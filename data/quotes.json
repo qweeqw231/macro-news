@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-10-02T15:38:02.156Z",
+  "quotes": [
+    {
+      "key": "sh_comp",
+      "name": "上证指数",
+      "price": 3842.19,
+      "changePct": 0.31,
+      "updatedAt": "2026-10-02T15:38:06.972Z"
+    },
+    {
+      "key": "dxy",
+      "name": "美元指数",
+      "price": 101.88,
+      "changePct": -0.15,
+      "updatedAt": "2026-10-02T15:38:06.972Z"
+    },
+    {
+      "key": "usdcnh",
+      "name": "美元兑离岸人民币",
+      "price": 6.7052,
+      "changePct": -0.14,
+      "updatedAt": "2026-10-02T15:38:06.973Z"
+    },
+    {
+      "key": "gold",
+      "name": "COMEX黄金",
+      "price": 4172,
+      "changePct": -0.72,
+      "updatedAt": "2026-10-02T15:38:06.972Z"
+    },
+    {
+      "key": "wti",
+      "name": "NYMEX原油",
+      "price": 90.01,
+      "changePct": -3.08,
+      "updatedAt": "2026-10-02T15:38:06.973Z"
+    }
+  ]
+}

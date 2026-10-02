@@ -1,0 +1,33 @@
+{
+  "day": "2026-09-17",
+  "items": [
+    {
+      "id": "15wee0t",
+      "ts": 1789581600,
+      "time": "2026-09-16T18:00:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Federal Reserve issues FOMC statement",
+      "summary": "Federal Reserve issues FOMC statement",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    },
+    {
+      "id": "34jxnc",
+      "ts": 1789581600,
+      "time": "2026-09-16T18:00:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Federal Reserve Board and Federal Open Market Committee release economic projections from the September 15-16 FOMC meeting",
+      "summary": "Federal Reserve Board and Federal Open Market Committee release economic projections from the September 15-16 FOMC meeting",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916b.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    }
+  ]
+}

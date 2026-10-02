@@ -1,0 +1,33 @@
+{
+  "day": "2026-09-23",
+  "items": [
+    {
+      "id": "1gc2znr",
+      "ts": 1790154000,
+      "time": "2026-09-23T09:00:00.000Z",
+      "source": "欧洲央行",
+      "channel": "政策/利率",
+      "title": "Almost ten million people took part in ECB survey on new euro banknotes",
+      "summary": "",
+      "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr260923~6ebddaf01e.en.html",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    },
+    {
+      "id": "15ckuz2",
+      "ts": 1790109000,
+      "time": "2026-09-22T20:30:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Federal Reserve Board announces approval of application by BancFirst Corporation",
+      "summary": "Federal Reserve Board announces approval of application by BancFirst Corporation",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/orders20260922a.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    }
+  ]
+}
