@@ -25,6 +25,12 @@
 
 * { box-sizing: border-box; }
 
+/* hidden 属性必须能压过下方的 display 规则。
+   `hidden` 只是靠 UA 默认样式表的 `display:none` 实现的，
+   一旦作者层给同元素写了 `display`（如 .kline-modal{display:flex}），
+   hidden 就会失效，元素常驻显示。这里统一兜底。 */
+[hidden] { display: none !important; }
+
 html {
   font-size: 16px;
   text-size-adjust: 100%;
