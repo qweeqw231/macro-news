@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    宏观资讯台 · 样式
    设计原则：与 micro-control-finance 研究站同源（学术论文风 · 衬线 · 克制）
    响应式：沿用研究站验证过的移动端方案（抽屉导航 / 触控 ≥40px / 表格横滚）
@@ -92,25 +92,45 @@ body { overflow-wrap: break-word; }
 .board h1 { font-size: 1.5rem; margin: 0; font-weight: 700; }
 .board-time { font-size: 0.8rem; color: var(--ink-mute); font-family: var(--sans); }
 
-.quotes {
+/* ---------- 宏观仪表盘（按市场分组） ---------- */
+.quotes { display: flex; flex-direction: column; gap: 1.1rem; }
+.mkt-hd {
+  display: flex; align-items: center; gap: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.3rem; margin-bottom: 0.6rem;
+}
+.mkt-name { font-family: var(--sans); font-weight: 700; font-size: 0.95rem; }
+.mkt-state {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
+  padding: 0.1rem 0.5rem; border-radius: 999px;
+  background: #ece9df; color: var(--ink-mute);
+}
+.mkt-state.open { background: #e6f4ea; color: var(--down); }
+.mkt-state.open::before { content: '●'; margin-right: 0.25em; }
+
+.mkt-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(178px, 1fr));
+  gap: 0.6rem;
 }
 .q {
+  display: block;
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 6px;
-  padding: 0.75rem 0.9rem;
+  padding: 0.6rem 0.75rem;
+  text-decoration: none; color: var(--ink);
+  cursor: pointer;
+  transition: border-color .15s, transform .15s;
 }
+.q:hover { border-color: var(--accent); transform: translateY(-1px); }
+.q-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 0.4rem; }
 .q-name { font-size: 0.8rem; color: var(--ink-mute); font-family: var(--sans); }
-.q-price {
-  font-size: 1.35rem; font-weight: 700; margin: 0.15rem 0 0.1rem;
-  font-variant-numeric: tabular-nums; line-height: 1.2;
-}
-.q-chg { font-size: 0.85rem; font-weight: 600; font-variant-numeric: tabular-nums; }
-.q-chg.up { color: var(--up); }
-.q-chg.down { color: var(--down); }
+.q-px { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.q-chg { font-size: 0.78rem; font-family: var(--sans); font-variant-numeric: tabular-nums; margin-top: 0.1rem; }
+.q-chg .up, .q-px.up { color: var(--up); }
+.q-chg .down, .q-px.down { color: var(--down); }
+
 .skeleton { color: var(--ink-faint); font-size: 0.9rem; padding: 1rem; }
 
 /* ---------- 搜索 ---------- */
@@ -232,7 +252,7 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
    ============================================================ */
 @media (max-width: 900px) {
   .page { padding: 1.6rem 1.15rem 3rem; }
-  .quotes { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .mkt-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 }
 
 @media (max-width: 640px) {
@@ -256,9 +276,9 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
   .tab { width: 100%; text-align: left; min-height: 44px; }
 
   .board h1 { font-size: 1.25rem; }
-  .quotes { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.5rem; }
-  .q { padding: 0.6rem 0.7rem; }
-  .q-price { font-size: 1.15rem; }
+  .mkt-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.5rem; }
+  .q { padding: 0.55rem 0.65rem; }
+  .q-px { font-size: 1rem; }
 
   .item { padding: 0.65rem 0.6rem; }
   .item-title { font-size: 0.9875rem; }

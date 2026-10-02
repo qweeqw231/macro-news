@@ -159,29 +159,57 @@ function rssSource({ name, channel, url, limit = 30, tag = '' }) {
   };
 }
 
-// ---------- 宏观仪表盘行情（东方财富，已实测） ----------
-const QUOTES = [
-  { key: 'sh_comp',   name: '上证指数',       secid: '1.000001' },
-  { key: 'dxy',       name: '美元指数',       secid: '100.UDI' },
-  { key: 'usdcnh',    name: '美元兑离岸人民币', secid: '133.USDCNH' },
-  { key: 'gold',      name: 'COMEX黄金',      secid: '101.GC00Y' },
-  { key: 'wti',       name: 'NYMEX原油',      secid: '102.CL00Y' },
+// ---------- 宏观仪表盘行情（东方财富 push2，全部经本机实测） ----------
+// market 用于判断是否处于交易时段（决定前端是否需要高频刷新）
+// kline 列为该指数的日 K 代码；null 表示当前可用数据源取不到（见 README）
+export const INDICES = [
+  // A股
+  { key: 'sh_comp',   name: '上证指数',   market: 'CN', secid: '1.000001', sina: 'sh000001' },
+  { key: 'sz_comp',   name: '深证成指',   market: 'CN', secid: '0.399001', sina: 'sz399001' },
+  { key: 'chinext',   name: '创业板指',   market: 'CN', secid: '0.399006', sina: 'sz399006' },
+  { key: 'star50',    name: '科创50',     market: 'CN', secid: '1.000688', sina: 'sh000688' },
+  { key: 'bse50',     name: '北证50',     market: 'CN', secid: '0.899050', sina: null },
+  { key: 'csi300',    name: '沪深300',    market: 'CN', secid: '1.000300', sina: 'sh000300' },
+  { key: 'csi500',    name: '中证500',    market: 'CN', secid: '1.000905', sina: 'sh000905' },
+  { key: 'csi1000',   name: '中证1000',   market: 'CN', secid: '1.000852', sina: 'sh000852' },
+  // 港股
+  { key: 'hsi',       name: '恒生指数',   market: 'HK', secid: '100.HSI',   sina: 'hkHSI' },
+  { key: 'hs_tech',   name: '恒生科技',   market: 'HK', secid: '124.HSTECH', sina: null },
+  // 美股
+  { key: 'dji',       name: '道琼斯',     market: 'US', secid: '100.DJIA',  sina: 'usDJI' },
+  { key: 'ixic',      name: '纳斯达克',   market: 'US', secid: '100.NDX',   sina: 'usIXIC' },
+  { key: 'spx',       name: '标普500',    market: 'US', secid: '100.SPX',   sina: 'usINX' },
+  // 其他
+  { key: 'n225',      name: '日经225',    market: 'JP', secid: '100.N225',  sina: null },
+  { key: 'dax',       name: '德国DAX',    market: 'EU', secid: '100.GDAXI', sina: null },
+  { key: 'ukx',       name: '英国富时100', market: 'UK', secid: '100.FTSE',  sina: null },
+  { key: 'kospi',     name: '韩国KOSPI',  market: 'KR', secid: '100.KS11',  sina: null },
 ];
+
+// f43 最新 / f44 最高 / f45 最低 / f46 开盘 / f47 成交量 / f60 昨收 / f170 涨跌幅
+const QUOTE_FIELDS = 'f43,f44,f45,f46,f47,f57,f58,f60,f170';
 
 export async function fetchQuotes() {
   const results = await Promise.allSettled(
-    QUOTES.map(async (q) => {
+    INDICES.map(async (q) => {
       const j = await get(
-        `https://push2.eastmoney.com/api/qt/stock/get?fltt=2&invt=2&secid=${q.secid}&fields=f57,f58,f43,f170`,
+        `https://push2.eastmoney.com/api/qt/stock/get?fltt=2&invt=2&secid=${q.secid}&fields=${QUOTE_FIELDS}`,
         { json: true }
       );
       const d = j?.data;
       if (!d?.f58) return null;
+      const num = (v) => (v === undefined || v === null || v === '-' ? null : Number(v));
       return {
         key: q.key,
         name: d.f58 || q.name,
-        price: Number(d.f43),
-        changePct: Number(d.f170),
+        market: q.market,
+        price: num(d.f43),
+        open: num(d.f46),
+        high: num(d.f44),
+        low: num(d.f45),
+        prevClose: num(d.f60),
+        volume: num(d.f47),
+        changePct: num(d.f170),
         updatedAt: new Date().toISOString(),
       };
     })

@@ -50,23 +50,99 @@
   }
 
   // ---------- 渲染：行情仪表盘 ----------
+  const MARKET_LABEL = { CN: 'A股', HK: '港股', US: '美股', JP: '日本', EU: '欧洲', UK: '英国', KR: '韩国' };
+
+  // 判断某市场当前是否处于交易时段（北京时间粗略判断，用于决定刷新频率）
+  function isTrading(market, now = new Date()) {
+    const wd = now.getDay();
+    if (wd === 0 || wd === 6) return false;              // 周末休市
+    const h = now.getHours() + now.getMinutes() / 60;
+    const win = {
+      CN: [9.5, 11.5, 13, 15],
+      HK: [9.5, 12, 13, 16],
+      JP: [8.5, 11.3, 12.5, 15],
+      KR: [8.5, 11.3, 12.5, 15.3],
+      SG: [9, 12, 13, 17],
+      EU: [15, 23.5],                                   // 夏令时约 15:00-23:30
+      UK: [14.5, 23],
+      US: [21.5, 28],                                  // 含夏令时，覆盖 21:30-次日 4:00
+    }[market];
+    if (!win) return false;
+    if (win.length === 4) {
+      return (h >= win[0] && h < win[1]) || (h >= win[2] && h < win[3]);
+    }
+    return h >= win[0] && h < win[1];
+  }
+
+  function fmtNum(v, d = 2) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    return Number(v).toLocaleString('zh-CN', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+
+  let lastQuoteSig = '';
   async function renderQuotes() {
     const box = $('#quotes');
     try {
       const d = await jget('quotes.json');
+      S.quotes = d.quotes;
+      // 行情没变就不重绘，避免轮询时闪烁
+      const sig = d.quotes.map((q) => q.key + q.price).join('|');
+      if (sig === lastQuoteSig) return;
+      lastQuoteSig = sig;
+
       box.innerHTML = '';
+      const groups = new Map();
       d.quotes.forEach((q) => {
-        const up = q.changePct >= 0;
-        const c = el('div', 'q');
-        c.appendChild(el('div', 'q-name', q.name));
-        c.appendChild(el('div', 'q-price', q.price.toLocaleString('zh-CN', { maximumFractionDigits: 4 })));
-        c.appendChild(el('div', `q-chg ${up ? 'up' : 'down'}`, `${up ? '▲' : '▼'} ${Math.abs(q.changePct).toFixed(2)}%`));
-        box.appendChild(c);
+        if (!groups.has(q.market)) groups.set(q.market, []);
+        groups.get(q.market).push(q);
       });
+
+      for (const [mk, list] of groups) {
+        const open = list.some((q) => isTrading(q.market));
+        const g = el('div', 'mkt');
+        const h = el('div', 'mkt-hd');
+        h.appendChild(el('span', 'mkt-name', MARKET_LABEL[mk] || mk));
+        h.appendChild(el('span', `mkt-state${open ? ' open' : ''}`, open ? '交易中' : '休市'));
+        g.appendChild(h);
+
+        const grid = el('div', 'mkt-grid');
+        list.forEach((q) => {
+          const up = (q.changePct || 0) >= 0;
+          const card = el('a', 'q');
+          card.href = '#';
+          card.dataset.key = q.key;
+          card.title = '查看 K 线图';
+          const head = el('div', 'q-hd');
+          head.appendChild(el('span', 'q-name', q.name));
+          const px = el('span', `q-px ${up ? 'up' : 'down'}`, fmtNum(q.price));
+          head.appendChild(px);
+          card.appendChild(head);
+          const chg = el('div', 'q-chg');
+          const amt = (q.price || 0) - (q.prevClose || 0);
+          chg.appendChild(el('span', up ? 'up' : 'down', `${up ? '▲' : '▼'} ${fmtNum(Math.abs(amt))}`));
+          chg.appendChild(el('span', up ? 'up' : 'down', `  ${Math.abs(q.changePct || 0).toFixed(2)}%`));
+          card.appendChild(chg);
+          grid.appendChild(card);
+        });
+        g.appendChild(grid);
+        box.appendChild(g);
+      }
+
       $('#quoteTime').textContent = '更新于 ' + new Date(d.generatedAt).toLocaleString('zh-CN', { hour12: false });
     } catch (e) {
       box.innerHTML = `<div class="skeleton">行情载入失败：${esc(e.message)}</div>`;
     }
+  }
+
+  // 交易时段内加快轮询，其余时间放慢
+  function startQuotePolling() {
+    const anyOpen = () =>
+      (S.quotes || []).some((q) => isTrading(q.market));
+    setInterval(async () => {
+      if (anyOpen()) {
+        await renderQuotes();
+      }
+    }, 15000);
   }
 
   // ---------- 渲染：条目 ----------
@@ -304,6 +380,24 @@
 
   // ---------- 启动 ----------
   async function boot() {
+    // file:// 下浏览器会拦截 fetch()，页面必然空白。
+    // 与其让用户对着白屏发呆，不如直接说明原因和解决办法。
+    if (location.protocol === 'file:') {
+      document.body.innerHTML = `
+        <div style="max-width:640px;margin:12vh auto;padding:2rem;font-family:system-ui,sans-serif;line-height:1.8">
+          <h1 style="font-size:1.4rem;margin:0 0 1rem">需要通过本地服务器打开</h1>
+          <p style="color:#555">本站通过 <code>fetch()</code> 读取 <code>data/</code> 目录下的数据文件，
+          而浏览器在 <code>file://</code> 协议下会拦截 fetch（跨源安全限制），
+          因此直接双击 <code>index.html</code> 必然是空白页 —— 这不是站点坏了。</p>
+          <p style="color:#555">在项目根目录双击运行：</p>
+          <pre style="background:#f5f3ec;padding:1rem;border-radius:6px;overflow-x:auto">start.cmd</pre>
+          <p style="color:#555">或在命令行执行：</p>
+          <pre style="background:#f5f3ec;padding:1rem;border-radius:6px;overflow-x:auto">node scripts\\serve.mjs</pre>
+          <p style="color:#555">然后访问 <a href="http://127.0.0.1:8848/">http://127.0.0.1:8848/</a></p>
+        </div>`;
+      return;
+    }
+
     initBurger();
     document.querySelectorAll('.tab').forEach((t) => {
       t.onclick = () => {
@@ -317,7 +411,7 @@
     $('#q').addEventListener('input', (e) => onSearchInput(e.target.value));
     $('#qClear').onclick = () => { $('#q').value = ''; onSearchInput(''); };
 
-    renderQuotes();
+    renderQuotes().then(startQuotePolling);
     try {
       const d = await jget('latest.json');
       S.base = d.items;
