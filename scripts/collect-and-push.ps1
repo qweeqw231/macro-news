@@ -52,6 +52,18 @@ $null = git commit -m "data: 宏观资讯自动采集（$stamp）"
 if ($LASTEXITCODE -ne 0) { Say "提交失败，跳过推送"; exit 1 }
 Say "已提交"
 
+# ---- 4.5 定期 gc：压缩仓库历史（长期体积的主要杠杆） ----
+# 每 200 次提交做一次。git 对相似 JSON 的 delta 压缩率约 80%，
+# 不 gc 的话松散对象会无限累积。
+$commitCount = [int](git rev-list --count HEAD 2>$null)
+if ($commitCount -gt 0 -and ($commitCount % 200) -eq 0) {
+    Say "达到 $commitCount 次提交，执行 git gc 压缩仓库"
+    $null = git gc --quiet --auto
+    $gitMB = [math]::Round(((Get-ChildItem (Join-Path $root '.git') -Recurse -File -Force |
+        Measure-Object Length -Sum).Sum / 1MB), 2)
+    Say "gc 完成，.git 当前 ${gitMB} MB"
+}
+
 # ---- 4. 推送 ----
 # 注意：PowerShell 会把 git 的 stderr 包装成错误文本，
 # 必须以 $LASTEXITCODE 判断成败，不能看有没有红色输出。
