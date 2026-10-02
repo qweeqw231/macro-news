@@ -64,6 +64,22 @@
     <div id="status"></div>
   </section>
 
+  <!-- ============ K线图抽屉 ============ -->
+  <div class="kline-modal" id="klineModal" hidden>
+    <div class="km-box">
+      <div class="km-hd">
+        <div class="km-title">
+          <strong id="kmName">—</strong>
+          <span class="km-price" id="kmPrice"></span>
+        </div>
+        <button class="km-close" id="kmClose" type="button" aria-label="关闭">×</button>
+      </div>
+      <div class="km-periods" id="kmPeriods"></div>
+      <div class="km-canvas" id="kmCanvas"></div>
+      <div class="km-note" id="kmNote"></div>
+    </div>
+  </div>
+
 </main>
 
 <footer class="ft">
@@ -71,7 +87,9 @@
   <p id="ftMeta"></p>
 </footer>
 
+<script src="assets/config.js"></script>
 <script src="assets/fuse.min.js"></script>
+<script src="assets/kline.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>

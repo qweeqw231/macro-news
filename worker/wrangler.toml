@@ -1,0 +1,9 @@
+name = "macro-news-proxy"
+main = "worker.js"
+compatibility_date = "2024-11-06"
+
+# 部署：改上面的 name 后执行
+#   npx wrangler deploy
+#
+# 免费额度：Workers 免费版每天 10 万次请求，足够个人自用
+# （前端 15 秒轮询一次 × 17 指数 = 每次 1 个请求，约 5760 次/天）

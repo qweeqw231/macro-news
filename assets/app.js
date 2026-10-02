@@ -1,4 +1,4 @@
-// site/assets/app.js
+﻿// site/assets/app.js
 // 宏观资讯台 · 前端逻辑
 // 零框架，直接 fetch data/*.json 渲染。
 // 搜索用 Fuse.js（延迟建索引，不阻塞首屏）。
@@ -142,7 +142,7 @@
       if (anyOpen()) {
         await renderQuotes();
       }
-    }, 15000);
+    }, (CFG.POLL_SECONDS || 15) * 1000);
   }
 
   // ---------- 渲染：条目 ----------
@@ -378,6 +378,90 @@
     hd.querySelector('.hd-in').appendChild(b);
   }
 
+  // ---------- K线图 ----------
+  const CFG = window.MACRO_CONFIG || { WORKER_URL: '', POLL_SECONDS: 15 };
+  const PERIOD_LABEL = { '1d': '日K', '1w': '周K', '1M': '月K', '5m': '5分', '30m': '30分', '60m': '60分' };
+  const NO_KLINE = new Set(['hs_tech', 'n225', 'dax', 'ukx', 'kospi']);
+  let kChart = null;
+
+  function openKline(key) {
+    const q = (S.quotes || []).find((x) => x.key === key);
+    const modal = $('#klineModal');
+    modal.hidden = false;
+    $('#kmName').textContent = q ? q.name : key;
+    $('#kmPrice').textContent = q ? fmtNum(q.price) : '';
+    $('#kmPrice').className = 'km-price ' + ((q?.changePct || 0) >= 0 ? 'up' : 'down');
+
+    const periods = $('#kmPeriods');
+    periods.innerHTML = '';
+    Object.keys(PERIOD_LABEL).forEach((p) => {
+      const b = el('button', 'pchip', PERIOD_LABEL[p]);
+      b.onclick = () => loadKline(key, p);
+      periods.appendChild(b);
+    });
+
+    if (!kChart) kChart = new window.KlineChart($('#kmCanvas'));
+    loadKline(key, CFG.DEFAULT_PERIOD || '1d');
+  }
+
+  function closeKline() { $('#klineModal').hidden = true; }
+
+  async function loadKline(key, period) {
+    document.querySelectorAll('.pchip').forEach((b) => b.classList.remove('on'));
+    const chip = [...document.querySelectorAll('.pchip')].find((b) => b.textContent === PERIOD_LABEL[period]);
+    if (chip) chip.classList.add('on');
+
+    const note = $('#kmNote');
+    if (NO_KLINE.has(key)) {
+      kChart.setData([]);
+      note.textContent = '该指数暂无可用 K 线数据源（实时行情仍正常）。';
+      return;
+    }
+
+    note.textContent = '加载中…';
+    let bars = null;
+    // 优先走 Worker 代理（可按需取任意周期 = 真·实时）
+    if (CFG.WORKER_URL) {
+      try {
+        const r = await fetch(`${CFG.WORKER_URL}/kline?key=${key}&period=${period}&limit=250`);
+        const j = await r.json();
+        if (j.bars) bars = j.bars;
+      } catch (e) { /* 代理不可用则回退 */ }
+    }
+    // 回退：本地预生成的日K
+    if (!bars && period === '1d') {
+      try {
+        const r = await fetch(`data/kline/${key}.json`, { cache: 'no-store' });
+        const j = await r.json();
+        if (j.bars) bars = j.bars;
+      } catch (e) { /* 忽略 */ }
+    }
+
+    if (!bars || !bars.length) {
+      kChart.setData([]);
+      note.textContent = CFG.WORKER_URL
+        ? '加载失败：该周期无数据，或 Worker 代理未部署。'
+        : '该周期需要配置 Cloudflare Worker 代理才能加载（当前仅有本地日K）。请在 assets/config.js 填入 WORKER_URL。';
+      return;
+    }
+    kChart.setData(bars);
+    note.textContent = `${bars.length} 根 · ${bars[0].t} → ${bars[bars.length - 1].t}` +
+      (CFG.WORKER_URL ? ' · 实时代理' : ' · 本地日K快照');
+  }
+
+  function bindKline() {
+    $('#kmClose').onclick = closeKline;
+    $('#klineModal').onclick = (e) => { if (e.target.id === 'klineModal') closeKline(); };
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !$('#klineModal').hidden) closeKline();
+    });
+    // 指数卡片点击 → 打开K线
+    $('#quotes').addEventListener('click', (e) => {
+      const card = e.target.closest('.q');
+      if (card && card.dataset.key) openKline(card.dataset.key);
+    });
+  }
+
   // ---------- 启动 ----------
   async function boot() {
     // file:// 下浏览器会拦截 fetch()，页面必然空白。
@@ -397,6 +481,8 @@
         </div>`;
       return;
     }
+
+    bindKline();
 
     initBurger();
     document.querySelectorAll('.tab').forEach((t) => {

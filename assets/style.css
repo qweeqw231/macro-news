@@ -321,3 +321,53 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
   body { font-size: 11pt; }
   .page { max-width: none; padding: 0; }
 }
+
+/* ---------- K线图抽屉 ---------- */
+.kline-modal {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(26,26,26,.45);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.km-box {
+  background: var(--surface);
+  border-radius: 8px;
+  width: min(980px, 100%);
+  max-height: 92vh;
+  display: flex; flex-direction: column;
+  padding: 1rem 1.15rem 1.15rem;
+  box-shadow: 0 12px 28px rgba(0,0,0,.16);
+}
+.km-hd { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .6rem; }
+.km-title { display: flex; align-items: baseline; gap: .7rem; }
+.km-title strong { font-size: 1.15rem; }
+.km-price { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.km-price.up { color: var(--up); }
+.km-price.down { color: var(--down); }
+.km-close {
+  width: 34px; height: 34px; flex-shrink: 0;
+  border: 1px solid var(--rule); border-radius: 5px;
+  background: transparent; cursor: pointer;
+  font-size: 1.3rem; line-height: 1; color: var(--ink-mute);
+}
+.km-close:hover { background: var(--code-bg); color: var(--accent); }
+.km-periods { display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: .7rem; }
+.pchip {
+  padding: .35rem .8rem; min-height: 34px;
+  font-family: var(--sans); font-size: .82rem;
+  border: 1px solid var(--rule); border-radius: 5px;
+  background: var(--surface); color: var(--ink-soft); cursor: pointer;
+}
+.pchip:hover { border-color: var(--accent); color: var(--accent); }
+.pchip.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.km-canvas { height: 440px; }
+.km-note {
+  margin-top: .6rem; font-size: .8rem; color: var(--ink-mute);
+  font-family: var(--sans);
+}
+@media (max-width: 640px) {
+  .kline-modal { padding: 0; align-items: flex-end; }
+  .km-box { max-height: 96vh; border-radius: 10px 10px 0 0; padding: .85rem .9rem 1rem; }
+  .km-canvas { height: 340px; }
+  .pchip { min-height: 40px; padding: .4rem .75rem; }
+}

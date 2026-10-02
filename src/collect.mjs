@@ -170,6 +170,33 @@ async function main() {
     await writeJSON(path.join(DATA, 'quotes.json'), { generatedAt: startedAt.toISOString(), quotes });
   }
 
+  // ---- K线：预生成日K（保证没有 Worker 代理时也能画图） ----
+  const klineOk = [];
+  const klineSkip = [];
+  if (!process.argv.includes('--no-kline')) {
+    const keys = (await import('./sources.mjs')).INDICES.map((i) => i.key);
+    const { fetchKline, klineAvailable } = await import('./sources.mjs');
+    for (const key of keys) {
+      if (!klineAvailable(key)) { klineSkip.push(key); continue; }
+      try {
+        const bars = await fetchKline(key, '1d', 250);
+        const meta = (await import('./sources.mjs')).INDICES.find((i) => i.key === key);
+        await writeJSON(path.join(DATA, 'kline', `${key}.json`), {
+          key,
+          name: meta?.name || key,
+          market: meta?.market || '',
+          period: '1d',
+          generatedAt: startedAt.toISOString(),
+          bars,
+        });
+        klineOk.push(`${key}(${bars.length})`);
+      } catch (err) {
+        klineSkip.push(key);
+      }
+    }
+    console.log(`[collect] K线：生成 ${klineOk.length} 个，跳过 ${klineSkip.length} 个（${klineSkip.join(', ') || '无'}）`);
+  }
+
   const okCount = perSource.filter((s) => s.ok).length;
   await writeJSON(path.join(DATA, '_last-run.json'), {
     startedAt: startedAt.toISOString(),

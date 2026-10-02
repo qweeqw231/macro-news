@@ -219,7 +219,82 @@ export async function fetchQuotes() {
     .filter(Boolean);
 }
 
-// ---------- 导出源清单 ----------
+// K线代码（经本机逐个实测）
+// sina: 新浪 CN_MarketData（国内指数，支持日/周/月/分钟）
+// tx:  腾讯 fqkline（港股）/ usfqkline（美股，支持日/周/月）
+// null = 当前可用源取不到历史数据，前端会显示「暂无数据」
+const KLINE_MAP = {
+  sh_comp: { sina: 'sh000001' },
+  sz_comp: { sina: 'sz399001' },
+  chinext: { sina: 'sz399006' },
+  star50:  { sina: 'sh000688' },
+  bse50:   { sina: 'bj899050' },
+  csi300:  { sina: 'sh000300' },
+  csi500:  { sina: 'sh000905' },
+  csi1000: { sina: 'sh000852' },
+  hsi:     { tx: 'hkHSI' },
+  dji:     { tx: 'usDJI', us: true },
+  ixic:    { tx: 'usIXIC', us: true },
+  spx:     { tx: 'usINX', us: true },
+  hs_tech: null,
+  n225:    null,
+  dax:     null,
+  ukx:     null,
+  kospi:   null,
+};
+
+// 周期 → 新浪 scale（分钟数）；周=1200 月=7200
+const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '5m': 5, '30m': 30, '60m': 60 };
+// 周期 → 腾讯 period
+const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
+
+export function klineAvailable(key) {
+  return !!KLINE_MAP[key];
+}
+
+export const KLINE_PERIODS = ['1d', '1w', '1M', '5m', '30m', '60m'];
+
+/**
+ * 取单个指数的 K 线，归一化为 {t,o,h,l,c,v}
+ * @param {string} key   指数 key
+ * @param {string} period 1d/1w/1M/5m/30m/60m
+ * @param {number} limit 根数
+ */
+export async function fetchKline(key, period = '1d', limit = 250) {
+  const m = KLINE_MAP[key];
+  if (!m) throw new Error(`${key} 暂无可用 K 线数据源`);
+
+  if (m.sina) {
+    const scale = SINA_SCALE[period];
+    if (!scale) throw new Error(`新浪不支持周期 ${period}`);
+    const url = `https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/` +
+      `CN_MarketData.getKLineData?symbol=${m.sina}&scale=${scale}&ma=no&datalen=${limit}`;
+    const d = await get(url, { headers: { Referer: 'https://finance.sina.com.cn/' } });
+    const arr = JSON.parse(d);
+    if (!Array.isArray(arr) || !arr.length) throw new Error('新浪返回空数据');
+    return arr.map((b) => ({
+      t: b.day, o: +b.open, h: +b.high, l: +b.low, c: +b.close, v: +b.volume,
+    }));
+  }
+
+  if (m.tx) {
+    if (!TX_PERIOD[period]) throw new Error(`腾讯不支持周期 ${period}`);
+    const ep = m.us
+      ? 'https://web.ifzq.gtimg.cn/appstock/app/usfqkline/get'
+      : 'https://web.ifzq.gtimg.cn/appstock/app/fqkline/get';
+    const url = `${ep}?param=${m.tx},${TX_PERIOD[period]},,,${limit},qfq`;
+    const j = JSON.parse(await get(url, { headers: { Referer: 'https://gu.qq.com/' } }));
+    const d = j?.data?.[m.tx];
+    const arr = d?.qfqday || d?.day;
+    if (!Array.isArray(arr) || !arr.length) throw new Error('腾讯返回空数据');
+    // 腾讯字段顺序：日期, 开盘, 收盘, 最高, 最低, 成交量
+    return arr.map((b) => ({
+      t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5],
+    }));
+  }
+
+  throw new Error(`${key} 暂无可用 K 线数据源`);
+}
 export const SOURCES = [
   { id: 'wallstreetcn', label: '华尔街见闻', run: wallstreetcn },
   {
