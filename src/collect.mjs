@@ -45,6 +45,38 @@ async function writeJSON(file, obj) {
   await writeFile(file, JSON.stringify(obj, null, 2), 'utf8');
 }
 
+// ---------- 写入优化：内容没变就不写盘 ----------
+// 时间戳类字段每次都变，若无条件写盘，git 会为同一份数据反复存新 blob。
+// 实测：12 个 K 线文件（432KB）仅因 generatedAt 变化，
+// 就让每次提交多出约 109KB 仓库增长，而 K 线其实一根都没变。
+// 剥掉易变字段后比对，内容相同即跳过写入。
+const TIME_FIELDS = '(generatedAt|updatedAt|startedAt|endedAt|durationMs)';
+const NUM_FIELDS = '(ms|error|count|ok|added|total)';
+const reTime = new RegExp(`"${TIME_FIELDS}"\\s*:\\s*"[^"]*"`, 'g');
+const reNum = new RegExp(`"${NUM_FIELDS}"\\s*:\\s*[^,\\n}]*`, 'g');
+
+function stripVolatile(text) {
+  return String(text).replace(reTime, '"_":"_"').replace(reNum, '"_":0');
+}
+
+const stats = { skipped: 0, written: 0 };
+
+async function writeJSONIfChanged(file, obj) {
+  const text = JSON.stringify(obj, null, 2);
+  if (existsSync(file)) {
+    try {
+      const old = await readFile(file, 'utf8');
+      if (stripVolatile(old) === stripVolatile(text)) {
+        stats.skipped++;
+        return false;
+      }
+    } catch { /* 读不了就照常写 */ }
+  }
+  await writeFile(file, text, 'utf8');
+  stats.written++;
+  return true;
+}
+
 async function main() {
   const startedAt = new Date();
   console.log(`[collect] 开始 · 回补窗口 ${SINCE_HOURS}h`);
@@ -133,12 +165,12 @@ async function main() {
   }
   const latest = allItems.sort((a, b) => b.ts - a.ts).slice(0, 200);
 
-  await writeJSON(path.join(DATA, 'latest.json'), {
+  await writeJSONIfChanged(path.join(DATA, 'latest.json'), {
     generatedAt: startedAt.toISOString(),
     total: allCount,
     items: latest,
   });
-  await writeJSON(path.join(DATA, 'index.json'), {
+  await writeJSONIfChanged(path.join(DATA, 'index.json'), {
     generatedAt: startedAt.toISOString(),
     total: allCount,
     days,
@@ -161,13 +193,13 @@ async function main() {
       });
     }
   }
-  await writeJSON(path.join(DATA, 'search.json'), {
+  await writeJSONIfChanged(path.join(DATA, 'search.json'), {
     generatedAt: startedAt.toISOString(),
     total: searchItems.length,
     items: searchItems,
   });
   if (quotes.length) {
-    await writeJSON(path.join(DATA, 'quotes.json'), { generatedAt: startedAt.toISOString(), quotes });
+    await writeJSONIfChanged(path.join(DATA, 'quotes.json'), { generatedAt: startedAt.toISOString(), quotes });
   }
 
   // ---- K线：预生成日K（保证没有 Worker 代理时也能画图） ----
@@ -181,7 +213,7 @@ async function main() {
       try {
         const bars = await fetchKline(key, '1d', 250);
         const meta = (await import('./sources.mjs')).INDICES.find((i) => i.key === key);
-        await writeJSON(path.join(DATA, 'kline', `${key}.json`), {
+        await writeJSONIfChanged(path.join(DATA, 'kline', `${key}.json`), {
           key,
           name: meta?.name || key,
           market: meta?.market || '',
@@ -198,7 +230,7 @@ async function main() {
   }
 
   const okCount = perSource.filter((s) => s.ok).length;
-  await writeJSON(path.join(DATA, '_last-run.json'), {
+  await writeJSONIfChanged(path.join(DATA, '_last-run.json'), {
     startedAt: startedAt.toISOString(),
     durationMs: Date.now() - startedAt.getTime(),
     sources: perSource.map(({ id, label, ok, items, ms, error }) => ({
