@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-04T15:08:13.493Z",
-  "total": 278,
+  "generatedAt": "2026-10-04T16:08:24.605Z",
+  "total": 280,
   "items": [
     {
       "id": "110g26g",
@@ -671,6 +671,28 @@
       "title": "也门胡塞武装称萨那遭到空袭",
       "summary": "据也门胡塞武装控制的马西拉电视台3日报道，当天，也门首都萨那遭到沙特空袭，报道没有提供关于遭袭目标或伤亡的细节。沙特方面暂无回应。（央视）",
       "url": "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173903",
+      "kind": "news"
+    },
+    {
+      "id": "6566q4",
+      "ts": 1791047708,
+      "time": "2026-10-04T01:15:08.000+08:00",
+      "source": "华尔街见闻",
+      "channel": "美股",
+      "title": "也门胡塞武装称萨那遭到空袭",
+      "summary": "据也门胡塞武装控制的马西拉电视台3日报道，当天，也门首都萨那遭到沙特空袭，报道没有提供关于遭袭目标或伤亡的细节。沙特方面暂无回应。（央视）",
+      "url": "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173903",
+      "kind": "news"
+    },
+    {
+      "id": "dwe3ko",
+      "ts": 1791047304,
+      "time": "2026-10-04T01:08:24.000+08:00",
+      "source": "华尔街见闻",
+      "channel": "美股",
+      "title": "苹果将加强Mac隐私控制，警告AI智能体带来的风险上升",
+      "summary": "苹果公司表示，计划为Mac用户推出新的隐私控制措施，并警告称，向包括AI智能体在内的第三方软件授予广泛的数据访问权限所带来的风险正在上升。 这家iPhone制造商周五在一份声明中表示，将推出更多控制措施，以确保希望向某款应用授予“完全磁盘访问权限”——也就是允许其完全访问系统文件、邮件、信息和浏览历史——的用户只能通过“非常明确的用户操作”来完成授权。",
+      "url": "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173902",
       "kind": "news"
     },
     {
@@ -2206,34 +2228,6 @@
       "source": "美联储",
       "channel": "政策/利率",
       "title": "Federal Reserve Board announces termination of enforcement action with SNB Bancshares and Bank of Eufaula",
-      "summary": "",
-      "url": "https://www.federalreserve.gov/feeds/press_all.xml",
-      "kind": "official",
-      "tags": [
-        "央行"
-      ]
-    },
-    {
-      "id": "wuyus6",
-      "ts": 0,
-      "time": "2026-10-02T15:28:21.470Z",
-      "source": "美联储",
-      "channel": "政策/利率",
-      "title": "Federal Reserve Board issues enforcement actions with former employee of Northstar Bank, former employee of American Express Travel Related Services Company, Inc., and former employee of Regions Bank",
-      "summary": "",
-      "url": "https://www.federalreserve.gov/feeds/press_all.xml",
-      "kind": "official",
-      "tags": [
-        "央行"
-      ]
-    },
-    {
-      "id": "i1zjnm",
-      "ts": 0,
-      "time": "2026-10-02T15:28:21.470Z",
-      "source": "美联储",
-      "channel": "政策/利率",
-      "title": "Federal Reserve issues FOMC statement",
       "summary": "",
       "url": "https://www.federalreserve.gov/feeds/press_all.xml",
       "kind": "official",
