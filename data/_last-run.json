@@ -1,36 +1,36 @@
 {
-  "startedAt": "2026-10-04T15:08:13.493Z",
-  "durationMs": 10679,
+  "startedAt": "2026-10-04T15:21:21.928Z",
+  "durationMs": 20315,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 2213
+      "ms": 7242
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 909
+      "ms": 3322
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1826
+      "ms": 2234
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 8294
+      "ms": 12199
     }
   ],
   "quotes": 17,
-  "added": 62
+  "added": 0
 }
