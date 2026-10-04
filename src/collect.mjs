@@ -15,7 +15,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SOURCES, fetchQuotes } from './sources.mjs';
+import { SOURCES, fetchQuotes, getQuoteError } from './sources.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -112,10 +112,17 @@ async function main() {
   console.log(`[collect] 窗口内去重后新增候选：${fresh.length} 条`);
 
   // ---- 行情 ----
+  // 关键：取不到就保留上一次的好数据，绝不用空数组覆盖
   let quotes = [];
   try {
     quotes = await fetchQuotes();
-    console.log(`[collect] 行情快照：${quotes.length} 项`);
+    const qerr = getQuoteError();
+    if (qerr) {
+      console.log(`  ⚠️ 行情部分失败：${qerr}`);
+    } else {
+      console.log(`[collect] 行情快照：${quotes.length} 项`);
+    }
+    if (!quotes.length) console.log('  ↳ 本轮行情为空，将保留 data/quotes.json 原有内容');
   } catch (err) {
     console.log(`  ❌ 行情 ${err.message}`);
   }
@@ -237,6 +244,7 @@ async function main() {
       id, label, ok, count: items.length, ms, ...(error ? { error } : {}),
     })),
     quotes: quotes.length,
+    ...(getQuoteError() ? { quoteError: getQuoteError() } : {}),
     added: addedTotal,
   });
 

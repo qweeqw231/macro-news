@@ -8,19 +8,27 @@ const UA =
 
 const TIMEOUT_MS = 15000;
 
-async function get(url, { json = false, headers = {} } = {}) {
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
-  try {
-    const res = await fetch(url, {
-      signal: ctrl.signal,
-      headers: { 'User-Agent': UA, Accept: json ? 'application/json' : '*/*', ...headers },
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return json ? await res.json() : await res.text();
-  } finally {
-    clearTimeout(timer);
+/** 带超时的请求；可选重试（GitHub 美国节点访问国内接口偶发超时） */
+async function get(url, { json = false, headers = {}, timeout = TIMEOUT_MS, retries = 0 } = {}) {
+  let lastErr;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeout);
+    try {
+      const res = await fetch(url, {
+        signal: ctrl.signal,
+        headers: { 'User-Agent': UA, Accept: json ? 'application/json' : '*/*', ...headers },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return json ? await res.json() : await res.text();
+    } catch (err) {
+      lastErr = err;
+      if (attempt < retries) await new Promise((r) => setTimeout(r, 800));
+    } finally {
+      clearTimeout(timer);
+    }
   }
+  throw lastErr;
 }
 
 // ---------- 工具 ----------
@@ -134,9 +142,9 @@ async function wallstreetcn() {
   return out;
 }
 
-function rssSource({ name, channel, url, limit = 30, tag = '' }) {
+function rssSource({ name, channel, url, limit = 30, tag = '', timeout = 15000, retries = 0 }) {
   return async () => {
-    const xml = await get(url);
+    const xml = await get(url, { timeout, retries });
     return parseFeed(xml)
       .filter((i) => i.title)
       .slice(0, limit)
@@ -189,12 +197,20 @@ export const INDICES = [
 // f43 最新 / f44 最高 / f45 最低 / f46 开盘 / f47 成交量 / f60 昨收 / f170 涨跌幅
 const QUOTE_FIELDS = 'f43,f44,f45,f46,f47,f57,f58,f60,f170';
 
+// 行情失败原因（由 fetchQuotes 写入，供采集器记录到 _last-run.json）
+let quoteError = '';
+export function getQuoteError() { return quoteError; }
+
 export async function fetchQuotes() {
+  // GitHub Actions 的美国节点访问国内行情接口明显更慢，
+  // 原先 15 秒超时 + 无重试会导致 17 个指数全军覆没（quotes: 0）。
+  // 这里放宽到 25 秒并各重试 1 次，并把失败原因回报给 _last-run.json，
+  // 否则线上只能看到「0 条」而无从排查。
   const results = await Promise.allSettled(
     INDICES.map(async (q) => {
       const j = await get(
         `https://push2.eastmoney.com/api/qt/stock/get?fltt=2&invt=2&secid=${q.secid}&fields=${QUOTE_FIELDS}`,
-        { json: true }
+        { json: true, timeout: 25000, retries: 1 }
       );
       const d = j?.data;
       if (!d?.f58) return null;
@@ -214,10 +230,18 @@ export async function fetchQuotes() {
       };
     })
   );
-  return results
-    .map((r) => (r.status === 'fulfilled' ? r.value : null))
-    .filter(Boolean);
+  const ok = results.filter((r) => r.status === 'fulfilled' && r.value);
+  const failed = results.filter((r) => r.status === 'rejected');
+  if (failed.length) {
+    // 去重后只报 1-2 条原因，避免日志刷屏
+    const reasons = [...new Set(failed.map((r) => String(r.reason?.message || r.reason)))].slice(0, 2);
+    quoteError = `${failed.length}/${INDICES.length} 失败：${reasons.join('；')}`;
+  } else {
+    quoteError = '';
+  }
+  return ok.map((r) => r.value);
 }
+
 
 // K线代码（经本机逐个实测）
 // sina: 新浪 CN_MarketData（国内指数，支持日/周/月/分钟）
@@ -322,12 +346,16 @@ export const SOURCES = [
   {
     id: 'stats',
     label: '国家统计局',
+    // 该源在 GitHub 美国节点上常需 12-15 秒，本机只要 5-7 秒，
+    // 原 15 秒超时在 Actions 上会被判定失败，这里放宽并允许重试
     run: rssSource({
       name: '国家统计局',
       channel: '官方数据',
       url: 'https://www.stats.gov.cn/sj/zxfb/rss.xml',
       limit: 25,
       tag: '中国宏观',
+      timeout: 30000,
+      retries: 1,
     }),
   },
 ];
