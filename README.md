@@ -4,16 +4,46 @@
 
 ## 核心设计：采集不占用任何 AI 上下文
 
+**推荐：GitHub Actions 定时采集（5 分钟）**
+
 ```
-Windows 计划任务（每 30 分钟）
-   └─ node src/collect.mjs          ← 纯脚本，0 context
-        └─ 写 data/*.json
-             └─ git commit & push
+GitHub Actions（每 5 分钟，cron）
+   └─ node src/collect.mjs          ← 纯脚本，0 context，跑在 GitHub 服务器上
+        └─ 写 data/*.json（内容未变则跳过写盘）
+             └─ git commit & push（仅数据有变化时）
                   └─ GitHub Pages 自动更新（约 1-2 分钟）
 ```
 
-采集是确定性的 IO 任务，跑在系统计划任务里，**不消耗对话窗口**。
+为什么用 Actions 而不是本地跑：
+
+| | 本地 Windows 计划任务 | GitHub Actions |
+|---|---|---|
+| 间隔 | 30 分钟（最低约 5） | **5 分钟** |
+| 电脑关机 | ❌ 停止采集 | ✅ 照常运行 |
+| 国内可达性 | ✅ | ✅（github.com / github.io 均可直连） |
+| 成本 | 0 | 0（公开仓库每月 2000 分钟免费额度，这里约 144 分钟/天） |
+
+> 备用：仍可保留本地计划任务作为补充（两套并行不冲突，采集器按 id 幂等去重）。
+> ```powershell
+> powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1
+> ```
+
+采集是确定性的 IO 任务，**不消耗对话窗口**。
 AI 只在你主动要求时介入（例如"把这周新闻和我的 6 大类资产对齐"）。
+
+## 关于「真·实时」
+
+行情延迟 = 采集间隔。GitHub Actions 定时任务**最短 5 分钟**（GitHub 硬限制），
+因此本方案的实际上限是 **5–15 分钟**（GitHub 高峰期定时任务可能延后几分钟）。
+
+这对于"读新闻 + 看日K"是够用的。若确实需要秒级，只能自建国内服务端
+（腾讯云 SCF / 阿里云函数计算 + API 网关），成本与复杂度都上一个台阶。
+
+原先准备的 Cloudflare Worker 方案**在国内不可用**——实测 `workers.dev`
+域名被 DNS 污染（解析到 75.126.150.210 等非 Cloudflare IP，TCP 443 不通），
+而 `cloudflare.com`、`pages.dev` 却正常。`worker/worker.js` 保留，
+供海外访问或未来换自定义域名时使用；不配置 `WORKER_URL` 时站点自动降级为本地数据。
+
 
 ## 数据源（全部经本机实测可用）
 
@@ -85,14 +115,20 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 
 ## 部署
 
-1. 在 GitHub 上新建仓库（建议 `macro-news`）
+1. 在 GitHub 上新建仓库（建议 `macro-news`，选 **Public** 以获得 Actions 免费额度）
 2. 推送代码：
    ```powershell
    git remote add origin https://github.com/<你的账号>/macro-news.git
    git push -u origin main
    ```
-3. 仓库 Settings → Pages → Source 选 `main` 分支、根目录
-4. 等待 1-2 分钟生效
+3. 仓库 **Settings → Pages** → Source 选 `main` 分支、根目录 → Save
+4. 仓库 **Actions** 页应能看到 `宏观资讯采集` 工作流；
+   首次可能需要在 Actions 页点一下 **Enable workflow**
+5. 想立刻验证采集是否工作，点该工作流右侧的 **Run workflow** 手动触发一次
+6. 等待 1-2 分钟，站点生效
+
+> 实测：`github.io` / `github.com` 在国内均可直连，站点部署在 GitHub Pages 没有访问障碍。
+> 唯一要避开的是 `workers.dev`（被阻断），本项目默认不依赖它。
 
 ## 待办 / 可扩展
 
@@ -135,7 +171,11 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 1. 浏览器直连东财/新浪/腾讯会被 CORS 拦截
 2. 行情要秒级实时，不能等采集器写文件
 
-### 部署
+### 部署（⚠️ 国内不可用，详见上文实测结论）
+
+> 实测：`workers.dev` 在国内被 DNS 污染、TCP 443 不通；
+> `cloudflare.com` / `pages.dev` 正常。说明是针对 `workers.dev` 单域名的阻断。
+> **本节仅供海外访问场景，或将来绑定自定义域名时参考。**
 
 ```powershell
 cd worker
@@ -156,10 +196,14 @@ window.MACRO_CONFIG = {
 };
 ```
 
-### 不配 Worker 也能用（自动降级）
+**若你有托管在 Cloudflare 的域名**，改用自定义域名即可绕开 workers.dev：
+Worker → Settings → Triggers → Custom Domains → 填 `api.你的域名.com`。
 
-- 行情：读本地 `data/quotes.json`，延迟 = 采集间隔（约 30 分钟）
-- K线：读本地预生成的日K；周/月/分钟需要 Worker
+### 不配 Worker 也能用（自动降级，推荐默认状态）
+
+- 行情：读 `data/quotes.json`，延迟 = 采集间隔（Actions 约 5–15 分钟）
+- K线：读本地预生成的日K；周/月/分钟需 Worker
+
 
 ### 接口
 

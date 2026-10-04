@@ -1,0 +1,68 @@
+name: 宏观资讯采集
+
+# 每 5 分钟采集一次（GitHub Actions 定时任务的最小间隔）。
+# 为什么用 Actions 而不是本地 Windows 计划任务：
+#   1. 采集跑在 GitHub 服务器上，不受国内网络对 workers.dev 的阻断影响
+#   2. 你的电脑关机 / 休眠时仍会继续采集（本地计划任务做不到）
+#   3. 公开仓库免费额度充足（每月 2000 分钟，这里每天约 144 分钟）
+#
+# 注意：GitHub 官方说明定时任务在高峰期可能延迟数分钟，属正常现象。
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  # 允许手动触发，方便验证
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# 同一时间只跑一个，避免并发写入冲突
+concurrency:
+  group: macro-news-collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 需要完整历史才能 git push
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 采集器零依赖，无需 npm install
+      - name: 采集
+        run: node src/collect.mjs
+
+      - name: 提交并推送（仅在数据有变化时）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data
+          if git diff --staged --quiet; then
+            echo "本轮无数据变化（采集器已跳过未变更文件），不提交"
+          else
+            n=$(git diff --staged --name-only | wc -l)
+            git commit -m "data: 自动采集（$(date -u '+%Y-%m-%d %H:%M UTC')，${n} 个文件）"
+            git push
+            echo "已提交 ${n} 个文件"
+          fi
+
+      - name: 上报本轮统计
+        if: always()
+        run: |
+          {
+            echo "### 采集完成 · $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo ""
+            echo '```json'
+            cat data/_last-run.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

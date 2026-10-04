@@ -7,7 +7,7 @@
 // 留空则自动降级为「读取本地采集的 data/quotes.json 与 data/kline/*.json」，
 // 此时行情延迟等于采集间隔（约 30 分钟），K线只有日K。
 window.MACRO_CONFIG = {
-  WORKER_URL: '',
+  WORKER_URL: 'https://bitter-art-461e.1969499429.workers.dev/',
   POLL_SECONDS: 15,        // 前端轮询间隔（仅在有市场开盘时）
   DEFAULT_PERIOD: '1d',
 };
