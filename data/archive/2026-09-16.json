@@ -2,6 +2,52 @@
   "day": "2026-09-16",
   "items": [
     {
+      "id": "15wee0t",
+      "ts": 1789581600,
+      "time": "2026-09-16T18:00:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Federal Reserve issues FOMC statement",
+      "summary": "Federal Reserve issues FOMC statement",
+      "content": "Federal Reserve issues FOMC statement",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    },
+    {
+      "id": "34jxnc",
+      "ts": 1789581600,
+      "time": "2026-09-16T18:00:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Federal Reserve Board and Federal Open Market Committee release economic projections from the September 15-16 FOMC meeting",
+      "summary": "Federal Reserve Board and Federal Open Market Committee release economic projections from the September 15-16 FOMC meeting",
+      "content": "Federal Reserve Board and Federal Open Market Committee release economic projections from the September 15-16 FOMC meeting",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916b.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    },
+    {
+      "id": "1nsbmlm",
+      "ts": 1789574400,
+      "time": "2026-09-17T00:00:00.000+08:00",
+      "source": "中国人民银行",
+      "channel": "政策/监管",
+      "title": "中国人民银行副行长宣昌能会见贝宝全球执行副总裁艾伦",
+      "summary": "",
+      "content": "",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026091717202687422/index.html",
+      "kind": "official",
+      "tags": [
+        "央行",
+        "政策"
+      ]
+    },
+    {
       "id": "13eak05",
       "ts": 1789488000,
       "time": "2026-09-16T00:00:00.000+08:00",
