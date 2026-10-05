@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>宏观资讯台 · 全球利率 / 汇率 / 政策 / 大宗</title>
 <meta name="description" content="全球宏观资讯自动采集台：央行政策、利率、汇率、大宗商品行情与要闻归档。" />
-<link rel="stylesheet" href="assets/style.css" />
+<link rel="stylesheet" href="assets/style.css?v=20261005g" />
 </head>
 <body>
 
@@ -80,16 +80,40 @@
     </div>
   </div>
 
+  <!-- ============ 站内阅读器 ============ -->
+  <div class="reader-modal" id="readerModal" hidden>
+    <div class="rd-box" role="dialog" aria-modal="true" aria-labelledby="rdTitle">
+      <div class="rd-hd">
+        <div class="rd-meta">
+          <span class="rd-src" id="rdSource"></span>
+          <span class="rd-time" id="rdTime"></span>
+          <span class="rd-time" id="rdChannel"></span>
+        </div>
+        <button class="rd-close" id="rdClose" type="button" aria-label="关闭">×</button>
+      </div>
+      <h2 class="rd-title" id="rdTitle"></h2>
+      <div class="rd-body" id="rdBody"></div>
+      <div class="rd-ft">
+        <a class="rd-link" id="rdLink" target="_blank" rel="noopener noreferrer">阅读原文 ↗</a>
+        <div class="rd-nav">
+          <button class="rd-nav-btn" id="rdPrev" type="button">← 上一条</button>
+          <button class="rd-nav-btn" id="rdNext" type="button">下一条 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <footer class="ft">
-  <p>宏观资讯台 · 自动采集自华尔街见闻 / 美联储 / 欧洲央行 / 国家统计局 · 行情来自东方财富</p>
+  <p>宏观资讯台 · 自动采集自华尔街见闻 / 东方财富 / 新浪财经 / 中新网 / 中国人民银行 / 美联储 / 欧洲央行 / 国家统计局</p>
   <p id="ftMeta"></p>
 </footer>
 
-<script src="assets/config.js"></script>
-<script src="assets/fuse.min.js"></script>
-<script src="assets/kline.js"></script>
-<script src="assets/app.js"></script>
+<script src="assets/config.js?v=20261005g"></script>
+<script src="assets/fuse.min.js?v=20261005g"></script>
+<script src="assets/market.js?v=20261005g"></script>
+<script src="assets/kline.js?v=20261005g"></script>
+<script src="assets/app.js?v=20261005g"></script>
 </body>
 </html>

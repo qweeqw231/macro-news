@@ -1,13 +1,10 @@
 // assets/config.js
 // 站点配置
 //
-// ★ Cloudflare Worker 代理（可选）★
-// 把你部署 Worker 后拿到的地址填到 WORKER_URL，例如：
-//   https://macro-news-proxy.你的子域.workers.dev
-// 留空则自动降级为「读取本地采集的 data/quotes.json 与 data/kline/*.json」，
-// 此时行情延迟等于采集间隔（约 30 分钟），K线只有日K。
+// 行情与 K 线由浏览器直连东方财富公开接口获取（接口带 CORS 头，国内可直连），
+// 无需任何服务器或代理；接口不可达时自动回退到 data/ 下采集器生成的快照。
 window.MACRO_CONFIG = {
-  WORKER_URL: 'https://bitter-art-461e.1969499429.workers.dev/',
-  POLL_SECONDS: 15,        // 前端轮询间隔（仅在有市场开盘时）
-  DEFAULT_PERIOD: '1d',
+  POLL_SECONDS: 15,       // 行情轮询间隔（仅在有市场处于交易时段时）
+  REFRESH_SECONDS: 20,    // K线弹窗打开且处于交易时段时的自动刷新间隔
+  DEFAULT_PERIOD: '1d',   // K线弹窗默认周期
 };

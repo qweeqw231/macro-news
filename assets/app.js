@@ -1,4 +1,4 @@
-﻿// site/assets/app.js
+// site/assets/app.js
 // 宏观资讯台 · 前端逻辑
 // 零框架，直接 fetch data/*.json 渲染。
 // 搜索用 Fuse.js（延迟建索引，不阻塞首屏）。
@@ -52,7 +52,10 @@
   // ---------- 渲染：行情仪表盘 ----------
   const MARKET_LABEL = { CN: 'A股', HK: '港股', US: '美股', JP: '日本', EU: '欧洲', UK: '英国', KR: '韩国' };
 
-  // 判断某市场当前是否处于交易时段（北京时间粗略判断，用于决定刷新频率）
+  // 交易时段判断（北京时间；小时可 >24 表示跨零点，如美股 21:30–次日 04:00）
+  function inRange(h, a, b) {
+    return b <= 24 ? (h >= a && h < b) : (h >= a || h < b - 24);
+  }
   function isTrading(market, now = new Date()) {
     const wd = now.getDay();
     if (wd === 0 || wd === 6) return false;              // 周末休市
@@ -69,9 +72,9 @@
     }[market];
     if (!win) return false;
     if (win.length === 4) {
-      return (h >= win[0] && h < win[1]) || (h >= win[2] && h < win[3]);
+      return inRange(h, win[0], win[1]) || inRange(h, win[2], win[3]);
     }
-    return h >= win[0] && h < win[1];
+    return inRange(h, win[0], win[1]);
   }
 
   function fmtNum(v, d = 2) {
@@ -82,22 +85,52 @@
   let lastQuoteSig = '';
   async function renderQuotes() {
     const box = $('#quotes');
-    try {
-      const d = await jget('quotes.json');
-      S.quotes = d.quotes;
-      // 行情没变就不重绘，避免轮询时闪烁
-      const sig = d.quotes.map((q) => q.key + q.price).join('|');
-      if (sig === lastQuoteSig) return;
-      lastQuoteSig = sig;
+    let quotes = null;
+    let generatedAt = null;
+    let realtime = false;
 
-      box.innerHTML = '';
-      const groups = new Map();
-      d.quotes.forEach((q) => {
-        if (!groups.has(q.market)) groups.set(q.market, []);
-        groups.get(q.market).push(q);
-      });
+    // 优先直连东方财富实时行情（国内可达、带 CORS），失败再回退本地采集快照
+    if (window.MarketData) {
+      try {
+        const live = await window.MarketData.fetchQuotes();
+        if (live && live.length) {
+          quotes = live;
+          generatedAt = new Date().toISOString();
+          realtime = true;
+        }
+      } catch (e) { /* 直连失败，走本地快照 */ }
+    }
+    if (!quotes) {
+      try {
+        const d = await jget('quotes.json');
+        quotes = d.quotes;
+        generatedAt = d.generatedAt;
+      } catch (e) {
+        box.innerHTML = `<div class="skeleton">行情载入失败：${esc(e.message)}</div>`;
+        return;
+      }
+    }
 
-      for (const [mk, list] of groups) {
+    S.quotes = quotes;
+    S.quotesRealtime = realtime;
+    // 行情没变就不重绘，避免轮询时闪烁
+    const sig = quotes.map((q) => q.key + q.price).join('|');
+    if (sig === lastQuoteSig) return;
+    lastQuoteSig = sig;
+
+    box.innerHTML = '';
+    const groups = new Map();
+    quotes.forEach((q) => {
+      if (!groups.has(q.market)) groups.set(q.market, []);
+      groups.get(q.market).push(q);
+    });
+
+    // A 股置顶
+    const ORDER = ['CN', 'HK', 'US', 'JP', 'EU', 'UK', 'KR'];
+    [...groups.keys()]
+      .sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b))
+      .forEach((mk) => {
+        const list = groups.get(mk);
         const open = list.some((q) => isTrading(q.market));
         const g = el('div', 'mkt');
         const h = el('div', 'mkt-hd');
@@ -126,12 +159,11 @@
         });
         g.appendChild(grid);
         box.appendChild(g);
-      }
+      });
 
-      $('#quoteTime').textContent = '更新于 ' + new Date(d.generatedAt).toLocaleString('zh-CN', { hour12: false });
-    } catch (e) {
-      box.innerHTML = `<div class="skeleton">行情载入失败：${esc(e.message)}</div>`;
-    }
+    $('#quoteTime').textContent =
+      '更新于 ' + new Date(generatedAt).toLocaleString('zh-CN', { hour12: false }) +
+      (realtime ? ' · 实时' : ' · 本地快照');
   }
 
   // 交易时段内加快轮询，其余时间放慢
@@ -146,11 +178,15 @@
   }
 
   // ---------- 渲染：条目 ----------
-  function itemNode(it) {
-    const a = el('a', 'item');
-    a.href = it.url || '#';
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
+  function itemNode(it, idx) {
+    const a = el('article', 'item');
+    a.tabIndex = 0;
+    a.setAttribute('role', 'button');
+    a.setAttribute('aria-label', `阅读：${it.title || ''}`);
+    a.onclick = () => openReader(idx);
+    a.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader(idx); }
+    };
     const hd = el('div', 'item-hd');
     hd.appendChild(el('span', 'item-time', fmtTime(it.time)));
     hd.appendChild(el('span', `item-src${it.kind === 'official' ? ' official' : ''}`, it.source));
@@ -172,8 +208,63 @@
       $('#moreBtn').hidden = true;
       return;
     }
-    list.forEach((it) => box.appendChild(itemNode(it)));
+    list.forEach((it, i) => box.appendChild(itemNode(it, i)));
     $('#moreBtn').hidden = S.shown >= S.items.length;
+  }
+
+  // ---------- 站内阅读器 ----------
+  let readerIdx = -1;
+
+  function fmtFullTime(iso) {
+    const d = new Date(iso);
+    return isNaN(d) ? '' : d.toLocaleString('zh-CN', { hour12: false });
+  }
+
+  function openReader(idx) {
+    if (idx < 0 || idx >= S.items.length) return;
+    readerIdx = idx;
+    renderReader();
+    $('#readerModal').hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReader() {
+    readerIdx = -1;
+    $('#readerModal').hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  function renderReader() {
+    const it = S.items[readerIdx];
+    if (!it) return;
+    $('#rdSource').textContent = it.source || '';
+    $('#rdTime').textContent = fmtFullTime(it.time);
+    $('#rdChannel').textContent = it.channel || '';
+    $('#rdTitle').textContent = it.title || '';
+
+    const body = $('#rdBody');
+    body.innerHTML = '';
+    const text = (it.content || it.summary || '').trim();
+    if (text) {
+      text.split(/\r?\n+/).map((p) => p.trim()).filter(Boolean)
+        .forEach((p) => body.appendChild(el('p', null, p)));
+    } else {
+      body.appendChild(el('p', 'rd-empty', '本条仅有标题，暂无正文内容，可点击「阅读原文」查看。'));
+    }
+
+    const link = $('#rdLink');
+    if (it.url) { link.href = it.url; link.hidden = false; } else { link.hidden = true; }
+    $('#rdPrev').disabled = readerIdx <= 0;
+    $('#rdNext').disabled = readerIdx >= S.items.length - 1;
+    body.scrollTop = 0;
+    $('#readerModal').querySelector('.rd-box').scrollTop = 0;
+  }
+
+  function stepReader(d) {
+    const n = readerIdx + d;
+    if (n < 0 || n >= S.items.length) return;
+    readerIdx = n;
+    renderReader();
   }
 
   function renderFilters() {
@@ -210,6 +301,7 @@
 
   async function runSearch(q) {
     S.q = q.trim();
+    closeReader();
     if (!S.q) {
       S.items = S.base || [];
       S.shown = PAGE;
@@ -249,6 +341,7 @@
 
   function doSearch() {
     if (!S.fuse) return;
+    closeReader();
     const res = S.fuse.search(S.q, { limit: 120 });
     S.items = res.map((r) => r.item);
     S.shown = PAGE;
@@ -260,6 +353,7 @@
   // ---------- 视图切换 ----------
   function showView(v) {
     S.view = v;
+    closeReader();
     document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.view === v));
     ['feed', 'archive', 'sources', 'status'].forEach((k) => {
       $('#view-' + k).hidden = k !== v;
@@ -290,6 +384,7 @@
   }
 
   async function openDay(day) {
+    closeReader();
     showView('feed');
     const box = $('#feed');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
@@ -354,7 +449,7 @@
         </table></div>
 
         <div class="note">
-          采集由 Windows 计划任务按固定周期运行 <code>node src/collect.mjs</code>，
+          采集由 GitHub Actions 按固定周期运行 <code>node src/collect.mjs</code>，
           完全不占用 AI 对话上下文。脚本幂等，重复运行不会产生重复条目；
           单个源失败不影响其他源，失败原因见上表。
         </div>`;
@@ -379,15 +474,19 @@
   }
 
   // ---------- K线图 ----------
-  const CFG = window.MACRO_CONFIG || { WORKER_URL: '', POLL_SECONDS: 15 };
-  const PERIOD_LABEL = { '1d': '日K', '1w': '周K', '1M': '月K', '5m': '5分', '30m': '30分', '60m': '60分' };
-  const NO_KLINE = new Set(['hs_tech', 'n225', 'dax', 'ukx', 'kospi']);
+  const CFG = window.MACRO_CONFIG || { POLL_SECONDS: 15, REFRESH_SECONDS: 20, DEFAULT_PERIOD: '1d' };
+  const PERIOD_LABEL = {
+    '1m': '1分', '5m': '5分', '15m': '15分', '30m': '30分', '60m': '60分',
+    '1d': '日K', '1w': '周K', '1M': '月K',
+  };
   let kChart = null;
+  let klineTimer = null;
+  let klineKey = '';
+  let klinePeriod = '1d';
 
   function openKline(key) {
     const q = (S.quotes || []).find((x) => x.key === key);
-    const modal = $('#klineModal');
-    modal.hidden = false;
+    $('#klineModal').hidden = false;
     $('#kmName').textContent = q ? q.name : key;
     $('#kmPrice').textContent = q ? fmtNum(q.price) : '';
     $('#kmPrice').className = 'km-price ' + ((q?.changePct || 0) >= 0 ? 'up' : 'down');
@@ -396,73 +495,102 @@
     periods.innerHTML = '';
     Object.keys(PERIOD_LABEL).forEach((p) => {
       const b = el('button', 'pchip', PERIOD_LABEL[p]);
+      b.dataset.period = p;
       b.onclick = () => loadKline(key, p);
       periods.appendChild(b);
     });
 
     if (!kChart) kChart = new window.KlineChart($('#kmCanvas'));
     loadKline(key, CFG.DEFAULT_PERIOD || '1d');
+    scheduleKlineRefresh(key);
   }
 
-  function closeKline() { $('#klineModal').hidden = true; }
+  function closeKline() {
+    clearTimeout(klineTimer);
+    $('#klineModal').hidden = true;
+  }
 
   async function loadKline(key, period) {
-    document.querySelectorAll('.pchip').forEach((b) => b.classList.remove('on'));
-    const chip = [...document.querySelectorAll('.pchip')].find((b) => b.textContent === PERIOD_LABEL[period]);
-    if (chip) chip.classList.add('on');
+    klineKey = key;
+    klinePeriod = period;
+    document.querySelectorAll('.pchip').forEach((b) => b.classList.toggle('on', b.dataset.period === period));
 
     const note = $('#kmNote');
-    if (NO_KLINE.has(key)) {
-      kChart.setData([]);
-      note.textContent = '该指数暂无可用 K 线数据源（实时行情仍正常）。';
-      return;
-    }
-
     note.textContent = '加载中…';
     let bars = null;
-    // 优先走 Worker 代理（可按需取任意周期 = 真·实时）
-    if (CFG.WORKER_URL) {
+    let from = '';
+    // 直连东财（任意周期）→ 腾讯 → 本地兜底（见 market.js）
+    try {
+      bars = await window.MarketData.fetchKline(key, period, 1000);
+      from = '实时';
+    } catch (e) {
+      // 本地兜底：采集器预生成的日K；周/月由日K聚合，零网络
       try {
-        const r = await fetch(`${CFG.WORKER_URL}/kline?key=${key}&period=${period}&limit=250`);
-        const j = await r.json();
-        if (j.bars) bars = j.bars;
-      } catch (e) { /* 代理不可用则回退 */ }
-    }
-    // 回退：本地预生成的日K
-    if (!bars && period === '1d') {
-      try {
-        const r = await fetch(`data/kline/${key}.json`, { cache: 'no-store' });
-        const j = await r.json();
-        if (j.bars) bars = j.bars;
-      } catch (e) { /* 忽略 */ }
+        bars = await window.MarketData.localKline(key, period);
+        from = period === '1d' ? '本地日K快照' : '本地日K聚合';
+      } catch (e2) { /* 本地也没有该周期 */ }
     }
 
     if (!bars || !bars.length) {
-      kChart.setData([]);
-      note.textContent = CFG.WORKER_URL
-        ? '加载失败：该周期无数据，或 Worker 代理未部署。'
-        : '该周期需要配置 Cloudflare Worker 代理才能加载（当前仅有本地日K）。请在 assets/config.js 填入 WORKER_URL。';
+      kChart.setData([], period);
+      note.textContent = '加载失败：直连与本地均无该周期数据（本地仅有日/周/月）。';
       return;
     }
-    kChart.setData(bars);
-    note.textContent = `${bars.length} 根 · ${bars[0].t} → ${bars[bars.length - 1].t}` +
-      (CFG.WORKER_URL ? ' · 实时代理' : ' · 本地日K快照');
+    kChart.setData(bars, period);
+    note.textContent = `${bars.length} 根 · ${bars[0].t} → ${bars[bars.length - 1].t} · ${from}`;
+  }
+
+  // 交易时段内自动刷新最新一根；只重设数据不重建图表，保留缩放位置
+  function scheduleKlineRefresh(key) {
+    clearTimeout(klineTimer);
+    const q = (S.quotes || []).find((x) => x.key === key);
+    if (!q || !isTrading(q.market)) return;
+    klineTimer = setTimeout(async () => {
+      if ($('#klineModal').hidden) return;
+      try {
+        const bars = await window.MarketData.fetchKline(klineKey, klinePeriod, 1000);
+        if (bars && bars.length) kChart.setData(bars, klinePeriod);
+      } catch (e) { /* 单次失败忽略，下一轮再试 */ }
+      scheduleKlineRefresh(key);
+    }, (CFG.REFRESH_SECONDS || 20) * 1000);
   }
 
   function bindKline() {
     $('#kmClose').onclick = closeKline;
-    $('#klineModal').onclick = (e) => { if (e.target.id === 'klineModal') closeKline(); };
+    // 故意不绑定「点击阴影关闭」：拖动 K 线时鼠标很容易移到画布外松手，
+    // 会被当作点击蒙层而误退出。关闭只保留右上角 × 与 Esc。
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !$('#klineModal').hidden) closeKline();
+      if ($('#klineModal').hidden) return;
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return; // 别抢输入框的按键
+      if (e.key === 'Escape') { closeKline(); return; }
+      // ←/→ 平移（鼠标拖动之外的第二条通路）
+      if (e.key === 'ArrowLeft') { kChart.panBy(15); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { kChart.panBy(-15); e.preventDefault(); }
+      // Ctrl/⌘ + + / - 缩放（不带修饰键也可以）；锚点为视图中心
+      else if (e.key === '+' || e.key === '=') { kChart.zoomBy(1 / 1.2, 0.5); e.preventDefault(); }
+      else if (e.key === '-' || e.key === '_') { kChart.zoomBy(1.2, 0.5); e.preventDefault(); }
     });
-    // 指数卡片点击 → 打开K线
+    // 指数卡片点击 → 打开K线（阻止 href="#" 默认跳回页首）
     $('#quotes').addEventListener('click', (e) => {
       const card = e.target.closest('.q');
-      if (card && card.dataset.key) openKline(card.dataset.key);
+      if (card && card.dataset.key) { e.preventDefault(); openKline(card.dataset.key); }
     });
   }
 
   // ---------- 启动 ----------
+  function bindReader() {
+    $('#rdClose').onclick = closeReader;
+    $('#readerModal').onclick = (e) => { if (e.target.id === 'readerModal') closeReader(); };
+    $('#rdPrev').onclick = () => stepReader(-1);
+    $('#rdNext').onclick = () => stepReader(1);
+    document.addEventListener('keydown', (e) => {
+      if ($('#readerModal').hidden) return;
+      if (e.key === 'Escape') closeReader();
+      else if (e.key === 'ArrowLeft') stepReader(-1);
+      else if (e.key === 'ArrowRight') stepReader(1);
+    });
+  }
+
   async function boot() {
     // file:// 下浏览器会拦截 fetch()，页面必然空白。
     // 与其让用户对着白屏发呆，不如直接说明原因和解决办法。
@@ -483,6 +611,7 @@
     }
 
     bindKline();
+    bindReader();
 
     initBurger();
     document.querySelectorAll('.tab').forEach((t) => {

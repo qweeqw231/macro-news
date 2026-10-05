@@ -68,6 +68,26 @@ function isoFromDate(str) {
   return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
 }
 
+// 正文/摘要统一截断，避免单条过长撑大 data 文件
+const clip = (s, n) => {
+  const t = String(s == null ? '' : s).trim();
+  return t.length > n ? t.slice(0, n) + '…' : t;
+};
+
+// 补全相对 URL。华尔街见闻的 uri 字段本身就是完整 URL，
+// 之前无条件再拼一次域名，产生了 https://wallstreetcn.comhttps://... 的坏链接。
+function absUrl(u, base) {
+  if (!u) return base || '';
+  if (/^https?:\/\//i.test(u)) return u;
+  try { return new URL(u, base).href; } catch { return u; }
+}
+
+// "2026-10-05 00:18:50"（北京时间）→ 秒级时间戳
+function tsFromCN(s) {
+  const t = Date.parse(String(s).replace(' ', 'T') + '+08:00');
+  return Number.isFinite(t) ? Math.floor(t / 1000) : 0;
+}
+
 // 极简 RSS/Atom 解析：抽取 item/entry 块里的 title / link / date / description
 function parseFeed(xml) {
   const blocks = [
@@ -122,24 +142,110 @@ async function wallstreetcn() {
     );
     for (const it of j?.data?.items || []) {
       const text = stripTags(pick(it, ['content_text', 'content', 'body']));
-      const title = stripTags(pick(it, ['title']));
-      if (!title && !text) continue;
+      const rawTitle = stripTags(pick(it, ['title']));
+      if (!rawTitle && !text) continue;
       const ts = Number(pick(it, ['display_time'], 0));
       const uri = pick(it, ['uri', 'url'], '');
       out.push({
-        id: stableId('wscn', String(it.id ?? ts), title || text.slice(0, 30)),
+        id: stableId('wscn', String(it.id ?? ts), rawTitle || text.slice(0, 30)),
         ts,
         time: ts ? isoFromUnix(ts) : new Date().toISOString(),
         source: '华尔街见闻',
         channel: label,
-        title: title || text.slice(0, 40),
-        summary: title ? text : '',
-        url: uri ? `https://wallstreetcn.com${uri}` : 'https://wallstreetcn.com/live/global',
+        // 快讯多数无独立标题：用正文首段当标题，正文完整存入 content
+        title: rawTitle || text.slice(0, 40),
+        summary: rawTitle ? clip(text, 140) : '',
+        content: clip(text, 4000),
+        url: absUrl(uri, 'https://wallstreetcn.com/livenews/global'),
         kind: 'news',
       });
     }
   }
   return out;
+}
+
+// 东方财富 · 财经新闻（国内）
+async function eastmoneyNews() {
+  const j = await get(
+    'https://np-listapi.eastmoney.com/comm/web/getNewsByColumns' +
+      '?client=web&biz=web_news_col&column=350&order=1&needInteractData=0' +
+      '&page_index=1&page_size=50&req_trace=1',
+    { json: true, headers: { Referer: 'https://finance.eastmoney.com/' } }
+  );
+  return (j?.data?.list || [])
+    .map((it) => {
+      const ts = tsFromCN(it.showTime);
+      return {
+        id: stableId('emnews', String(it.code), it.title),
+        ts,
+        time: ts ? isoFromUnix(ts) : new Date().toISOString(),
+        source: '东方财富',
+        channel: '国内财经',
+        title: stripTags(it.title),
+        summary: clip(stripTags(it.summary), 140),
+        content: clip(stripTags(it.summary), 4000),
+        url: absUrl(it.url || it.uniqueUrl, 'https://finance.eastmoney.com/'),
+        kind: 'news',
+      };
+    })
+    .filter((x) => x.title && x.url);
+}
+
+// 新浪财经 · 财经滚动（国内）
+async function sinaFinance() {
+  const j = await get(
+    'https://feed.mix.sina.com.cn/api/roll/get?pageid=153&lid=2516&k=&num=50&page=1',
+    { json: true, headers: { Referer: 'https://finance.sina.com.cn/' } }
+  );
+  return (j?.result?.data || [])
+    .map((it) => {
+      const ts = Number(it.ctime) || 0;
+      return {
+        id: stableId('sina', String(it.docid || it.url || it.title)),
+        ts,
+        time: ts ? isoFromUnix(ts) : new Date().toISOString(),
+        source: '新浪财经',
+        channel: '国内财经',
+        title: stripTags(it.title),
+        summary: clip(stripTags(it.intro), 140),
+        content: clip(stripTags(it.intro), 4000),
+        url: absUrl(it.url, 'https://finance.sina.com.cn/'),
+        kind: 'news',
+      };
+    })
+    .filter((x) => x.title && x.url);
+}
+
+// 中国人民银行 · 新闻发布（该站无 RSS，解析列表页 HTML）
+async function pbcNews() {
+  const html = await get(
+    'https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html',
+    { headers: { Referer: 'https://www.pbc.gov.cn/' }, timeout: 25000, retries: 1 }
+  );
+  const re =
+    /<a\s+href="(\/goutongjiaoliu\/113456\/113469\/\d+\/index\.html)"([^>]*)>([\s\S]*?)<\/a>([\s\S]{0,240}?)<span class="hui12">(\d{4}-\d{2}-\d{2})<\/span>/g;
+  const out = [];
+  let m;
+  while ((m = re.exec(html))) {
+    const attr = m[2].match(/title="([^"]*)"/);
+    const title = stripTags(attr ? attr[1] : m[3]);
+    if (!title) continue;
+    const ts = Math.floor(new Date(`${m[5]}T00:00:00+08:00`).getTime() / 1000);
+    out.push({
+      id: stableId('pbc', m[1]),
+      ts,
+      time: isoFromUnix(ts),
+      source: '中国人民银行',
+      channel: '政策/监管',
+      title,
+      summary: '',
+      content: '',
+      url: new URL(m[1], 'https://www.pbc.gov.cn').href,
+      kind: 'official',
+      tags: ['央行', '政策'],
+    });
+  }
+  return out.slice(0, 30);
 }
 
 function rssSource({ name, channel, url, limit = 30, tag = '', timeout = 15000, retries = 0 }) {
@@ -158,7 +264,8 @@ function rssSource({ name, channel, url, limit = 30, tag = '', timeout = 15000, 
           source: name,
           channel,
           title: i.title,
-          summary: stripTags(i.description).slice(0, 300),
+          summary: clip(stripTags(i.description), 140),
+          content: clip(stripTags(i.description), 4000),
           url: i.link || url,
           kind: 'official',
           tags: tag ? [tag] : [],
@@ -321,9 +428,24 @@ export async function fetchKline(key, period = '1d', limit = 250) {
 }
 export const SOURCES = [
   { id: 'wallstreetcn', label: '华尔街见闻', run: wallstreetcn },
+  { id: 'eastmoney', label: '东方财富', run: eastmoneyNews },
+  { id: 'sina', label: '新浪财经', run: sinaFinance },
+  {
+    id: 'chinanews',
+    label: '中新网财经',
+    run: rssSource({
+      name: '中新网',
+      channel: '国内财经',
+      url: 'https://www.chinanews.com.cn/rss/finance.xml',
+      limit: 30,
+      tag: '国内',
+    }),
+  },
+  { id: 'pbc', label: '中国人民银行', run: pbcNews, windowed: false },
   {
     id: 'fed',
     label: '美联储',
+    windowed: false,
     run: rssSource({
       name: '美联储',
       channel: '政策/利率',
@@ -335,6 +457,7 @@ export const SOURCES = [
   {
     id: 'ecb',
     label: '欧洲央行',
+    windowed: false,
     run: rssSource({
       name: '欧洲央行',
       channel: '政策/利率',
@@ -346,6 +469,7 @@ export const SOURCES = [
   {
     id: 'stats',
     label: '国家统计局',
+    windowed: false,
     // 该源在 GitHub 美国节点上常需 12-15 秒，本机只要 5-7 秒，
     // 原 15 秒超时在 Actions 上会被判定失败，这里放宽并允许重试
     run: rssSource({

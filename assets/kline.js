@@ -12,42 +12,211 @@ class KlineChart {
     this.bars = [];
     this.hover = -1;
     this.barsShown = 90;
+    this.offset = 0;          // 右侧回看的根数：0 = 显示到最新
+    this.dragging = false;
+    this.period = '1d';       // 周期：决定横轴刻度格式与年份标记
+    this._anim = null;        // 缩放动画的 requestAnimationFrame id
+    this._zoomTarget = this.barsShown; // 连续缩放时的目标根数（避免动画中反复重算基准）
     this._bind();
     this._ro = new ResizeObserver(() => this.render());
     this._ro.observe(root);
   }
 
-  destroy() { this._ro.disconnect(); this.canvas.remove(); }
+  destroy() {
+    cancelAnimationFrame(this._anim);
+    clearTimeout(this._animEnd);
+    this._ro.disconnect();
+    document.removeEventListener('mousemove', this._onDocMove);
+    document.removeEventListener('mouseup', this._onDocUp);
+    this.canvas.remove();
+  }
 
-  setData(bars) { this.bars = bars || []; this.render(); }
+  setData(bars, period) {
+    cancelAnimationFrame(this._anim);
+    clearTimeout(this._animEnd);
+    this.bars = bars || [];
+    if (period) this.period = period;
+    this.offset = Math.max(0, Math.min(this.offset, this._maxOffset()));
+    this._zoomTarget = this.barsShown;
+    this.render();
+  }
 
   _bind() {
-    const move = (e) => {
-      const r = this.canvas.getBoundingClientRect();
-      const x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
-      const y = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
-      const n = this._barsShown();
-      if (!n || y < 0 || y > this._h * 0.78) { this.hover = -1; this.render(); return; }
-      const plotW = this._w - this._pad.l - this._pad.r;
-      const i = Math.round((x - this._pad.l) / (plotW / n) - 0.5);
-      this.hover = Math.max(0, Math.min(n - 1, i));
-      this.mouse = { x, y };
+    const cvs = this.canvas;
+    const pos = (e) => {
+      const r = cvs.getBoundingClientRect();
+      const t = e.touches ? e.touches[0] : e;
+      return { x: t.clientX - r.left, y: t.clientY - r.top };
+    };
+    const inPlot = (y) => this._h && y >= 0 && y <= this._h * 0.78;
+
+    // 开始拖动：整块画布都可按下（不限于价格区），只要还有可回看的根数
+    const startDrag = (clientX) => {
+      if (!this.bars.length || this._maxOffset() <= 0) return false;
+      const r = cvs.getBoundingClientRect();
+      this.dragging = true;
+      this.dragX = clientX - r.left;
+      this.dragOffset = this.offset;
+      this.hover = -1;
+      this.mouse = null;
+      cvs.style.cursor = 'grabbing';
+      console.log(`[kline] 拖动开始 · 共 ${this.bars.length} 根 · 可回看 ${this._maxOffset()} 根`);
+      return true;
+    };
+
+    const moveDrag = (clientX) => {
+      if (!this.dragging) return;
+      const r = cvs.getBoundingClientRect();
+      const x = clientX - r.left;
+      const bw = (this._w - this._pad.l - this._pad.r) / this._barsShown();
+      const delta = Math.round((this.dragX - x) / bw);
+      const next = Math.max(0, Math.min(this._maxOffset(), this.dragOffset + delta));
+      if (next !== this.offset) {
+        this.offset = next;
+        this.render();
+      }
+    };
+
+    const endDrag = () => {
+      if (!this.dragging) return;
+      this.dragging = false;
       this.render();
     };
-    this.canvas.addEventListener('mousemove', move);
-    this.canvas.addEventListener('touchmove', (e) => { move(e); e.preventDefault(); }, { passive: false });
-    const leave = () => { this.hover = -1; this.mouse = null; this.render(); };
-    this.canvas.addEventListener('mouseleave', leave);
-    this.canvas.addEventListener('touchend', leave);
-    this.canvas.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const d = e.deltaY > 0 ? 12 : -12;
-      this.barsShown = Math.max(30, Math.min(this.bars.length, this.barsShown - d));
+
+    // —— 鼠标：canvas 上按下，document 上移动/松开 ——
+    // 这是最经典可靠的拖拽写法：不依赖 setPointerCapture，鼠标移出画布也不会中断
+    cvs.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      if (startDrag(e.clientX)) e.preventDefault();
+    });
+    this._onDocMove = (e) => moveDrag(e.clientX);
+    this._onDocUp = endDrag;
+    document.addEventListener('mousemove', this._onDocMove);
+    document.addEventListener('mouseup', this._onDocUp);
+
+    // 悬停十字光标（仅在价格区、且未拖动时；音量副图/底部区域不显示）
+    cvs.addEventListener('mousemove', (e) => {
+      if (this.dragging || !this._h) return;
+      const p = pos(e);
+      const n = this._barsShown();
+      if (!n || !inPlot(p.y)) {
+        if (this.hover !== -1) { this.hover = -1; this.mouse = null; this.render(); }
+        return;
+      }
+      const bw = (this._w - this._pad.l - this._pad.r) / n;
+      const i = Math.round((p.x - this._pad.l) / bw - 0.5);
+      this.hover = Math.max(0, Math.min(n - 1, i));
+      this.mouse = { x: p.x, y: p.y };
       this.render();
+    });
+    cvs.addEventListener('mouseleave', () => {
+      if (this.dragging) return;
+      if (this.hover !== -1) { this.hover = -1; this.mouse = null; this.render(); }
+    });
+
+    // 双击回到最新
+    cvs.addEventListener('dblclick', () => {
+      this.offset = 0;
+      this.render();
+    });
+
+    // —— 触屏：canvas 上按下/移动/松开（touchmove 阻止页面滚动）——
+    cvs.addEventListener('touchstart', (e) => {
+      if (startDrag(e.touches[0].clientX) && e.cancelable) e.preventDefault();
+    }, { passive: false });
+    cvs.addEventListener('touchmove', (e) => {
+      if (!this.dragging) return;
+      moveDrag(e.touches[0].clientX);
+      if (e.cancelable) e.preventDefault();
+    }, { passive: false });
+    cvs.addEventListener('touchend', endDrag);
+
+    // 滚轮缩放：上滚放大、下滚缩小；以光标位置为锚点平滑过渡。
+    // Ctrl+滚轮同为缩放，并阻止浏览器整页缩放（Ctrl+滚轮默认会缩放整个页面）
+    cvs.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const pad = this._pad || { l: 6, r: 58 };
+      const plotW = Math.max(1, this._w - pad.l - pad.r);
+      const r = cvs.getBoundingClientRect();
+      const anchor = Math.max(0, Math.min(1, (e.clientX - r.left - pad.l) / plotW));
+      const step = e.ctrlKey ? 0.08 : 0.2;              // Ctrl 轮档次更细
+      const factor = 1 + (e.deltaY > 0 ? step : -step); // >1 显示更多根（缩小）
+      this.zoomBy(factor, anchor);
     }, { passive: false });
   }
 
-  _barsShown() { return Math.min(this.barsShown, this.bars.length); }
+  _barsShown() { return Math.max(1, Math.min(Math.round(this.barsShown), this.bars.length)); }
+
+  _maxOffset() { return Math.max(0, this.bars.length - this._barsShown()); }
+
+  // 缩放限幅：最少 20 根（再少就看不出形态），最多显示全部
+  _zoomLimits() {
+    const total = this.bars.length;
+    return { min: Math.max(1, Math.min(20, total)), max: total };
+  }
+
+  /**
+   * 以某个横向位置为锚点缩放（锚点下的那根 K 线在缩放前后保持不动）
+   * @param {number} target      目标显示根数
+   * @param {number} anchorRatio 锚点位置占绘图区宽度比例 0(左)~1(右)
+   * @param {boolean} animate    是否平滑过渡
+   */
+  zoomTo(target, anchorRatio, animate = true) {
+    if (!this.bars.length) return;
+    const { min, max } = this._zoomLimits();
+    const next = Math.max(min, Math.min(max, target));
+    const from = this.barsShown;
+    if (Math.abs(next - from) < 0.5) return;
+
+    const r = anchorRatio == null ? 0.5 : Math.max(0, Math.min(1, anchorRatio));
+    const len = this.bars.length;
+    // 锚点处 K 线的绝对索引（缩放过程中保持不变）
+    const anchorIdx = (len - this.offset - this._barsShown()) + r * this._barsShown();
+
+    const apply = (n) => {
+      this.barsShown = n;
+      const startIdx = anchorIdx - r * n;
+      const off = len - Math.round(n) - startIdx;
+      this.offset = Math.max(0, Math.min(Math.max(0, len - Math.round(n)), Math.round(off)));
+      this.render();
+    };
+
+    cancelAnimationFrame(this._anim);
+    clearTimeout(this._animEnd);
+    this._zoomTarget = next;
+    // 后台标签页 rAF 会被节流，直接落终值
+    if (!animate || document.hidden) { apply(next); return; }
+
+    const t0 = performance.now();
+    const dur = 160;                       // 主流行情软件的缩放过渡在 120~200ms
+    const tick = (t) => {
+      const k = Math.min(1, (t - t0) / dur);
+      const e = 1 - Math.pow(1 - k, 3);    // easeOutCubic
+      apply(from + (next - from) * e);
+      if (k < 1) this._anim = requestAnimationFrame(tick);
+      else clearTimeout(this._animEnd);
+    };
+    this._anim = requestAnimationFrame(tick);
+    // 兜底：即便 rAF 不触发，也在过渡时长后落到终值，绝不会"按了没反应"
+    this._animEnd = setTimeout(() => {
+      cancelAnimationFrame(this._anim);
+      apply(next);
+    }, dur + 60);
+  }
+
+  // 按倍率缩放（factor<1 放大、>1 缩小），供滚轮/键盘调用
+  zoomBy(factor, anchorRatio) {
+    this.zoomTo((this._zoomTarget || this.barsShown) * factor, anchorRatio);
+  }
+
+  // 键盘平移：delta>0 表示回看更早，<0 表示回到更近
+  panBy(delta) {
+    if (!this.bars.length) return;
+    const next = Math.max(0, Math.min(this._maxOffset(), this.offset + delta));
+    if (next === this.offset) return;
+    this.offset = next;
+    this.render();
+  }
 
   _calcMA(bars, n) {
     const out = new Array(bars.length).fill(null);
@@ -80,7 +249,10 @@ class KlineChart {
     }
 
     const n = this._barsShown();
-    const view = this.bars.slice(-n);
+    this.offset = Math.max(0, Math.min(this.offset, this._maxOffset()));
+    const end = this.bars.length - this.offset;
+    const start = end - n;
+    const view = this.bars.slice(start, end);
     const pad = this._pad;
     const plotW = w - pad.l - pad.r;
     const mainH = h * 0.72;
@@ -89,8 +261,11 @@ class KlineChart {
     const bw = plotW / n;
 
     // ---- 价格区间（含均线） ----
-    const ma5 = this._calcMA(view, 5), ma10 = this._calcMA(view, 10);
-    const ma20 = this._calcMA(view, 20), ma60 = this._calcMA(view, 60);
+    // 均线按「全量 bars」计算再切片，平移时左侧边缘也能得到正确的均线值
+    const ma5 = this._calcMA(this.bars, 5).slice(start, end);
+    const ma10 = this._calcMA(this.bars, 10).slice(start, end);
+    const ma20 = this._calcMA(this.bars, 20).slice(start, end);
+    const ma60 = this._calcMA(this.bars, 60).slice(start, end);
     let lo = Infinity, hi = -Infinity;
     view.forEach((b) => { if (b.l < lo) lo = b.l; if (b.h > hi) hi = b.h; });
     [ma5, ma10, ma20, ma60].forEach((m) => m.forEach((v) => { if (v != null) { if (v < lo) lo = v; if (v > hi) hi = v; } }));
@@ -183,14 +358,52 @@ class KlineChart {
       lx += ctx.measureText(name + ':' + (v == null ? '--' : v.toFixed(2))).width + 10;
     });
 
-    // ---- 日期轴 ----
+    // 回看提示（拖动/滚轮查看历史时显示）
+    ctx.textAlign = 'left';
+    ctx.font = '11px system-ui';
+    const canPan = this._maxOffset() > 0;
+    ctx.fillStyle = this.offset > 0 ? '#8b5a2b' : '#b9b3a4';
+    ctx.fillText(
+      this.offset > 0
+        ? `← 已回看 ${this.offset} 根 · 双击回到最新`
+        : (canPan ? `共 ${this.bars.length} 根 · 拖动/←→ 平移 · 滚轮或 Ctrl+± 缩放`
+                  : `共 ${this.bars.length} 根 · 已全部显示`),
+      pad.l + 4, pad.t + 22
+    );
+
+    // 光标：可拖动时显示抓手，提示"这里能拖"
+    cvs.style.cursor = this.dragging ? 'grabbing' : (canPan ? 'grab' : 'crosshair');
+
+    // ---- 日期轴（周期感知：周/月/长期日K 带年份；跨年画淡色分隔线）----
+    const per = this.period || '1d';
+    const fmtTick = (s) => {
+      const t = String(s);
+      if (per === '1M') return t.slice(0, 7);               // 2024-12
+      if (per === '1w' || per === '1d') return t.slice(2, 10); // 24-12-30
+      return t.slice(5, 16);                                // 09-30 09:34
+    };
+    if (per === '1M' || per === '1w' || per === '1d') {
+      ctx.save();
+      ctx.strokeStyle = '#e2ded3';
+      ctx.lineWidth = 1;
+      let prevY = String(view[0].t).slice(0, 4);
+      view.forEach((b, i) => {
+        const y = String(b.t).slice(0, 4);
+        if (y !== prevY) {
+          const x = Math.round(pad.l + i * bw) + 0.5;
+          ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, volTop + volH); ctx.stroke();
+          prevY = y;
+        }
+      });
+      ctx.restore();
+    }
+
     ctx.fillStyle = '#8a8a8a';
     ctx.textAlign = 'center';
     const tick = Math.max(1, Math.floor(n / 6));
     view.forEach((b, i) => {
       if (i % tick) return;
-      const t = String(b.t).slice(5, 16);
-      ctx.fillText(t, xOf(i), h - pad.b / 2 - 2);
+      ctx.fillText(fmtTick(b.t), xOf(i), h - pad.b / 2 - 2);
     });
 
     // ---- 十字光标 + 浮窗 ----

@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    宏观资讯台 · 样式
    设计原则：与 micro-control-finance 研究站同源（学术论文风 · 衬线 · 克制）
    响应式：沿用研究站验证过的移动端方案（抽屉导航 / 触控 ≥40px / 表格横滚）
@@ -183,9 +183,11 @@ body { overflow-wrap: break-word; }
   border-bottom: 1px solid var(--rule);
   text-decoration: none; color: var(--ink);
   border-radius: 4px;
+  cursor: pointer;
   transition: background .12s;
 }
 .item:hover { background: #f7f5ef; }
+.item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .item-hd {
   display: flex; align-items: baseline; gap: 0.6rem;
   flex-wrap: wrap; margin-bottom: 0.15rem;
@@ -376,4 +378,67 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
   .km-box { max-height: 96vh; border-radius: 10px 10px 0 0; padding: .85rem .9rem 1rem; }
   .km-canvas { height: 340px; }
   .pchip { min-height: 40px; padding: .4rem .75rem; }
+}
+
+/* ---------- 站内阅读器 ---------- */
+.reader-modal {
+  position: fixed; inset: 0; z-index: 210;
+  background: rgba(26,26,26,.45);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.rd-box {
+  background: var(--surface);
+  border-radius: 8px;
+  width: min(760px, 100%);
+  max-height: 92vh;
+  display: flex; flex-direction: column;
+  padding: 1.1rem 1.35rem 1rem;
+  box-shadow: 0 12px 28px rgba(0,0,0,.16);
+}
+.rd-hd { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.rd-meta { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+.rd-src {
+  font-family: var(--sans); font-size: .72rem; font-weight: 600;
+  padding: .1rem .5rem; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+}
+.rd-time { font-family: var(--sans); font-size: .75rem; color: var(--ink-faint); }
+.rd-close {
+  width: 34px; height: 34px; flex-shrink: 0;
+  border: 1px solid var(--rule); border-radius: 5px;
+  background: transparent; cursor: pointer;
+  font-size: 1.3rem; line-height: 1; color: var(--ink-mute);
+}
+.rd-close:hover { background: var(--code-bg); color: var(--accent); }
+.rd-title { font-size: 1.25rem; line-height: 1.5; margin: .7rem 0 .5rem; }
+.rd-body {
+  overflow-y: auto; flex: 1;
+  border-top: 1px solid var(--rule);
+  padding-top: .8rem;
+  font-size: 1rem; line-height: 1.85; color: var(--ink-soft);
+}
+.rd-body p { margin: 0 0 .85rem; }
+.rd-body .rd-empty { color: var(--ink-faint); }
+.rd-ft {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  border-top: 1px solid var(--rule);
+  margin-top: .8rem; padding-top: .7rem;
+}
+.rd-link { font-family: var(--sans); font-size: .85rem; color: var(--accent); text-decoration: none; }
+.rd-link:hover { text-decoration: underline; }
+.rd-nav { display: flex; gap: .5rem; }
+.rd-nav-btn {
+  font-family: var(--sans); font-size: .85rem;
+  padding: .4rem .8rem; min-height: 36px;
+  border: 1px solid var(--rule); border-radius: 5px;
+  background: var(--surface); color: var(--ink-soft); cursor: pointer;
+}
+.rd-nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.rd-nav-btn:disabled { opacity: .45; cursor: default; }
+@media (max-width: 640px) {
+  .reader-modal { padding: 0; align-items: flex-end; }
+  .rd-box { max-height: 96vh; border-radius: 10px 10px 0 0; padding: .9rem 1rem 1rem; }
+  .rd-title { font-size: 1.1rem; }
 }

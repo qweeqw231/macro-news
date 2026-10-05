@@ -50,8 +50,12 @@ async function writeJSON(file, obj) {
 // 实测：12 个 K 线文件（432KB）仅因 generatedAt 变化，
 // 就让每次提交多出约 109KB 仓库增长，而 K 线其实一根都没变。
 // 剥掉易变字段后比对，内容相同即跳过写入。
+//
+// 注意：只剥「纯噪声」字段（时间戳与耗时）。count / total / added / ok / error
+// 都是有意义的变化——早先把它们一并剥掉，导致同一天新增条目时 index.json 的
+// 天数计数被判为「未变化」而跳过写盘，归档页计数长期停留在旧值。
 const TIME_FIELDS = '(generatedAt|updatedAt|startedAt|endedAt|durationMs)';
-const NUM_FIELDS = '(ms|error|count|ok|added|total)';
+const NUM_FIELDS = '(durationMs|ms)';
 const reTime = new RegExp(`"${TIME_FIELDS}"\\s*:\\s*"[^"]*"`, 'g');
 const reNum = new RegExp(`"${NUM_FIELDS}"\\s*:\\s*[^,\\n}]*`, 'g');
 
@@ -90,21 +94,24 @@ async function main() {
       try {
         const items = await s.run();
         console.log(`  ✅ ${s.label.padEnd(12)} ${String(items.length).padStart(4)} 条  ${Date.now() - t0}ms`);
-        return { id: s.id, label: s.label, ok: true, items, ms: Date.now() - t0 };
+        return { id: s.id, label: s.label, ok: true, items, ms: Date.now() - t0, windowed: s.windowed !== false };
       } catch (err) {
         console.log(`  ❌ ${s.label.padEnd(12)} ${String(err.message).slice(0, 60)}`);
-        return { id: s.id, label: s.label, ok: false, error: err.message, items: [], ms: Date.now() - t0 };
+        return { id: s.id, label: s.label, ok: false, error: err.message, items: [], ms: Date.now() - t0, windowed: s.windowed !== false };
       }
     })
   );
 
   // ---- 时间窗过滤 ----
+  // 官方源（央行/统计局等）发布频率低，最新一条可能在窗口之外；
+  // 若同样按 24h 过滤会被永久丢弃。标记 windowed:false 的源跳过窗口，
+  // 靠 archive 的 id 去重保证不重复入库。
   const cutoff = startedAt.getTime() - SINCE_HOURS * 3600 * 1000;
   const merged = new Map();
   for (const s of perSource) {
     for (const it of s.items) {
       const t = it.ts ? it.ts * 1000 : new Date(it.time).getTime();
-      if (Number.isFinite(t) && t < cutoff) continue;
+      if (s.windowed && Number.isFinite(t) && t < cutoff) continue;
       if (!merged.has(it.id)) merged.set(it.id, it);
     }
   }
