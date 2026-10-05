@@ -1,0 +1,35 @@
+{
+  "day": "2026-08-21",
+  "items": [
+    {
+      "id": "1vy3u4r",
+      "ts": 1787275801,
+      "time": "2026-08-21T01:30:01.000Z",
+      "source": "国家统计局",
+      "channel": "官方数据",
+      "title": "国家统计局关于2026年早稻产量数据的公告",
+      "summary": "根据早稻抽样调查结果推算，2026年全国早稻播种面积、单位面积产量、总产量如下： 全国早稻播种面积4744.3千公顷（7116.4万亩），比2025年增加1.4千公顷（2.2万亩），略有增加。 全国早稻单位面积产量5963.4公斤/公顷（397.6公斤/亩），比2025年减少48…",
+      "content": "根据早稻抽样调查结果推算，2026年全国早稻播种面积、单位面积产量、总产量如下： 全国早稻播种面积4744.3千公顷（7116.4万亩），比2025年增加1.4千公顷（2.2万亩），略有增加。 全国早稻单位面积产量5963.4公斤/公顷（397.6公斤/亩），比2025年减少48.5公斤/公顷（3.2公斤/亩），下降0.8%。 全国早...",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260821_1965086.html",
+      "kind": "official",
+      "tags": [
+        "中国宏观"
+      ]
+    },
+    {
+      "id": "1h6uwix",
+      "ts": 1787256000,
+      "time": "2026-08-20T20:00:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Federal Reserve Board announces approval of application by National Westminster Bank Plc",
+      "summary": "Federal Reserve Board announces approval of application by National Westminster Bank Plc",
+      "content": "Federal Reserve Board announces approval of application by National Westminster Bank Plc",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/orders20260820a.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    }
+  ]
+}
