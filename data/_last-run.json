@@ -1,65 +1,65 @@
 {
-  "startedAt": "2026-10-06T20:13:02.070Z",
-  "durationMs": 59144,
+  "startedAt": "2026-10-06T23:48:13.911Z",
+  "durationMs": 32698,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 4242
+      "ms": 4280
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1241
+      "ms": 1156
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1543
+      "ms": 1419
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 1206
+      "ms": 882
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 4864
+      "ms": 2008
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1240
+      "ms": 735
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1930
+      "ms": 1255
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 26472
+      "ms": 23919
     }
   ],
-  "quotes": 16,
-  "quoteError": "1/17 失败：HTTP 502",
-  "added": 121
+  "quotes": 0,
+  "quoteError": "17/17 失败：HTTP 502",
+  "added": 100
 }
