@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-17T04:50:17.133Z",
+  "generatedAt": "2026-10-17T08:52:13.875Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -12,7 +12,7 @@
       "prevClose": 3707.48,
       "volume": 472632158,
       "changePct": 0.24,
-      "updatedAt": "2026-10-17T04:50:40.968Z"
+      "updatedAt": "2026-10-17T08:52:37.881Z"
     },
     {
       "key": "sz_comp",
@@ -25,7 +25,7 @@
       "prevClose": 11816.79,
       "volume": 550865831,
       "changePct": -0.12,
-      "updatedAt": "2026-10-17T04:50:40.975Z"
+      "updatedAt": "2026-10-17T08:52:37.842Z"
     },
     {
       "key": "chinext",
@@ -38,7 +38,20 @@
       "prevClose": 2783.17,
       "volume": 171608347,
       "changePct": -0.39,
-      "updatedAt": "2026-10-17T04:50:52.618Z"
+      "updatedAt": "2026-10-17T08:52:37.965Z"
+    },
+    {
+      "key": "star50",
+      "name": "科创50",
+      "market": "CN",
+      "price": 1358.65,
+      "open": 1381.93,
+      "high": 1389.43,
+      "low": 1341.21,
+      "prevClose": 1359.52,
+      "volume": 7634690,
+      "changePct": -0.06,
+      "updatedAt": "2026-10-17T08:52:37.864Z"
     },
     {
       "key": "bse50",
@@ -51,7 +64,7 @@
       "prevClose": 967.51,
       "volume": 7190919,
       "changePct": -1.81,
-      "updatedAt": "2026-10-17T04:50:41.114Z"
+      "updatedAt": "2026-10-17T08:52:37.939Z"
     },
     {
       "key": "csi300",
@@ -64,7 +77,7 @@
       "prevClose": 4166.01,
       "volume": 184705168,
       "changePct": 0.11,
-      "updatedAt": "2026-10-17T04:50:41.120Z"
+      "updatedAt": "2026-10-17T08:52:37.849Z"
     },
     {
       "key": "csi500",
@@ -77,7 +90,20 @@
       "prevClose": 6769.25,
       "volume": 142052846,
       "changePct": 0.05,
-      "updatedAt": "2026-10-17T04:50:53.100Z"
+      "updatedAt": "2026-10-17T08:52:37.972Z"
+    },
+    {
+      "key": "csi1000",
+      "name": "中证1000",
+      "market": "CN",
+      "price": 6681.94,
+      "open": 6777.39,
+      "high": 6834.45,
+      "low": 6626.52,
+      "prevClose": 6678.65,
+      "volume": 210437542,
+      "changePct": 0.05,
+      "updatedAt": "2026-10-17T08:52:37.966Z"
     },
     {
       "key": "hsi",
@@ -90,7 +116,7 @@
       "prevClose": 24062.72,
       "volume": 10793438976,
       "changePct": 0.52,
-      "updatedAt": "2026-10-17T04:50:41.109Z"
+      "updatedAt": "2026-10-17T08:52:37.991Z"
     },
     {
       "key": "hs_tech",
@@ -103,7 +129,7 @@
       "prevClose": 4060.99,
       "volume": 1065195168,
       "changePct": 1.16,
-      "updatedAt": "2026-10-17T04:50:41.109Z"
+      "updatedAt": "2026-10-17T08:52:38.036Z"
     },
     {
       "key": "dji",
@@ -116,7 +142,7 @@
       "prevClose": 52177.69,
       "volume": 488091536,
       "changePct": -0.34,
-      "updatedAt": "2026-10-17T04:50:41.117Z"
+      "updatedAt": "2026-10-17T08:52:38.294Z"
     },
     {
       "key": "ixic",
@@ -129,7 +155,7 @@
       "prevClose": 26713.03,
       "volume": 8351719680,
       "changePct": -2.15,
-      "updatedAt": "2026-10-17T04:50:52.507Z"
+      "updatedAt": "2026-10-17T08:52:38.044Z"
     },
     {
       "key": "spx",
@@ -142,7 +168,7 @@
       "prevClose": 7744.06,
       "volume": 3312218256,
       "changePct": -1.09,
-      "updatedAt": "2026-10-17T04:50:41.094Z"
+      "updatedAt": "2026-10-17T08:52:38.039Z"
     },
     {
       "key": "n225",
@@ -155,7 +181,7 @@
       "prevClose": 64425.95,
       "volume": 0,
       "changePct": 1.39,
-      "updatedAt": "2026-10-17T04:50:41.286Z"
+      "updatedAt": "2026-10-17T08:52:38.183Z"
     },
     {
       "key": "dax",
@@ -168,7 +194,7 @@
       "prevClose": 25382.62,
       "volume": 0,
       "changePct": 0.95,
-      "updatedAt": "2026-10-17T04:50:41.126Z"
+      "updatedAt": "2026-10-17T08:52:38.302Z"
     },
     {
       "key": "ukx",
@@ -181,7 +207,7 @@
       "prevClose": 10840.35,
       "volume": 883213712,
       "changePct": 0.38,
-      "updatedAt": "2026-10-17T04:50:41.087Z"
+      "updatedAt": "2026-10-17T08:52:38.200Z"
     },
     {
       "key": "kospi",
@@ -194,7 +220,7 @@
       "prevClose": 5554.22,
       "volume": 286453,
       "changePct": 2.05,
-      "updatedAt": "2026-10-17T04:50:41.350Z"
+      "updatedAt": "2026-10-17T08:52:38.464Z"
     }
   ]
 }
