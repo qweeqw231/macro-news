@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T19:01:46.796Z",
+  "generatedAt": "2026-10-20T22:13:22.768Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -12,7 +12,7 @@
       "prevClose": 3730.92,
       "volume": 408693062,
       "changePct": 0.12,
-      "updatedAt": "2026-10-20T19:02:15.328Z"
+      "updatedAt": "2026-10-20T22:13:48.651Z"
     },
     {
       "key": "sz_comp",
@@ -25,7 +25,7 @@
       "prevClose": 11817.42,
       "volume": 469828148,
       "changePct": -0.14,
-      "updatedAt": "2026-10-20T19:02:15.456Z"
+      "updatedAt": "2026-10-20T22:13:48.594Z"
     },
     {
       "key": "chinext",
@@ -38,7 +38,20 @@
       "prevClose": 2746.29,
       "volume": 151827961,
       "changePct": -0.26,
-      "updatedAt": "2026-10-20T19:02:15.092Z"
+      "updatedAt": "2026-10-20T22:13:48.582Z"
+    },
+    {
+      "key": "star50",
+      "name": "科创50",
+      "market": "CN",
+      "price": 1342.42,
+      "open": 1319.66,
+      "high": 1355.2,
+      "low": 1309.87,
+      "prevClose": 1329.19,
+      "volume": 8033098,
+      "changePct": 1,
+      "updatedAt": "2026-10-20T22:13:48.563Z"
     },
     {
       "key": "bse50",
@@ -51,7 +64,7 @@
       "prevClose": 946.15,
       "volume": 7986128,
       "changePct": 3.88,
-      "updatedAt": "2026-10-20T19:02:14.908Z"
+      "updatedAt": "2026-10-20T22:13:48.665Z"
     },
     {
       "key": "csi300",
@@ -64,7 +77,7 @@
       "prevClose": 4174.53,
       "volume": 166956113,
       "changePct": -0.54,
-      "updatedAt": "2026-10-20T19:02:15.164Z"
+      "updatedAt": "2026-10-20T22:13:48.624Z"
     },
     {
       "key": "csi500",
@@ -77,7 +90,7 @@
       "prevClose": 6800.66,
       "volume": 121643784,
       "changePct": 0.6,
-      "updatedAt": "2026-10-20T19:02:15.012Z"
+      "updatedAt": "2026-10-20T22:13:48.638Z"
     },
     {
       "key": "csi1000",
@@ -90,7 +103,7 @@
       "prevClose": 6698.3,
       "volume": 178560851,
       "changePct": 1.02,
-      "updatedAt": "2026-10-20T19:02:15.794Z"
+      "updatedAt": "2026-10-20T22:13:48.641Z"
     },
     {
       "key": "hsi",
@@ -103,7 +116,7 @@
       "prevClose": 24186.83,
       "volume": 10898542080,
       "changePct": -1.32,
-      "updatedAt": "2026-10-20T19:02:15.388Z"
+      "updatedAt": "2026-10-20T22:13:48.619Z"
     },
     {
       "key": "hs_tech",
@@ -116,46 +129,46 @@
       "prevClose": 4108.24,
       "volume": 1122374768,
       "changePct": -1.52,
-      "updatedAt": "2026-10-20T19:02:15.137Z"
+      "updatedAt": "2026-10-20T22:13:48.656Z"
     },
     {
       "key": "dji",
       "name": "道琼斯",
       "market": "US",
-      "price": 52441.17,
+      "price": 52495.88,
       "open": 51959.21,
       "high": 52689.81,
       "low": 51910.92,
       "prevClose": 51966.03,
-      "volume": 226094680,
-      "changePct": 0.91,
-      "updatedAt": "2026-10-20T19:02:15.569Z"
+      "volume": 368648000,
+      "changePct": 1.02,
+      "updatedAt": "2026-10-20T22:13:48.706Z"
     },
     {
       "key": "ixic",
       "name": "纳斯达克",
       "market": "US",
-      "price": 26454.42,
+      "price": 26424.82,
       "open": 26332.92,
       "high": 26601.72,
       "low": 26179.74,
       "prevClose": 26430.89,
-      "volume": 5028706560,
-      "changePct": 0.09,
-      "updatedAt": "2026-10-20T19:02:15.286Z"
+      "volume": 6999145216,
+      "changePct": -0.02,
+      "updatedAt": "2026-10-20T22:13:48.696Z"
     },
     {
       "key": "spx",
       "name": "标普500",
       "market": "US",
-      "price": 7715.03,
+      "price": 7712.57,
       "open": 7679.01,
       "high": 7748.42,
       "low": 7668.03,
       "prevClose": 7690.73,
-      "volume": 1623675088,
-      "changePct": 0.32,
-      "updatedAt": "2026-10-20T19:02:15.485Z"
+      "volume": 2710012352,
+      "changePct": 0.28,
+      "updatedAt": "2026-10-20T22:13:48.708Z"
     },
     {
       "key": "n225",
@@ -168,7 +181,7 @@
       "prevClose": 64916.7,
       "volume": 0,
       "changePct": -1.3,
-      "updatedAt": "2026-10-20T19:02:15.197Z"
+      "updatedAt": "2026-10-20T22:13:48.665Z"
     },
     {
       "key": "dax",
@@ -181,7 +194,7 @@
       "prevClose": 25319.77,
       "volume": 0,
       "changePct": -0.06,
-      "updatedAt": "2026-10-20T19:02:15.327Z"
+      "updatedAt": "2026-10-20T22:13:48.719Z"
     },
     {
       "key": "ukx",
@@ -192,9 +205,9 @@
       "high": 10767.96,
       "low": 10673.02,
       "prevClose": 10764.69,
-      "volume": 698950496,
+      "volume": 896799920,
       "changePct": -0.29,
-      "updatedAt": "2026-10-20T19:02:15.332Z"
+      "updatedAt": "2026-10-20T22:13:48.688Z"
     },
     {
       "key": "kospi",
@@ -207,7 +220,7 @@
       "prevClose": 5768.01,
       "volume": 259746,
       "changePct": -3.73,
-      "updatedAt": "2026-10-20T19:02:15.286Z"
+      "updatedAt": "2026-10-20T22:13:48.749Z"
     }
   ]
 }
