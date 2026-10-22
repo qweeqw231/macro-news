@@ -1,109 +1,109 @@
 {
-  "generatedAt": "2026-10-21T22:28:12.467Z",
+  "generatedAt": "2026-10-22T00:48:37.979Z",
   "quotes": [
     {
       "key": "sh_comp",
       "name": "上证指数",
       "market": "CN",
-      "price": 3713.03,
-      "open": 3740.57,
-      "high": 3743.08,
-      "low": 3703.12,
-      "prevClose": 3735.37,
-      "volume": 378286389,
-      "changePct": -0.6,
-      "updatedAt": "2026-10-21T22:28:35.890Z"
+      "price": 3712.83,
+      "open": null,
+      "high": null,
+      "low": null,
+      "prevClose": 3713.03,
+      "volume": null,
+      "changePct": -0.01,
+      "updatedAt": "2026-10-22T00:49:33.356Z"
     },
     {
       "key": "sz_comp",
       "name": "深证成指",
       "market": "CN",
       "price": 11704.35,
-      "open": 11838.79,
-      "high": 11909.62,
-      "low": 11666.59,
-      "prevClose": 11801.29,
-      "volume": 471214992,
-      "changePct": -0.82,
-      "updatedAt": "2026-10-21T22:28:35.703Z"
+      "open": null,
+      "high": null,
+      "low": null,
+      "prevClose": 11704.35,
+      "volume": null,
+      "changePct": 0,
+      "updatedAt": "2026-10-22T00:49:33.388Z"
     },
     {
       "key": "chinext",
       "name": "创业板指",
       "market": "CN",
       "price": 2694.71,
-      "open": 2746.84,
-      "high": 2766.81,
-      "low": 2682.71,
-      "prevClose": 2739.2,
-      "volume": 154598959,
-      "changePct": -1.62,
-      "updatedAt": "2026-10-21T22:28:35.654Z"
+      "open": null,
+      "high": null,
+      "low": null,
+      "prevClose": 2694.71,
+      "volume": null,
+      "changePct": 0,
+      "updatedAt": "2026-10-22T00:49:33.556Z"
     },
     {
       "key": "star50",
       "name": "科创50",
       "market": "CN",
       "price": 1343.28,
-      "open": 1356.63,
-      "high": 1369.18,
-      "low": 1335.39,
-      "prevClose": 1342.42,
-      "volume": 6651319,
-      "changePct": 0.06,
-      "updatedAt": "2026-10-21T22:28:35.763Z"
+      "open": null,
+      "high": null,
+      "low": null,
+      "prevClose": 1343.28,
+      "volume": null,
+      "changePct": 0,
+      "updatedAt": "2026-10-22T00:49:33.453Z"
     },
     {
       "key": "bse50",
       "name": "北证50",
       "market": "CN",
-      "price": 975.78,
-      "open": 983.23,
-      "high": 987.89,
-      "low": 969.59,
-      "prevClose": 982.87,
-      "volume": 6294871,
-      "changePct": -0.72,
-      "updatedAt": "2026-10-21T22:28:35.888Z"
+      "price": null,
+      "open": null,
+      "high": null,
+      "low": null,
+      "prevClose": 975.78,
+      "volume": null,
+      "changePct": null,
+      "updatedAt": "2026-10-22T00:49:33.555Z"
     },
     {
       "key": "csi300",
       "name": "沪深300",
       "market": "CN",
-      "price": 4111.93,
-      "open": 4161.26,
-      "high": 4161.26,
-      "low": 4098.96,
-      "prevClose": 4152.11,
-      "volume": 144303527,
-      "changePct": -0.97,
-      "updatedAt": "2026-10-21T22:28:36.091Z"
+      "price": 4111.65,
+      "open": null,
+      "high": null,
+      "low": null,
+      "prevClose": 4111.93,
+      "volume": null,
+      "changePct": -0.01,
+      "updatedAt": "2026-10-22T00:49:33.555Z"
     },
     {
       "key": "csi500",
       "name": "中证500",
       "market": "CN",
-      "price": 6840.56,
-      "open": 6875.71,
-      "high": 6941.51,
-      "low": 6821.39,
-      "prevClose": 6841.44,
-      "volume": 111776428,
-      "changePct": -0.01,
-      "updatedAt": "2026-10-21T22:28:35.638Z"
+      "price": 6840.34,
+      "open": null,
+      "high": null,
+      "low": null,
+      "prevClose": 6840.56,
+      "volume": null,
+      "changePct": 0,
+      "updatedAt": "2026-10-22T00:49:33.623Z"
     },
     {
       "key": "csi1000",
       "name": "中证1000",
       "market": "CN",
-      "price": 6780.26,
-      "open": 6798.97,
-      "high": 6880.55,
-      "low": 6763.45,
-      "prevClose": 6766.9,
-      "volume": 175326782,
-      "changePct": 0.2,
-      "updatedAt": "2026-10-21T22:28:36.066Z"
+      "price": 6779.75,
+      "open": null,
+      "high": null,
+      "low": null,
+      "prevClose": 6780.26,
+      "volume": null,
+      "changePct": -0.01,
+      "updatedAt": "2026-10-22T00:49:33.604Z"
     },
     {
       "key": "hsi",
@@ -116,7 +116,7 @@
       "prevClose": 23867.74,
       "volume": 11839000576,
       "changePct": -0.9,
-      "updatedAt": "2026-10-21T22:28:35.602Z"
+      "updatedAt": "2026-10-22T00:49:33.613Z"
     },
     {
       "key": "hs_tech",
@@ -129,7 +129,7 @@
       "prevClose": 4045.91,
       "volume": 985275296,
       "changePct": -1.26,
-      "updatedAt": "2026-10-21T22:28:35.649Z"
+      "updatedAt": "2026-10-22T00:49:33.633Z"
     },
     {
       "key": "dji",
@@ -142,7 +142,7 @@
       "prevClose": 52495.88,
       "volume": 359385264,
       "changePct": 0.69,
-      "updatedAt": "2026-10-21T22:28:35.643Z"
+      "updatedAt": "2026-10-22T00:49:33.724Z"
     },
     {
       "key": "ixic",
@@ -155,7 +155,7 @@
       "prevClose": 26424.82,
       "volume": 6898345216,
       "changePct": 1.05,
-      "updatedAt": "2026-10-21T22:28:36.072Z"
+      "updatedAt": "2026-10-22T00:49:33.711Z"
     },
     {
       "key": "spx",
@@ -168,20 +168,20 @@
       "prevClose": 7712.57,
       "volume": 2887567120,
       "changePct": 0.58,
-      "updatedAt": "2026-10-21T22:28:35.833Z"
+      "updatedAt": "2026-10-22T00:49:33.835Z"
     },
     {
       "key": "n225",
       "name": "日经225",
       "market": "JP",
-      "price": 64621.24,
-      "open": 64885.95,
-      "high": 65404.63,
-      "low": 64558.6,
-      "prevClose": 64075.42,
+      "price": 64516.89,
+      "open": 64539.36,
+      "high": 64866.44,
+      "low": 64331.82,
+      "prevClose": 64621.24,
       "volume": 0,
-      "changePct": 0.85,
-      "updatedAt": "2026-10-21T22:28:36.001Z"
+      "changePct": -0.16,
+      "updatedAt": "2026-10-22T00:49:33.949Z"
     },
     {
       "key": "dax",
@@ -194,7 +194,7 @@
       "prevClose": 25304.42,
       "volume": 0,
       "changePct": 1.35,
-      "updatedAt": "2026-10-21T22:28:35.913Z"
+      "updatedAt": "2026-10-22T00:49:34.172Z"
     },
     {
       "key": "ukx",
@@ -207,20 +207,20 @@
       "prevClose": 10733,
       "volume": 795176304,
       "changePct": 0.19,
-      "updatedAt": "2026-10-21T22:28:36.097Z"
+      "updatedAt": "2026-10-22T00:49:33.816Z"
     },
     {
       "key": "kospi",
       "name": "韩国KOSPI",
       "market": "KR",
-      "price": 5735.66,
-      "open": 5666.34,
-      "high": 5816.43,
-      "low": 5630.14,
-      "prevClose": 5552.74,
-      "volume": 214353,
-      "changePct": 3.29,
-      "updatedAt": "2026-10-21T22:28:36.071Z"
+      "price": 5738.67,
+      "open": 5670.11,
+      "high": 5740.28,
+      "low": 5663.75,
+      "prevClose": 5735.66,
+      "volume": 57914,
+      "changePct": 0.05,
+      "updatedAt": "2026-10-22T00:49:33.932Z"
     }
   ]
 }
