@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-28T14:17:55.713Z",
+  "generatedAt": "2026-10-28T17:33:13.978Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -221,6 +221,65 @@
       "volume": 223200,
       "changePct": 6.63,
       "updatedAt": "2026-10-28T14:18:57.380Z"
+    },
+    {
+      "key": "ndx",
+      "name": "纳指100",
+      "market": "US",
+      "price": 29672.91,
+      "open": 29732.04,
+      "high": 29798.66,
+      "low": 29618.42,
+      "prevClose": 29651.44,
+      "changePct": 0.07,
+      "updatedAt": "2026-10-28T13:32:59+08:00",
+      "note": ""
+    },
+    {
+      "key": "xau",
+      "name": "伦敦金",
+      "market": "CMDTY",
+      "price": 4041.14,
+      "open": 4061.17,
+      "high": 4070.74,
+      "low": 4028.01,
+      "prevClose": 4060.13,
+      "changePct": -0.47,
+      "updatedAt": "2026-10-29T01:32:00+08:00",
+      "note": ""
+    },
+    {
+      "key": "sge_au9999",
+      "name": "上海金Au99.99",
+      "market": "SGE",
+      "price": 868.99,
+      "open": 862.5,
+      "high": 873,
+      "low": 860.2,
+      "prevClose": 860.31,
+      "changePct": 1.01,
+      "updatedAt": "2026-10-28T15:30:00+08:00",
+      "note": "carried"
+    },
+    {
+      "key": "usdcny",
+      "name": "人民币中间价",
+      "market": "FX",
+      "price": 6.7165,
+      "prevClose": 6.7171,
+      "changePct": -0.0089,
+      "updatedAt": "2026-10-28T09:15:00+08:00",
+      "note": ""
+    },
+    {
+      "key": "cgb_1y",
+      "name": "1Y国债收益率",
+      "market": "CN",
+      "price": 1.1693,
+      "prevClose": 1.1799,
+      "changePct": -0.8984,
+      "updatedAt": "2026-10-28T17:00:00+08:00",
+      "note": "carried"
     }
   ]
 }

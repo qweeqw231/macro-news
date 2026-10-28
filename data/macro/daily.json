@@ -1,0 +1,46 @@
+[
+  {
+    "date": "2026-10-29",
+    "items": [
+      {
+        "key": "margin",
+        "name": "两融余额",
+        "value": 23731.96,
+        "unit": "亿元",
+        "source": "上交所+深交所"
+      },
+      {
+        "key": "us10y",
+        "name": "10Y美债",
+        "value": 5,
+        "unit": "%",
+        "source": "FRED",
+        "note": "2026-10-26"
+      },
+      {
+        "key": "social_financing",
+        "name": "社融增量",
+        "value": 35476,
+        "unit": "亿元",
+        "source": "人民银行",
+        "note": "2026-09"
+      },
+      {
+        "key": "cpi",
+        "name": "CPI同比",
+        "value": 0.9,
+        "unit": "%",
+        "source": "国家统计局",
+        "note": "2026年09月份"
+      },
+      {
+        "key": "pmi",
+        "name": "制造业PMI",
+        "value": 50.1,
+        "unit": "",
+        "source": "国家统计局",
+        "note": "2026年09月份"
+      }
+    ]
+  }
+]

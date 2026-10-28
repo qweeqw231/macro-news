@@ -60,5 +60,24 @@
     }
   ],
   "quotes": 17,
-  "added": 267
+  "added": 267,
+  "at": "2026-10-29T01:33:13+08:00",
+  "ok": [
+    "ndx",
+    "xau",
+    "sge_au9999",
+    "usdcny",
+    "cgb_1y"
+  ],
+  "fail": {},
+  "macroOk": [
+    "margin",
+    "us10y",
+    "social_financing",
+    "cpi",
+    "pmi"
+  ],
+  "macroFail": {},
+  "portfolioQuotes": 5,
+  "portfolioDurationMs": 1421
 }
