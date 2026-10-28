@@ -210,14 +210,25 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
    git remote add origin https://github.com/<你的账号>/macro-news.git
    git push -u origin main
    ```
+   > 若 `git push` 报 `Recv failure: Connection was reset`（HTTPS 被重置），
+   > 改用 SSH-443：`~/.ssh/config` 里配 `Host github.com → HostName ssh.github.com / Port 443`，
+   > 再在仓库里设 `git config url."ssh://git@ssh.github.com:443/".insteadOf "https://github.com/"`，
+   > remote URL 不用改。
 3. 仓库 **Settings → Pages** → Source 选 `main` 分支、根目录 → Save
 4. 仓库 **Actions** 页应能看到 `宏观资讯采集` 工作流；
    首次可能需要在 Actions 页点一下 **Enable workflow**
 5. 想立刻验证采集是否工作，点该工作流右侧的 **Run workflow** 手动触发一次
 6. 等待 1-2 分钟，站点生效
 
-> 实测：`github.io` / `github.com` 在国内均可直连，站点部署在 GitHub Pages 没有访问障碍。
-> 唯一要避开的是 `workers.dev`（被阻断），本项目默认不依赖它。
+> ⚠️ **2026-10-29 实测：这个仓库的 Pages 还没启用**（GitHub API `has_pages=false`，
+> `https://qweeqw231.github.io/macro-news/` 返回 GitHub Pages 的 "Site not found"）。
+> 数据与代码都在仓库里，但站点没上线 —— 需要你在仓库 **Settings → Pages** 里
+> 把 Source 选成 `main` 分支 / 根目录并 Save，等 1-2 分钟后才会生效。
+> 启用后站点地址为 `https://qweeqw231.github.io/macro-news/`。
+>
+> 另：**本机到 `github.com` / `github.io` 的 HTTPS 会被重置**（2026-10-29 实测，
+> `api.github.com` 正常）。所以 `git push` 走 SSH-443，
+> 而站点是否可达取决于你当时用的网络。
 
 ## 站内阅读新闻
 
