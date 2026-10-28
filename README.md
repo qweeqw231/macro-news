@@ -31,6 +31,67 @@ GitHub Actions（每 5 分钟，cron）
 采集是确定性的 IO 任务，**不消耗对话窗口**。
 AI 只在你主动要求时介入（例如"把这周新闻和我的 6 大类资产对齐"）。
 
+## 第二条采集链：组合行情 + 宏观（交易日 16:30）
+
+高频链路负责**新闻 + 17 个指数**；低频链路负责**组合分析需要的额外数据**，两者共用同一个
+`data/quotes.json`，因此**必须按 key 合并写**（见下方「两个任务共用同一个文件」）。
+
+```
+minimax 定时任务（交易日 16:30 Asia/Shanghai，固定对话）
+   └─ scripts\portfolio-collect-and-push.ps1     ← 一条命令，全程无 AI 判断
+        ├─ node src\portfolio-collect.mjs        ← 5 个组合行情 key + 5 个宏观指标
+        │    ├─ data\quotes.json       按 key 合并（保留原 17 个 key）
+        │    ├─ data\macro\daily.json  按日期追加
+        │    └─ data\_last-run.json    读改写（保留高频链路写的字段）
+        └─ git commit（仅 data/ 有变化时）→ git push origin main
+             └─ GitHub Pages 自动更新
+```
+
+配套的 **16:35 重试任务**（规格 §1「失败重试 1 次，间隔 5 分钟」）：
+读 `logs\last-portfolio-status.json` 判断 16:30 那轮是否成功，失败才补跑一次。
+
+| 项 | 值 |
+|---|---|
+| 频率 | 周一至周五 16:30（Asia/Shanghai） |
+| 超时 | 脚本内 55 秒预算（规格要求 60 秒，留 5 秒写盘） |
+| 重试 | 16:35 检查并补跑一次 |
+| 节假日 | cron 不认中国节假日；脚本取不到当日数据时按 `carried` 沿用上一交易日，**内容未变就不写盘**（规格 §1 允许的简化） |
+
+### 5 个新增行情 key
+
+| key | 名称 | 数据源 | 备注 |
+|---|---|---|---|
+| `ndx` | 纳指100 | 腾讯行情 `qt.gtimg.cn/q=usNDX` | |
+| `xau` | 伦敦金 | 腾讯行情 `qt.gtimg.cn/q=hf_XAU` | 现货黄金，24 小时连续交易 |
+| `sge_au9999` | 上海金 Au99.99 | 上金所官网日行情表 | 精确匹配 `Au99.99`，避免误匹配 `iAu99.99` |
+| `usdcny` | 人民币中间价 | 中国货币网 `ccpr.json` | 备用源为东财 `133.USDCNH`（离岸价，note 标 `estimated`） |
+| `cgb_1y` | 1Y 国债收益率 | 中债收益率曲线 | 取不到当日值时沿用上一交易日（note 标 `carried`） |
+
+### 5 个宏观指标（`data/macro/daily.json`）
+
+| key | 名称 | 数据源 |
+|---|---|---|
+| `margin` | 两融余额 | 上交所 + 深交所（合计，亿元） |
+| `us10y` | 10Y 美债 | FRED `DGS10` |
+| `social_financing` | 社融增量 | 人民银行统计报表附件 |
+| `cpi` | CPI 同比 | 国家统计局（东财接口） |
+| `pmi` | 制造业 PMI | 国家统计局（东财接口） |
+
+### 两个任务共用同一个文件
+
+高频链路（5 分钟）与低频链路（16:30）都会写 `data/quotes.json` 和 `data/_last-run.json`。
+**整份覆盖会互相抹掉**，所以两边都改成：
+
+- `quotes.json` —— 按 `key` 合并写（各自只更新自己那批 key）
+- `_last-run.json` —— 读改写（各自只更新自己的字段）
+
+否则 16:30 写进去的 5 个 key 会在 5 分钟内被高频链路整份覆盖掉。
+
+### 数据校验（规格 §5）
+
+写入前逐条校验：价格 > 0、涨跌幅 ∈ −20%~+20%、上海金 ∈ 500~1500 元/克、
+中间价 ∈ 5.0~9.0、`updatedAt` 距今 ≥3 天则标 `stale`。任一条不过就丢弃该条并记进运行日志。
+
 ## 实时行情与 K 线：浏览器直连，无需服务器
 
 **新闻**的延迟 = 采集间隔（GitHub Actions 最短 5 分钟）；但**行情与 K 线**
@@ -84,13 +145,17 @@ macro-news/
 │   ├── index.json        按天归档索引
 │   ├── kline/            预生成日K（直连失败时的回退）
 │   ├── _last-run.json    上次运行状态
+│   ├── macro/daily.json  宏观指标日频序列（16:30 链路写）
 │   └── archive/YYYY-MM-DD.json
 ├── src/
 │   ├── collect.mjs       采集主程序（零依赖）
-│   └── sources.mjs       各源适配器
+│   ├── sources.mjs       各源适配器
+│   ├── portfolio.mjs     5 个组合行情 key + 5 个宏观指标适配器
+│   └── portfolio-collect.mjs  组合采集主程序（按 key 合并写）
 ├── worker/               Cloudflare Worker（可选，国内不可用，见上）
 ├── scripts/
 │   ├── collect-and-push.ps1   采集 → 提交 → 推送
+│   ├── portfolio-collect-and-push.ps1  组合采集 → 提交 → 推送（16:30 定时任务调用）
 │   └── register-task.ps1      注册/取消计划任务
 └── logs/                 运行日志（保留 14 天，不入库）
 ```
@@ -98,11 +163,20 @@ macro-news/
 ## 使用
 
 ```powershell
-# 手动采集一次
+# 手动采集一次（新闻 + 17 指数）
 node src\collect.mjs
 
 # 首次使用建议回补 30 天
 node src\collect.mjs --since 720
+
+# 手动采集一次（组合行情 + 宏观，16:30 定时任务跑的就是它）
+node src\portfolio-collect.mjs
+
+# 只采集不写盘（看结果用）
+node src\portfolio-collect.mjs --dry-run
+
+# 组合采集全流程（采集 → 提交 → 推送），定时任务调用的是这条
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\portfolio-collect-and-push.ps1
 
 # 注册计划任务（默认 30 分钟）
 powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1
@@ -251,3 +325,13 @@ GET /kline?key=sh_comp&period=1d&limit=250
    `https://wallstreetcn.comhttps://...` 的坏链接，链接全部失效
 8. **「内容未变不写盘」误判**：剥离易变字段时把 `count / total / added` 也剥掉，
    导致同一天新增条目时 `index.json` 被判为未变化而跳过写盘，归档计数长期停留在旧值
+9. **两个采集任务整份覆盖同一个文件**：5 分钟链路与 16:30 链路都写 `quotes.json` /
+   `_last-run.json`，任何一边整份覆盖都会把另一边的结果抹掉。解法是两边都按 key 合并 / 读改写
+10. **规格书的字段索引不可信**：`hf_XAU` 的 `[2]` 不是开盘价（与现价同值），真正的开盘在 `[8]`；
+    照抄会让 `prevClose` 恒等于 `price`、涨跌幅恒为 0。`secid=133.USDCNY` 实测 `data:null`，
+    可用的是 `133.USDCNH`（离岸价）。**所有字段索引都必须本机实测**
+11. **`git over HTTPS 到 github.com 被重置**：`api.github.com` 通、`github.com:443` TCP 通，
+    但 TLS 握手被 RST（`Recv failure: Connection was reset`）。SSH 走 `ssh.github.com:443` 正常，
+    用仓库级 `url.<ssh>.insteadOf` 让 git 自动改走 SSH，remote URL 保持不变
+12. **写盘前要建目录**：`data/macro/` 首次不存在时直接 `writeFile` 会 ENOENT；
+    `writeJSON` 里有 `mkdir` 而 `writeJSONIfChanged` 里没有 —— 两个函数要一起改

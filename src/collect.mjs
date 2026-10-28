@@ -213,7 +213,17 @@ async function main() {
     items: searchItems,
   });
   if (quotes.length) {
-    await writeJSONIfChanged(path.join(DATA, 'quotes.json'), { generatedAt: startedAt.toISOString(), quotes });
+    // 按 key 合并写入：保留 portfolio-collect.mjs 写入的其它 key。
+    // 本任务只负责 INDICES 里的 17 个指数；若整份覆盖，组合行情（ndx/xau/...）
+    // 会在下一次运行（本任务每 5 分钟一次）里被抹掉。
+    const quotesFile = path.join(DATA, 'quotes.json');
+    const prevQuotes = await readJSON(quotesFile, { quotes: [] });
+    const byKey = new Map((prevQuotes.quotes || []).map((q) => [q.key, q]));
+    for (const q of quotes) byKey.set(q.key, q);
+    await writeJSONIfChanged(quotesFile, {
+      generatedAt: startedAt.toISOString(),
+      quotes: [...byKey.values()],
+    });
   }
 
   // ---- K线：预生成日K（保证没有 Worker 代理时也能画图） ----
@@ -244,16 +254,25 @@ async function main() {
   }
 
   const okCount = perSource.filter((s) => s.ok).length;
-  await writeJSONIfChanged(path.join(DATA, '_last-run.json'), {
+  // 读改写：保留 portfolio-collect.mjs（每日 16:30 任务）写入的字段
+  // （at / ok / fail / macroOk / macroFail / portfolioQuotes ...）。
+  // 若整份覆盖，组合行情那套运行日志会在下一次本任务运行（每 5 分钟）里被清空。
+  const logFile = path.join(DATA, '_last-run.json');
+  const prevLog = await readJSON(logFile, {});
+  const logObj = {
+    ...prevLog,
     startedAt: startedAt.toISOString(),
     durationMs: Date.now() - startedAt.getTime(),
     sources: perSource.map(({ id, label, ok, items, ms, error }) => ({
       id, label, ok, count: items.length, ms, ...(error ? { error } : {}),
     })),
     quotes: quotes.length,
-    ...(getQuoteError() ? { quoteError: getQuoteError() } : {}),
     added: addedTotal,
-  });
+  };
+  const qErr = getQuoteError();
+  if (qErr) logObj.quoteError = qErr;
+  else delete logObj.quoteError;
+  await writeJSONIfChanged(logFile, logObj);
 
   console.log(
     `[collect] 完成 · 源 ${okCount}/${SOURCES.length} 成功 · 新增 ${addedTotal} 条 · 库内共 ${allCount} 条 · ${Date.now() - startedAt.getTime()}ms`
