@@ -51,6 +51,43 @@
     { key: 'dax',     secid: '100.GDAXI', market: 'EU', name: '德国DAX' },
     { key: 'ukx',     secid: '100.FTSE', market: 'UK', name: '英国富时100' },
     { key: 'kospi',   secid: '100.KS11', market: 'KR', name: '韩国KOSPI' },
+    // ---- 场内 ETF（32 只）----
+    // 清单真值在 src/etf.mjs（按主题取「成交额 + 规模」最优的代表）；
+    // 这里只放前端需要的 secid / name / 腾讯代码。
+    // 东财 ulist 批量端点对 ETF **同样有效**（早前「ulist 对 ETF 返回 '-'」的
+    // 结论是错的 —— 那次用了 stock/get 的字段口径），所以 ETF 与指数共用一次批量请求。
+    { key: 'etf_563360', secid: '1.563360', market: 'ETF', name: '中证A500ETF' },
+    { key: 'etf_159819', secid: '0.159819', market: 'ETF', name: '人工智能ETF' },
+    { key: 'etf_159530', secid: '0.159530', market: 'ETF', name: '机器人ETF' },
+    { key: 'etf_588200', secid: '1.588200', market: 'ETF', name: '科创芯片ETF' },
+    { key: 'etf_159516', secid: '0.159516', market: 'ETF', name: '半导体设备ETF' },
+    { key: 'etf_158050', secid: '0.158050', market: 'ETF', name: '创业板算力ETF' },
+    { key: 'etf_159732', secid: '0.159732', market: 'ETF', name: '消费电子ETF' },
+    { key: 'etf_513050', secid: '1.513050', market: 'ETF', name: '中概互联网ETF' },
+    { key: 'etf_159792', secid: '0.159792', market: 'ETF', name: '港股通互联网ETF' },
+    { key: 'etf_513530', secid: '1.513530', market: 'ETF', name: '港股通红利ETF' },
+    { key: 'etf_513120', secid: '1.513120', market: 'ETF', name: '港股创新药ETF' },
+    { key: 'etf_512170', secid: '1.512170', market: 'ETF', name: '医疗ETF' },
+    { key: 'etf_159992', secid: '0.159992', market: 'ETF', name: '创新药ETF' },
+    { key: 'etf_512690', secid: '1.512690', market: 'ETF', name: '酒ETF' },
+    { key: 'etf_159766', secid: '0.159766', market: 'ETF', name: '旅游ETF' },
+    { key: 'etf_512880', secid: '1.512880', market: 'ETF', name: '证券ETF' },
+    { key: 'etf_512800', secid: '1.512800', market: 'ETF', name: '银行ETF' },
+    { key: 'etf_515220', secid: '1.515220', market: 'ETF', name: '煤炭ETF' },
+    { key: 'etf_512400', secid: '1.512400', market: 'ETF', name: '有色金属ETF' },
+    { key: 'etf_516150', secid: '1.516150', market: 'ETF', name: '稀土ETF' },
+    { key: 'etf_512660', secid: '1.512660', market: 'ETF', name: '军工ETF' },
+    { key: 'etf_560280', secid: '1.560280', market: 'ETF', name: '工程机械ETF' },
+    { key: 'etf_159755', secid: '0.159755', market: 'ETF', name: '电池ETF' },
+    { key: 'etf_515790', secid: '1.515790', market: 'ETF', name: '光伏ETF' },
+    { key: 'etf_159611', secid: '0.159611', market: 'ETF', name: '电力ETF' },
+    { key: 'etf_159865', secid: '0.159865', market: 'ETF', name: '养殖ETF' },
+    { key: 'etf_512200', secid: '1.512200', market: 'ETF', name: '房地产ETF' },
+    { key: 'etf_159869', secid: '0.159869', market: 'ETF', name: '游戏ETF' },
+    { key: 'etf_512890', secid: '1.512890', market: 'ETF', name: '红利低波ETF' },
+    { key: 'etf_159201', secid: '0.159201', market: 'ETF', name: '自由现金流ETF' },
+    { key: 'etf_518880', secid: '1.518880', market: 'ETF', name: '黄金ETF' },
+    { key: 'etf_511990', secid: '1.511990', market: 'ETF', name: '华宝添益ETF' },
   ];
   const byKey = new Map(META.map((m) => [m.key, m]));
 
@@ -58,11 +95,47 @@
   const KLT = { '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60, '1d': 101, '1w': 102, '1M': 103 };
 
   // 腾讯代码（备用源）；仅日/周/月可用
+  // ⚠ 腾讯 K 线主机用 ifzq.gtimg.cn（不带 web. 前缀）：
+  //   本机 DNS 解析不了 web.ifzq.gtimg.cn（ENOTFOUND），而 ifzq.gtimg.cn 正常。
+  //   之前写成 web.ifzq.gtimg.cn 会让「腾讯兜底 K 线」整条路径静默失效。
   const TX_CODE = {
     sh_comp: 'sh000001', sz_comp: 'sz399001', chinext: 'sz399006', star50: 'sh000688',
     bse50: 'bj899050', csi300: 'sh000300', csi500: 'sh000905', csi1000: 'sh000852',
     hsi: 'hkHSI', hs_tech: 'hkHSTECH',
     dji: 'usDJI', ixic: 'usIXIC', spx: 'usINX',
+    // ---- 场内 ETF 的腾讯代码（备用源：东财限流时用）----
+    etf_563360: 'sh563360',
+    etf_159819: 'sz159819',
+    etf_159530: 'sz159530',
+    etf_588200: 'sh588200',
+    etf_159516: 'sz159516',
+    etf_158050: 'sz158050',
+    etf_159732: 'sz159732',
+    etf_513050: 'sh513050',
+    etf_159792: 'sz159792',
+    etf_513530: 'sh513530',
+    etf_513120: 'sh513120',
+    etf_512170: 'sh512170',
+    etf_159992: 'sz159992',
+    etf_512690: 'sh512690',
+    etf_159766: 'sz159766',
+    etf_512880: 'sh512880',
+    etf_512800: 'sh512800',
+    etf_515220: 'sh515220',
+    etf_512400: 'sh512400',
+    etf_516150: 'sh516150',
+    etf_512660: 'sh512660',
+    etf_560280: 'sh560280',
+    etf_159755: 'sz159755',
+    etf_515790: 'sh515790',
+    etf_159611: 'sz159611',
+    etf_159865: 'sz159865',
+    etf_512200: 'sh512200',
+    etf_159869: 'sz159869',
+    etf_512890: 'sh512890',
+    etf_159201: 'sz159201',
+    etf_518880: 'sh518880',
+    etf_511990: 'sh511990',
   };
   const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
@@ -202,8 +275,8 @@
     const p = TX_PERIOD[period];
     if (!code || !p) throw new Error('腾讯无该指数/周期');
     const ep = /^us/.test(code)
-      ? 'https://web.ifzq.gtimg.cn/appstock/app/usfqkline/get'
-      : 'https://web.ifzq.gtimg.cn/appstock/app/fqkline/get';
+      ? 'https://ifzq.gtimg.cn/appstock/app/usfqkline/get'
+      : 'https://ifzq.gtimg.cn/appstock/app/fqkline/get';
     const j = await req(`${ep}?param=${code},${p},,,${limit || 250},qfq`, 10000);
     const d = j && j.data && j.data[code];
     const arr = d && (d[p] || d['qfq' + p]);
@@ -220,7 +293,7 @@
     const code = TX_CODE[key];
     const step = TX_MIN[period];
     if (!code || !step) throw new Error('腾讯无该指数/周期');
-    const j = await req(`https://web.ifzq.gtimg.cn/appstock/app/minute/query?code=${code}`, 10000);
+    const j = await req(`https://ifzq.gtimg.cn/appstock/app/minute/query?code=${code}`, 10000);
     const d = j && j.data && j.data[code] && j.data[code].data;
     const rows = d && d.data;
     if (!Array.isArray(rows) || !rows.length) throw new Error('腾讯分时返回空数据');

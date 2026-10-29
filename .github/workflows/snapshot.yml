@@ -1,0 +1,80 @@
+name: 时点快照兜底
+
+# 云端兜底链路：设备断网 / 本机任务没跑 / 定时任务被暂停时，由 GitHub 补上
+# 「当天上午盘收盘价」与「当天收盘价」两份时点快照。
+#
+# 为什么值得单独跑一个 workflow：
+#   · 它在 GitHub 服务器上执行，不依赖你的设备开机、联网、不依赖 minimax Code 常驻；
+#   · 时点价取自**历史 K 线**（5 分钟 K / 日 K），所以哪怕晚上 8 点才跑，
+#     也能补出当天 11:30 与 15:00 的真实价格 —— 「迟到」不影响数值的正确性；
+#   · 本机链路（minimax 定时任务）是「准点」，云端链路是「不丢」，两者互补。
+#
+# ⚠ 关于触发频率：GitHub 官方的定时任务在高峰期常延迟数分钟到数十分钟，
+#   声明的 */30 只是下限，不是保证。实测本仓库的 workflow 常出现 3~7 小时才跑一次
+#   的情况 —— 所以这里的定位是**兜底**（保证当天最终会有快照），而不是准点采集。
+#
+# ⚠ 并发：collect.yml 与本 workflow 写同一个分支，必须用**同一个 concurrency group**
+#   串行执行，否则两个 workflow 互相把对方的提交顶掉（数据丢一小时）。
+
+on:
+  schedule:
+    # 每半小时一次（北京时间 13 分 / 43 分各一次，避开整点高峰）
+    - cron: '13,43 * * * *'
+  workflow_dispatch:
+    inputs:
+      backfill:
+        description: '回补最近 N 个自然日里缺失的快照'
+        required: false
+        default: '5'
+
+permissions:
+  contents: write
+
+# 与 collect.yml 共用同一个 group → 两个 workflow 串行写分支
+concurrency:
+  group: macro-news-write
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 需要完整历史才能 git push
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 采集器零依赖，无需 npm install
+      # --backfill 会检查最近 N 天里 am/pm 快照是否已存在，缺才补；非交易日会自动跳过
+      - name: 补齐缺失的时点快照
+        run: node src/snapshot.mjs --backfill ${{ github.event.inputs.backfill || '5' }}
+
+      - name: 提交并推送（仅在快照有变化时）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/snapshots
+          if git diff --staged --quiet; then
+            echo "快照已齐全（或非交易日），不提交"
+          else
+            n=$(git diff --staged --name-only | wc -l)
+            git commit -m "data: 时点快照兜底（$(date -u '+%Y-%m-%d %H:%M UTC')，${n} 个文件）"
+            git push
+            echo "已提交 ${n} 个快照文件"
+          fi
+
+      - name: 上报本轮统计
+        if: always()
+        run: |
+          {
+            echo "### 快照兜底 · $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo ""
+            ls -1 data/snapshots 2>/dev/null | tail -10 || echo "（无快照目录）"
+          } >> "$GITHUB_STEP_SUMMARY"

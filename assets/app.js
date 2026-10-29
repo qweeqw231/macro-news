@@ -51,9 +51,10 @@
 
   // ---------- 渲染：行情仪表盘 ----------
   // CMDTY / SGE / FX 是组合行情链路的三个新市场（快照回退时才会出现）
+  // ETF 是场内 ETF 的独立分组（32 只，market='ETF'）
   const MARKET_LABEL = {
     CN: 'A股', HK: '港股', US: '美股', JP: '日本', EU: '欧洲', UK: '英国', KR: '韩国',
-    CMDTY: '大宗商品', SGE: '上海金', FX: '外汇',
+    CMDTY: '大宗商品', SGE: '上海金', FX: '外汇', ETF: '场内ETF',
   };
 
   // 交易时段判断（北京时间；小时可 >24 表示跨零点，如美股 21:30–次日 04:00）
@@ -66,6 +67,7 @@
     const h = now.getHours() + now.getMinutes() / 60;
     const win = {
       CN: [9.5, 11.5, 13, 15],
+      ETF: [9.5, 11.5, 13, 15],                          // 场内 ETF 与 A 股同时段
       HK: [9.5, 12, 13, 16],
       JP: [8.5, 11.3, 12.5, 15],
       KR: [8.5, 11.3, 12.5, 15.3],
@@ -92,6 +94,8 @@
     let quotes = null;
     let generatedAt = null;
     let realtime = false;
+    let localQuotes = null;
+    let localGeneratedAt = null;
 
     // 优先直连东方财富实时行情（国内可达、带 CORS），失败再回退本地采集快照
     if (window.MarketData) {
@@ -104,15 +108,28 @@
         }
       } catch (e) { /* 直连失败，走本地快照 */ }
     }
+    // 本地快照始终读一次：直连行情只覆盖指数+ETF，
+    // 组合行情（ndx/xau/sge/usdcny/cgb）与「云端补采的 ETF」都在 quotes.json 里。
+    // 合并后两者同屏，且不会出现「实时模式下反而看不到某些标的」。
+    try {
+      const d = await jget('quotes.json');
+      if (d && Array.isArray(d.quotes)) {
+        localQuotes = d.quotes;
+        localGeneratedAt = d.generatedAt || null;
+      }
+    } catch (e) { /* 本地快照不可用 */ }
+
     if (!quotes) {
-      try {
-        const d = await jget('quotes.json');
-        quotes = d.quotes;
-        generatedAt = d.generatedAt;
-      } catch (e) {
-        box.innerHTML = `<div class="skeleton">行情载入失败：${esc(e.message)}</div>`;
+      if (!localQuotes) {
+        box.innerHTML = '<div class="skeleton">行情载入失败：实时源与本地快照均不可用</div>';
         return;
       }
+      quotes = localQuotes;
+      generatedAt = localGeneratedAt;
+    } else if (localQuotes) {
+      const seen = new Set(quotes.map((q) => q.key));
+      const extra = localQuotes.filter((q) => !seen.has(q.key));
+      if (extra.length) quotes = [...quotes, ...extra];
     }
 
     S.quotes = quotes;
@@ -129,8 +146,8 @@
       groups.get(q.market).push(q);
     });
 
-    // A 股置顶
-    const ORDER = ['CN', 'HK', 'US', 'JP', 'EU', 'UK', 'KR'];
+    // A 股置顶；场内 ETF 紧随其后
+    const ORDER = ['CN', 'ETF', 'HK', 'US', 'JP', 'EU', 'UK', 'KR', 'CMDTY', 'SGE', 'FX'];
     [...groups.keys()]
       .sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b))
       .forEach((mk) => {

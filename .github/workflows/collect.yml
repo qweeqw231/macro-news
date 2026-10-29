@@ -17,9 +17,12 @@ on:
 permissions:
   contents: write
 
-# 同一时间只跑一个，避免并发写入冲突
+# 同一时间只跑一个，避免并发写入冲突。
+# ⚠ 与 snapshot.yml **必须用同一个 group**（macro-news-write）：
+#   两个 workflow 都往 main 分支提交，并发执行时会互相把对方的提交顶掉，
+#   表现为「数据丢一段时间」。共用 group 即串行化。
 concurrency:
-  group: macro-news-collect
+  group: macro-news-write
   cancel-in-progress: false
 
 jobs:

@@ -17,34 +17,46 @@
 | 实际用途 | 数据完整入库，在**本地**读取与分析；`assets/` 下的前端代码保留但没上线 |
 | 想上线 | 仓库 **Settings → Pages** → Source 选 `main` / 根目录 → Save，等 1~2 分钟 |
 
-### 三条链路，各管各的，别搞混
+### 采集时间线（**别搞混谁在什么时候产出什么**）
 
-| # | 采集什么 | 谁在跑 | 频率 | 产出落在哪 |
-|---|---|---|---|---|
-| ① | 新闻 + **17 个指数** | GitHub Actions（`src/collect.mjs`） | 声明 `*/5`，**实测 3~5 小时一次** | `data/archive/`、`data/latest.json`、`data/search.json`、`data/kline/`、`data/quotes.json` 里的 17 个指数 → **推到 GitHub** |
-| ② | **5 个新标的** + 5 个宏观 | minimax 定时任务（`scripts/portfolio-collect-and-push.ps1`） | 交易日 **16:30**（另设 16:35 失败重试一次） | `data/quotes.json` 里的 5 个新 key、`data/macro/daily.json`、`data/_last-run.json` → **先写本机，再推到 GitHub** |
-| ③ | 把 ①② 的产物**拉回本机** | minimax 定时任务（`scripts/pull-remote.ps1`） | 每 **4 小时** | 本地 `data/` |
+> 2026-10-29 重排过一次：新增「时点快照」机制，并把原来 16:30 那一轮的职责拆清楚。
+> **云端管「不丢」，本机管「准点」**，两者写不同的文件、互不覆盖。
 
-- ①② ③ 跑在**本机**的 minimax 定时任务（`C:\Work\Minimax_Work\macro-news`）需要 **MiniMax Code 客户端常驻**。
-- ① 完全在云端，**电脑关机也照跑**（只是产物先到 GitHub，等 ③ 拉回本机）。
+| 时间 | 谁在跑 | 干什么 | 产出落到哪 |
+|---|---|---|---|
+| 声明 `*/5`，**实测 3~6 小时一次** | GitHub Actions `collect.yml` | 新闻 + **17 指数 + 32 场内 ETF** 的最新价 + 日 K | `data/archive/`、`data/latest.json`、`data/search.json`、`data/kline/`、`data/quotes.json` → 推到 GitHub |
+| 声明 `*/30`，**实测不准** | GitHub Actions `snapshot.yml` | **云端兜底**：当天 am/pm 快照缺就补；并回补最近 5 天 | `data/snapshots/` → 推到 GitHub |
+| **12:05**（交易日） | minimax 定时任务 | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价 | `data/snapshots/YYYY-MM-DD_am.json` → 推到 GitHub |
+| **16:30**（交易日） | minimax 定时任务 | **收盘时点快照**（A股 15:00、港股 16:00）+ 5 组合行情 + 5 宏观指标 | `data/snapshots/YYYY-MM-DD_pm.json`、`data/quotes.json`、`data/macro/daily.json` → 推到 GitHub |
+| **16:35**（交易日） | minimax 定时任务 | 只在 16:30 失败时补跑一次（读 `logs\last-portfolio-status.json` 判断） | 同上 |
+| 每 **4 小时** | minimax 定时任务 | 把云端产物**拉回本机** | 本地 `data/` |
+
+- 后三条跑在**本机**的 minimax 定时任务（`C:\Work\Minimax_Work\macro-news`），需要 **MiniMax Code 客户端常驻**。
+- 前两条完全在云端，**电脑关机也照跑**（产物先到 GitHub，等「每 4 小时」那条拉回本机）。
+- **时点快照 ≠ 最新价**：`data/quotes.json` 是「谁先跑到谁抓到」的实时价；
+  `data/snapshots/` 才是**按交易日归档、不可覆盖**的时点价（详见下面「时点快照机制」一节）。
 
 ### 本地数据文件（读取契约）
 
 | 文件 | 内容 | 谁写 |
 |---|---|---|
-| `data/quotes.json` | **22 个标的**快照 = 17 指数 + 5 新增（`ndx`/`xau`/`sge_au9999`/`usdcny`/`cgb_1y`） | ①②（**按 key 合并**） |
-| `data/archive/YYYY-MM-DD.json` | 按天归档的新闻，**含标题与正文**（`items[].content`） | ① |
-| `data/latest.json` | 全量新闻索引，**含 content** | ① |
-| `data/search.json` | 检索索引，**只有 title + summary，没有正文**（约 9.4MB） | ① |
-| `data/macro/daily.json` | 宏观日频序列：两融余额 / 10Y 美债 / 社融增量 / CPI 同比 / 制造业 PMI | ② |
-| `data/kline/*.json` | 12 个指数的日 K（250 根） | ① |
-| `data/_last-run.json` | 运行状态（两条链路的字段**并存**） | ①②（**读改写**） |
-| `logs/` | 本地运行日志，**不入库** | ②③ |
+| `data/quotes.json` | **54 个标的**快照 = 17 指数 + **32 场内 ETF** + 5 组合（`ndx`/`xau`/`sge_au9999`/`usdcny`/`cgb_1y`） | Actions / minimax（**按 key 合并**） |
+| `data/snapshots/YYYY-MM-DD_am.json` | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价（54 项） | minimax 12:05 + Actions 兜底 |
+| `data/snapshots/YYYY-MM-DD_pm.json` | **收盘时点快照**：A股 15:00、港股 16:00 的官方收盘价（54 项） | minimax 16:30 + Actions 兜底 |
+| `data/archive/YYYY-MM-DD.json` | 按天归档的新闻，**含标题与正文**（`items[].content`） | Actions |
+| `data/latest.json` | 全量新闻索引，**含 content** | Actions |
+| `data/search.json` | 检索索引，**只有 title + summary，没有正文**（约 9.4MB） | Actions |
+| `data/macro/daily.json` | 宏观日频序列：两融余额 / 10Y 美债 / 社融增量 / CPI 同比 / 制造业 PMI | minimax 16:30 |
+| `data/kline/*.json` | 12 个指数的日 K（250 根） | Actions |
+| `data/_last-run.json` | 运行状态（多条链路的字段**并存**） | 各链路（**读改写**） |
+| `logs/` | 本地运行日志，**不入库** | minimax |
 
 ### 如果你是来取数的 AI
 
 - **要行情 / 宏观** → 读 `data/quotes.json` + `data/macro/daily.json`，不要自己去抓 HTTP 接口。
   仓库里的适配器已经把各源的字段索引**逐个实测校准**过了，自己重写极易踩错（见下面第 5 条）。
+- **要某天的收盘价 / 上午收盘价** → 读 `data/snapshots/YYYY-MM-DD_pm.json` / `_am.json`。
+  `data/quotes.json` 里的 A股数值是**实时价**，不等于收盘价（这是本项目 2026-10-29 改造的核心）。
 - **要新闻（含正文）** → 读 `data/archive/YYYY-MM-DD.json` 的 `items[].content`。
   `data/search.json` 只有摘要，**别指望从它拿全文**。
 - **不要顺手触发采集**：采集归定时任务管，AI 只负责读。要刷新就跑现成脚本（见下）。
@@ -54,24 +66,28 @@
 
 | 任务名 | cron_id | 计划 | 干什么 |
 |---|---|---|---|
-| macro-news 组合行情+宏观采集（交易日 16:30） | `9b31e4b6-fa07-44ce-83f4-67c8d1eb5aa2` | `30 16 * * 1-5` | 跑 `scripts\portfolio-collect-and-push.ps1` |
-| macro-news 组合采集失败重试（16:35） | `95efe173-0c21-4250-8240-695641e49677` | `35 16 * * 1-5` | 读 `logs\last-portfolio-status.json`，失败才补跑一次 |
+| macro-news 上午盘时点快照（交易日 12:05，采 11:30 上午收盘价） | `8333a316-198e-4ca6-9a66-2e65a3c76643` | `5 12 * * 1-5` | 跑 `scripts\snapshot-collect-and-push.ps1` |
+| macro-news 收盘快照+组合行情+宏观采集（交易日 16:30） | `9b31e4b6-fa07-44ce-83f4-67c8d1eb5aa2` | `30 16 * * 1-5` | 跑 `scripts\portfolio-collect-and-push.ps1` |
+| macro-news 收盘快照+组合采集失败重试（16:35） | `95efe173-0c21-4250-8240-695641e49677` | `35 16 * * 1-5` | 读 `logs\last-portfolio-status.json`，失败才补跑一次 |
 | macro-news 远端数据同步（每 4 小时拉取新闻+行情） | `6f7816d3-da5f-4eda-9030-476a55684b6a` | `0 */4 * * *` | 跑 `scripts\pull-remote.ps1` |
 
-三个都是**固定对话**（fixed session）、模型 `MiniMax-M3.1-Flash`、`project` = 本仓库路径。
+四个都是**固定对话**（fixed session）、模型 `MiniMax-M3.1-Flash`、`project` = 本仓库路径。
 管理方式：`cron_read list` / `cron_update {cron_id, schedule|enabled}` / `cron_delete {cron_id}`。
 
 > ⚠️ **cron 表达式里的 `1-5` = 周一至周五**（不是"每周一"）。界面上的中文描述可能显示得不准确，
 > 以 `cron_read` 返回的 `schedule` 字段为准。
-> 法定节假日 cron 不认，脚本靠"取不到当日数据 → 沿用上一交易日 → 内容未变不写盘"来兜底。
+> 法定节假日 cron 不认，脚本靠"取不到当日数据 → 沿用上一交易日 → 内容未变不写盘"来兜底；
+> 时点快照则靠"当天没有任何标的取到价 → 判定非交易日 → 不写文件"来兜底。
 
 ### ⚠️ 别踩的坑（每一条都是实测踩出来的）
 
 1. **要刷新数据就跑现成脚本**，不要另写采集逻辑：
    - 刷全部（远端 → 本机）：`powershell -NoProfile -ExecutionPolicy Bypass -File scripts\pull-remote.ps1`
-   - 刷 5 个新标的 + 宏观（本机 → 远端）：`powershell -NoProfile -ExecutionPolicy Bypass -File scripts\portfolio-collect-and-push.ps1`
+   - 刷收盘快照 + 5 个新标的 + 宏观（本机 → 远端）：`powershell -NoProfile -ExecutionPolicy Bypass -File scripts\portfolio-collect-and-push.ps1`
+   - 只刷时点快照（本机 → 远端）：`powershell -NoProfile -ExecutionPolicy Bypass -File scripts\snapshot-collect-and-push.ps1`
+   - **补拉最近 5 天的快照**（断网几天后用这个）：`powershell -NoProfile -ExecutionPolicy Bypass -File scripts\snapshot-collect-and-push.ps1 -Backfill 5`
 2. **`git reset --hard` 会毁掉工作区**，本项目禁止使用。
-3. **两条链路共用 `data/quotes.json` 和 `data/_last-run.json`**。任何一边改成整份覆盖写，
+3. **多条链路共用 `data/quotes.json` 和 `data/_last-run.json`**。任何一边改成整份覆盖写，
    另一边的成果会在几分钟内消失——`src/collect.mjs` 已被专门改成**按 key 合并 + 读改写**，
    改动它之前先读「两个任务共用同一个文件」一节。
 4. **本机到 `github.com` 的 HTTPS 会被重置**，`git push` 走 SSH-443
@@ -80,19 +96,37 @@
    `hf_XAU` 的 `[2]` 不是开盘价（与现价同值），真正的昨收/开盘是 `[7]`/`[8]`；
    东财 `secid=133.USDCNY` 实测 `data:null`（可用的离岸价是 `133.USDCNH`）。
 6. **正文覆盖率 97.4%**：中国人民银行、欧洲央金的条目**只有标题没有正文**（公告原文在 PDF 里）。
-7. **周末与法定节假日**：行情数值沿用上一交易日（`note` 标 `carried`），**是正常行为不是故障**。
+7. **周末与法定节假日**：行情数值沿用上一交易日（`note` 标 `carried`），**是正常行为不是故障**；
+   时点快照则**直接不写文件**（非交易日没有 bar，取不到价）。
 8. **仓库在变大**（`data/search.json` 约 9.4MB，`data/archive/` 每天涨），
    而 Actions 每次要克隆全历史。离 GitHub 1GB 软限制还远，但一年后值得重新评估归档策略。
+9. 🔴 **东财是「按接口」限流的，不是按主机、也不是按 IP 总量**。实测把单只 `stock/get`
+   和 `kline/get` 打密之后，这两个端点会 socket 级拒绝（`UND_ERR_SOCKET`），
+   而**同一主机上的 `ulist.np` 批量端点仍然正常**。
+   ⇒ 行情一律走**批量**（1 个请求拿完 49 个标的），K 线必须有**第二源**（腾讯）。
+10. 🔴 **「ulist 对 ETF 返回 '-'」是错的**。那次的坑在于用了 `stock/get` 的字段口径；
+    换成 `f2/f12/f13/f14/f18` 后，ETF 在批量端点里全部有值。**别再为此写逐只请求。**
+11. 🔴 **腾讯 K 线主机要用 `ifzq.gtimg.cn`（不带 `web.` 前缀）** —— 本机 DNS 解析不了
+    `web.ifzq.gtimg.cn`（ENOTFOUND）。写错会让「腾讯兜底 K 线」整条路径静默失效。
+12. 🔴 **熔断必须按主机组隔离**。第一版熔断是全局计数，结果东财 K 线端点被限流后
+    **连带把腾讯备用源也熔断了**，一轮快照只剩 15/54 —— 一个源挂掉反而把冗余源干掉了。
+13. 🟡 **东财的源时间戳（f124/f86）在收盘后仍持续跳动**（实测 15:32 → 16:26），
+    它是「数据推送时间」不是「最后成交时刻」⇒ **不能**用它自证「实时价已冻结在收盘价上」。
+    时点价一律走 K 线（确定性）。
+14. 🟡 **上海金（上金所）当日行情在 17:00 前常常还没发布**，取不到就沿用上一交易日（`note` 标 `carried`）；
+    中债 1Y 收益率曲线也是傍晚才出。**当天想看黄金/利率的准确收盘价，看 `data/snapshots/` 里
+    `etf_518880`（黄金ETF）的收盘价**，它与 A股同时收盘。
 
 ---
 
-## 采集标的总清单（22 个行情 + 5 个宏观 + 8 个新闻源）
+## 采集标的总清单（54 个行情 + 5 个宏观 + 8 个新闻源）
 
-> 一句话版：**22 个行情标的**（17 个指数 + 5 个组合行情）、**5 个宏观指标**、**8 个新闻源**。
-> 清单由 `src/sources.mjs` 的 `INDICES` 与 `src/portfolio.mjs` 的 `PORTFOLIO_QUOTES` 直接定义，
-> **改代码就是改这里**。实时价格不写死在本文，一律读 `data/quotes.json`。
+> 一句话版：**54 个行情标的**（17 个指数 + **32 只场内 ETF** + 5 个组合行情）、**5 个宏观指标**、**8 个新闻源**。
+> 清单由 `src/sources.mjs` 的 `INDICES`、`src/etf.mjs` 的 `ETFS`、
+> `src/portfolio.mjs` 的 `PORTFOLIO_QUOTES` 直接定义，**改代码就是改这里**。
+> 实时价格不写死在本文，一律读 `data/quotes.json`。
 
-### ① 17 个指数（Actions 链路，3~5 小时一次）
+### ① 17 个指数（Actions 链路，3~6 小时一次）
 
 | key | 名称 | 市场 | 数据源 |
 |---|---|---|---|
@@ -116,6 +150,57 @@
 
 > 另有 12 个指数有**日 K 预生成**（`data/kline/*.json`，250 根），
 > `hs_tech` / `n225` / `dax` / `ukx` / `kospi` 取不到（见「K线数据源」一节）。
+
+### ①-b 32 只场内 ETF（Actions 链路，3~6 小时一次；快照链路另有时点价）
+
+> **考察方法**（2026-10-29 实测，非推测）：
+> 东财 `clist` 端点拉全市场 **1655 只**场内 ETF → 按主题聚类 → 每个主题按
+> 「成交额 + 规模」取最优的一只作代表 → 逐只走单只 `stock/get` 验证 **32/32 全部可用**。
+> 清单真值在 `src/etf.mjs`（改那里即可增删）。
+
+**取舍原则**：有现成指数的宽基（沪深300/中证500/中证1000/创业板/科创50…）**不重复收 ETF**，
+指数口径更标准；只留没有对应指数的**中证A500**。行业/主题类没有便捷指数，**必须用场内 ETF 代理** ——
+这正是本轮考察的重点（机器人、中概互联网、恒生科技、创新药…）。
+场外「ETF 联接基金」不收：它只有每日净值、没有盘中价，而联接基金跟踪的正是这些场内 ETF。
+
+| key | 名称 | 主题 | secid |
+|---|---|---|---|
+| `etf_563360` | 中证A500ETF | 宽基 | `1.563360` |
+| `etf_159819` | 人工智能ETF | 科技AI | `0.159819` |
+| `etf_159530` | **机器人ETF** | 科技AI | `0.159530` |
+| `etf_588200` | 科创芯片ETF | 科技AI | `1.588200` |
+| `etf_159516` | 半导体设备ETF | 科技AI | `0.159516` |
+| `etf_158050` | 创业板算力ETF | 科技AI | `0.158050` |
+| `etf_159732` | 消费电子ETF | 科技AI | `0.159732` |
+| `etf_513050` | **中概互联网ETF** | 互联网 | `1.513050` |
+| `etf_159792` | 港股通互联网ETF | 互联网 | `0.159792` |
+| `etf_513530` | 港股通红利ETF | 港股 | `1.513530` |
+| `etf_513120` | 港股创新药ETF | 港股 | `1.513120` |
+| `etf_512170` | 医疗ETF | 医药 | `1.512170` |
+| `etf_159992` | 创新药ETF | 医药 | `0.159992` |
+| `etf_512690` | 酒ETF | 消费 | `1.512690` |
+| `etf_159766` | 旅游ETF | 消费 | `0.159766` |
+| `etf_512880` | 证券ETF | 金融 | `1.512880` |
+| `etf_512800` | 银行ETF | 金融 | `1.512800` |
+| `etf_515220` | 煤炭ETF | 资源 | `1.515220` |
+| `etf_512400` | 有色金属ETF | 资源 | `1.512400` |
+| `etf_516150` | 稀土ETF | 资源 | `1.516150` |
+| `etf_512660` | 军工ETF | 军工制造 | `1.512660` |
+| `etf_560280` | 工程机械ETF | 军工制造 | `1.560280` |
+| `etf_159755` | 电池ETF | 新能源 | `0.159755` |
+| `etf_515790` | 光伏ETF | 新能源 | `1.515790` |
+| `etf_159611` | 电力ETF | 公用农业地产 | `0.159611` |
+| `etf_159865` | 养殖ETF | 公用农业地产 | `0.159865` |
+| `etf_512200` | 房地产ETF | 公用农业地产 | `1.512200` |
+| `etf_159869` | 游戏ETF | 传媒 | `0.159869` |
+| `etf_512890` | 红利低波ETF | 红利风格 | `1.512890` |
+| `etf_159201` | 自由现金流ETF | 红利风格 | `0.159201` |
+| `etf_518880` | 黄金ETF | 跨资产 | `1.518880` |
+| `etf_511990` | 华宝添益ETF | 跨资产 | `1.511990` |
+
+> 行情用东财**批量**端点一次拿完（`ulist.np`，含 ETF）；
+> K 线走东财 `kline` → **腾讯 `ifzq.gtimg.cn` 兜底**（东财按接口限流时，腾讯仍在）。
+> 同主题的其它候选（例如机器人主题共 17 只）可在 `tmp/` 的考察脚本里按同样口径复算。
 
 ### ② 5 个组合行情新标的（16:30 链路）
 
@@ -152,23 +237,88 @@
 
 ---
 
+## 时点快照机制（2026-10-29 新增）
+
+### 为什么需要它
+
+`data/quotes.json` 里的 A股数值是**「谁先跑到谁抓到」的实时价**：
+Actions 每隔几小时跑一次，抓到的是那个时刻的盘中价；上午盘的值会被下午盘覆盖、**无法回溯**。
+所以另建一套**按交易日归档、不可覆盖**的时点记录。
+
+### 两档快照
+
+| 档 | 文件 | 目标时点 | 取价方式 |
+|---|---|---|---|
+| `am` | `data/snapshots/YYYY-MM-DD_am.json` | A股 **11:30**、港股 **12:00** | 5 分钟 K 线对应 bar 的收盘价 |
+| `pm` | `data/snapshots/YYYY-MM-DD_pm.json` | A股 **15:00**、港股 **16:00** | 日 K 的官方收盘价 |
+
+两档都覆盖 54 个标的（17 指数 + 32 ETF + 5 组合）。每条记录带：
+`price` / `prevClose` / `changePct` / `asOf`（价格对应的**真实时刻**）/ `priceSource`（`kline5m` 或 `dailyK`）/ `note`。
+
+### 为什么用 K 线而不是直接抓实时价
+
+- **K 线是历史数据** ⇒ 事后任意时刻重跑都能补出那天的真值，**断网几天也不丢数**。
+- 实时价无法自证：东财的源时间戳在收盘后仍会跳动（实测 15:32 → 16:26），是「数据推送时间」
+  而不是「最后成交时刻」，无法证明价格冻结在目标价上 ⇒ 不用实时价。
+- 口径已**三方交叉验证**：5 分钟「15:00」bar 的收盘价 == 日 K 当日收盘价，
+  东财与腾讯两源对同一时点**完全一致**（上证 3651.43 / 沪深300ETF 4.111 / 机器人ETF 1.287）。
+
+### 补拉（断网后的恢复途径）
+
+```bash
+# 补最近 5 个自然日里缺失的快照（最常用）
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\snapshot-collect-and-push.ps1 -Backfill 5
+
+# 补指定某天的收盘快照
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\snapshot-collect-and-push.ps1 -Session pm -Date 2026-10-27
+```
+
+- 非交易日 / 节假日：**自动跳过、不写文件**（当天一个标的都取不到价 → 判定非交易日）。
+- 补拉上限 = 行情源的历史保留期：东财日 K 实测覆盖 30+ 个交易日、腾讯 5 分钟 K 给 320 根（约 6 个交易日）。
+- 云端 `snapshot.yml` 也会自动回补最近 5 天，**本机断网不影响云端产生快照**。
+
+---
+
+## 断网了怎么办？四层补拉途径
+
+| 层 | 场景 | 怎么做 | 能补回什么 |
+|---|---|---|---|
+| ① **本机恢复网络** | 设备只是断了 GitHub | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\pull-remote.ps1` | 云端（Actions）跑出来的全部产物：新闻、行情、**时点快照** |
+| ② **本机还能上网，只是 GitHub 不通** | 本机常态（`github.com` HTTPS 被 RST，但国内源全通） | 本机照常跑采集脚本，或直接读国内源的最新数据 | 行情/宏观**完全不受影响**（采集不依赖 GitHub） |
+| ③ **任意设备 / 离线读** | 换台电脑、想用别的工具看 | `https://raw.githubusercontent.com/qweeqw231/macro-news/main/data/quotes.json`（快照同理，换 `data/snapshots/2026-10-29_pm.json`） | 仓库里的**全部数据文件**，免登录直链 |
+| ④ **连 GitHub 都不通** | 完全离网 | 直接打国内源（清单见上面各表），或等恢复后跑 ① | 原始行情；本仓库不依赖任何代理 |
+
+**关键点**：采集链路**不依赖 GitHub**，只依赖国内行情源（东财 / 腾讯 / 上金所 / 中债 / 中国货币网），
+GitHub 只是**存档与分发**。所以「设备断网」真正丢的只有两件事：
+① 本机 GPU 之外的对话讨论（数据在 GitHub 上，仍可读）；② 本机定时任务没跑时**当天的时点快照**——
+但这一条已由**云端 `snapshot.yml` 兜底**（云端用历史 K 线回溯，能补出当天 11:30 / 15:00 的真值）。
+
+---
+
 ## 核心设计：采集不占用任何 AI 上下文
+
+
 
 **主力：GitHub Actions 定时采集**（云端跑，电脑关机也照跑）
 
 ```
-GitHub Actions（定时工作流，实测每 3~5 小时一次）
-   └─ node src/collect.mjs          ← 纯脚本，0 context，跑在 GitHub 服务器上
-        └─ 写 data/*.json（内容未变则跳过写盘）
-             └─ git commit & push（仅数据有变化时）
+GitHub Actions（定时工作流，实测每 3~6 小时一次）
+   ├─ node src/collect.mjs          ← 纯脚本，0 context，跑在 GitHub 服务器上
+   │    └─ 写 data/*.json（内容未变则跳过写盘）
+   │         └─ git commit & push（仅数据有变化时）
+   └─ node src/snapshot.mjs --backfill 5   ← 时点快照兜底（同一 group，串行执行）
+        └─ 缺哪天的 am/pm 就补哪天的（用历史 K 线回溯，晚跑也不影响数值正确性）
 ```
 
-> ⚠️ 工作流声明的是 `*/5`（5 分钟），但**实测每次间隔 3~5 小时**——GitHub 会大幅延迟定时调度。
+> ⚠️ 工作流声明的是 `*/5`（5 分钟），但**实测每次间隔 3~6 小时**——GitHub 会大幅延迟定时调度。
 > 别按「5 分钟」推断数据新鲜度。详见「现状速览」。
+>
+> ⚠️ 两个 workflow 写同一个分支，**必须共用同一个 `concurrency: group`**（现为 `macro-news-write`），
+> 否则并发推送会互相把对方的提交顶掉，表现为「数据丢一段时间」。
 
 | | 本地 Windows 计划任务 | GitHub Actions |
 |---|---|---|
-| 间隔 | 30 分钟（最低约 5） | 声明 5 分钟，**实测 3~5 小时** |
+| 间隔 | 30 分钟（最低约 5） | 声明 5 分钟，**实测 3~6 小时** |
 | 电脑关机 | ❌ 停止采集 | ✅ 照常运行 |
 | 国内可达性 | ✅ | ⚠️ `github.com` 的 HTTPS 在本机被重置（git 走 SSH-443） |
 | 成本 | 0 | 0（公开仓库每月 2000 分钟免费额度） |
@@ -177,16 +327,25 @@ GitHub Actions（定时工作流，实测每 3~5 小时一次）
 AI 只在你主动要求时介入（例如"把这周新闻和我的 6 大类资产对齐"）。
 
 
-## 第二条采集链：组合行情 + 宏观（交易日 16:30）
+## 第二条采集链：时点快照 + 组合行情 + 宏观（交易日 12:05 / 16:30）
 
-高频链路负责**新闻 + 17 个指数**；低频链路负责**组合分析需要的额外数据**，两者共用同一个
-`data/quotes.json`，因此**必须按 key 合并写**（见下方「两个任务共用同一个文件」）。
+高频链路负责**新闻 + 17 指数 + 32 场内 ETF**；低频链路负责**时点快照**与**组合分析需要的额外数据**，
+两者共用同一个 `data/quotes.json`，因此**必须按 key 合并写**（见下方「两个任务共用同一个文件」）。
 
 ```
-minimax 定时任务（交易日 16:30 Asia/Shanghai，固定对话）
-   └─ scripts\portfolio-collect-and-push.ps1     ← 一条命令，全程无 AI 判断
-        ├─ node src\portfolio-collect.mjs        ← 5 个组合行情 key + 5 个宏观指标
-        │    ├─ data\quotes.json       按 key 合并（保留原 17 个 key）
+minimax 定时任务（交易日 12:05，固定对话）
+   └─ scripts\snapshot-collect-and-push.ps1    ← 一条命令，全程无 AI 判断
+        └─ node src\snapshot.mjs               ← 上午盘时点快照（A股 11:30 / 港股 12:00）
+             └─ data\snapshots\YYYY-MM-DD_am.json
+                  └─ git commit（仅快照有变化时）→ git push origin main
+
+minimax 定时任务（交易日 16:30，固定对话）
+   └─ scripts\portfolio-collect-and-push.ps1   ← 一条命令，全程无 AI 判断
+        ├─ node src\snapshot.mjs --auto        ← 收盘时点快照（A股 15:00 / 港股 16:00）
+        │    │                                  （顺带补当天可能缺的上午盘快照）
+        │    └─ data\snapshots\YYYY-MM-DD_pm.json
+        ├─ node src\portfolio-collect.mjs      ← 5 个组合行情 key + 5 个宏观指标
+        │    ├─ data\quotes.json       按 key 合并（保留其它链路的 key）
         │    ├─ data\macro\daily.json  按日期追加
         │    └─ data\_last-run.json    读改写（保留高频链路写的字段）
         └─ git commit（仅 data/ 有变化时）→ git push origin main
@@ -198,10 +357,10 @@ minimax 定时任务（交易日 16:30 Asia/Shanghai，固定对话）
 
 | 项 | 值 |
 |---|---|
-| 频率 | 周一至周五 16:30（Asia/Shanghai） |
+| 频率 | 周一至周五 **12:05**（上午盘快照）+ **16:30**（收盘快照 + 组合 + 宏观） |
 | 超时 | 脚本内 55 秒预算（规格要求 60 秒，留 5 秒写盘） |
-| 重试 | 16:35 检查并补跑一次 |
-| 节假日 | cron 不认中国节假日；脚本取不到当日数据时按 `carried` 沿用上一交易日，**内容未变就不写盘**（规格 §1 允许的简化） |
+| 重试 | 16:35 检查并补跑一次；快照另有云端 `snapshot.yml` 兜底 |
+| 节假日 | cron 不认中国节假日；组合行情取不到当日数据时按 `carried` 沿用上一交易日，**内容未变就不写盘**；**时点快照则直接不写文件**（非交易日没有 K 线 bar） |
 
 ### 5 个新增行情 key
 
@@ -225,14 +384,17 @@ minimax 定时任务（交易日 16:30 Asia/Shanghai，固定对话）
 
 ### 两个任务共用同一个文件
 
-高频链路（Actions，3~5 小时）与低频链路（16:30）都会写 `data/quotes.json` 和 `data/_last-run.json`。
+高频链路（Actions，3~6 小时）与低频链路（16:30）都会写 `data/quotes.json` 和 `data/_last-run.json`。
 **整份覆盖会互相抹掉**，所以两边都改成：
 
 - `quotes.json` —— 按 `key` 合并写（各自只更新自己那批 key）
 - `_last-run.json` —— 读改写（各自只更新自己的字段）
 
 否则 16:30 写进去的 5 个 key 会在下一轮高频链路运行时被整份覆盖掉。
-（已用「拿远端 HEAD 的 src+data 模拟跑一遍 Actions」验证过：跑完 22 个 key 与 portfolio 日志字段都还在。）
+（已用「拿远端 HEAD 的 src+data 模拟跑一遍 Actions」验证过：跑完 54 个 key 与 portfolio 日志字段都还在。）
+
+> 时点快照走**独立目录** `data/snapshots/`，按日期一个文件、**只写一次不覆盖**，
+> 因此和上面两条链路天然不冲突，也不需要合并写。
 
 ### 数据校验（规格 §5）
 
@@ -464,9 +626,10 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 
 **取数链（逐级回退，任何一级成功即止）：**
 
-1. **东方财富** `push2his`（多镜像主机，缓存优先 + 并发兜底）—— 唯一覆盖全部 17 个指数、
-   且含 1/5/15/30/60 分钟与日/周/月的源
-2. **腾讯** `web.ifzq.gtimg.cn` —— 日/周/月，覆盖 CN/HK/US；东财不可达时兜底
+1. **东方财富** `push2his`（多镜像主机 + 限速 + 退避 + 按主机组熔断 + 磁盘缓存）——
+   覆盖全部 17 个指数与 32 只场内 ETF，且含 1/5/15/30/60 分钟与日/周/月的源
+2. **腾讯** `ifzq.gtimg.cn` —— 日/周/月 + **5 分钟**，覆盖 CN/HK/US 与场内 ETF；东财被限流时兜底
+   （⚠ 用 `ifzq.gtimg.cn`，**不带 `web.` 前缀** —— 本机 DNS 解析不了 `web.ifzq.gtimg.cn`）
 3. **腾讯分时** `minute/query` —— 分钟周期兜底，用当日分时聚合出分钟K（**仅当天**）
 4. **本地** `data/kline/<key>.json` —— 采集器预生成的日K；**周/月由日K在浏览器端聚合**
    （零网络）；离线也能用，仅分钟周期没有本地兜底
@@ -479,10 +642,15 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 | 恒生指数 / 恒生科技 | ✓ | ✓(日周月) |
 | 道琼斯 / 纳斯达克 / 标普500 | ✓ | ✓(日周月) |
 | 日经225 / 德国DAX / 英国富时100 / 韩国KOSPI | ✓ | — |
+| 32 只场内 ETF | ✓ | ✓(日周月/5分钟) |
 
 > **实测注意**：东财这些镜像主机**会间歇性不可达**（同一时刻有的通、有的断，
 > 表现为 `net::ERR_EMPTY_RESPONSE`），因此代码按主机缓存 + 失败并发赛其余。
-> 东财整体不可达时，日/周/月由腾讯兜底，分钟由腾讯分时兜底（仅当天）；再不可达则
+> 更严重的是东财**按接口**做 IP 级限流：实测把 `stock/get` 与 `kline/get` 打密后，
+> 这两个端点会 socket 级拒绝（`UND_ERR_SOCKET`），而同一主机的 `ulist.np` 批量端点仍正常。
+> ⇒ 行情一律走**批量**（1 个请求拿完 49 个标的），K 线必须有**第二源**（腾讯），
+> 并且**熔断要按主机组隔离**（否则一个源挂掉会连带熔断掉备用源）。
+> 全部不可达时，日/周/月由腾讯兜底，分钟由腾讯分时兜底（仅当天）；再不可达则
 > 落到本地日K（周/月聚合）。仅「分钟周期 + 东财/腾讯都不可达」这一种组合会显示暂无数据。
 
 
@@ -539,5 +707,19 @@ GET /kline?key=sh_comp&period=1d&limit=250
     overwritten by merge"），本地改动完好 —— 天然安全，适合做自动化同步任务
 14. **`git fetch` 之后 `origin/main` 才前进**：判断「本地是否已是最新」必须在 fetch **之后**
     再读 `git rev-list --count HEAD..origin/main`，否则会误判成「无需同步」
-15. **Actions 的 `*/5` 不是 5 分钟**：实测每次间隔 3~5 小时，别按 5 分钟推断数据新鲜度，
+15. **Actions 的 `*/5` 不是 5 分钟**：实测每次间隔 3~6 小时，别按 5 分钟推断数据新鲜度，
     拉取频率也要跟着远端的真实节奏走
+16. 🔴 **东财是「按接口」限流的**：把单只 `stock/get` 与 `kline/get` 打密后，这两个端点会
+    socket 级拒绝（`UND_ERR_SOCKET`），而**同一主机上的 `ulist.np` 批量端点仍然正常**。
+    ⇒ 行情走批量（1 个请求 49 个标的），K 线配腾讯第二源
+17. 🔴 **「ulist 对 ETF 返回 '-'」是错的**：那次用错了字段口径（`stock/get` 的 f43 系）。
+    换成 `f2/f12/f13/f14/f18` 后 ETF 在批量端点全部有值 —— 别再为此写逐只请求
+18. 🔴 **腾讯 K 线主机用 `ifzq.gtimg.cn`（不带 `web.`）**：本机 DNS 解析不了
+    `web.ifzq.gtimg.cn`（ENOTFOUND），写错会让「腾讯兜底 K 线」整条路径静默失效
+19. 🔴 **熔断要按主机组隔离**：全局计数会让「东财 K 线被限流」连带熔断掉「腾讯备用源」，
+    一轮快照只剩 15/54 —— 一个源挂掉反而把冗余源干掉了
+20. 🔴 **两个 workflow 写同一分支必须共用 `concurrency: group`**：否则并发推送互相顶掉提交
+21. 🟡 **东财源时间戳（f124/f86）收盘后仍跳动**（15:32 → 16:26），它是推送时间不是成交时间，
+    不能用它自证「实时价已冻结在收盘价上」⇒ 时点价一律走 K 线
+22. 🟡 **上金所当日行情 17:00 前常未发布**、中债 1Y 曲线傍晚才出 ⇒ 当天想看黄金/利率收盘价，
+    看 `data/snapshots/` 里 `etf_518880`（黄金ETF）的收盘价，它与 A股同时收盘

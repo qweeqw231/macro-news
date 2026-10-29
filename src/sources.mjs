@@ -2,6 +2,9 @@
 // 全球宏观资讯 · 数据源适配器
 // 每个适配器返回统一 schema 的条目数组；单个源失败不影响整体采集。
 
+import { ETFS, etfTxCode } from './etf.mjs';
+import { fetchBatchQuotes } from './quotes.mjs';
+
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
   '(KHTML, like Gecko) Chrome/122.0 Safari/537.36';
@@ -277,76 +280,63 @@ function rssSource({ name, channel, url, limit = 30, tag = '', timeout = 15000, 
 // ---------- 宏观仪表盘行情（东方财富 push2，全部经本机实测） ----------
 // market 用于判断是否处于交易时段（决定前端是否需要高频刷新）
 // kline 列为该指数的日 K 代码；null 表示当前可用数据源取不到（见 README）
+// tx 为腾讯备用源的代码（东财限流时用于 K 线 / 行情的冗余）；null = 腾讯无对应代码
 export const INDICES = [
   // A股
-  { key: 'sh_comp',   name: '上证指数',   market: 'CN', secid: '1.000001', sina: 'sh000001' },
-  { key: 'sz_comp',   name: '深证成指',   market: 'CN', secid: '0.399001', sina: 'sz399001' },
-  { key: 'chinext',   name: '创业板指',   market: 'CN', secid: '0.399006', sina: 'sz399006' },
-  { key: 'star50',    name: '科创50',     market: 'CN', secid: '1.000688', sina: 'sh000688' },
-  { key: 'bse50',     name: '北证50',     market: 'CN', secid: '0.899050', sina: null },
-  { key: 'csi300',    name: '沪深300',    market: 'CN', secid: '1.000300', sina: 'sh000300' },
-  { key: 'csi500',    name: '中证500',    market: 'CN', secid: '1.000905', sina: 'sh000905' },
-  { key: 'csi1000',   name: '中证1000',   market: 'CN', secid: '1.000852', sina: 'sh000852' },
+  { key: 'sh_comp',   name: '上证指数',   market: 'CN', secid: '1.000001', sina: 'sh000001', tx: 'sh000001' },
+  { key: 'sz_comp',   name: '深证成指',   market: 'CN', secid: '0.399001', sina: 'sz399001', tx: 'sz399001' },
+  { key: 'chinext',   name: '创业板指',   market: 'CN', secid: '0.399006', sina: 'sz399006', tx: 'sz399006' },
+  { key: 'star50',    name: '科创50',     market: 'CN', secid: '1.000688', sina: 'sh000688', tx: 'sh000688' },
+  { key: 'bse50',     name: '北证50',     market: 'CN', secid: '0.899050', sina: null,       tx: 'bj899050' },
+  { key: 'csi300',    name: '沪深300',    market: 'CN', secid: '1.000300', sina: 'sh000300', tx: 'sh000300' },
+  { key: 'csi500',    name: '中证500',    market: 'CN', secid: '1.000905', sina: 'sh000905', tx: 'sh000905' },
+  { key: 'csi1000',   name: '中证1000',   market: 'CN', secid: '1.000852', sina: 'sh000852', tx: 'sh000852' },
   // 港股
-  { key: 'hsi',       name: '恒生指数',   market: 'HK', secid: '100.HSI',   sina: 'hkHSI' },
-  { key: 'hs_tech',   name: '恒生科技',   market: 'HK', secid: '124.HSTECH', sina: null },
+  { key: 'hsi',       name: '恒生指数',   market: 'HK', secid: '100.HSI',   sina: 'hkHSI', tx: 'hkHSI' },
+  { key: 'hs_tech',   name: '恒生科技',   market: 'HK', secid: '124.HSTECH', sina: null,    tx: 'hkHSTECH' },
   // 美股
-  { key: 'dji',       name: '道琼斯',     market: 'US', secid: '100.DJIA',  sina: 'usDJI' },
-  { key: 'ixic',      name: '纳斯达克',   market: 'US', secid: '100.NDX',   sina: 'usIXIC' },
-  { key: 'spx',       name: '标普500',    market: 'US', secid: '100.SPX',   sina: 'usINX' },
-  // 其他
-  { key: 'n225',      name: '日经225',    market: 'JP', secid: '100.N225',  sina: null },
-  { key: 'dax',       name: '德国DAX',    market: 'EU', secid: '100.GDAXI', sina: null },
-  { key: 'ukx',       name: '英国富时100', market: 'UK', secid: '100.FTSE',  sina: null },
-  { key: 'kospi',     name: '韩国KOSPI',  market: 'KR', secid: '100.KS11',  sina: null },
+  { key: 'dji',       name: '道琼斯',     market: 'US', secid: '100.DJIA',  sina: 'usDJI', tx: 'usDJI' },
+  { key: 'ixic',      name: '纳斯达克',   market: 'US', secid: '100.NDX',   sina: 'usIXIC', tx: 'usIXIC' },
+  { key: 'spx',       name: '标普500',    market: 'US', secid: '100.SPX',   sina: 'usINX', tx: 'usINX' },
+  // 其他（腾讯无对应代码 → 只能走东财）
+  { key: 'n225',      name: '日经225',    market: 'JP', secid: '100.N225',  sina: null, tx: null },
+  { key: 'dax',       name: '德国DAX',    market: 'EU', secid: '100.GDAXI', sina: null, tx: null },
+  { key: 'ukx',       name: '英国富时100', market: 'UK', secid: '100.FTSE',  sina: null, tx: null },
+  { key: 'kospi',     name: '韩国KOSPI',  market: 'KR', secid: '100.KS11',  sina: null, tx: null },
 ];
-
-// f43 最新 / f44 最高 / f45 最低 / f46 开盘 / f47 成交量 / f60 昨收 / f170 涨跌幅
-const QUOTE_FIELDS = 'f43,f44,f45,f46,f47,f57,f58,f60,f170';
 
 // 行情失败原因（由 fetchQuotes 写入，供采集器记录到 _last-run.json）
 let quoteError = '';
 export function getQuoteError() { return quoteError; }
 
+/**
+ * 采集全部行情：17 个指数 + 32 只场内 ETF。
+ *
+ * ⚠ 走**批量**端点（东财 ulist.np），不是逐只 stock/get：
+ *   · 批量一次拿完 49 个标的，请求数从 49 降到 1；
+ *   · 东财的限流是**按接口**的 —— 实测打密之后 stock/get 与 kline 端点会被
+ *     socket 级拒绝，而 ulist 仍然正常，所以批量端点同时也是更抗限流的选择。
+ *   · 详见 src/quotes.mjs 的口径说明（含「ulist 对 ETF 也有效」这条更正）。
+ */
 export async function fetchQuotes() {
-  // GitHub Actions 的美国节点访问国内行情接口明显更慢，
-  // 原先 15 秒超时 + 无重试会导致 17 个指数全军覆没（quotes: 0）。
-  // 这里放宽到 25 秒并各重试 1 次，并把失败原因回报给 _last-run.json，
-  // 否则线上只能看到「0 条」而无从排查。
-  const results = await Promise.allSettled(
-    INDICES.map(async (q) => {
-      const j = await get(
-        `https://push2.eastmoney.com/api/qt/stock/get?fltt=2&invt=2&secid=${q.secid}&fields=${QUOTE_FIELDS}`,
-        { json: true, timeout: 25000, retries: 1 }
-      );
-      const d = j?.data;
-      if (!d?.f58) return null;
-      const num = (v) => (v === undefined || v === null || v === '-' ? null : Number(v));
-      return {
-        key: q.key,
-        name: d.f58 || q.name,
-        market: q.market,
-        price: num(d.f43),
-        open: num(d.f46),
-        high: num(d.f44),
-        low: num(d.f45),
-        prevClose: num(d.f60),
-        volume: num(d.f47),
-        changePct: num(d.f170),
-        updatedAt: new Date().toISOString(),
-      };
-    })
-  );
-  const ok = results.filter((r) => r.status === 'fulfilled' && r.value);
-  const failed = results.filter((r) => r.status === 'rejected');
-  if (failed.length) {
-    // 去重后只报 1-2 条原因，避免日志刷屏
-    const reasons = [...new Set(failed.map((r) => String(r.reason?.message || r.reason)))].slice(0, 2);
-    quoteError = `${failed.length}/${INDICES.length} 失败：${reasons.join('；')}`;
+  const targets = [
+    ...INDICES.map((i) => ({
+      key: i.key, name: i.name, market: i.market, secid: i.secid, tx: i.tx,
+    })),
+    ...ETFS.map((e) => ({
+      key: e.key, name: e.name, market: 'ETF', secid: e.secid,
+      tx: etfTxCode(e.secid), theme: e.theme, region: e.region || 'CN',
+    })),
+  ];
+  const { quotes, fail } = await fetchBatchQuotes(targets);
+  const failCount = Object.keys(fail).length;
+  if (failCount) {
+    const reasons = [...new Set(Object.values(fail))].slice(0, 2).join('；');
+    quoteError = `${failCount}/${targets.length} 失败：${reasons}`;
   } else {
     quoteError = '';
   }
-  return ok.map((r) => r.value);
+  return quotes;
 }
 
 
