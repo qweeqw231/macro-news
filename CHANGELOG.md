@@ -6,6 +6,35 @@
 
 ### 待发布
 
+## [1.2.0] - 2026-10-29
+
+### 新增
+
+- **`scripts/pull-remote.ps1` + 配套定时任务「macro-news 远端数据同步（每 4 小时）」**
+  - 方向与采集链路相反：**远端 → 本机**。跑 `git fetch origin main` +
+    `git merge --ff-only origin/main`，让本地 `data/` 随时跟上 GitHub 上的最新
+    新闻（含标题与正文）、行情、归档与 K 线。
+  - 频率定为**每 4 小时**：实测 GitHub Actions 实际每 **3~5 小时**才推一次
+    （最近三次 10-28 19:39 → 23:30 → 10-29 02:43 UTC），拉得更勤拿到的还是同一份数据。
+  - 安全性：快进失败（本地有未提交改动，或有本地独有提交）→ **跳过并报告**，
+    绝不覆盖用户工作区。已实测 `git merge --ff-only` 在脏工作区下会拒绝合并并中止。
+  - 运行状态写入 `logs/last-pull-status.json`（不入库）。
+
+### 修正
+
+- README 里「github.io / github.com 在国内均可直连」的旧结论已不成立
+  （2026-10-29 实测 HTTPS 被重置），改为标注 SSH-443 推送方式与本机实测结论。
+- README 标注 **GitHub Pages 尚未启用**（`has_pages=false`，
+  `qweeqw231.github.io/macro-news/` 返回 "Site not found"），
+  需在仓库 Settings → Pages 里把 Source 选成 `main` / 根目录。
+
+### 踩坑
+
+- 用 `git restore --source=origin/main --worktree -- data` 只拉数据会留下
+  「脏工作区 + untracked 文件」，**反而阻塞下一次快进**；整体 ff 才是干净做法。
+- `git fetch origin main` 之后 `origin/main` 会前进，但 `git rev-parse origin/main`
+  要在 fetch **之后**再读，否则会误判「本地已是最新」。
+
 ## [1.1.0] - 2026-10-29
 
 ### 新增

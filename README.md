@@ -92,6 +92,30 @@ minimax 定时任务（交易日 16:30 Asia/Shanghai，固定对话）
 写入前逐条校验：价格 > 0、涨跌幅 ∈ −20%~+20%、上海金 ∈ 500~1500 元/克、
 中间价 ∈ 5.0~9.0、`updatedAt` 距今 ≥3 天则标 `stale`。任一条不过就丢弃该条并记进运行日志。
 
+## 第三条链路：定时从远端拉取（本地同步）
+
+上面的两条链路都是「本机 → 远端」。还有一条是反方向的：**远端 → 本机**，
+让本地 `data/` 随时跟上 GitHub 上的最新数据（新闻正文、行情、归档）。
+
+```
+minimax 定时任务（每 4 小时）
+   └─ scripts\pull-remote.ps1
+        ├─ git fetch origin main
+        └─ git merge --ff-only origin main     ← 只前进，不产生合并提交
+             └─ 本地 data/ 变成远端最新（新闻含正文 / 行情 / 归档 / K线）
+```
+
+| 项 | 说明 |
+|---|---|
+| 频率 | 每 4 小时（`0 */4 * * *`），含周末——新闻周末照常更新 |
+| 为什么是 4 小时 | GitHub Actions 实测**每 3~5 小时才推一次**，拉得更勤拿到的还是同一份数据 |
+| 安全性 | 快进失败（本地有未提交改动 / 有本地独有提交）→ **跳过并报告，绝不覆盖你的工作区** |
+| 手动执行 | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\pull-remote.ps1` |
+
+> ⚠️ **读本地数据前先拉**。Actions 的产物先到 GitHub，本地要等拉取才更新。
+> 反过来，16:30 采集任务产出的 5 个新 key 是**直接写在本机**的（它就跑在本机），
+> 方向相反，两条链路不会互相覆盖。
+
 ## 实时行情与 K 线：浏览器直连，无需服务器
 
 **新闻**的延迟 = 采集间隔（GitHub Actions 最短 5 分钟）；但**行情与 K 线**
@@ -156,6 +180,7 @@ macro-news/
 ├── scripts/
 │   ├── collect-and-push.ps1   采集 → 提交 → 推送
 │   ├── portfolio-collect-and-push.ps1  组合采集 → 提交 → 推送（16:30 定时任务调用）
+│   ├── pull-remote.ps1        从远端拉取最新数据到本地（每 4 小时）
 │   └── register-task.ps1      注册/取消计划任务
 └── logs/                 运行日志（保留 14 天，不入库）
 ```
@@ -177,6 +202,9 @@ node src\portfolio-collect.mjs --dry-run
 
 # 组合采集全流程（采集 → 提交 → 推送），定时任务调用的是这条
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\portfolio-collect-and-push.ps1
+
+# 从远端拉取最新数据到本地（定时任务每 4 小时跑一次）
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\pull-remote.ps1
 
 # 注册计划任务（默认 30 分钟）
 powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1
