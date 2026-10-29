@@ -501,7 +501,8 @@
     if (viewFromHash() !== v) history.replaceState(null, '', '#view-' + v);
     // 需要数据的视图在切过去时才去取（懒加载）
     if (v === 'archive') renderArchive();
-    if (v === 'sources' || v === 'status') renderSources();
+    if (v === 'sources') renderSources();
+    if (v === 'status') renderStatus();
   }
 
   // ---------- 归档 ----------
@@ -546,23 +547,29 @@
     }
   }
 
-  // ---------- 来源 ----------
+  // ---------- 来源 / 运行状态 ----------
+  // ⚠ 这两个视图共用同一份数据（`_last-run.json` + `index.json`），
+  //   但**必须分别填各自的容器**：以前两个区块都写进了 `#sources`，
+  //   而 `#status` 从来没被写过 ⇒ 点「运行状态」永远是空白一片（看起来像"点了没反应"）。
+  let runMeta = null;
+  async function loadRunMeta() {
+    if (!runMeta) {
+      const [last, idx] = await Promise.all([jget('_last-run.json'), jget('index.json')]);
+      let total = 0;
+      (idx.days || []).forEach((d) => { total += d.count || 0; });
+      runMeta = { last: last || {}, total, days: (idx.days || []).length };
+    }
+    return runMeta;
+  }
+
   async function renderSources() {
     const box = $('#sources');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
     try {
-      const [last, idx] = await Promise.all([jget('_last-run.json'), jget('index.json')]);
-      const counts = new Map();
-      idx.days.forEach((d) => counts.set(d.day, d.count));
-
-      const n = (k) => {
-        let c = 0;
-        counts.forEach((v) => { c += v; });
-        return c;
-      };
-
+      const { last } = await loadRunMeta();
+      const srcs = last.sources || [];
       let rows = '';
-      last.sources.forEach((s) => {
+      srcs.forEach((s) => {
         rows += `<tr>
           <td>${esc(s.label)}</td>
           <td class="${s.ok ? 'ok' : 'bad'}">${s.ok ? '正常' : '失败'}</td>
@@ -574,26 +581,41 @@
 
       box.innerHTML = `
         <h2 style="font-size:1.2rem;margin:1.5rem 0 .5rem">数据源</h2>
-        <div class="tbl-wrap"><table>
+        ${srcs.length ? `<div class="tbl-wrap"><table>
           <thead><tr><th>来源</th><th>状态</th><th class="num">本次条数</th><th class="num">耗时</th><th>错误</th></tr></thead>
           <tbody>${rows}</tbody>
-        </table></div>
+        </table></div>` : '<div class="note">没有可用的来源状态记录。</div>'}
 
-        <h2 style="font-size:1.2rem;margin:1.75rem 0 .5rem">采集概况</h2>
+        <div class="note">
+          共 ${srcs.length} 个新闻源，每个源独立 try/catch —— <strong>单个源失败不影响其他源</strong>，
+          失败原因见上表。状态与耗时是最近一次采集时的现场值，随当次网络状况波动。
+        </div>`;
+    } catch (e) {
+      box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
+    }
+  }
+
+  async function renderStatus() {
+    const box = $('#status');
+    box.innerHTML = '<div class="skeleton">载入中…</div>';
+    try {
+      const { last, total, days } = await loadRunMeta();
+      box.innerHTML = `
+        <h2 style="font-size:1.2rem;margin:1.5rem 0 .5rem">采集概况</h2>
         <div class="tbl-wrap"><table>
           <tbody>
-            <tr><td>最近一次运行</td><td class="num">${new Date(last.startedAt).toLocaleString('zh-CN', { hour12: false })}</td></tr>
-            <tr><td>总耗时</td><td class="num">${last.durationMs} ms</td></tr>
-            <tr><td>本次新增</td><td class="num">${last.added} 条</td></tr>
-            <tr><td>行情快照</td><td class="num">${last.quotes} 项</td></tr>
-            <tr><td>库内总计</td><td class="num">${n()} 条 / ${idx.days.length} 天</td></tr>
+            <tr><td>最近一次运行</td><td class="num">${last.startedAt ? new Date(last.startedAt).toLocaleString('zh-CN', { hour12: false }) : '—'}</td></tr>
+            <tr><td>总耗时</td><td class="num">${last.durationMs != null ? last.durationMs + ' ms' : '—'}</td></tr>
+            <tr><td>本次新增</td><td class="num">${last.added != null ? last.added + ' 条' : '—'}</td></tr>
+            <tr><td>行情快照</td><td class="num">${last.quotes != null ? last.quotes + ' 项' : '—'}</td></tr>
+            <tr><td>库内总计</td><td class="num">${total} 条 / ${days} 天</td></tr>
           </tbody>
         </table></div>
 
         <div class="note">
           采集由 GitHub Actions 按固定周期运行 <code>node src/collect.mjs</code>，
-          完全不占用 AI 对话上下文。脚本幂等，重复运行不会产生重复条目；
-          单个源失败不影响其他源，失败原因见上表。
+          完全不占用 AI 对话上下文。脚本幂等，重复运行不会产生重复条目。
+          各源本次条数与耗时见「来源」页。
         </div>`;
     } catch (e) {
       box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
