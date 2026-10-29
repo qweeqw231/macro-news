@@ -179,7 +179,7 @@ export async function emGetJSON(pathnameWithQuery, opts = {}) {
         breaker.fails = 0;
       }
       if (attempt < retries - 1) {
-        // 退避 1s / 3s / 6s
+        // 退避 ~1.3s / ~2.3s（retries=3 时共两次等待）
         await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, attempt) + 300));
       }
     } finally {
