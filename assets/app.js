@@ -418,10 +418,10 @@
   }
 
   // ---------- 视图切换 ----------
-  // 视图与 URL 的 hash 一一对应（#view-feed / #view-archive / #view-sources）：
+  // 视图与 URL 的 hash 一一对应（#view-feed / #view-market / #view-archive / #view-sources）：
   //   · 页签是真链接，点一下 URL 就变 —— 有即时反馈，也能收藏/分享某个视图；
   //   · 即使 app.js 还没加载完，点下去也会跳到对应区块，而不是毫无反应。
-  const VIEWS = ['feed', 'archive', 'sources'];
+  const VIEWS = ['feed', 'market', 'archive', 'sources'];
 
   // ---------- 视图切换后的视口对齐 ----------
   //
@@ -470,7 +470,7 @@
   }
 
   function viewFromHash() {
-    const m = String(location.hash || '').match(/^#view-(feed|archive|sources)$/);
+    const m = String(location.hash || '').match(/^#view-(feed|market|archive|sources)$/);
     return m ? m[1] : null;
   }
 
