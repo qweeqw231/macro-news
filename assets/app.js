@@ -33,8 +33,10 @@
       ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])
     );
 
-  async function jget(name) {
-    const r = await fetch(`${DATA}/${name}`, { cache: 'no-store' });
+  async function jget(name, cache) {
+    // ⚠ 检索索引（几 MB）用默认缓存：Pages 的 cache-control 是 max-age=600，
+    //   10 分钟内刷新页面可以直接复用浏览器缓存，不用再拉一次几 MB。
+    const r = await fetch(`${DATA}/${name}`, { cache: cache || 'no-store' });
     if (!r.ok) throw new Error(`${name} HTTP ${r.status}`);
     return r.json();
   }
@@ -358,6 +360,34 @@
     searchTimer = setTimeout(() => runSearch(v), 220);
   }
 
+  // 检索索引 `data/search.json` 有 6~10MB（gzip 后 ~2.7MB），
+  // 从 GitHub Pages 拉一次要**几十秒到几分钟**（本机实测带宽 5~30 KB/s）。
+  // ⇒ 在要闻流加载完之后**后台预取**：用户敲关键词时通常已经就绪；
+  //   还没好时 qMeta 显示「检索索引载入中…」。
+  let searchIdxPromise = null;
+  function ensureSearchIndex() {
+    if (S.searchIdx) return Promise.resolve(S.searchIdx);
+    if (!searchIdxPromise) {
+      searchIdxPromise = jget('search.json', 'default')
+        .then((d) => {
+          S.searchIdx = d.items || [];
+          S.fuse = new window.Fuse(S.searchIdx, {
+            includeScore: true, ignoreLocation: true,
+            minMatchCharLength: 2, threshold: 0.4, distance: 100,
+            keys: [
+              { name: 'title', weight: 0.55 },
+              { name: 'summary', weight: 0.3 },
+              { name: 'source', weight: 0.1 },
+              { name: 'channel', weight: 0.05 },
+            ],
+          });
+          return S.searchIdx;
+        })
+        .catch((e) => { searchIdxPromise = null; throw e; });
+    }
+    return searchIdxPromise;
+  }
+
   async function runSearch(q) {
     S.q = q.trim();
     closeReader();
@@ -374,26 +404,12 @@
       return;
     }
     if (!S.searchIdx) {
-      $('#qMeta').textContent = '检索索引载入中…';
+      $('#qMeta').textContent = '检索索引载入中…（首次检索要下载索引，请稍候）';
       try {
-        const d = await jget('search.json');
-        S.searchIdx = d.items;
-        const build = () => {
-          S.fuse = new window.Fuse(S.searchIdx, {
-            includeScore: true, ignoreLocation: true,
-            minMatchCharLength: 2, threshold: 0.4, distance: 100,
-            keys: [
-              { name: 'title', weight: 0.55 },
-              { name: 'summary', weight: 0.3 },
-              { name: 'source', weight: 0.1 },
-              { name: 'channel', weight: 0.05 },
-            ],
-          });
-          doSearch();
-        };
         // ⚠ 别用 requestIdleCallback：用户已经在等搜索结果了，等「空闲」反而更慢
         //   （而且 requestIdleCallback 在后台标签页里可能迟迟不触发 → 搜索看起来「没反应」）
-        build();
+        await ensureSearchIndex();
+        doSearch();
       } catch (e) {
         $('#qMeta').textContent = '索引载入失败：' + e.message;
         return;
@@ -810,6 +826,8 @@
       // 走一遍空搜索分支：首次加载就把「母集」说明写进 #qMeta
       // （空搜索 = 最新快照 200 条，带关键词 = 全库 17092 条），同时渲染筛选条与列表
       runSearch('');
+      // 后台预取检索索引（大文件，几十秒）—— 用户第一次敲关键词时多半已经就绪
+      ensureSearchIndex().catch(() => {});
       // 页脚先放快照信息（兜底），随后由 renderFoot() 换成完整的采集概况
       $('#ftMeta').textContent = `库内 ${d.total} 条 · 快照生成于 ${new Date(d.generatedAt).toLocaleString('zh-CN', { hour12: false })}`;
       renderFoot();
