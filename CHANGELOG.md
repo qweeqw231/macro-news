@@ -37,6 +37,13 @@
 
 ### 修正
 
+- 🟡 **`cgb_1y` 的「周K / 月K」原本要把日K 重下一遍**：
+  日K 文件有 **504KB**，前端切周期时 `localKline()` 会再次 `fetch` 同一个文件
+  （`cache: 'no-store'`），线上按本机实测 5~30 KB/s 的带宽要 **20~100 秒**。
+  - 后端**预生成** `data/kline/cgb_1y_1w.json`（861 根）/ `cgb_1y_1M.json`（202 根），
+    聚合口径抽到 `src/aggregate.mjs`（后端预生成与前端兜底聚合共用同一份规则）；
+  - 前端 `localKline()` 增加**内存缓存**：同一会话内本地文件只下一次
+    （实测二次调用 **0ms**），取失败的不进缓存、允许重试。
 - 🟡 **中新网「采集失败（fetch failed）」= 瞬时网络抖动 + `retries = 0` 的组合**。
   实测 `https://www.chinanews.com.cn/rss/finance.xml` **完全可达**（200 / 16.5KB / 0.39 秒），
   源没坏，是 `rssSource()` 默认 `retries = 0` ⇒ 一次抖动就把源判死。

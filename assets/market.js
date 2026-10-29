@@ -441,6 +441,30 @@
   }
 
   // ---- 本地兜底：采集器预生成的日K；周/月由日K聚合（零网络，必可用） ----
+  //
+  // ⚠ 本地文件的**内存缓存**：同一页面会话内，把「日K」切到「周K / 月K」时会再次读
+  //   同一个日K 文件。1Y 国债的日K 文件有 **500KB** —— 线上按本机实测 5~30 KB/s 的带宽
+  //   重下一次要 20~100 秒，用户点一下周K 得干等。
+  //   ⇒ 缓存住已取回的文件（同一会话内只下一次）；取失败的不进缓存，允许重试。
+  const localFileCache = new Map();
+  function fetchLocalFile(path) {
+    if (!localFileCache.has(path)) {
+      localFileCache.set(
+        path,
+        fetch(path, { cache: 'no-store' })
+          .then((r) => {
+            if (!r.ok) throw new Error('本地文件不存在 ' + path);
+            return r.json();
+          })
+          .catch((e) => {
+            localFileCache.delete(path);
+            throw e;
+          })
+      );
+    }
+    return localFileCache.get(path);
+  }
+
   function aggregateDaily(daily, unit) {
     const weekKey = (t) => {
       const d = new Date(String(t).slice(0, 10) + 'T00:00:00Z');
@@ -476,16 +500,13 @@
     if (period === '1w' || period === '1M') {
       const suffix = period === '1w' ? '_1w' : '_1M';
       try {
-        const r = await fetch(`data/kline/${key}${suffix}.json`, { cache: 'no-store' });
-        if (r.ok) {
-          const bars = (await r.json()).bars;
-          if (Array.isArray(bars) && bars.length) return bars;
-        }
+        const j = await fetchLocalFile(`data/kline/${key}${suffix}.json`);
+        const bars = j.bars;
+        if (Array.isArray(bars) && bars.length) return bars;
       } catch (e) { /* 没有该周期文件 → 落到下面的日K聚合 */ }
     }
-    const r = await fetch(`data/kline/${key}.json`, { cache: 'no-store' });
-    if (!r.ok) throw new Error('本地日K不存在');
-    const daily = (await r.json()).bars;
+    const j = await fetchLocalFile(`data/kline/${key}.json`);
+    const daily = j.bars;
     if (!Array.isArray(daily) || !daily.length) throw new Error('本地日K为空');
     if (period === '1d') return daily;
     if (period === '1w') return aggregateDaily(daily, 'week');

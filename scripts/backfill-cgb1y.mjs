@@ -18,6 +18,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchCgbCurveOneY } from '../src/portfolio.mjs';
+import { aggregateDaily } from '../src/aggregate.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -54,18 +55,29 @@ const seen = new Set(bars.map((b) => b.t));
 // 所以每攒够 FLUSH_EVERY 根就写一次盘（而不是等跑完才写）。
 const FLUSH_EVERY = 50;
 let lastFlush = 0;
+const meta = (period) => ({
+  key: 'cgb_1y',
+  name: '1Y国债收益率',
+  market: 'CN',
+  period,
+  generatedAt: new Date().toISOString(),
+  source: '中债国债收益率曲线（queryGjqxInfo）',
+});
 async function flush() {
   bars.sort((a, b) => String(a.t).localeCompare(String(b.t)));
   await mkdir(path.dirname(OUT), { recursive: true });
-  await writeFile(OUT, JSON.stringify({
-    key: 'cgb_1y',
-    name: '1Y国债收益率',
-    market: 'CN',
-    period: '1d',
-    generatedAt: new Date().toISOString(),
-    source: '中债国债收益率曲线（queryGjqxInfo）',
-    bars,
-  }, null, 2), 'utf8');
+  await writeFile(OUT, JSON.stringify({ ...meta('1d'), bars }, null, 2), 'utf8');
+  // 周K / 月K 一并预生成：前端点「周K / 月K」时直接读小文件，
+  // 不用把 500KB 的日K 再下一遍（线上按本机 5~30 KB/s 的带宽重下要 20~100 秒）。
+  for (const [period, unit] of [['1w', 'week'], ['1M', 'month']]) {
+    const sub = aggregateDaily(bars, unit);
+    if (!sub.length) continue;
+    await writeFile(
+      path.join(path.dirname(OUT), `cgb_1y_${period}.json`),
+      JSON.stringify({ ...meta(period), source: meta('1d').source + ' · 由日K聚合', bars: sub }, null, 2),
+      'utf8'
+    );
+  }
 }
 
 // 已有数据覆盖的日期：这些天**不需要再请求**（中债在工作日返回的 srcDate 就是当天，
