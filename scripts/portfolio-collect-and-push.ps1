@@ -137,7 +137,17 @@ if ($nodeExit -ne 0) {
     exit 1
 }
 
-# ---- 3. 有变化才提交 ----
+# ---- 3. 刷新服务端预生成的全量日K（data\kline\<key>_full.json）----
+# 这是「直连源全部不可用时」的兜底：前端拿不到新浪/东财/腾讯时，
+# 还能从 Pages 上读到全量日K（紧凑数组行），而不是只有 1000 根的近 4 年快照。
+# 每天最多更新一次（脚本按 generatedAt 判断），所以这一步平时几乎不产生请求。
+# 失败不阻断：它只是兜底，缺了只是少一条退路。
+$fullOut = & node scripts\update-kline-full.mjs 2>&1 | Out-String
+$fullExit = $LASTEXITCODE
+$fullOut.TrimEnd() -split "`r?`n" | ForEach-Object { Say $_ }
+if ($fullExit -ne 0) { Say "全量日K刷新失败（退出码 $fullExit），不影响本轮采集与推送" }
+
+# ---- 4. 有变化才提交 ----
 # 注意：不要写成 `git add ... 2>&1 | Out-Null`。
 # PowerShell 5.1 下把原生命令的输出管道给 Out-Null 时该命令可能根本不执行，
 # `$null =` 才是既执行又丢弃输出的正确写法。

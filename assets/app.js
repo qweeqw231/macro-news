@@ -655,6 +655,31 @@
   let klineTimer = null;
   let klineKey = '';
   let klinePeriod = '1d';
+  // 请求令牌：每次取数 +1。
+  // ⚠ 没有它会出两个 bug：
+  //   ① 旧图残留 —— 图表是单例，切标的时画布还留着上一个标的的 K 线；
+  //   ② 数据串台 —— 快速点 A→B 时，A 的响应后到会执行 setData(A的bars)，
+  //      结果 **A 的 K 线显示在 B 的标题下**。
+  // ⇒ 任何异步回来的结果，先校验令牌，过期的直接丢弃。
+  let klineReqId = 0;
+
+  // 「更全的结果到了」的等待器。
+  // 直连链里各源到货时间不同（新浪 ~0.8s / 腾讯 ~1.4s / 东财可能挂到超时），
+  // 在决定要不要去拉「服务端全量文件」之前，先给还在路上的源留一个宽限期，
+  // 否则会在新浪还没到时就抢着去拉全量文件 —— 白耗 Pages 带宽（实测只有 7~20 KB/s）。
+  let upgradeWaiters = [];
+  const notifyUpgrade = () => {
+    const w = upgradeWaiters;
+    upgradeWaiters = [];
+    w.forEach((fn) => fn());
+  };
+  const waitUpgrade = (ms) =>
+    new Promise((resolve) => {
+      let done = false;
+      const fin = () => { if (done) return; done = true; resolve(); };
+      upgradeWaiters.push(fin);
+      setTimeout(fin, ms);
+    });
 
   function openKline(key) {
     const q = (S.quotes || []).find((x) => x.key === key);
@@ -677,8 +702,9 @@
     });
 
     if (!kChart) kChart = new window.KlineChart($('#kmCanvas'));
+    else kChart.reset();              // ← 清掉上一个标的的图（残留 bug）
     loadKline(key, CFG.DEFAULT_PERIOD || '1d');
-    scheduleKlineRefresh(key);
+    scheduleKlineRefresh();
   }
 
   function closeKline() {
@@ -697,49 +723,88 @@
     period === '1d' || period === '1w' || period === '1M' ? 8000 : 1000;
 
   async function loadKline(key, period) {
+    const myId = ++klineReqId;          // 请求令牌：过期响应一律丢弃
     klineKey = key;
     klinePeriod = period;
     document.querySelectorAll('.pchip').forEach((b) => b.classList.toggle('on', b.dataset.period === period));
 
     const note = $('#kmNote');
     note.textContent = '加载中…';
-    let bars = null;
-    let from = '';
-    // 取数链见 market.js：东财直连 → 新浪(JSONP 全量) → 本地预生成 → 腾讯兜底
-    try {
-      bars = await window.MarketData.fetchKline(key, period, klineLimit(period));
-      from = window.MarketData.getKlineSource
-        ? window.MarketData.getKlineSource()
-        : '直连';
-    } catch (e) {
-      // 兜底：采集器预生成的日K；周/月有对应周期文件，否则由日K聚合，零网络
-      try {
-        bars = await window.MarketData.localKline(key, period);
-        from = period === '1d' ? '本地日K快照' : '本地预生成';
-      } catch (e2) { /* 本地也没有该周期 */ }
+    kChart.setData([], period);          // ← 立刻清空画布，绝不留上一个标的的图
+
+    // 落图入口。三个约束：
+    //   ① 令牌过期 → 丢弃（修「A 的响应后到，盖在 B 的标题下」）；
+    //   ② **根数变少的结果不覆盖已有的** —— 否则后到的 1000 根会把先到的 8000 根降级；
+    //   ③ 根数相同时**直连优先于本地** —— 直连是刚抓的，本地是采集器的每日快照。
+    let shown = 0;
+    let shownRank = -1;                   // 0 = 本地，1 = 直连
+    const apply = (bars, src, rank) => {
+      if (myId !== klineReqId) return false;
+      if (!bars || !bars.length) return false;
+      if (bars.length < shown) return false;
+      if (bars.length === shown && rank <= shownRank) return false;
+      shown = bars.length;
+      shownRank = rank;
+      kChart.setData(bars, period);
+      note.textContent = `${bars.length} 根 · ${bars[0].t} → ${bars[bars.length - 1].t} · ${src}`;
+      notifyUpgrade();
+      return true;
+    };
+
+    // ---- 第 1 波：直连多源赛马（东财/新浪/腾讯 同时发）+ 本地快路径（走 Pages）----
+    // 直连源走外网、本地文件走 GitHub Pages，两条路带宽互不争抢，谁先回先出图。
+    // 本地那一路是**保险**：直连全挂时，它也能在 1~4 秒内给出一张图（近 4 年 / 1000 根）。
+    window.MarketData.localKline(key, period)
+      .then((bars) => apply(bars, '本地预生成（近 4 年）', 0))
+      .catch(() => false);
+
+    await window.MarketData
+      .fetchKlineRemote(key, period, klineLimit(period), (bars, src) => apply(bars, src, 1))
+      .catch(() => false);
+    if (myId !== klineReqId) return;      // 期间用户已经切到别的标的/周期了
+
+    // ---- 第 2 波：直连没给够根数 ⇒ 拉服务端预生成的全量日K ----
+    // 宽限 3 秒：给可能更慢但更全的源留窗口，避免在它还在路上时白耗 Pages 带宽。
+    if (period === '1d' && shown < 2000) {
+      await waitUpgrade(3000);
+      if (myId !== klineReqId) return;
+      if (shown < 2000) {
+        try {
+          const bars = await window.MarketData.localFullKline(key, period);
+          apply(bars, '本地全量（服务端预生成）', 0);
+        } catch (e) { /* 没有全量文件 */ }
+      }
     }
 
-    if (!bars || !bars.length) {
-      kChart.setData([], period);
+    if (myId === klineReqId && shown === 0) {
       note.textContent = '加载失败：直连与本地均无该周期数据（本地仅有日/周/月）。';
-      return;
     }
-    kChart.setData(bars, period);
-    note.textContent = `${bars.length} 根 · ${bars[0].t} → ${bars[bars.length - 1].t} · ${from}`;
   }
 
   // 交易时段内自动刷新最新一根；只重设数据不重建图表，保留缩放位置
-  function scheduleKlineRefresh(key) {
+  function scheduleKlineRefresh() {
     clearTimeout(klineTimer);
-    const q = (S.quotes || []).find((x) => x.key === key);
+    const q = (S.quotes || []).find((x) => x.key === klineKey);
     if (!q || !isTrading(q.market)) return;
     klineTimer = setTimeout(async () => {
       if ($('#klineModal').hidden) return;
+      const myId = klineReqId;            // 期间是否换过标的/周期
       try {
-        const bars = await window.MarketData.fetchKline(klineKey, klinePeriod, klineLimit(klinePeriod));
-        if (bars && bars.length) kChart.setData(bars, klinePeriod);
+        // ⚠ 用 onData 而不是等返回值：赛马链里**首个成功**只保证「有数据」，
+        //   不保证是最全的（腾讯 1000 根可能先于新浪 8752 根到）。
+        //   onData 让每个源到货都单独判断一次，谁根数多谁上。
+        await window.MarketData.fetchKlineRemote(
+          klineKey, klinePeriod, klineLimit(klinePeriod),
+          (bars) => {
+            if (myId !== klineReqId) return;   // 换过了，丢弃这次刷新
+            // ⚠ 只在「根数不减少」时覆盖：直连只给 1000 根时，不能把本地全量的 8752 根降级
+            if (bars && bars.length && bars.length >= kChart.bars.length) {
+              kChart.setData(bars, klinePeriod);
+            }
+          }
+        );
       } catch (e) { /* 单次失败忽略，下一轮再试 */ }
-      scheduleKlineRefresh(key);
+      scheduleKlineRefresh();
     }, (CFG.REFRESH_SECONDS || 20) * 1000);
   }
 

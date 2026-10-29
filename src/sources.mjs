@@ -336,17 +336,20 @@ export const INDICES = [
   { key: 'sz_comp',   name: '深证成指',   market: 'CN', secid: '0.399001', sina: 'sz399001', tx: 'sz399001' },
   { key: 'chinext',   name: '创业板指',   market: 'CN', secid: '0.399006', sina: 'sz399006', tx: 'sz399006' },
   { key: 'star50',    name: '科创50',     market: 'CN', secid: '1.000688', sina: 'sh000688', tx: 'sh000688' },
-  { key: 'bse50',     name: '北证50',     market: 'CN', secid: '0.899050', sina: null,       tx: 'bj899050' },
+  { key: 'bse50',     name: '北证50',     market: 'CN', secid: '0.899050', sina: 'bj899050', tx: 'bj899050' },
   { key: 'csi300',    name: '沪深300',    market: 'CN', secid: '1.000300', sina: 'sh000300', tx: 'sh000300' },
   { key: 'csi500',    name: '中证500',    market: 'CN', secid: '1.000905', sina: 'sh000905', tx: 'sh000905' },
   { key: 'csi1000',   name: '中证1000',   market: 'CN', secid: '1.000852', sina: 'sh000852', tx: 'sh000852' },
   // 港股
-  { key: 'hsi',       name: '恒生指数',   market: 'HK', secid: '100.HSI',   sina: 'hkHSI', tx: 'hkHSI' },
+  // ⚠ 新浪**只有 CN 的 8 个指数**可用（2026-10-30 实测）：
+  //   hkHSI / hkHSTECH / usDJI / usIXIC / usINX 的 json_v2 与 jsonp_v2 都返回 **null**。
+  //   ⇒ 这几个标的的新浪字段一律置 null，别写一个"看起来有"其实取不到的值。
+  { key: 'hsi',       name: '恒生指数',   market: 'HK', secid: '100.HSI',   sina: null,    tx: 'hkHSI' },
   { key: 'hs_tech',   name: '恒生科技',   market: 'HK', secid: '124.HSTECH', sina: null,    tx: 'hkHSTECH' },
   // 美股
-  { key: 'dji',       name: '道琼斯',     market: 'US', secid: '100.DJIA',  sina: 'usDJI', tx: 'usDJI' },
-  { key: 'ixic',      name: '纳斯达克',   market: 'US', secid: '100.NDX',   sina: 'usIXIC', tx: 'usIXIC' },
-  { key: 'spx',       name: '标普500',    market: 'US', secid: '100.SPX',   sina: 'usINX', tx: 'usINX' },
+  { key: 'dji',       name: '道琼斯',     market: 'US', secid: '100.DJIA',  sina: null,    tx: 'usDJI' },
+  { key: 'ixic',      name: '纳斯达克',   market: 'US', secid: '100.NDX',   sina: null,    tx: 'usIXIC' },
+  { key: 'spx',       name: '标普500',    market: 'US', secid: '100.SPX',   sina: null,    tx: 'usINX' },
   // 其他（腾讯无对应代码 → 只能走东财）
   { key: 'n225',      name: '日经225',    market: 'JP', secid: '100.N225',  sina: null, tx: null },
   { key: 'dax',       name: '德国DAX',    market: 'EU', secid: '100.GDAXI', sina: null, tx: null },

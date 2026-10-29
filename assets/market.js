@@ -264,7 +264,7 @@
       'kline',
       KLINE_HOSTS,
       (h) => h + path,
-      10000,
+      6000,
       (j) => (j && j.data && j.data.klines && j.data.klines.length ? j.data.klines : null)
     );
     // 东财字段顺序：日期, 开, 收, 高, 低, 量, 额
@@ -289,11 +289,14 @@
   };
   const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200 };
 
-  // 新浪 JSONP 的回调名是**固定**的（写在路径里的 `var%20_data=`），
-  // 所以同一时刻只能有一个请求在飞 —— K线抽屉一次只开一张图，天然满足。
-  function sinaJsonp(url, timeoutMs) {
+  // 新浪 JSONP 的回调名写在**路径**里（`/var%20_xxx=/`），**每个请求必须唯一**：
+  // 固定名字时，快速切换标的两条请求会同时在飞 → 后到的把回调值覆盖，
+  // 先到的 onload 读到**别的标的的数据**（串台）。
+  // 实测新浪接受任意回调名（`var%20_kline_t1=` 可用）。
+  let sinaCbSeq = 0;
+  function sinaJsonp(url, cbName, timeoutMs) {
     return new Promise((resolve, reject) => {
-      const G = '_data';
+      const G = cbName;
       const script = document.createElement('script');
       let timer = null;
       const done = (fn, arg) => {
@@ -302,7 +305,7 @@
         try { delete window[G]; } catch (e) { window[G] = undefined; }
         fn(arg);
       };
-      timer = setTimeout(() => done(reject, new Error('新浪 JSONP 超时')), timeoutMs || 45000);
+      timer = setTimeout(() => done(reject, new Error('新浪 JSONP 超时')), timeoutMs || 15000);
       script.onerror = () => done(reject, new Error('新浪 JSONP 加载失败'));
       script.onload = () => {
         const raw = window[G];
@@ -318,10 +321,11 @@
     const code = SINA_CODE[key];
     const scale = SINA_SCALE[period];
     if (!code || !scale) throw new Error('新浪无该指数/周期');
+    const cb = '_kline_' + (++sinaCbSeq);
     const url =
-      'https://money.finance.sina.com.cn/quotes_service/api/jsonp_v2.php/var%20_data=' +
+      'https://money.finance.sina.com.cn/quotes_service/api/jsonp_v2.php/var%20' + cb + '=' +
       `/CN_MarketData.getKLineData?symbol=${code}&scale=${scale}&ma=no&datalen=20000`;
-    const raw = await sinaJsonp(url);
+    const raw = await sinaJsonp(url, cb);
     return raw.map((b) => ({
       t: String(b.day).slice(0, 10), o: +b.open, c: +b.close,
       h: +b.high, l: +b.low, v: +b.volume,
@@ -340,7 +344,7 @@
     const ep = /^us/.test(code)
       ? 'https://ifzq.gtimg.cn/appstock/app/usfqkline/get'
       : 'https://ifzq.gtimg.cn/appstock/app/fqkline/get';
-    const j = await req(`${ep}?param=${code},${p},,,${n},qfq`, 10000);
+    const j = await req(`${ep}?param=${code},${p},,,${n},qfq`, 8000);
     const d = j && j.data && j.data[code];
     const arr = d && (d[p] || d['qfq' + p]);
     if (!Array.isArray(arr) || !arr.length) throw new Error('腾讯返回空数据');
@@ -395,48 +399,85 @@
   let lastKlineSource = '';
   const getKlineSource = () => lastKlineSource;
 
-  // 取数顺序：**东财 → 新浪(JSONP) → 本地预生成 → 腾讯**
+  // ---- 取数编排（2026-10-30 重排：串行 fallback → **并发赛马**）----
   //
-  // 为什么新浪排在本地前面（2026-10-29 实测）：
-  //   · 东财 `stock/kline/get` 对消费级 IP 限流很凶（实测整段 socket 级拒绝，
-  //     而**同一主机的 `ulist.np` 行情照常 200** —— 它是**按接口**限流的）；
-  //   · 新浪 `datalen` **没有上限**（给多少给多少），上证能给到 **8752 根 / 36 年**，
-  //     比本地预生成的 1000 根全得多 —— 用 JSONP 变体绕开 CORS，浏览器可直连；
-  //   · 本地预生成文件是 **日K 1000 / 周K 1821 / 月K ~431~500 根**，
-  //     周K、月K **比腾讯备源更全**（35.8 年 vs 19 年；36 年 vs 36 年），
-  //     而且零网络、零限流 —— 所以它是比腾讯更好的第三选择；
-  //   · 腾讯 n>1000 返回空 ⇒ 最多 1000 根，只能垫底。
-  async function fetchKline(key, period, limit) {
-    try {
-      const v = await fetchKlineEM(key, period, limit);
-      lastKlineSource = '东财直连';
-      return v;
-    } catch (e) {
-      console.warn('[market] 东财K线不可用，转新浪：', e && e.message);
-      try {
-        const v = await fetchKlineSina(key, period);
-        lastKlineSource = '新浪直连（全量历史）';
-        return v;
-      } catch (e2) {
-        console.warn('[market] 新浪K线不可用，转本地预生成：', e2 && e.message);
-        try {
-          const v = await localKline(key, period);
-          lastKlineSource = period === '1d' ? '本地日K快照' : '本地' + (period === '1w' ? '周K' : '月K');
-          return v;
-        } catch (e3) {
-          console.warn('[market] 本地无该周期，转腾讯兜底：', e3 && e3.message);
-          try {
-            const v = TX_PERIOD[period]
-              ? await fetchKlineTX(key, period, limit)
-              : await fetchKlineTXMinute(key, period);
-            lastKlineSource = '腾讯兜底';
-            return v;
-          } catch (e4) {
-            console.warn('[market] 腾讯K线不可用：', e4 && e.message);
-            throw e4;
+  //   直连通道 fetchKlineRemote()：东财 / 新浪(JSONP) / 腾讯 **同时发**，谁先回先用
+  //   本地通道 localKline() / localFullKline()：采集器预生成的文件（走 GitHub Pages）
+  //
+  // ⚠ 为什么必须并发（2026-10-30 本机实测，这是「加载要好几秒」的真正根因）：
+  //   · 东财 push2his 在本机是 **socket 级拒绝**（连接被重置，0.3 秒失败）；
+  //     在能连上的机器上它一旦被限流就会**挂到超时**。
+  //   · 串行链下用户必须先等东财那 6~10 秒超时，才轮得到新浪 —— 白等。
+  //   · 新浪 JSONP 在浏览器里是 **gzip 传输**（浏览器对 <script> 也会发 Accept-Encoding），
+  //     实测 8000 根只要 **226KB / 0.8 秒**；
+  //     ⚠ 之前测到的「918KB / 21 秒」是没发 Accept-Encoding 的 curl 假象，别被它误导。
+  //   ⇒ 并发后：新浪 ~0.8 秒出图，腾讯 ~1.4 秒兜底，东财挂不挂都不影响。
+  //
+  // 为什么本地兜底不放在直连链里：直连源走**外网**，本地文件走 **GitHub Pages**，
+  // 两者带宽互不争抢，可以并发；而同一个文件绝不能被两条链各下载一遍（白耗带宽）。
+  //
+  // 各源能给多少根（实测）：
+  //   · 东财 lmt 无上限（8000 根到手）；但对消费级 IP **按接口**限流很凶
+  //   · 新浪 datalen 无上限（**8752 根 / 36 年全量**），**只覆盖 CN 的 8 个指数**
+  //     （实测 hkHSI / usDJI / usIXIC / usINX / hkHSTECH 全部返回 null）；
+  //     普通 json_v2.php 不带 CORS 头 ⇒ 必须走 jsonp_v2.php 的 JSONP 变体
+  //   · 腾讯 n>1000 直接返回空 ⇒ 必须 clamp 到 1000
+  //   · 本地预生成：日K 1000 根（4 年）；服务端另有全量文件 <key>_full.json
+  async function fetchKlineRemote(key, period, limit, onData) {
+    const jobs = [];
+    const add = (name, fn) => {
+      jobs.push(
+        Promise.resolve()
+          .then(fn)
+          .then((bars) => {
+            if (!bars || !bars.length) throw new Error(name + ' 返回空');
+            // 每个源到货都通知一次：后来的**根数更多**才覆盖（判断在 app.js 的 apply 里）
+            if (typeof onData === 'function') {
+              try { onData(bars, name); } catch (e) { /* 回调异常不影响取数 */ }
+            }
+            return { name, bars };
+          })
+          .catch((e) => {
+            console.warn(`[market] ${name} 不可用：`, e && e.message);
+            throw e;
+          })
+      );
+    };
+
+    add('东财直连', () => fetchKlineEM(key, period, limit));
+    if (SINA_CODE[key] && SINA_SCALE[period]) {
+      add('新浪直连（全量历史）', () => fetchKlineSina(key, period));
+    }
+    add('腾讯兜底', () =>
+      TX_PERIOD[period]
+        ? fetchKlineTX(key, period, limit)
+        : fetchKlineTXMinute(key, period));
+
+    // 首个成功即返回；其余源**继续在跑**，到货会通过 onData 追加更全的数据
+    let left = jobs.length;
+    let firstErr = null;
+    return new Promise((resolve, reject) => {
+      jobs.forEach((j) =>
+        j.then(
+          (r) => { lastKlineSource = r.name; resolve(r.bars); },
+          (e) => {
+            if (!firstErr) firstErr = e;
+            if (--left === 0) reject(firstErr || new Error('所有直连源均不可用'));
           }
-        }
-      }
+        )
+      );
+    });
+  }
+
+  // 兼容入口：直连失败时回退本地预生成（保留原有语义）
+  async function fetchKline(key, period, limit, onData) {
+    try {
+      return await fetchKlineRemote(key, period, limit, onData);
+    } catch (e) {
+      console.warn('[market] 直连K线不可用，转本地预生成：', e && e.message);
+      const v = await localKline(key, period);
+      lastKlineSource = period === '1d' ? '本地日K快照' : '本地' + (period === '1w' ? '周K' : '月K');
+      return v;
     }
   }
 
@@ -446,12 +487,21 @@
   //   同一个日K 文件。1Y 国债的日K 文件有 **500KB** —— 线上按本机实测 5~30 KB/s 的带宽
   //   重下一次要 20~100 秒，用户点一下周K 得干等。
   //   ⇒ 缓存住已取回的文件（同一会话内只下一次）；取失败的不进缓存，允许重试。
+
+  // 本地 K 线文件：URL 带**按天版本号** ⇒ 同一天内重复打开命中浏览器缓存（秒开），
+  // 跨天自动失效（数据每天更新）。
+  // ⚠ 之前用 `cache: 'no-store'`，浏览器缓存**完全失效** ⇒ 反复点同一标的每次都重下。
+  // ⚠ 必须带超时：实测 Pages 偶发「传到一半就卡住」（HTTP 仍是 200），
+  //   没有 AbortController 的话 fetch 会**无限期挂起**，用户只看到一句「加载中…」。
   const localFileCache = new Map();
-  function fetchLocalFile(path) {
+  const DATA_STAMP = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  function fetchLocalFile(path, timeoutMs = 15000) {
     if (!localFileCache.has(path)) {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), timeoutMs);
       localFileCache.set(
         path,
-        fetch(path, { cache: 'no-store' })
+        fetch(`${path}?v=${DATA_STAMP}`, { signal: ctrl.signal, cache: 'default' })
           .then((r) => {
             if (!r.ok) throw new Error('本地文件不存在 ' + path);
             return r.json();
@@ -460,6 +510,7 @@
             localFileCache.delete(path);
             throw e;
           })
+          .finally(() => clearTimeout(timer))
       );
     }
     return localFileCache.get(path);
@@ -492,6 +543,25 @@
     return out;
   }
 
+
+  // ---- 服务端预生成的**全量**日K（紧凑数组格式）----
+  //
+  // 现有 data/kline/<key>.json 只有 **1000 根（4 年）**，而「尽可能多」需要 8752 根（36 年）。
+  // 后端每天生成一份 <key>_full.json，bars 是**数组行** [t,o,c,h,l,v]：
+  // 8752 根约 110KB（gzip 后约 41KB）—— 比新浪原始 JSON 的 977KB 小一个量级，
+  // 而且**不依赖第三方源的可用性**（东财限流时它照样能出图）。
+  async function localFullKline(key, period) {
+    if (period !== '1d') throw new Error('全量文件只有日K');
+    // ⚠ 超时给到 30s：全量文件 gzip 后约 166KB，按本机实测 7~20 KB/s 要 8~24 秒，
+    //   用 15s 会让「正在下载中」被误判成「没有这个文件」。
+    const j = await fetchLocalFile(`data/kline/${key}_full.json`, 30000);
+    const bars = (j.bars || []).map((b) => (Array.isArray(b)
+      ? { t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5] }
+      : { t: b.t, o: +b.o, c: +b.c, h: +b.h, l: +b.l, v: +b.v }));
+    if (!bars.length) throw new Error('全量文件为空');
+    return bars;
+  }
+
   async function localKline(key, period) {
     if (!byKey.has(key)) throw new Error('未知指数 ' + key);
     // 周/月优先读采集器预生成的对应周期文件 —— 历史比「日K 聚合」更全：
@@ -514,5 +584,6 @@
     throw new Error('本地无该周期');
   }
 
-  window.MarketData = { META, KLT, fetchQuotes, fetchKline, localKline, getKlineSource };
+
+  window.MarketData = { META, KLT, fetchQuotes, fetchKline, fetchKlineRemote, localKline, localFullKline, getKlineSource };
 })();

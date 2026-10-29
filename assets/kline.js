@@ -41,6 +41,21 @@ class KlineChart {
     this.render();
   }
 
+  /**
+   * 清空画面并复位视图状态。
+   *
+   * ⚠ 切换标的时必须调用：图表实例是**单例**（app.js 里 `if (!kChart) kChart = new KlineChart(...)`），
+   *   不清的话，新标的的标题会配上**上一个标的的 K 线**（用户报「上一轮打开的图会残留」）。
+   */
+  reset() {
+    this.setData([], this.period);
+    this.offset = 0;
+    this.barsShown = 90;
+    this.hover = -1;
+    this.mouse = null;
+    this._zoomTarget = 90;
+  }
+
   _bind() {
     const cvs = this.canvas;
     const pos = (e) => {
