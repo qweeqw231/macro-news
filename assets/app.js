@@ -531,6 +531,14 @@
     $('#klineModal').hidden = true;
   }
 
+  // ---- K线取数根数（按周期给到「源侧真实上限」，而不是一刀切 1000）----
+  //   日K/周K/月K → 3000：东财 lmt=3000 实测可给 3000 根（12.3 年），
+  //     周K 1821 根（1990 起 35.8 年）、月K 431 根（36 年全量）——都是源侧的全部数据。
+  //   分钟级 → 保持 1000：源侧本身就封顶（5 分钟 1536 根、1 分钟只有当天 240 根），
+  //     再多也没有。
+  const klineLimit = (period) =>
+    period === '1d' || period === '1w' || period === '1M' ? 3000 : 1000;
+
   async function loadKline(key, period) {
     klineKey = key;
     klinePeriod = period;
@@ -542,7 +550,7 @@
     let from = '';
     // 直连东财（任意周期）→ 腾讯 → 本地兜底（见 market.js）
     try {
-      bars = await window.MarketData.fetchKline(key, period, 1000);
+      bars = await window.MarketData.fetchKline(key, period, klineLimit(period));
       from = '实时';
     } catch (e) {
       // 本地兜底：采集器预生成的日K；周/月由日K聚合，零网络
@@ -569,7 +577,7 @@
     klineTimer = setTimeout(async () => {
       if ($('#klineModal').hidden) return;
       try {
-        const bars = await window.MarketData.fetchKline(klineKey, klinePeriod, 1000);
+        const bars = await window.MarketData.fetchKline(klineKey, klinePeriod, klineLimit(klinePeriod));
         if (bars && bars.length) kChart.setData(bars, klinePeriod);
       } catch (e) { /* 单次失败忽略，下一轮再试 */ }
       scheduleKlineRefresh(key);

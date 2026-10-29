@@ -226,31 +226,53 @@ async function main() {
     });
   }
 
-  // ---- K线：预生成日K（保证没有 Worker 代理时也能画图） ----
+  // ---- K线：预生成 日K / 周K / 月K（保证没有 Worker 代理时也能画图） ----
+  //
+  // 为什么预生成三档，而不是像以前那样只存日K：
+  //   · 前端直连（东财）能拿到 周K 1821 根（1990 起 35.8 年）、月K 431 根（36 年全量），
+  //     本地兜底只有日K 的话，周/月只能由日K 聚合 → 历史被砍到 4 年；
+  //   · 体积与更新频率是权衡点：日K 每天变（主体成本），周K 一周变、月K 一月变
+  //     → 把长历史放在周K/月K 里，日更压力只有日K 一档。
+  //
+  // 文件名：data/kline/<key>.json（日）/ <key>_1w.json（周）/ <key>_1M.json（月）
   const klineOk = [];
   const klineSkip = [];
   if (!process.argv.includes('--no-kline')) {
-    const keys = (await import('./sources.mjs')).INDICES.map((i) => i.key);
-    const { fetchKline, klineAvailable } = await import('./sources.mjs');
+    const { INDICES, fetchKline, klineAvailable } = await import('./sources.mjs');
+    const keys = INDICES.map((i) => i.key);
+    const KLINE_SPEC = [
+      { period: '1d', limit: 1000, suffix: '' },   // 日K 1000 根 ≈ 4 年（日更主体）
+      { period: '1w', limit: 1821, suffix: '_1w' }, // 周K 1821 根 ≈ 35.8 年（周更）
+      { period: '1M', limit: 500, suffix: '_1M' },  // 月K 源侧实际只有 ~431~454 根 = 36 年全量（月更）
+    ];
     for (const key of keys) {
       if (!klineAvailable(key)) { klineSkip.push(key); continue; }
-      try {
-        const bars = await fetchKline(key, '1d', 250);
-        const meta = (await import('./sources.mjs')).INDICES.find((i) => i.key === key);
-        await writeJSONIfChanged(path.join(DATA, 'kline', `${key}.json`), {
-          key,
-          name: meta?.name || key,
-          market: meta?.market || '',
-          period: '1d',
-          generatedAt: startedAt.toISOString(),
-          bars,
-        });
-        klineOk.push(`${key}(${bars.length})`);
-      } catch (err) {
-        klineSkip.push(key);
+      const meta = INDICES.find((i) => i.key === key);
+      const done = [];
+      for (const spec of KLINE_SPEC) {
+        try {
+          const bars = await fetchKline(key, spec.period, spec.limit);
+          await writeJSONIfChanged(path.join(DATA, 'kline', `${key}${spec.suffix}.json`), {
+            key,
+            name: meta?.name || key,
+            market: meta?.market || '',
+            period: spec.period,
+            generatedAt: startedAt.toISOString(),
+            bars,
+          });
+          done.push(`${spec.period}:${bars.length}`);
+        } catch (err) {
+          // 单个周期失败不影响其它周期（例如某源不支持月K）
+        }
+        // 同一轮里要打 12×3 个请求，间隔一下别把新浪/腾讯打到限流
+        await new Promise((r) => setTimeout(r, 250));
       }
+      if (done.length) klineOk.push(`${key}[${done.join(',')}]`);
+      else klineSkip.push(key);
     }
-    console.log(`[collect] K线：生成 ${klineOk.length} 个，跳过 ${klineSkip.length} 个（${klineSkip.join(', ') || '无'}）`);
+    console.log(
+      `[collect] K线：${klineOk.length} 个标的 × ${KLINE_SPEC.length} 个周期，跳过 ${klineSkip.length} 个（${klineSkip.join(', ') || '无'}）`
+    );
   }
 
   const okCount = perSource.filter((s) => s.ok).length;

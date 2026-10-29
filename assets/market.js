@@ -274,10 +274,14 @@
     const code = TX_CODE[key];
     const p = TX_PERIOD[period];
     if (!code || !p) throw new Error('腾讯无该指数/周期');
+    // ⚠ 腾讯日/周/月在 n>1000 时**直接返回空**（实测 2026-10-29：n=1000 正常，n=3000 空），
+    //   而东财 lmt 可以给到 3000 —— 所以备源必须自己 clamp，
+    //   否则东财一被限流、备源就整条失效（只剩本地兜底）。
+    const n = Math.min(limit || 250, 1000);
     const ep = /^us/.test(code)
       ? 'https://ifzq.gtimg.cn/appstock/app/usfqkline/get'
       : 'https://ifzq.gtimg.cn/appstock/app/fqkline/get';
-    const j = await req(`${ep}?param=${code},${p},,,${limit || 250},qfq`, 10000);
+    const j = await req(`${ep}?param=${code},${p},,,${n},qfq`, 10000);
     const d = j && j.data && j.data[code];
     const arr = d && (d[p] || d['qfq' + p]);
     if (!Array.isArray(arr) || !arr.length) throw new Error('腾讯返回空数据');
@@ -374,6 +378,19 @@
 
   async function localKline(key, period) {
     if (!byKey.has(key)) throw new Error('未知指数 ' + key);
+    // 周/月优先读采集器预生成的对应周期文件 —— 历史比「日K 聚合」更全：
+    //   周K 1821 根（1990 起 35.8 年）、月K ~431 根（36 年全量）。
+    // 文件不存在时再回退到「日K 聚合」（零网络，必可用）。
+    if (period === '1w' || period === '1M') {
+      const suffix = period === '1w' ? '_1w' : '_1M';
+      try {
+        const r = await fetch(`data/kline/${key}${suffix}.json`, { cache: 'no-store' });
+        if (r.ok) {
+          const bars = (await r.json()).bars;
+          if (Array.isArray(bars) && bars.length) return bars;
+        }
+      } catch (e) { /* 没有该周期文件 → 落到下面的日K聚合 */ }
+    }
     const r = await fetch(`data/kline/${key}.json`, { cache: 'no-store' });
     if (!r.ok) throw new Error('本地日K不存在');
     const daily = (await r.json()).bars;

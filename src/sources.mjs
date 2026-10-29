@@ -4,6 +4,7 @@
 
 import { ETFS, etfTxCode } from './etf.mjs';
 import { fetchBatchQuotes } from './quotes.mjs';
+import { emGetJSON, KLINE_HOSTS } from './em.mjs';
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
@@ -340,37 +341,26 @@ export async function fetchQuotes() {
 }
 
 
-// K线代码（经本机逐个实测）
-// sina: 新浪 CN_MarketData（国内指数，支持日/周/月/分钟）
-// tx:  腾讯 fqkline（港股）/ usfqkline（美股，支持日/周/月）
-// null = 当前可用源取不到历史数据，前端会显示「暂无数据」
-const KLINE_MAP = {
-  sh_comp: { sina: 'sh000001' },
-  sz_comp: { sina: 'sz399001' },
-  chinext: { sina: 'sz399006' },
-  star50:  { sina: 'sh000688' },
-  bse50:   { sina: 'bj899050' },
-  csi300:  { sina: 'sh000300' },
-  csi500:  { sina: 'sh000905' },
-  csi1000: { sina: 'sh000852' },
-  hsi:     { tx: 'hkHSI' },
-  dji:     { tx: 'usDJI', us: true },
-  ixic:    { tx: 'usIXIC', us: true },
-  spx:     { tx: 'usINX', us: true },
-  hs_tech: null,
-  n225:    null,
-  dax:     null,
-  ukx:     null,
-  kospi:   null,
-};
-
+// ── K 线取数：东财（主源）→ 新浪 / 腾讯（备源）──
+//
+// 为什么主源换成东财（2026-10-29 本机实测）：
+//   · 东财 lmt 给多少给多少：日K 3000 根（12.3 年）、周K 1821 根（35.8 年）、月K 431 根（36 年）；
+//   · 腾讯在 n>1000 时**直接返回空** —— 拿它当主源，港股/美股的长历史根本取不到
+//     （道指周K 最多到 2007 年，东财能到 1896 年）；
+//   · 新浪 datalen 也能给 3000，但只覆盖 CN 的 8 个指数。
+// ⇒ 与前端直连保持同一口径（东财 → 腾讯 → 本地）。
+//
+// sina / tx 来自 INDICES：新浪只覆盖 CN 8 个，腾讯覆盖港股 + 美股，都是备源。
+const EM_KLT = { '1d': 101, '1w': 102, '1M': 103, '5m': 5, '30m': 30, '60m': 60 };
+const KL_FIELDS = 'fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58';
 // 周期 → 新浪 scale（分钟数）；周=1200 月=7200
 const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '5m': 5, '30m': 30, '60m': 60 };
 // 周期 → 腾讯 period
 const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
 export function klineAvailable(key) {
-  return !!KLINE_MAP[key];
+  // 东财按 secid 能取到全部 17 个指数（含恒生科技 / 日经 / DAX / 富时 / KOSPI）
+  return !!INDICES.find((i) => i.key === key && i.secid);
 }
 
 export const KLINE_PERIODS = ['1d', '1w', '1M', '5m', '30m', '60m'];
@@ -382,39 +372,79 @@ export const KLINE_PERIODS = ['1d', '1w', '1M', '5m', '30m', '60m'];
  * @param {number} limit 根数
  */
 export async function fetchKline(key, period = '1d', limit = 250) {
-  const m = KLINE_MAP[key];
-  if (!m) throw new Error(`${key} 暂无可用 K 线数据源`);
+  const idx = INDICES.find((i) => i.key === key);
+  if (!idx || !idx.secid) throw new Error(`${key} 暂无可用 K 线数据源`);
+  const errors = [];
 
-  if (m.sina) {
-    const scale = SINA_SCALE[period];
-    if (!scale) throw new Error(`新浪不支持周期 ${period}`);
-    const url = `https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/` +
-      `CN_MarketData.getKLineData?symbol=${m.sina}&scale=${scale}&ma=no&datalen=${limit}`;
-    const d = await get(url, { headers: { Referer: 'https://finance.sina.com.cn/' } });
-    const arr = JSON.parse(d);
-    if (!Array.isArray(arr) || !arr.length) throw new Error('新浪返回空数据');
-    return arr.map((b) => ({
-      t: b.day, o: +b.open, h: +b.high, l: +b.low, c: +b.close, v: +b.volume,
-    }));
+  // ---- 主源：东财（历史最长，lmt 没有 1000 根上限） ----
+  const klt = EM_KLT[period];
+  if (klt) {
+    try {
+      const j = await emGetJSON(
+        `/api/qt/stock/kline/get?secid=${idx.secid}&klt=${klt}&fqt=1&lmt=${limit}&end=20500101&${KL_FIELDS}`,
+        { hosts: KLINE_HOSTS, cacheTtlMs: 3 * 3600 * 1000, cacheTag: `k${klt}`, timeout: 15000 }
+      );
+      const rows = j?.data?.klines || [];
+      if (rows.length) {
+        // 东财行：日期,开,收,高,低,量,额,振幅
+        return rows.map((r) => {
+          const p = String(r).split(',');
+          return { t: p[0], o: +p[1], c: +p[2], h: +p[3], l: +p[4], v: +p[5] };
+        });
+      }
+      errors.push('东财返回空');
+    } catch (err) {
+      errors.push(`东财失败(${String(err.message).slice(0, 80)})`);
+    }
+  } else {
+    errors.push(`东财不支持周期 ${period}`);
   }
 
-  if (m.tx) {
-    if (!TX_PERIOD[period]) throw new Error(`腾讯不支持周期 ${period}`);
-    const ep = m.us
-      ? 'https://web.ifzq.gtimg.cn/appstock/app/usfqkline/get'
-      : 'https://web.ifzq.gtimg.cn/appstock/app/fqkline/get';
-    const url = `${ep}?param=${m.tx},${TX_PERIOD[period]},,,${limit},qfq`;
-    const j = JSON.parse(await get(url, { headers: { Referer: 'https://gu.qq.com/' } }));
-    const d = j?.data?.[m.tx];
-    const arr = d?.qfqday || d?.day;
-    if (!Array.isArray(arr) || !arr.length) throw new Error('腾讯返回空数据');
-    // 腾讯字段顺序：日期, 开盘, 收盘, 最高, 最低, 成交量
-    return arr.map((b) => ({
-      t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5],
-    }));
+  // ---- 备源 1：新浪（CN 指数，支持日/周/月/分钟） ----
+  if (idx.sina) {
+    try {
+      const scale = SINA_SCALE[period];
+      if (!scale) throw new Error(`新浪不支持周期 ${period}`);
+      const url = `https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/` +
+        `CN_MarketData.getKLineData?symbol=${idx.sina}&scale=${scale}&ma=no&datalen=${limit}`;
+      const d = await get(url, { headers: { Referer: 'https://finance.sina.com.cn/' } });
+      const arr = JSON.parse(d);
+      if (!Array.isArray(arr) || !arr.length) throw new Error('新浪返回空数据');
+      return arr.map((b) => ({
+        t: b.day, o: +b.open, h: +b.high, l: +b.low, c: +b.close, v: +b.volume,
+      }));
+    } catch (err) {
+      errors.push(`新浪失败(${String(err.message).slice(0, 80)})`);
+    }
   }
 
-  throw new Error(`${key} 暂无可用 K 线数据源`);
+  // ---- 备源 2：腾讯（港股 / 美股，日/周/月） ----
+  if (idx.tx && TX_PERIOD[period]) {
+    try {
+      // ⚠ 腾讯在 n>1000 时**直接返回空**（实测 2026-10-29）→ 必须 clamp，
+      //   否则周K 要 1821 根时腾讯整条路径返回空。
+      const n = Math.min(limit, 1000);
+      // ⚠ 主机用 ifzq.gtimg.cn（不带 web. 前缀，与前端一致）
+      const ep = idx.tx.startsWith('us')
+        ? 'https://ifzq.gtimg.cn/appstock/app/usfqkline/get'
+        : 'https://ifzq.gtimg.cn/appstock/app/fqkline/get';
+      const url = `${ep}?param=${idx.tx},${TX_PERIOD[period]},,,${n},qfq`;
+      const j = JSON.parse(await get(url, { headers: { Referer: 'https://gu.qq.com/' } }));
+      const d = j?.data?.[idx.tx];
+      // ⚠ 周/月不能写死 qfqday||day —— 实测腾讯的键是 week / month（不带 qfq 前缀），
+      //   写死会导致周K/月K 取不到数据。
+      const arr = d?.['qfq' + TX_PERIOD[period]] || d?.[TX_PERIOD[period]];
+      if (!Array.isArray(arr) || !arr.length) throw new Error('腾讯返回空数据');
+      // 腾讯字段顺序：日期, 开盘, 收盘, 最高, 最低, 成交量
+      return arr.map((b) => ({
+        t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5],
+      }));
+    } catch (err) {
+      errors.push(`腾讯失败(${String(err.message).slice(0, 80)})`);
+    }
+  }
+
+  throw new Error(`K线不可得：${errors.join('；')}`);
 }
 export const SOURCES = [
   { id: 'wallstreetcn', label: '华尔街见闻', run: wallstreetcn },
