@@ -534,7 +534,8 @@ macro-news/
 │   ├── latest.json       最近 200 条（首屏）
 │   ├── search.json       全库检索索引
 │   ├── index.json        按天归档索引
-│   ├── kline/            预生成 K 线（17 指数 × 日/周/月 = 51 个文件），直连失败时的回退
+│   ├── kline/            预生成 K 线（17 指数 × 日/周/月 = 51 个文件
+│   │                     + cgb_1y 的日/周/月 = 3 个，共 54 个），直连失败时的回退
 │   ├── macro/daily.json  宏观指标日频序列（16:30 链路写）
 │   ├── _last-run.json    上次运行状态（多链路字段并存，读改写）
 │   └── archive/YYYY-MM-DD.json
@@ -770,8 +771,10 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 2. **新浪** `CN_MarketData.getKLineData`（**JSONP 变体**，见下）—— 覆盖 CN 的 8 个指数，
    **`datalen` 没有上限**：给多少给多少，上证能给到 **8752 根 / 36 年全量**
 3. **本地预生成** `data/kline/<key>{,_1w,_1M}.json` —— 采集器预生成的**日K / 周K / 月K**
-   （17 个指数 × 3 周期 = 51 个文件）；没有对应周期文件时，才回退到「日K 在浏览器端聚合」
-   （零网络）
+   （17 个指数 × 3 周期 + `cgb_1y` × 3 周期 = 54 个文件）；没有对应周期文件时，
+   才回退到「日K 在浏览器端聚合」（零网络）。
+   ⚠ 本地文件做了**内存缓存**：同一页面会话内切周期不会重复下载
+   （`cgb_1y` 的日K 有 504KB，线上按 5~30 KB/s 的带宽重下一次要 20~100 秒）。
 4. **腾讯** `ifzq.gtimg.cn` —— 日/周/月 + **5 分钟**，覆盖 CN/HK/US 与场内 ETF
    （⚠ 用 `ifzq.gtimg.cn`，**不带 `web.` 前缀** —— 本机 DNS 解析不了 `web.ifzq.gtimg.cn`；
    ⚠ `n` 必须 clamp 到 **1000**，腾讯在 n>1000 时直接返回空）
