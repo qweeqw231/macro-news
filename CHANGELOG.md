@@ -10,6 +10,10 @@
 
 ### 新增
 
+- **README 加了「采集标的总清单」章节**：22 个行情标的（17 指数 + 5 组合行情）、
+  5 个宏观指标、8 个新闻源，逐个列出 key / 名称 / 市场 / 数据源。
+  清单与 `src/sources.mjs` 的 `INDICES`、`src/portfolio.mjs` 的 `PORTFOLIO_QUOTES` 一一对应
+  （17 个 secid 已逐条核对）。此前 README 只列了 5 个新标的，17 个指数一直没有完整清单。
 - **`scripts/pull-remote.ps1` + 配套定时任务「macro-news 远端数据同步（每 4 小时）」**
   - 方向与采集链路相反：**远端 → 本机**。跑 `git fetch origin main` +
     `git merge --ff-only origin/main`，让本地 `data/` 随时跟上 GitHub 上的最新
