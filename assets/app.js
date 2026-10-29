@@ -140,7 +140,9 @@
     if (sig === lastQuoteSig) return;
     lastQuoteSig = sig;
 
-    box.innerHTML = '';
+    // 用 fragment 一次性替换：`innerHTML=''` 再逐个 append 会让仪表盘在渲染过程中
+    // 高度塌成 0（既闪一下，又把「视口对齐」的基准位置弄乱）
+    const frag = document.createDocumentFragment();
     const groups = new Map();
     quotes.forEach((q) => {
       if (!groups.has(q.market)) groups.set(q.market, []);
@@ -180,8 +182,9 @@
           grid.appendChild(card);
         });
         g.appendChild(grid);
-        box.appendChild(g);
+        frag.appendChild(g);
       });
+    box.replaceChildren(frag);
 
     $('#quoteTime').textContent =
       '更新于 ' + new Date(generatedAt).toLocaleString('zh-CN', { hour12: false }) +
@@ -420,6 +423,57 @@
   //   · 即使 app.js 还没加载完，点下去也会跳到对应区块，而不是毫无反应。
   const VIEWS = ['feed', 'archive', 'sources', 'status'];
 
+  // ---------- 视图切换后的视口对齐 ----------
+  //
+  // ⚠ 为什么不能「算一次位置就滚」：
+  //   页面总高度是**异步变化**的。宏观仪表盘的行情卡要等
+  //   「东财直连 + 本地 quotes.json」都回来才渲染（实测几秒），
+  //   渲染完会把下面所有区块整体往下推 ⇒ 切换瞬间算好的目标位置当场失效。
+  //   实测症状：**第一次**点「归档」停在仪表盘中段（差了 588px），
+  //   等行情渲染完再点第二次才对。
+  //
+  // 对策：先滚一次 → 再在几秒内盯着 body 尺寸变化 → 一旦尺寸变了就重新对齐。
+  let alignRO = null;
+  let alignTimer = null;
+
+  function alignToView(v) {
+    const sec = $('#view-' + v);
+    if (!sec) return;
+
+    // 目标 = 该区块的绝对位置 - sticky 顶栏高度
+    const target = () => Math.max(0, sec.getBoundingClientRect().top + window.scrollY - 72);
+    window.scrollTo({ top: target(), behavior: 'smooth' });
+
+    if (alignRO) alignRO.disconnect();
+    clearTimeout(alignTimer);
+
+    // 用户自己滚了就别抢方向盘（否则布局一变就把人拽回去）
+    let userMoved = false;
+    const onUser = () => { userMoved = true; };
+    window.addEventListener('wheel', onUser, { passive: true });
+    window.addEventListener('touchmove', onUser, { passive: true });
+    window.addEventListener('keydown', onUser);
+
+    let last = target();
+    alignRO = new ResizeObserver(() => {
+      if (userMoved) return;
+      const y = target();
+      if (Math.abs(y - last) < 4) return;
+      last = y;
+      // 用瞬时定位而不是 smooth：smooth 会和正在进行的动画互相打架
+      window.scrollTo({ top: y, behavior: 'auto' });
+    });
+    alignRO.observe(document.body);
+
+    alignTimer = setTimeout(() => {
+      if (alignRO) alignRO.disconnect();
+      alignRO = null;
+      window.removeEventListener('wheel', onUser);
+      window.removeEventListener('touchmove', onUser);
+      window.removeEventListener('keydown', onUser);
+    }, 4000);
+  }
+
   function viewFromHash() {
     const m = String(location.hash || '').match(/^#view-(feed|archive|sources|status)$/);
     return m ? m[1] : null;
@@ -442,11 +496,7 @@
     //   宏观仪表盘是常驻在页面顶部的，四个视图的内容都在它下面。
     //   滚回顶部 ⇒ 切换后画面还是仪表盘 ⇒ 用户看到「四个页签一模一样」、
     //   「点了没反应」。这里滚到区块顶部（避开 sticky 顶栏高度）。
-    const sec = $('#view-' + v);
-    if (sec) {
-      const y = sec.getBoundingClientRect().top + window.scrollY - 72;
-      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
-    }
+    alignToView(v);
     // URL 与视图保持同步（replaceState 不会触发 hashchange，不会造成循环）
     if (viewFromHash() !== v) history.replaceState(null, '', '#view-' + v);
     // 需要数据的视图在切过去时才去取（懒加载）
