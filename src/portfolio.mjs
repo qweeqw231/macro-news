@@ -36,6 +36,9 @@ async function get(url, { json = false, headers = {}, timeout = TIMEOUT_MS, retr
       return buf.toString('utf8');
     } catch (err) {
       lastErr = err;
+      // ⚠ 429（限流）**不要在内部重试** —— 立刻再打一次只会让限流更严重。
+      //   直接上抛，让调用方（回补脚本）按自己的退避序列处理。
+      if (/HTTP 429/.test(String(err && err.message))) throw err;
       if (attempt < retries) await new Promise((r) => setTimeout(r, 800));
     } finally {
       clearTimeout(timer);
@@ -342,27 +345,40 @@ async function fetchUsdcny() {
 // 即：第 0 列是曲线名，其后依次为隔夜/3月/6月/1年/3年/5年/7年/10年/30年，
 // 「1年」= 第 4 列。
 // ⚠ 休市日（或当天曲线尚未发布）该接口只返回表头、没有数据行 → 需回退到上一交易日。
+//
+// 抽出成独立函数：日更（portfolio-collect）与历史回补（scripts/backfill-cgb1y.mjs）共用。
+/**
+ * 取中债国债收益率曲线的「1 年期」值。
+ * @param {string} day YYYY-MM-DD
+ * @returns {Promise<{srcDate: string, oneY: number}|null>} 该日没有曲线时返回 null
+ */
+export async function fetchCgbCurveOneY(day) {
+  const html = await get(
+    `https://yield.chinabond.com.cn/cbweb-cbrc-web/cbrc/queryGjqxInfo?workTime=${day}&locale=zh_CN`,
+    { headers: { Referer: 'https://yield.chinabond.com.cn/' }, retries: 1 }
+  );
+  const rows = [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].map((m) =>
+    [...m[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map((c) => stripTags(c[1]))
+  );
+  const cgb = rows.find((r) => r[0] && r[0].includes('中债国债收益率曲线'));
+  if (!cgb) return null;
+  const oneY = num(cgb[4]);
+  if (oneY === null) return null;
+  // 表头首格形如 "2026-10-28(%)"，取其中的日期（可能是回退到的上一交易日）
+  const hdr = rows[0]?.[0] || '';
+  const dm = hdr.match(/(\d{4}-\d{2}-\d{2})/);
+  return { srcDate: dm ? dm[1] : day, oneY };
+}
+
 async function fetchCgb1y() {
   let lastErr = null;
   for (let back = 0; back <= 7; back++) {
     const d = new Date(Date.now() - back * 86400000);
     const day = ymd(d);
     try {
-      const html = await get(
-        `https://yield.chinabond.com.cn/cbweb-cbrc-web/cbrc/queryGjqxInfo?workTime=${day}&locale=zh_CN`,
-        { headers: { Referer: 'https://yield.chinabond.com.cn/' }, retries: 1 }
-      );
-      const rows = [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].map((m) =>
-        [...m[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map((c) => stripTags(c[1]))
-      );
-      const cgb = rows.find((r) => r[0] && r[0].includes('中债国债收益率曲线'));
-      if (!cgb) { lastErr = new Error(`中债 ${day} 无国债收益率曲线`); continue; }
-      const oneY = num(cgb[4]);
-      if (oneY === null) { lastErr = new Error(`中债 ${day} 1年值缺失`); continue; }
-      // 表头首格形如 "2026-10-28(%)"，取其中的日期
-      const hdr = rows[0]?.[0] || '';
-      const dm = hdr.match(/(\d{4}-\d{2}-\d{2})/);
-      const srcDate = dm ? dm[1] : day;
+      const c = await fetchCgbCurveOneY(day);
+      if (!c) { lastErr = new Error(`中债 ${day} 无国债收益率曲线`); continue; }
+      const { srcDate, oneY } = c;
       return {
         key: 'cgb_1y',
         name: '1Y国债收益率',

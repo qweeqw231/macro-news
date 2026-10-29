@@ -267,30 +267,63 @@ async function pbcNews() {
   return out.slice(0, 30);
 }
 
-function rssSource({ name, channel, url, limit = 30, tag = '', timeout = 15000, retries = 0 }) {
+/**
+ * RSS/Atom 源适配器。
+ *
+ * 为什么要「备选入口」：2026-10-29 排查中新网采集失败（_last-run 里记的 fetch failed）时实测，
+ * 主入口 https://www.chinanews.com.cn/rss/finance.xml 本身**完全可达**（200 / 16.5KB / 0.39 秒），
+ * 那次失败是**瞬时网络抖动**；而原实现 retries 默认 0 ⇒ 一次抖动就记失败，源被白白判死。
+ *
+ * ⇒ 两处加固：
+ *   ① retries ≥ 1，给瞬时失败留重试窗口；
+ *   ② urls 备选入口，主入口彻底不可用时依次降级，而不是整个源判死。
+ * 解析成功但**一条标题都取不到**也算这个入口不可用（继续试下一个），
+ * 否则会悄悄采到一个 0 条的源还标成「成功」。
+ */
+function rssSource({ name, channel, url, urls, limit = 30, tag = '', timeout = 15000, retries = 0 }) {
+  const candidates = urls && urls.length ? urls : [url];
   return async () => {
-    const xml = await get(url, { timeout, retries });
-    return parseFeed(xml)
-      .filter((i) => i.title)
-      .slice(0, limit)
-      .map((i) => {
-        const d = new Date(i.date);
-        const ts = Number.isNaN(d.getTime()) ? 0 : Math.floor(d.getTime() / 1000);
-        return {
-          id: stableId('rss', name, i.link || i.title),
-          ts,
-          time: i.date ? isoFromDate(i.date) : new Date().toISOString(),
-          source: name,
-          channel,
-          title: i.title,
-          summary: summarize(stripTags(i.description)),
-          content: clip(stripTags(i.description), 4000),
-          url: i.link || url,
-          kind: 'official',
-          tags: tag ? [tag] : [],
-        };
-      });
+    const errors = [];
+    for (const u of candidates) {
+      try {
+        const xml = await get(u, { timeout, retries });
+        const items = parseFeed(xml).filter((i) => i.title);
+        if (!items.length) {
+          errors.push(`${shortUrl(u)} 无可解析条目`);
+          continue;
+        }
+        return items.slice(0, limit).map((i) => {
+          const d = new Date(i.date);
+          const ts = Number.isNaN(d.getTime()) ? 0 : Math.floor(d.getTime() / 1000);
+          return {
+            id: stableId('rss', name, i.link || i.title),
+            ts,
+            time: i.date ? isoFromDate(i.date) : new Date().toISOString(),
+            source: name,
+            channel,
+            title: i.title,
+            summary: summarize(stripTags(i.description)),
+            content: clip(stripTags(i.description), 4000),
+            url: i.link || u,
+            kind: 'official',
+            tags: tag ? [tag] : [],
+          };
+        });
+      } catch (err) {
+        errors.push(`${shortUrl(u)} → ${String(err.message).slice(0, 60)}`);
+      }
+    }
+    throw new Error(`RSS 全部入口失败：${errors.join('；')}`);
   };
+}
+
+// 报错信息里只保留路径，完整 URL 过长会淹没真正的错误
+function shortUrl(u) {
+  try {
+    return new URL(u).pathname;
+  } catch {
+    return String(u).slice(0, 60);
+  }
 }
 
 // ---------- 宏观仪表盘行情（东方财富 push2，全部经本机实测） ----------
@@ -472,8 +505,18 @@ export const SOURCES = [
       name: '中新网',
       channel: '国内财经',
       url: 'https://www.chinanews.com.cn/rss/finance.xml',
+      // 备选入口按序降级：finance.xml（财经）→ scroll-news.xml（滚动）→ importnews.xml（要闻）
+      // 三个入口 2026-10-29 本机实测全部 200（16.5KB / 16.5KB / 14.8KB）
+      urls: [
+        'https://www.chinanews.com.cn/rss/finance.xml',
+        'https://www.chinanews.com.cn/rss/scroll-news.xml',
+        'https://www.chinanews.com.cn/rss/importnews.xml',
+      ],
       limit: 30,
       tag: '国内',
+      // 之前 retries=0：一次瞬时网络抖动就记 fetch failed，源被判死
+      retries: 2,
+      timeout: 20000,
     }),
   },
   { id: 'pbc', label: '中国人民银行', run: pbcNews, windowed: false },
@@ -487,6 +530,7 @@ export const SOURCES = [
       url: 'https://www.federalreserve.gov/feeds/press_all.xml',
       limit: 30,
       tag: '央行',
+      retries: 1,
     }),
   },
   {
@@ -499,6 +543,7 @@ export const SOURCES = [
       url: 'https://www.ecb.europa.eu/rss/press.html',
       limit: 20,
       tag: '央行',
+      retries: 1,
     }),
   },
   {

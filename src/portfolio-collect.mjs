@@ -135,6 +135,36 @@ async function main() {
     `${quotesChanged ? '' : ' · 内容未变，跳过写盘'}`
   );
 
+  // ---- 1Y 国债收益率的 K 线：每天追加一根到 data/kline/cgb_1y.json ----
+  // 站点上「1Y国债收益率」这张卡片的 K 线**只有这一个源**（中债逐日曲线），
+  // 没有东财 secid、没有腾讯代码 ⇒ 前端只能读本地预生成文件。
+  // 收益率没有开高低收，o=h=l=c=收益率，v=0。
+  const cgb = quotes.find((q) => q.key === 'cgb_1y');
+  if (cgb && Number.isFinite(cgb.price)) {
+    const klineFile = path.join(DATA, 'kline', 'cgb_1y.json');
+    const old = await readJSON(klineFile, { bars: [] });
+    const bars = Array.isArray(old.bars) ? old.bars.slice() : [];
+    const srcDay = (cgb.updatedAt || '').slice(0, 10) || day;
+    const bar = { t: srcDay, o: cgb.price, c: cgb.price, h: cgb.price, l: cgb.price, v: 0 };
+    const i = bars.findIndex((b) => b.t === srcDay);
+    if (i >= 0) bars[i] = bar;
+    else bars.push(bar);
+    bars.sort((a, b) => String(a.t).localeCompare(String(b.t)));
+    const klineChanged = await writeJSONIfChanged(klineFile, {
+      key: 'cgb_1y',
+      name: '1Y国债收益率',
+      market: 'CN',
+      period: '1d',
+      generatedAt: at,
+      source: '中债国债收益率曲线（queryGjqxInfo）',
+      bars,
+    });
+    console.log(
+      `  kline/cgb_1y.json：${bars.length} 根（最新 ${bars[bars.length - 1]?.t} = ` +
+      `${bars[bars.length - 1]?.c}%）${klineChanged ? '' : ' · 内容未变，跳过写盘'}`
+    );
+  }
+
   // ---- §4.2 追加写入 data/macro/daily.json ----
   // 每条记录形如 {"date":"2026-10-28","items":[...]}，按日期去重（同日重跑覆盖）。
   const macroFile = path.join(DATA, 'macro', 'daily.json');

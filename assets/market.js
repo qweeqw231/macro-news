@@ -88,6 +88,10 @@
     { key: 'etf_159201', secid: '0.159201', market: 'ETF', name: '自由现金流ETF' },
     { key: 'etf_518880', secid: '1.518880', market: 'ETF', name: '黄金ETF' },
     { key: 'etf_511990', secid: '1.511990', market: 'ETF', name: '华宝添益ETF' },
+    // 1Y 国债收益率：全站只有中债「逐日收益率曲线」这一个源
+    //   ⇒ 没有东财 secid、也没有腾讯代码，**K线只能走本地预生成文件**
+    //   data/kline/cgb_1y.json（采集器每天追加一根）。
+    { key: 'cgb_1y', secid: null, market: 'CN', name: '1Y国债收益率' },
   ];
   const byKey = new Map(META.map((m) => [m.key, m]));
 
@@ -191,7 +195,7 @@
 
   // ---- 行情：东财批量接口 ----
   async function fetchQuotesEM() {
-    const secids = META.map((m) => m.secid).join(',');
+    const secids = META.filter((m) => m.secid).map((m) => m.secid).join(',');
     const qs = `fltt=2&invt=2&secids=${secids}&fields=${QUOTE_FIELDS}`;
     const diff = await viaHosts(
       'quote',
@@ -251,6 +255,7 @@
     const m = byKey.get(key);
     const klt = KLT[period];
     if (!m) throw new Error('未知指数 ' + key);
+    if (!m.secid) throw new Error('东财无该标的（只有本地预生成）');
     if (!klt) throw new Error('不支持的周期 ' + period);
     const path =
       `/api/qt/stock/kline/get?secid=${m.secid}&klt=${klt}&fqt=1&lmt=${limit || 250}` +
@@ -267,6 +272,60 @@
       const p = String(row).split(',');
       return { t: p[0], o: +p[1], c: +p[2], h: +p[3], l: +p[4], v: +p[5] };
     });
+  }
+
+  // ---- K线备源：新浪（仅 CN 指数；JSONP 绕过 CORS，一次拿全量历史）----
+  //
+  // ⚠ 新浪的 CN_MarketData.getKLineData **datalen 给多少给多少**（2026-10-29 实测）：
+  //   3000 → 3000 根（2014-06-26 起）、8000 → 8000 根（1993-11-30 起）、
+  //   10000 → **8752 根（1990-12-19 起，36 年全量）**、20000 → 同 8752 根（给超了也是全量）。
+  //   ⇒ 想拿多少就给多少，这是全站**唯一没有根数上限**的日K源。
+  // ⚠ 普通 json_v2.php **不带 CORS 头**，浏览器 fetch 不了；
+  //   但 jsonp_v2.php 的 JSONP 变体可以用 <script> 加载（不受同源策略限制）。
+  const SINA_CODE = {
+    sh_comp: 'sh000001', sz_comp: 'sz399001', chinext: 'sz399006',
+    star50: 'sh000688', bse50: 'bj899050', csi300: 'sh000300',
+    csi500: 'sh000905', csi1000: 'sh000852',
+  };
+  const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200 };
+
+  // 新浪 JSONP 的回调名是**固定**的（写在路径里的 `var%20_data=`），
+  // 所以同一时刻只能有一个请求在飞 —— K线抽屉一次只开一张图，天然满足。
+  function sinaJsonp(url, timeoutMs) {
+    return new Promise((resolve, reject) => {
+      const G = '_data';
+      const script = document.createElement('script');
+      let timer = null;
+      const done = (fn, arg) => {
+        if (timer) clearTimeout(timer);
+        script.remove();
+        try { delete window[G]; } catch (e) { window[G] = undefined; }
+        fn(arg);
+      };
+      timer = setTimeout(() => done(reject, new Error('新浪 JSONP 超时')), timeoutMs || 45000);
+      script.onerror = () => done(reject, new Error('新浪 JSONP 加载失败'));
+      script.onload = () => {
+        const raw = window[G];
+        if (!Array.isArray(raw) || !raw.length) return done(reject, new Error('新浪 JSONP 返回空'));
+        done(resolve, raw);
+      };
+      script.src = url;
+      document.head.appendChild(script);
+    });
+  }
+
+  async function fetchKlineSina(key, period) {
+    const code = SINA_CODE[key];
+    const scale = SINA_SCALE[period];
+    if (!code || !scale) throw new Error('新浪无该指数/周期');
+    const url =
+      'https://money.finance.sina.com.cn/quotes_service/api/jsonp_v2.php/var%20_data=' +
+      `/CN_MarketData.getKLineData?symbol=${code}&scale=${scale}&ma=no&datalen=20000`;
+    const raw = await sinaJsonp(url);
+    return raw.map((b) => ({
+      t: String(b.day).slice(0, 10), o: +b.open, c: +b.close,
+      h: +b.high, l: +b.low, v: +b.volume,
+    }));
   }
 
   // ---- K线备源：腾讯（仅日/周/月） ----
@@ -336,37 +395,46 @@
   let lastKlineSource = '';
   const getKlineSource = () => lastKlineSource;
 
-  // 取数顺序：**东财 → 本地预生成 → 腾讯**
+  // 取数顺序：**东财 → 新浪(JSONP) → 本地预生成 → 腾讯**
   //
-  // 为什么本地预生成要排在腾讯前面（2026-10-29 实测）：
+  // 为什么新浪排在本地前面（2026-10-29 实测）：
   //   · 东财 `stock/kline/get` 对消费级 IP 限流很凶（实测整段 socket 级拒绝，
   //     而**同一主机的 `ulist.np` 行情照常 200** —— 它是**按接口**限流的）；
-  //   · 东财不可用时腾讯能顶上，但腾讯在 n>1000 时返回空 ⇒ 最多只能给 1000 根；
+  //   · 新浪 `datalen` **没有上限**（给多少给多少），上证能给到 **8752 根 / 36 年**，
+  //     比本地预生成的 1000 根全得多 —— 用 JSONP 变体绕开 CORS，浏览器可直连；
   //   · 本地预生成文件是 **日K 1000 / 周K 1821 / 月K ~431~500 根**，
   //     周K、月K **比腾讯备源更全**（35.8 年 vs 19 年；36 年 vs 36 年），
-  //     而且零网络、零限流 —— 所以它是比腾讯更好的第二选择。
+  //     而且零网络、零限流 —— 所以它是比腾讯更好的第三选择；
+  //   · 腾讯 n>1000 返回空 ⇒ 最多 1000 根，只能垫底。
   async function fetchKline(key, period, limit) {
     try {
       const v = await fetchKlineEM(key, period, limit);
       lastKlineSource = '东财直连';
       return v;
     } catch (e) {
-      console.warn('[market] 东财K线不可用，转本地预生成：', e && e.message);
+      console.warn('[market] 东财K线不可用，转新浪：', e && e.message);
       try {
-        const v = await localKline(key, period);
-        lastKlineSource = period === '1d' ? '本地日K快照' : '本地' + (period === '1w' ? '周K' : '月K');
+        const v = await fetchKlineSina(key, period);
+        lastKlineSource = '新浪直连（全量历史）';
         return v;
       } catch (e2) {
-        console.warn('[market] 本地无该周期，转腾讯兜底：', e2 && e2.message);
+        console.warn('[market] 新浪K线不可用，转本地预生成：', e2 && e.message);
         try {
-          const v = TX_PERIOD[period]
-            ? await fetchKlineTX(key, period, limit)
-            : await fetchKlineTXMinute(key, period);
-          lastKlineSource = '腾讯兜底';
+          const v = await localKline(key, period);
+          lastKlineSource = period === '1d' ? '本地日K快照' : '本地' + (period === '1w' ? '周K' : '月K');
           return v;
         } catch (e3) {
-          console.warn('[market] 腾讯K线不可用：', e3 && e3.message);
-          throw e3;
+          console.warn('[market] 本地无该周期，转腾讯兜底：', e3 && e3.message);
+          try {
+            const v = TX_PERIOD[period]
+              ? await fetchKlineTX(key, period, limit)
+              : await fetchKlineTXMinute(key, period);
+            lastKlineSource = '腾讯兜底';
+            return v;
+          } catch (e4) {
+            console.warn('[market] 腾讯K线不可用：', e4 && e.message);
+            throw e4;
+          }
         }
       }
     }

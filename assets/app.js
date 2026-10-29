@@ -649,6 +649,8 @@
     '1m': '1分', '5m': '5分', '15m': '15分', '30m': '30分', '60m': '60分',
     '1d': '日K', '1w': '周K', '1M': '月K',
   };
+  // 日频标的（1Y国债收益率）可用的周期
+  const DAILY_PERIODS = ['1d', '1w', '1M'];
   let kChart = null;
   let klineTimer = null;
   let klineKey = '';
@@ -663,7 +665,11 @@
 
     const periods = $('#kmPeriods');
     periods.innerHTML = '';
+    // 1Y国债收益率是**逐日一条曲线**（中债只有日频），既没有分钟源也没有腾讯代码
+    // ⇒ 分钟周期对它必然是空的，直接不渲染这几个页签，别让用户点了只得到一句「加载失败」
+    const dailyOnly = key === 'cgb_1y';
     Object.keys(PERIOD_LABEL).forEach((p) => {
+      if (dailyOnly && !DAILY_PERIODS.includes(p)) return;
       const b = el('button', 'pchip', PERIOD_LABEL[p]);
       b.dataset.period = p;
       b.onclick = () => loadKline(key, p);
@@ -681,12 +687,14 @@
   }
 
   // ---- K线取数根数（按周期给到「源侧真实上限」，而不是一刀切 1000）----
-  //   日K/周K/月K → 3000：东财 lmt=3000 实测可给 3000 根（12.3 年），
-  //     周K 1821 根（1990 起 35.8 年）、月K 431 根（36 年全量）——都是源侧的全部数据。
+  //   日K/周K/月K → **8000**：东财 `lmt` **没有上限**，给多少给多少（实测 3000 根时
+  //     就给 3000 根 —— 3000 本来是我们自己写的请求值，不是源的封顶）。
+  //     上证全量日K = **8752 根（1990-12-19 起，36 年）**，8000 根 ≈ 32 年。
+  //     周K 1821 根、月K 431 根是源侧全量，给多少也只有这么多。
   //   分钟级 → 保持 1000：源侧本身就封顶（5 分钟 1536 根、1 分钟只有当天 240 根），
   //     再多也没有。
   const klineLimit = (period) =>
-    period === '1d' || period === '1w' || period === '1M' ? 3000 : 1000;
+    period === '1d' || period === '1w' || period === '1M' ? 8000 : 1000;
 
   async function loadKline(key, period) {
     klineKey = key;
@@ -697,7 +705,7 @@
     note.textContent = '加载中…';
     let bars = null;
     let from = '';
-    // 取数链见 market.js：东财直连 → 本地预生成 → 腾讯
+    // 取数链见 market.js：东财直连 → 新浪(JSONP 全量) → 本地预生成 → 腾讯兜底
     try {
       bars = await window.MarketData.fetchKline(key, period, klineLimit(period));
       from = window.MarketData.getKlineSource
