@@ -9,24 +9,26 @@
 > **本项目已停止主动开发。** 采集完全由下面的定时任务自动驱动，**不需要、也不应该**人工干预。
 > 这一节写的是**现状**（2026-10-29 实测），不是设计愿望——按这里的事实理解本仓库即可。
 
-### 站点：Pages 已启用，但还没发布出来
+### 站点已上线
 
 | | |
 |---|---|
-| GitHub Pages | **已启用**（GitHub API `has_pages=true`）→ 但 `https://qweeqw231.github.io/macro-news/` 仍返回 GitHub 的 "Site not found"（2026-10-29 16:48 实测） |
-| 现状含义 | Pages 开关打开了，但**还没有一次成功的发布**。通常是 Source 没选对，或首次构建还没跑完 |
-| 要做的事 | 仓库 **Settings → Pages** → Build and deployment → Source 选 **Deploy from a branch** → Branch `main` / Folder `/ (root)` → Save；然后到 **Actions** 页看 `pages build and deployment` 任务有没有红叉 |
-| 已做的准备 | 仓库根已放 **`.nojekyll`**（跳过 Jekyll 原样发布，否则 `data/_last-run.json` 会被 Jekyll 忽略掉，见下） |
+| 站点地址 | **https://qweeqw231.github.io/macro-news/** （2026-10-29 16:50 实测 HTTP 200） |
+| 发布方式 | Settings → Pages → Source = **Deploy from a branch** → `main` / `/ (root)`；仓库根放 **`.nojekyll`** 跳过 Jekyll |
+| 更新机制 | 采集器 commit 到 `main` → Pages 自动重建（约 30 秒~1 分钟）→ 网站自动更新 |
+| 实测可达 | `index.html` / `assets/app.js` / `data/quotes.json`（54 条）/ `data/_last-run.json` / `data/snapshots/*.json` 全部 200 |
 
-> **为什么需要 `.nojekyll`**：Jekyll 默认**忽略所有以 `_` 开头的文件/目录**，
-> 而 `data/_last-run.json`（站点的「运行状态」面板要读它）正好以 `_` 开头 →
-> 走 Jekyll 构建的话它不会被发布，前端一请求就 404。
-> 加一个空的 `.nojekyll` 让 Pages 直接原样发布整个目录，既保住这个文件，也省掉一次无用的 Jekyll 构建。
->
 > **Pages 在这个项目里到底干什么**：它是整条链路的**出口**——
 > 采集器（Actions / 本机任务）把数据写进 `data/` 并 commit 到 `main`，
 > Pages 自动重建并把整个仓库发布成公开网站，你打开网址就能看到最新数据。
 > 没有它，采集结果只躺在 git 仓库里，只能 clone 下来读 JSON。
+>
+> **为什么需要 `.nojekyll`**：Jekyll 默认**忽略所有以 `_` 开头的文件/目录**，
+> 而 `data/_last-run.json`（站点的「运行状态」面板要读它）正好以 `_` 开头 →
+> 走 Jekyll 构建的话它不会被发布，前端一请求就 404。
+> 加一个空的 `.nojekyll` 让 Pages 直接原样发布整个目录，既保住这个文件，也省掉一次无用的 Jekyll 构建。
+> （实测：加之前站点首次发布后 `data/_last-run.json` 取不到；加之后 200。）
+
 
 
 ### 采集时间线（**别搞混谁在什么时候产出什么**）
@@ -361,7 +363,7 @@ minimax 定时任务（交易日 16:30，固定对话）
         │    ├─ data\macro\daily.json  按日期追加
         │    └─ data\_last-run.json    读改写（保留高频链路写的字段）
         └─ git commit（仅 data/ 有变化时）→ git push origin main
-             └─ 远端仓库更新（Pages 已启用，等首次发布成功后即自动重建上线）
+             └─ 远端仓库更新 → Pages 自动重建 → 网站更新（约 30 秒~1 分钟）
 ```
 
 配套的 **16:35 重试任务**（规格 §1「失败重试 1 次，间隔 5 分钟」）：
@@ -613,13 +615,11 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 5. 想立刻验证采集是否工作，点该工作流右侧的 **Run workflow** 手动触发一次
 6. 等待 1-2 分钟，站点生效
 
-> ⚠️ **2026-10-29 16:48 实测**：Pages 开关**已打开**（`has_pages=true`），但站点**仍未发布**
-> （`https://qweeqw231.github.io/macro-news/` 返回 "Site not found"，轮询 4 分钟都是 404）。
-> 说明**还没有一次成功的发布**。请到 Settings → Pages 确认 Source 是
-> **Deploy from a branch → `main` / `/ (root)`**，再看 Actions 页里
-> `pages build and deployment` 任务是成功还是报错。
-> 若 Source 选的是 **GitHub Actions**，则还需要一个部署工作流（本仓库目前没有）——
-> 告诉我要不要加。
+> ✅ **2026-10-29 16:50 实测：站点已上线** —— `https://qweeqw231.github.io/macro-news/` 返回 200，
+> `data/quotes.json`（54 条）、`data/_last-run.json`、`data/snapshots/*.json` 均可访问。
+> 之前一直 404 的原因是**从未有过一次成功的发布**（Pages 开关开了但没触发成功构建）；
+> 补上 `.nojekyll` 并 push 后，`pages build and deployment` 工作流 conclusion=success，
+> 部署记录的 `environment_url` 就是上面这个地址。
 > 启用后站点地址为 `https://qweeqw231.github.io/macro-news/`。
 >
 > 另：**本机到 `github.com` / `github.io` 的 HTTPS 会被重置**（2026-10-29 实测，
@@ -643,8 +643,8 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 
 > 本项目**已停止主动开发**。下面是还开着的口子，按需要再动：
 
-- [ ] **让 GitHub Pages 首次发布成功**（开关已开，但站点还是 "Site not found"：
-      确认 Source = `main` / `/ (root)`，看 Actions 里 `pages build and deployment` 是否报错）
+- [x] **GitHub Pages 上线**（2026-10-29 16:50 实测 200：`https://qweeqw231.github.io/macro-news/`；
+      Source = `main` / `/ (root)`，仓库根 `.nojekyll` 跳过 Jekyll）
 - [ ] 让 16:30 任务顺带跑一次 `src/collect.mjs` → 新闻滞后从最坏 9 小时压到 1 小时内
 - [ ] 归档策略：`data/archive/` 每天涨、`search.json` 已 9.4MB，
       一年后考虑改按月切文件或给 Actions 加 `git gc`

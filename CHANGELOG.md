@@ -69,6 +69,12 @@
 - 🟡 **上金所当日行情 17:00 前常未发布**、中债 1Y 曲线傍晚才出 → 16:30 那轮拿到的是
   前一交易日的值（`note` 标 `carried`），属正常行为；当天想看黄金收盘价请看快照里的
   `etf_518880`（黄金ETF）。
+- 🔴 **GitHub Pages 走 Jekyll 构建会丢掉 `data/_last-run.json`**：Jekyll 默认忽略所有
+  以 `_` 开头的文件/目录，而运行状态面板正是要读这个文件 → 线上请求 404。
+  根目录加一个空的 **`.nojekyll`** 即可让 Pages 原样发布整个目录（实测加完即 200）。
+- 🟡 **Pages 开关打开 ≠ 站点已发布**：GitHub API `has_pages=true` 只说明功能已启用，
+  真正上线的判据是 `GET /repos/{owner}/{repo}/deployments` 里有 `environment=github-pages`
+  且 `state=success` 的记录（有 `environment_url`）；此前一直 404 的原因就是**从未成功发布过**。
 
 ### 踩坑
 
@@ -78,6 +84,9 @@
   现在按 session 分流（am 只要 5 分钟 K、pm 只要日 K）+ 缓存 + 限速 + 熔断。
 - `cron_create` 传 `project` + 新建固定对话会返回 422；先不带 `project` 建，再用
   `cron_update` 补上 `project` 可行。
+- 本机 `web_fetch` / `Invoke-WebRequest` 访问 `*.github.io` 会超时，但 `curl.exe -4` 正常
+  ⇒ 探测站点用 `curl.exe -4`；另外 `GET /repos/{owner}/{repo}/deployments` 与
+  `/actions/runs` 对公开仓库**可匿名读**（Pages 配置接口 `/pages` 则不行，匿名 404）。
 
 ## [1.2.0] - 2026-10-29
 
