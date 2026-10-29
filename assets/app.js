@@ -548,15 +548,17 @@
     note.textContent = '加载中…';
     let bars = null;
     let from = '';
-    // 直连东财（任意周期）→ 腾讯 → 本地兜底（见 market.js）
+    // 取数链见 market.js：东财直连 → 本地预生成 → 腾讯
     try {
       bars = await window.MarketData.fetchKline(key, period, klineLimit(period));
-      from = '实时';
+      from = window.MarketData.getKlineSource
+        ? window.MarketData.getKlineSource()
+        : '直连';
     } catch (e) {
-      // 本地兜底：采集器预生成的日K；周/月由日K聚合，零网络
+      // 兜底：采集器预生成的日K；周/月有对应周期文件，否则由日K聚合，零网络
       try {
         bars = await window.MarketData.localKline(key, period);
-        from = period === '1d' ? '本地日K快照' : '本地日K聚合';
+        from = period === '1d' ? '本地日K快照' : '本地预生成';
       } catch (e2) { /* 本地也没有该周期 */ }
     }
 

@@ -332,18 +332,42 @@
     return bars;
   }
 
+  // 最近一次 K 线取数实际命中的层级（给界面上的「来源」标注用，避免把兜底数据显示成实时）
+  let lastKlineSource = '';
+  const getKlineSource = () => lastKlineSource;
+
+  // 取数顺序：**东财 → 本地预生成 → 腾讯**
+  //
+  // 为什么本地预生成要排在腾讯前面（2026-10-29 实测）：
+  //   · 东财 `stock/kline/get` 对消费级 IP 限流很凶（实测整段 socket 级拒绝，
+  //     而**同一主机的 `ulist.np` 行情照常 200** —— 它是**按接口**限流的）；
+  //   · 东财不可用时腾讯能顶上，但腾讯在 n>1000 时返回空 ⇒ 最多只能给 1000 根；
+  //   · 本地预生成文件是 **日K 1000 / 周K 1821 / 月K ~431~500 根**，
+  //     周K、月K **比腾讯备源更全**（35.8 年 vs 19 年；36 年 vs 36 年），
+  //     而且零网络、零限流 —— 所以它是比腾讯更好的第二选择。
   async function fetchKline(key, period, limit) {
     try {
-      return await fetchKlineEM(key, period, limit);
+      const v = await fetchKlineEM(key, period, limit);
+      lastKlineSource = '东财直连';
+      return v;
     } catch (e) {
-      console.warn('[market] 东财K线不可用，转腾讯兜底：', e && e.message);
+      console.warn('[market] 东财K线不可用，转本地预生成：', e && e.message);
       try {
-        return TX_PERIOD[period]
-          ? await fetchKlineTX(key, period, limit)
-          : await fetchKlineTXMinute(key, period);
+        const v = await localKline(key, period);
+        lastKlineSource = period === '1d' ? '本地日K快照' : '本地' + (period === '1w' ? '周K' : '月K');
+        return v;
       } catch (e2) {
-        console.warn('[market] 腾讯K线不可用，转本地兜底：', e2 && e2.message);
-        throw e2;
+        console.warn('[market] 本地无该周期，转腾讯兜底：', e2 && e2.message);
+        try {
+          const v = TX_PERIOD[period]
+            ? await fetchKlineTX(key, period, limit)
+            : await fetchKlineTXMinute(key, period);
+          lastKlineSource = '腾讯兜底';
+          return v;
+        } catch (e3) {
+          console.warn('[market] 腾讯K线不可用：', e3 && e3.message);
+          throw e3;
+        }
       }
     }
   }
@@ -401,5 +425,5 @@
     throw new Error('本地无该周期');
   }
 
-  window.MarketData = { META, KLT, fetchQuotes, fetchKline, localKline };
+  window.MarketData = { META, KLT, fetchQuotes, fetchKline, localKline, getKlineSource };
 })();
