@@ -22,6 +22,15 @@
 
 ### 修正
 
+- **README 加了置顶的「现状速览」章节**，按 2026-10-29 的真实状态重写：
+  - 明确写清**站点未部署**（GitHub Pages `has_pages=false`）、**项目已停止主动开发**；
+  - 三条链路（Actions 采集 / 16:30 组合采集 / 每 4 小时拉回本机）各自的负责范围、频率、产出；
+  - 列出 3 个 minimax 定时任务的**任务名 + cron_id + 计划表达式**，并注明
+    `cron_read` 返回的 `schedule` 才是准的（界面中文描述可能把 `1-5` 显示成"每周一"）；
+  - 新增「如果你是来取数的 AI」小节：读哪些文件、不要自己抓 HTTP、不要手工改 `data/`；
+  - 把「别踩的坑」扩到 15 条（含 `git restore --source` 不可用于同步、
+    `fetch` 后才读 `origin/main`、Actions 的 `*/5` 实测 3~5 小时）；
+  - 待办清单改为"还开着的口子"（启用 Pages / 压缩新闻滞后 / 归档策略 / 补正文等）。
 - README 里「github.io / github.com 在国内均可直连」的旧结论已不成立
   （2026-10-29 实测 HTTPS 被重置），改为标注 SSH-443 推送方式与本机实测结论。
 - README 标注 **GitHub Pages 尚未启用**（`has_pages=false`，

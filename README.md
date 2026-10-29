@@ -2,34 +2,114 @@
 
 全球宏观资讯自动采集与归档：**利率 · 汇率 · 政策 · 大宗商品**。
 
+---
+
+## ⚠️ 现状速览（**先读这一节**）
+
+> **本项目已停止主动开发。** 采集完全由下面的定时任务自动驱动，**不需要、也不应该**人工干预。
+> 这一节写的是**现状**（2026-10-29 实测），不是设计愿望——按这里的事实理解本仓库即可。
+
+### 站点没有部署
+
+| | |
+|---|---|
+| GitHub Pages | **未启用**（`has_pages=false`）→ `https://qweeqw231.github.io/macro-news/` 返回 GitHub 的 "Site not found" |
+| 实际用途 | 数据完整入库，在**本地**读取与分析；`assets/` 下的前端代码保留但没上线 |
+| 想上线 | 仓库 **Settings → Pages** → Source 选 `main` / 根目录 → Save，等 1~2 分钟 |
+
+### 三条链路，各管各的，别搞混
+
+| # | 采集什么 | 谁在跑 | 频率 | 产出落在哪 |
+|---|---|---|---|---|
+| ① | 新闻 + **17 个指数** | GitHub Actions（`src/collect.mjs`） | 声明 `*/5`，**实测 3~5 小时一次** | `data/archive/`、`data/latest.json`、`data/search.json`、`data/kline/`、`data/quotes.json` 里的 17 个指数 → **推到 GitHub** |
+| ② | **5 个新标的** + 5 个宏观 | minimax 定时任务（`scripts/portfolio-collect-and-push.ps1`） | 交易日 **16:30**（另设 16:35 失败重试一次） | `data/quotes.json` 里的 5 个新 key、`data/macro/daily.json`、`data/_last-run.json` → **先写本机，再推到 GitHub** |
+| ③ | 把 ①② 的产物**拉回本机** | minimax 定时任务（`scripts/pull-remote.ps1`） | 每 **4 小时** | 本地 `data/` |
+
+- ①② ③ 跑在**本机**的 minimax 定时任务（`C:\Work\Minimax_Work\macro-news`）需要 **MiniMax Code 客户端常驻**。
+- ① 完全在云端，**电脑关机也照跑**（只是产物先到 GitHub，等 ③ 拉回本机）。
+
+### 本地数据文件（读取契约）
+
+| 文件 | 内容 | 谁写 |
+|---|---|---|
+| `data/quotes.json` | **22 个标的**快照 = 17 指数 + 5 新增（`ndx`/`xau`/`sge_au9999`/`usdcny`/`cgb_1y`） | ①②（**按 key 合并**） |
+| `data/archive/YYYY-MM-DD.json` | 按天归档的新闻，**含标题与正文**（`items[].content`） | ① |
+| `data/latest.json` | 全量新闻索引，**含 content** | ① |
+| `data/search.json` | 检索索引，**只有 title + summary，没有正文**（约 9.4MB） | ① |
+| `data/macro/daily.json` | 宏观日频序列：两融余额 / 10Y 美债 / 社融增量 / CPI 同比 / 制造业 PMI | ② |
+| `data/kline/*.json` | 12 个指数的日 K（250 根） | ① |
+| `data/_last-run.json` | 运行状态（两条链路的字段**并存**） | ①②（**读改写**） |
+| `logs/` | 本地运行日志，**不入库** | ②③ |
+
+### 如果你是来取数的 AI
+
+- **要行情 / 宏观** → 读 `data/quotes.json` + `data/macro/daily.json`，不要自己去抓 HTTP 接口。
+  仓库里的适配器已经把各源的字段索引**逐个实测校准**过了，自己重写极易踩错（见下面第 5 条）。
+- **要新闻（含正文）** → 读 `data/archive/YYYY-MM-DD.json` 的 `items[].content`。
+  `data/search.json` 只有摘要，**别指望从它拿全文**。
+- **不要顺手触发采集**：采集归定时任务管，AI 只负责读。要刷新就跑现成脚本（见下）。
+- **不要手工编辑 `data/` 下的文件** —— 它们是派生数据，下次采集就会被覆盖。
+
+### 定时任务清单（minimax cron，2026-10-29 实测均在 active）
+
+| 任务名 | cron_id | 计划 | 干什么 |
+|---|---|---|---|
+| macro-news 组合行情+宏观采集（交易日 16:30） | `9b31e4b6-fa07-44ce-83f4-67c8d1eb5aa2` | `30 16 * * 1-5` | 跑 `scripts\portfolio-collect-and-push.ps1` |
+| macro-news 组合采集失败重试（16:35） | `95efe173-0c21-4250-8240-695641e49677` | `35 16 * * 1-5` | 读 `logs\last-portfolio-status.json`，失败才补跑一次 |
+| macro-news 远端数据同步（每 4 小时拉取新闻+行情） | `6f7816d3-da5f-4eda-9030-476a55684b6a` | `0 */4 * * *` | 跑 `scripts\pull-remote.ps1` |
+
+三个都是**固定对话**（fixed session）、模型 `MiniMax-M3.1-Flash`、`project` = 本仓库路径。
+管理方式：`cron_read list` / `cron_update {cron_id, schedule|enabled}` / `cron_delete {cron_id}`。
+
+> ⚠️ **cron 表达式里的 `1-5` = 周一至周五**（不是"每周一"）。界面上的中文描述可能显示得不准确，
+> 以 `cron_read` 返回的 `schedule` 字段为准。
+> 法定节假日 cron 不认，脚本靠"取不到当日数据 → 沿用上一交易日 → 内容未变不写盘"来兜底。
+
+### ⚠️ 别踩的坑（每一条都是实测踩出来的）
+
+1. **要刷新数据就跑现成脚本**，不要另写采集逻辑：
+   - 刷全部（远端 → 本机）：`powershell -NoProfile -ExecutionPolicy Bypass -File scripts\pull-remote.ps1`
+   - 刷 5 个新标的 + 宏观（本机 → 远端）：`powershell -NoProfile -ExecutionPolicy Bypass -File scripts\portfolio-collect-and-push.ps1`
+2. **`git reset --hard` 会毁掉工作区**，本项目禁止使用。
+3. **两条链路共用 `data/quotes.json` 和 `data/_last-run.json`**。任何一边改成整份覆盖写，
+   另一边的成果会在几分钟内消失——`src/collect.mjs` 已被专门改成**按 key 合并 + 读改写**，
+   改动它之前先读「两个任务共用同一个文件」一节。
+4. **本机到 `github.com` 的 HTTPS 会被重置**，`git push` 走 SSH-443
+   （仓库已配 `url."ssh://git@ssh.github.com:443/".insteadOf "https://github.com/"`，remote URL 不用改）。
+5. **规格里的字段索引有两处是错的**，实测为准：
+   `hf_XAU` 的 `[2]` 不是开盘价（与现价同值），真正的昨收/开盘是 `[7]`/`[8]`；
+   东财 `secid=133.USDCNY` 实测 `data:null`（可用的离岸价是 `133.USDCNH`）。
+6. **正文覆盖率 97.4%**：中国人民银行、欧洲央金的条目**只有标题没有正文**（公告原文在 PDF 里）。
+7. **周末与法定节假日**：行情数值沿用上一交易日（`note` 标 `carried`），**是正常行为不是故障**。
+8. **仓库在变大**（`data/search.json` 约 9.4MB，`data/archive/` 每天涨），
+   而 Actions 每次要克隆全历史。离 GitHub 1GB 软限制还远，但一年后值得重新评估归档策略。
+
+---
+
 ## 核心设计：采集不占用任何 AI 上下文
 
-**推荐：GitHub Actions 定时采集（5 分钟）**
+**主力：GitHub Actions 定时采集**（云端跑，电脑关机也照跑）
 
 ```
-GitHub Actions（每 5 分钟，cron）
+GitHub Actions（定时工作流，实测每 3~5 小时一次）
    └─ node src/collect.mjs          ← 纯脚本，0 context，跑在 GitHub 服务器上
         └─ 写 data/*.json（内容未变则跳过写盘）
              └─ git commit & push（仅数据有变化时）
-                  └─ GitHub Pages 自动更新（约 1-2 分钟）
 ```
 
-为什么用 Actions 而不是本地跑：
+> ⚠️ 工作流声明的是 `*/5`（5 分钟），但**实测每次间隔 3~5 小时**——GitHub 会大幅延迟定时调度。
+> 别按「5 分钟」推断数据新鲜度。详见「现状速览」。
 
 | | 本地 Windows 计划任务 | GitHub Actions |
 |---|---|---|
-| 间隔 | 30 分钟（最低约 5） | **5 分钟** |
+| 间隔 | 30 分钟（最低约 5） | 声明 5 分钟，**实测 3~5 小时** |
 | 电脑关机 | ❌ 停止采集 | ✅ 照常运行 |
-| 国内可达性 | ✅ | ✅（github.com / github.io 均可直连） |
-| 成本 | 0 | 0（公开仓库每月 2000 分钟免费额度，这里约 144 分钟/天） |
-
-> 备用：仍可保留本地计划任务作为补充（两套并行不冲突，采集器按 id 幂等去重）。
-> ```powershell
-> powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1
-> ```
+| 国内可达性 | ✅ | ⚠️ `github.com` 的 HTTPS 在本机被重置（git 走 SSH-443） |
+| 成本 | 0 | 0（公开仓库每月 2000 分钟免费额度） |
 
 采集是确定性的 IO 任务，**不消耗对话窗口**。
 AI 只在你主动要求时介入（例如"把这周新闻和我的 6 大类资产对齐"）。
+
 
 ## 第二条采集链：组合行情 + 宏观（交易日 16:30）
 
@@ -44,7 +124,7 @@ minimax 定时任务（交易日 16:30 Asia/Shanghai，固定对话）
         │    ├─ data\macro\daily.json  按日期追加
         │    └─ data\_last-run.json    读改写（保留高频链路写的字段）
         └─ git commit（仅 data/ 有变化时）→ git push origin main
-             └─ GitHub Pages 自动更新
+             └─ 远端仓库更新（⚠️ GitHub Pages 未启用，暂不发布站点）
 ```
 
 配套的 **16:35 重试任务**（规格 §1「失败重试 1 次，间隔 5 分钟」）：
@@ -79,13 +159,14 @@ minimax 定时任务（交易日 16:30 Asia/Shanghai，固定对话）
 
 ### 两个任务共用同一个文件
 
-高频链路（5 分钟）与低频链路（16:30）都会写 `data/quotes.json` 和 `data/_last-run.json`。
+高频链路（Actions，3~5 小时）与低频链路（16:30）都会写 `data/quotes.json` 和 `data/_last-run.json`。
 **整份覆盖会互相抹掉**，所以两边都改成：
 
 - `quotes.json` —— 按 `key` 合并写（各自只更新自己那批 key）
 - `_last-run.json` —— 读改写（各自只更新自己的字段）
 
-否则 16:30 写进去的 5 个 key 会在 5 分钟内被高频链路整份覆盖掉。
+否则 16:30 写进去的 5 个 key 会在下一轮高频链路运行时被整份覆盖掉。
+（已用「拿远端 HEAD 的 src+data 模拟跑一遍 Actions」验证过：跑完 22 个 key 与 portfolio 日志字段都还在。）
 
 ### 数据校验（规格 §5）
 
@@ -118,7 +199,10 @@ minimax 定时任务（每 4 小时）
 
 ## 实时行情与 K 线：浏览器直连，无需服务器
 
-**新闻**的延迟 = 采集间隔（GitHub Actions 最短 5 分钟）；但**行情与 K 线**
+> ⚠️ 这一节讲的是**站点前端**的行为，而站点目前**没部署**（见「现状速览」）。
+> 数据侧对应的是 `data/quotes.json` 的快照回退：直连不可达时前端读本地快照。
+
+**新闻**的延迟 = 采集间隔（GitHub Actions 实测 3~5 小时）；但**行情与 K 线**
 不受采集间隔限制——浏览器直接请求东方财富公开接口，秒级刷新：
 
 ```
@@ -151,8 +235,11 @@ minimax 定时任务（每 4 小时）
 | 国家统计局 | 中国宏观数据（CPI / PPI / PMI） | 官方 RSS |
 | 东方财富 | 指数 / 汇率 / 商品实时行情 | 公开行情 API |
 
+> 组合行情的 5 个新源（腾讯行情 / 上金所 / 中国货币网 / 中债）与 5 个宏观指标的源，
+> 见「第二条采集链」里的两张表。
+
 > 采集脚本对每个源独立容错：单个源失败不影响其他源，失败原因记录在 `data/_last-run.json`，
-> 并在站点的「运行状态」页展示。
+> 并在站点的「运行状态」页展示（站点未部署时直接读该 json）。
 > 官方源（央行 / 统计局 / 美联储 / 欧洲央行）发布频率低，**不套用 24h 时间窗**，
 > 靠条目 id 去重，避免「最新一条在窗口外被永久丢弃」。
 
@@ -187,32 +274,27 @@ macro-news/
 
 ## 使用
 
+> 日常**不需要手动跑任何东西** —— 定时任务会自动跑。
+> 下面这些命令是「想立刻刷新 / 排查问题时」才用的。
+
 ```powershell
-# 手动采集一次（新闻 + 17 指数）
+# 从远端拉取最新数据到本地（= 每 4 小时的定时任务；最常用的一条）
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\pull-remote.ps1
+
+# 采集 5 个新标的 + 5 个宏观，并提交推送（= 16:30 的定时任务）
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\portfolio-collect-and-push.ps1
+
+# 手动采集一次（新闻 + 17 指数，通常由 Actions 在云端跑）
 node src\collect.mjs
+
+# 只采集组合行情不写盘（看结果用）
+node src\portfolio-collect.mjs --dry-run
 
 # 首次使用建议回补 30 天
 node src\collect.mjs --since 720
 
-# 手动采集一次（组合行情 + 宏观，16:30 定时任务跑的就是它）
-node src\portfolio-collect.mjs
-
-# 只采集不写盘（看结果用）
-node src\portfolio-collect.mjs --dry-run
-
-# 组合采集全流程（采集 → 提交 → 推送），定时任务调用的是这条
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\portfolio-collect-and-push.ps1
-
-# 从远端拉取最新数据到本地（定时任务每 4 小时跑一次）
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\pull-remote.ps1
-
-# 注册计划任务（默认 30 分钟）
+# ⚠️ 以下是**旧的**本地 Windows 计划任务方案（本项目从未启用，当前不需要）
 powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1
-
-# 自定义频率
-powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Minutes 15
-
-# 取消
 powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 ```
 
@@ -243,6 +325,7 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
    > 再在仓库里设 `git config url."ssh://git@ssh.github.com:443/".insteadOf "https://github.com/"`，
    > remote URL 不用改。
 3. 仓库 **Settings → Pages** → Source 选 `main` 分支、根目录 → Save
+   ← **这一步目前还没做**（见下方现状说明）
 4. 仓库 **Actions** 页应能看到 `宏观资讯采集` 工作流；
    首次可能需要在 Actions 页点一下 **Enable workflow**
 5. 想立刻验证采集是否工作，点该工作流右侧的 **Run workflow** 手动触发一次
@@ -260,6 +343,9 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 
 ## 站内阅读新闻
 
+> ⚠️ 这段功能代码在 `assets/` 里是完整的，但**站点没部署**（见「现状速览」），所以线上看不到。
+> 数据侧完全可用：正文就存在 `data/archive/*.json` 的 `items[].content` 里。
+
 条目**不再跳转源站**，点击即在站内打开阅读器：
 
 - 展示来源 / 时间 / 频道 / 标题 / 完整正文（保留段落）
@@ -270,10 +356,17 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 
 ## 待办 / 可扩展
 
-- [ ] 接入 FRED API（美债收益率等时间序列，需申请免费 key）
+> 本项目**已停止主动开发**。下面是还开着的口子，按需要再动：
+
+- [ ] **启用 GitHub Pages**（唯一"随时能做"的一件：Settings → Pages → `main` / 根目录）
+- [ ] 让 16:30 任务顺带跑一次 `src/collect.mjs` → 新闻滞后从最坏 9 小时压到 1 小时内
+- [ ] 归档策略：`data/archive/` 每天涨、`search.json` 已 9.4MB，
+      一年后考虑改按月切文件或给 Actions 加 `git gc`
+- [ ] 补正文：人民银行 / 欧洲央行条目目前只有标题（公告原文在 PDF 里）
+- [ ] 接入 FRED API（美债收益率时间序列，需申请免费 key；目前用免 key 的 CSV 接口）
 - [ ] 增加更多官方源（IMF / 世界银行 / 证监会 / 交易所）
 - [ ] 条目按 6 大类资产打标，关联到 micro-control-finance 的章节
-- [ ] 周报自动生成（可选，会引入 AI 调用成本）
+- [ ] 周报自动生成（会引入 AI 调用成本，默认不做）
 
 ---
 
@@ -364,7 +457,7 @@ GET /kline?key=sh_comp&period=1d&limit=250
    `https://wallstreetcn.comhttps://...` 的坏链接，链接全部失效
 8. **「内容未变不写盘」误判**：剥离易变字段时把 `count / total / added` 也剥掉，
    导致同一天新增条目时 `index.json` 被判为未变化而跳过写盘，归档计数长期停留在旧值
-9. **两个采集任务整份覆盖同一个文件**：5 分钟链路与 16:30 链路都写 `quotes.json` /
+9. **两个采集任务整份覆盖同一个文件**：高频链路与 16:30 链路都写 `quotes.json` /
    `_last-run.json`，任何一边整份覆盖都会把另一边的结果抹掉。解法是两边都按 key 合并 / 读改写
 10. **规格书的字段索引不可信**：`hf_XAU` 的 `[2]` 不是开盘价（与现价同值），真正的开盘在 `[8]`；
     照抄会让 `prevClose` 恒等于 `price`、涨跌幅恒为 0。`secid=133.USDCNY` 实测 `data:null`，
@@ -374,3 +467,11 @@ GET /kline?key=sh_comp&period=1d&limit=250
     用仓库级 `url.<ssh>.insteadOf` 让 git 自动改走 SSH，remote URL 保持不变
 12. **写盘前要建目录**：`data/macro/` 首次不存在时直接 `writeFile` 会 ENOENT；
     `writeJSON` 里有 `mkdir` 而 `writeJSONIfChanged` 里没有 —— 两个函数要一起改
+13. **拉远端数据要用 `git fetch` + `git merge --ff-only`，别用 `git restore --source --worktree`**：
+    后者会留下「脏工作区 + untracked 文件」，**反而阻塞下一次快进**。
+    而 `merge --ff-only` 在工作区脏时会**拒绝合并并中止**（"Your local changes ... would be
+    overwritten by merge"），本地改动完好 —— 天然安全，适合做自动化同步任务
+14. **`git fetch` 之后 `origin/main` 才前进**：判断「本地是否已是最新」必须在 fetch **之后**
+    再读 `git rev-list --count HEAD..origin/main`，否则会误判成「无需同步」
+15. **Actions 的 `*/5` 不是 5 分钟**：实测每次间隔 3~5 小时，别按 5 分钟推断数据新鲜度，
+    拉取频率也要跟着远端的真实节奏走
