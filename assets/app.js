@@ -418,64 +418,59 @@
   }
 
   // ---------- 视图切换 ----------
-  // 视图与 URL 的 hash 一一对应（#view-feed / #view-archive / #view-sources / #view-status）：
+  // 视图与 URL 的 hash 一一对应（#view-feed / #view-archive / #view-sources）：
   //   · 页签是真链接，点一下 URL 就变 —— 有即时反馈，也能收藏/分享某个视图；
   //   · 即使 app.js 还没加载完，点下去也会跳到对应区块，而不是毫无反应。
-  const VIEWS = ['feed', 'archive', 'sources', 'status'];
+  const VIEWS = ['feed', 'archive', 'sources'];
 
   // ---------- 视图切换后的视口对齐 ----------
   //
   // ⚠ 为什么不能「算一次位置就滚」：
   //   页面总高度是**异步变化**的。宏观仪表盘的行情卡要等
-  //   「东财直连 + 本地 quotes.json」都回来才渲染（实测几秒），
+  //   「东财直连 + 本地 quotes.json」都回来才渲染（实测 5~10 秒都可能），
   //   渲染完会把下面所有区块整体往下推 ⇒ 切换瞬间算好的目标位置当场失效。
   //   实测症状：**第一次**点「归档」停在仪表盘中段（差了 588px），
   //   等行情渲染完再点第二次才对。
   //
-  // 对策：先滚一次 → 再在几秒内盯着 body 尺寸变化 → 一旦尺寸变了就重新对齐。
+  // ⚠ 而且切换瞬间**页面可能还不够高**（板块还是空的、文档比视口还矮），
+  //   这时 `scrollTo` 会被浏览器钳到 0 —— 只能等页面长出来之后再对齐。
+  //
+  // 对策：用 `ResizeObserver` **常驻**盯着 body 尺寸，
+  //   尺寸一变就重新对齐（**不设时间窗**：行情渲染快则 1 秒、慢则 10 秒，
+  //   任何固定窗口都会漏）。用户自己滚了就停手，不抢方向盘。
   let alignRO = null;
-  let alignTimer = null;
+  let alignState = null;
 
-  function alignToView(v) {
-    const sec = $('#view-' + v);
-    if (!sec) return;
-
-    // 目标 = 该区块的绝对位置 - sticky 顶栏高度
-    const target = () => Math.max(0, sec.getBoundingClientRect().top + window.scrollY - 72);
-    window.scrollTo({ top: target(), behavior: 'smooth' });
-
-    if (alignRO) alignRO.disconnect();
-    clearTimeout(alignTimer);
-
-    // 用户自己滚了就别抢方向盘（否则布局一变就把人拽回去）
-    let userMoved = false;
-    const onUser = () => { userMoved = true; };
+  function initAlign() {
+    // 用户自己滚了 → 本次视图的自动纠偏停手（否则布局一变就把人拽回去）
+    const onUser = () => { if (alignState) alignState.userMoved = true; };
     window.addEventListener('wheel', onUser, { passive: true });
     window.addEventListener('touchmove', onUser, { passive: true });
     window.addEventListener('keydown', onUser);
 
-    let last = target();
     alignRO = new ResizeObserver(() => {
-      if (userMoved) return;
-      const y = target();
-      if (Math.abs(y - last) < 4) return;
-      last = y;
+      const st = alignState;
+      if (!st || st.userMoved) return;
+      const y = Math.max(0, st.sec.getBoundingClientRect().top + window.scrollY - 72);
+      if (Math.abs(y - st.last) < 4) return;
+      st.last = y;
       // 用瞬时定位而不是 smooth：smooth 会和正在进行的动画互相打架
       window.scrollTo({ top: y, behavior: 'auto' });
     });
     alignRO.observe(document.body);
+  }
 
-    alignTimer = setTimeout(() => {
-      if (alignRO) alignRO.disconnect();
-      alignRO = null;
-      window.removeEventListener('wheel', onUser);
-      window.removeEventListener('touchmove', onUser);
-      window.removeEventListener('keydown', onUser);
-    }, 4000);
+  function alignToView(v) {
+    const sec = $('#view-' + v);
+    if (!sec) return;
+    // 目标 = 该区块的绝对位置 - sticky 顶栏高度
+    const target = () => Math.max(0, sec.getBoundingClientRect().top + window.scrollY - 72);
+    alignState = { sec, userMoved: false, last: target() };
+    window.scrollTo({ top: target(), behavior: 'smooth' });
   }
 
   function viewFromHash() {
-    const m = String(location.hash || '').match(/^#view-(feed|archive|sources|status)$/);
+    const m = String(location.hash || '').match(/^#view-(feed|archive|sources)$/);
     return m ? m[1] : null;
   }
 
@@ -502,7 +497,6 @@
     // 需要数据的视图在切过去时才去取（懒加载）
     if (v === 'archive') renderArchive();
     if (v === 'sources') renderSources();
-    if (v === 'status') renderStatus();
   }
 
   // ---------- 归档 ----------
@@ -547,10 +541,11 @@
     }
   }
 
-  // ---------- 来源 / 运行状态 ----------
-  // ⚠ 这两个视图共用同一份数据（`_last-run.json` + `index.json`），
-  //   但**必须分别填各自的容器**：以前两个区块都写进了 `#sources`，
-  //   而 `#status` 从来没被写过 ⇒ 点「运行状态」永远是空白一片（看起来像"点了没反应"）。
+  // ---------- 来源 + 页脚概况 ----------
+  // ⚠ 这两处共用同一份数据（`_last-run.json` + `index.json`），但**必须分别填各自的容器**：
+  //   以前两个区块都写进了 `#sources`，而 `#status` 从来没被写过
+  //   ⇒ 点「运行状态」永远是空白一片（看起来像"点了没反应"）。
+  //   现在「运行状态」页签已取消，概况直接渲染到页脚（见 renderFoot）。
   let runMeta = null;
   async function loadRunMeta() {
     if (!runMeta) {
@@ -595,30 +590,25 @@
     }
   }
 
-  async function renderStatus() {
-    const box = $('#status');
-    box.innerHTML = '<div class="skeleton">载入中…</div>';
+  // ---------- 页脚：采集概况 ----------
+  //
+  // ⚠ 这里原本是一个独立的「运行状态」页签，但它的内容就是页脚那一行 ⇒ 页签冗余，
+  //   已按用户意见取消这个导航项（2026-10-29）。
+  //   概况改为直接渲染到页脚，任何视图下都看得到。
+  async function renderFoot() {
+    const el = $('#ftMeta');
     try {
       const { last, total, days } = await loadRunMeta();
-      box.innerHTML = `
-        <h2 style="font-size:1.2rem;margin:1.5rem 0 .5rem">采集概况</h2>
-        <div class="tbl-wrap"><table>
-          <tbody>
-            <tr><td>最近一次运行</td><td class="num">${last.startedAt ? new Date(last.startedAt).toLocaleString('zh-CN', { hour12: false }) : '—'}</td></tr>
-            <tr><td>总耗时</td><td class="num">${last.durationMs != null ? last.durationMs + ' ms' : '—'}</td></tr>
-            <tr><td>本次新增</td><td class="num">${last.added != null ? last.added + ' 条' : '—'}</td></tr>
-            <tr><td>行情快照</td><td class="num">${last.quotes != null ? last.quotes + ' 项' : '—'}</td></tr>
-            <tr><td>库内总计</td><td class="num">${total} 条 / ${days} 天</td></tr>
-          </tbody>
-        </table></div>
-
-        <div class="note">
-          采集由 GitHub Actions 按固定周期运行 <code>node src/collect.mjs</code>，
-          完全不占用 AI 对话上下文。脚本幂等，重复运行不会产生重复条目。
-          各源本次条数与耗时见「来源」页。
-        </div>`;
+      const bits = [];
+      if (last.startedAt) bits.push('最近一次采集 ' + new Date(last.startedAt).toLocaleString('zh-CN', { hour12: false }));
+      if (last.durationMs != null) bits.push('耗时 ' + last.durationMs + ' ms');
+      if (last.added != null) bits.push('本次新增 ' + last.added + ' 条');
+      if (last.quotes != null) bits.push('行情快照 ' + last.quotes + ' 项');
+      bits.push('库内 ' + total + ' 条 / ' + days + ' 天');
+      el.textContent = bits.join(' · ');
     } catch (e) {
-      box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
+      // 运行状态读不到就退回快照信息（latest.json 那条）
+      if (!el.textContent) el.textContent = '运行状态读取失败：' + esc(e.message);
     }
   }
 
@@ -788,10 +778,13 @@
     bindReader();
 
     initBurger();
+    // 常驻的视口对齐观察器（必须在第一次 showView 之前装好）
+    initAlign();
     document.querySelectorAll('.tab').forEach((t) => {
       t.onclick = (e) => {
-        // 阻止浏览器默认的锚点跳转：页面要停在仪表盘，不要跳到区块位置。
-        // 但 hash 仍然用 replaceState 同步（URL 变了 → 有即时反馈、可收藏/分享）。
+        // 阻止浏览器默认的锚点跳转：滚动位置由 showView() 统一控制
+        // （要滚到该视图的区块顶部，而不是浏览器默认的锚点位置）。
+        // hash 仍然用 replaceState 同步（URL 变了 → 有即时反馈、可收藏/分享）。
         e.preventDefault();
         showView(t.dataset.view);
       };
@@ -816,7 +809,9 @@
       S.total = d.total || (d.items || []).length;
       renderFilters();
       renderFeed();
+      // 页脚先放快照信息（兜底），随后由 renderFoot() 换成完整的采集概况
       $('#ftMeta').textContent = `库内 ${d.total} 条 · 快照生成于 ${new Date(d.generatedAt).toLocaleString('zh-CN', { hour12: false })}`;
+      renderFoot();
     } catch (e) {
       $('#feed').innerHTML = `<div class="empty">数据载入失败：${esc(e.message)}<br>请先运行 <code>node src/collect.mjs</code></div>`;
     }
