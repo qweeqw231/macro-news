@@ -18,6 +18,7 @@
     fuse: null,
     shown: PAGE,
     archive: null,
+    total: 0,        // 库内总条数（用于标注当前列表的母集）
   };
 
   const $ = (s) => document.querySelector(s);
@@ -255,6 +256,30 @@
     document.body.style.overflow = '';
   }
 
+  // 搜索结果来自 search.json —— 只有 title + summary，**没有正文**；
+  // 完整正文存在按天的归档文件里（content 最多 4000 字）。
+  // 所以打开一条没有正文的条目时，按日期去 data/archive/YYYY-MM-DD.json 取全文（带缓存）。
+  const dayCache = new Map();
+
+  async function fetchFullItem(it) {
+    if (!it) return it;
+    if ((it.content || '').trim()) return it;
+    const day = String(it.time || '').slice(0, 10);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return it;
+    try {
+      let items = dayCache.get(day);
+      if (!items) {
+        const d = await jget(`archive/${day}.json`);
+        items = d.items || [];
+        dayCache.set(day, items);
+      }
+      const full = items.find((x) => x.id === it.id);
+      return full || it;
+    } catch (e) {
+      return it;
+    }
+  }
+
   function renderReader() {
     const it = S.items[readerIdx];
     if (!it) return;
@@ -271,6 +296,16 @@
         .forEach((p) => body.appendChild(el('p', null, p)));
     } else {
       body.appendChild(el('p', 'rd-empty', '本条仅有标题，暂无正文内容，可点击「阅读原文」查看。'));
+    }
+
+    // 缺正文（多半是搜索命中）→ 异步从归档补齐后重绘
+    if (!(it.content || '').trim()) {
+      const cur = readerIdx;
+      fetchFullItem(it).then((full) => {
+        if (readerIdx !== cur || !S.items[cur] || full === it) return;
+        S.items[cur] = full;
+        renderReader();
+      });
     }
 
     const link = $('#rdLink');
@@ -328,7 +363,11 @@
       S.shown = PAGE;
       renderFilters();
       renderFeed();
-      $('#qMeta').textContent = '';
+      // 标注母集：空搜索时列表是「最新快照」，检索却覆盖全库 —— 不写清楚，
+      // 同一个分类会出现「带关键词的条数 > 不带的条数」这种看起来自相矛盾的数字。
+      $('#qMeta').textContent =
+        `最新快照 ${(S.base || []).length} 条` +
+        (S.total ? ` · 库内共 ${S.total} 条（输入关键词可检索全库）` : '');
       return;
     }
     if (!S.searchIdx) {
@@ -349,8 +388,9 @@
           });
           doSearch();
         };
-        if (window.requestIdleCallback) window.requestIdleCallback(build, { timeout: 800 });
-        else build();
+        // ⚠ 别用 requestIdleCallback：用户已经在等搜索结果了，等「空闲」反而更慢
+        //   （而且 requestIdleCallback 在后台标签页里可能迟迟不触发 → 搜索看起来「没反应」）
+        build();
       } catch (e) {
         $('#qMeta').textContent = '索引载入失败：' + e.message;
         return;
@@ -363,12 +403,15 @@
   function doSearch() {
     if (!S.fuse) return;
     closeReader();
-    const res = S.fuse.search(S.q, { limit: 120 });
+    // ⚠ **不要设 limit**：以前写死 `limit: 120` 会把结果**静默截断**，
+    //   于是「命中 120 条」其实是「至多 120 条」—— 真实命中更多时这个数字是假的
+    //   （「加息」实测真实命中 185 条，界面却显示 120）。
+    const res = S.fuse.search(S.q);
     S.items = res.map((r) => r.item);
     S.shown = PAGE;
     renderFilters();
     renderFeed();
-    $('#qMeta').textContent = `命中 ${res.length} 条 · 在 ${S.searchIdx.length} 条归档中检索`;
+    $('#qMeta').textContent = `全库 ${S.searchIdx.length} 条中命中 ${res.length} 条`;
   }
 
   // ---------- 视图切换 ----------
@@ -395,7 +438,15 @@
       $('#view-' + k).hidden = k !== v;
     });
     document.querySelector('.hd').classList.remove('nav-open');
-    window.scrollTo(0, 0);
+    // ⚠ 必须滚到**该视图的区块**，不能 `scrollTo(0,0)`：
+    //   宏观仪表盘是常驻在页面顶部的，四个视图的内容都在它下面。
+    //   滚回顶部 ⇒ 切换后画面还是仪表盘 ⇒ 用户看到「四个页签一模一样」、
+    //   「点了没反应」。这里滚到区块顶部（避开 sticky 顶栏高度）。
+    const sec = $('#view-' + v);
+    if (sec) {
+      const y = sec.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    }
     // URL 与视图保持同步（replaceState 不会触发 hashchange，不会造成循环）
     if (viewFromHash() !== v) history.replaceState(null, '', '#view-' + v);
     // 需要数据的视图在切过去时才去取（懒加载）
@@ -690,6 +741,7 @@
       const d = await jget('latest.json');
       S.base = d.items;
       S.items = d.items;
+      S.total = d.total || (d.items || []).length;
       renderFilters();
       renderFeed();
       $('#ftMeta').textContent = `库内 ${d.total} 条 · 快照生成于 ${new Date(d.generatedAt).toLocaleString('zh-CN', { hour12: false })}`;

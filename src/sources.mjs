@@ -78,6 +78,21 @@ const clip = (s, n) => {
   return t.length > n ? t.slice(0, n) + '…' : t;
 };
 
+// 摘要：**优先在句末断开**，避免「…有数百名客户的个人信息遭到泄露…」这种半句话。
+// 长度从 140 放宽到 220 —— 列表里能多看一句，读者的正文另走归档全文。
+const SUMMARY_LEN = 220;
+function summarize(s, n = SUMMARY_LEN) {
+  const t = String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
+  if (t.length <= n) return t;
+  const head = t.slice(0, n);
+  // 只在窗口后半段找句末标点：太靠前的句子会截掉太多内容
+  const min = Math.floor(n * 0.45);
+  for (let i = head.length - 1; i >= min; i--) {
+    if ('。！？；!?;'.includes(head[i])) return head.slice(0, i + 1) + '…';
+  }
+  return head + '…';
+}
+
 // 补全相对 URL。华尔街见闻的 uri 字段本身就是完整 URL，
 // 之前无条件再拼一次域名，产生了 https://wallstreetcn.comhttps://... 的坏链接。
 function absUrl(u, base) {
@@ -158,7 +173,7 @@ async function wallstreetcn() {
         channel: label,
         // 快讯多数无独立标题：用正文首段当标题，正文完整存入 content
         title: rawTitle || text.slice(0, 40),
-        summary: rawTitle ? clip(text, 140) : '',
+        summary: rawTitle ? summarize(text) : '',
         content: clip(text, 4000),
         url: absUrl(uri, 'https://wallstreetcn.com/livenews/global'),
         kind: 'news',
@@ -186,7 +201,7 @@ async function eastmoneyNews() {
         source: '东方财富',
         channel: '国内财经',
         title: stripTags(it.title),
-        summary: clip(stripTags(it.summary), 140),
+        summary: summarize(stripTags(it.summary)),
         content: clip(stripTags(it.summary), 4000),
         url: absUrl(it.url || it.uniqueUrl, 'https://finance.eastmoney.com/'),
         kind: 'news',
@@ -211,7 +226,7 @@ async function sinaFinance() {
         source: '新浪财经',
         channel: '国内财经',
         title: stripTags(it.title),
-        summary: clip(stripTags(it.intro), 140),
+        summary: summarize(stripTags(it.intro)),
         content: clip(stripTags(it.intro), 4000),
         url: absUrl(it.url, 'https://finance.sina.com.cn/'),
         kind: 'news',
@@ -268,7 +283,7 @@ function rssSource({ name, channel, url, limit = 30, tag = '', timeout = 15000, 
           source: name,
           channel,
           title: i.title,
-          summary: clip(stripTags(i.description), 140),
+          summary: summarize(stripTags(i.description)),
           content: clip(stripTags(i.description), 4000),
           url: i.link || url,
           kind: 'official',

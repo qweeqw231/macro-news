@@ -202,7 +202,7 @@ async function main() {
         source: it.source,
         channel: it.channel,
         title: it.title,
-        summary: (it.summary || '').slice(0, 200),
+        summary: (it.summary || '').slice(0, 220),
         url: it.url,
       });
     }
