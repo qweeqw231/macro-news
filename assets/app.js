@@ -807,8 +807,9 @@
       S.base = d.items;
       S.items = d.items;
       S.total = d.total || (d.items || []).length;
-      renderFilters();
-      renderFeed();
+      // 走一遍空搜索分支：首次加载就把「母集」说明写进 #qMeta
+      // （空搜索 = 最新快照 200 条，带关键词 = 全库 17092 条），同时渲染筛选条与列表
+      runSearch('');
       // 页脚先放快照信息（兜底），随后由 renderFoot() 换成完整的采集概况
       $('#ftMeta').textContent = `库内 ${d.total} 条 · 快照生成于 ${new Date(d.generatedAt).toLocaleString('zh-CN', { hour12: false })}`;
       renderFoot();
