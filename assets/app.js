@@ -372,15 +372,35 @@
   }
 
   // ---------- 视图切换 ----------
+  // 视图与 URL 的 hash 一一对应（#view-feed / #view-archive / #view-sources / #view-status）：
+  //   · 页签是真链接，点一下 URL 就变 —— 有即时反馈，也能收藏/分享某个视图；
+  //   · 即使 app.js 还没加载完，点下去也会跳到对应区块，而不是毫无反应。
+  const VIEWS = ['feed', 'archive', 'sources', 'status'];
+
+  function viewFromHash() {
+    const m = String(location.hash || '').match(/^#view-(feed|archive|sources|status)$/);
+    return m ? m[1] : null;
+  }
+
   function showView(v) {
     S.view = v;
     closeReader();
-    document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.view === v));
-    ['feed', 'archive', 'sources', 'status'].forEach((k) => {
+    document.querySelectorAll('.tab').forEach((t) => {
+      const on = t.dataset.view === v;
+      t.classList.toggle('active', on);
+      if (on) t.setAttribute('aria-current', 'page');
+      else t.removeAttribute('aria-current');
+    });
+    VIEWS.forEach((k) => {
       $('#view-' + k).hidden = k !== v;
     });
     document.querySelector('.hd').classList.remove('nav-open');
     window.scrollTo(0, 0);
+    // URL 与视图保持同步（replaceState 不会触发 hashchange，不会造成循环）
+    if (viewFromHash() !== v) history.replaceState(null, '', '#view-' + v);
+    // 需要数据的视图在切过去时才去取（懒加载）
+    if (v === 'archive') renderArchive();
+    if (v === 'sources' || v === 'status') renderSources();
   }
 
   // ---------- 归档 ----------
@@ -646,13 +666,21 @@
 
     initBurger();
     document.querySelectorAll('.tab').forEach((t) => {
-      t.onclick = () => {
+      t.onclick = (e) => {
+        // 阻止浏览器默认的锚点跳转：页面要停在仪表盘，不要跳到区块位置。
+        // 但 hash 仍然用 replaceState 同步（URL 变了 → 有即时反馈、可收藏/分享）。
+        e.preventDefault();
         showView(t.dataset.view);
-        if (t.dataset.view === 'archive') renderArchive();
-        if (t.dataset.view === 'sources') renderSources();
-        if (t.dataset.view === 'status') renderSources();
       };
     });
+    // 手动改 hash / 前进后退时也要跟着切视图
+    window.addEventListener('hashchange', () => {
+      const v = viewFromHash();
+      if (v && v !== S.view) showView(v);
+    });
+    // 带着 #view-xxx 打开时直接进对应视图
+    const initialView = viewFromHash();
+    if (initialView) showView(initialView);
     $('#moreBtn').onclick = () => { S.shown += PAGE; renderFeed(); };
     $('#q').addEventListener('input', (e) => onSearchInput(e.target.value));
     $('#qClear').onclick = () => { $('#q').value = ''; onSearchInput(''); };

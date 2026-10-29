@@ -79,6 +79,9 @@ body { overflow-wrap: break-word; }
   border-radius: 5px;
   cursor: pointer;
   min-height: 40px;
+  display: inline-block;       /* 页签是真链接了，按 button 的样式对齐 */
+  text-decoration: none;      /* 去掉链接默认下划线 */
+  line-height: 1.4;
   transition: background .15s, color .15s;
 }
 .tab:hover { background: var(--code-bg); color: var(--accent); }
