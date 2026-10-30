@@ -86,9 +86,14 @@ function hmAdd(hm, min) {
 }
 
 // ---- 时点定义（北京时间）----
+// ⚠ readyAt 必须取「该 session 里最晚收盘的那个市场 + 2 分钟缓冲」，不是 A 股收盘时刻：
+//   pm 文件同时含 CN/ETF（15:00）与 HK（16:00），15:10 跑的话港股日 K 还是盘中值；
+//   am 文件同时含 CN（11:30）与 HK（12:00），11:35 跑的话港股上午 bar 还没收。
+//   2026-10-30 事故：`--backfill` 根本没检查 readyAt，14:24 就跑出 pm，
+//   把盘中日 K 当收盘价写进 asOf=15:00（csi300 4002.41 vs 官方 3985.50，+0.42%）。
 const SESSIONS = {
-  am: { label: '上午盘', readyAt: '11:35' },
-  pm: { label: '收盘', readyAt: '15:10' },
+  am: { label: '上午盘', readyAt: '12:02' },
+  pm: { label: '收盘', readyAt: '16:02' },
 };
 // 目标时点：A股/ETF 上午 11:30、收盘 15:00；港股上午 12:00、收盘 16:00
 const SESSION_TARGET = {
@@ -452,10 +457,28 @@ async function main() {
     return;
   }
 
-  console.log(`[snapshot] 待采 ${jobs.length} 份：${jobs.map((j) => `${j.date} ${j.session}`).join('、')}`);
+  // ⚠ 当天的 session 必须等「最晚收盘市场 + 2 分钟」之后才允许生成。
+  //   否则拿到的日 K / 分时 bar 还是盘中值，却会被打上 asOf=收盘时刻的标签 ——
+  //   这比缺一份快照更糟：下游无法分辨它是收盘价还是盘中价。
+  const tooEarly = jobs.filter((j) => j.date === now.date && now.hm < SESSIONS[j.session].readyAt);
+  if (tooEarly.length) {
+    for (const j of tooEarly) {
+      console.log(
+        `  ⏭ ${j.date} ${j.session}：未到 ${SESSIONS[j.session].readyAt}（当前 ${now.hm}），` +
+          '盘中价不能当成收盘价，跳过'
+      );
+    }
+  }
+  const readyJobs = jobs.filter((j) => !(j.date === now.date && now.hm < SESSIONS[j.session].readyAt));
+  if (!readyJobs.length) {
+    console.log(`[snapshot] 本轮全部未到采集时刻（当前 ${now.hm}）`);
+    return;
+  }
+
+  console.log(`[snapshot] 待采 ${readyJobs.length} 份：${readyJobs.map((j) => `${j.date} ${j.session}`).join('、')}`);
 
   let written = 0, skipped = 0;
-  for (const job of jobs) {
+  for (const job of readyJobs) {
     const t0 = Date.now();
     let doc;
     try {
