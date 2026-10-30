@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T12:40:52.685Z",
+  "generatedAt": "2026-10-30T13:10:03.332Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -201,28 +201,28 @@
       "key": "dax",
       "name": "德国DAX30",
       "market": "EU",
-      "price": 25805.83,
+      "price": 25833.11,
       "open": 25948.61,
       "high": 26026.2,
       "low": 25788.95,
       "prevClose": 26039.68,
       "volume": 0,
-      "changePct": -0.9,
-      "updatedAt": "2026-10-30T20:26:21+08:00",
+      "changePct": -0.79,
+      "updatedAt": "2026-10-30T20:56:01+08:00",
       "source": "eastmoney"
     },
     {
       "key": "ukx",
       "name": "英国富时100",
       "market": "UK",
-      "price": 10748.78,
+      "price": 10735.89,
       "open": 10721.51,
       "high": 10778.72,
       "low": 10715.93,
       "prevClose": 10722.07,
-      "volume": 260364920,
-      "changePct": 0.25,
-      "updatedAt": "2026-10-30T20:41:21+08:00",
+      "volume": 280646544,
+      "changePct": 0.13,
+      "updatedAt": "2026-10-30T21:11:05+08:00",
       "source": "eastmoney"
     },
     {
@@ -840,14 +840,14 @@
       "key": "cac40",
       "name": "法国CAC40",
       "market": "EU",
-      "price": 7956.8,
+      "price": 7970.66,
       "open": 7973.86,
       "high": 7992.17,
       "low": 7953.45,
       "prevClose": 7970,
       "volume": 0,
-      "changePct": -0.17,
-      "updatedAt": "2026-10-30T20:26:15+08:00",
+      "changePct": 0.01,
+      "updatedAt": "2026-10-30T20:56:00+08:00",
       "source": "eastmoney"
     }
   ]
