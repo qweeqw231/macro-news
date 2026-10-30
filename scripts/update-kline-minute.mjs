@@ -93,8 +93,10 @@ const PERIOD_SPEC = {
   '1m':  { limit: 300,  order: 5 },   // ≈ 1.2 个交易日
 };
 
-// 请求之间的间隔（毫秒）：东财按 IP 限流，打太密就会被挂住/拒绝
-const GAP_MS = 2500;
+// 请求之间的间隔（毫秒）：东财按 IP 限流，打太密就会被挂住/拒绝。
+// ⚠ Actions 的 runner IP 是**共享**的（同一 IP 上还有别的用户在打东财）⇒ 经常处于限流边缘，
+//   间隔给到 4 秒，宁可慢也别把这一轮打挂。
+const GAP_MS = 4000;
 // 单个请求的**硬超时**（毫秒）：超时按失败处理，继续下一个，不让整轮被拖死
 const REQ_TIMEOUT_MS = 20000;
 // 失败重试次数（额外再试一次）
@@ -142,13 +144,22 @@ let same = 0;
 const failures = [];
 const results = [];
 
-for (const key of keys) {
-  const meta = klineTarget(key);
-  if (!meta) {
-    failures.push(`${key}: 未知标的`);
-    continue;
-  }
-  for (const period of periodList) {
+// 命中限流/熔断的特征（后端的错误文案里就有）
+const isThrottle = (msg) => /限流|熔断|连续\s*\d+\s*次连接失败/.test(msg);
+
+// ⚠⚠ **按「周期」优先遍历，不是按标的**：先把 5m 的**全部标的**刷完，再刷 30m。
+//   理由：Actions 的 runner IP 共享、经常处于东财限流边缘，一轮打到一半被限流是常态。
+//   若按标的遍历，被限流时只有前 2 个标的拿到了 3 个周期、其余 5 个标的一个周期都没有；
+//   按周期遍历则至少保证「5m 对所有标的」是齐的（5m 才是最常用的那个）。
+let throttleHit = false;
+
+outer: for (const period of periodList) {
+  for (const key of keys) {
+    const meta = klineTarget(key);
+    if (!meta) {
+      failures.push(`${key}: 未知标的`);
+      continue;
+    }
     const spec = PERIOD_SPEC[period] || { limit: 1000 };
     const file = path.join(OUT_DIR, `${key}_${period}.json`);
 
@@ -175,6 +186,13 @@ for (const key of keys) {
       const why = String(lastErr?.message || lastErr).slice(0, 100);
       failures.push(`${key}/${period}: ${why}`);
       console.log(`  ⚠ ${key.padEnd(9)} ${period.padEnd(3)} 失败：${why}`);
+      // 命中限流/熔断 ⇒ **立刻收手**：后端此时已把整组主机熔断，
+      // 再打下去只会全部秒失败，还可能让这个 IP 被封得更久 ⇒ 剩下的留给下一轮。
+      if (isThrottle(why)) {
+        throttleHit = true;
+        console.log('  ⛔ 命中东财限流/熔断，本轮到此为止（剩下的下一轮再补）');
+        break outer;
+      }
       await sleep(GAP_MS);
       continue;
     }
@@ -259,12 +277,16 @@ if (!DRY) {
 }
 
 console.log(
-  `[update-kline-minute] 更新 ${changed} 个 / 无变化 ${same} 个 / 失败 ${failures.length} 个`
+  `[update-kline-minute] 更新 ${changed} 个 / 无变化 ${same} 个 / 失败 ${failures.length} 个` +
+  (throttleHit ? '（本轮因东财限流提前收手）' : '')
 );
 if (failures.length) {
   console.log('失败明细：');
   failures.forEach((f) => console.log('  - ' + f));
 }
-// 只要写成功过一个就算这轮可用（下一轮会补齐没抓到的）——
-// 全部失败才报错，避免每小时都把作业标成失败、淹没真正的问题。
-if (!changed && !same && failures.length) process.exitCode = 1;
+// ⚠ **限流是常态**（Actions 的 runner IP 是共享的，经常在东财的限流边缘）
+//   ⇒ 不把作业标成失败：失败明细写在 _status.json 里（进仓库，匿名可读），
+//   下一轮（每小时）自动补齐。作业标红只会把真正的问题淹没在噪声里。
+if (!results.length && failures.length) {
+  console.log('本轮一个都没抓到（多半是东财限流），下一轮再试。');
+}
