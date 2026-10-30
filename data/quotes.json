@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T16:52:31.920Z",
+  "generatedAt": "2026-10-30T17:07:30.793Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -145,42 +145,42 @@
       "key": "dji",
       "name": "道琼斯",
       "market": "US",
-      "price": 51892.01,
+      "price": 51858.6,
       "open": 52383.9,
       "high": 52383.9,
-      "low": 51868.76,
+      "low": 51836.27,
       "prevClose": 52342.56,
-      "volume": 283884464,
-      "changePct": -0.86,
-      "updatedAt": "2026-10-31T00:53:05+08:00",
+      "volume": 295186016,
+      "changePct": -0.92,
+      "updatedAt": "2026-10-31T01:07:48+08:00",
       "source": "eastmoney"
     },
     {
       "key": "ixic",
       "name": "纳斯达克",
       "market": "US",
-      "price": 25420.55,
+      "price": 25396.26,
       "open": 25592.49,
       "high": 25673,
-      "low": 25397.52,
+      "low": 25394.57,
       "prevClose": 26184.72,
-      "volume": 3715620656,
-      "changePct": -2.92,
-      "updatedAt": "2026-10-31T00:53:26+08:00",
+      "volume": 3870439440,
+      "changePct": -3.01,
+      "updatedAt": "2026-10-31T01:07:55+08:00",
       "source": "eastmoney"
     },
     {
       "key": "spx",
       "name": "标普500",
       "market": "US",
-      "price": 7581.96,
+      "price": 7578.02,
       "open": 7631.07,
       "high": 7637.48,
-      "low": 7578.56,
+      "low": 7576.94,
       "prevClose": 7720.39,
-      "volume": 1752860064,
-      "changePct": -1.79,
-      "updatedAt": "2026-10-31T00:53:09+08:00",
+      "volume": 1829571424,
+      "changePct": -1.84,
+      "updatedAt": "2026-10-31T01:07:47+08:00",
       "source": "eastmoney"
     },
     {
@@ -847,7 +847,7 @@
       "prevClose": 7970,
       "volume": 0,
       "changePct": -0.01,
-      "updatedAt": "2026-10-31T00:38:15+08:00",
+      "updatedAt": "2026-10-31T00:52:45+08:00",
       "source": "eastmoney"
     }
   ]
