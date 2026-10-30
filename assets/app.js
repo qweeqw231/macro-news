@@ -229,14 +229,20 @@
   function renderFeed() {
     const box = $('#feed');
     box.innerHTML = '';
-    const list = S.items.slice(0, S.shown);
+    // ⚠ 必须在这里应用频道筛选。之前 applyFilter() 的返回值被直接丢掉，
+    //   点「全球」只是把 chip 高亮，列表纹丝不动。
+    const visible = applyFilter();
+    S.visible = visible;   // 阅读器的上下条也走这份顺序，否则筛选后下标会错位
+    const list = visible.slice(0, S.shown);
     if (!list.length) {
-      box.appendChild(el('div', 'empty', S.q ? '没有匹配的条目' : '暂无数据，请先运行采集脚本'));
+      const msg = S.q ? '没有匹配的条目'
+        : (S.filter === 'all' ? '暂无数据，请先运行采集脚本' : '该频道暂无条目');
+      box.appendChild(el('div', 'empty', msg));
       $('#moreBtn').hidden = true;
       return;
     }
     list.forEach((it, i) => box.appendChild(itemNode(it, i)));
-    $('#moreBtn').hidden = S.shown >= S.items.length;
+    $('#moreBtn').hidden = S.shown >= visible.length;
   }
 
   // ---------- 站内阅读器 ----------
@@ -248,7 +254,8 @@
   }
 
   function openReader(idx) {
-    if (idx < 0 || idx >= S.items.length) return;
+    const list = S.visible || S.items;
+    if (idx < 0 || idx >= list.length) return;
     readerIdx = idx;
     renderReader();
     $('#readerModal').hidden = false;
@@ -286,7 +293,8 @@
   }
 
   function renderReader() {
-    const it = S.items[readerIdx];
+    const list = S.visible || S.items;
+    const it = list[readerIdx];
     if (!it) return;
     $('#rdSource').textContent = it.source || '';
     $('#rdTime').textContent = fmtFullTime(it.time);
@@ -316,14 +324,14 @@
     const link = $('#rdLink');
     if (it.url) { link.href = it.url; link.hidden = false; } else { link.hidden = true; }
     $('#rdPrev').disabled = readerIdx <= 0;
-    $('#rdNext').disabled = readerIdx >= S.items.length - 1;
+    $('#rdNext').disabled = readerIdx >= list.length - 1;
     body.scrollTop = 0;
     $('#readerModal').querySelector('.rd-box').scrollTop = 0;
   }
 
   function stepReader(d) {
     const n = readerIdx + d;
-    if (n < 0 || n >= S.items.length) return;
+    if (n < 0 || n >= (S.visible || S.items).length) return;
     readerIdx = n;
     renderReader();
   }
@@ -338,7 +346,7 @@
     box.innerHTML = '';
     const mk = (label, key, n) => {
       const b = el('button', `fchip${S.filter === key ? ' on' : ''}`, `${label} ${n}`);
-      b.onclick = () => { S.filter = key; S.shown = PAGE; renderFilters(); applyFilter(); };
+      b.onclick = () => { S.filter = key; S.shown = PAGE; renderFilters(); renderFeed(); };
       return b;
     };
     box.appendChild(mk('全部', 'all', S.items.length));

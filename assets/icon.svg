@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="宏观资讯台">
+  <title>宏观资讯台</title>
+  <!-- 纸感底色（与站点 bg / rule 配色一致；注意 XML 注释里不能出现两个连续减号） -->
+  <rect x="2.5" y="2.5" width="59" height="59" rx="14" fill="#fdfdfb" stroke="#e5e2da" stroke-width="1.5"/>
+  <!-- 地球：轮廓 + 一条经线 + 赤道；描边加粗，保证 16px favicon 下仍闭合 -->
+  <circle cx="32" cy="25.5" r="14.5" fill="none" stroke="#2c5e8e" stroke-width="3"/>
+  <ellipse cx="32" cy="25.5" rx="6.2" ry="14.5" fill="none" stroke="#2c5e8e" stroke-width="2.1"/>
+  <path d="M17.7 25.5h28.6" stroke="#2c5e8e" stroke-width="2.1"/>
+  <!-- 行情折线：走在地球下方，不压赤道，小尺寸也不会糊成一团 -->
+  <path d="M18 52l7-6 5 3 12-11" fill="none" stroke="#8b5a2b" stroke-width="3.4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="42" cy="38" r="2.9" fill="#8b5a2b"/>
+</svg>

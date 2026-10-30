@@ -63,10 +63,12 @@ body { overflow-wrap: break-word; }
   gap: 1rem; flex-wrap: wrap;
 }
 .logo {
+  display: inline-flex; align-items: center; gap: 0.45rem;
   font-family: var(--sans);
   font-weight: 700; font-size: 1rem; letter-spacing: 0.08em;
   color: var(--ink); text-decoration: none; flex-shrink: 0;
 }
+.logo-mark { width: 22px; height: 22px; display: block; flex-shrink: 0; }
 .logo span { color: var(--warm); margin: 0 0.15em; }
 .hd-nav { display: flex; gap: 0.35rem; flex-wrap: wrap; }
 .tab {
