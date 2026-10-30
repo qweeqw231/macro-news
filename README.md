@@ -46,7 +46,7 @@
 
 | 时间 | 谁在跑 | 干什么 | 产出落到哪 |
 |---|---|---|---|
-| 声明 `*/5`，**实测 3~6 小时一次** | GitHub Actions `collect.yml` | 新闻 + **17 指数 + 32 场内 ETF** 的最新价 + 日 K | `data/archive/`、`data/latest.json`、`data/search.json`、`data/kline/`、`data/quotes.json` → 推到 GitHub |
+| 声明 `*/5`，**实测 3~6 小时一次** | GitHub Actions `collect.yml` | 新闻 + **18 指数 + 32 场内 ETF** 的最新价 + 日 K | `data/archive/`、`data/latest.json`、`data/search.json`、`data/kline/`、`data/quotes.json` → 推到 GitHub |
 | 声明 `*/30`，**实测不准** | GitHub Actions `snapshot.yml` | **云端兜底**：当天 am/pm 快照缺就补；并回补最近 5 天 | `data/snapshots/` → 推到 GitHub |
 | 每天 **12:23**（UTC 04:23）+ 改了取数逻辑时 | GitHub Actions `kline-full.yml` | 生成**服务端预生成的全量日K**（21 个标的，最长到 1990 年） | `data/kline/<key>_full.json` → 推到 GitHub |
 | 每小时（第 7 分） | GitHub Actions `kline-minute.yml` | 生成**服务端预生成的分钟K**（7 个「客户端只有东财一个源」的标的 × 1/5/15/30/60 分） | `data/kline/min/<key>_<period>.json` → 推到 GitHub |
@@ -64,9 +64,9 @@
 
 | 文件 | 内容 | 谁写 |
 |---|---|---|
-| `data/quotes.json` | **54 个标的**快照 = 17 指数 + **32 场内 ETF** + 5 组合（`ndx`/`xau`/`sge_au9999`/`usdcny`/`cgb_1y`） | Actions / minimax（**按 key 合并**） |
-| `data/snapshots/YYYY-MM-DD_am.json` | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价（54 项） | minimax 12:05 + Actions 兜底 |
-| `data/snapshots/YYYY-MM-DD_pm.json` | **收盘时点快照**：A股 15:00、港股 16:00 的官方收盘价（54 项） | minimax 16:30 + Actions 兜底 |
+| `data/quotes.json` | **57 个标的**快照 = 18 指数 + **32 场内 ETF** + 7 组合（`ndx`/`xau`/`sge_au9999`/`usdcny`/`cgb_1y`） | Actions / minimax（**按 key 合并**） |
+| `data/snapshots/YYYY-MM-DD_am.json` | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价（57 项） | minimax 12:05 + Actions 兜底 |
+| `data/snapshots/YYYY-MM-DD_pm.json` | **收盘时点快照**：A股 15:00、港股 16:00 的官方收盘价（57 项） | minimax 16:30 + Actions 兜底 |
 | `data/archive/YYYY-MM-DD.json` | 按天归档的新闻，**含标题与正文**（`items[].content`） | Actions |
 | `data/latest.json` | 全量新闻索引，**含 content** | Actions |
 | `data/search.json` | 检索索引，**只有 title + summary，没有正文**（约 9.8 MB；Pages 支持 gzip，实际传输约 2.8 MB） | Actions |
@@ -379,7 +379,7 @@ Actions 每隔几小时跑一次，抓到的是那个时刻的盘中价；上午
 | `am` | `data/snapshots/YYYY-MM-DD_am.json` | A股 **11:30**、港股 **12:00** | 5 分钟 K 线对应 bar 的收盘价 |
 | `pm` | `data/snapshots/YYYY-MM-DD_pm.json` | A股 **15:00**、港股 **16:00** | 日 K 的官方收盘价 |
 
-两档都覆盖 54 个标的（17 指数 + 32 ETF + 5 组合）。每条记录带：
+两档都覆盖 57 个标的（18 指数 + 32 ETF + 7 组合）。每条记录带：
 `price` / `prevClose` / `changePct` / `asOf`（价格对应的**真实时刻**）/ `priceSource`（`kline5m` 或 `dailyK`）/ `note`。
 
 ### 为什么用 K 线而不是直接抓实时价
@@ -456,7 +456,7 @@ AI 只在你主动要求时介入（例如"把这周新闻和我的 6 大类资�
 
 ## 第二条采集链：时点快照 + 组合行情 + 宏观（交易日 12:05 / 16:30）
 
-高频链路负责**新闻 + 17 指数 + 32 场内 ETF**；低频链路负责**时点快照**与**组合分析需要的额外数据**，
+高频链路负责**新闻 + 18 指数 + 32 场内 ETF**；低频链路负责**时点快照**与**组合分析需要的额外数据**，
 两者共用同一个 `data/quotes.json`，因此**必须按 key 合并写**（见下方「两个任务共用同一个文件」）。
 
 ```
@@ -608,7 +608,7 @@ K 线抽屉打开时**同时**发三路请求，谁先回先出图；后到的**
 
 | 类别 | 源 | 取什么 | 接口 | 冗余 |
 |---|---|---|---|---|
-| **行情（批量）** | 东方财富 | 17 指数 + **32 场内 ETF** 最新价 | `ulist.np`（**1 个请求拿完 49 个标的**） | 腾讯 `qt.gtimg.cn`（GBK，批量） |
+| **行情（批量）** | 东方财富 | 18 指数 + **32 场内 ETF** 最新价 | `ulist.np`（**1 个请求拿完 49 个标的**） | 腾讯 `qt.gtimg.cn`（GBK，批量） |
 | **K 线** | 东方财富 | 日 K / 5 分钟 K | `push2his`（`klt=101/5`） | **腾讯 `ifzq.gtimg.cn`**（日/周/月 + 5 分钟） |
 | | 腾讯 | 同上 + 当日分时 | `fqkline` / `mkline` / `minute/query` | 东财 |
 | **组合行情** | 腾讯 | 纳指100、伦敦金 | `qt.gtimg.cn/q=usNDX` `q=hf_XAU` | 无 |
@@ -657,20 +657,21 @@ macro-news/
 ├── 采集规格.md            采集口径与字段定义（★ 改字段前先看这个）
 ├── assets/               style.css / app.js / market.js / kline.js / fuse.min.js
 ├── data/                 采集产物（已入库，Pages 直接读取）
-│   ├── quotes.json       最新行情快照 54 key（17 指数 + 32 ETF + 5 组合），直连失败时的回退
+│   ├── quotes.json       最新行情快照 57 key（18 指数 + 32 ETF + 7 组合），直连失败时的回退
 │   ├── snapshots/        时点快照（★ 收盘价 / 上午收盘价的权威来源，只写一次不覆盖）
 │   │   └── YYYY-MM-DD_am.json / _pm.json
 │   ├── latest.json       最近 200 条（首屏）
 │   ├── search.json       全库检索索引
 │   ├── index.json        按天归档索引
-│   ├── kline/            预生成 K 线（17 指数 × 日/周/月 = 51 个文件
-│   │                     + cgb_1y 的日/周/月 = 3 个，共 54 个），直连失败时的回退
+│   ├── kline/            预生成 K 线（18 指数 × 日/周/月 = 54 个文件
+│   │                     + cgb_1y 的日/周/月 = 3 个，共 57 个；另有 6 个组合标的的
+│   │                     日/周/月 + min/ 子目录里的分钟快照），直连失败时的回退
 │   ├── macro/daily.json  宏观指标日频序列（16:30 链路写）
 │   ├── _last-run.json    上次运行状态（多链路字段并存，读改写）
 │   └── archive/YYYY-MM-DD.json
 ├── src/
 │   ├── collect.mjs       采集主程序（新闻 + 行情 + K 线，零依赖）
-│   ├── sources.mjs       8 个新闻源 + 17 指数的适配器
+│   ├── sources.mjs       8 个新闻源 + 18 指数的适配器
 │   ├── etf.mjs           32 只场内 ETF 清单（★ 增删 ETF 只改这里）
 │   ├── quotes.mjs        批量行情（东财 ulist.np → 腾讯兜底）
 │   ├── kline.mjs         日 K / 5 分钟 K（东财 → 腾讯双源）
@@ -706,7 +707,7 @@ macro-news/
 | 页签 | 地址 | 内容 |
 |---|---|---|
 | 要闻流 | `#view-feed` | 搜索 + 筛选 + 最新快讯（默认视图） |
-| 行情 | `#view-market` | **宏观仪表盘**：54 个标的的行情卡（17 指数 + 32 场内 ETF + 5 组合） |
+| 行情 | `#view-market` | **宏观仪表盘**：57 个标的的行情卡（18 指数 + 32 场内 ETF + 7 组合） |
 | 归档 | `#view-archive` | 按天列出条目数，点某天看当天全部 |
 | 来源 | `#view-sources` | 8 个新闻源的状态 / 条数 / 耗时 / 错误 |
 
@@ -775,7 +776,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\pull-remote.ps1
 # 采集 5 个新标的 + 5 个宏观，并提交推送（= 16:30 的定时任务）
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\portfolio-collect-and-push.ps1
 
-# 手动采集一次（新闻 + 17 指数，通常由 Actions 在云端跑）
+# 手动采集一次（新闻 + 18 指数，通常由 Actions 在云端跑）
 node src\collect.mjs
 
 # 只采集组合行情不写盘（看结果用）
@@ -899,11 +900,11 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 **取数链（逐级回退，任何一级成功即止）：**
 
 1. **东方财富** `push2his`（多镜像主机 + 限速 + 退避 + 按主机组熔断 + 磁盘缓存）——
-   覆盖全部 17 个指数与 32 只场内 ETF，且含 1/5/15/30/60 分钟与日/周/月的源
+   覆盖全部 18 个指数与 32 只场内 ETF，且含 1/5/15/30/60 分钟与日/周/月的源
 2. **新浪** `CN_MarketData.getKLineData`（**JSONP 变体**，见下）—— 覆盖 CN 的 8 个指数，
    **`datalen` 没有上限**：给多少给多少，上证能给到 **8752 根 / 36 年全量**
 3. **本地预生成** `data/kline/<key>{,_1w,_1M}.json` —— 采集器预生成的**日K / 周K / 月K**
-   （17 个指数 × 3 周期 + `cgb_1y` × 3 周期 = 54 个文件）；没有对应周期文件时，
+   （18 个指数 × 3 周期 + `cgb_1y` × 3 周期 = 57 个文件）；没有对应周期文件时，
    才回退到「日K 在浏览器端聚合」（零网络）。
    ⚠ 本地文件做了**内存缓存**：同一页面会话内切周期不会重复下载
    （`cgb_1y` 的日K 有 504KB，线上按 5~30 KB/s 的带宽重下一次要 20~100 秒）。
