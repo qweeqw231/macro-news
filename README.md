@@ -48,6 +48,7 @@
 |---|---|---|---|
 | 声明 `*/5`，**实测 3~6 小时一次** | GitHub Actions `collect.yml` | 新闻 + **17 指数 + 32 场内 ETF** 的最新价 + 日 K | `data/archive/`、`data/latest.json`、`data/search.json`、`data/kline/`、`data/quotes.json` → 推到 GitHub |
 | 声明 `*/30`，**实测不准** | GitHub Actions `snapshot.yml` | **云端兜底**：当天 am/pm 快照缺就补；并回补最近 5 天 | `data/snapshots/` → 推到 GitHub |
+| 每天 **12:23**（UTC 04:23）+ 改了取数逻辑时 | GitHub Actions `kline-full.yml` | 生成**服务端预生成的全量日K**（21 个标的，最长到 1990 年） | `data/kline/<key>_full.json` → 推到 GitHub |
 | **12:05**（交易日） | minimax 定时任务 | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价 | `data/snapshots/YYYY-MM-DD_am.json` → 推到 GitHub |
 | **16:30**（交易日） | minimax 定时任务 | **收盘时点快照**（A股 15:00、港股 16:00）+ 5 组合行情 + 5 宏观指标 | `data/snapshots/YYYY-MM-DD_pm.json`、`data/quotes.json`、`data/macro/daily.json` → 推到 GitHub |
 | **16:35**（交易日） | minimax 定时任务 | 只在 16:30 失败时补跑一次（读 `logs\last-portfolio-status.json` 判断） | 同上 |
@@ -197,6 +198,16 @@
 25. 🟡 **货币网的历史中间价接口全部 404**：`ccpr.json` 只有当天；
     `CcprHis.json` / `ccprHis.json` / `ShiborHis.json` 都不是中间价历史。
     ⇒ 人民币中间价的历史**只能是离岸价代理**，且必须在界面上标注口径差异。
+26. 🔴 **东财的封禁是「客户端指纹」级的，不是 IP 级的**（2026-10-30 实测）：
+    **同一个 IP、同一个域名，浏览器能连、Node 连不上** ——
+    浏览器 `fetch` 东财批量报价正常返回 45 个 key，而 Node 的 `fetch` 对
+    `push2` / `push2his` 全部**秒失败**（`TypeError: fetch failed`，100~190ms）。
+    ⇒ ①「本机取不到」**不等于**「这个源没了」，别据此改口径；
+      ② 需要长历史的服务端预生成**要放在 Actions（美国节点）**上做 ——
+      本机 Node 取不到，不代表线上取不到（实测 Actions 一次就把 21 个全量文件补齐了）。
+27. 🟡 **腾讯 `usfqkline` 的 1000 根是硬上限**：`n=2000` 直接返回空数组，
+    带日期区间（`usIXIC,day,2010-01-01,2026-10-30,2000,qfq`）也不行。
+    ⇒ 美股的长历史**只有东财一个源**，服务端全量文件是唯一可靠的补法。
 
 ---
 
@@ -639,7 +650,8 @@ macro-news/
 │   └── register-task.ps1      注册/取消计划任务（旧方案，未启用）
 ├── .github/workflows/
 │   ├── collect.yml         云端采集（新闻 + 行情 + 日 K）
-│   └── snapshot.yml        云端快照兜底（缺就补 + 回补近 5 天）
+│   ├── snapshot.yml        云端快照兜底（缺就补 + 回补近 5 天）
+│   └── kline-full.yml      云端生成全量日K（每天一次 + 改代码即跑）
 ├── .cache/                取数磁盘缓存（不入库）
 ├── worker/               Cloudflare Worker（可选，国内不可用，见上）
 └── logs/                 运行日志（保留 14 天，不入库）
