@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T06:06:28.521Z",
+  "generatedAt": "2026-10-30T11:28:15.205Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -256,27 +256,27 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 3988.06,
+      "price": 3971.75,
       "open": 4023.79,
       "high": 4026.24,
-      "low": 3987.4,
+      "low": 3965.2,
       "prevClose": 4021.23,
-      "changePct": -0.82,
-      "updatedAt": "2026-10-30T14:05:00+08:00",
+      "changePct": -1.23,
+      "updatedAt": "2026-10-30T19:27:00+08:00",
       "note": ""
     },
     {
       "key": "sge_au9999",
       "name": "上海金Au99.99",
       "market": "SGE",
-      "price": 865.26,
-      "open": 869.3,
-      "high": 873.8,
-      "low": 863.05,
-      "prevClose": 868.99,
-      "changePct": -0.43,
-      "updatedAt": "2026-10-29T15:30:00+08:00",
-      "note": "carried"
+      "price": 854.76,
+      "open": 863.8,
+      "high": 867,
+      "low": 853.5,
+      "prevClose": 865.26,
+      "changePct": -1.21,
+      "updatedAt": "2026-10-30T15:30:00+08:00",
+      "note": ""
     },
     {
       "key": "usdcny",
@@ -292,11 +292,11 @@
       "key": "cgb_1y",
       "name": "1Y国债收益率",
       "market": "CN",
-      "price": 1.1649,
-      "prevClose": 1.1693,
-      "changePct": -0.3763,
-      "updatedAt": "2026-10-29T17:00:00+08:00",
-      "note": "carried"
+      "price": 1.1714,
+      "prevClose": 1.1649,
+      "changePct": 0.558,
+      "updatedAt": "2026-10-30T17:00:00+08:00",
+      "note": ""
     },
     {
       "key": "etf_563360",
@@ -814,26 +814,26 @@
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 50.91,
+      "price": 50.39,
       "open": 52.16,
       "high": 52.21,
-      "low": 50.86,
+      "low": 50.34,
       "prevClose": 52.14,
-      "changePct": -2.36,
-      "updatedAt": "2026-10-30T14:04:00+08:00",
+      "changePct": -3.36,
+      "updatedAt": "2026-10-30T19:26:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 112.05,
+      "price": 113.48,
       "open": 111.61,
       "high": 114.07,
       "low": 111.03,
       "prevClose": 110.8,
-      "changePct": 1.13,
-      "updatedAt": "2026-10-30T14:06:02+08:00",
+      "changePct": 2.42,
+      "updatedAt": "2026-10-30T19:27:10+08:00",
       "note": ""
     }
   ]
