@@ -123,8 +123,19 @@
   /** 该标的的 K 线口径说明（组合标的有代理品种的差异，其余为空串）。 */
   const getKlineNote = (key) => (byKey.get(key) || {}).klineNote || '';
 
+  // 某些标的**全网都没有同口径的分钟源** ⇒ 与其甩一句「加载失败」，
+  // 不如说清楚**为什么没有**（用户看到的是事实，不是一个像 bug 的报错）。
+  const NO_MINUTE_REASON = {
+    xau: '新浪外盘只提供日线（MinKLine 接口一律 __ERROR），东财也没有现货黄金 secid ⇒ 全网无同口径分钟源',
+    brent: '布伦特只有新浪外盘的日线；东财 112.B00Y 是「当月连续结算价」，与报价口径在换月时基差可达 6% ⇒ 刻意不混用',
+  };
+  const getMinuteUnavailableReason = (key) => NO_MINUTE_REASON[key] || '';
+
   // 周期 → 东财 klt（1/5/15/30/60 分钟；101 日 / 102 周 / 103 月）
   const KLT = { '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60, '1d': 101, '1w': 102, '1M': 103 };
+
+  // 分钟周期清单（与服务端预生成的分钟K文件名 <key>_<period>.json 一一对应）
+  const MINUTE_PERIODS = ['1m', '5m', '15m', '30m', '60m'];
 
   // 腾讯代码（备用源）；仅日/周/月可用
   // ⚠ 腾讯 K 线主机用 ifzq.gtimg.cn（不带 web. 前缀）：
@@ -218,18 +229,30 @@
         if (v != null) return v;
       } catch (e) { hostDown.set(cached, Date.now()); }
     }
-    const got = await Promise.any(
-      alive.filter((h) => h !== cached).map(async (h) => {
-        try {
-          const v = pick(await req(buildUrl(h), timeout));
-          if (v == null) throw new Error('空数据');
-          return { h, v };
-        } catch (e) {
-          hostDown.set(h, Date.now());
-          throw e;
-        }
-      })
-    );
+    // ⚠ 并发别开满（2026-10-30 实测）：一次图表请求同时打 6 个镜像主机，
+    //   很容易把东财打到 socket 级拒绝（实测：拉完 CAC40 9192 根日K 后，
+    //   紧接着的 5 分钟请求就变成「All promises were rejected」）。
+    //   ⇒ 改成**每组最多 2 个并发**，这一组全挂再试下一组。
+    const rest = alive.filter((h) => h !== cached);
+    let got = null;
+    for (let i = 0; i < rest.length && !got; i += 2) {
+      const chunk = rest.slice(i, i + 2);
+      try {
+        got = await Promise.any(chunk.map(async (h) => {
+          try {
+            const v = pick(await req(buildUrl(h), timeout));
+            if (v == null) throw new Error('空数据');
+            return { h, v };
+          } catch (e) {
+            hostDown.set(h, Date.now());
+            throw e;
+          }
+        }));
+      } catch (e) {
+        // 这一组全挂 ⇒ 下一组继续试
+      }
+    }
+    if (!got) throw new Error('所有镜像主机均失败');
     hostCache[which] = got.h;
     hostDown.delete(got.h);
     return got.v;
@@ -665,6 +688,22 @@
 
   async function localKline(key, period) {
     if (!byKey.has(key)) throw new Error('未知指数 ' + key);
+
+    // ---- 分钟周期：读服务端预生成的分钟K快照 ----
+    // ⚠ 欧日韩指数 / 上海金 / 伦敦银的分钟K **只有东财一个源**，
+    //   而东财对客户端时不时 socket 级拒绝（实测：拉完 9192 根日K 后下一个请求就被全拒）
+    //   ⇒ 客户端直连失败时，这里用服务端（Actions / 美国节点）预生成的快照兜底。
+    //   文件名规则：data/kline/<key>_<period>.json（如 dax_5m.json），
+    //   由 scripts/update-kline-minute.mjs 生成，bars 是紧凑数组行 [t,o,c,h,l,v]。
+    if (MINUTE_PERIODS.includes(period)) {
+      const j = await fetchLocalFile(`data/kline/${key}_${period}.json`);
+      const bars = (j.bars || []).map((b) => (Array.isArray(b)
+        ? { t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5] }
+        : { t: b.t, o: +b.o, c: +b.c, h: +b.h, l: +b.l, v: +b.v }));
+      if (!bars.length) throw new Error('本地无该分钟周期');
+      return bars;
+    }
+
     // 周/月优先读采集器预生成的对应周期文件 —— 历史比「日K 聚合」更全：
     //   周K 1821 根（1990 起 35.8 年）、月K ~431 根（36 年全量）。
     // 文件不存在时再回退到「日K 聚合」（零网络，必可用）。
@@ -686,5 +725,5 @@
   }
 
 
-  window.MarketData = { META, KLT, fetchQuotes, fetchKline, fetchKlineRemote, localKline, localFullKline, getKlineSource, getKlineNote };
+  window.MarketData = { META, KLT, MINUTE_PERIODS, fetchQuotes, fetchKline, fetchKlineRemote, localKline, localFullKline, getKlineSource, getKlineNote, getMinuteUnavailableReason };
 })();

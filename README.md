@@ -49,6 +49,7 @@
 | 声明 `*/5`，**实测 3~6 小时一次** | GitHub Actions `collect.yml` | 新闻 + **17 指数 + 32 场内 ETF** 的最新价 + 日 K | `data/archive/`、`data/latest.json`、`data/search.json`、`data/kline/`、`data/quotes.json` → 推到 GitHub |
 | 声明 `*/30`，**实测不准** | GitHub Actions `snapshot.yml` | **云端兜底**：当天 am/pm 快照缺就补；并回补最近 5 天 | `data/snapshots/` → 推到 GitHub |
 | 每天 **12:23**（UTC 04:23）+ 改了取数逻辑时 | GitHub Actions `kline-full.yml` | 生成**服务端预生成的全量日K**（21 个标的，最长到 1990 年） | `data/kline/<key>_full.json` → 推到 GitHub |
+| 每小时（第 7 分） | GitHub Actions `kline-minute.yml` | 生成**服务端预生成的分钟K**（7 个「客户端只有东财一个源」的标的 × 1/5/15/30/60 分） | `data/kline/<key>_<period>.json` → 推到 GitHub |
 | **12:05**（交易日） | minimax 定时任务 | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价 | `data/snapshots/YYYY-MM-DD_am.json` → 推到 GitHub |
 | **16:30**（交易日） | minimax 定时任务 | **收盘时点快照**（A股 15:00、港股 16:00）+ 5 组合行情 + 5 宏观指标 | `data/snapshots/YYYY-MM-DD_pm.json`、`data/quotes.json`、`data/macro/daily.json` → 推到 GitHub |
 | **16:35**（交易日） | minimax 定时任务 | 只在 16:30 失败时补跑一次（读 `logs\last-portfolio-status.json` 判断） | 同上 |
@@ -72,6 +73,7 @@
 | `data/macro/daily.json` | 宏观日频序列：两融余额 / 10Y 美债 / 社融增量 / CPI 同比 / 制造业 PMI | minimax 16:30 |
 | `data/kline/*.json` | 18 个指数 + 7 个组合标的 × **日K / 周K / 月K**（1000 / 1821 / ~431~500 根） | Actions |
 | `data/kline/<key>_full.json` | **服务端预生成的全量日K**：紧凑数组行 `[t,o,c,h,l,v]`。目前 **8 个** CN 指数有（8752 / 8660 / 6019 / 5298 / 3984 / 2925 / 1652 / 1089 根，共 2.3 MB / gzip 881 KB）。直连源不可用时的兜底 | `scripts/update-kline-full.mjs` |
+| `data/kline/<key>_<period>.json` | **服务端预生成的分钟K**：紧凑数组行 `[t,o,c,h,l,v]`。覆盖**客户端没有第二个分钟源**的 7 个标的（日经225 / 德国DAX30 / 法国CAC40 / 英国富时100 / 韩国KOSPI / 上海金Au99.99 / 伦敦银）× `1m/5m/15m/30m/60m`。东财把客户端挡了时，分钟图照样出 | `scripts/update-kline-minute.mjs` |
 | `data/_last-run.json` | 运行状态（多条链路的字段**并存**） | 各链路（**读改写**） |
 | `logs/` | 本地运行日志，**不入库** | minimax |
 
@@ -687,6 +689,8 @@ macro-news/
 │   ├── collect.yml         云端采集（新闻 + 行情 + 日 K）
 │   ├── snapshot.yml        云端快照兜底（缺就补 + 回补近 5 天）
 │   └── kline-full.yml      云端生成全量日K（每天一次 + 改代码即跑）
+│   ├── kline-full.yml      云端生成全量日K（每天一次 + 改代码即跑）
+│   └── kline-minute.yml    云端生成分钟K（每小时 + 改代码即跑）
 ├── .cache/                取数磁盘缓存（不入库）
 ├── worker/               Cloudflare Worker（可选，国内不可用，见上）
 └── logs/                 运行日志（保留 14 天，不入库）
@@ -995,6 +999,16 @@ powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
 > 全部不可达时，日/周/月由腾讯兜底，分钟由腾讯分时兜底（仅当天）；再不可达则
 > 落到本地日K（周/月聚合）。仅「分钟周期 + 东财/腾讯都不可达」这一种组合会显示暂无数据。
 
+> **分钟级现在有第三层兜底：服务端预生成的分钟K**（2026-10-30 新增）。
+> 欧日韩指数、上海金、伦敦银的分钟K**只有东财一个源**，而东财对客户端是**socket 级封禁**
+> （本机 Node 与 curl 都 `http=000`；浏览器能连，但连打几个大请求后同样会被拒）。
+> ⇒ `scripts/update-kline-minute.mjs` 在 Actions（美国节点）每小时抓一次，
+> 写成 `data/kline/<key>_<period>.json`；前端 `localKline()` 的分钟分支直接读它。
+> ⇒ **东财挡住客户端时，欧日韩/上海金/伦敦银的分钟图照样出**（数据最多滞后 1 小时）。
+> A股/港股/美股不生成：腾讯分时（`minute` / `usMinute`）在客户端稳定可用，没必要占仓库体积。
+> 伦敦金、布伦特原油**全网没有同口径的分钟源**（新浪外盘只有日线）⇒ 前端会明确说明为什么没有，
+> 而不是画一张假图（2026-10-30 的教训：把月K 当 5 分钟画出来）。
+
 
 ## Cloudflare Worker 行情代理（已弃用，保留备查）
 
@@ -1092,3 +1106,13 @@ GET /kline?key=sh_comp&period=1d&limit=250
     验证前先**只留一个页签**，或用 Node 直接跑同款逻辑做交叉验证
     （本例：用 `assets/fuse.min.js` + `data/search.json` 在 Node 里跑出「加息 185 条」，
     与浏览器实测完全一致）。
+
+33. 🔴 **「一次图表请求同时打 6 个东财镜像主机」会把自己打到限流**：
+    实测拉完 CAC40 的 9192 根日K 后，**紧接着**的 5 分钟请求就变成「All promises were rejected」。
+    ⇒ 镜像赛马改成**每组最多 2 个并发**、这组全挂再试下一组；冷却期 60s → 20s。
+34. 🔴 **分钟级不能按「根数多」判谁盖谁**：直连（东财）只有今天的几十根，
+    本地快照有几百根却停在**上一次刷新** ⇒ 按根数判会让本地把实时数据盖掉，用户看到的反而是旧数据。
+    ⇒ 分钟级改按**新鲜度**判（最后一根时间新的赢，一样新则直连赢）；日/周/月仍按根数判（历史越长越好）。
+35. 🔴 **Yahoo 不是东财的备源**：`query1.finance.yahoo.com` 对本机返回 **429 Too Many Requests**，
+    拿它当第二源会得到一个「看起来有、实际一直失败」的依赖。腾讯对 `hf_*` 外盘也没有分时接口
+    （`minute/query` 与 `kline/mkline` 都是 param error）⇒ 外盘大宗只能靠新浪外盘的**日线**。

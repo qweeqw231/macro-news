@@ -1,0 +1,72 @@
+name: 分钟K刷新
+
+# 每小时生成一次「服务端预生成的分钟K」：data/kline/<key>_<period>.json
+#
+# 为什么必须放在 Actions（2026-10-30 实测）：
+#   · 欧日韩指数 + 上海金 + 伦敦银的**分钟K 只有东财一个源**
+#     （腾讯无 jpNI225/ukFTSE/deDAX/krKOSPI 代码；新浪只有实时价、没有分时序列；
+#      新浪外盘的 MinKLine 接口一律 __ERROR）；
+#   · 东财 push2his 对本机的**非浏览器客户端**是 socket 级拒绝（Node fetch / curl 都失败），
+#     浏览器连打几个大请求后**同样会被封**（实测拉完 9192 根日K 后，下一个请求就被拒）；
+#   · Actions 跑在美国节点 ⇒ 服务端能稳定连上东财 ⇒ 把分钟K预生成好，
+#     客户端直连失败时回落到本地快照，**分钟图不再取决于东财此刻能不能连**。
+#
+# 与 collect.yml / snapshot.yml / kline-full.yml 共用同一个 concurrency group
+# ⇒ 四个写分支的流程串行化，不会互相把对方的提交顶掉。
+
+on:
+  schedule:
+    # 每小时第 7 分钟（错开整点，避开各平台接口的高峰）
+    - cron: '7 * * * *'
+  # 允许手动触发，方便验证
+  workflow_dispatch:
+  # 改了取数逻辑 / 本文件就立刻跑一次（不用等定时）。
+  # ⚠ 路径过滤刻意**不含 data/**：本 workflow 自己提交 data/kline/*_*.json，
+  #   若把 data/ 纳入触发条件，就会「提交 → 触发 → 再提交」的循环。
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/kline-minute.yml'
+      - 'scripts/update-kline-minute.mjs'
+      - 'src/sources.mjs'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: macro-news-write
+  cancel-in-progress: false
+
+jobs:
+  kline-minute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 需要完整历史才能 git push
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 采集器零依赖，无需 npm install
+      - name: 生成分钟K
+        run: node scripts/update-kline-minute.mjs
+
+      - name: 提交并推送（仅在分钟K有变化时）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/kline
+          if git diff --staged --quiet; then
+            echo "本轮无分钟K变化（内容未变，不重写）"
+          else
+            n=$(git diff --staged --name-only | wc -l)
+            git commit -m "data: 服务端预生成分钟K（$(date -u '+%Y-%m-%d %H:%M UTC')，${n} 个文件）"
+            git push || (git pull --rebase origin main && git push)
+            echo "已提交 ${n} 个文件"
+          fi

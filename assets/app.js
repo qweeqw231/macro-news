@@ -738,13 +738,28 @@
     //   ③ 根数相同时**直连优先于本地** —— 直连是刚抓的，本地是采集器的每日快照。
     let shown = 0;
     let shownRank = -1;                   // 0 = 本地，1 = 直连
+    let shownLast = '';                   // 已落图的最后一根时间（分钟级按新鲜度比就靠它）
+    const isMinute = () =>
+      (window.MarketData.MINUTE_PERIODS || []).includes(period);
     const apply = (bars, src, rank) => {
       if (myId !== klineReqId) return false;
       if (!bars || !bars.length) return false;
-      if (bars.length < shown) return false;
-      if (bars.length === shown && rank <= shownRank) return false;
+      const last = String(bars[bars.length - 1].t || '');
+      if (isMinute()) {
+        // ---- 分钟级：按**新鲜度**比，不是按根数比 ----
+        //   直连（东财）只有今天的几十根，本地快照有几百根但停在**上一次刷新**（最多 1 小时前）
+        //   ⇒ 若还按根数判，本地会把今天的实时数据盖掉，用户看到的反而是上一次刷新。
+        //   规则：最后一根时间新的赢；一样新则直连赢。
+        if (shown && last < shownLast) return false;
+        if (shown && last === shownLast && rank <= shownRank) return false;
+      } else {
+        // ---- 日/周/月：按**根数**比（历史越长越好） ----
+        if (bars.length < shown) return false;
+        if (bars.length === shown && rank <= shownRank) return false;
+      }
       shown = bars.length;
       shownRank = rank;
+      shownLast = last;
       kChart.setData(bars, period);
       // 口径说明（组合标的的代理品种）必须显示出来，不能让用户以为看到的就是报价源本身
       const caliber = window.MarketData.getKlineNote ? window.MarketData.getKlineNote(key) : '';
@@ -759,7 +774,13 @@
     // 直连源走外网、本地文件走 GitHub Pages，两条路带宽互不争抢，谁先回先出图。
     // 本地那一路是**保险**：直连全挂时，它也能在 1~4 秒内给出一张图（近 4 年 / 1000 根）。
     window.MarketData.localKline(key, period)
-      .then((bars) => apply(bars, '本地预生成（近 4 年）', 0))
+      .then((bars) => apply(
+        bars,
+        isMinute()
+          ? '本地预生成（分钟快照·服务端每小时刷新）'
+          : '本地预生成（近 4 年）',
+        0
+      ))
       .catch(() => false);
 
     await window.MarketData
@@ -781,7 +802,14 @@
     }
 
     if (myId === klineReqId && shown === 0) {
-      note.textContent = '加载失败：直连与本地均无该周期数据（本地仅有日/周/月）。';
+      // 分钟级若是「全网本来就没有同口径的分钟源」，要说清楚**为什么**，
+      // 别让用户以为页面坏了（2026-10-30：伦敦金/布伦特原油属于这一类）。
+      const minuteReason = isMinute() && window.MarketData.getMinuteUnavailableReason
+        ? window.MarketData.getMinuteUnavailableReason(key)
+        : '';
+      note.textContent = minuteReason
+        ? `无分钟级数据：${minuteReason}`
+        : '加载失败：直连与本地均无该周期数据（本地仅有日/周/月）。';
     }
   }
 

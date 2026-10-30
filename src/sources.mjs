@@ -467,10 +467,12 @@ export async function fetchQuotes() {
 // ⇒ 与前端直连保持同一口径（东财 → 腾讯 → 本地）。
 //
 // sina / tx 来自 INDICES：新浪只覆盖 CN 8 个，腾讯覆盖港股 + 美股，都是备源。
-const EM_KLT = { '1d': 101, '1w': 102, '1M': 103, '5m': 5, '30m': 30, '60m': 60 };
+// ⚠ 2026-10-30 补 1m / 15m：前端周期表有 1分/5分/15分/30分/60分，
+//   而服务端原先只有 5m/30m/60m ⇒ 服务端预生成分钟K 时 1m/15m 会直接被跳过。
+const EM_KLT = { '1d': 101, '1w': 102, '1M': 103, '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60 };
 const KL_FIELDS = 'fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58';
 // 周期 → 新浪 scale（分钟数）；周=1200 月=7200
-const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '5m': 5, '30m': 30, '60m': 60 };
+const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60 };
 // 周期 → 腾讯 period
 const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
@@ -483,7 +485,7 @@ export function klineAvailable(key) {
   return !!(t.secid || t.sina || t.tx || t.sinaGlobal || t.sge);
 }
 
-export const KLINE_PERIODS = ['1d', '1w', '1M', '5m', '30m', '60m'];
+export const KLINE_PERIODS = ['1d', '1w', '1M', '1m', '5m', '15m', '30m', '60m'];
 
 // 本次 fetchKline 实际命中的源（供采集器写进文件、前端显示口径）
 let klineSource = '';
