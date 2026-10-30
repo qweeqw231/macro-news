@@ -713,14 +713,14 @@
   }
 
   // ---- K线取数根数（按周期给到「源侧真实上限」，而不是一刀切 1000）----
-  //   日K/周K/月K → **8000**：东财 `lmt` **没有上限**，给多少给多少（实测 3000 根时
-  //     就给 3000 根 —— 3000 本来是我们自己写的请求值，不是源的封顶）。
-  //     上证全量日K = **8752 根（1990-12-19 起，36 年）**，8000 根 ≈ 32 年。
-  //     周K 1821 根、月K 431 根是源侧全量，给多少也只有这么多。
+  //   日K/周K/月K → **20000**：东财 `lmt` **没有上限**，给多少给多少；新浪 `datalen` 同理。
+  //   ⚠ 之前写 8000 是**我们自己写的请求值**，不是源的上限 ——
+  //     实测纳斯达克（100.NDX）lmt=8000 → 8000 根，lmt=20000 → **8865 根**（1991-08-12 起）；
+  //     道指这类 1896 年起的品种能到 20000 根（66 年）。
   //   分钟级 → 保持 1000：源侧本身就封顶（5 分钟 1536 根、1 分钟只有当天 240 根），
   //     再多也没有。
   const klineLimit = (period) =>
-    period === '1d' || period === '1w' || period === '1M' ? 8000 : 1000;
+    period === '1d' || period === '1w' || period === '1M' ? 20000 : 1000;
 
   async function loadKline(key, period) {
     const myId = ++klineReqId;          // 请求令牌：过期响应一律丢弃
@@ -746,7 +746,11 @@
       shown = bars.length;
       shownRank = rank;
       kChart.setData(bars, period);
-      note.textContent = `${bars.length} 根 · ${bars[0].t} → ${bars[bars.length - 1].t} · ${src}`;
+      // 口径说明（组合标的的代理品种）必须显示出来，不能让用户以为看到的就是报价源本身
+      const caliber = window.MarketData.getKlineNote ? window.MarketData.getKlineNote(key) : '';
+      note.textContent =
+        `${bars.length} 根 · ${bars[0].t} → ${bars[bars.length - 1].t} · ${src}` +
+        (caliber ? ` · ${caliber}` : '');
       notifyUpgrade();
       return true;
     };

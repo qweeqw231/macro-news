@@ -88,12 +88,31 @@
     { key: 'etf_159201', secid: '0.159201', market: 'ETF', name: '自由现金流ETF' },
     { key: 'etf_518880', secid: '1.518880', market: 'ETF', name: '黄金ETF' },
     { key: 'etf_511990', secid: '1.511990', market: 'ETF', name: '华宝添益ETF' },
+    // ---- 组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）----
+    // 这 4 个 key 的**实时价**来自各自的专业源（腾讯 usNDX / 腾讯 hf_XAU /
+    // 上金所官网 / 中国货币网），走的是 quotes.json 里的组合快照，
+    // **刻意不写 secid** —— 否则会被 fetchQuotesEM 的东财批量请求一起取回来，
+    // 用「COMEX 期货价 / CNH 离岸价」顶掉「现货伦敦金 / 官方中间价」，口径就串了。
+    // 它们的 K 线代码单独放 klineSecid / sinaGlobal，由 fetchKlineEM / fetchKlineSinaGlobal 取。
+    // ⚠ 口径差异必须如实标注（klineNote 会显示在 K 线注记上）：
+    //   · 纳指100 → 100.NDX100：与腾讯 usNDX 末根收盘**完全一致**（29402.51）⇒ 同品种
+    //   · 伦敦金 → 新浪外盘 XAU：其末根开/高/低与新浪实时 hf_XAU **逐个吻合**
+    //     ⇒ 它就是**现货伦敦金**，与报价源同品种（东财没有现货 secid）
+    //   · 上海金 → 118.AU9999：name=黄金9999，**就是上金所 Au99.99** ⇒ 同品种
+    //   · 中间价 → 133.USDCNH：中国货币网只有当天接口、没有历史 ⇒ 用离岸价作代理
+    { key: 'ndx',        klineSecid: '100.NDX100', market: 'US',    name: '纳指100',        klineNote: '' },
+    { key: 'xau',        sinaGlobal: 'XAU',        market: 'CMDTY', name: '伦敦金',        klineNote: '' },
+    { key: 'sge_au9999', klineSecid: '118.AU9999', market: 'SGE',   name: '上海金Au99.99', klineNote: '' },
+    { key: 'usdcny',     klineSecid: '133.USDCNH', market: 'FX',    name: '人民币中间价',  klineNote: '历史为离岸价 CNH，与官方中间价有基差（实测约 0.8%）' },
     // 1Y 国债收益率：全站只有中债「逐日收益率曲线」这一个源
     //   ⇒ 没有东财 secid、也没有腾讯代码，**K线只能走本地预生成文件**
     //   data/kline/cgb_1y.json（采集器每天追加一根）。
     { key: 'cgb_1y', secid: null, market: 'CN', name: '1Y国债收益率' },
   ];
   const byKey = new Map(META.map((m) => [m.key, m]));
+
+  /** 该标的的 K 线口径说明（组合标的有代理品种的差异，其余为空串）。 */
+  const getKlineNote = (key) => (byKey.get(key) || {}).klineNote || '';
 
   // 周期 → 东财 klt（1/5/15/30/60 分钟；101 日 / 102 周 / 103 月）
   const KLT = { '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60, '1d': 101, '1w': 102, '1M': 103 };
@@ -141,6 +160,17 @@
     etf_518880: 'sh518880',
     etf_511990: 'sh511990',
   };
+
+  // **只用于 K 线**的腾讯代码（不进实时报价批次）。
+  //
+  // ⚠ 为什么不能直接往 TX_CODE 里加：fetchQuotesTX() 是按 TX_CODE 批量取行情的，
+  //   组合标的的实时价归各自的专业源（腾讯 usNDX / 腾讯 hf_XAU / 上金所 / 货币网），
+  //   混进报价批次会让 K 线的口径与卡片上的价格对不上（实测 ndx 就这样漏了进去）。
+  const TX_KLINE_CODE = Object.assign({}, TX_CODE, {
+    // 纳指100：腾讯 usfqkline 最多 1000 根（n>1000 直接返回空）
+    ndx: 'usNDX',
+  });
+
   const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
   const num = (v) => (v === undefined || v === null || v === '-' || v === '' ? null : Number(v));
@@ -255,10 +285,12 @@
     const m = byKey.get(key);
     const klt = KLT[period];
     if (!m) throw new Error('未知指数 ' + key);
-    if (!m.secid) throw new Error('东财无该标的（只有本地预生成）');
+    // ⚠ 组合标的的东财 secid 放在 klineSecid（不占 secid，否则会混进实时报价批次）
+    const secid = m.klineSecid || m.secid;
+    if (!secid) throw new Error('东财无该标的（只有本地预生成）');
     if (!klt) throw new Error('不支持的周期 ' + period);
     const path =
-      `/api/qt/stock/kline/get?secid=${m.secid}&klt=${klt}&fqt=1&lmt=${limit || 250}` +
+      `/api/qt/stock/kline/get?secid=${secid}&klt=${klt}&fqt=1&lmt=${limit || 250}` +
       `&end=20500101&fields1=${KLINE_FIELDS1}&fields2=${KLINE_FIELDS2}`;
     const kl = await viaHosts(
       'kline',
@@ -332,9 +364,47 @@
     }));
   }
 
+  // ---- K线备源：新浪外盘（现货伦敦金 XAU；JSONP 绕过 CORS）----
+  //
+  // ⚠ 实测（2026-10-30）：
+  //   · 5186 根（2006-10-30 起），字段 date/open/high/low/close/volume
+  //   · **只有日线**（getGlobalFuturesWeeklyKLine / getGlobalFuturesMinKLine 都返回 __ERROR）
+  //     ⇒ 周/月由日K在本地聚合（口径与本地文件的聚合一致）
+  //   · symbol 必须**去掉 hf_ 前缀**（symbol=hf_XAU 返回 null）
+  //   · 回调名**可自定义**（实测 var%20_kline_1= 可用）⇒ 与 CN 指数共用 sinaJsonp
+  const SINA_GLOBAL_CODE = { xau: 'XAU' };
+
+  // OHLC 自洽兜底：把 high/low 撑开到必定包含 open/close。
+  // ⚠ 新浪外盘 XAU 日线 5186 根里有 132 根「最高<开盘 / 最低>收盘」的坏行（集中在 2012~2017，
+  //   是新浪自己的历史数据损坏，不是字段序错）；不修会画出「影线穿过实体」的畸形蜡烛。
+  //   只动 high/low，不动 open/close（收盘价语义不能碰）。后端 src/sources.mjs 用同一套规则。
+  function fixOhlc(bars) {
+    return bars.map((b) => ({
+      ...b,
+      h: Math.max(b.h, b.o, b.c),
+      l: Math.min(b.l, b.o, b.c),
+    }));
+  }
+
+  async function fetchKlineSinaGlobal(key, period) {
+    const symbol = SINA_GLOBAL_CODE[key];
+    if (!symbol) throw new Error('新浪外盘无该标的');
+    const cb = '_kline_' + (++sinaCbSeq);
+    const url =
+      'https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20' + cb + '=' +
+      `/GlobalFuturesService.getGlobalFuturesDailyKLine?symbol=${symbol}`;
+    const raw = await sinaJsonp(url, cb);
+    const daily = fixOhlc(raw.map((b) => ({
+      t: String(b.date).slice(0, 10), o: +b.open, c: +b.close,
+      h: +b.high, l: +b.low, v: +b.volume || 0,
+    })));
+    if (period === '1d') return daily;
+    return aggregateDaily(daily, period === '1w' ? 'week' : 'month');
+  }
+
   // ---- K线备源：腾讯（仅日/周/月） ----
   async function fetchKlineTX(key, period, limit) {
-    const code = TX_CODE[key];
+    const code = TX_KLINE_CODE[key];
     const p = TX_PERIOD[period];
     if (!code || !p) throw new Error('腾讯无该指数/周期');
     // ⚠ 腾讯日/周/月在 n>1000 时**直接返回空**（实测 2026-10-29：n=1000 正常，n=3000 空），
@@ -357,7 +427,7 @@
   const TX_MIN = { '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60 };
 
   async function fetchKlineTXMinute(key, period) {
-    const code = TX_CODE[key];
+    const code = TX_KLINE_CODE[key];
     const step = TX_MIN[period];
     if (!code || !step) throw new Error('腾讯无该指数/周期');
     const j = await req(`https://ifzq.gtimg.cn/appstock/app/minute/query?code=${code}`, 10000);
@@ -447,6 +517,9 @@
     add('东财直连', () => fetchKlineEM(key, period, limit));
     if (SINA_CODE[key] && SINA_SCALE[period]) {
       add('新浪直连（全量历史）', () => fetchKlineSina(key, period));
+    }
+    if (SINA_GLOBAL_CODE[key]) {
+      add('新浪外盘（全量历史·现货）', () => fetchKlineSinaGlobal(key, period));
     }
     add('腾讯兜底', () =>
       TX_PERIOD[period]
@@ -585,5 +658,5 @@
   }
 
 
-  window.MarketData = { META, KLT, fetchQuotes, fetchKline, fetchKlineRemote, localKline, localFullKline, getKlineSource };
+  window.MarketData = { META, KLT, fetchQuotes, fetchKline, fetchKlineRemote, localKline, localFullKline, getKlineSource, getKlineNote };
 })();

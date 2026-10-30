@@ -1,0 +1,62 @@
+name: 全量日K刷新
+
+# 每天生成一次「服务端预生成的全量日K」：data/kline/<key>_full.json
+#
+# 为什么必须放在 Actions 而不是只在本地跑（2026-10-30 实测）：
+#   · 东财 push2his 对**消费级 IP**会做 socket 级拒绝（`UND_ERR_SOCKET`），
+#     本机 Node 连不上 ⇒ 港/美/日/德/英/韩这 9 个指数的长历史在**本机根本取不到**
+#     （腾讯只给 1000 根，新浪不覆盖这些品种）⇒ 上一轮 21 个目标里有 13 个生成失败；
+#   · Actions 跑在美国节点 ⇒ 同一个脚本能拿到东财的全量（纳斯达克 8865 根 / 1991 年起）；
+#   · 脚本自身「每天最多更新一次」（按文件里的 generatedAt 判断）⇒ 一天只会真跑一轮，
+#     不会把配额烧掉（本地 16:30 的任务也会被这个判断去重，不会重复写）。
+#
+# 与 collect.yml / snapshot.yml 共用同一个 concurrency group ⇒ 三个写分支的流程串行化，
+# 不会互相把对方的提交顶掉。
+
+on:
+  schedule:
+    # UTC 04:23 = 北京 12:23（避开通盘与本地 16:30 那轮）
+    - cron: '23 4 * * *'
+  # 允许手动触发，方便验证
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: macro-news-write
+  cancel-in-progress: false
+
+jobs:
+  kline-full:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 需要完整历史才能 git push
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 采集器零依赖，无需 npm install
+      - name: 生成全量日K
+        run: node scripts/update-kline-full.mjs
+
+      - name: 提交并推送（仅在全量K线有变化时）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/kline
+          if git diff --staged --quiet; then
+            echo "本轮无全量K线变化（已生成的当天不会再写）"
+          else
+            n=$(git diff --staged --name-only | wc -l)
+            git commit -m "data: 服务端预生成全量日K（$n 个文件）"
+            git push || (git pull --rebase origin main && git push)
+            echo "已提交 ${n} 个文件"
+          fi

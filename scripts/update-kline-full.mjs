@@ -24,7 +24,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { INDICES, fetchKline } from '../src/sources.mjs';
+import { INDICES, PORTFOLIO_KLINE, fetchKline, getKlineSource } from '../src/sources.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -39,10 +39,11 @@ const DRY = process.argv.includes('--dry-run');
 const ONLY = arg('only', '');
 
 // 东财 lmt / 新浪 datalen 都是「给多少给多少」⇒ 给 20000 拿到的就是源侧全量
-// （上证 = 8752 根 / 1990-12-19 起，36 年）。前端直连也是按 20000 要的，两边口径一致。
-// ⚠ 2026-10-30 实测：本机到东财 push2his 是 **socket 级拒绝**（0.3 秒失败），
-//   所以全量文件只能靠**新浪**（仅覆盖 CN 的 8 个指数）⇒ 港美股日/德/英/日/韩这 9 个
-//   标的在本机**拿不到 >1000 根的日K**，脚本会自动跳过它们（不写残缺文件）。
+// （上证 = 8752 根 / 1990-12-19 起，36 年；纳斯达克 = 8865 根 / 1991 年起）。
+// 前端直连也是按 20000 要的，两边口径一致。
+// ⚠ 2026-10-30 实测：东财 push2his **限流是间歇性的** —— 同一天里先用后被 socket 级拒绝。
+//   所以本脚本靠「东财 → 新浪 → 腾讯」的降级链取数，拿不到就跳过（不写残缺文件），
+//   下一轮再来。港美日德英韩的标的**只有东财**有长历史 ⇒ 东财被限流时它们这一轮就更新不了。
 const LIMIT = 20000;
 
 // 低于这个根数就不写文件：存量的日K 快照是 1000 根，全量文件必须**明显更全**才有意义。
@@ -50,7 +51,9 @@ const LIMIT = 20000;
 const MIN_BARS = 1050;
 
 const today = new Date().toISOString().slice(0, 10);
-const list = ONLY ? INDICES.filter((i) => i.key === ONLY) : INDICES;
+// 目标 = 17 个指数 + 4 个组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）
+const ALL_TARGETS = [...INDICES, ...PORTFOLIO_KLINE];
+const list = ONLY ? ALL_TARGETS.filter((i) => i.key === ONLY) : ALL_TARGETS;
 
 console.log(`[update-kline-full] 目标 ${list.length} 个标的 · limit=${LIMIT}${DRY ? '（dry-run）' : ''}`);
 
@@ -87,7 +90,9 @@ for (const idx of list) {
           market: idx.market,
           period: '1d',
           generatedAt: new Date().toISOString(),
-          source: `服务端预生成的全量日K（limit=${LIMIT}）`,
+          // 取数源与口径都写进文件：全量文件是「离线快照」，必须能自证是哪来的
+          source: `服务端预生成的全量日K（limit=${LIMIT}）· 取数源：${getKlineSource() || '未知'}`,
+          caliber: idx.klineNote || '',
           // 紧凑数组行：[t,o,c,h,l,v]
           bars: bars.map((b) => [b.t, b.o, b.c, b.h, b.l, b.v]),
         }),
@@ -97,7 +102,7 @@ for (const idx of list) {
     changed++;
     console.log(
       `  ${idx.key.padEnd(9)} ${String(bars.length).padStart(6)} 根  ` +
-      `${bars[0].t} → ${bars[bars.length - 1].t}${DRY ? '（dry-run）' : ''}`
+      `${bars[0].t} → ${bars[bars.length - 1].t}  [${getKlineSource() || '未知源'}]${DRY ? '（dry-run）' : ''}`
     );
   } catch (e) {
     failed++;

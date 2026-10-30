@@ -81,9 +81,80 @@ async function writeJSONIfChanged(file, obj) {
   return true;
 }
 
+/**
+ * K线预生成：日K / 周K / 月K（保证没有 Worker 代理时也能画图）。
+ *
+ * 为什么预生成三档，而不是像以前那样只存日K：
+ *   · 前端直连（东财）能拿到 周K 1821 根（1990 起 35.8 年）、月K 431 根（36 年全量），
+ *     本地兜底只有日K 的话，周/月只能由日K聚合 → 历史被砍到 4 年；
+ *   · 体积与更新频率是权衡点：日K 每天变（主体成本），周K 一周变、月K 一月变
+ *     → 把长历史放在周K/月K 里，日更压力只有日K 一档。
+ *
+ * 文件名：data/kline/<key>.json（日）/ <key>_1w.json（周）/ <key>_1M.json（月）
+ *
+ * @param {Date} startedAt
+ * @param {string[]} [onlyKeys] 只刷这些 key（默认全部）
+ */
+async function collectKlines(startedAt, onlyKeys) {
+  const klineOk = [];
+  const klineSkip = [];
+  const { INDICES, PORTFOLIO_KLINE, fetchKline, klineAvailable, klineTarget, getKlineSource } =
+    await import('./sources.mjs');
+  // 17 个指数 + 4 个组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）
+  const all = [...INDICES.map((i) => i.key), ...PORTFOLIO_KLINE.map((i) => i.key)];
+  const keys = onlyKeys && onlyKeys.length ? all.filter((k) => onlyKeys.includes(k)) : all;
+  const KLINE_SPEC = [
+    { period: '1d', limit: 1000, suffix: '' },   // 日K 1000 根 ≈ 4 年（日更主体）
+    { period: '1w', limit: 1821, suffix: '_1w' }, // 周K 1821 根 ≈ 35.8 年（周更）
+    { period: '1M', limit: 500, suffix: '_1M' },  // 月K 源侧实际只有 ~431~454 根 = 36 年全量（月更）
+  ];
+  for (const key of keys) {
+    if (!klineAvailable(key)) { klineSkip.push(key); continue; }
+    const meta = klineTarget(key);
+    const done = [];
+    for (const spec of KLINE_SPEC) {
+      try {
+        const bars = await fetchKline(key, spec.period, spec.limit);
+        await writeJSONIfChanged(path.join(DATA, 'kline', `${key}${spec.suffix}.json`), {
+          key,
+          name: meta?.name || key,
+          market: meta?.market || '',
+          period: spec.period,
+          generatedAt: startedAt.toISOString(),
+          // 取数源写进文件：离线快照必须能自证是哪来的（东财 / 新浪 / 新浪外盘 / 上金所 / 腾讯）
+          source: getKlineSource() || '',
+          bars,
+        });
+        done.push(`${spec.period}:${bars.length}`);
+      } catch (err) {
+        // 单个周期失败不影响其它周期（例如某源不支持月K）
+      }
+      // 同一轮里要打 12×3 个请求，间隔一下别把新浪/腾讯打到限流
+      await new Promise((r) => setTimeout(r, 250));
+    }
+    if (done.length) klineOk.push(`${key}[${done.join(',')}]`);
+    else klineSkip.push(key);
+  }
+  console.log(
+    `[collect] K线：${klineOk.length} 个标的 × ${KLINE_SPEC.length} 个周期，跳过 ${klineSkip.length} 个（${klineSkip.join(', ') || '无'}）`
+  );
+  if (klineOk.length) console.log(`[collect] K线明细：${klineOk.join(' ')}`);
+}
+
 async function main() {
   const startedAt = new Date();
   console.log(`[collect] 开始 · 回补窗口 ${SINCE_HOURS}h`);
+
+  // --kline-only：只刷 K 线文件（不抓新闻、不写行情快照），用于单独补某个标的的 K 线
+  if (process.argv.includes('--kline-only')) {
+    const i = process.argv.indexOf('--kline-only');
+    const only = process.argv[i + 1] && !process.argv[i + 1].startsWith('--')
+      ? process.argv[i + 1].split(',').map((s) => s.trim()).filter(Boolean)
+      : null;
+    console.log(`[collect] --kline-only${only ? ' · 只刷 ' + only.join(',') : ' · 全部标的'}`);
+    await collectKlines(startedAt, only);
+    return;
+  }
 
   await mkdir(ARCHIVE, { recursive: true });
 
@@ -235,44 +306,8 @@ async function main() {
   //     → 把长历史放在周K/月K 里，日更压力只有日K 一档。
   //
   // 文件名：data/kline/<key>.json（日）/ <key>_1w.json（周）/ <key>_1M.json（月）
-  const klineOk = [];
-  const klineSkip = [];
   if (!process.argv.includes('--no-kline')) {
-    const { INDICES, fetchKline, klineAvailable } = await import('./sources.mjs');
-    const keys = INDICES.map((i) => i.key);
-    const KLINE_SPEC = [
-      { period: '1d', limit: 1000, suffix: '' },   // 日K 1000 根 ≈ 4 年（日更主体）
-      { period: '1w', limit: 1821, suffix: '_1w' }, // 周K 1821 根 ≈ 35.8 年（周更）
-      { period: '1M', limit: 500, suffix: '_1M' },  // 月K 源侧实际只有 ~431~454 根 = 36 年全量（月更）
-    ];
-    for (const key of keys) {
-      if (!klineAvailable(key)) { klineSkip.push(key); continue; }
-      const meta = INDICES.find((i) => i.key === key);
-      const done = [];
-      for (const spec of KLINE_SPEC) {
-        try {
-          const bars = await fetchKline(key, spec.period, spec.limit);
-          await writeJSONIfChanged(path.join(DATA, 'kline', `${key}${spec.suffix}.json`), {
-            key,
-            name: meta?.name || key,
-            market: meta?.market || '',
-            period: spec.period,
-            generatedAt: startedAt.toISOString(),
-            bars,
-          });
-          done.push(`${spec.period}:${bars.length}`);
-        } catch (err) {
-          // 单个周期失败不影响其它周期（例如某源不支持月K）
-        }
-        // 同一轮里要打 12×3 个请求，间隔一下别把新浪/腾讯打到限流
-        await new Promise((r) => setTimeout(r, 250));
-      }
-      if (done.length) klineOk.push(`${key}[${done.join(',')}]`);
-      else klineSkip.push(key);
-    }
-    console.log(
-      `[collect] K线：${klineOk.length} 个标的 × ${KLINE_SPEC.length} 个周期，跳过 ${klineSkip.length} 个（${klineSkip.join(', ') || '无'}）`
-    );
+    await collectKlines(startedAt);
   }
 
   const okCount = perSource.filter((s) => s.ok).length;
