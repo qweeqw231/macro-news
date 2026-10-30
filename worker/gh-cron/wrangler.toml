@@ -1,0 +1,27 @@
+# worker/gh-cron/wrangler.toml
+# GitHub Actions 外部定时触发器
+#
+# 部署：
+#   cd worker/gh-cron
+#   npx wrangler secret put GITHUB_TOKEN   # 粘贴 fine-grained PAT（Actions: Read and write）
+#   npx wrangler deploy
+#
+# ⚠ Cloudflare 每个 Worker 最多 3 条 cron trigger，所以三档合并在这三条里：
+#   1) 每 15 分钟 → collect.yml
+#   2) 每 30 分钟 → snapshot.yml
+#   3) 每小时 :17 → kline-minute.yml；其中 UTC 04 点那一次额外触发 kline-full.yml
+# 分钟数刻意与仓库里的 cron 保持一致（全部避开整点）。
+
+name = "macro-news-cron"
+main = "gh-cron.js"
+compatibility_date = "2024-01-01"
+
+# 纯定时器，不需要对外提供静态资源
+workers_dev = true
+
+[triggers]
+crons = [
+  "7,22,37,52 * * * *",
+  "13,43 * * * *",
+  "17 * * * *"
+]

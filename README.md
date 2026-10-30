@@ -46,9 +46,9 @@
 
 | 时间 | 谁在跑 | 干什么 | 产出落到哪 |
 |---|---|---|---|
-| 声明 `*/5`，**实测 3~6 小时一次** | GitHub Actions `collect.yml` | 新闻 + **18 指数 + 32 场内 ETF** 的最新价 + 日 K | `data/archive/`、`data/latest.json`、`data/search.json`、`data/kline/`、`data/quotes.json` → 推到 GitHub |
+| 声明每 15 分钟（主 `7,22,37,52` + 备 `14,44`），**实测 4~8 次/天** | GitHub Actions `collect.yml` | 新闻 + 最新价（`--no-kline`，**不再刷 K 线**） | `data/archive/`、`data/latest.json`、`data/search.json`、`data/quotes.json` → 推到 GitHub |
 | 声明 `*/30`，**实测不准** | GitHub Actions `snapshot.yml` | **云端兜底**：当天 am/pm 快照缺就补；并回补最近 5 天 | `data/snapshots/` → 推到 GitHub |
-| 每天 **12:23**（UTC 04:23）+ 改了取数逻辑时 | GitHub Actions `kline-full.yml` | 生成**服务端预生成的全量日K**（21 个标的，最长到 1990 年） | `data/kline/<key>_full.json` → 推到 GitHub |
+| 每天 **12:23**（UTC 04:23）+ 改了取数逻辑时 | GitHub Actions `kline-full.yml` | 全量日K + **日/周/月K（`--kline-only`）** | `data/kline/` → 推到 GitHub |
 | 每小时（第 7 分） | GitHub Actions `kline-minute.yml` | 生成**服务端预生成的分钟K**（7 个「客户端只有东财一个源」的标的 × 1/5/15/30/60 分） | `data/kline/min/<key>_<period>.json` → 推到 GitHub |
 | **12:05**（交易日） | minimax 定时任务 | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价 | `data/snapshots/YYYY-MM-DD_am.json` → 推到 GitHub |
 | **16:30**（交易日） | minimax 定时任务 | **收盘时点快照**（A股 15:00、港股 16:00）+ 5 组合行情 + 5 宏观指标 | `data/snapshots/YYYY-MM-DD_pm.json`、`data/quotes.json`、`data/macro/daily.json` → 推到 GitHub |
@@ -59,6 +59,50 @@
 - 前两条完全在云端，**电脑关机也照跑**（产物先到 GitHub，等「每 4 小时」那条拉回本机）。
 - **时点快照 ≠ 最新价**：`data/quotes.json` 是「谁先跑到谁抓到」的实时价；
   `data/snapshots/` 才是**按交易日归档、不可覆盖**的时点价（详见下面「时点快照机制」一节）。
+
+### GitHub 的 cron 为什么不可靠，以及怎么绕开
+
+实测（2026-10-04 ~ 10-30，26 天，数据来自 Actions API）：
+
+```
+collect.yml 的 schedule 触发次数：4~8 次/天
+合计 144 次 / 26 天 ≈ 5.5 次/天
+当时的声明：*/5（288 次/天）  →  实际兑现约 3%
+```
+
+**这不是偶发故障，而是从建站起就如此**：改 cron 分钟数、避开整点、加主备两条，
+都只能影响「哪几次被吞」，改不了兑现比例。仓库里能做的已经做了
+（错峰 cron + 主备 + push 触发 + 独立并发组 + 统一推送脚本）。
+
+要让云端**按时**跑，只能从仓库外面触发。方案见 `worker/gh-cron/`：
+
+- Cloudflare Worker **Cron Trigger**，到点调 GitHub 的 `workflow_dispatch`
+- 三条 cron 分别驱动 collect（15 分钟）/ snapshot（30 分钟）/ kline-minute（每小时）
+- 跑在 Cloudflare 边缘节点，**不依赖 GitHub 排程器，也不依赖你的电脑开机**
+- 需要你配置一个 fine-grained PAT（Actions: Read and write）作为 Worker secret
+
+> 时序上它和仓库内的 `schedule` 是**冗余**关系：外部触发按时跑，GitHub 自己偶尔兑现的那几次
+> 也不会重复写数据（采集器幂等、push-data.sh 有 fetch+rebase 重试）。
+> push 触发则是第三重保障：改代码立刻跑一轮。
+
+部署（一次性，约 5 分钟）：
+
+```bash
+# 1) GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token
+#    Repository access : Only select repositories → 只选 macro-news
+#    Permissions       : Actions → Read and write
+# 2) 把 token 存成 Worker secret 并部署
+cd worker/gh-cron
+npx wrangler secret put GITHUB_TOKEN
+npx wrangler deploy
+```
+
+验证：打开仓库的 **Actions** 页，若看到 `宏观资讯采集` 新增一条 `workflow_dispatch` 触发的运行，
+说明 Worker 已经能调通。也可以在浏览器访问 `https://<子域>.workers.dev/run?run=collect`
+（返回 `{"key":"collect","status":204,"ok":true}` 即成功）。
+
+> ⚠ 从国内直接访问 `*.workers.dev` 会被 DNS 污染打不开——这只影响**你手动访问**；
+> 定时器是 Cloudflare 自己在服务端往外发请求，不受影响。所以要手动验证请看 Actions 页。
 
 ### 本地数据文件（读取契约）
 
