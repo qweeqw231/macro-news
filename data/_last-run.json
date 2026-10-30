@@ -81,5 +81,6 @@
   ],
   "macroFail": {},
   "portfolioQuotes": 7,
-  "portfolioDurationMs": 2218
+  "portfolioDurationMs": 2218,
+  "quoteError": "5/50 失败：东财批量失败：HTTP 502"
 }
