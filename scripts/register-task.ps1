@@ -2,14 +2,14 @@
 # 注册 / 更新 Windows 计划任务：定时采集并推送
 #
 # 用法：
-#   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1              # 默认 30 分钟
+#   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1              # 默认 120 分钟
 #   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Minutes 15  # 自定义
 #   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Full       # 每轮都刷日/周/月K
 #   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -MinuteKline # 顺带刷分钟K
 #   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister  # 取消
 
 param(
-    [int]$Minutes = 30,
+    [int]$Minutes = 120,
     [switch]$Full,
     [switch]$MinuteKline,
     [switch]$Unregister

@@ -46,10 +46,11 @@
 
 | 时间 | 谁在跑 | 干什么 | 产出落到哪 |
 |---|---|---|---|
-| 声明每 15 分钟（主 `7,22,37,52` + 备 `14,44`），**实测 4~8 次/天** | GitHub Actions `collect.yml` | 新闻 + 最新价（`--no-kline`，**不再刷 K 线**） | `data/archive/`、`data/latest.json`、`data/search.json`、`data/quotes.json` → 推到 GitHub |
-| 声明 `*/30`，**实测不准** | GitHub Actions `snapshot.yml` | **云端兜底**：当天 am/pm 快照缺就补；并回补最近 5 天 | `data/snapshots/` → 推到 GitHub |
-| 每天 **12:23**（UTC 04:23）+ 改了取数逻辑时 | GitHub Actions `kline-full.yml` | 全量日K + **日/周/月K（`--kline-only`）** | `data/kline/` → 推到 GitHub |
-| 每小时（第 7 分） | GitHub Actions `kline-minute.yml` | 生成**服务端预生成的分钟K**（7 个「客户端只有东财一个源」的标的 × 1/5/15/30/60 分） | `data/kline/min/<key>_<period>.json` → 推到 GitHub |
+| 每 15 分钟（**Cloudflare Worker 外部触发**） | Cloudflare `gh-cron` | 调 GitHub `workflow_dispatch`（不依赖 GitHub 排程器） | — |
+| 每 15 分钟（外部触发为主，仓库内 `schedule` 为冗余） | GitHub Actions `collect.yml` | 新闻 + 最新价（`--no-kline`，**不再刷 K 线**） | `data/archive/`、`data/latest.json`、`data/search.json`、`data/quotes.json` → 推到 GitHub |
+| 每 30 分钟（外部触发） | GitHub Actions `snapshot.yml` | **云端兜底**：当天 am/pm 快照缺就补；并回补最近 5 天 | `data/snapshots/` → 推到 GitHub |
+| 每小时 :17（外部触发；UTC 04 点附带全量） | GitHub Actions `kline-minute.yml` / `kline-full.yml` | 分钟K / 全量日K + 日周月K | `data/kline/` → 推到 GitHub |
+| 每 **120 分钟**（**回退渠道**，云端正常时基本不产出） | 本机 Windows 任务 `MacroNews-Collect` | 新闻 + 行情（静默无窗口） | 本地 `data/` → 推到 GitHub |
 | **12:05**（交易日） | minimax 定时任务 | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价 | `data/snapshots/YYYY-MM-DD_am.json` → 推到 GitHub |
 | **16:30**（交易日） | minimax 定时任务 | **收盘时点快照**（A股 15:00、港股 16:00）+ 5 组合行情 + 5 宏观指标 | `data/snapshots/YYYY-MM-DD_pm.json`、`data/quotes.json`、`data/macro/daily.json` → 推到 GitHub |
 | **16:35**（交易日） | minimax 定时任务 | 只在 16:30 失败时补跑一次（读 `logs\last-portfolio-status.json` 判断） | 同上 |
@@ -729,15 +730,15 @@ macro-news/
 │   ├── portfolio-collect-and-push.ps1  收盘快照+组合+宏观 → 提交 → 推送（16:30 定时任务调用）
 │   ├── pull-remote.ps1        从远端拉取最新数据到本地（每 4 小时）
 │   ├── serve.mjs              本地静态预览服务器（file:// 打不开 fetch，需 http://）
-│   └── register-task.ps1      注册/取消计划任务（旧方案，未启用）
+│   └── register-task.ps1      注册/取消**回退**计划任务（每 120 分钟，静默无窗口）
 ├── .github/workflows/
-│   ├── collect.yml         云端采集（新闻 + 行情 + 日 K）
+│   ├── collect.yml         云端采集（新闻 + 行情；--no-kline）
 │   ├── snapshot.yml        云端快照兜底（缺就补 + 回补近 5 天）
-│   └── kline-full.yml      云端生成全量日K（每天一次 + 改代码即跑）
-│   ├── kline-full.yml      云端生成全量日K（每天一次 + 改代码即跑）
+│   ├── kline-full.yml      云端生成全量日K + 日/周/月K（每天一次 + 改代码即跑）
 │   └── kline-minute.yml    云端生成分钟K（每小时 + 改代码即跑）
 ├── .cache/                取数磁盘缓存（不入库）
-├── worker/               Cloudflare Worker（可选，国内不可用，见上）
+├── worker/                Cloudflare Worker
+│   └── gh-cron/           **主触发**：外部 cron 调 workflow_dispatch（见上）
 └── logs/                 运行日志（保留 14 天，不入库）
 ```
 
@@ -829,9 +830,11 @@ node src\portfolio-collect.mjs --dry-run
 # 首次使用建议回补 30 天
 node src\collect.mjs --since 720
 
-# ⚠️ 以下是**旧的**本地 Windows 计划任务方案（本项目从未启用，当前不需要）
+# 回退渠道：Windows 计划任务（云端正常时基本不产出，只在云端挂掉时接管）
+# 默认每 120 分钟；静默运行（wscript + run-hidden.vbs，无窗口）
 powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1
-powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister
+powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Minutes 30   # 临时加密
+powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister   # 取消
 ```
 
 ## 采集脚本特性
