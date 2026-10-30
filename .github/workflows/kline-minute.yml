@@ -11,13 +11,21 @@ name: 分钟K刷新
 #   · Actions 跑在美国节点 ⇒ 服务端能稳定连上东财 ⇒ 把分钟K预生成好，
 #     客户端直连失败时回落到本地快照，**分钟图不再取决于东财此刻能不能连**。
 #
-# 与 collect.yml / snapshot.yml / kline-full.yml 共用同一个 concurrency group
-# ⇒ 四个写分支的流程串行化，不会互相把对方的提交顶掉。
+# 与其它写分支的流程**刻意分开** concurrency group：
+#   GitHub 的 concurrency group 同时最多保留 1 个 running + 1 个 pending，
+#   新排队的工作流会把 pending 的那个**取消掉**。
+#   本 workflow 最坏要跑 30 分钟（35 个请求 × 4 秒间隔 + 超时），
+#   若与采集共用一个组，期间排队的采集任务会被下一轮采集直接取消 ⇒ 表现为「定时任务莫名少跑」。
+#   分开之后互不干扰；万一同时推 main，由 scripts/push-data.sh 负责 fetch + rebase 重试。
+# ⚠ 2026-10-30：GitHub 排程器曾整整 3.75 小时不产生任何 schedule 事件
+#   ⇒ 分钟K 的真正保底是本机 Windows 计划任务（scripts/register-task.ps1）。
 
 on:
   schedule:
-    # 每小时第 7 分钟（错开整点，避开各平台接口的高峰）
-    - cron: '7 * * * *'
+    # 每小时第 17 分钟。
+    # ⚠ 刻意**避开整点**（GitHub 排程队列在整点最堵），
+    #   也避开 snapshot.yml 的 :13/:43 和 collect.yml 的 :07/:14/:22/:37/:44/:52。
+    - cron: '17 * * * *'
   # 允许手动触发，方便验证
   workflow_dispatch:
   # 改了取数逻辑 / 本文件就立刻跑一次（不用等定时）。
@@ -34,7 +42,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: macro-news-write
+  group: macro-news-kline-minute
   cancel-in-progress: false
 
 jobs:
@@ -73,17 +81,5 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: 提交并推送（仅在分钟K有变化时）
-        if: always()
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- data/kline
-          if git diff --staged --quiet; then
-            echo "本轮无分钟K变化（内容未变，不重写）"
-          else
-            n=$(git diff --staged --name-only | wc -l)
-            git commit -m "data: 服务端预生成分钟K（$(date -u '+%Y-%m-%d %H:%M UTC')，${n} 个文件）"
-            git push || (git pull --rebase origin main && git push)
-            echo "已提交 ${n} 个文件"
-          fi
+      - name: 提交并推送（仅在数据有变化时）
+        run: bash scripts/push-data.sh data/kline MSG_PREFIX="data: 服务端预生成分钟K"

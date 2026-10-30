@@ -2,6 +2,13 @@ name: 全量日K刷新
 
 # 每天生成一次「服务端预生成的全量日K」：data/kline/<key>_full.json
 #
+# 另外在这一轮里**顺带刷新日K / 周K / 月K**（data/kline/<key>.json / _1w.json / _1M.json）：
+#   · 2026-10-30 之前，这三档是由 collect.yml 每轮顺带刷的；
+#   · 现在要闻流采集改成 `--no-kline`（只抓新闻，快、且不打扰东财），
+#     日/周/月 K 挪到这里每日刷一次 —— 日K 每天变、周K 一周变、月K 一月变，一天足够；
+#   · 好处：把「每轮 63 个 K 线请求」从「每 ~9 分钟」降到「每天一次」，
+#     撞东财按 IP 限流的概率小一个数量级（限流是常态，不是意外）。
+#
 # 为什么必须放在 Actions 而不是只在本地跑（2026-10-30 实测）：
 #   · 东财 push2his 对**消费级 IP**会做 socket 级拒绝（`UND_ERR_SOCKET`），
 #     本机 Node 连不上 ⇒ 港/美/日/德/英/韩这 9 个指数的长历史在**本机根本取不到**
@@ -10,8 +17,9 @@ name: 全量日K刷新
 #   · 脚本自身「每天最多更新一次」（按文件里的 generatedAt 判断）⇒ 一天只会真跑一轮，
 #     不会把配额烧掉（本地 16:30 的任务也会被这个判断去重，不会重复写）。
 #
-# 与 collect.yml / snapshot.yml 共用同一个 concurrency group ⇒ 三个写分支的流程串行化，
-# 不会互相把对方的提交顶掉。
+# 与其它写分支的 workflow **各自独立** concurrency group
+#   ⇒ 互不排队、互不取消（GitHub 的 concurrency group 会把 pending 的那个取消掉）；
+#   万一同时推 main，由 scripts/push-data.sh 负责 fetch + rebase 重试。
 
 on:
   schedule:
@@ -33,13 +41,15 @@ permissions:
   contents: write
 
 concurrency:
-  group: macro-news-write
+  group: macro-news-kline-full
   cancel-in-progress: false
 
 jobs:
   kline-full:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # ⚠ 20 → 30 分钟：全量日K（21 个标的的完整历史）+ 日/周/月K（21×3 个请求）
+    #   都打东财，按 IP 限流时每个请求可能耗到 20 秒硬超时。
+    timeout-minutes: 30
 
     steps:
       - name: 检出代码
@@ -56,16 +66,12 @@ jobs:
       - name: 生成全量日K
         run: node scripts/update-kline-full.mjs
 
-      - name: 提交并推送（仅在全量K线有变化时）
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- data/kline
-          if git diff --staged --quiet; then
-            echo "本轮无全量K线变化（已生成的当天不会再写）"
-          else
-            n=$(git diff --staged --name-only | wc -l)
-            git commit -m "data: 服务端预生成全量日K（$n 个文件）"
-            git push || (git pull --rebase origin main && git push)
-            echo "已提交 ${n} 个文件"
-          fi
+      # 日K / 周K / 月K（21 个标的 × 3 个周期）—— 每天才刷一次，搬到这里
+      # ⚠ 单个周期失败不影响其它周期（采集器内部逐周期 try/catch），
+      #   失败时保留上一轮的旧文件，不会把图表打空。
+      - name: 刷新日K / 周K / 月K
+        continue-on-error: true
+        run: node src/collect.mjs --kline-only
+
+      - name: 提交并推送（仅在数据有变化时）
+        run: bash scripts/push-data.sh data/kline MSG_PREFIX="data: K线日更（全量 + 日/周/月）"

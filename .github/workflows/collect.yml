@@ -10,19 +10,40 @@ name: 宏观资讯采集
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    # ⚠ 2026-10-30 实测：GitHub 的排程器从 06:23Z 起整整 3.75 小时**一个 schedule 事件都没产生**
+    #   （5 个工作流全是 active，status.github.com 全绿；同期的 push 触发工作流全部正常成功）
+    #   ⇒ 排程器本身在抽风，仓库代码改不动它。这里只能做能做的：
+    #     ① 所有 cron 的分钟数**全部避开整点**（整点是 GitHub 排程队列最堵的时段）；
+    #     ② 主 + 备两条 cron 错开叠放，某一条被丢事件时另一条还能顶上；
+    #     ③ 补 push 触发（改代码就立刻采一轮，不等 cron）。
+    #   要闻流的**真正保底**放在本机 Windows 计划任务上（每 2 小时一次，见 scripts/register-task.ps1）。
+    - cron: '7,22,37,52 * * * *'   # 主：每 15 分钟
+    - cron: '14,44 * * * *'        # 备：每 30 分钟再叠一轮，降低单条被丢事件的概率
   # 允许手动触发，方便验证
   workflow_dispatch:
+  # 改了取数逻辑 / 本文件就立刻跑一次（不用等定时）。
+  # ⚠ 路径过滤刻意**不含 data/**：本 workflow 自己提交 data/，
+  #   若把 data/ 纳入触发条件，就会「提交 → 触发 → 再提交」的循环。
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/collect.yml'
+      - 'scripts/push-data.sh'
+      - 'src/collect.mjs'
+      - 'src/sources.mjs'
+      - 'src/em.mjs'
 
 permissions:
   contents: write
 
-# 同一时间只跑一个，避免并发写入冲突。
-# ⚠ 与 snapshot.yml **必须用同一个 group**（macro-news-write）：
-#   两个 workflow 都往 main 分支提交，并发执行时会互相把对方的提交顶掉，
-#   表现为「数据丢一段时间」。共用 group 即串行化。
+# ⚠ 并发组**故意与其它三个 workflow 分开**：
+#   GitHub 的 concurrency group 语义是「同时最多 1 个 running + 1 个 pending，
+#   新排队的工作流会把 pending 的那个**取消掉**」。
+#   之前四个 workflow 共用 macro-news-write，而分钟K刷新最坏要跑 30 分钟
+#   ⇒ 期间排队的采集任务会被下一轮采集**直接取消** ⇒ 表现为「定时任务莫名少跑」。
+#   现在各自独立，并发推送由 scripts/push-data.sh 负责 fetch + rebase 重试 ⇒ 不会丢数据。
 concurrency:
-  group: macro-news-write
+  group: macro-news-collect
   cancel-in-progress: false
 
 jobs:
@@ -43,21 +64,10 @@ jobs:
 
       # 采集器零依赖，无需 npm install
       - name: 采集
-        run: node src/collect.mjs
+        run: node src/collect.mjs --no-kline
 
       - name: 提交并推送（仅在数据有变化时）
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- data
-          if git diff --staged --quiet; then
-            echo "本轮无数据变化（采集器已跳过未变更文件），不提交"
-          else
-            n=$(git diff --staged --name-only | wc -l)
-            git commit -m "data: 自动采集（$(date -u '+%Y-%m-%d %H:%M UTC')，${n} 个文件）"
-            git push
-            echo "已提交 ${n} 个文件"
-          fi
+        run: bash scripts/push-data.sh data MSG_PREFIX="data: 自动采集"
 
       - name: 上报本轮统计
         if: always()

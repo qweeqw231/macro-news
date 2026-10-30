@@ -13,8 +13,11 @@ name: 时点快照兜底
 #   声明的 */30 只是下限，不是保证。实测本仓库的 workflow 常出现 3~7 小时才跑一次
 #   的情况 —— 所以这里的定位是**兜底**（保证当天最终会有快照），而不是准点采集。
 #
-# ⚠ 并发：collect.yml 与本 workflow 写同一个分支，必须用**同一个 concurrency group**
-#   串行执行，否则两个 workflow 互相把对方的提交顶掉（数据丢一小时）。
+# ⚠ 并发：与其它三个写分支的 workflow **各自独立** concurrency group。
+#   GitHub 的 concurrency group 同时最多保留 1 个 running + 1 个 pending，
+#   新排队的工作流会把 pending 的那个**取消掉** ⇒ 共用一个组时，
+#   30 分钟级的分钟K刷新会把期间排队的采集任务直接取消。
+#   分开之后互不干扰；万一同时推 main，由 scripts/push-data.sh 负责 fetch + rebase 重试。
 
 on:
   schedule:
@@ -30,9 +33,10 @@ on:
 permissions:
   contents: write
 
-# 与 collect.yml 共用同一个 group → 两个 workflow 串行写分支
+# 与 collect.yml 等写分支的 workflow 各用各的 group → 互不排队、互不取消；
+# 并发推送由 scripts/push-data.sh 的 fetch + rebase 重试兜底
 concurrency:
-  group: macro-news-write
+  group: macro-news-snapshot
   cancel-in-progress: false
 
 jobs:
@@ -56,19 +60,8 @@ jobs:
       - name: 补齐缺失的时点快照
         run: node src/snapshot.mjs --backfill ${{ github.event.inputs.backfill || '5' }}
 
-      - name: 提交并推送（仅在快照有变化时）
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- data/snapshots
-          if git diff --staged --quiet; then
-            echo "快照已齐全（或非交易日），不提交"
-          else
-            n=$(git diff --staged --name-only | wc -l)
-            git commit -m "data: 时点快照兜底（$(date -u '+%Y-%m-%d %H:%M UTC')，${n} 个文件）"
-            git push
-            echo "已提交 ${n} 个快照文件"
-          fi
+      - name: 提交并推送（仅在数据有变化时）
+        run: bash scripts/push-data.sh data/snapshots MSG_PREFIX="data: 时点快照兜底"
 
       - name: 上报本轮统计
         if: always()

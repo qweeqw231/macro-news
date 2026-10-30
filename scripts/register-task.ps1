@@ -4,10 +4,14 @@
 # 用法：
 #   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1              # 默认 30 分钟
 #   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Minutes 15  # 自定义
+#   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Full       # 每轮都刷日/周/月K
+#   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -MinuteKline # 顺带刷分钟K
 #   powershell -ExecutionPolicy Bypass -File scripts\register-task.ps1 -Unregister  # 取消
 
 param(
     [int]$Minutes = 30,
+    [switch]$Full,
+    [switch]$MinuteKline,
     [switch]$Unregister
 )
 
@@ -31,9 +35,16 @@ if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
 # 先清掉旧的，避免重复注册
 Unregister-ScheduledTask -TaskName $taskName -Confirm:$false -ErrorAction SilentlyContinue
 
-$action = New-ScheduledTaskAction `
-    -Execute 'powershell.exe' `
-    -Argument "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$script`""
+# ⚠ 这两行把 -Full / -MinuteKline 真正传到 collect-and-push.ps1。
+#   之前只在 param 里声明、却拼进 Argument —— 开关是死的：
+#   计划任务永远按默认「日K 陈旧度 6 小时」跑，分钟K 一次都不会刷。
+$extra = @()
+if ($Full) { $extra += '-KlineStaleHours 0' }   # 0 = 每轮都刷日/周/月K
+if ($MinuteKline) { $extra += '-MinuteKline' }
+$argLine = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$script`""
+if ($extra.Count -gt 0) { $argLine += ' ' + ($extra -join ' ') }
+
+$action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument $argLine
 
 # 每 $Minutes 分钟一次，从现在开始
 $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) `
