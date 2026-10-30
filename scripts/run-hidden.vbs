@@ -11,7 +11,7 @@
 '
 Option Explicit
 
-Dim sh, ps1, extra, i, cmd
+Dim sh, ps1, extra, i, cmd, rc
 
 If WScript.Arguments.Count = 0 Then
   WScript.Quit 1
@@ -26,5 +26,7 @@ Next
 
 cmd = "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File """ & ps1 & """" & extra
 
-' 0 = hidden window, False = do not wait
-sh.Run cmd, 0, False
+' 0 = hidden window, True = wait for it to finish
+' 等待并回传退出码：否则任务计划程序永远显示 0（真实失败会被吞掉）
+rc = sh.Run(cmd, 0, True)
+WScript.Quit rc
