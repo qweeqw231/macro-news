@@ -61,16 +61,17 @@
   ],
   "quotes": 49,
   "added": 211,
-  "at": "2026-10-29T16:33:04+08:00",
+  "at": "2026-10-30T14:07:01+08:00",
   "ok": [
+    "ndx",
+    "xau",
+    "xag",
+    "brent",
     "sge_au9999",
     "usdcny",
     "cgb_1y"
   ],
-  "fail": {
-    "ndx": "fetch failed",
-    "xau": "fetch failed"
-  },
+  "fail": {},
   "macroOk": [
     "margin",
     "us10y",
@@ -79,6 +80,6 @@
     "pmi"
   ],
   "macroFail": {},
-  "portfolioQuotes": 3,
-  "portfolioDurationMs": 20729
+  "portfolioQuotes": 7,
+  "portfolioDurationMs": 1759
 }

@@ -125,10 +125,12 @@ function buildTargets() {
       amBar: '11:30',
     });
   }
-  // 组合 5 个 key：日频/24 小时连续，无分钟级历史 → 只在当日有效
+  // 组合 7 个 key：日频/24 小时连续，无分钟级历史 → 只在当日有效
   for (const [key, name, market] of [
     ['ndx', '纳指100', 'US'],
     ['xau', '伦敦金', 'CMDTY'],
+    ['xag', '伦敦银', 'CMDTY'],
+    ['brent', '布伦特原油', 'CMDTY'],
     ['sge_au9999', '上海金Au99.99', 'SGE'],
     ['usdcny', '人民币中间价', 'FX'],
     ['cgb_1y', '1Y国债收益率', 'CN'],

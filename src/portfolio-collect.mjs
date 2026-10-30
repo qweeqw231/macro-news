@@ -104,7 +104,10 @@ async function main() {
   const { quotes, ok, fail } = qRes;
   const { items: macroItems, ok: mOk, fail: mFail } = mRes;
 
-  console.log(`  行情成功 ${ok.length}/5：${ok.join(', ') || '无'}`);
+  // ⚠ 分母要跟着 PORTFOLIO_QUOTES 的实际条数走 —— 写死 5 会在新增标的后显示
+  //   「行情成功 7/5」这种自相矛盾的话（2026-10-30 加了 xag/brent 后出现）
+  const expectedQuotes = (await import('./portfolio.mjs')).PORTFOLIO_QUOTES.length;
+  console.log(`  行情成功 ${ok.length}/${expectedQuotes}：${ok.join(', ') || '无'}`);
   console.log(`  宏观成功 ${mOk.length}/5：${mOk.join(', ') || '无'}`);
   for (const [k, v] of Object.entries(fail)) console.log(`  ❌ ${k}：${v}`);
   for (const [k, v] of Object.entries(mFail)) console.log(`  ❌ 宏观 ${k}：${v}`);

@@ -107,6 +107,16 @@ export function validateQuote(q) {
   if (q.key === 'usdcny' && (q.price < 5.0 || q.price > 9.0)) {
     return `中间价超出区间(${q.price})`;
   }
+  // 伦敦银（美元/盎司）：正常 10~200；布伦特原油（美元/桶）：正常 10~300
+  if (q.key === 'xag' && (q.price < 5 || q.price > 300)) {
+    return `伦敦银超出区间(${q.price})`;
+  }
+  if (q.key === 'brent' && (q.price < 5 || q.price > 400)) {
+    return `布伦特原油超出区间(${q.price})`;
+  }
+  if (q.key === 'xau' && (q.price < 500 || q.price > 10000)) {
+    return `伦敦金超出区间(${q.price})`;
+  }
   return null;
 }
 
@@ -152,38 +162,66 @@ async function fetchNdx() {
 }
 
 // ============================================================================
-// §3.2 伦敦金（xau）—— 腾讯行情 hf_XAU
+// §3.2 伦敦金（xau）/ 伦敦银（xag）/ 布伦特原油（brent）—— 腾讯行情 hf_*
 // ============================================================================
-// 实测响应：v_hf_XAU="4039.30,-0.51,4039.30,4039.65,4070.74,4028.01,
-//            00:19:00,4060.13,4061.17,0,0,0,2026-10-29,伦敦金（现货黄金）"
+// 实测响应（hf_XAU，hf_XAG / hf_OIL 字段结构完全一致）：
+//   v_hf_XAU="4002.80,-0.46,4002.80,4003.15,4026.24,3987.40,13:41:00,4021.23,
+//             4023.79,0,0,0,2026-10-30,伦敦金（现货黄金）"
 // 索引（实测，逗号分隔）：
 //   [0]现价 [1]涨跌幅% [2]买价 [3]卖价 [4]最高 [5]最低 [6]时间
 //   [7]昨收 [8]开盘 [12]日期 [13]名称
 // ⚠ 规格书把 [2] 标为「开盘价」、把 [8] 漏掉了。实测 [2] 与 [0] 同为现价（买一价），
 //   真正的昨收/开盘分别是 [7]/[8]。按规格书写会导致 prevClose 恒等于 price、
 //   涨跌额恒为 0，故此处按实测口径取值。
+//
+// ⚠ 品种核对（2026-10-30 实测，腾讯与新浪两边同名同价）：
+//   · hf_XAU = 伦敦金（现货黄金）  · hf_XAG = 伦敦银（现货白银）
+//   · hf_OIL = 布伦特原油          · hf_SI  = 纽约白银（COMEX 期货，非伦敦银）
+//   · hf_CL  = 纽约原油（WTI）
+//   ⇒ **伦敦银必须用 hf_XAG**，用 hf_SI 会变成 COMEX 期货口径。
 async function fetchXau() {
-  const text = await get('https://qt.gtimg.cn/q=hf_XAU', {
+  return fetchHfQuote('hf_XAU', 'xau', '伦敦金', 'CMDTY');
+}
+
+/** §3.2b 伦敦银（xag）—— 腾讯 hf_XAG（伦敦银·现货白银） */
+async function fetchXag() {
+  return fetchHfQuote('hf_XAG', 'xag', '伦敦银', 'CMDTY');
+}
+
+/** §3.2c 布伦特原油（brent）—— 腾讯 hf_OIL（ICE 布伦特，美元/桶） */
+async function fetchBrent() {
+  return fetchHfQuote('hf_OIL', 'brent', '布伦特原油', 'CMDTY');
+}
+
+/**
+ * 腾讯 hf_* 外盘品种实时行情（伦敦金/伦敦银/布伦特原油/纽约原油…共用一套字段口径）。
+ * @param {string} code  腾讯代码（hf_XAU / hf_XAG / hf_OIL …）
+ * @param {string} key   站内 key
+ * @param {string} name  显示名
+ * @param {string} market 分组
+ */
+async function fetchHfQuote(code, key, name, market) {
+  const text = await get(`https://qt.gtimg.cn/q=${code}`, {
     gbk: true, headers: { Referer: 'https://gu.qq.com/' },
   });
   const m = text.match(/="([^"]+)"/);
-  if (!m) throw new Error('腾讯 hf_XAU 返回格式异常');
+  if (!m) throw new Error(`腾讯 ${code} 返回格式异常`);
   const f = m[1].split(',');
-  if (f.length < 14) throw new Error(`腾讯 hf_XAU 字段不足(${f.length})`);
+  if (f.length < 14) throw new Error(`腾讯 ${code} 字段不足(${f.length})`);
   const price = num(f[0]);
   const prevClose = num(f[7]);
   const date = f[12];
   return {
-    key: 'xau',
-    name: '伦敦金',
-    market: 'CMDTY',
+    key,
+    name,
+    market,
     price,
     open: num(f[8]),
     high: num(f[4]),
     low: num(f[5]),
     prevClose,
     changePct: num(f[1]),
-    // 现货黄金是 24 小时连续交易，[6] 是北京时间 HH:mm:ss，配合 [12] 的日期
+    // 外盘连续交易，[6] 是北京时间 HH:mm:ss，配合 [12] 的日期
     updatedAt: /^\d{4}-\d{2}-\d{2}$/.test(date)
       ? `${date}T${(f[6] || '00:00:00').padEnd(8, '0').slice(0, 8)}+08:00`
       : isoCN(),
@@ -406,6 +444,8 @@ async function fetchCgb1y() {
 export const PORTFOLIO_QUOTES = [
   { key: 'ndx', label: '纳指100', run: fetchNdx },
   { key: 'xau', label: '伦敦金', run: fetchXau },
+  { key: 'xag', label: '伦敦银', run: fetchXag },
+  { key: 'brent', label: '布伦特原油', run: fetchBrent },
   { key: 'sge_au9999', label: '上海金Au99.99', run: fetchSgeAu9999 },
   { key: 'usdcny', label: '人民币中间价', run: fetchUsdcny },
   { key: 'cgb_1y', label: '1Y国债收益率', run: fetchCgb1y },

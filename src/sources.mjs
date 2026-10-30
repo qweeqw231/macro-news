@@ -353,6 +353,9 @@ export const INDICES = [
   // 其他（腾讯无对应代码 → 只能走东财）
   { key: 'n225',      name: '日经225',    market: 'JP', secid: '100.N225',  sina: null, tx: null },
   { key: 'dax',       name: '德国DAX',    market: 'EU', secid: '100.GDAXI', sina: null, tx: null },
+  // 法国CAC40：东财 secid 100.FCHI（name=法国CAC40）—— 由东财搜索接口
+  //   `searchapi.eastmoney.com/api/suggest/get?input=法国CAC40` 反查得到
+  { key: 'cac40',     name: '法国CAC40',  market: 'EU', secid: '100.FCHI',  sina: null, tx: null },
   { key: 'ukx',       name: '英国富时100', market: 'UK', secid: '100.FTSE',  sina: null, tx: null },
   { key: 'kospi',     name: '韩国KOSPI',  market: 'KR', secid: '100.KS11',  sina: null, tx: null },
 ];
@@ -388,6 +391,25 @@ export const PORTFOLIO_KLINE = [
   {
     key: 'sge_au9999', name: '上海金Au99.99', market: 'SGE', secid: '118.AU9999', sina: null,
     tx: null, sge: 'Au99.99', klineNote: '',
+  },
+  {
+    // 伦敦银：新浪外盘 XAG（现货白银/美元，与腾讯 hf_XAG 实时价同一条线）
+    //   实测 5187 根（2006-10-30 起），末根 close 与腾讯 hf_XAG 实时价吻合
+    //   ⚠ 腾讯的 hf_SI 是**纽约白银（COMEX 期货）**，不能拿来当伦敦银
+    //   东财 122.XAG「白银/美元」实测与新浪**同一条线**（末根差 0.03~0.12，年均差 <0.7%）
+    //   ⇒ 可以作第二源，且它的历史更长（8950 根 / 1992 起）
+    key: 'xag', name: '伦敦银', market: 'CMDTY', secid: '122.XAG', sina: null,
+    tx: null, sinaGlobal: 'XAG', klineNote: '',
+  },
+  {
+    // 布伦特原油：新浪外盘 OIL（ICE 布伦特连续，与腾讯 hf_OIL 实时价同一条线）
+    //   实测 2587 根（2016-10-31 起）
+    // ⚠ **刻意不接东财 112.B00Y**：实测两条线在**换月时基差会跳到 6%**
+    //   （2026-04-24：东财 105.88 vs 新浪 99.78；2016 年平均差 3.52%）——
+    //   东财是「当月连续结算价」、新浪是「连续合约收盘价」⇒ 口径不同，混用会串。
+    //   而报价卡片用的是腾讯 hf_OIL（= 新浪那条线）⇒ K 线必须跟着它走。
+    key: 'brent', name: '布伦特原油', market: 'CMDTY', secid: null, sina: null,
+    tx: null, sinaGlobal: 'OIL', klineNote: '',
   },
   {
     key: 'usdcny', name: '人民币中间价', market: 'FX', secid: '133.USDCNH', sina: null, tx: null,
@@ -529,7 +551,7 @@ export function fixOhlc(bars) {
  *   · Node 侧直接 fetch 文本即可（不带 Referer 也能通），但响应**没有 CORS 头**
  *     ⇒ 浏览器端必须走 JSONP（<script> 加载）
  */
-async function sinaGlobalDaily(symbol) {
+export async function sinaGlobalDaily(symbol) {
   const url = 'https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_data=/' +
     `GlobalFuturesService.getGlobalFuturesDailyKLine?symbol=${symbol}`;
   const txt = await get(url, { headers: { Referer: 'https://finance.sina.com.cn/' } });
@@ -563,70 +585,67 @@ async function sgeDaily(instid) {
 }
 
 /**
- * 取单个指数的 K 线，归一化为 {t,o,h,l,c,v}
- * @param {string} key   指数 key
- * @param {string} period 1d/1w/1M/5m/30m/60m
- * @param {number} limit 根数
+ * 该标的在指定周期上的候选取数源（**按优先级排序**）。
+ *
+ * ⚠ 顺序不是全局统一的，而是**按品种**定的：
+ *   · 组合大宗（伦敦金/银/布伦特）：**新浪外盘优先**（实测 XAG 5187 根 / XAU 5186 根 /
+ *     OIL 2587 根，都从 2006~2016 起），东财（122.XAG / 112.B00Y / 101.GC00Y）次之；
+ *   · 上海金：东财优先（`118.AU9999` 2004 起 5552 根）→ 上金所官网（2016 起 2391 根）；
+ *   · 指数：东财优先（lmt 无上限）→ 新浪 CN（仅 8 个 CN 指数）→ 腾讯（封顶 1000 根）。
+ *
+ * @returns {{name:string, run:() => Promise<object[]>}[]}
  */
-export async function fetchKline(key, period = '1d', limit = 250) {
-  const idx = klineTarget(key);
-  if (!idx || !klineAvailable(key)) throw new Error(`${key} 暂无可用 K 线数据源`);
-  const errors = [];
-
-  // ---- 主源：东财（历史最长，lmt 没有 1000 根上限） ----
+function klineProviders(idx, period, limit) {
+  const P = [];
   const klt = EM_KLT[period];
-  if (idx.secid && klt) {
-    try {
+
+  const pushSinaGlobal = () => P.push({
+    name: '新浪外盘',
+    run: async () => {
+      const daily = await sinaGlobalDaily(idx.sinaGlobal);
+      if (period === '1d') return daily.slice(-limit);
+      if (period === '1w') return aggregateBars(daily, 'week').slice(-limit);
+      if (period === '1M') return aggregateBars(daily, 'month').slice(-limit);
+      // ⚠ 新浪外盘**只有日线**（Weekly/Min 接口都返回 __ERROR）⇒ 分钟周期明确不支持，
+      //   绝不能拿日线糊弄成分钟K（前端 2026-10-30 就踩过这个坑：把月K 当 5 分钟画出来）。
+      throw new Error(`新浪外盘不支持周期 ${period}`);
+    },
+  });
+
+  const pushSge = () => P.push({
+    name: '上金所官网',
+    run: async () => {
+      const daily = await sgeDaily(idx.sge);
+      if (period === '1d') return daily.slice(-limit);
+      if (period === '1w') return aggregateBars(daily, 'week').slice(-limit);
+      if (period === '1M') return aggregateBars(daily, 'month').slice(-limit);
+      throw new Error(`上金所不支持周期 ${period}`);
+    },
+  });
+
+  const pushEm = () => P.push({
+    name: '东方财富',
+    run: async () => {
+      if (!idx.secid) throw new Error('东财无该标的');
+      if (!klt) throw new Error(`东财不支持周期 ${period}`);
       const j = await emGetJSON(
         `/api/qt/stock/kline/get?secid=${idx.secid}&klt=${klt}&fqt=1&lmt=${limit}&end=20500101&${KL_FIELDS}`,
         { hosts: KLINE_HOSTS, cacheTtlMs: 3 * 3600 * 1000, cacheTag: `k${klt}`, timeout: 15000 }
       );
       const rows = j?.data?.klines || [];
-      if (rows.length) {
-        // 东财行：日期,开,收,高,低,量,额,振幅
-        klineSource = '东方财富';
-        return rows.map((r) => {
-          const p = String(r).split(',');
-          return { t: p[0], o: +p[1], c: +p[2], h: +p[3], l: +p[4], v: +p[5] };
-        });
-      }
-      errors.push('东财返回空');
-    } catch (err) {
-      errors.push(`东财失败(${String(err.message).slice(0, 80)})`);
-    }
-  } else if (idx.secid) {
-    errors.push(`东财不支持周期 ${period}`);
-  }
+      if (!rows.length) throw new Error('东财返回空');
+      // 东财行：日期,开,收,高,低,量,额,振幅
+      return rows.map((r) => {
+        const p = String(r).split(',');
+        return { t: p[0], o: +p[1], c: +p[2], h: +p[3], l: +p[4], v: +p[5] };
+      });
+    },
+  });
 
-  // ---- 备源 1：新浪外盘（现货伦敦金 XAU；只有日线，周/月由日K聚合） ----
-  if (idx.sinaGlobal) {
-    try {
-      const daily = await sinaGlobalDaily(idx.sinaGlobal);
-      if (period === '1d') { klineSource = '新浪外盘'; return daily.slice(-limit); }
-      if (period === '1w') { klineSource = '新浪外盘'; return aggregateBars(daily, 'week').slice(-limit); }
-      if (period === '1M') { klineSource = '新浪外盘'; return aggregateBars(daily, 'month').slice(-limit); }
-      errors.push(`新浪外盘不支持周期 ${period}`);
-    } catch (err) {
-      errors.push(`新浪外盘失败(${String(err.message).slice(0, 80)})`);
-    }
-  }
-
-  // ---- 备源 2：上海黄金交易所官网（Au99.99；只有日线，周/月由日K聚合） ----
-  if (idx.sge) {
-    try {
-      const daily = await sgeDaily(idx.sge);
-      if (period === '1d') { klineSource = '上金所官网'; return daily.slice(-limit); }
-      if (period === '1w') { klineSource = '上金所官网'; return aggregateBars(daily, 'week').slice(-limit); }
-      if (period === '1M') { klineSource = '上金所官网'; return aggregateBars(daily, 'month').slice(-limit); }
-      errors.push(`上金所不支持周期 ${period}`);
-    } catch (err) {
-      errors.push(`上金所失败(${String(err.message).slice(0, 80)})`);
-    }
-  }
-
-  // ---- 备源 1：新浪（CN 指数，支持日/周/月/分钟） ----
-  if (idx.sina) {
-    try {
+  const pushSina = () => P.push({
+    name: '新浪财经',
+    run: async () => {
+      if (!idx.sina) throw new Error('新浪无该标的');
       const scale = SINA_SCALE[period];
       if (!scale) throw new Error(`新浪不支持周期 ${period}`);
       const url = `https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/` +
@@ -634,18 +653,18 @@ export async function fetchKline(key, period = '1d', limit = 250) {
       const d = await get(url, { headers: { Referer: 'https://finance.sina.com.cn/' } });
       const arr = JSON.parse(d);
       if (!Array.isArray(arr) || !arr.length) throw new Error('新浪返回空数据');
-      klineSource = '新浪财经';
       return arr.map((b) => ({
         t: b.day, o: +b.open, h: +b.high, l: +b.low, c: +b.close, v: +b.volume,
       }));
-    } catch (err) {
-      errors.push(`新浪失败(${String(err.message).slice(0, 80)})`);
-    }
-  }
+    },
+  });
 
-  // ---- 备源 2：腾讯（港股 / 美股，日/周/月） ----
-  if (idx.tx && TX_PERIOD[period]) {
-    try {
+  const pushTx = () => P.push({
+    name: '腾讯行情',
+    run: async () => {
+      // ⚠ idx.tx 可能为 null（组合标的里没腾讯代码的）⇒ 必须先判空，
+      //   否则 `idx.tx.startsWith` 会抛 TypeError，把真正的失败原因盖掉。
+      if (!idx.tx) throw new Error('腾讯无该标的');
       // ⚠ 腾讯在 n>1000 时**直接返回空**（实测 2026-10-29）→ 必须 clamp，
       //   否则周K 要 1821 根时腾讯整条路径返回空。
       const n = Math.min(limit, 1000);
@@ -661,15 +680,65 @@ export async function fetchKline(key, period = '1d', limit = 250) {
       const arr = d?.['qfq' + TX_PERIOD[period]] || d?.[TX_PERIOD[period]];
       if (!Array.isArray(arr) || !arr.length) throw new Error('腾讯返回空数据');
       // 腾讯字段顺序：日期, 开盘, 收盘, 最高, 最低, 成交量
-      klineSource = '腾讯行情';
       return arr.map((b) => ({
         t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5],
       }));
-    } catch (err) {
-      errors.push(`腾讯失败(${String(err.message).slice(0, 80)})`);
+    },
+  });
+
+  if (idx.sinaGlobal) { pushSinaGlobal(); pushEm(); }
+  else if (idx.sge) { pushEm(); pushSge(); }
+  else { pushEm(); pushSina(); pushTx(); }
+  return P;
+}
+
+/**
+ * 取单个指数的 K 线，归一化为 {t,o,h,l,c,v}
+ * @param {string} key   指数 key
+ * @param {string} period 1d/1w/1M/5m/30m/60m
+ * @param {number} limit 根数
+ * @param {object} [opts]
+ * @param {boolean} [opts.longest]  true = **所有源都跑，取根数最多的那份**；
+ *        用于「全量日K」文件（要的是尽可能长的历史，不是第一个能返回的源）。
+ *        ⚠ 默认（false）保持**顺序链、先成功先返回**：日常采集每天要跑 21×3 次请求，
+ *        每个源都试一遍会明显加重限流压力。
+ */
+export async function fetchKline(key, period = '1d', limit = 250, opts = {}) {
+  const idx = klineTarget(key);
+  if (!idx || !klineAvailable(key)) throw new Error(`${key} 暂无可用 K 线数据源`);
+  const providers = klineProviders(idx, period, limit);
+  if (!providers.length) throw new Error(`${key} 暂无可用 K 线数据源`);
+
+  if (opts.longest) {
+    const settled = await Promise.allSettled(providers.map((p) => p.run()));
+    let best = null;
+    settled.forEach((r, i) => {
+      if (r.status !== 'fulfilled' || !r.value || !r.value.length) return;
+      if (!best || r.value.length > best.bars.length) {
+        best = { name: providers[i].name, bars: r.value };
+      }
+    });
+    if (!best) {
+      const why = settled.map((r, i) =>
+        `${providers[i].name}(${r.status === 'rejected' ? String(r.reason?.message || r.reason).slice(0, 60) : '空'})`
+      ).join('；');
+      throw new Error(`K线不可得：${why}`);
     }
+    klineSource = best.name;
+    return best.bars;
   }
 
+  const errors = [];
+  for (const p of providers) {
+    try {
+      const bars = await p.run();
+      if (!bars || !bars.length) throw new Error('返回空');
+      klineSource = p.name;
+      return bars;
+    } catch (err) {
+      errors.push(`${p.name}失败(${String(err.message).slice(0, 80)})`);
+    }
+  }
   throw new Error(`K线不可得：${errors.join('；')}`);
 }
 export const SOURCES = [

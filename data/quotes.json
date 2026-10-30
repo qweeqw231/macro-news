@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T00:21:27.161Z",
+  "generatedAt": "2026-10-30T06:06:28.521Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -243,26 +243,26 @@
       "key": "ndx",
       "name": "纳指100",
       "market": "US",
-      "price": 29813.16,
-      "open": 29732.04,
-      "high": 29848.71,
-      "low": 29618.42,
-      "prevClose": 29651.44,
-      "changePct": 0.55,
-      "updatedAt": "2026-10-28T17:15:59+08:00",
+      "price": 29402.51,
+      "open": 29421.18,
+      "high": 29517.8,
+      "low": 29257.05,
+      "prevClose": 29813.16,
+      "changePct": -1.38,
+      "updatedAt": "2026-10-29T17:15:59+08:00",
       "note": ""
     },
     {
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 4033.59,
-      "open": 4067.46,
-      "high": 4068.72,
-      "low": 4022.03,
-      "prevClose": 4067.16,
-      "changePct": -0.83,
-      "updatedAt": "2026-10-29T16:06:00+08:00",
+      "price": 3988.06,
+      "open": 4023.79,
+      "high": 4026.24,
+      "low": 3987.4,
+      "prevClose": 4021.23,
+      "changePct": -0.82,
+      "updatedAt": "2026-10-30T14:05:00+08:00",
       "note": ""
     },
     {
@@ -276,26 +276,26 @@
       "prevClose": 868.99,
       "changePct": -0.43,
       "updatedAt": "2026-10-29T15:30:00+08:00",
-      "note": ""
+      "note": "carried"
     },
     {
       "key": "usdcny",
       "name": "人民币中间价",
       "market": "FX",
-      "price": 6.7147,
-      "prevClose": 6.7165,
-      "changePct": -0.0268,
-      "updatedAt": "2026-10-29T09:15:00+08:00",
+      "price": 6.7138,
+      "prevClose": 6.7147,
+      "changePct": -0.0134,
+      "updatedAt": "2026-10-30T09:15:00+08:00",
       "note": ""
     },
     {
       "key": "cgb_1y",
       "name": "1Y国债收益率",
       "market": "CN",
-      "price": 1.1693,
-      "prevClose": 1.1799,
-      "changePct": -0.8984,
-      "updatedAt": "2026-10-28T17:00:00+08:00",
+      "price": 1.1649,
+      "prevClose": 1.1693,
+      "changePct": -0.3763,
+      "updatedAt": "2026-10-29T17:00:00+08:00",
       "note": "carried"
     },
     {
@@ -809,6 +809,32 @@
       "changePct": 0.01,
       "updatedAt": "2026-10-29T16:11:47+08:00",
       "source": "eastmoney"
+    },
+    {
+      "key": "xag",
+      "name": "伦敦银",
+      "market": "CMDTY",
+      "price": 50.91,
+      "open": 52.16,
+      "high": 52.21,
+      "low": 50.86,
+      "prevClose": 52.14,
+      "changePct": -2.36,
+      "updatedAt": "2026-10-30T14:04:00+08:00",
+      "note": ""
+    },
+    {
+      "key": "brent",
+      "name": "布伦特原油",
+      "market": "CMDTY",
+      "price": 112.05,
+      "open": 111.61,
+      "high": 114.07,
+      "low": 111.03,
+      "prevClose": 110.8,
+      "changePct": 1.13,
+      "updatedAt": "2026-10-30T14:06:02+08:00",
+      "note": ""
     }
   ]
 }

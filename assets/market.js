@@ -49,6 +49,8 @@
     { key: 'spx',     secid: '100.SPX',  market: 'US', name: '标普500' },
     { key: 'n225',    secid: '100.N225', market: 'JP', name: '日经225' },
     { key: 'dax',     secid: '100.GDAXI', market: 'EU', name: '德国DAX' },
+    // 法国CAC40：secid 由东财搜索接口反查（input=法国CAC40 → Code=FCHI, MktNum=100）
+    { key: 'cac40',   secid: '100.FCHI', market: 'EU', name: '法国CAC40' },
     { key: 'ukx',     secid: '100.FTSE', market: 'UK', name: '英国富时100' },
     { key: 'kospi',   secid: '100.KS11', market: 'KR', name: '韩国KOSPI' },
     // ---- 场内 ETF（32 只）----
@@ -103,6 +105,13 @@
     { key: 'ndx',        klineSecid: '100.NDX100', market: 'US',    name: '纳指100',        klineNote: '' },
     { key: 'xau',        sinaGlobal: 'XAU',        market: 'CMDTY', name: '伦敦金',        klineNote: '' },
     { key: 'sge_au9999', klineSecid: '118.AU9999', market: 'SGE',   name: '上海金Au99.99', klineNote: '' },
+    // 伦敦银：新浪外盘 XAG（现货白银/美元，5187 根 / 2006 起）；东财 122.XAG 同一条线
+    //   （末根差 0.03~0.12、年均差 <0.7%）且历史更长（8950 根 / 1992 起）⇒ 可作第二源
+    //   ⚠ 腾讯的 hf_SI 是「纽约白银」（COMEX 期货），不是伦敦银，别用错
+    { key: 'xag',        klineSecid: '122.XAG', sinaGlobal: 'XAG', market: 'CMDTY', name: '伦敦银', klineNote: '' },
+    // 布伦特原油：新浪外盘 OIL（ICE 布伦特连续，2587 根 / 2016 起）
+    //   ⚠ 刻意不接东财 112.B00Y：实测两条线换月时基差跳到 6%（当月连续结算 vs 连续合约收盘）
+    { key: 'brent',      sinaGlobal: 'OIL', market: 'CMDTY', name: '布伦特原油', klineNote: '' },
     { key: 'usdcny',     klineSecid: '133.USDCNH', market: 'FX',    name: '人民币中间价',  klineNote: '历史为离岸价 CNH，与官方中间价有基差（实测约 0.8%）' },
     // 1Y 国债收益率：全站只有中债「逐日收益率曲线」这一个源
     //   ⇒ 没有东财 secid、也没有腾讯代码，**K线只能走本地预生成文件**
@@ -189,10 +198,13 @@
 
   // 主机缓存：上次成功的主机先用，失败再并发赛其余（避免每次多倍请求）
   const hostCache = { quote: null, kline: null };
-  // 失败主机冷却：已知不可达的主机 60s 内不再重试，
+  // 失败主机冷却：已知不可达的主机在一段时间内不再重试，
   // 否则每次取数都会撞一遍全部镜像，控制台刷满 ERR_EMPTY_RESPONSE 且拖慢回退
+  // ⚠ 冷却期别太长（2026-10-30 从 60s 收到 20s）：东财一旦被封，冷却期内
+  //   **全站所有标的**都只剩腾讯兜底（欧日韩指数的分钟K直接归零）。
+  //   20s 足以避开「立刻重试再被拒」，又不会让一次封禁废掉整整一分钟。
   const hostDown = new Map();
-  const DOWN_MS = 60000;
+  const DOWN_MS = 20000;
 
   async function viaHosts(which, hosts, buildUrl, timeout, pick) {
     const now = Date.now();
@@ -364,15 +376,15 @@
     }));
   }
 
-  // ---- K线备源：新浪外盘（现货伦敦金 XAU；JSONP 绕过 CORS）----
+  // ---- K线备源：新浪外盘（现货伦敦金/伦敦银/布伦特；JSONP 绕过 CORS）----
   //
   // ⚠ 实测（2026-10-30）：
-  //   · 5186 根（2006-10-30 起），字段 date/open/high/low/close/volume
+  //   · XAU 5186 根（2006-10-30 起）/ XAG 5187 根 / OIL 2587 根（2016-10-31 起）
   //   · **只有日线**（getGlobalFuturesWeeklyKLine / getGlobalFuturesMinKLine 都返回 __ERROR）
   //     ⇒ 周/月由日K在本地聚合（口径与本地文件的聚合一致）
   //   · symbol 必须**去掉 hf_ 前缀**（symbol=hf_XAU 返回 null）
   //   · 回调名**可自定义**（实测 var%20_kline_1= 可用）⇒ 与 CN 指数共用 sinaJsonp
-  const SINA_GLOBAL_CODE = { xau: 'XAU' };
+  const SINA_GLOBAL_CODE = { xau: 'XAU', xag: 'XAG', brent: 'OIL' };
 
   // OHLC 自洽兜底：把 high/low 撑开到必定包含 open/close。
   // ⚠ 新浪外盘 XAU 日线 5186 根里有 132 根「最高<开盘 / 最低>收盘」的坏行（集中在 2012~2017，
@@ -389,6 +401,12 @@
   async function fetchKlineSinaGlobal(key, period) {
     const symbol = SINA_GLOBAL_CODE[key];
     if (!symbol) throw new Error('新浪外盘无该标的');
+    // ⚠ **只有日线**。分钟周期必须明确失败 —— 2026-10-30 的教训：
+    //   这里原本写成「非 1d 一律按 month 聚合」，结果伦敦金的「5分钟」图
+    //   画出来的是 **241 根月K**（2006-10-31 起），假数据比没数据更糟。
+    if (period !== '1d' && period !== '1w' && period !== '1M') {
+      throw new Error('新浪外盘只有日线，无分钟级数据');
+    }
     const cb = '_kline_' + (++sinaCbSeq);
     const url =
       'https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20' + cb + '=' +
@@ -430,10 +448,20 @@
     const code = TX_KLINE_CODE[key];
     const step = TX_MIN[period];
     if (!code || !step) throw new Error('腾讯无该指数/周期');
-    const j = await req(`https://ifzq.gtimg.cn/appstock/app/minute/query?code=${code}`, 10000);
+    // ⚠⚠ **美股必须走 usMinute 端点**（2026-10-30 实测）：
+    //   通用端点 minute/query 对美股指数只返回 **1 个点**（等于当前价，不是分时序列）
+    //   ⇒ 道指/纳指的「5分钟」图只剩 1 根蜡烛；
+    //   usMinute/query 则给 **391 个分时点**（09:30 起，含量）。
+    const url = code.startsWith('us')
+      ? `https://ifzq.gtimg.cn/appstock/app/usMinute/query?code=${code}`
+      : `https://ifzq.gtimg.cn/appstock/app/minute/query?code=${code}`;
+    const j = await req(url, 10000);
     const d = j && j.data && j.data[code] && j.data[code].data;
     const rows = d && d.data;
     if (!Array.isArray(rows) || !rows.length) throw new Error('腾讯分时返回空数据');
+    // ⚠ 点数太少 = 这个源其实没有分时序列（美股走错端点时就是 1 点）。
+    //   当成有效数据画出来会得到「只有 1 根蜡烛」的假图 ⇒ 直接判失败，让东财那条腿顶上。
+    if (rows.length < 5) throw new Error(`腾讯分时只有 ${rows.length} 点，判定无分时序列`);
 
     // 每行："HHMM 价 累计量 累计额"，量需做差分
     const pts = [];

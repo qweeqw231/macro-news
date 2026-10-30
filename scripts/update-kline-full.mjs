@@ -75,7 +75,11 @@ for (const idx of list) {
     }
   }
   try {
-    const bars = await fetchKline(idx.key, '1d', LIMIT);
+    // ⚠ longest=true：**所有源都跑，取根数最多的那份**。
+    //   全量文件要的是「尽可能长的历史」，而不是「第一个能返回的源」——
+    //   组合大宗（伦敦金/银/布伦特）的新浪外盘有 5187/5187/2587 根，
+    //   东财的对应 secid 可能短得多，顺序链会把它盖掉。
+    const bars = await fetchKline(idx.key, '1d', LIMIT, { longest: true });
     // 太短的说明只拿到某个备源（腾讯 clamp 到 1000），当全量写进去反而误导
     if (!bars || bars.length < MIN_BARS) {
       throw new Error(`只取到 ${bars ? bars.length : 0} 根，不足 ${MIN_BARS} 根，不当全量写`);
