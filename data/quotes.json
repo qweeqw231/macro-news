@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T20:39:59.804Z",
+  "generatedAt": "2026-10-30T00:21:27.161Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -164,7 +164,7 @@
       "high": 26286.46,
       "low": 26053.16,
       "prevClose": 26549.85,
-      "volume": 6424200448,
+      "volume": 6506000384,
       "changePct": -1.38,
       "updatedAt": "2026-10-30T04:00:00+08:00",
       "source": "eastmoney"
@@ -187,14 +187,14 @@
       "key": "n225",
       "name": "日经225",
       "market": "JP",
-      "price": 64659.47,
-      "open": 64126.25,
-      "high": 64831.29,
-      "low": 63749.2,
-      "prevClose": 63954.19,
+      "price": 63848.89,
+      "open": 64344.37,
+      "high": 64589.04,
+      "low": 63761.99,
+      "prevClose": 64659.47,
       "volume": 0,
-      "changePct": 1.1,
-      "updatedAt": "2026-10-29T14:30:00+08:00",
+      "changePct": -1.25,
+      "updatedAt": "2026-10-30T08:21:20+08:00",
       "source": "eastmoney"
     },
     {
@@ -220,7 +220,7 @@
       "high": 10773.7,
       "low": 10694.02,
       "prevClose": 10694.5,
-      "volume": 820511232,
+      "volume": 856456656,
       "changePct": 0.26,
       "updatedAt": "2026-10-30T00:35:30+08:00",
       "source": "eastmoney"
@@ -229,14 +229,14 @@
       "key": "kospi",
       "name": "韩国KOSPI",
       "market": "KR",
-      "price": 5937.66,
-      "open": 6017.22,
-      "high": 6100.11,
-      "low": 5817.92,
-      "prevClose": 6012.44,
-      "volume": 279659,
-      "changePct": -1.24,
-      "updatedAt": "2026-10-29T14:29:59+08:00",
+      "price": 5718.76,
+      "open": 5760.35,
+      "high": 5784.98,
+      "low": 5679.8,
+      "prevClose": 5937.66,
+      "volume": 29969,
+      "changePct": -3.69,
+      "updatedAt": "2026-10-30T08:21:40+08:00",
       "source": "eastmoney"
     },
     {
