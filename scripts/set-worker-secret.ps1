@@ -53,6 +53,9 @@ try {
 } finally {
     [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
 }
+# ⚠ 必须 Trim：粘贴时很容易带上行尾空格/换行，GitHub 会把它当成坏请求返回 400（而不是 401），
+#   表现为「token 明明是对的，但 dispatch 一直失败」。2026-10-30 实测踩过一次。
+$plain = $plain.Trim()
 if ([string]::IsNullOrWhiteSpace($plain)) {
     Write-Host "值为空，已取消" -ForegroundColor Yellow
     exit 1
