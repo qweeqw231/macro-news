@@ -139,12 +139,12 @@
       "name": "恒生指数",
       "market": "HK",
       "kind": "index",
-      "price": 22943.88,
+      "price": 22958.65,
       "prevClose": 23094.83,
-      "changePct": -0.6536,
+      "changePct": -0.5897,
       "open": 23088.14,
       "high": 23184.09,
-      "low": 22938.01,
+      "low": 22928.27,
       "asOf": "2026-10-29T16:00:00+08:00",
       "priceSource": "dailyK",
       "note": ""
@@ -153,12 +153,12 @@
       "name": "恒生科技",
       "market": "HK",
       "kind": "index",
-      "price": 3740.88,
+      "price": 3744.14,
       "prevClose": 3853.72,
-      "changePct": -2.9281,
+      "changePct": -2.8435,
       "open": 3834.6,
       "high": 3834.6,
-      "low": 3738.98,
+      "low": 3737.21,
       "asOf": "2026-10-29T16:00:00+08:00",
       "priceSource": "dailyK",
       "note": ""
@@ -843,5 +843,6 @@
       "priceSource": "daily",
       "note": ""
     }
-  }
+  },
+  "note": "2026-10-31 修正：文件在 15:57 采集（早于港股 16:00 收盘），hsi/hs_tech 取到盘中价；已按 10-29 日K 收盘价回填价格与高低点并重算 changePct"
 }
