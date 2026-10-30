@@ -47,6 +47,24 @@ if ($dirty.Count -eq 0) {
 Say "检测到 $($dirty.Count) 个数据文件有变化"
 
 # ---- 3. 提交 ----
+# ⚠ 提交前必须先 fetch + merge：远端可能已经被别的链路（Actions / 另一台机器）推过提交，
+#   不合并就直接 commit + push 会一直 non-fast-forward ⇒ **数据永远推不上去**。
+#   冲突只可能出在 data/（两边都改了同一个数据文件）⇒ 用 -X ours 取**本地**版本：
+#   本地跑的是新代码，与远端旧代码写出的同一份数据语义可能不同（口径以本地为准）。
+$null = git fetch origin main
+if ($LASTEXITCODE -eq 0) {
+    $behind = [int](git rev-list --count HEAD..origin/main 2>$null)
+    if ($behind -gt 0) {
+        Say "远端领先 $behind 个提交，先合并（data/ 冲突取本地）"
+        $null = git merge -X ours --no-edit origin/main
+        if ($LASTEXITCODE -ne 0) {
+            Say "合并失败，放弃本次提交（下次运行再试）"
+            $null = git merge --abort
+            exit 1
+        }
+    }
+}
+
 $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
 $null = git commit -m "data: 宏观资讯自动采集（$stamp）"
 if ($LASTEXITCODE -ne 0) { Say "提交失败，跳过推送"; exit 1 }
@@ -64,13 +82,33 @@ if ($commitCount -gt 0 -and ($commitCount % 200) -eq 0) {
     Say "gc 完成，.git 当前 ${gitMB} MB"
 }
 
-# ---- 4. 推送 ----
+# ---- 4. 推送（带重试）----
+# ⚠ SSH-443 会被随机 reset（实测：连续 4 次失败、第 5 次成功是常态）⇒ 必须重试。
+#   重试前再 fetch + merge 一次：失败的这段时间里远端可能又前进了
+#   （Actions 的其它链路也在推），不合并就是 non-fast-forward，推一百次也推不上去。
 # 注意：PowerShell 会把 git 的 stderr 包装成错误文本，
 # 必须以 $LASTEXITCODE 判断成败，不能看有没有红色输出。
-$pushOut = & git push origin main 2>&1 | Out-String
-if ($LASTEXITCODE -eq 0) {
-    Say "推送成功，GitHub Pages 将在 1-2 分钟内更新"
-} else {
-    Say "推送失败（网络问题），数据已安全保存在本地，下次运行会自动重试："
-    ($pushOut.TrimEnd() -split "`r?`n" | Select-Object -First 3) | ForEach-Object { Say "  $_" }
+$pushOk = $false
+for ($i = 1; $i -le 6; $i++) {
+    $pushOut = & git push origin main 2>&1 | Out-String
+    if ($LASTEXITCODE -eq 0) {
+        Say "推送成功（第 $i 次），GitHub Pages 将在 1-2 分钟内更新"
+        $pushOk = $true
+        break
+    }
+    $firstLine = ($pushOut.TrimEnd() -split "`r?`n" | Select-Object -First 1)
+    Say "推送失败（第 $i 次）：$firstLine"
+    if ($i -lt 6) {
+        $null = git fetch origin main
+        $null = git merge -X ours --no-edit origin/main
+        if ($LASTEXITCODE -ne 0) {
+            Say "合并失败，放弃重推（数据已存在本地提交里，下次运行会再推）"
+            $null = git merge --abort
+            break
+        }
+        Start-Sleep -Seconds 5
+    }
+}
+if (-not $pushOk) {
+    Say "推送未成功：数据已安全保存在本地提交里，下次运行会自动重试。"
 }
