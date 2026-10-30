@@ -6,6 +6,53 @@
 
 ### 待发布
 
+## [1.10.0] - 2026-10-31
+
+> 这一轮解决的不是「能不能采」，而是「云端会不会按时跑」。
+> 实测 GitHub 的 `schedule` 从建站起就只兑现约 3%（26 天合计 144 次，而当时声明是 288 次/天），
+> 于是把触发搬到仓库外：**Cloudflare Worker Cron → `workflow_dispatch`**。
+
+### 新增
+
+- **Cloudflare Worker 外部触发器**（`worker/gh-cron/`），三条 cron：
+  - `7,22,37,52 * * * *` → `collect.yml`（15 分钟）
+  - `13,43 * * * *` → `snapshot.yml`（30 分钟）
+  - `17 * * * *` → `kline-minute.yml`（每小时；UTC 04 点那一次额外带 `kline-full.yml`）
+  - 跑在 Cloudflare 边缘节点，**不依赖 GitHub 排程器，也不依赖本机开机**
+- Worker 把最近一次 dispatch 的结果写进 KV（`STATE.last_dispatch`）：
+  `{at, cron, results:[{key,status,ok,error}]}` —— 控制台打不开时唯一的观测点
+- `scripts/set-worker-secret.ps1`：`dash.cloudflare.com` 返回 403 时改用 API 写 secret；
+  **写入前先真调一次 dispatch 验证 token**（失败即拒绝保存），并对输入 `.Trim()`
+
+### 修正
+
+- 🔴 **`workflow_id` 不能写完整路径**：`.../workflows/.github/workflows/collect.yml/dispatches`
+  返回 400（响应体为空）/404。实测对照：文件名 `collect.yml` → 401（路由存在）、
+  完整路径 → 404（路由不存在）。改成文件名后返回 204。
+- 🔴 **PAT 行尾空白会让 GitHub 返回 400 而不是 401**，排查时极易误判成权限问题 ⇒ 写入前 Trim。
+- 🔴 **4 个 workflow 的 YAML 全部解析失败**：`run: ... MSG_PREFIX="data: 自动采集"` 中的
+  `: ` 被当成映射 ⇒ run 记录存在但**一个 job 都建不出来** ⇒ 整行加引号。
+- 🔴 **`push-data.sh` 静默不提交**：把 `MSG_PREFIX=...` 当成待提交路径 → `git add` fatal，
+  但仍打印「本轮无变化」并 exit 0 ⇒ 四个 workflow 全都不提交。
+  改为解析 `KEY=VALUE`，且 `git add` 失败显式 exit 1。
+- 🔴 **本机备份一条都推不出去**：`collect-and-push.ps1` 先 `git add` 再 `git merge`，
+  远端有数据提交时必然 `Your local changes would be overwritten` ⇒ 改为**先 commit 再 merge**。
+- `register-task.ps1` 的 `-Full` / `-MinuteKline` 只声明、未拼进任务参数（开关是死的）。
+- 日志按 GBK 解码 node 的 UTF-8 输出导致乱码（`[collect] 寮€濮?`），显式设 UTF-8。
+
+### 变更
+
+- 本机 Windows 任务**降级为回退渠道**：30 分钟 → **120 分钟**；
+  改用 `wscript + run-hidden.vbs` 零窗口启动（`powershell -WindowStyle Hidden` 仍会先闪一下黑框）。
+- `collect.yml` 改 `--no-kline`，日/周/月 K 归 `kline-full.yml` 每天一次 ——
+  每轮 63 个 K 线请求降到每天一次，明显降低被东财按 IP 限流的概率。
+- 本机与云端**幂等**：同样按条目 id 去重，正常情况下本机几乎不产出，只在云端挂掉时接管。
+
+### 数据
+
+- 云端恢复 15 分钟级采集：2026-10-30 15:52Z 起出现 `workflow_dispatch` 运行，
+  GitHub 在 **2 秒**内接单并成功跑完。
+
 ## [1.9.0] - 2026-10-30
 
 > 上一轮把「缺分钟K」定位到两个层面：**端点用错了**（美股走错端点只剩 1 根）与

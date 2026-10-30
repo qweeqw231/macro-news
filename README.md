@@ -92,18 +92,39 @@ collect.yml 的 schedule 触发次数：4~8 次/天
 # 1) GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token
 #    Repository access : Only select repositories → 只选 macro-news
 #    Permissions       : Actions → Read and write
-# 2) 把 token 存成 Worker secret 并部署
+# 2) 部署 Worker
 cd worker/gh-cron
-npx wrangler secret put GITHUB_TOKEN
 npx wrangler deploy
+# 3) 写入 secret
+npx wrangler secret put GITHUB_TOKEN
 ```
 
-验证：打开仓库的 **Actions** 页，若看到 `宏观资讯采集` 新增一条 `workflow_dispatch` 触发的运行，
-说明 Worker 已经能调通。也可以在浏览器访问 `https://<子域>.workers.dev/run?run=collect`
-（返回 `{"key":"collect","status":204,"ok":true}` 即成功）。
+> ⚠ **国内打不开 `dash.cloudflare.com`（实测直接 403，挂代理也一样）**，所以不要指望控制台。
+> 改用 API 方式写 secret（会先验证 token 能否真触发 workflow，通过才保存）：
+> ```powershell
+> powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
+> ```
+
+验证：
+
+1. 仓库 **Actions** 页应出现 `宏观资讯采集` 的 **`workflow_dispatch`** 运行（15 分钟一轮）。
+2. 排障时可读 Worker 的 KV：键 `STATE.last_dispatch` 里存着最近一次的
+   `{at, cron, results:[{key,status,ok,error}]}`。API：
+   ```bash
+   GET /accounts/<acc>/storage/kv/namespaces/<ns>/values/last_dispatch
+   ```
+
+**这一轮踩过的三个坑（都会伪装成「token 坏了」）**：
+
+| 现象 | 真因 | 修法 |
+|---|---|---|
+| GitHub 返回 **400 且响应体为空** | `workflow_id` 写了完整路径 `.github/workflows/collect.yml`（该路由不存在；实测文件名 `collect.yml` → 401，完整路径 → 404） | 只传**文件名** |
+| 同样 400、但 token 明明是好的 | 粘贴时带了**行尾空格/换行**，GitHub 会回 400 而不是 401 | 写入前 `.Trim()` |
+| 前一天能调 API，第二天 401 | Cloudflare OAuth access token **约 1 小时过期**，wrangler 会自动刷新，直接调 API 不会 | 重新 `wrangler login` 或先跑一次 `wrangler whoami` |
 
 > ⚠ 从国内直接访问 `*.workers.dev` 会被 DNS 污染打不开——这只影响**你手动访问**；
-> 定时器是 Cloudflare 自己在服务端往外发请求，不受影响。所以要手动验证请看 Actions 页。
+> 定时器是 Cloudflare 自己在服务端往外发请求，不受影响。所以监控看 Actions 页即可，
+> **不需要开代理盯着 Cloudflare**。
 
 ### 本地数据文件（读取契约）
 
