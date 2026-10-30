@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T13:27:01.698Z",
+  "generatedAt": "2026-10-30T13:29:23.341Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -159,14 +159,14 @@
       "key": "ixic",
       "name": "纳斯达克",
       "market": "US",
-      "price": 26184.72,
-      "open": 26201.82,
-      "high": 26286.46,
-      "low": 26053.16,
-      "prevClose": 26549.85,
-      "volume": 6506000384,
-      "changePct": -1.38,
-      "updatedAt": "2026-10-30T04:00:00+08:00",
+      "price": 25597.8,
+      "open": 25592.49,
+      "high": 25598.47,
+      "low": 25592.49,
+      "prevClose": 26184.72,
+      "volume": 525928464,
+      "changePct": -2.24,
+      "updatedAt": "2026-10-30T21:30:17+08:00",
       "source": "eastmoney"
     },
     {
@@ -201,28 +201,28 @@
       "key": "dax",
       "name": "德国DAX30",
       "market": "EU",
-      "price": 25864.36,
+      "price": 25863.45,
       "open": 25948.61,
       "high": 26026.2,
       "low": 25788.95,
       "prevClose": 26039.68,
       "volume": 0,
-      "changePct": -0.67,
-      "updatedAt": "2026-10-30T21:13:02+08:00",
+      "changePct": -0.68,
+      "updatedAt": "2026-10-30T21:15:23+08:00",
       "source": "eastmoney"
     },
     {
       "key": "ukx",
       "name": "英国富时100",
       "market": "UK",
-      "price": 10721.47,
+      "price": 10728.4,
       "open": 10721.51,
       "high": 10778.72,
       "low": 10715.93,
       "prevClose": 10722.07,
-      "volume": 293427520,
-      "changePct": -0.01,
-      "updatedAt": "2026-10-30T21:28:02+08:00",
+      "volume": 297452960,
+      "changePct": 0.06,
+      "updatedAt": "2026-10-30T21:30:13+08:00",
       "source": "eastmoney"
     },
     {
@@ -840,14 +840,14 @@
       "key": "cac40",
       "name": "法国CAC40",
       "market": "EU",
-      "price": 7980,
+      "price": 7980.1,
       "open": 7973.86,
       "high": 7992.17,
       "low": 7953.45,
       "prevClose": 7970,
       "volume": 0,
       "changePct": 0.13,
-      "updatedAt": "2026-10-30T21:13:00+08:00",
+      "updatedAt": "2026-10-30T21:15:15+08:00",
       "source": "eastmoney"
     }
   ]
