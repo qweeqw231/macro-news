@@ -146,8 +146,8 @@
       "market": "HK",
       "kind": "index",
       "price": 23140.64,
-      "prevClose": 23024.41,
-      "changePct": 0.5048,
+      "prevClose": 23041.32,
+      "changePct": 0.4311,
       "open": 23149.84,
       "high": 23150.12,
       "low": 23138.98,
@@ -160,8 +160,8 @@
       "market": "HK",
       "kind": "index",
       "price": 3868.8,
-      "prevClose": 3799.32,
-      "changePct": 1.8287,
+      "prevClose": 3800.43,
+      "changePct": 1.799,
       "open": 3871.79,
       "high": 3871.93,
       "low": 3867.29,
@@ -779,5 +779,6 @@
       "priceSource": "kline5m",
       "note": ""
     }
-  }
+  },
+  "note": "2026-10-31 修正：港股昨收原取 5 分钟 K 的 15:00 bar（盘中价），已改为前一交易日日 K 收盘价并重算 changePct"
 }

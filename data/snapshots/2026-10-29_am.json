@@ -140,8 +140,8 @@
       "market": "HK",
       "kind": "index",
       "price": 23106.71,
-      "prevClose": 23076.08,
-      "changePct": 0.1327,
+      "prevClose": 23094.83,
+      "changePct": 0.0514,
       "open": 23111.38,
       "high": 23111.38,
       "low": 23095.39,
@@ -154,8 +154,8 @@
       "market": "HK",
       "kind": "index",
       "price": 3777.24,
-      "prevClose": 3844.78,
-      "changePct": -1.7567,
+      "prevClose": 3853.72,
+      "changePct": -1.9846,
       "open": 3778.58,
       "high": 3778.58,
       "low": 3775.3,
@@ -843,5 +843,6 @@
       "priceSource": "daily",
       "note": ""
     }
-  }
+  },
+  "note": "2026-10-31 修正：港股昨收原取 5 分钟 K 的 15:00 bar（盘中价），已改为前一交易日日 K 收盘价并重算 changePct"
 }

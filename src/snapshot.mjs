@@ -326,7 +326,9 @@ async function buildSnapshot(date, session) {
         asOf = `${date}T${t.amBar}:00+08:00`;
         priceSource = 'kline5m';
         // A股/ETF 的昨收 = 前一交易日 15:00 那根（5 分钟 K 覆盖约 6 个交易日，够用）
-        const prevBar = pickPrevBar(mmap, date, '15:00');
+        // ⚠ 港股例外：5 分钟 K 只到 15:35、没有 16:00 收盘 bar，拿 15:00 那根会把
+        //   盘中价当成收盘价（2026-10-29 hsi 差 18.75 点）；交给下面的日 K 兜底。
+        const prevBar = t.market === 'HK' ? null : pickPrevBar(mmap, date, '15:00');
         prevClose = prevBar ? prevBar.bar.c : null;
       } else if (NO_SESSION_TARGET.has(t.market)) {
         const pick = dmap ? pickDaily(dmap, date) : null;
