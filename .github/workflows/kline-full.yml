@@ -19,6 +19,15 @@ on:
     - cron: '23 4 * * *'
   # 允许手动触发，方便验证
   workflow_dispatch:
+  # 改了取数逻辑 / 本文件就立刻跑一次（不用等定时）。
+  # ⚠ 路径过滤刻意**不含 data/**：本 workflow 自己提交 data/kline/*_full.json，
+  #   若把 data/ 纳入触发条件，就会「提交 → 触发 → 再提交」的循环。
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/kline-full.yml'
+      - 'scripts/update-kline-full.mjs'
+      - 'src/sources.mjs'
 
 permissions:
   contents: write
