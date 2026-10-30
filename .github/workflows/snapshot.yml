@@ -61,7 +61,8 @@ jobs:
         run: node src/snapshot.mjs --backfill ${{ github.event.inputs.backfill || '5' }}
 
       - name: 提交并推送（仅在数据有变化时）
-        run: bash scripts/push-data.sh data/snapshots MSG_PREFIX="data: 时点快照兜底"
+        # ⚠ 必须整行加引号：plain scalar 里的 `: ` 会让 YAML 解析失败
+        run: 'bash scripts/push-data.sh data/snapshots MSG_PREFIX="data: 时点快照兜底"'
 
       - name: 上报本轮统计
         if: always()

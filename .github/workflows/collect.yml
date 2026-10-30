@@ -67,7 +67,9 @@ jobs:
         run: node src/collect.mjs --no-kline
 
       - name: 提交并推送（仅在数据有变化时）
-        run: bash scripts/push-data.sh data MSG_PREFIX="data: 自动采集"
+        # ⚠ 必须整行加引号：plain scalar 里出现 `: `（MSG_PREFIX="data: ..."）
+        #   会被 YAML 当成映射，整份 workflow 直接解析失败（run 建不出来，只留一条 failure）
+        run: 'bash scripts/push-data.sh data MSG_PREFIX="data: 自动采集"'
 
       - name: 上报本轮统计
         if: always()

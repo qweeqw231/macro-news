@@ -74,4 +74,5 @@ jobs:
         run: node src/collect.mjs --kline-only
 
       - name: 提交并推送（仅在数据有变化时）
-        run: bash scripts/push-data.sh data/kline MSG_PREFIX="data: K线日更（全量 + 日/周/月）"
+        # ⚠ 必须整行加引号：plain scalar 里的 `: ` 会让 YAML 解析失败
+        run: 'bash scripts/push-data.sh data/kline MSG_PREFIX="data: K线日更（全量 + 日/周/月）"'
