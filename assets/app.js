@@ -807,9 +807,15 @@
       const minuteReason = isMinute() && window.MarketData.getMinuteUnavailableReason
         ? window.MarketData.getMinuteUnavailableReason(key)
         : '';
-      note.textContent = minuteReason
-        ? `无分钟级数据：${minuteReason}`
-        : '加载失败：直连与本地均无该周期数据（本地仅有日/周/月）。';
+      if (minuteReason) {
+        note.textContent = `无分钟级数据：${minuteReason}`;
+      } else if (isMinute()) {
+        // 有源、但直连被挡 + 本地快照还没生成（服务端每小时刷新，可能正在补齐）
+        note.textContent =
+          '加载失败：直连源此刻不可达，且本地分钟快照尚未生成（服务端每小时刷新，可能正在补齐）。';
+      } else {
+        note.textContent = '加载失败：直连与本地均无该周期数据（本地仅有日/周/月）。';
+      }
     }
   }
 
