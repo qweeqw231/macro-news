@@ -619,13 +619,20 @@
   //   没有 AbortController 的话 fetch 会**无限期挂起**，用户只看到一句「加载中…」。
   const localFileCache = new Map();
   const DATA_STAMP = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  // 分钟快照是**每小时**更新的 ⇒ 版本戳也按小时变。
+  // ⚠ 为什么不能只用按天戳（2026-10-30 实测）：分钟文件是**逐步补齐**的
+  //   （服务端每轮只补一部分），用户在「文件还不存在」时打开过一次，
+  //   那个 404 会被浏览器/CDN 缓存住 ⇒ 文件后来补齐了，前端仍然一直报「尚未生成」。
+  //   ⇒ 分钟路径（data/kline/min/）用「天+小时」戳，跨小时自动换 URL。
+  const HOUR_STAMP = new Date().getUTCHours();
   function fetchLocalFile(path, timeoutMs = 15000) {
     if (!localFileCache.has(path)) {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+      const stamp = path.indexOf('/min/') >= 0 ? `${DATA_STAMP}h${HOUR_STAMP}` : DATA_STAMP;
       localFileCache.set(
         path,
-        fetch(`${path}?v=${DATA_STAMP}`, { signal: ctrl.signal, cache: 'default' })
+        fetch(`${path}?v=${stamp}`, { signal: ctrl.signal, cache: 'default' })
           .then((r) => {
             if (!r.ok) throw new Error('本地文件不存在 ' + path);
             return r.json();
