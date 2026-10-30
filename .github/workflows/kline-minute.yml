@@ -57,7 +57,11 @@ jobs:
 
       # 采集器零依赖，无需 npm install
       # ⚠ 输出同时写进作业摘要：作业日志要鉴权才看得到，摘要匿名可读。
+      # ⚠ continue-on-error：东财限流时这一轮可能一个都抓不到 —— 但脚本会把
+      #   **失败明细写进 data/kline/min/_status.json**，下面的提交步骤用 if: always()
+      #   把它带进仓库 ⇒ 不需要鉴权也能看到「哪个标的没抓到、为什么」。
       - name: 生成分钟K
+        continue-on-error: true
         run: |
           set -o pipefail
           node scripts/update-kline-minute.mjs 2>&1 | tee minutes.log
@@ -70,6 +74,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: 提交并推送（仅在分钟K有变化时）
+        if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

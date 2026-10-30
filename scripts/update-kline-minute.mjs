@@ -61,7 +61,15 @@ const arg = (name, dflt) => {
 };
 const DRY = process.argv.includes('--dry-run');
 const ONLY = arg('only', '');
-const PERIODS = arg('periods', '').split(',').map((s) => s.trim()).filter(Boolean);
+const PERIODS_ARG = arg('periods', '');
+
+// 每轮**必刷**的周期：5m（最常用）+ 30m；
+// 其余（60m / 15m / 1m）按**小时轮换**刷新 —— 它们的变化频率本来就慢，
+// 而且每轮少打几个请求，被东财按 IP 限流的概率小得多
+// （实测 2026-10-30：同一台 Actions 机器一轮打 35 个请求就被限流，作业直接超时失败）。
+const ALWAYS_PERIODS = ['5m', '30m'];
+const ROTATE_PERIODS = ['60m', '15m', '1m'];
+const AUTO_PERIODS = [...ALWAYS_PERIODS, ROTATE_PERIODS[new Date().getUTCHours() % ROTATE_PERIODS.length]];
 
 // 客户端没有别的分钟源 ⇒ 必须由服务端兜底
 const TARGET_KEYS = [
@@ -86,7 +94,7 @@ const PERIOD_SPEC = {
 };
 
 // 请求之间的间隔（毫秒）：东财按 IP 限流，打太密就会被挂住/拒绝
-const GAP_MS = 1200;
+const GAP_MS = 2500;
 // 单个请求的**硬超时**（毫秒）：超时按失败处理，继续下一个，不让整轮被拖死
 const REQ_TIMEOUT_MS = 20000;
 // 失败重试次数（额外再试一次）
@@ -116,7 +124,10 @@ function withTimeout(promise, ms, label) {
   return Promise.race([work, timeout]).finally(() => clearTimeout(timer));
 }
 
-const periodList = (PERIODS.length ? PERIODS : Object.keys(PERIOD_SPEC))
+const periodList = (PERIODS_ARG.length
+  ? PERIODS_ARG.split(',').map((s) => s.trim()).filter(Boolean)
+  : AUTO_PERIODS
+)
   .sort((a, b) => (PERIOD_SPEC[a]?.order ?? 99) - (PERIOD_SPEC[b]?.order ?? 99));
 
 const keys = ONLY ? TARGET_KEYS.filter((k) => k === ONLY) : TARGET_KEYS;
