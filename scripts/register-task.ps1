@@ -26,6 +26,7 @@ if ($Unregister) {
 
 $root = Split-Path -Parent $PSScriptRoot
 $script = Join-Path $root 'scripts\collect-and-push.ps1'
+$hidden = Join-Path $root 'scripts\run-hidden.vbs'
 
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
     Write-Host "ERROR: 未找到 node，请先安装 Node.js" -ForegroundColor Red
@@ -36,15 +37,20 @@ if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
 Unregister-ScheduledTask -TaskName $taskName -Confirm:$false -ErrorAction SilentlyContinue
 
 # ⚠ 这两行把 -Full / -MinuteKline 真正传到 collect-and-push.ps1。
-#   之前只在 param 里声明、却拼进 Argument —— 开关是死的：
+#   之前只在 param 里声明、却没拼进 Argument —— 开关是死的：
 #   计划任务永远按默认「日K 陈旧度 6 小时」跑，分钟K 一次都不会刷。
 $extra = @()
-if ($Full) { $extra += '-KlineStaleHours 0' }   # 0 = 每轮都刷日/周/月K
+if ($Full) { $extra += '-KlineStaleHours' ; $extra += '0' }   # 0 = 每轮都刷日/周/月K
 if ($MinuteKline) { $extra += '-MinuteKline' }
-$argLine = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$script`""
+
+# ⚠ 用 wscript + run-hidden.vbs 启动，而不是直接 powershell.exe -WindowStyle Hidden：
+#   后者仍会**先弹一下黑框**再隐藏（每 30 分钟闪一次）。
+#   wscript.exe 是 GUI 子系统宿主，本身没有控制台；WshShell.Run 用 style 0
+#   启动子进程 ⇒ 全程零窗口。
+$argLine = "//nologo `"$hidden`" `"$script`""
 if ($extra.Count -gt 0) { $argLine += ' ' + ($extra -join ' ') }
 
-$action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument $argLine
+$action = New-ScheduledTaskAction -Execute 'wscript.exe' -Argument $argLine -WorkingDirectory $root
 
 # 每 $Minutes 分钟一次，从现在开始
 $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) `
