@@ -15,6 +15,12 @@ param(
 
 $ErrorActionPreference = 'Continue'
 
+# ⚠ 日志乱码修复：node 输出 UTF-8，而 PowerShell 5.1 默认按控制台代码页（GBK）解码，
+#   结果是「[collect] 寮€濮?」这种乱码，出问题时根本没法看日志。
+#   显式把原生进程输出流按 UTF-8 解码。
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
@@ -90,29 +96,34 @@ if ($dirty.Count -eq 0) {
 
 Say "检测到 $($dirty.Count) 个数据文件有变化"
 
-# ---- 5. 提交 ----
-# ⚠ 提交前必须先 fetch + merge：远端可能已经被别的链路（Actions / 另一台机器）推过提交，
-#   不合并就直接 commit + push 会一直 non-fast-forward ⇒ **数据永远推不上去**。
-#   冲突只可能出在 data/（两边都改了同一个数据文件）⇒ 用 -X ours 取**本地**版本：
+# ---- 5. 先提交，再合并（顺序不能反）----
+# ⚠ 2026-10-30 实测：原顺序是「先 fetch+merge，后 commit」，但脚本在合并前已经
+#   `git add -- data`，索引里带着未提交的改动，而远端也在改同一批 data 文件 ⇒
+#   git merge 直接拒绝：
+#     error: Your local changes to the following files would be overwritten by merge
+#     Please commit your changes or stash them before you merge.
+#   合并失败 → 脚本「放弃本次提交」→ 本机备份一条都推不上去。
+#   正确顺序：**先 commit（工作区变干净），再 fetch+merge**。
+#   冲突只可能出在 data/（两边都改了同一份数据）⇒ -X ours 取**本地**版本：
 #   本地跑的是新代码，与远端旧代码写出的同一份数据语义可能不同（口径以本地为准）。
+$stamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
+$null = git commit -m "data: 宏观资讯自动采集（$stamp）"
+if ($LASTEXITCODE -ne 0) { Say "提交失败，跳过推送"; exit 1 }
+Say "已提交"
+
 $null = git fetch origin main
 if ($LASTEXITCODE -eq 0) {
     $behind = [int](git rev-list --count HEAD..origin/main 2>$null)
     if ($behind -gt 0) {
-        Say "远端领先 $behind 个提交，先合并（data/ 冲突取本地）"
+        Say "远端领先 $behind 个提交，合并（data/ 冲突取本地）"
         $null = git merge -X ours --no-edit origin/main
         if ($LASTEXITCODE -ne 0) {
-            Say "合并失败，放弃本次提交（下次运行再试）"
+            Say "合并失败，放弃本次推送（下次运行再试；数据已提交在本地）"
             $null = git merge --abort
             exit 1
         }
     }
 }
-
-$stamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
-$null = git commit -m "data: 宏观资讯自动采集（$stamp）"
-if ($LASTEXITCODE -ne 0) { Say "提交失败，跳过推送"; exit 1 }
-Say "已提交"
 
 # ---- 6. 定期 gc：压缩仓库历史（长期体积的主要杠杆） ----
 # 每 200 次提交做一次。git 对相似 JSON 的 delta 压缩率约 80%，

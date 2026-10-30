@@ -29,6 +29,14 @@ on:
         description: '回补最近 N 个自然日里缺失的快照'
         required: false
         default: '5'
+  # 与另外三个 workflow 保持一致：改本文件 / 取数脚本就立刻跑一次。
+  # ⚠ 路径过滤刻意不含 data/（本 workflow 自己提交 data/snapshots，否则会自触发循环）
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/snapshot.yml'
+      - 'src/snapshot.mjs'
+      - 'src/quotes.mjs'
 
 permissions:
   contents: write
