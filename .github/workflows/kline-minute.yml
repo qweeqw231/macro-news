@@ -40,7 +40,9 @@ concurrency:
 jobs:
   kline-minute:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # ⚠ 35 个请求、每个之间还隔着 1.2 秒（东财按 IP 限流，打太密会被挂住），
+    #   再加上单请求 20 秒硬超时 ⇒ 最坏情况接近 20 分钟，给足时间。
+    timeout-minutes: 30
 
     steps:
       - name: 检出代码
@@ -54,8 +56,18 @@ jobs:
           node-version: '22'
 
       # 采集器零依赖，无需 npm install
+      # ⚠ 输出同时写进作业摘要：作业日志要鉴权才看得到，摘要匿名可读。
       - name: 生成分钟K
-        run: node scripts/update-kline-minute.mjs
+        run: |
+          set -o pipefail
+          node scripts/update-kline-minute.mjs 2>&1 | tee minutes.log
+          {
+            echo "### 分钟K刷新 · $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo ""
+            echo '```'
+            cat minutes.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: 提交并推送（仅在分钟K有变化时）
         run: |
