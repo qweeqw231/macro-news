@@ -9,7 +9,8 @@
 # ⚠ Cloudflare 每个 Worker 最多 3 条 cron trigger，所以三档合并在这三条里：
 #   1) 每 15 分钟 → collect.yml
 #   2) 每 30 分钟 → snapshot.yml
-#   3) 每小时 :17 → kline-minute.yml；其中 UTC 04 点那一次额外触发 kline-full.yml
+#   3) 每 30 分钟（:17 / :47）→ kline-minute.yml；
+#      UTC 04:17 那一次额外附带 kline-full.yml（全量日K 每天一次）
 # 分钟数刻意与仓库里的 cron 保持一致（全部避开整点）。
 
 name = "macro-news-cron"
@@ -23,7 +24,7 @@ workers_dev = true
 crons = [
   "7,22,37,52 * * * *",
   "13,43 * * * *",
-  "17 * * * *"
+  "17,47 * * * *"
 ]
 
 # 记录最近一次 dispatch 的返回码/错误，便于在 dash 打不开时排障

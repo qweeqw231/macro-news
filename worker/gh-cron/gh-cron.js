@@ -44,7 +44,9 @@ const WORKFLOWS = {
 // 与 wrangler.toml 里的 crons 一一对应
 const CRON_COLLECT = '7,22,37,52 * * * *';   // 每 15 分钟
 const CRON_SNAPSHOT = '13,43 * * * *';       // 每 30 分钟
-const CRON_HOURLY = '17 * * * *';            // 每小时（整点 17 分）
+// 分钟K：每 30 分钟（:17 / :47）。脚本内部仍是「5m/30m 每轮必刷，60m/15m/1m 按小时轮换」，
+// 所以 5m 快照最多 30 分钟旧，其余周期最多约 3 小时旧。
+const CRON_MINUTE = '17,47 * * * *';
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body, null, 2), {
@@ -101,10 +103,12 @@ export default {
       tasks.push('collect');
     } else if (event.cron === CRON_SNAPSHOT) {
       tasks.push('snapshot');
-    } else if (event.cron === CRON_HOURLY) {
+    } else if (event.cron === CRON_MINUTE) {
       tasks.push('klineMinute');
-      // 全量日K/日周月K 每天一次即可：每小时 :17 触发时，只在 UTC 04 点那一次带上
-      if (new Date(event.scheduledTime).getUTCHours() === 4) tasks.push('klineFull');
+      // 全量日K/日周月K 每天一次即可：只在 UTC 04:17 那轮附带，
+      // 04:47 那轮不再重复（否则一天会跑两次全量日K）
+      const d = new Date(event.scheduledTime);
+      if (d.getUTCHours() === 4 && d.getUTCMinutes() === 17) tasks.push('klineFull');
     } else {
       // 未知 cron（比如后来改了表达式却没改这里）：保守地按采集处理
       tasks.push('collect');
@@ -130,7 +134,7 @@ export default {
     return json({
       ok: true,
       routes: ['GET /health', 'GET /run?run=collect|snapshot|klineMinute|klineFull'],
-      crons: [CRON_COLLECT, CRON_SNAPSHOT, CRON_HOURLY],
+      crons: [CRON_COLLECT, CRON_SNAPSHOT, CRON_MINUTE],
     });
   },
 };
