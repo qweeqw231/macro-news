@@ -14,13 +14,18 @@
 
 ### 新增
 
-- **服务端预生成的分钟 K**：`data/kline/<key>_<period>.json`（`1m/5m/15m/30m/60m`），
+- **服务端预生成的分钟 K**：`data/kline/min/<key>_<period>.json`（`1m/5m/15m/30m/60m`），
   由 `scripts/update-kline-minute.mjs` 在 Actions（美国节点）生成，
   `.github/workflows/kline-minute.yml` **每小时**刷一次（内容没变就不重写、不提交）。
   覆盖**客户端没有第二个分钟源**的 7 个标的：
   日经225 / 德国DAX30 / 法国CAC40 / 英国富时100 / 韩国KOSPI / 上海金Au99.99 / 伦敦银。
   ⇒ 东财把客户端挡了（实测 socket 级封禁，本机 Node 与 curl 都 `http=000`），
   **欧日韩/上海金/伦敦银的分钟图照样出**，数据最多滞后 1 小时。
+- 🔴 **分钟文件必须放 `data/kline/min/` 子目录**：`<key>_1m.json`（1分钟）与 `<key>_1M.json`（月K）
+  在 **Windows 上是同一个文件名**（大小写不敏感）。第一版直接放 `data/kline/` 时，
+  本地拉取后 6 个标的的月K 文件全被 1分钟内容覆盖，**Pages 部署也折叠了这两个名字**
+  ⇒ 线上那 6 个标的的「月K」图直接变成 1分钟图。改为子目录后彻底隔离。
+  （自查方法：`git ls-files` 按小写折叠后看有没有重名。）
 - 后端 `EM_KLT` 补 `1m` / `15m`（原来只有 `5m/30m/60m`，服务端预生成会直接跳过这两个周期）。
 - 前端 `MarketData.MINUTE_PERIODS` 与 `getMinuteUnavailableReason(key)`。
 

@@ -38,7 +38,14 @@ import { fetchKline, getKlineSource, klineTarget } from '../src/sources.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const OUT_DIR = path.join(ROOT, 'data', 'kline');
+// ⚠⚠ **必须放在 data/kline/min/ 子目录里**，不能直接放 data/kline/：
+//   分钟周期 '1m' 的文件名是 <key>_1m.json，而月K 是 <key>_1M.json ——
+//   **Windows 文件系统大小写不敏感 ⇒ 这两个是同一个文件名**！
+//   实测后果（2026-10-30）：本地拉取远端产物时，1分钟的数据把月K 覆盖了，
+//   git 里 6 个标的的 <key>_1M.json 全部变成 1分钟内容（工作区显示 18128 行被删）。
+//   Linux（GitHub Actions / Pages）区分大小写，所以线上没事、只有本地坏 —— 最难查的那种。
+//   ⇒ 分钟文件一律进子目录，物理隔离。
+const OUT_DIR = path.join(ROOT, 'data', 'kline', 'min');
 
 const arg = (name, dflt) => {
   const i = process.argv.indexOf('--' + name);

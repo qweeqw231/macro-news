@@ -693,10 +693,12 @@
     // ⚠ 欧日韩指数 / 上海金 / 伦敦银的分钟K **只有东财一个源**，
     //   而东财对客户端时不时 socket 级拒绝（实测：拉完 9192 根日K 后下一个请求就被全拒）
     //   ⇒ 客户端直连失败时，这里用服务端（Actions / 美国节点）预生成的快照兜底。
-    //   文件名规则：data/kline/<key>_<period>.json（如 dax_5m.json），
+    //   文件名规则：data/kline/min/<key>_<period>.json（如 data/kline/min/dax_5m.json），
     //   由 scripts/update-kline-minute.mjs 生成，bars 是紧凑数组行 [t,o,c,h,l,v]。
+    //   ⚠ 必须在 min/ 子目录：'<key>_1m.json'（1分钟）与 '<key>_1M.json'（月K）
+    //     在 **Windows 上是同一个文件名**（大小写不敏感）⇒ 放同一目录会把月K 覆盖掉。
     if (MINUTE_PERIODS.includes(period)) {
-      const j = await fetchLocalFile(`data/kline/${key}_${period}.json`);
+      const j = await fetchLocalFile(`data/kline/min/${key}_${period}.json`);
       const bars = (j.bars || []).map((b) => (Array.isArray(b)
         ? { t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5] }
         : { t: b.t, o: +b.o, c: +b.c, h: +b.h, l: +b.l, v: +b.v }));
