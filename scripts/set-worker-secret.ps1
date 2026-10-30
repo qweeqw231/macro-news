@@ -58,6 +58,43 @@ if ([string]::IsNullOrWhiteSpace($plain)) {
     exit 1
 }
 
+# ---- 3.5 先在 GitHub 侧验证：能不能真的触发 workflow ----
+# 这一步会真实触发一次 collect 运行（也就顺便验证了端到端链路）。
+# 验证失败就不往 Cloudflare 写，避免又出现「secret 存了但一直 401/403」的盲区。
+$repoForTest = 'qweeqw231/macro-news'
+$testUri = "https://api.github.com/repos/$repoForTest/actions/workflows/collect.yml/dispatches"
+$ghHeaders = @{
+    Authorization          = "Bearer $plain"
+    Accept                 = 'application/vnd.github+json'
+    'X-GitHub-Api-Version' = '2022-11-28'
+    'User-Agent'           = 'macro-news-secret-verify'
+}
+Write-Host "验证 token 能否触发 workflow_dispatch ..."
+try {
+    $resp = Invoke-WebRequest -Uri $testUri -Method Post -Headers $ghHeaders `
+        -ContentType 'application/json' -Body '{"ref":"main"}' -UseBasicParsing -ErrorAction Stop
+    if ($resp.StatusCode -ne 204) {
+        Write-Host "token 验证失败：HTTP $($resp.StatusCode)" -ForegroundColor Red
+        exit 1
+    }
+    Write-Host "OK token 有效（已触发一次 collect 运行）" -ForegroundColor Green
+} catch {
+    $code = 0
+    $msg = $_.Exception.Message
+    if ($_.Exception.Response) {
+        $code = [int]$_.Exception.Response.StatusCode
+        try {
+            $reader = New-Object IO.StreamReader($_.Exception.Response.GetResponseStream())
+            $msg = $reader.ReadToEnd()
+        } catch { }
+    }
+    Write-Host "token 验证失败：HTTP $code" -ForegroundColor Red
+    Write-Host "  $msg" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "请检查 fine-grained token：Repository access 是否包含 $repoForTest；Permissions → Actions 是否为 Read and write。" -ForegroundColor Yellow
+    exit 1
+}
+
 # ---- 4. 写入 ----
 $uri = "https://api.cloudflare.com/client/v4/accounts/$acc/workers/scripts/$Worker/secrets"
 $body = @{ name = $SecretName; text = $plain; type = 'secret_text' } | ConvertTo-Json

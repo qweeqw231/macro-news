@@ -30,11 +30,15 @@
 
 const DEFAULT_REPO = 'qweeqw231/macro-news';
 
+// ⚠ 这里只能写**文件名**，不能写完整路径 `.github/workflows/xxx.yml`。
+//   实测：POST .../workflows/collect.yml/dispatches           -> 401（路由存在，需鉴权）
+//         POST .../workflows/.github/workflows/collect.yml/... -> 404（路由不存在）
+//   写完整路径会被 GitHub 当成多级路径，返回 400/404，且响应体为空 —— 很容易误判成 token 问题。
 const WORKFLOWS = {
-  collect: '.github/workflows/collect.yml',
-  snapshot: '.github/workflows/snapshot.yml',
-  klineMinute: '.github/workflows/kline-minute.yml',
-  klineFull: '.github/workflows/kline-full.yml',
+  collect: 'collect.yml',
+  snapshot: 'snapshot.yml',
+  klineMinute: 'kline-minute.yml',
+  klineFull: 'kline-full.yml',
 };
 
 // 与 wrangler.toml 里的 crons 一一对应
@@ -47,6 +51,17 @@ function json(body, status = 200) {
     status,
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' },
   });
+}
+
+// 把最近一次 dispatch 的结果写进 KV（只存状态码与错误原文，不含 token）
+// 目的：workers.dev 在国内不可访问、wrangler tail 也被网络挡住，
+//      没有这个落点就完全看不到「GitHub 到底返回了什么」。
+async function record(env, data) {
+  try {
+    if (env.STATE) await env.STATE.put('last_dispatch', JSON.stringify(data));
+  } catch (e) {
+    console.log('KV 写入失败: ' + (e && e.message));
+  }
 }
 
 async function dispatch(env, key) {
@@ -96,7 +111,9 @@ export default {
     }
 
     const results = await Promise.all(tasks.map((t) => dispatch(env, t)));
-    console.log(JSON.stringify({ cron: event.cron, at: new Date(event.scheduledTime).toISOString(), results }));
+    const payload = { at: new Date(event.scheduledTime).toISOString(), cron: event.cron, results };
+    console.log(JSON.stringify(payload));
+    await record(env, payload);
   },
 
   async fetch(req, env) {
@@ -107,6 +124,7 @@ export default {
     const key = url.searchParams.get('run');
     if (key) {
       const r = await dispatch(env, key);
+      await record(env, { at: new Date().toISOString(), manual: key, results: [r] });
       return json(r, r.ok ? 200 : 502);
     }
     return json({

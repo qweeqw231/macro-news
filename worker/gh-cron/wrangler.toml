@@ -25,3 +25,8 @@ crons = [
   "13,43 * * * *",
   "17 * * * *"
 ]
+
+# 记录最近一次 dispatch 的返回码/错误，便于在 dash 打不开时排障
+[[kv_namespaces]]
+binding = "STATE"
+id = "5f6cfc2f6fc34ed4a02e5e4197cd376b"
