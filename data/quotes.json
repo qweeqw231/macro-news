@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T17:07:30.793Z",
+  "generatedAt": "2026-10-30T17:54:12.811Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -145,42 +145,42 @@
       "key": "dji",
       "name": "道琼斯",
       "market": "US",
-      "price": 51858.6,
+      "price": 51781.72,
       "open": 52383.9,
       "high": 52383.9,
-      "low": 51836.27,
+      "low": 51776,
       "prevClose": 52342.56,
-      "volume": 295186016,
-      "changePct": -0.92,
-      "updatedAt": "2026-10-31T01:07:48+08:00",
+      "volume": 330670384,
+      "changePct": -1.07,
+      "updatedAt": "2026-10-31T01:54:25+08:00",
       "source": "eastmoney"
     },
     {
       "key": "ixic",
       "name": "纳斯达克",
       "market": "US",
-      "price": 25396.26,
+      "price": 25322.19,
       "open": 25592.49,
       "high": 25673,
-      "low": 25394.57,
+      "low": 25317.45,
       "prevClose": 26184.72,
-      "volume": 3870439440,
-      "changePct": -3.01,
-      "updatedAt": "2026-10-31T01:07:55+08:00",
+      "volume": 4342589440,
+      "changePct": -3.29,
+      "updatedAt": "2026-10-31T01:54:41+08:00",
       "source": "eastmoney"
     },
     {
       "key": "spx",
       "name": "标普500",
       "market": "US",
-      "price": 7578.02,
+      "price": 7562.37,
       "open": 7631.07,
       "high": 7637.48,
-      "low": 7576.94,
+      "low": 7561.1,
       "prevClose": 7720.39,
-      "volume": 1829571424,
-      "changePct": -1.84,
-      "updatedAt": "2026-10-31T01:07:47+08:00",
+      "volume": 2074650688,
+      "changePct": -2.05,
+      "updatedAt": "2026-10-31T01:54:25+08:00",
       "source": "eastmoney"
     },
     {
@@ -201,14 +201,14 @@
       "key": "dax",
       "name": "德国DAX30",
       "market": "EU",
-      "price": 25818.75,
+      "price": 25818.21,
       "open": 25948.61,
       "high": 26026.2,
       "low": 25779.15,
       "prevClose": 26039.68,
       "volume": 0,
       "changePct": -0.85,
-      "updatedAt": "2026-10-31T00:35:30+08:00",
+      "updatedAt": "2026-10-31T01:00:00+08:00",
       "source": "eastmoney"
     },
     {
@@ -847,7 +847,7 @@
       "prevClose": 7970,
       "volume": 0,
       "changePct": -0.01,
-      "updatedAt": "2026-10-31T00:52:45+08:00",
+      "updatedAt": "2026-10-31T01:00:00+08:00",
       "source": "eastmoney"
     }
   ]
