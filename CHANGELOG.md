@@ -17,7 +17,7 @@
 - **Cloudflare Worker 外部触发器**（`worker/gh-cron/`），三条 cron：
   - `7,22,37,52 * * * *` → `collect.yml`（15 分钟）
   - `13,43 * * * *` → `snapshot.yml`（30 分钟）
-  - `17 * * * *` → `kline-minute.yml`（每小时；UTC 04 点那一次额外带 `kline-full.yml`）
+  - `17,47 * * * *` → `kline-minute.yml`（每 30 分钟；UTC 04:17 那一次额外带 `kline-full.yml`）
   - 跑在 Cloudflare 边缘节点，**不依赖 GitHub 排程器，也不依赖本机开机**
 - Worker 把最近一次 dispatch 的结果写进 KV（`STATE.last_dispatch`）：
   `{at, cron, results:[{key,status,ok,error}]}` —— 控制台打不开时唯一的观测点

@@ -49,7 +49,7 @@
 | 每 15 分钟（**Cloudflare Worker 外部触发**） | Cloudflare `gh-cron` | 调 GitHub `workflow_dispatch`（不依赖 GitHub 排程器） | — |
 | 每 15 分钟（外部触发为主，仓库内 `schedule` 为冗余） | GitHub Actions `collect.yml` | 新闻 + 最新价（`--no-kline`，**不再刷 K 线**） | `data/archive/`、`data/latest.json`、`data/search.json`、`data/quotes.json` → 推到 GitHub |
 | 每 30 分钟（外部触发） | GitHub Actions `snapshot.yml` | **云端兜底**：当天 am/pm 快照缺就补；并回补最近 5 天 | `data/snapshots/` → 推到 GitHub |
-| 每小时 :17（外部触发；UTC 04 点附带全量） | GitHub Actions `kline-minute.yml` / `kline-full.yml` | 分钟K / 全量日K + 日周月K | `data/kline/` → 推到 GitHub |
+| 每 30 分钟（外部触发；UTC 04:17 附带全量） | GitHub Actions `kline-minute.yml` / `kline-full.yml` | 分钟K（5m/30m 每轮必刷，60m/15m/1m 按小时轮换） / 全量日K + 日周月K | `data/kline/` → 推到 GitHub |
 | 每 **120 分钟**（**回退渠道**，云端正常时基本不产出） | 本机 Windows 任务 `MacroNews-Collect` | 新闻 + 行情（静默无窗口） | 本地 `data/` → 推到 GitHub |
 | **12:05**（交易日） | minimax 定时任务 | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价 | `data/snapshots/YYYY-MM-DD_am.json` → 推到 GitHub |
 | **16:30**（交易日） | minimax 定时任务 | **收盘时点快照**（A股 15:00、港股 16:00）+ 5 组合行情 + 5 宏观指标 | `data/snapshots/YYYY-MM-DD_pm.json`、`data/quotes.json`、`data/macro/daily.json` → 推到 GitHub |
@@ -78,7 +78,7 @@ collect.yml 的 schedule 触发次数：4~8 次/天
 要让云端**按时**跑，只能从仓库外面触发。方案见 `worker/gh-cron/`：
 
 - Cloudflare Worker **Cron Trigger**，到点调 GitHub 的 `workflow_dispatch`
-- 三条 cron 分别驱动 collect（15 分钟）/ snapshot（30 分钟）/ kline-minute（每小时）
+- 三条 cron 分别驱动 collect（15 分钟）/ snapshot（30 分钟）/ kline-minute（**30 分钟**）
 - 跑在 Cloudflare 边缘节点，**不依赖 GitHub 排程器，也不依赖你的电脑开机**
 - 需要你配置一个 fine-grained PAT（Actions: Read and write）作为 Worker secret
 
