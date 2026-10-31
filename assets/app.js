@@ -663,7 +663,9 @@
   };
   // 日频标的（1Y国债收益率）可用的周期
   const DAILY_PERIODS = ['1d', '1w', '1M', '1y'];
-  // 均线：5/10/20/30/60/120/250，可逐条开关；默认全开，状态存 localStorage
+  // 均线：日/周/月/分钟用 5/10/20/30/60/120/250；年K 只用 5/10/20/30（单位是年），
+  // 且数据长度不足 n 根时，MA_n 及更长的均线不绘制、对应按钮置灰。
+  const YEAR_MA = [5, 10, 20, 30];
   const MA_LIST = [5, 10, 20, 30, 60, 120, 250];
   const MA_STORE = 'macro.maShown';
   const loadMA = () => {
@@ -678,6 +680,7 @@
   let klineTimer = null;
   let klineKey = '';
   let klinePeriod = '1d';
+  let maYearMax = 0;        // 年K 当前数据的根数：决定 MA_n 是否可用（0 = 数据还没到）
   // 请求令牌：每次取数 +1。
   // ⚠ 没有它会出两个 bug：
   //   ① 旧图残留 —— 图表是单例，切标的时画布还留着上一个标的的 K 线；
@@ -708,16 +711,25 @@
     const box = $('#kmMA');
     if (!box) return;
     box.innerHTML = '';
-    MA_LIST.forEach((n) => {
-      const b = el('button', 'mchip' + (maShown.has(n) ? ' on' : ''), 'MA' + n);
+    const isYear = klinePeriod === '1y';
+    const list = isYear ? YEAR_MA : MA_LIST;
+    list.forEach((n) => {
+      const unavailable = isYear && n > maYearMax;
+      const on = maShown.has(n) && !unavailable;
+      const b = el('button', 'mchip' + (on ? ' on' : '') + (unavailable ? ' disabled' : ''), 'MA' + n);
       b.type = 'button';
-      b.onclick = () => {
-        if (maShown.has(n)) maShown.delete(n);
-        else maShown.add(n);
-        b.classList.toggle('on', maShown.has(n));
-        try { localStorage.setItem(MA_STORE, JSON.stringify([...maShown])); } catch (e) { /* 忽略 */ }
-        if (kChart) kChart.setMAEnabled([...maShown]);
-      };
+      if (unavailable) {
+        b.disabled = true;
+        b.title = '年K 只有 ' + maYearMax + ' 根，不足 ' + n + ' 年';
+      } else {
+        b.onclick = () => {
+          if (maShown.has(n)) maShown.delete(n);
+          else maShown.add(n);
+          b.classList.toggle('on', maShown.has(n));
+          try { localStorage.setItem(MA_STORE, JSON.stringify([...maShown])); } catch (e) { /* 忽略 */ }
+          if (kChart) kChart.setMAEnabled([...maShown]);
+        };
+      }
       box.appendChild(b);
     });
     if (kChart) kChart.setMAEnabled([...maShown]);
@@ -772,12 +784,14 @@
     // 年K 是「月K 聚合」出来的派生周期：取数一律取月K，落图前再聚合
     const isYear = period === '1y';
     const fetchPeriod = isYear ? '1M' : period;
-    $('#kmMA').hidden = isYear;         // 年K 只有几十根，均线没有意义
+    // 年K 的均线单位是「年」：只保留 5/10/20/30，且数据没到之前全部置灰
     document.querySelectorAll('.pchip').forEach((b) => b.classList.toggle('on', b.dataset.period === period));
 
     const note = $('#kmNote');
     note.textContent = '加载中…';
     kChart.setData([], period);          // ← 立刻清空画布，绝不留上一个标的的图
+    maYearMax = 0;
+    renderMA();
 
     // 落图入口。三个约束：
     //   ① 令牌过期 → 丢弃（修「A 的响应后到，盖在 B 的标题下」）；
@@ -817,6 +831,8 @@
       shownRank = rank;
       shownLast = last;
       kChart.setData(bars, period);
+      // 年K 的均线可用性与根数有关（< n 根时 MA_n 不画，按钮置灰）
+      if (isYear) { maYearMax = bars.length; renderMA(); }
       // 口径说明（组合标的的代理品种）必须显示出来，不能让用户以为看到的就是报价源本身
       const caliber = window.MarketData.getKlineNote ? window.MarketData.getKlineNote(key) : '';
       const span = isYear

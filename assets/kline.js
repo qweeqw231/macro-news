@@ -296,9 +296,10 @@ class KlineChart {
 
     // ---- 价格区间（含均线） ----
     // 均线按「全量 bars」计算再切片，平移时左侧边缘也能得到正确的均线值。
-    // 年K 只有几十根，MA120/250 没有意义 ⇒ 年K 不画均线。
+    // 年K 的均线单位是「年」：只支持 5/10/20/30，且数据不足 n 根时 MA_n 不画。
+    const YEAR_MA = [5, 10, 20, 30];
     const maList = this.period === '1y'
-      ? []
+      ? YEAR_MA.filter((n) => this.maEnabled.has(n) && this.bars.length >= n)
       : [...this.maEnabled].filter((x) => x >= 2).sort((a, b) => a - b);
     const mas = maList.map((n) => ({
       n,
