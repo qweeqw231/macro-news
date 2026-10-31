@@ -107,15 +107,15 @@
     //   · 上海金 → 118.AU9999：name=黄金9999，**就是上金所 Au99.99** ⇒ 同品种
     //   · 中间价 → 133.USDCNH：中国货币网只有当天接口、没有历史 ⇒ 用离岸价作代理
     { key: 'ndx',        secid: '100.NDX100', klineSecid: '100.NDX100', market: 'US', name: '纳指100', klineNote: '' },
-    { key: 'xau',        sinaGlobal: 'XAU',        market: 'CMDTY', name: '伦敦金',        klineNote: '' },
+    { key: 'xau',        sinaGlobal: 'XAU',        market: 'CMDTY', name: '伦敦金',        klineNote: '现货黄金（新浪外盘 XAU）：报价源在 04:55 冻结，官方 05:00 收盘，差约 1 美元（0.04%）' },
     { key: 'sge_au9999', klineSecid: '118.AU9999', market: 'SGE',   name: '上海金Au99.99', klineNote: '' },
     // 伦敦银：新浪外盘 XAG（现货白银/美元，5187 根 / 2006 起）；东财 122.XAG 同一条线
     //   （末根差 0.03~0.12、年均差 <0.7%）且历史更长（8950 根 / 1992 起）⇒ 可作第二源
     //   ⚠ 腾讯的 hf_SI 是「纽约白银」（COMEX 期货），不是伦敦银，别用错
-    { key: 'xag',        klineSecid: '122.XAG', sinaGlobal: 'XAG', market: 'CMDTY', name: '伦敦银', klineNote: '' },
+    { key: 'xag',        klineSecid: '122.XAG', sinaGlobal: 'XAG', market: 'CMDTY', name: '伦敦银', klineNote: '现货白银（新浪外盘 XAG）：报价源在 04:55 冻结，与 05:00 官方收盘差通常 <0.1%' },
     // 布伦特原油：新浪外盘 OIL（ICE 布伦特连续，2587 根 / 2016 起）
     //   ⚠ 刻意不接东财 112.B00Y：实测两条线换月时基差跳到 6%（当月连续结算 vs 连续合约收盘）
-    { key: 'brent',      sinaGlobal: 'OIL', market: 'CMDTY', name: '布伦特原油', klineNote: '' },
+    { key: 'brent',      sinaGlobal: 'OIL', market: 'CMDTY', name: '布伦特原油', klineNote: 'ICE 布伦特连续合约：与具体月份合约（如 12 月）存在约 4 美元基差，涨跌幅一致' },
     { key: 'usdcny',     klineSecid: '133.USDCNH', market: 'FX',    name: '人民币中间价',  klineNote: '历史为离岸价 CNH，与官方中间价有基差（实测约 0.8%）' },
     // 1Y 国债收益率：全站只有中债「逐日收益率曲线」这一个源
     //   ⇒ 没有东财 secid、也没有腾讯代码，**K线只能走本地预生成文件**
