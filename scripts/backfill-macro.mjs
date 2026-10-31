@@ -52,6 +52,10 @@ function writeJSON(file, obj) {
 }
 
 const MONTHLY_KEYS = new Set(['social_financing', 'cpi', 'pmi']);
+const hasDailyItems = (rec) =>
+  Array.isArray(rec?.items) &&
+  rec.items.some((it) => it.key === 'margin') &&
+  rec.items.some((it) => it.key === 'us10y');
 const fmtVal = (it) => (it == null ? '失败' : `${it.value}${it.unit || ''}`);
 
 async function main() {
@@ -67,9 +71,6 @@ async function main() {
 
   const macro = readJSON(MACRO_FILE, []);
   const list = Array.isArray(macro) ? macro : [];
-  const hasDay = (day) => list.some(
-    (x) => x && x.date === day && Array.isArray(x.items) && x.items.length > 0
-  );
 
   // 月度值：取离目标日最近的一条现有记录（跨月时可能差一个月，但不会逐日变化）
   const nearestMonthly = (day) => {
@@ -103,9 +104,10 @@ async function main() {
       detail(`${day} ${WEEK[weekday(day)]}：周末，跳过`);
       continue;
     }
-    if (hasDay(day)) {
+    const existing = list.find((x) => x && x.date === day);
+    if (existing && hasDailyItems(existing)) {
       skipped++;
-      detail(`${day}：已有记录，跳过`);
+      detail(`${day}：两融/美债都在，跳过`);
       continue;
     }
 
@@ -157,6 +159,22 @@ async function main() {
         us10y: uRes.status === 'fulfilled' ? 'ok' : String(uRes.reason?.message || uRes.reason),
         cgb: cgbText,
       });
+    }
+
+    // 已有记录但缺日频（例如云端先写了月度）：把取到的日频合并进去，不丢原有月度项
+    if (existing) {
+      const items = Array.isArray(existing.items) ? existing.items.slice() : [];
+      for (const it of dailyItems) {
+        const i = items.findIndex((x) => x.key === it.key);
+        if (i >= 0) items[i] = it;
+        else items.push(it);
+      }
+      existing.items = items;
+      filled++;
+      detail(
+        `${day} ${WEEK[weekday(day)]}：补日频 两融 ${mText} · 美债 ${uText} · 1Y国债 ${cgbText}`
+      );
+      continue;
     }
 
     const monthly = nearestMonthly(day);
