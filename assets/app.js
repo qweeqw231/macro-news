@@ -488,13 +488,13 @@
     alignRO.observe(document.body);
   }
 
-  function alignToView(v) {
+  function alignToView(v, instant) {
     const sec = $('#view-' + v);
     if (!sec) return;
     // 目标 = 该区块的绝对位置 - sticky 顶栏高度
     const target = () => Math.max(0, sec.getBoundingClientRect().top + window.scrollY - 72);
     alignState = { sec, userMoved: false, last: target() };
-    window.scrollTo({ top: target(), behavior: 'smooth' });
+    window.scrollTo({ top: target(), behavior: instant ? 'auto' : 'smooth' });
   }
 
   function viewFromHash() {
@@ -502,7 +502,7 @@
     return m ? m[1] : null;
   }
 
-  function showView(v) {
+  function showView(v, instant) {
     S.view = v;
     closeReader();
     document.querySelectorAll('.tab').forEach((t) => {
@@ -519,7 +519,7 @@
     //   宏观仪表盘是常驻在页面顶部的，四个视图的内容都在它下面。
     //   滚回顶部 ⇒ 切换后画面还是仪表盘 ⇒ 用户看到「四个页签一模一样」、
     //   「点了没反应」。这里滚到区块顶部（避开 sticky 顶栏高度）。
-    alignToView(v);
+    alignToView(v, instant);
     // URL 与视图保持同步（replaceState 不会触发 hashchange，不会造成循环）
     if (viewFromHash() !== v) history.replaceState(null, '', '#view-' + v);
     // 需要数据的视图在切过去时才去取（懒加载）
@@ -997,9 +997,9 @@
       const v = viewFromHash();
       if (v && v !== S.view) showView(v);
     });
-    // 带着 #view-xxx 打开时直接进对应视图
+    // 带着 #view-xxx 打开时直接进对应视图（instant：首帧不要看到平滑滚动）
     const initialView = viewFromHash();
-    if (initialView) showView(initialView);
+    if (initialView) showView(initialView, true);
     $('#moreBtn').onclick = () => { S.shown += PAGE; renderFeed(); };
     $('#q').addEventListener('input', (e) => onSearchInput(e.target.value));
     $('#qClear').onclick = () => { $('#q').value = ''; onSearchInput(''); };
