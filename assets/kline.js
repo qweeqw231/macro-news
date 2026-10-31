@@ -25,6 +25,12 @@ class KlineChart {
     this._zoomTarget = this.barsShown; // 连续缩放时的目标根数（避免动画中反复重算基准）
     // 均线：5/10/20/30/60/120/250，可在弹窗里逐条开关（年K 不画均线）
     this.maEnabled = new Set([5, 10, 20, 30, 60, 120, 250]);
+    // 触屏状态：双指缩放 / 单指拖动 / 双击回最新 / 单击看明细
+    this._pinch = null;
+    this._lastTap = null;
+    this._touchStart = null;
+    this._touchMoved = false;
+    this._coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
     this._bind();
     this._ro = new ResizeObserver(() => this.render());
     this._ro.observe(root);
@@ -154,16 +160,93 @@ class KlineChart {
       this.render();
     });
 
-    // —— 触屏：canvas 上按下/移动/松开（touchmove 阻止页面滚动）——
+    // —— 触屏：单指平移 / 双指缩放 / 双击回最新 / 单击看明细 ——
+    const tdist = (a, b) => Math.max(1, Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY));
+    const pinchAnchorOf = (e) => {
+      const r = cvs.getBoundingClientRect();
+      const mid = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
+      const plotW = (this._w - this._pad.l - this._pad.r) || 1;
+      return Math.max(0, Math.min(1, (mid - this._pad.l) / plotW));
+    };
+    const startPinch = (e) => {
+      this.dragging = false;
+      this.hover = -1;
+      this._lastTap = null;
+      this._touchStart = null;
+      this._pinch = {
+        dist: tdist(e.touches[0], e.touches[1]),
+        shown: this._barsShown(),
+        anchor: pinchAnchorOf(e),
+      };
+      if (e.cancelable) e.preventDefault();
+    };
+
     cvs.addEventListener('touchstart', (e) => {
+      this._coarse = true;   // 混合设备（触摸本 + 鼠标）以「真实用过触摸」为准
+      if (e.touches.length >= 2) { startPinch(e); return; }
+      this._pinch = null;
+      this._touchMoved = false;
+      this._touchStart = {
+        x: e.touches[0].clientX, y: e.touches[0].clientY, t: performance.now(),
+      };
       if (startDrag(e.touches[0].clientX) && e.cancelable) e.preventDefault();
     }, { passive: false });
+
     cvs.addEventListener('touchmove', (e) => {
-      if (!this.dragging) return;
-      moveDrag(e.touches[0].clientX);
+      if (e.touches.length >= 2) {
+        if (!this._pinch) startPinch(e);
+        // 双指捏合：两指距离变大 = 放大（显示的根数变少），锚点固定在双指中点
+        const d = tdist(e.touches[0], e.touches[1]);
+        this.zoomTo(this._pinch.shown * (this._pinch.dist / d), this._pinch.anchor, false);
+        if (e.cancelable) e.preventDefault();
+        return;
+      }
+      if (this._touchStart) {
+        const dx = e.touches[0].clientX - this._touchStart.x;
+        const dy = e.touches[0].clientY - this._touchStart.y;
+        if (Math.abs(dx) > 10 || Math.abs(dy) > 10) this._touchMoved = true;
+      }
+      if (this.dragging) moveDrag(e.touches[0].clientX);
       if (e.cancelable) e.preventDefault();
     }, { passive: false });
-    cvs.addEventListener('touchend', endDrag);
+
+    cvs.addEventListener('touchend', (e) => {
+      if (this._pinch) {
+        if (e.touches.length >= 2) return;
+        this._pinch = null;
+        this.dragging = false;
+        this._touchStart = null;
+        this.render();
+        return;
+      }
+      endDrag();
+      const t = e.changedTouches && e.changedTouches[0];
+      if (!t) { this._touchStart = null; return; }
+      const now = performance.now();
+      if (!this._touchMoved && this._touchStart && now - this._touchStart.t < 300) {
+        const prev = this._lastTap;
+        if (prev && now - prev.t < 320 && Math.abs(t.clientX - prev.x) < 32) {
+          // 双击：回到最新（触屏上 dblclick 不可靠，自己判）
+          this.offset = 0;
+          this.hover = -1;
+          this._lastTap = null;
+          this.render();
+        } else {
+          this._lastTap = { t: now, x: t.clientX };
+          // 单击：把十字光标/明细浮窗钉在点击的那根上（触屏没有 hover）
+          this.showPointAt(t.clientX, t.clientY);
+        }
+      } else {
+        this._lastTap = null;
+      }
+      this._touchStart = null;
+    });
+
+    cvs.addEventListener('touchcancel', () => {
+      this._pinch = null;
+      this.dragging = false;
+      this._touchStart = null;
+    });
 
     // 滚轮缩放：上滚放大、下滚缩小；以光标位置为锚点平滑过渡。
     // Ctrl+滚轮同为缩放，并阻止浏览器整页缩放（Ctrl+滚轮默认会缩放整个页面）
@@ -249,6 +332,20 @@ class KlineChart {
     const next = Math.max(0, Math.min(this._maxOffset(), this.offset + delta));
     if (next === this.offset) return;
     this.offset = next;
+    this.render();
+  }
+
+  showPointAt(clientX, clientY) {
+    if (!this.bars.length) return;
+    const r = this.canvas.getBoundingClientRect();
+    const x = clientX - r.left;
+    const n = this._barsShown();
+    const plotW = this._w - this._pad.l - this._pad.r;
+    const bw = plotW / n;
+    const i = Math.floor((x - this._pad.l) / bw);
+    if (i < 0 || i >= n) return;
+    this.hover = i;
+    this.mouse = { x, y: clientY - r.top };
     this.render();
   }
 
@@ -390,18 +487,22 @@ class KlineChart {
       lx += ctx.measureText(txt).width + 10;
     });
 
-    // 回看提示（拖动/滚轮查看历史时显示）
+    // 回看提示：触屏没有滚轮 / Ctrl，文案换成手势；字号也略大一点便于拇指屏阅读
     ctx.textAlign = 'left';
-    ctx.font = '11px system-ui';
+    ctx.font = (this._coarse ? '12px' : '11px') + ' system-ui';
     const canPan = this._maxOffset() > 0;
+    const touch = this._coarse;
     ctx.fillStyle = this.offset > 0 ? '#8b5a2b' : '#b9b3a4';
-    ctx.fillText(
-      this.offset > 0
-        ? `← 已回看 ${this.offset} 根 · 双击回到最新`
-        : (canPan ? `共 ${this.bars.length} 根 · 拖动/←→ 平移 · 滚轮或 Ctrl+± 缩放`
-                  : `共 ${this.bars.length} 根 · 已全部显示`),
-      pad.l + 4, pad.t + 22
-    );
+    const hint = this.offset > 0
+      ? (touch
+          ? `← 回看 ${this.offset} 根 · 双击回最新 · 双指缩放`
+          : `← 已回看 ${this.offset} 根 · 双击回到最新`)
+      : (canPan
+          ? (touch
+              ? `共 ${this.bars.length} 根 · 单指拖动 · 双指缩放`
+              : `共 ${this.bars.length} 根 · 拖动/←→ 平移 · 滚轮或 Ctrl+± 缩放`)
+          : `共 ${this.bars.length} 根 · 已全部显示`);
+    ctx.fillText(hint, pad.l + 4, pad.t + 22);
 
     // 光标：可拖动时显示抓手，提示"这里能拖"
     cvs.style.cursor = this.dragging ? 'grabbing' : (canPan ? 'grab' : 'crosshair');
