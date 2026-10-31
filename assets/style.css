@@ -464,3 +464,17 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
   }
   .rd-title { font-size: 1.1rem; }
 }
+
+/* 横屏 / 矮窗口（手机横屏、小笔电）：浮层内容容易超高 ⇒ 允许滚动并压缩画布。
+   ⚠ 必须放在 K 线/阅读器的**基础规则之后**，否则同优先级下会被 height:440px 覆盖。 */
+@media (max-height: 560px) {
+  .kline-modal, .reader-modal { padding: 0.6rem; }
+  .km-box, .rd-box { max-height: 96vh; overflow-y: auto; }
+  .km-canvas { height: 200px; }
+  .km-periods, .km-ma {
+    flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .km-periods::-webkit-scrollbar, .km-ma::-webkit-scrollbar { display: none; }
+  .pchip, .mchip { flex: 0 0 auto; }
+}
