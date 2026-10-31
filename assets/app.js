@@ -34,8 +34,10 @@
     );
 
   async function jget(name, cache) {
-    // ⚠ 检索索引（几 MB）用默认缓存：Pages 的 cache-control 是 max-age=600，
-    //   10 分钟内刷新页面可以直接复用浏览器缓存，不用再拉一次几 MB。
+    // 缓存策略按「新鲜度 vs 重复下载」逐项决定（见各调用点）：
+    //   no-store（默认）：latest / quotes / 今天的归档天 —— 首屏与 15s 轮询必须拿最新；
+    //   default：search / index / _last-run / 历史归档天 —— 交给 Pages 的 max-age=600，
+    //            刷新页面或重开某天时省掉一次 0.7~16s 的 TTFB。
     const r = await fetch(`${DATA}/${name}`, { cache: cache || 'no-store' });
     if (!r.ok) throw new Error(`${name} HTTP ${r.status}`);
     return r.json();
@@ -321,8 +323,27 @@
 
   // 搜索结果来自 search.json —— 只有 title + summary，**没有正文**；
   // 完整正文存在按天的归档文件里（content 最多 4000 字）。
-  // 所以打开一条没有正文的条目时，按日期去 data/archive/YYYY-MM-DD.json 取全文（带缓存）。
+  // 所以打开一条没有正文的条目时，按日期去 data/archive/YYYY-MM-DD.json 取全文。
+  //
+  // 归档页打开某天也用同一个缓存：一天约 800 条 / ~1MB，切走再点不用重下。
+  // 最多留 3 天（防内存膨胀）；今天的文件还在增长，5 分钟后失效重取。
+  const DAY_CACHE_MAX = 3;
+  const DAY_FRESH_MS = 5 * 60 * 1000;
   const dayCache = new Map();
+  const beijingDay = (d = new Date()) =>
+    new Date(d.getTime() + 8 * 3600 * 1000).toISOString().slice(0, 10);
+
+  async function getDay(day) {
+    const today = day === beijingDay();
+    const hit = dayCache.get(day);
+    if (hit && (!today || Date.now() - hit.at < DAY_FRESH_MS)) return hit.data;
+    // 历史天不会变 → 交给 Pages 的 max-age=600；今天还在增长 → 必须拿最新
+    const data = await jget(`archive/${day}.json`, today ? 'no-store' : 'default');
+    if (hit) dayCache.delete(day);        // 重新插入到队尾（LRU）
+    dayCache.set(day, { at: Date.now(), data });
+    if (dayCache.size > DAY_CACHE_MAX) dayCache.delete(dayCache.keys().next().value);
+    return data;
+  }
 
   async function fetchFullItem(it) {
     if (!it) return it;
@@ -330,13 +351,8 @@
     const day = String(it.time || '').slice(0, 10);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return it;
     try {
-      let items = dayCache.get(day);
-      if (!items) {
-        const d = await jget(`archive/${day}.json`);
-        items = d.items || [];
-        dayCache.set(day, items);
-      }
-      const full = items.find((x) => x.id === it.id);
+      const d = await getDay(day);
+      const full = (d.items || []).find((x) => x.id === it.id);
       return full || it;
     } catch (e) {
       return it;
@@ -580,7 +596,7 @@
   function loadIndex() {
     if (S.archive) return Promise.resolve(S.archive);
     if (!indexPromise) {
-      indexPromise = jget('index.json')
+      indexPromise = jget('index.json', 'default')
         .then((d) => { S.archive = d; return d; })
         .catch((e) => { indexPromise = null; throw e; });
     }
@@ -607,13 +623,14 @@
     }
   }
 
+  // 打开过的「天」放内存（见 getDay）：切走再点不用重下。
   async function openDay(day) {
     closeReader();
     showView('feed');
     const box = $('#feed');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
     try {
-      const d = await jget(`archive/${day}.json`);
+      const d = await getDay(day);
       S.items = d.items;
       S.filter = 'all';
       S.q = '';
@@ -636,7 +653,7 @@
   let runMeta = null;
   async function loadRunMeta() {
     if (!runMeta) {
-      const [last, idx] = await Promise.all([jget('_last-run.json'), loadIndex()]);
+      const [last, idx] = await Promise.all([jget('_last-run.json', 'default'), loadIndex()]);
       let total = 0;
       (idx.days || []).forEach((d) => { total += d.count || 0; });
       runMeta = { last: last || {}, total, days: (idx.days || []).length };
