@@ -110,6 +110,8 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 每次门禁还会先跑 `scripts/backfill-macro.mjs --days 14`：补最近 14 天缺失的日记录
 （两融/10Y 美债按目标日期取，1Y 国债补当日 K 线，社融/CPI/PMI 取最近一条月度值）；
 没有缺口时只读一次文件，不发请求。
+**日频源**：两融 / 10Y 美债优先走东方财富数据中心（GitHub Actions 可达）；
+上交所+深交所 / FRED 仅作回退（Actions 实测不可达）。1Y 国债仍走中债。
 **不再读写 `quotes.json`**（行情已全部并入链路 ①，避免用旧值覆盖高频结果）。
 
 ### 2.5 链路 ⑤：本机回退与同步

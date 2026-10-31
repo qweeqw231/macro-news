@@ -14,6 +14,9 @@ const UA =
 
 const TIMEOUT_MS = 20000;
 
+// 东方财富数据中心：GitHub Actions 可达（SSE/FRED 在 Actions 上实测不可达）
+const EM_DATACENTER = 'https://datacenter.eastmoney.com/securities/api/data/v1/get';
+
 /** 带超时的请求；可选重试。gbk=true 时按 GBK 解码（腾讯行情返回 GBK）。 */
 async function get(url, { json = false, headers = {}, timeout = TIMEOUT_MS, retries = 0, gbk = false } = {}) {
   let lastErr;
@@ -662,8 +665,34 @@ function estimateSgeAu9999(quotes, prevQuotes) {
 // 规格书 §8 把这一组放在「第二阶段（按月）」，但 §0 的说明又要求每天写入。
 // 这里按「能取到就取，取不到就跳过该条」实现，不因单项缺失而整轮失败。
 
-/** 两融余额：沪深两市融资余额合计（亿元）。day 省略时取最新交易日。 */
-export async function fetchMargin(day) {
+/** 两融余额（亿元）：东方财富「三市两融」优先；失败回退上交所+深交所。 */
+async function fetchMarginEastmoney(day) {
+  const j = await get(
+    `${EM_DATACENTER}?reportName=RPT_MARGIN_DATASTATISTICS` +
+      '&columns=TRADE_DATE,MARGIN_BALANCE,FIN_BALANCE' +
+      '&sortColumns=TRADE_DATE&sortTypes=-1&pageNumber=1&pageSize=60&source=WEB&client=WEB',
+    { json: true, headers: { Referer: 'https://data.eastmoney.com/' }, retries: 1 }
+  );
+  const rows = j?.result?.data || [];
+  // 两融数据有滞后（10-30 当天可能只有 10-29 的行）：取「目标日或之前最近」的一行
+  const row = day
+    ? rows.find((r) => String(r?.TRADE_DATE || '').slice(0, 10) <= day)
+    : rows[0];
+  if (!row) throw new Error(`东方财富两融数据缺失${day ? `（${day}）` : ''}`);
+  const v = num(row.MARGIN_BALANCE);
+  if (v === null) throw new Error('东方财富两融余额缺失');
+  return {
+    key: 'margin',
+    name: '两融余额',
+    value: Number((v / 1e8).toFixed(2)),
+    unit: '亿元',
+    source: '东方财富（三市两融）',
+    note: String(row.TRADE_DATE || '').slice(0, 10),
+  };
+}
+
+/** 回退源：沪深两市融资余额合计（亿元）。day 省略时取最新交易日。 */
+async function fetchMarginSSE(day) {
   // 上交所返回最近 N 个交易日（tradeDate 参数实测被忽略），按 opDate 挑目标日
   const sse = await get(
     'https://query.sse.com.cn/marketdata/tradedata/queryMargin.do' +
@@ -701,8 +730,45 @@ export async function fetchMargin(day) {
   };
 }
 
-/** 10Y 美债收益率（%）：FRED DGS10。day 省略时取最近值；指定时取该日或之前最近的有效值。 */
-export async function fetchUs10y(day) {
+export async function fetchMargin(day) {
+  try {
+    return await fetchMarginEastmoney(day);
+  } catch (e) {
+    try {
+      return await fetchMarginSSE(day);
+    } catch (e2) {
+      throw new Error(`两融失败：东财 ${e.message}；沪深 ${e2.message}`);
+    }
+  }
+}
+
+/** 10Y 美债收益率（%）：东方财富中美国债收益率优先；失败回退 FRED。 */
+async function fetchUs10yEastmoney(day) {
+  const target = day || ymd(new Date());
+  const j = await get(
+    `${EM_DATACENTER}?reportName=RPTA_WEB_TREASURYYIELD` +
+      '&columns=SOLAR_DATE,EMG00001310&sortColumns=SOLAR_DATE&sortTypes=-1' +
+      '&token=894050c76af8597a853f5b408b759f5d&pageNumber=1&pageSize=60&source=WEB&client=WEB',
+    { json: true, headers: { Referer: 'https://data.eastmoney.com/' }, retries: 1 }
+  );
+  const rows = j?.result?.data || [];
+  // 按日期倒序：第一个 <= 目标日的就是「目标日或之前最近的有效值」
+  const row = rows.find((r) => String(r?.SOLAR_DATE || '').slice(0, 10) <= target);
+  if (!row) throw new Error(`东方财富美债数据缺失（${target}）`);
+  const v = num(row.EMG00001310);
+  if (v === null) throw new Error('东方财富 10Y 美债缺失');
+  return {
+    key: 'us10y',
+    name: '10Y美债',
+    value: v,
+    unit: '%',
+    source: '东方财富（中美国债收益率）',
+    note: String(row.SOLAR_DATE || '').slice(0, 10),
+  };
+}
+
+/** 回退源：FRED DGS10。day 省略时取最近值；指定时取该日或之前最近的有效值。 */
+async function fetchUs10yFRED(day) {
   const end = day || ymd(new Date());
   const endMs = Date.parse(end + 'T00:00:00Z');
   const start = new Date(endMs - 10 * 86400000).toISOString().slice(0, 10);
@@ -719,6 +785,18 @@ export async function fetchUs10y(day) {
     }
   }
   throw new Error('FRED DGS10 无有效值');
+}
+
+export async function fetchUs10y(day) {
+  try {
+    return await fetchUs10yEastmoney(day);
+  } catch (e) {
+    try {
+      return await fetchUs10yFRED(day);
+    } catch (e2) {
+      throw new Error(`美债失败：东财 ${e.message}；FRED ${e2.message}`);
+    }
+  }
 }
 
 /** 社会融资规模增量（亿元）：人民银行「社会融资规模增量统计表」 */

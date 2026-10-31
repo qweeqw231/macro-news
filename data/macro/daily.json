@@ -5,17 +5,18 @@
       {
         "key": "margin",
         "name": "两融余额",
-        "value": 23491.52,
+        "value": 23849.61,
         "unit": "亿元",
-        "source": "上交所+深交所"
+        "source": "东方财富（三市两融）",
+        "note": "2026-10-29"
       },
       {
         "key": "us10y",
         "name": "10Y美债",
-        "value": 5.05,
+        "value": 4.94,
         "unit": "%",
-        "source": "FRED",
-        "note": "2026-10-28"
+        "source": "东方财富（中美国债收益率）",
+        "note": "2026-10-30"
       },
       {
         "key": "social_financing",
@@ -49,17 +50,18 @@
       {
         "key": "margin",
         "name": "两融余额",
-        "value": 23752.6,
+        "value": 23849.61,
         "unit": "亿元",
-        "source": "上交所+深交所"
+        "source": "东方财富（三市两融）",
+        "note": "2026-10-29"
       },
       {
         "key": "us10y",
         "name": "10Y美债",
-        "value": 4.99,
+        "value": 4.98,
         "unit": "%",
-        "source": "FRED",
-        "note": "2026-10-27"
+        "source": "东方财富（中美国债收益率）",
+        "note": "2026-10-29"
       },
       {
         "key": "social_financing",

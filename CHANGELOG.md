@@ -6,6 +6,18 @@
 
 ### 待发布
 
+## [2.0.9] - 2026-10-31
+
+### 变更
+
+- **宏观日频源迁移**（GitHub Actions 实测：上交所 `fetch failed`、FRED 20 秒超时）：
+  - 两融余额 → 东方财富 `RPT_MARGIN_DATASTATISTICS`（三市两融，`MARGIN_BALANCE`）；
+  - 10Y 美债 → 东方财富 `RPTA_WEB_TREASURYYIELD`（`EMG00001310`，数值与 FRED 一致）；
+  - 上交所+深交所 / FRED 保留为回退；1Y 国债仍走中债。
+- `backfill-macro.mjs --refresh`：换源/修口径时对已有记录重取日频，保留原有月度项。
+- 注意：两融口径由「沪深融资余额」改为「三市两融余额」，数值会比旧记录略高；
+  10-29 / 10-30 两条历史记录已用 `--refresh` 重取。
+
 ## [2.0.8] - 2026-10-31
 
 ### 新增

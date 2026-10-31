@@ -12,6 +12,7 @@
 //   node scripts/backfill-macro.mjs --days 14
 //   node scripts/backfill-macro.mjs --from 2026-10-26 --to 2026-10-30
 //   node scripts/backfill-macro.mjs --dry-run           # 只抓不写
+//   node scripts/backfill-macro.mjs --refresh           # 已有记录也重取日频（换源/修口径时用）
 //   node scripts/backfill-macro.mjs --quiet             # 只打总结（云端门禁用）
 
 import fs from 'node:fs';
@@ -28,6 +29,7 @@ const CGB_1W = path.join(ROOT, 'data', 'kline', 'cgb_1y_1w.json');
 const CGB_1M = path.join(ROOT, 'data', 'kline', 'cgb_1y_1M.json');
 
 const DRY = process.argv.includes('--dry-run');
+const REFRESH = process.argv.includes('--refresh');
 const QUIET = process.argv.includes('--quiet');
 const arg = (name, dflt) => {
   const i = process.argv.indexOf('--' + name);
@@ -105,7 +107,7 @@ async function main() {
       continue;
     }
     const existing = list.find((x) => x && x.date === day);
-    if (existing && hasDailyItems(existing)) {
+    if (existing && hasDailyItems(existing) && !REFRESH) {
       skipped++;
       detail(`${day}：两融/美债都在，跳过`);
       continue;
