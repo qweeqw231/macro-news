@@ -435,7 +435,7 @@ export function getQuoteError() { return quoteError; }
  *   放进这里之后，卡片与 K 线同源（东财 100.NDX100）、同频（15 分钟）。
  *
  * ⚠ 走**批量**端点（东财 ulist.np），不是逐只 stock/get：
- *   · 批量一次拿完 50 个标的，请求数从 50 降到 1；
+ *   · 批量一次拿完 51 个标的，请求数从 51 降到 1；
  *   · 东财的限流是**按接口**的 —— 实测打密之后 stock/get 与 kline 端点会被
  *     socket 级拒绝，而 ulist 仍然正常，所以批量端点同时也是更抗限流的选择。
  *   · 详见 src/quotes.mjs 的口径说明（含「ulist 对 ETF 也有效」这条更正）。
