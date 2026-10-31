@@ -1,66 +1,66 @@
 {
-  "startedAt": "2026-10-31T09:07:34.330Z",
-  "durationMs": 27558,
+  "startedAt": "2026-10-31T09:54:12.582Z",
+  "durationMs": 9803,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 8117
+      "ms": 1502
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1251
+      "ms": 204
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1266
+      "ms": 288
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 3201
+      "ms": 210
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 2270
+      "ms": 198
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1697
+      "ms": 674
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 2290
+      "ms": 714
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 23592
+      "ms": 4223
     }
   ],
-  "quotes": 54,
-  "added": 11,
+  "quotes": 48,
+  "added": 37,
   "at": "2026-10-30T19:28:29+08:00",
   "ok": [
     "ndx",
@@ -81,5 +81,6 @@
   ],
   "macroFail": {},
   "portfolioQuotes": 7,
-  "portfolioDurationMs": 2218
+  "portfolioDurationMs": 2218,
+  "quoteError": "6/51 失败：东财批量失败：fetch failed"
 }
