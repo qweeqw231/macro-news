@@ -53,9 +53,9 @@
 |---|---|---|---|---|
 | ① | **新闻 + 行情** | GitHub Actions `collect.yml`（Cloudflare Worker 外部触发） | 15 分钟 | `data/archive/`、`latest.json`、`search.json`、`quotes.json` |
 | ② | **K 线** | Actions `kline-full.yml` / `kline-minute.yml` | 全量每天 12:23；最后一根每小时 | `data/kline/` |
-| ③ | **时点快照** | Actions `snapshot.yml` 兜底 + 本机 minimax 12:05 / 16:30 | 30 分钟 / 交易日两档 | `data/snapshots/` |
-| ④ | **宏观指标** | 本机 minimax 16:30 | 每个交易日 | `data/macro/daily.json`、`kline/cgb_1y*` |
-| ⑤ | **本机回退 / 同步** | Windows 计划任务 + minimax 每 4 小时 | 120 分钟 / 4 小时 | 本地 `data/`（回退采集、拉回远端） |
+| ③ | **时点快照** | Actions `snapshot.yml`（Worker 每 30 分钟触发，回补 5 天） | 30 分钟 | `data/snapshots/` |
+| ④ | **宏观指标** | Actions `snapshot.yml`（17:00 后幂等补当天） | 每个交易日 | `data/macro/daily.json`、`kline/cgb_1y*` |
+| ⑤ | **本机回退 / 同步** | Windows 计划任务 `MacroNews-Collect` / `MacroNews-Pull` | 120 分钟 / 4 小时 | 本地 `data/`（回退采集、拉回远端） |
 
 ```
                       ┌──────────────── 链路 ① 每 15 分钟 ───────────────┐
@@ -66,12 +66,9 @@ Cloudflare Worker ──> │ collect.yml → collect.mjs                       
                       │ kline-full.yml   每天 12:23 全量日/周/月K          │
                       │ kline-minute.yml 每小时分钟K + 当前时段最后一根日K │──> commit/push
                       └──────────────────────────────────────────────────┘
-                      ┌──────────────── 链路 ③ 快照 ─────────────────────┐
-GitHub Actions ──────>│ snapshot.yml（兜底 + 回补 5 天）                  │
-本机 minimax 12:05 ──>│ snapshot.mjs --auto（上午盘 / 收盘）              │──> commit/push
-                      └──────────────────────────────────────────────────┘
-                      ┌──────────────── 链路 ④ 宏观 ─────────────────────┐
-本机 minimax 16:30 ──>│ portfolio-collect.mjs（5 指标 + 1Y国债日K）       │──> commit/push
+                      ┌──────────── 链路 ③ 快照 + ④ 宏观 ───────────────┐
+GitHub Actions ──────>│ snapshot.yml（快照兜底 + 回补 5 天）              │
+Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补当天）  │──> commit/push
                       └──────────────────────────────────────────────────┘
 ```
 
@@ -96,24 +93,28 @@ GitHub Actions ──────>│ snapshot.yml（兜底 + 回补 5 天）   
   - `scripts/update-kline-last.mjs`：只 upsert **当前处于交易时段**品种的最后一根日 K
     （上海金夜盘这类「未来蜡烛」要随采集动态更新，每天一次不够）
 
-### 2.3 链路 ③：时点快照（12:05 / 16:30）
+### 2.3 链路 ③：时点快照（云端 30 分钟兜底）
 
-- **本机**：12:05 上午盘、16:30 收盘（`scripts/snapshot-collect-and-push.ps1`）。
-- **云端兜底**：`snapshot.yml` 每 30 分钟，缺哪天的 am/pm 就补哪天，并回补最近 5 天。
+- **云端**：`snapshot.yml` 由 Worker 每 30 分钟触发，缺哪天的 am/pm 就补哪天，并回补最近 5 天。
+- **不再有本机准点任务**：2026-10-31 起 minimax 的 12:05 / 16:30 快照任务已下线。
+  时点价一律取 K 线，晚采不影响数值（`capturedAt` 会晚，`asOf` 与价格不变）。
 - **不可覆盖**：`data/snapshots/YYYY-MM-DD_am|pm.json` 一个时点一个文件，只写一次。
 - **取价**：一律走 K 线（历史数据可回溯），规则见 §3.2。
 
-### 2.4 链路 ④：宏观（16:30）
+### 2.4 链路 ④：宏观（17:00 后，云端）
 
 `node src/portfolio-collect.mjs` → 5 个宏观指标 + 1Y 国债日 K。
-**不再读写 `quotes.json`**（行情已全部并入链路 ①，避免每天 16:30 用旧值覆盖高频结果）。
+挂在 `snapshot.yml` 里：`scripts/collect-macro-if-due.mjs` 每 30 分钟检查一次，
+只有**北京工作日 17:00 后、且当天还没有记录**时才真正采集（17:13 / 17:43 天然重试）。
+17:00 是下限：中债 1Y 曲线要 17:00 后才发布，16:30 采会把昨天的值当今天。
+**不再读写 `quotes.json`**（行情已全部并入链路 ①，避免用旧值覆盖高频结果）。
 
 ### 2.5 链路 ⑤：本机回退与同步
 
 | 任务 | 频率 | 作用 |
 |---|---|---|
 | Windows `MacroNews-Collect` | 120 分钟 | 云端正常时基本不产出；云端挂掉时接管（静默无窗口） |
-| minimax `pull-remote.ps1` | 4 小时 | `git merge --ff-only` 把远端产物拉回本机，**绝不覆盖工作区** |
+| Windows `MacroNews-Pull` | 4 小时 | `git merge --ff-only` 把远端产物拉回本机，**绝不覆盖工作区** |
 
 ---
 
@@ -241,6 +242,12 @@ node scripts/serve.mjs
 # 从远端拉最新数据（= 每 4 小时任务）
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\pull-remote.ps1
 
+# 注册 / 更新 4 小时同步任务（Windows 计划任务）
+powershell -ExecutionPolicy Bypass -File scripts\register-pull-task.ps1
+
+# 手动验证宏观源（--force 忽略门禁，--dry-run 不写盘）
+node scripts\collect-macro-if-due.mjs --force --dry-run
+
 # 手动采集一次（新闻 + 行情，通常由 Actions 跑）
 node src/collect.mjs
 
@@ -304,14 +311,16 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 
 ### 6.3 本机定时任务
 
-| 任务 | 计划 | 脚本 | cron_id |
+| 任务 | 计划 | 脚本 | 注册 |
 |---|---|---|---|
-| 上午盘快照 | `5 12 * * 1-5` | `scripts\snapshot-collect-and-push.ps1` | `8333a316-198e-4ca6-9a66-2e65a3c76643` |
-| 收盘快照 + 宏观 | `30 16 * * 1-5` | `scripts\portfolio-collect-and-push.ps1` | `9b31e4b6-fa07-44ce-83f4-67c8d1eb5aa2` |
-| 失败重试 | `35 16 * * 1-5` | 读 `logs\last-portfolio-status.json`，失败才补跑 | `95efe173-0c21-4250-8240-695641e49677` |
-| 远端同步 | `0 */4 * * *` | `scripts\pull-remote.ps1` | `6f7816d3-da5f-4eda-9030-476a55684b6a` |
+| 本机回退采集 | 每 120 分钟 | `scripts\collect-and-push.ps1` | `scripts\register-task.ps1` |
+| 远端同步 | 每 4 小时 | `scripts\pull-remote.ps1` | `scripts\register-pull-task.ps1` |
 
-Windows 回退任务 `MacroNews-Collect` 默认每 120 分钟，`wscript + run-hidden.vbs` 零窗口启动。
+`MacroNews-Collect` / `MacroNews-Pull` 均用 `wscript + run-hidden.vbs` 零窗口启动，
+`-StartWhenAvailable` 允许睡眠/关机后补跑。
+
+> minimax 的 4 个旧任务（12:05 上午快照、16:30 收盘+宏观、16:35 重试、4 小时同步）
+> 已于 2026-10-31 全部下线。若控制台里还能看到，直接停用/删除即可；本仓库不再依赖它们。
 
 ---
 
@@ -408,7 +417,7 @@ macro-news/
 │   ├── em.mjs         镜像 / 限速 / 退避 / 熔断 / 缓存
 │   ├── snapshot.mjs   时点快照（am/pm，含 §3.1 收盘时刻表）
 │   ├── portfolio.mjs  7 个组合行情 + 5 个宏观指标
-│   └── portfolio-collect.mjs  宏观 + 1Y国债日K（每日 16:30）
+│   └── portfolio-collect.mjs  宏观 + 1Y国债日K（每工作日 17:00 后，云端）
 ├── scripts/           serve · push-data.sh · update-kline-{full,minute,last} · 各 PowerShell 任务
 └── worker/gh-cron/    Cloudflare 外部触发器（窄职责，仅 dispatch）
 ```
@@ -420,4 +429,7 @@ macro-news/
   实测 `workers.dev` 被 DNS 污染、国内不可达；且东财接口本身带 CORS，代理不再需要。
   `worker/` 目录仅保留用于海外或绑定自定义域名。
 - **串行 K 线 fallback**：已被三源并发赛马取代。
-- **16:30 组合行情链路**：已被并入 15 分钟链路；16:30 任务只剩宏观 + 1Y 国债日 K。
+- **16:30 组合行情链路**：已被并入 15 分钟链路；宏观改到云端 **17:00 后**（2026-10-31）。
+- **minimax 定时任务**：曾承担 12:05 / 16:30 快照、16:30 宏观、4 小时同步；
+  配额不可控且实测并不总准点（10-30 的宏观 19:28 才跑）。2026-10-31 起全部下线，
+  快照/宏观改由 `snapshot.yml` 兜底，远端同步改 Windows 计划任务。

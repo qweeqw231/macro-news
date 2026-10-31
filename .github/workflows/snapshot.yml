@@ -1,13 +1,13 @@
-name: 时点快照兜底
+name: 时点快照 + 宏观兜底
 
 # 云端兜底链路：设备断网 / 本机任务没跑 / 定时任务被暂停时，由 GitHub 补上
-# 「当天上午盘收盘价」与「当天收盘价」两份时点快照。
+# 「当天上午盘收盘价」「当天收盘价」两份时点快照，以及当天缺失的宏观指标。
 #
 # 为什么值得单独跑一个 workflow：
-#   · 它在 GitHub 服务器上执行，不依赖你的设备开机、联网、不依赖 minimax Code 常驻；
+#   · 它在 GitHub 服务器上执行，不依赖你的设备开机、联网（2026-10-31 起不再依赖 minimax）；
 #   · 时点价取自**历史 K 线**（5 分钟 K / 日 K），所以哪怕晚上 8 点才跑，
 #     也能补出当天 11:30 与 15:00 的真实价格 —— 「迟到」不影响数值的正确性；
-#   · 本机链路（minimax 定时任务）是「准点」，云端链路是「不丢」，两者互补。
+#   · 宏观指标也挂在这里：17:00 后（中债 1Y 曲线已发布）幂等补当天，不需要额外 cron。
 #
 # ⚠ 关于触发频率：GitHub 官方的定时任务在高峰期常延迟数分钟到数十分钟，
 #   声明的 */30 只是下限，不是保证。实测本仓库的 workflow 常出现 3~7 小时才跑一次
@@ -29,6 +29,16 @@ on:
         description: '回补最近 N 个自然日里缺失的快照'
         required: false
         default: '5'
+      macro_now:
+        description: '立即采集宏观（忽略 17:00 / 周末门禁，用于验证）'
+        required: false
+        type: boolean
+        default: false
+      macro_dry_run:
+        description: '宏观只采不写（配合 macro_now 验证云端源可达性）'
+        required: false
+        type: boolean
+        default: false
   # 与另外三个 workflow 保持一致：改本文件 / 取数脚本就立刻跑一次。
   # ⚠ 路径过滤刻意不含 data/（本 workflow 自己提交 data/snapshots，否则会自触发循环）
   push:
@@ -37,6 +47,10 @@ on:
       - '.github/workflows/snapshot.yml'
       - 'src/snapshot.mjs'
       - 'src/quotes.mjs'
+      - 'src/portfolio.mjs'
+      - 'src/portfolio-collect.mjs'
+      - 'src/aggregate.mjs'
+      - 'scripts/collect-macro-if-due.mjs'
 
 permissions:
   contents: write
@@ -68,15 +82,33 @@ jobs:
       - name: 补齐缺失的时点快照
         run: node src/snapshot.mjs --backfill ${{ github.event.inputs.backfill || '5' }}
 
+      # 宏观指标：与快照共用同一条云端触发；门禁在脚本里
+      # （周末 / 未到 17:00 / 当天已有记录 → 直接跳过，不产生请求）
+      - name: 宏观指标（17:00 后补当天，幂等）
+        if: always()
+        env:
+          MACRO_FORCE: ${{ github.event.inputs.macro_now == 'true' && '--force' || '' }}
+          MACRO_DRY: ${{ github.event.inputs.macro_dry_run == 'true' && '--dry-run' || '' }}
+        run: node scripts/collect-macro-if-due.mjs $MACRO_FORCE $MACRO_DRY
+
+      # portfolio-collect 会顺带写 data/_last-run.json；15 分钟采集也在写同一个文件，
+      # 不提交它，避免两条链路在同一文件上反复 rebase 冲突（宏观状态不进仓库，不影响站点）。
+      - name: 丢弃运行日志改动
+        if: always()
+        run: git checkout -- data/_last-run.json
+
       - name: 提交并推送（仅在数据有变化时）
+        if: always()
         # ⚠ 必须整行加引号：plain scalar 里的 `: ` 会让 YAML 解析失败
-        run: 'bash scripts/push-data.sh data/snapshots MSG_PREFIX="data: 时点快照兜底"'
+        run: 'bash scripts/push-data.sh data/snapshots data/macro data/kline/cgb_1y.json data/kline/cgb_1y_1w.json data/kline/cgb_1y_1M.json MSG_PREFIX="data: 时点快照 + 宏观兜底"'
 
       - name: 上报本轮统计
         if: always()
         run: |
           {
-            echo "### 快照兜底 · $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo "### 快照 + 宏观兜底 · $(date -u '+%Y-%m-%d %H:%M UTC')"
             echo ""
             ls -1 data/snapshots 2>/dev/null | tail -10 || echo "（无快照目录）"
+            echo ""
+            tail -c 400 data/macro/daily.json 2>/dev/null || true
           } >> "$GITHUB_STEP_SUMMARY"
