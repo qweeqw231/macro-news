@@ -17,17 +17,9 @@
   },
   "coverage": {
     "total": 54,
-    "ok": 47,
-    "missing": 7,
-    "missingDetail": {
-      "bse50": "无该时点数据（非交易日、超出保留期或源限流）",
-      "hsi": "无该时点数据（非交易日、超出保留期或源限流）",
-      "hs_tech": "无该时点数据（非交易日、超出保留期或源限流）",
-      "n225": "无该时点数据（非交易日、超出保留期或源限流）",
-      "dax": "无该时点数据（非交易日、超出保留期或源限流）",
-      "ukx": "无该时点数据（非交易日、超出保留期或源限流）",
-      "kospi": "无该时点数据（非交易日、超出保留期或源限流）"
-    },
+    "ok": 54,
+    "missing": 0,
+    "missingDetail": {},
     "sourceFailures": {
       "dailyK": {
         "n225": "日K不可得：东财日K失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
@@ -100,6 +92,20 @@
       "priceSource": "kline5m",
       "note": ""
     },
+    "bse50": {
+      "name": "北证50",
+      "market": "CN",
+      "kind": "index",
+      "price": 916.9,
+      "prevClose": 910.08,
+      "changePct": 0.7494,
+      "open": 905.93,
+      "high": 916.9,
+      "low": 905.82,
+      "asOf": "2026-10-30T11:30:00+08:00",
+      "priceSource": "kline5m",
+      "note": ""
+    },
     "csi300": {
       "name": "沪深300",
       "market": "CN",
@@ -142,13 +148,41 @@
       "priceSource": "kline5m",
       "note": ""
     },
+    "hsi": {
+      "name": "恒生指数",
+      "market": "HK",
+      "kind": "index",
+      "price": 23335.66,
+      "prevClose": 22958.65,
+      "changePct": 1.6421,
+      "open": 23339.25,
+      "high": 23340.58,
+      "low": 23329.56,
+      "asOf": "2026-10-30T12:00:00+08:00",
+      "priceSource": "kline5m",
+      "note": ""
+    },
+    "hs_tech": {
+      "name": "恒生科技",
+      "market": "HK",
+      "kind": "index",
+      "price": 3797.6,
+      "prevClose": 3744.14,
+      "changePct": 1.4278,
+      "open": 3799.74,
+      "high": 3799.74,
+      "low": 3796.72,
+      "asOf": "2026-10-30T12:00:00+08:00",
+      "priceSource": "kline5m",
+      "note": ""
+    },
     "dji": {
       "name": "道琼斯",
       "market": "US",
       "kind": "index",
       "price": 52342.56,
-      "prevClose": 52342.56,
-      "changePct": 0,
+      "prevClose": 52475.1,
+      "changePct": -0.2526,
       "open": 52086.13,
       "high": 52405.88,
       "low": 52086.13,
@@ -161,8 +195,8 @@
       "market": "US",
       "kind": "index",
       "price": 26184.72,
-      "prevClose": 26184.72,
-      "changePct": 0,
+      "prevClose": 26549.85,
+      "changePct": -1.3753,
       "open": 26201.82,
       "high": 26286.46,
       "low": 26053.16,
@@ -175,11 +209,67 @@
       "market": "US",
       "kind": "index",
       "price": 7720.39,
-      "prevClose": 7720.39,
-      "changePct": 0,
+      "prevClose": 7743.98,
+      "changePct": -0.3046,
       "open": 7699.61,
       "high": 7732.21,
       "low": 7690.94,
+      "asOf": "2026-10-29",
+      "priceSource": "dailyK",
+      "note": "该市场无上午盘概念，取最近一个已收盘交易日（交易所当地日期）"
+    },
+    "n225": {
+      "name": "日经225",
+      "market": "JP",
+      "kind": "index",
+      "price": 64659.47,
+      "prevClose": 63954.19,
+      "changePct": 1.1028,
+      "open": 64126.25,
+      "high": 64831.29,
+      "low": 63749.2,
+      "asOf": "2026-10-29",
+      "priceSource": "dailyK",
+      "note": "该市场无上午盘概念，取最近一个已收盘交易日（交易所当地日期）"
+    },
+    "dax": {
+      "name": "德国DAX",
+      "market": "EU",
+      "kind": "index",
+      "price": 26039.68,
+      "prevClose": 25704.02,
+      "changePct": 1.3059,
+      "open": 25724.02,
+      "high": 26106.19,
+      "low": 25720.69,
+      "asOf": "2026-10-29",
+      "priceSource": "dailyK",
+      "note": "该市场无上午盘概念，取最近一个已收盘交易日（交易所当地日期）"
+    },
+    "ukx": {
+      "name": "英国富时100",
+      "market": "UK",
+      "kind": "index",
+      "price": 10722.07,
+      "prevClose": 10694.5,
+      "changePct": 0.2578,
+      "open": 10694.02,
+      "high": 10773.7,
+      "low": 10694.02,
+      "asOf": "2026-10-29",
+      "priceSource": "dailyK",
+      "note": "该市场无上午盘概念，取最近一个已收盘交易日（交易所当地日期）"
+    },
+    "kospi": {
+      "name": "韩国KOSPI",
+      "market": "KR",
+      "kind": "index",
+      "price": 5937.66,
+      "prevClose": 6012.44,
+      "changePct": -1.2438,
+      "open": 6017.22,
+      "high": 6100.11,
+      "low": 5817.92,
       "asOf": "2026-10-29",
       "priceSource": "dailyK",
       "note": "该市场无上午盘概念，取最近一个已收盘交易日（交易所当地日期）"
@@ -766,5 +856,6 @@
       "priceSource": "daily",
       "note": ""
     }
-  }
+  },
+  "note": "2026-10-31 回填：当天 12:05 采集时东财 K 线熔断，bse50/hsi/hs_tech/n225/dax/ukx/kospi 缺失，已按 5 分钟 K（CN/HK）与最近已收盘交易日日 K（日/德/英/韩，均为 10-29）补齐；dji/ixic/spx 的 prevClose 原被写成当日收盘（涨跌幅恒为 0），一并按 10-28 日 K 修正"
 }
