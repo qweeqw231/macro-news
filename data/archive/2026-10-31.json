@@ -2,6 +2,18 @@
   "day": "2026-10-31",
   "items": [
     {
+      "id": "t406l3",
+      "ts": 1793458355,
+      "time": "2026-10-31T22:52:35.000+08:00",
+      "source": "华尔街见闻",
+      "channel": "全球",
+      "title": "DeepSeek发布全新Agent架构",
+      "summary": "10月31日晚，DeepSeek Harness 团队在官方公众号发表技术文章《Super-agent 设计探索：迈向更自主的Agent 系统》。 DeepSeek表示，模型能力提升催生了新的应用形态，个人助手（Personal Agent）开始集中涌现。然而，现有主流 Agent设计还难以在多任务和团队协作的规模上支撑这一模式，多任务上限取决于人的注意力。…",
+      "content": "10月31日晚，DeepSeek Harness 团队在官方公众号发表技术文章《Super-agent 设计探索：迈向更自主的Agent 系统》。 DeepSeek表示，模型能力提升催生了新的应用形态，个人助手（Personal Agent）开始集中涌现。然而，现有主流 Agent设计还难以在多任务和团队协作的规模上支撑这一模式，多任务上限取决于人的注意力。通过双层架构、事件驱动、异步多信道交互、存算分离与外部 Watchdog等思路，DeepSeek团队突破了这些限制，系统在底层接管了繁琐的会话管理与上下文同步，使人类得以从具体的执行细节进一步上移到更高层的决策与验收。",
+      "url": "https://wallstreetcn.com/livenews/3191994",
+      "kind": "news"
+    },
+    {
       "id": "1r0xpxy",
       "ts": 1793458168,
       "time": "2026-10-31T22:49:28.000+08:00",
