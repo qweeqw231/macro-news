@@ -400,7 +400,7 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 | 组合 | 上金所官网 | 上海金 Au99.99 | 估算回退（note=estimated） |
 | 组合 | 中国货币网 `ccpr.json` | 人民币中间价 | 东财 `133.USDCNH`（离岸） |
 | 组合 | 中债 `queryGjqxInfo` | 1Y 国债收益率 | 无 |
-| 宏观 | 上交所+深交所 / FRED / 央行 / 统计局 | 两融、10Y 美债、社融、CPI、PMI | 无 |
+| 宏观 | 东方财富数据中心 / 央行 / 统计局 | 两融、10Y 美债、社融、CPI、PMI | 上交所+深交所 / FRED |
 | 新闻 | 华尔街见闻 / 东财 / 新浪 / 中新网 / 央行 / 美联储 / 欧洲央行 / 统计局 | 快讯与政策发布 | 无 |
 
 取数基础设施 `src/em.mjs`：主机镜像、90ms 全局限速、指数退避、**按主机组隔离的熔断**、磁盘缓存。
