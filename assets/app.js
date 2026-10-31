@@ -66,8 +66,10 @@
   }
   function isTrading(market, now = new Date()) {
     const wd = now.getDay();
-    if (wd === 0 || wd === 6) return false;              // 周末休市
     const h = now.getHours() + now.getMinutes() / 60;
+    if (wd === 0) return false;                          // 周日休市
+    // 有夜盘的品种：周六凌晨仍算「周五夜盘」（上海金夜盘到次日 02:30）
+    if (wd === 6 && !(market === 'SGE' && h < 2.5)) return false;
     const win = {
       CN: [9.5, 11.5, 13, 15],
       ETF: [9.5, 11.5, 13, 15],                          // 场内 ETF 与 A 股同时段
@@ -78,6 +80,8 @@
       EU: [15, 23.5],                                   // 夏令时约 15:00-23:30
       UK: [14.5, 23],
       US: [21.5, 28],                                  // 含夏令时，覆盖 21:30-次日 4:00
+      // 上海金：09:00-11:30 / 13:30-15:30 / 20:00-次日 02:30（夜盘归属下一交易日）
+      SGE: [9, 15.5, 20, 26.5],
     }[market];
     if (!win) return false;
     if (win.length === 4) {

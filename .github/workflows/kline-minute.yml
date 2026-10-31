@@ -36,6 +36,7 @@ on:
     paths:
       - '.github/workflows/kline-minute.yml'
       - 'scripts/update-kline-minute.mjs'
+      - 'scripts/update-kline-last.mjs'
       - 'src/sources.mjs'
 
 permissions:
@@ -80,6 +81,13 @@ jobs:
             cat minutes.log
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+      # 顺带刷新「当前交易时段」的最后一根日K：
+      # 上海金等有夜盘的品种会出现「未来蜡烛」，这根 bar 需要随采集动态更新，
+      # 每天 12:23 一次的 kline-full 不够。脚本只 upsert 最后一根，代价很小。
+      - name: 刷新最后一根日K
+        continue-on-error: true
+        run: node scripts/update-kline-last.mjs
 
       - name: 提交并推送（仅在数据有变化时）
         # ⚠ 必须整行加引号：plain scalar 里的 `: ` 会让 YAML 解析失败

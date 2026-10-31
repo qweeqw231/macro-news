@@ -31,11 +31,6 @@ const SINCE_HOURS = argSince > -1 ? Number(process.argv[argSince + 1]) || 24 : 2
 const pad = (n) => String(n).padStart(2, '0');
 const dayKey = (d) =>
   `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-// Actions 跑在 UTC，不能用本机时区算「今天」
-const beijingToday = () => {
-  const t = new Date(Date.now() + 8 * 3600 * 1000);
-  return `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}`;
-};
 
 async function readJSON(file, fallback) {
   if (!existsSync(file)) return fallback;
@@ -120,12 +115,7 @@ async function collectKlines(startedAt, onlyKeys) {
     const done = [];
     for (const spec of KLINE_SPEC) {
       try {
-        const raw = await fetchKline(key, spec.period, spec.limit);
-        // ⚠ 丢掉「未来日期」的 bar：上海金等有夜盘的品种，周五夜盘归属下一交易日，
-        //   东财会把收盘后仍在变化的夜盘数据标成下周一（实测 2026-11-02 的 c=833）。
-        //   在周六看就是一根「未来蜡烛」。等那一天真正到了，它会被正常重新抓取进来。
-        const today = beijingToday();
-        const bars = raw.filter((b) => String(b.t).slice(0, 10) <= today);
+        const bars = await fetchKline(key, spec.period, spec.limit);
         await writeJSONIfChanged(path.join(DATA, 'kline', `${key}${spec.suffix}.json`), {
           key,
           name: meta?.name || key,
