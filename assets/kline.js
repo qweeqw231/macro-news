@@ -34,7 +34,10 @@ class KlineChart {
   setData(bars, period) {
     cancelAnimationFrame(this._anim);
     clearTimeout(this._animEnd);
-    this.bars = bars || [];
+    // ⚠ 丢掉「未来日期」的 bar：上海金等有夜盘的品种，周五夜盘归属下一交易日，
+    //   东财会把夜盘数据标成下周一（实测 2026-11-02 的 c=833）→ 周六看就是一根未来蜡烛。
+    const today = beijingToday();
+    this.bars = (bars || []).filter((b) => String(b.t).slice(0, 10) <= today);
     if (period) this.period = period;
     this.offset = Math.max(0, Math.min(this.offset, this._maxOffset()));
     this._zoomTarget = this.barsShown;
@@ -480,6 +483,12 @@ class KlineChart {
 
 function yOfInverse(y, lo, hi, mainH) {
   return hi - ((y - 12) / mainH) * (hi - lo);
+}
+/** 北京今天的日期（YYYY-MM-DD），用于过滤「夜盘归属下一交易日」产生的未来 bar */
+function beijingToday() {
+  const t = new Date(Date.now() + 8 * 3600 * 1000);
+  const p = (n) => String(n).padStart(2, '0');
+  return `${t.getUTCFullYear()}-${p(t.getUTCMonth() + 1)}-${p(t.getUTCDate())}`;
 }
 function fmtVol(v) {
   if (!v) return '—';

@@ -551,6 +551,83 @@ export async function fetchPortfolioQuotes(prevQuotes = []) {
   return { quotes: quotes.map(markStale), ok, fail };
 }
 
+// ============================================================================
+// §3.5 高频（15 分钟）版组合行情
+// ============================================================================
+// 背景（2026-10-31）：组合行情原先只由每天 16:30 的 portfolio-collect 采一次，
+// 对美股指数 / 24 小时贵金属就意味着「收盘后要等第二天才有新值」。
+// 现在并入 Actions 的 15 分钟采集，但不是所有 key 都值得每 15 分钟抓一遍：
+//   · 正在交易（ndx 已并入指数批量；xau/xag/brent 24 小时）→ 每轮取；
+//   · 一天只发布一次（上海金 15:30 / 中间价 09:15 / 1Y国债 17:00）
+//     → 过了发布时刻且存量不是今天的，才重取。
+const DAILY_PUBLISH = { sge_au9999: '15:30', usdcny: '09:15', cgb_1y: '17:00' };
+
+/** 北京时间的 日期 / 时刻 / 星期（0=周日） */
+function beijingNowParts(d = new Date()) {
+  const t = new Date(d.getTime() + 8 * 3600 * 1000);
+  return {
+    date: `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}`,
+    hm: `${pad(t.getUTCHours())}:${pad(t.getUTCMinutes())}`,
+    wd: t.getUTCDay(),
+  };
+}
+
+function dueInFastFetch(key, prevQ, now) {
+  const publish = DAILY_PUBLISH[key];
+  if (!publish) return true;                        // 交易中的品种：每轮都取
+  if (now.wd === 0 || now.wd === 6) return false;   // 日频源周末不发布
+  if (now.hm < publish) return false;               // 还没到发布时刻
+  const d = String(prevQ?.updatedAt || '').slice(0, 10);
+  return !d || d < now.date;                        // 存量不是今天的 → 重取
+}
+
+/**
+ * 高频采集（collect.mjs 每 15 分钟调用）：只取「该取」的组合行情。
+ * 没到的 key 不返回，由调用方保留 quotes.json 里的存量值。
+ * @param {object[]} prevQuotes 上一份 quotes.json 的 quotes
+ */
+export async function fetchPortfolioQuotesFast(prevQuotes = []) {
+  const now = beijingNowParts();
+  const prev = new Map(prevQuotes.map((q) => [q.key, q]));
+  const due = PORTFOLIO_QUOTES.filter(
+    (s) => s.key !== 'ndx' && dueInFastFetch(s.key, prev.get(s.key), now)
+  );
+  const settled = await Promise.allSettled(
+    due.map(async (s) => {
+      const q = await s.run();
+      const bad = validateQuote(q);
+      if (bad) throw new Error(`${s.label}：${bad}`);
+      return q;
+    })
+  );
+  const quotes = [];
+  const ok = [];
+  const fail = {};
+  let cgbSrcDate = null;
+  settled.forEach((r, i) => {
+    const s = due[i];
+    if (r.status === 'fulfilled' && r.value) {
+      const q = { ...r.value };
+      if (q._srcDate) { cgbSrcDate = q._srcDate; delete q._srcDate; }
+      quotes.push(q);
+      ok.push(s.key);
+    } else {
+      fail[s.key] = String(r.reason?.message || r.reason).slice(0, 200);
+    }
+  });
+  const cgb = quotes.find((q) => q.key === 'cgb_1y');
+  if (cgb && cgb.prevClose === null && cgbSrcDate) {
+    try {
+      const p = await fetchPrevCgb1y(cgbSrcDate);
+      if (p !== null && p > 0) {
+        cgb.prevClose = p;
+        cgb.changePct = Number((((cgb.price - p) / p) * 100).toFixed(4));
+      }
+    } catch { /* 拿不到就留空 */ }
+  }
+  return { quotes: quotes.map(markStale), ok, fail };
+}
+
 /**
  * §3.3 的估算回退：拿不到 SGE 实时行情时，用伦敦金涨跌幅 + 汇率调整估算上海金。
  * @returns {object|null} 无法估算时返回 null

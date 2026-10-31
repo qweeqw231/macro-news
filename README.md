@@ -47,12 +47,12 @@
 | 时间 | 谁在跑 | 干什么 | 产出落到哪 |
 |---|---|---|---|
 | 每 15 分钟（**Cloudflare Worker 外部触发**） | Cloudflare `gh-cron` | 调 GitHub `workflow_dispatch`（不依赖 GitHub 排程器） | — |
-| 每 15 分钟（外部触发为主，仓库内 `schedule` 为冗余） | GitHub Actions `collect.yml` | 新闻 + 最新价（`--no-kline`，**不再刷 K 线**） | `data/archive/`、`data/latest.json`、`data/search.json`、`data/quotes.json` → 推到 GitHub |
+| 每 15 分钟（外部触发为主，仓库内 `schedule` 为冗余） | GitHub Actions `collect.yml` | 新闻 + 最新价 + **全部 7 个组合行情 key**（`--no-kline`，**不再刷 K 线**） | `data/archive/`、`data/latest.json`、`data/search.json`、`data/quotes.json` → 推到 GitHub |
 | 每 30 分钟（外部触发） | GitHub Actions `snapshot.yml` | **云端兜底**：当天 am/pm 快照缺就补；并回补最近 5 天 | `data/snapshots/` → 推到 GitHub |
 | 每 30 分钟（外部触发；UTC 04:17 附带全量） | GitHub Actions `kline-minute.yml` / `kline-full.yml` | 分钟K（5m/30m 每轮必刷，60m/15m/1m 按小时轮换） / 全量日K + 日周月K | `data/kline/` → 推到 GitHub |
 | 每 **120 分钟**（**回退渠道**，云端正常时基本不产出） | 本机 Windows 任务 `MacroNews-Collect` | 新闻 + 行情（静默无窗口） | 本地 `data/` → 推到 GitHub |
 | **12:05**（交易日） | minimax 定时任务 | **上午盘时点快照**：A股 11:30、港股 12:00 的真实收盘价 | `data/snapshots/YYYY-MM-DD_am.json` → 推到 GitHub |
-| **16:30**（交易日） | minimax 定时任务 | **收盘时点快照**（A股 15:00、港股 16:00）+ 5 组合行情 + 5 宏观指标 | `data/snapshots/YYYY-MM-DD_pm.json`、`data/quotes.json`、`data/macro/daily.json` → 推到 GitHub |
+| **16:30**（交易日） | minimax 定时任务 | **收盘时点快照**（A股 15:00、港股 16:00）+ 5 宏观指标 + 1Y国债日K | `data/snapshots/YYYY-MM-DD_pm.json`、`data/macro/daily.json`、`data/kline/cgb_1y.json` → 推到 GitHub |
 | **16:35**（交易日） | minimax 定时任务 | 只在 16:30 失败时补跑一次（读 `logs\last-portfolio-status.json` 判断） | 同上 |
 | 每 **4 小时** | minimax 定时任务 | 把云端产物**拉回本机** | 本地 `data/` |
 
@@ -520,10 +520,10 @@ GitHub Actions（定时工作流，实测每 3~6 小时一次）
 AI 只在你主动要求时介入（例如"把这周新闻和我的 6 大类资产对齐"）。
 
 
-## 第二条采集链：时点快照 + 组合行情 + 宏观（交易日 12:05 / 16:30）
+## 第二条采集链：时点快照 + 宏观（交易日 12:05 / 16:30）
 
-高频链路负责**新闻 + 18 指数 + 32 场内 ETF**；低频链路负责**时点快照**与**组合分析需要的额外数据**，
-两者共用同一个 `data/quotes.json`，因此**必须按 key 合并写**（见下方「两个任务共用同一个文件」）。
+高频链路负责**新闻 + 18 指数 + 32 场内 ETF + 7 个组合行情**；低频链路负责**时点快照**与**宏观指标**。
+2026-10-31 起 `data/quotes.json` 只由高频链路写，两条链路不再共用同一份行情文件（见下方「两个任务共用同一个文件」）。
 
 ```
 minimax 定时任务（交易日 12:05，固定对话）
@@ -537,8 +537,7 @@ minimax 定时任务（交易日 16:30，固定对话）
         ├─ node src\snapshot.mjs --auto        ← 收盘时点快照（A股 15:00 / 港股 16:00）
         │    │                                  （顺带补当天可能缺的上午盘快照）
         │    └─ data\snapshots\YYYY-MM-DD_pm.json
-        ├─ node src\portfolio-collect.mjs      ← 7 个组合行情 key + 5 个宏观指标
-        │    ├─ data\quotes.json       按 key 合并（保留其它链路的 key）
+        ├─ node src\portfolio-collect.mjs      ← 5 个宏观指标 + 1Y国债日K（行情已并入 15 分钟链路）
         │    ├─ data\macro\daily.json  按日期追加
         │    └─ data\_last-run.json    读改写（保留高频链路写的字段）
         └─ git commit（仅 data/ 有变化时）→ git push origin main
@@ -550,12 +549,21 @@ minimax 定时任务（交易日 16:30，固定对话）
 
 | 项 | 值 |
 |---|---|
-| 频率 | 周一至周五 **12:05**（上午盘快照）+ **16:30**（收盘快照 + 组合 + 宏观） |
+| 频率 | 周一至周五 **12:05**（上午盘快照）+ **16:30**（收盘快照 + 宏观 + 1Y国债日K） |
 | 超时 | 脚本内 55 秒预算（规格要求 60 秒，留 5 秒写盘） |
 | 重试 | 16:35 检查并补跑一次；快照另有云端 `snapshot.yml` 兜底 |
-| 节假日 | cron 不认中国节假日；组合行情取不到当日数据时按 `carried` 沿用上一交易日，**内容未变就不写盘**；**时点快照则直接不写文件**（非交易日没有 K 线 bar） |
+| 节假日 | cron 不认中国节假日；宏观指标取不到当日值时沿用上一交易日；**时点快照则直接不写文件**（非交易日没有 K 线 bar） |
 
-### 7 个新增行情 key
+### 7 个行情 key（2026-10-31 起全部并入 15 分钟链路）
+
+> 原先这 7 个 key 由每天 16:30 的 `portfolio-collect` 单独采集。问题是美股/伦敦金/原油
+> 在 16:30 还没开盘收盘，「最新价」永远停在上一交易日（实测 10-31 纳指100 卡片还是 10-29 的 29402.51）。
+> 现在全部走 Actions 的 15 分钟 `collect.mjs`（`fetchPortfolioQuotesFast`）：
+> - **每轮都取**：`ndx`（并入指数批量）/ `xau` / `xag` / `brent`（24 小时交易）
+> - **到发布时刻才取**：`sge_au9999`（15:30）/ `usdcny`（09:15）/ `cgb_1y`（17:00）——
+>   存量已是今天的就跳过，避免每 15 分钟抓一次一天只变一次的数据
+>
+> `portfolio-collect.mjs` 不再读写 `quotes.json`，只保留 5 个宏观指标 + 1Y国债日K。
 
 | key | 名称 | 数据源 | 备注 |
 |---|---|---|---|
@@ -579,14 +587,11 @@ minimax 定时任务（交易日 16:30，固定对话）
 
 ### 两个任务共用同一个文件
 
-高频链路（Actions，3~6 小时）与低频链路（16:30）都会写 `data/quotes.json` 和 `data/_last-run.json`。
-**整份覆盖会互相抹掉**，所以两边都改成：
+2026-10-31 起，`data/quotes.json` **只由 15 分钟链路写**（含全部 7 个组合行情 key）；
+16:30 任务不再碰它。`data/_last-run.json` 仍由两者读改写：
 
-- `quotes.json` —— 按 `key` 合并写（各自只更新自己那批 key）
-- `_last-run.json` —— 读改写（各自只更新自己的字段）
-
-否则 16:30 写进去的 5 个 key 会在下一轮高频链路运行时被整份覆盖掉。
-（已用「拿远端 HEAD 的 src+data 模拟跑一遍 Actions」验证过：跑完 54 个 key 与 portfolio 日志字段都还在。）
+- `quotes.json` —— 高频链路独占（按 `key` 合并，没到发布时刻的 key 保留存量）
+- `_last-run.json` —— 读改写（collect 写新闻/行情字段，portfolio-collect 写 `macroOk/macroFail`）
 
 > 时点快照走**独立目录** `data/snapshots/`，按日期一个文件、**只写一次不覆盖**，
 > 因此和上面两条链路天然不冲突，也不需要合并写。

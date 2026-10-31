@@ -100,8 +100,55 @@ const SESSION_TARGET = {
   am: { CN: '11:30', ETF: '11:30', HK: '12:00' },
   pm: { CN: '15:00', ETF: '15:00', HK: '16:00' },
 };
-// 没有「上午盘/收盘」固定时刻的市场（美股/日经/欧股…）：取最近一个已收盘交易日
+// 没有「上午盘/收盘」固定时刻的市场（美股/日经/欧股…）：取最近一个**已收完**的交易日
 const NO_SESSION_TARGET = new Set(['US', 'JP', 'EU', 'UK', 'KR']);
+
+// ---- 采集规格：日 K 标为「D」的那一根，在北京时间何时才算收完 ----
+// ⚠ 这是快照口径的根。am 在 12:05 采集时：
+//   · 日/韩（UTC+9）已经是下午盘 → 当天日 K 是**没收盘的半截 bar**；
+//   · 美/欧当天的 session 还没开（或刚开）→ 当天也没有可用的收盘价。
+//   ⇒ 一律不能用「不晚于 D」的最后一根，必须用「在采集时点已经收完」的最后一根。
+//   表里的 +1 表示「次日」；欧美取冬令时较晚的那个收盘时刻（保守，不会误判为已收）。
+const SNAPSHOT_CAPTURE_HM = { am: '12:05', pm: '16:02' };
+const BAR_CLOSED_AT = {
+  CN: '15:00', ETF: '15:00', HK: '16:00',
+  JP: '14:00', KR: '14:30',
+  EU: '00:30+1', UK: '00:30+1', US: '05:00+1',
+};
+
+const BJ_MS = 8 * 3600 * 1000;
+/** 北京日期+时刻 → epoch（不依赖运行机器的时区） */
+function bjStamp(date, hm, plusDays = 0) {
+  const [y, m, d] = date.split('-').map(Number);
+  const [h, mi] = hm.split(':').map(Number);
+  return Date.UTC(y, m - 1, d + plusDays, h, mi) - BJ_MS;
+}
+/** epoch → 北京日期 YYYY-MM-DD */
+function bjDate(ms) {
+  const t = new Date(ms + BJ_MS);
+  return `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}`;
+}
+/** 日 K「日期 D」这根何时收完 */
+function barClosedAt(market, date) {
+  const spec = BAR_CLOSED_AT[market] || '15:00';
+  const plus = spec.endsWith('+1');
+  return bjStamp(date, plus ? spec.slice(0, 5) : spec, plus ? 1 : 0);
+}
+/**
+ * 在某个 session 的采集时点，该市场「最后一根已经收完」的日 K 日期。
+ * @param {string} market US / JP / EU / UK / KR / CN / HK / ETF
+ * @param {string} date   快照日期 YYYY-MM-DD（北京时间）
+ * @param {'am'|'pm'} session
+ */
+function lastClosedBarDate(market, date, session) {
+  const asOf = bjStamp(date, SNAPSHOT_CAPTURE_HM[session]);
+  let d = date;
+  for (let i = 0; i < 10; i++) {
+    if (barClosedAt(market, d) <= asOf) return d;
+    d = bjDate(bjStamp(d, '00:00') - 86400000);
+  }
+  return date;
+}
 // 实时价「已冻结在目标价」的容忍窗口（分钟）
 const FREEZE_TOLERANCE_MIN = 5;
 
@@ -309,7 +356,8 @@ async function buildSnapshot(date, session) {
     let open = null, high = null, low = null, prevClose = null;
 
     if (session === 'pm') {
-      const pick = dmap ? (exact ? (dmap.has(date) ? { date, bar: dmap.get(date) } : null) : pickDaily(dmap, date)) : null;
+      const targetDate = exact ? date : lastClosedBarDate(t.market, date, 'pm');
+      const pick = dmap ? (exact ? (dmap.has(date) ? { date, bar: dmap.get(date) } : null) : pickDaily(dmap, targetDate)) : null;
       if (pick) {
         price = pick.bar.c; open = pick.bar.o; high = pick.bar.h; low = pick.bar.l;
         asOf = closeLabel(t.market, pick.date);
@@ -331,7 +379,8 @@ async function buildSnapshot(date, session) {
         const prevBar = t.market === 'HK' ? null : pickPrevBar(mmap, date, '15:00');
         prevClose = prevBar ? prevBar.bar.c : null;
       } else if (NO_SESSION_TARGET.has(t.market)) {
-        const pick = dmap ? pickDaily(dmap, date) : null;
+        // ⚠ 不能用 pickDaily(dmap, date)：12:05 时日/韩已在下午盘、当天日 K 是半截 bar
+        const pick = dmap ? pickDaily(dmap, lastClosedBarDate(t.market, date, 'am')) : null;
         if (pick) {
           price = pick.bar.c; open = pick.bar.o; high = pick.bar.h; low = pick.bar.l;
           asOf = pick.date;

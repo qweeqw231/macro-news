@@ -1,17 +1,16 @@
 // src/portfolio-collect.mjs
-// 组合行情 + 宏观指标采集（每日 16:30 Asia/Shanghai）
+// 宏观指标 + 1Y 国债日 K 采集（每日 16:30 Asia/Shanghai）
 //
-// 规格：《采集规格.md》§1/§2/§4/§5/§6
-//   · 采集 5 个新增行情 key + 5 个宏观指标
-//   · 合并写入 data/quotes.json（保留原有 17 个 key）
+// 规格：《采集规格.md》§2/§4/§5/§6
+//   · 采集 5 个宏观指标
 //   · 追加写入 data/macro/daily.json
 //   · 运行日志写入 data/_last-run.json
 //
-// 与 collect.mjs 的关系：
-//   collect.mjs         每 5 分钟跑（GitHub Actions），负责新闻 + 17 个指数行情
-//   portfolio-collect   每日跑一次，负责组合行情 + 宏观指标
-// 两者都会写 quotes.json 与 _last-run.json，因此都必须「读改写」，
-// 保留对方写入的字段，否则高频任务会把低频任务的结果覆盖掉。
+// ⚠ 2026-10-31 起：行情（ndx / xau / xag / brent / sge / usdcny / cgb_1y）
+//   全部并入 collect.mjs 的 15 分钟采集（portfolio.mjs 的 fetchPortfolioQuotesFast），
+//   本任务不再读写 data/quotes.json —— 否则每天 16:30（美股开盘前）会用旧值
+//   把高频任务刚更新的卡片覆盖回去。
+//   1Y 国债日 K 仍由本任务追加（中债曲线每天只发布一次）。
 //
 // 用法：
 //   node src/portfolio-collect.mjs            # 正常采集
@@ -21,7 +20,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { fetchPortfolioQuotes, fetchMacroIndicators } from './portfolio.mjs';
+import { fetchMacroIndicators, fetchCgbCurveOneY } from './portfolio.mjs';
 import { aggregateDaily } from './aggregate.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -92,27 +91,15 @@ async function writeJSONIfChanged(file, obj) {
 async function main() {
   console.log(`[portfolio] 开始 · 预算 ${DEADLINE_MS}ms`);
 
-  // ---- 采集：行情 + 宏观（各自独立容错）----
-  // 先读旧 quotes.json：§3.3 的 estimated 回退需要上一次已写入的上海金收盘价。
-  const quotesFile = path.join(DATA, 'quotes.json');
-  const existingQuotes = await readJSON(quotesFile, { quotes: [] });
-
-  const [qRes, mRes] = await Promise.all([
-    fetchPortfolioQuotes(existingQuotes.quotes || []),
-    fetchMacroIndicators(),
-  ]);
-  const { quotes, ok, fail } = qRes;
+  // ---- 采集：宏观指标 + 1Y 国债日 K ----
+  // ⚠ 2026-10-31 起，xau/xag/brent/ndx 等全部行情改由 collect.mjs 的 15 分钟采集负责
+  //   （见 portfolio.mjs 的 fetchPortfolioQuotesFast）。本任务不再读写 quotes.json ——
+  //   否则每天 16:30（美股开盘前）会把高频任务刚更新的卡片用旧值覆盖回去。
+  const mRes = await fetchMacroIndicators();
   const { items: macroItems, ok: mOk, fail: mFail } = mRes;
-
-  // ⚠ 分母要跟着 PORTFOLIO_QUOTES 的实际条数走 —— 写死 5 会在新增标的后显示
-  //   「行情成功 7/5」这种自相矛盾的话（2026-10-30 加了 xag/brent 后出现）
-  const expectedQuotes = (await import('./portfolio.mjs')).PORTFOLIO_QUOTES.length;
-  console.log(`  行情成功 ${ok.length}/${expectedQuotes}：${ok.join(', ') || '无'}`);
   console.log(`  宏观成功 ${mOk.length}/5：${mOk.join(', ') || '无'}`);
-  for (const [k, v] of Object.entries(fail)) console.log(`  ❌ ${k}：${v}`);
   for (const [k, v] of Object.entries(mFail)) console.log(`  ❌ 宏观 ${k}：${v}`);
 
-  // quotes.json 的 generatedAt 按规格 §4.1 用 UTC；
   // 运行日志的 at 按规格 §6 的示例用 +08:00。
   const at = new Date().toISOString();
   const atCN = isoCN();
@@ -120,36 +107,28 @@ async function main() {
 
   if (DRY_RUN) {
     console.log('\n[dry-run] 采集结果（不写盘）：');
-    console.log(JSON.stringify({ quotes, macroItems }, null, 2));
+    console.log(JSON.stringify({ macroItems }, null, 2));
     return;
   }
-
-  // ---- §4.1 合并写入 quotes.json：保留原有 key ----
-  // 原有 17 个 key 由 collect.mjs 维护，本任务只更新/追加这 5 个。
-  // 这里按 key 做合并：既保留本任务上次写入的值，也保留其它任务写入的 key。
-  const byKey = new Map((existingQuotes.quotes || []).map((q) => [q.key, q]));
-  for (const q of quotes) byKey.set(q.key, q);
-  const mergedQuotes = [...byKey.values()];
-  const quotesChanged = await writeJSONIfChanged(quotesFile, {
-    generatedAt: at,
-    quotes: mergedQuotes,
-  });
-  console.log(
-    `  quotes.json：${mergedQuotes.length} 个 key（新增/更新 ${quotes.length}）` +
-    `${quotesChanged ? '' : ' · 内容未变，跳过写盘'}`
-  );
 
   // ---- 1Y 国债收益率的 K 线：每天追加一根到 data/kline/cgb_1y.json ----
   // 站点上「1Y国债收益率」这张卡片的 K 线**只有这一个源**（中债逐日曲线），
   // 没有东财 secid、没有腾讯代码 ⇒ 前端只能读本地预生成文件。
   // 收益率没有开高低收，o=h=l=c=收益率，v=0。
-  const cgb = quotes.find((q) => q.key === 'cgb_1y');
-  if (cgb && Number.isFinite(cgb.price)) {
+  let cgbDate = day, cgbVal = null;
+  for (let back = 0; back <= 7 && cgbVal === null; back++) {
+    const tryDay = dayKey(new Date(Date.now() - back * 86400000));
+    try {
+      const c = await fetchCgbCurveOneY(tryDay);
+      if (c) { cgbVal = c.oneY; cgbDate = c.srcDate; }
+    } catch { /* 当天没有曲线就继续往前找 */ }
+  }
+  if (Number.isFinite(cgbVal)) {
     const klineFile = path.join(DATA, 'kline', 'cgb_1y.json');
     const old = await readJSON(klineFile, { bars: [] });
     const bars = Array.isArray(old.bars) ? old.bars.slice() : [];
-    const srcDay = (cgb.updatedAt || '').slice(0, 10) || day;
-    const bar = { t: srcDay, o: cgb.price, c: cgb.price, h: cgb.price, l: cgb.price, v: 0 };
+    const srcDay = cgbDate;
+    const bar = { t: srcDay, o: cgbVal, c: cgbVal, h: cgbVal, l: cgbVal, v: 0 };
     const i = bars.findIndex((b) => b.t === srcDay);
     if (i >= 0) bars[i] = bar;
     else bars.push(bar);
@@ -220,25 +199,19 @@ async function main() {
 
   // ---- §6 运行日志写入 data/_last-run.json ----
   // 读改写：保留 collect.mjs 写的字段（前端「来源」页依赖 sources/startedAt/...），
-  // 只更新本任务负责的 at / ok / fail。
+  // 本任务只更新宏观相关字段（行情字段归 collect.mjs）。
   const logFile = path.join(DATA, '_last-run.json');
   const prevLog = await readJSON(logFile, {});
-  await writeJSONIfChanged(logFile, {
-    ...prevLog,
-    at: atCN,
-    ok,
-    fail,
-    macroOk: mOk,
-    macroFail: mFail,
-    portfolioQuotes: quotes.length,
-    portfolioDurationMs: Date.now() - started,
-  });
-  console.log('  _last-run.json：已更新 at/ok/fail');
+  const nextLog = { ...prevLog, at: atCN, macroOk: mOk, macroFail: mFail, macroDurationMs: Date.now() - started };
+  delete nextLog.portfolioQuotes;
+  delete nextLog.portfolioDurationMs;
+  await writeJSONIfChanged(logFile, nextLog);
+  console.log('  _last-run.json：已更新 at/macroOk/macroFail');
 
   console.log(`[portfolio] 完成 · ${Date.now() - started}ms`);
 
-  // 全部源都失败才算整轮失败（部分成功仍应落盘）
-  if (ok.length === 0 && mOk.length === 0) process.exitCode = 1;
+  // 宏观全部失败才算整轮失败（部分成功仍应落盘）
+  if (mOk.length === 0) process.exitCode = 1;
 }
 
 main().catch((err) => {
