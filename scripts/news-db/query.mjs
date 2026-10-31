@@ -18,6 +18,12 @@ const LIMIT = Number(arg('limit', '20'));
 
 const db = openDb(DB);
 
+if (process.argv.includes('--vacuum')) {
+  db.exec('VACUUM');
+  db.exec('PRAGMA wal_checkpoint(TRUNCATE)');
+  console.log('VACUUM 完成');
+}
+
 const rawArgs = process.argv.slice(2).filter((a, i, arr) => {
   if (a.startsWith('--')) return false;
   if (i > 0 && arr[i - 1].startsWith('--')) return false;

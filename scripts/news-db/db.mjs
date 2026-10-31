@@ -153,9 +153,10 @@ export function stats(db, file = DEFAULT_DB) {
   const fts = db.prepare('SELECT COUNT(*) AS n FROM items_fts').get().n;
   const range = db.prepare('SELECT MIN(published_at) AS min, MAX(published_at) AS max FROM items').get();
   const src = db.prepare('SELECT source, COUNT(*) AS n FROM items GROUP BY source ORDER BY n DESC').all();
+  const state = db.prepare('SELECT source, MAX(cursor) AS last FROM backfill_state GROUP BY source ORDER BY source').all();
   let mb = 0;
   try { mb = fs.statSync(file).size / 1024 / 1024; } catch { /* ignore */ }
-  return { items: n, fts, min: range.min, max: range.max, sources: src, mb: Math.round(mb * 10) / 10 };
+  return { items: n, fts, min: range.min, max: range.max, sources: src, state, mb: Math.round(mb * 10) / 10 };
 }
 
 export { ROOT };

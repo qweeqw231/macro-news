@@ -4,7 +4,14 @@
 
 ## [Unreleased]
 
-### 待发布
+### 新增
+
+- **本地新闻库（独立于站点）**：`scripts/news-db/`，SQLite FTS5 + bigram 中文检索，数据库在
+  `.local/news.db`（已 gitignore）。已回补 **2021-11-01 ~ 2026-10-31**：
+  共 **525,411 条**（中新网 506,725、中国人民银行 1,627，其余为原有近 60 天全量内容）；
+  当前 DB 约 **458 MB**。暂不接静态站，等数据稳定后再把最近 1 年接回。
+- 工具：`import-archive.mjs`（导入现有 archive）、`backfill-chinanews.mjs`（按日归档）、
+  `backfill-pbc.mjs`（央行列表分页）、`query.mjs`（检索 / 统计 / VACUUM）。
 
 ## [2.0.9] - 2026-10-31
 
