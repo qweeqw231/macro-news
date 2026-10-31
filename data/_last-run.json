@@ -1,66 +1,67 @@
 {
-  "startedAt": "2026-10-31T11:22:39.625Z",
-  "durationMs": 49739,
+  "startedAt": "2026-10-31T11:52:33.564Z",
+  "durationMs": 35080,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 4398
+      "ms": 4295
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 954
+      "ms": 1403
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1317
+      "ms": 2847
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 654
+      "ms": 957
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 3012
+      "ms": 3724
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 586
+      "ms": 1904
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1358
+      "ms": 2309
     },
     {
       "id": "stats",
       "label": "国家统计局",
-      "ok": true,
-      "count": 25,
-      "ms": 45816
+      "ok": false,
+      "count": 0,
+      "ms": 31055,
+      "error": "RSS 全部入口失败：/sj/zxfb/rss.xml → fetch failed"
     }
   ],
   "quotes": 54,
-  "added": 10,
+  "added": 9,
   "at": "2026-10-30T19:28:29+08:00",
   "ok": [
     "ndx",
