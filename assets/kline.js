@@ -343,7 +343,11 @@ class KlineChart {
     const plotW = this._w - this._pad.l - this._pad.r;
     const bw = plotW / n;
     const i = Math.floor((x - this._pad.l) / bw);
-    if (i < 0 || i >= n) return;
+    if (i < 0 || i >= n) {
+      // 点在绘图区外：既然触屏没有 mouseleave，就用「点空白」收起明细
+      if (this.hover !== -1) { this.hover = -1; this.mouse = null; this.render(); }
+      return;
+    }
     this.hover = i;
     this.mouse = { x, y: clientY - r.top };
     this.render();
