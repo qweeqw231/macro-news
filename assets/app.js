@@ -421,8 +421,8 @@
 
   // 检索索引 `data/search.json` 有 6~10MB（gzip 后 ~2.7MB），
   // 从 GitHub Pages 拉一次要**几十秒到几分钟**（本机实测带宽 5~30 KB/s）。
-  // ⇒ 在要闻流加载完之后**后台预取**：用户敲关键词时通常已经就绪；
-  //   还没好时 qMeta 显示「检索索引载入中…」。
+  // ⇒ **用户碰搜索框（focus）或开始输入时才预取**：首屏、归档、行情都不跟它抢带宽。
+  //   还没下完时 qMeta 会显示「检索索引载入中…」。
   let searchIdxPromise = null;
   function ensureSearchIndex() {
     if (S.searchIdx) return Promise.resolve(S.searchIdx);
@@ -574,14 +574,27 @@
   }
 
   // ---------- 归档 ----------
+  // 归档索引只拉一次：页脚（loadRunMeta）与归档页（renderArchive）共用同一个 Promise。
+  // 之前两处各发一次请求，在 Pages 冷缓存下等于多赌一次 0.7~16s 的 TTFB。
+  let indexPromise = null;
+  function loadIndex() {
+    if (S.archive) return Promise.resolve(S.archive);
+    if (!indexPromise) {
+      indexPromise = jget('index.json')
+        .then((d) => { S.archive = d; return d; })
+        .catch((e) => { indexPromise = null; throw e; });
+    }
+    return indexPromise;
+  }
+
   async function renderArchive() {
     const box = $('#days');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
     try {
-      if (!S.archive) S.archive = await jget('index.json');
+      const idx = await loadIndex();
       box.innerHTML = '';
-      if (!S.archive.days.length) { box.appendChild(el('div', 'empty', '暂无归档')); return; }
-      S.archive.days.forEach((d) => {
+      if (!idx.days.length) { box.appendChild(el('div', 'empty', '暂无归档')); return; }
+      idx.days.forEach((d) => {
         const a = el('a', 'day');
         a.href = '#';
         a.appendChild(el('div', 'day-d', d.day));
@@ -623,7 +636,7 @@
   let runMeta = null;
   async function loadRunMeta() {
     if (!runMeta) {
-      const [last, idx] = await Promise.all([jget('_last-run.json'), jget('index.json')]);
+      const [last, idx] = await Promise.all([jget('_last-run.json'), loadIndex()]);
       let total = 0;
       (idx.days || []).forEach((d) => { total += d.count || 0; });
       runMeta = { last: last || {}, total, days: (idx.days || []).length };
@@ -1075,6 +1088,9 @@
     $('#moreBtn').onclick = () => { S.shown += PAGE; renderFeed(); };
     $('#q').addEventListener('input', (e) => onSearchInput(e.target.value));
     $('#qClear').onclick = () => { $('#q').value = ''; onSearchInput(''); };
+    // 检索索引改为「用户碰搜索框才预取」：首屏不再后台拉 2.7MB，避免和归档/某天详情抢带宽。
+    // 输入本身也会触发（runSearch 里 await ensureSearchIndex），这里只是给打字留出提前量。
+    $('#q').addEventListener('focus', () => { ensureSearchIndex().catch(() => {}); });
     // 行情搜索：无需防抖（57 张卡片），输入即筛
     $('#mq').addEventListener('input', (e) => {
       mktQ = e.target.value;
@@ -1099,8 +1115,7 @@
       // 走一遍空搜索分支：首次加载就把「母集」说明写进 #qMeta
       // （空搜索 = 最新快照 200 条，带关键词 = 全库 17092 条），同时渲染筛选条与列表
       runSearch('');
-      // 后台预取检索索引（大文件，几十秒）—— 用户第一次敲关键词时多半已经就绪
-      ensureSearchIndex().catch(() => {});
+      // ⚠ 不在这里预取 search.json：改为用户 focus / 输入搜索框时再拉（见 boot 里的搜索框绑定）
       // 页脚先放快照信息（兜底），随后由 renderFoot() 换成完整的采集概况
       $('#ftMeta').textContent = `库内 ${d.total} 条 · 快照生成于 ${new Date(d.generatedAt).toLocaleString('zh-CN', { hour12: false })}`;
       renderFoot();
