@@ -505,7 +505,7 @@
   function showView(v, instant) {
     S.view = v;
     closeReader();
-    document.querySelectorAll('.tab').forEach((t) => {
+    document.querySelectorAll('.tab, .mnav-item').forEach((t) => {
       const on = t.dataset.view === v;
       t.classList.toggle('active', on);
       if (on) t.setAttribute('aria-current', 'page');
@@ -514,7 +514,6 @@
     VIEWS.forEach((k) => {
       $('#view-' + k).hidden = k !== v;
     });
-    document.querySelector('.hd').classList.remove('nav-open');
     // ⚠ 必须滚到**该视图的区块**，不能 `scrollTo(0,0)`：
     //   宏观仪表盘是常驻在页面顶部的，四个视图的内容都在它下面。
     //   滚回顶部 ⇒ 切换后画面还是仪表盘 ⇒ 用户看到「四个页签一模一样」、
@@ -638,21 +637,6 @@
       // 运行状态读不到就退回快照信息（latest.json 那条）
       if (!el.textContent) el.textContent = '运行状态读取失败：' + esc(e.message);
     }
-  }
-
-  // ---------- 移动端汉堡 ----------
-  function initBurger() {
-    const hd = document.querySelector('.hd');
-    const b = el('button', 'nav-burger');
-    b.type = 'button';
-    b.setAttribute('aria-label', '打开导航');
-    b.innerHTML = '<span></span><span></span><span></span>';
-    b.onclick = (e) => {
-      e.stopPropagation();
-      const on = hd.classList.toggle('nav-open');
-      b.setAttribute('aria-label', on ? '关闭导航' : '打开导航');
-    };
-    hd.querySelector('.hd-in').appendChild(b);
   }
 
   // ---------- K线图 ----------
@@ -1008,10 +992,9 @@
     bindKline();
     bindReader();
 
-    initBurger();
     // 常驻的视口对齐观察器（必须在第一次 showView 之前装好）
     initAlign();
-    document.querySelectorAll('.tab').forEach((t) => {
+    document.querySelectorAll('.tab, .mnav-item').forEach((t) => {
       t.onclick = (e) => {
         // 阻止浏览器默认的锚点跳转：滚动位置由 showView() 统一控制
         // （要滚到该视图的区块顶部，而不是浏览器默认的锚点位置）。
