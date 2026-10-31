@@ -970,6 +970,18 @@
     });
   }
 
+  // 搜索框提示：手机上输入框只有 ~240px，长 placeholder 会被截断。
+  // HTML 默认用短版（窄屏首帧就不会截断），桌面再换成完整提示。
+  const Q_PLACEHOLDER_FULL = '全文检索：标题 / 摘要 / 来源（如：降息、CPI、黄金、原油）';
+  const Q_PLACEHOLDER_SHORT = '搜索：降息、CPI、黄金…';
+  const syncSearchPlaceholder = () => {
+    const q = $('#q');
+    if (!q) return;
+    q.placeholder = window.matchMedia('(max-width: 640px)').matches
+      ? Q_PLACEHOLDER_SHORT
+      : Q_PLACEHOLDER_FULL;
+  };
+
   async function boot() {
     // file:// 下浏览器会拦截 fetch()，页面必然空白。
     // 与其让用户对着白屏发呆，不如直接说明原因和解决办法。
@@ -1014,6 +1026,8 @@
     $('#moreBtn').onclick = () => { S.shown += PAGE; renderFeed(); };
     $('#q').addEventListener('input', (e) => onSearchInput(e.target.value));
     $('#qClear').onclick = () => { $('#q').value = ''; onSearchInput(''); };
+    syncSearchPlaceholder();
+    window.addEventListener('resize', syncSearchPlaceholder);
 
     renderQuotes().then(startQuotePolling);
     try {
