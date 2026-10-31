@@ -1,67 +1,66 @@
 {
-  "startedAt": "2026-10-31T04:52:31.454Z",
-  "durationMs": 30419,
+  "startedAt": "2026-10-31T05:07:32.655Z",
+  "durationMs": 23424,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 4832
+      "ms": 4156
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1336
+      "ms": 1238
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 3582
+      "ms": 2438
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 1166
+      "ms": 957
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
-      "ok": false,
-      "count": 0,
-      "ms": 2765,
-      "error": "fetch failed"
+      "ok": true,
+      "count": 15,
+      "ms": 2376
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1506
+      "ms": 785
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1948
+      "ms": 1211
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 25925
+      "ms": 19856
     }
   ],
   "quotes": 54,
-  "added": 7,
+  "added": 5,
   "at": "2026-10-30T19:28:29+08:00",
   "ok": [
     "ndx",
