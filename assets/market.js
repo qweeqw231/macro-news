@@ -91,18 +91,22 @@
     { key: 'etf_518880', secid: '1.518880', market: 'ETF', name: '黄金ETF' },
     { key: 'etf_511990', secid: '1.511990', market: 'ETF', name: '华宝添益ETF' },
     // ---- 组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）----
-    // 这 4 个 key 的**实时价**来自各自的专业源（腾讯 usNDX / 腾讯 hf_XAU /
-    // 上金所官网 / 中国货币网），走的是 quotes.json 里的组合快照，
-    // **刻意不写 secid** —— 否则会被 fetchQuotesEM 的东财批量请求一起取回来，
+    // 除纳指100外，其余 key 的**实时价**来自各自的专业源（腾讯 hf_XAU / 上金所官网 /
+    // 中国货币网），走 quotes.json 里的组合快照，
+    // 其余 3 个**刻意不写 secid** —— 否则会被 fetchQuotesEM 的东财批量请求一起取回来，
     // 用「COMEX 期货价 / CNH 离岸价」顶掉「现货伦敦金 / 官方中间价」，口径就串了。
     // 它们的 K 线代码单独放 klineSecid / sinaGlobal，由 fetchKlineEM / fetchKlineSinaGlobal 取。
+    // ⚠ 纳指100 例外：它是美股指数、只在美股时段交易，而组合采集每天 16:30（美股开盘前）
+    //   才跑一次 ⇒ 卡片会一直停在上一交易日（2026-10-31 实测：K 线已到 10-30 收盘，
+    //   卡片还是 10-29）。它与 100.NDX100 的 K 线是同一品种（收盘逐位一致），
+    //   所以直接进东财实时批次，和 K 线同源同频。
     // ⚠ 口径差异必须如实标注（klineNote 会显示在 K 线注记上）：
     //   · 纳指100 → 100.NDX100：与腾讯 usNDX 末根收盘**完全一致**（29402.51）⇒ 同品种
     //   · 伦敦金 → 新浪外盘 XAU：其末根开/高/低与新浪实时 hf_XAU **逐个吻合**
     //     ⇒ 它就是**现货伦敦金**，与报价源同品种（东财没有现货 secid）
     //   · 上海金 → 118.AU9999：name=黄金9999，**就是上金所 Au99.99** ⇒ 同品种
     //   · 中间价 → 133.USDCNH：中国货币网只有当天接口、没有历史 ⇒ 用离岸价作代理
-    { key: 'ndx',        klineSecid: '100.NDX100', market: 'US',    name: '纳指100',        klineNote: '' },
+    { key: 'ndx',        secid: '100.NDX100', klineSecid: '100.NDX100', market: 'US', name: '纳指100', klineNote: '' },
     { key: 'xau',        sinaGlobal: 'XAU',        market: 'CMDTY', name: '伦敦金',        klineNote: '' },
     { key: 'sge_au9999', klineSecid: '118.AU9999', market: 'SGE',   name: '上海金Au99.99', klineNote: '' },
     // 伦敦银：新浪外盘 XAG（现货白银/美元，5187 根 / 2006 起）；东财 122.XAG 同一条线
@@ -146,6 +150,8 @@
     bse50: 'bj899050', csi300: 'sh000300', csi500: 'sh000905', csi1000: 'sh000852',
     hsi: 'hkHSI', hs_tech: 'hkHSTECH',
     dji: 'usDJI', ixic: 'usIXIC', spx: 'usINX',
+    // 纳指100：东财批量失败时靠腾讯补（与 100.NDX100 同品种，收盘逐位一致）
+    ndx: 'usNDX',
     // ---- 场内 ETF 的腾讯代码（备用源：东财限流时用）----
     etf_563360: 'sh563360',
     etf_159819: 'sz159819',
@@ -181,11 +187,12 @@
     etf_511990: 'sh511990',
   };
 
-  // **只用于 K 线**的腾讯代码（不进实时报价批次）。
+  // K 线使用的腾讯代码（日/周/月）。
   //
-  // ⚠ 为什么不能直接往 TX_CODE 里加：fetchQuotesTX() 是按 TX_CODE 批量取行情的，
-  //   组合标的的实时价归各自的专业源（腾讯 usNDX / 腾讯 hf_XAU / 上金所 / 货币网），
-  //   混进报价批次会让 K 线的口径与卡片上的价格对不上（实测 ndx 就这样漏了进去）。
+  // ⚠ 组合标的的实时价归各自的专业源（腾讯 hf_XAU / 上金所 / 货币网），
+  //   **除纳指100外**不要再往 TX_CODE 里加：混进报价批次会用错口径
+  //   （例如 hf_SI 是 COMEX 期货白银、不是伦敦银）。
+  //   纳指100 是例外——它与 usNDX / 东财 100.NDX100 同品种，实时报价也需要它做备源。
   const TX_KLINE_CODE = Object.assign({}, TX_CODE, {
     // 纳指100：腾讯 usfqkline 最多 1000 根（n>1000 直接返回空）
     ndx: 'usNDX',

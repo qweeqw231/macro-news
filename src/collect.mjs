@@ -285,8 +285,9 @@ async function main() {
   });
   if (quotes.length) {
     // 按 key 合并写入：保留 portfolio-collect.mjs 写入的其它 key。
-    // 本任务只负责 INDICES 里的 17 个指数；若整份覆盖，组合行情（ndx/xau/...）
-    // 会在下一次运行（本任务每 5 分钟一次）里被抹掉。
+    // 本任务负责 INDICES 里的 17 个指数 + 32 只 ETF + 纳指100（ndx 在 15 分钟级别单独刷新，
+    // 否则美股收盘后要等到第二天 16:30 的组合采集才更新）；若整份覆盖，
+    // 组合行情（xau/xag/...）会在下一次运行里被抹掉。
     const quotesFile = path.join(DATA, 'quotes.json');
     const prevQuotes = await readJSON(quotesFile, { quotes: [] });
     const byKey = new Map((prevQuotes.quotes || []).map((q) => [q.key, q]));

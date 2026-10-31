@@ -98,10 +98,16 @@ class KlineChart {
       this.render();
     };
 
-    // —— 鼠标：canvas 上按下，document 上移动/松开 ——
-    // 这是最经典可靠的拖拽写法：不依赖 setPointerCapture，鼠标移出画布也不会中断
-    cvs.addEventListener('mousedown', (e) => {
+    // —— 鼠标：整块弹窗上按下，document 上移动/松开 ——
+    // 这是最经典可靠的拖拽写法：不依赖 setPointerCapture，鼠标移出画布也不会中断。
+    // ⚠ 按下区域从 canvas 放宽到整个弹窗：用户把鼠标拖出画布再松手后，
+    //   下一次「向右拖回最新」往往落在弹窗阴影里；只绑 canvas 的话按下去毫无反应，
+    //   表现就是「最后一根再也拖不回来了」（2026-10-31 实测复现）。
+    //   按钮/链接（关闭、周期切换）不抢事件。
+    const dragSurface = cvs.closest('.kline-modal') || cvs;
+    dragSurface.addEventListener('mousedown', (e) => {
       if (e.button !== 0) return;
+      if (e.target && e.target.closest && e.target.closest('button, a, input, textarea, select')) return;
       if (startDrag(e.clientX)) e.preventDefault();
     });
     this._onDocMove = (e) => moveDrag(e.clientX);
@@ -438,9 +444,14 @@ class KlineChart {
       ctx.textAlign = 'left';
       ctx.fillText(yOfInverse(y, lo, hi, mainH).toFixed(2), w - pad.r + 5, y);
 
-      // 信息浮窗
-      const chg = b.c - b.o;
-      const pct = b.o ? (chg / b.o) * 100 : 0;
+      // 信息浮窗：涨跌按惯例对比「上一根收盘」，不是当天开盘。
+      // ⚠ view 是切片，上一根要用全量 bars 的绝对下标取，否则视图左边缘会算错；
+      //   第一根没有上一根时才退回开盘价。
+      const absIdx = start + this.hover;
+      const prevBar = absIdx > 0 ? this.bars[absIdx - 1] : null;
+      const base = prevBar ? prevBar.c : b.o;
+      const chg = b.c - base;
+      const pct = base ? (chg / base) * 100 : 0;
       const lines = [
         `${b.t}`,
         `开 ${b.o.toFixed(2)}   高 ${b.h.toFixed(2)}`,

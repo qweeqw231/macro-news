@@ -865,9 +865,12 @@
       // ←/→ 平移（鼠标拖动之外的第二条通路）
       if (e.key === 'ArrowLeft') { kChart.panBy(15); e.preventDefault(); }
       else if (e.key === 'ArrowRight') { kChart.panBy(-15); e.preventDefault(); }
-      // Ctrl/⌘ + + / - 缩放（不带修饰键也可以）；锚点为视图中心
-      else if (e.key === '+' || e.key === '=') { kChart.zoomBy(1 / 1.2, 0.5); e.preventDefault(); }
-      else if (e.key === '-' || e.key === '_') { kChart.zoomBy(1.2, 0.5); e.preventDefault(); }
+      // Ctrl/⌘ + + / - 缩放（不带修饰键也可以）
+      // ⚠ 看最新时不锚定中心：否则「缩小到全部 → 再放大」会把视图锚到历史中点，
+      //   最后一根直接被推到屏幕外（实测 offset 变成 455）。看最新时锚在右边缘（1）。
+      const zoomAnchor = kChart.offset === 0 ? 1 : 0.5;
+      if (e.key === '+' || e.key === '=') { kChart.zoomBy(1 / 1.2, zoomAnchor); e.preventDefault(); }
+      else if (e.key === '-' || e.key === '_') { kChart.zoomBy(1.2, zoomAnchor); e.preventDefault(); }
     });
     // 指数卡片点击 → 打开K线（阻止 href="#" 默认跳回页首）
     $('#quotes').addEventListener('click', (e) => {

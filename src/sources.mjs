@@ -427,10 +427,15 @@ let quoteError = '';
 export function getQuoteError() { return quoteError; }
 
 /**
- * 采集全部行情：17 个指数 + 32 只场内 ETF。
+ * 采集全部行情：17 个指数 + 32 只场内 ETF + 纳指100。
+ *
+ * ⚠ 纳指100（ndx）虽属组合标的，但它是**只在美股时段交易的股指**：
+ *   组合采集每天 16:30（美股开盘前）才跑一次 ⇒ 卡片会停在上一交易日，
+ *   而 100.NDX100 的 K 线早已更新（2026-10-31 实测：K 线 10-30 收盘，卡片还是 10-29）。
+ *   放进这里之后，卡片与 K 线同源（东财 100.NDX100）、同频（15 分钟）。
  *
  * ⚠ 走**批量**端点（东财 ulist.np），不是逐只 stock/get：
- *   · 批量一次拿完 49 个标的，请求数从 49 降到 1；
+ *   · 批量一次拿完 50 个标的，请求数从 50 降到 1；
  *   · 东财的限流是**按接口**的 —— 实测打密之后 stock/get 与 kline 端点会被
  *     socket 级拒绝，而 ulist 仍然正常，所以批量端点同时也是更抗限流的选择。
  *   · 详见 src/quotes.mjs 的口径说明（含「ulist 对 ETF 也有效」这条更正）。
@@ -444,6 +449,7 @@ export async function fetchQuotes() {
       key: e.key, name: e.name, market: 'ETF', secid: e.secid,
       tx: etfTxCode(e.secid), theme: e.theme, region: e.region || 'CN',
     })),
+    { key: 'ndx', name: '纳指100', market: 'US', secid: '100.NDX100', tx: null },
   ];
   const { quotes, fail } = await fetchBatchQuotes(targets);
   const failCount = Object.keys(fail).length;
