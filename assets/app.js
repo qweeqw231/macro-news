@@ -680,7 +680,7 @@
   let klineTimer = null;
   let klineKey = '';
   let klinePeriod = '1d';
-  let maYearMax = 0;        // 年K 当前数据的根数：决定 MA_n 是否可用（0 = 数据还没到）
+  let maBars = 0;            // 当前周期数据的总根数：决定 MA_n 是否可画（0 = 数据还没到）
   // 请求令牌：每次取数 +1。
   // ⚠ 没有它会出两个 bug：
   //   ① 旧图残留 —— 图表是单例，切标的时画布还留着上一个标的的 K 线；
@@ -707,6 +707,11 @@
       setTimeout(fin, ms);
     });
 
+  // 当前可用的均线 = （年K 只到 30）∩ 已开启 ∩ 数据根数足够
+  const enabledMA = () =>
+    (klinePeriod === '1y' ? YEAR_MA : MA_LIST)
+      .filter((n) => maShown.has(n) && n <= maBars);
+
   function renderMA() {
     const box = $('#kmMA');
     if (!box) return;
@@ -714,25 +719,25 @@
     const isYear = klinePeriod === '1y';
     const list = isYear ? YEAR_MA : MA_LIST;
     list.forEach((n) => {
-      const unavailable = isYear && n > maYearMax;
+      const unavailable = n > maBars;
       const on = maShown.has(n) && !unavailable;
       const b = el('button', 'mchip' + (on ? ' on' : '') + (unavailable ? ' disabled' : ''), 'MA' + n);
       b.type = 'button';
       if (unavailable) {
         b.disabled = true;
-        b.title = '年K 只有 ' + maYearMax + ' 根，不足 ' + n + ' 年';
+        b.title = '当前数据只有 ' + maBars + ' 根，不足 ' + n + ' 根';
       } else {
         b.onclick = () => {
           if (maShown.has(n)) maShown.delete(n);
           else maShown.add(n);
           b.classList.toggle('on', maShown.has(n));
           try { localStorage.setItem(MA_STORE, JSON.stringify([...maShown])); } catch (e) { /* 忽略 */ }
-          if (kChart) kChart.setMAEnabled([...maShown]);
+          if (kChart) kChart.setMAEnabled(enabledMA());
         };
       }
       box.appendChild(b);
     });
-    if (kChart) kChart.setMAEnabled([...maShown]);
+    if (kChart) kChart.setMAEnabled(enabledMA());
   }
 
   function openKline(key) {
@@ -790,7 +795,7 @@
     const note = $('#kmNote');
     note.textContent = '加载中…';
     kChart.setData([], period);          // ← 立刻清空画布，绝不留上一个标的的图
-    maYearMax = 0;
+    maBars = 0;
     renderMA();
 
     // 落图入口。三个约束：
@@ -831,8 +836,9 @@
       shownRank = rank;
       shownLast = last;
       kChart.setData(bars, period);
-      // 年K 的均线可用性与根数有关（< n 根时 MA_n 不画，按钮置灰）
-      if (isYear) { maYearMax = bars.length; renderMA(); }
+      // 数据变长后，原本「根数不足」的均线会自动变为可用（按钮取消置灰、曲线开始绘制）
+      maBars = bars.length;
+      renderMA();
       // 口径说明（组合标的的代理品种）必须显示出来，不能让用户以为看到的就是报价源本身
       const caliber = window.MarketData.getKlineNote ? window.MarketData.getKlineNote(key) : '';
       const span = isYear
@@ -912,21 +918,27 @@
   function scheduleKlineRefresh() {
     clearTimeout(klineTimer);
     const q = (S.quotes || []).find((x) => x.key === klineKey);
-    if (!q || !isTrading(q.market) || klinePeriod === '1y') return;
+    if (!q || !isTrading(q.market)) return;
     klineTimer = setTimeout(async () => {
       if ($('#klineModal').hidden) return;
       const myId = klineReqId;            // 期间是否换过标的/周期
+      const isYear = klinePeriod === '1y';
+      const fetchPeriod = isYear ? '1M' : klinePeriod;
       try {
         // ⚠ 用 onData 而不是等返回值：赛马链里**首个成功**只保证「有数据」，
         //   不保证是最全的（腾讯 1000 根可能先于新浪 8752 根到）。
         //   onData 让每个源到货都单独判断一次，谁根数多谁上。
         await window.MarketData.fetchKlineRemote(
-          klineKey, klinePeriod, klineLimit(klinePeriod),
+          klineKey, fetchPeriod, klineLimit(fetchPeriod),
           (bars) => {
             if (myId !== klineReqId) return;   // 换过了，丢弃这次刷新
+            const next = isYear ? window.MarketData.aggregateYear(bars) : bars;
+            if (!next || !next.length) return;
             // ⚠ 只在「根数不减少」时覆盖：直连只给 1000 根时，不能把本地全量的 8752 根降级
-            if (bars && bars.length && bars.length >= kChart.bars.length) {
-              kChart.setData(bars, klinePeriod);
+            if (next.length >= kChart.bars.length) {
+              kChart.setData(next, klinePeriod);
+              maBars = next.length;
+              renderMA();
             }
           }
         );
