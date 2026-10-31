@@ -362,6 +362,22 @@
     csi500: 'sh000905', csi1000: 'sh000852',
   };
   const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200 };
+  // 分钟周期：新浪的 CN_MarketDataService 对**指数和场内 ETF 都有效**，
+  // datalen 上限 1023（2026-10-31 实测：1023 → 1023 根；2000/5000 → 返回 null）。
+  //   1m ≈ 4 个交易日 / 5m ≈ 21 天 / 15m ≈ 64 天 / 30m ≈ 128 天 / 60m ≈ 256 天。
+  //   ⚠ 东财对 ETF 的分钟历史只给最近一天（用户实测「只有数根」），新浪这条腿正好补上。
+  const SINA_MIN_SCALE = { '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60 };
+
+  /** 新浪代码：指数用 SINA_CODE；ETF 由 secid 反推（1.xxx → shxxx / 0.xxx → szxxx） */
+  function sinaCodeFor(key) {
+    if (SINA_CODE[key]) return SINA_CODE[key];
+    const m = byKey.get(key);
+    if (!m || !m.secid) return '';
+    const [mk, code] = String(m.secid).split('.');
+    if (mk === '1') return 'sh' + code;
+    if (mk === '0') return 'sz' + code;
+    return '';
+  }
 
   // 新浪 JSONP 的回调名写在**路径**里（`/var%20_xxx=/`），**每个请求必须唯一**：
   // 固定名字时，快速切换标的两条请求会同时在飞 → 后到的把回调值覆盖，
@@ -403,6 +419,24 @@
     return raw.map((b) => ({
       t: String(b.day).slice(0, 10), o: +b.open, c: +b.close,
       h: +b.high, l: +b.low, v: +b.volume,
+    }));
+  }
+
+  // ---- K线备源：新浪分钟（CN 指数 + 场内 ETF；JSONP）----
+  // 1023 根封顶（实测），但比东财「ETF 只有当天」和腾讯 320 根都好。
+  async function fetchKlineSinaMinute(key, period) {
+    const code = sinaCodeFor(key);
+    const scale = SINA_MIN_SCALE[period];
+    if (!code || !scale) throw new Error('新浪无该标的/分钟周期');
+    if (!/^(sh|sz)/.test(code)) throw new Error('新浪分钟只覆盖沪深标的');
+    const cb = '_kline_' + (++sinaCbSeq);
+    const url =
+      'https://quotes.sina.cn/cn/api/jsonp_v2.php/var%20' + cb + '=' +
+      `/CN_MarketDataService.getKLineData?symbol=${code}&scale=${scale}&ma=no&datalen=1023`;
+    const raw = await sinaJsonp(url, cb, 15000);
+    return raw.map((b) => ({
+      t: String(b.day), o: +b.open, c: +b.close, h: +b.high, l: +b.low,
+      v: +b.volume || 0,
     }));
   }
 
@@ -576,6 +610,12 @@
     if (SINA_CODE[key] && SINA_SCALE[period]) {
       add('新浪直连（全量历史）', () => fetchKlineSina(key, period));
     }
+    if (SINA_MIN_SCALE[period]) {
+      const sym = sinaCodeFor(key);
+      if (sym && /^(sh|sz)/.test(sym)) {
+        add('新浪分钟（1023 根）', () => fetchKlineSinaMinute(key, period));
+      }
+    }
     if (SINA_GLOBAL_CODE[key]) {
       add('新浪外盘（全量历史·现货）', () => fetchKlineSinaGlobal(key, period));
     }
@@ -665,14 +705,18 @@
     let cur = null;
     let curKey = '';
     daily.forEach((b) => {
-      const k = unit === 'month' ? String(b.t).slice(0, 7) : weekKey(b.t);
+      const k = unit === 'year' ? String(b.t).slice(0, 4)
+        : unit === 'month' ? String(b.t).slice(0, 7) : weekKey(b.t);
       if (!cur || k !== curKey) {
-        cur = { t: b.t, o: b.o, c: b.c, h: b.h, l: b.l, v: b.v };
+        cur = {
+          t: unit === 'year' ? k + '-01-01' : b.t,
+          o: b.o, c: b.c, h: b.h, l: b.l, v: b.v,
+        };
         curKey = k;
         out.push(cur);
       } else {
         cur.c = b.c;
-        cur.t = b.t;
+        if (unit !== 'year') cur.t = b.t;
         if (b.h > cur.h) cur.h = b.h;
         if (b.l < cur.l) cur.l = b.l;
         cur.v += b.v;
@@ -680,6 +724,7 @@
     });
     return out;
   }
+  const aggregateYear = (bars) => aggregateDaily(bars, 'year');
 
 
   // ---- 服务端预生成的**全量**日K（紧凑数组格式）----
@@ -731,15 +776,23 @@
         if (Array.isArray(bars) && bars.length) return bars;
       } catch (e) { /* 没有该周期文件 → 落到下面的日K聚合 */ }
     }
+    if (period === '1y') {
+      try {
+        const j = await fetchLocalFile(`data/kline/${key}_1M.json`);
+        const m = j.bars;
+        if (Array.isArray(m) && m.length) return aggregateYear(m);
+      } catch (e) { /* 没有月K文件 → 用日K聚合 */ }
+    }
     const j = await fetchLocalFile(`data/kline/${key}.json`);
     const daily = j.bars;
     if (!Array.isArray(daily) || !daily.length) throw new Error('本地日K为空');
     if (period === '1d') return daily;
+    if (period === '1y') return aggregateYear(daily);
     if (period === '1w') return aggregateDaily(daily, 'week');
     if (period === '1M') return aggregateDaily(daily, 'month');
     throw new Error('本地无该周期');
   }
 
 
-  window.MarketData = { META, KLT, MINUTE_PERIODS, fetchQuotes, fetchKline, fetchKlineRemote, localKline, localFullKline, getKlineSource, getKlineNote, getMinuteUnavailableReason };
+  window.MarketData = { META, KLT, MINUTE_PERIODS, fetchQuotes, fetchKline, fetchKlineRemote, localKline, localFullKline, getKlineSource, getKlineNote, getMinuteUnavailableReason, aggregateYear };
 })();

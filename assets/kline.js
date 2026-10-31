@@ -2,6 +2,12 @@
 // K线图组件（Canvas 手绘，零依赖）
 // 视觉规范参照主流行情软件：红涨绿跌、十字光标、均线、成交量副图
 
+// 均线颜色（与主流行情软件的可区分度优先）
+const MA_COLOR = {
+  5: '#f0a020', 10: '#2c5e8e', 20: '#8e44ad', 30: '#e91e63',
+  60: '#16a085', 120: '#795548', 250: '#607d8b',
+};
+
 class KlineChart {
   constructor(root) {
     this.root = root;
@@ -17,6 +23,8 @@ class KlineChart {
     this.period = '1d';       // 周期：决定横轴刻度格式与年份标记
     this._anim = null;        // 缩放动画的 requestAnimationFrame id
     this._zoomTarget = this.barsShown; // 连续缩放时的目标根数（避免动画中反复重算基准）
+    // 均线：5/10/20/30/60/120/250，可在弹窗里逐条开关（年K 不画均线）
+    this.maEnabled = new Set([5, 10, 20, 30, 60, 120, 250]);
     this._bind();
     this._ro = new ResizeObserver(() => this.render());
     this._ro.observe(root);
@@ -38,6 +46,11 @@ class KlineChart {
     if (period) this.period = period;
     this.offset = Math.max(0, Math.min(this.offset, this._maxOffset()));
     this._zoomTarget = this.barsShown;
+    this.render();
+  }
+
+  setMAEnabled(list) {
+    this.maEnabled = new Set((list || []).filter((n) => n >= 2));
     this.render();
   }
 
@@ -282,14 +295,19 @@ class KlineChart {
     const bw = plotW / n;
 
     // ---- 价格区间（含均线） ----
-    // 均线按「全量 bars」计算再切片，平移时左侧边缘也能得到正确的均线值
-    const ma5 = this._calcMA(this.bars, 5).slice(start, end);
-    const ma10 = this._calcMA(this.bars, 10).slice(start, end);
-    const ma20 = this._calcMA(this.bars, 20).slice(start, end);
-    const ma60 = this._calcMA(this.bars, 60).slice(start, end);
+    // 均线按「全量 bars」计算再切片，平移时左侧边缘也能得到正确的均线值。
+    // 年K 只有几十根，MA120/250 没有意义 ⇒ 年K 不画均线。
+    const maList = this.period === '1y'
+      ? []
+      : [...this.maEnabled].filter((x) => x >= 2).sort((a, b) => a - b);
+    const mas = maList.map((n) => ({
+      n,
+      arr: this._calcMA(this.bars, n).slice(start, end),
+      color: MA_COLOR[n] || '#888',
+    }));
     let lo = Infinity, hi = -Infinity;
     view.forEach((b) => { if (b.l < lo) lo = b.l; if (b.h > hi) hi = b.h; });
-    [ma5, ma10, ma20, ma60].forEach((m) => m.forEach((v) => { if (v != null) { if (v < lo) lo = v; if (v > hi) hi = v; } }));
+    mas.forEach(({ arr }) => arr.forEach((v) => { if (v != null) { if (v < lo) lo = v; if (v > hi) hi = v; } }));
     const padY = (hi - lo) * 0.06 || 1;
     lo -= padY; hi += padY;
 
@@ -357,26 +375,18 @@ class KlineChart {
       });
       ctx.stroke();
     };
-    drawMA(ma5, '#f0a020', 'MA5');
-    drawMA(ma10, '#2c5e8e', 'MA10');
-    drawMA(ma20, '#8e44ad', 'MA20');
-    drawMA(ma60, '#16a085', 'MA60');
+    mas.forEach(({ arr, color }) => drawMA(arr, color));
 
-    // ---- 图例 ----
+    // ---- 图例（只列当前开启的均线）----
     ctx.textAlign = 'left';
     ctx.font = '11px system-ui';
-    const lg = view[n - 1];
-    const leg = [
-      ['MA5', ma5[n - 1], '#f0a020'],
-      ['MA10', ma10[n - 1], '#2c5e8e'],
-      ['MA20', ma20[n - 1], '#8e44ad'],
-      ['MA60', ma60[n - 1], '#16a085'],
-    ];
+    const leg = mas.map(({ n, arr, color }) => ['MA' + n, arr[arr.length - 1], color]);
     let lx = pad.l + 4;
     leg.forEach(([name, v, col]) => {
+      const txt = name + ':' + (v == null ? '--' : v.toFixed(2));
       ctx.fillStyle = col;
-      ctx.fillText(name + ':' + (v == null ? '--' : v.toFixed(2)), lx, pad.t + 6);
-      lx += ctx.measureText(name + ':' + (v == null ? '--' : v.toFixed(2))).width + 10;
+      ctx.fillText(txt, lx, pad.t + 6);
+      lx += ctx.measureText(txt).width + 10;
     });
 
     // 回看提示（拖动/滚轮查看历史时显示）
@@ -399,6 +409,7 @@ class KlineChart {
     const per = this.period || '1d';
     const fmtTick = (s) => {
       const t = String(s);
+      if (per === '1y') return t.slice(0, 4);                // 2026
       if (per === '1M') return t.slice(0, 7);               // 2024-12
       if (per === '1w' || per === '1d') return t.slice(2, 10); // 24-12-30
       return t.slice(5, 16);                                // 09-30 09:34

@@ -659,10 +659,21 @@
   const CFG = window.MACRO_CONFIG || { POLL_SECONDS: 15, REFRESH_SECONDS: 20, DEFAULT_PERIOD: '1d' };
   const PERIOD_LABEL = {
     '1m': '1分', '5m': '5分', '15m': '15分', '30m': '30分', '60m': '60分',
-    '1d': '日K', '1w': '周K', '1M': '月K',
+    '1d': '日K', '1w': '周K', '1M': '月K', '1y': '年K',
   };
   // 日频标的（1Y国债收益率）可用的周期
-  const DAILY_PERIODS = ['1d', '1w', '1M'];
+  const DAILY_PERIODS = ['1d', '1w', '1M', '1y'];
+  // 均线：5/10/20/30/60/120/250，可逐条开关；默认全开，状态存 localStorage
+  const MA_LIST = [5, 10, 20, 30, 60, 120, 250];
+  const MA_STORE = 'macro.maShown';
+  const loadMA = () => {
+    try {
+      const v = JSON.parse(localStorage.getItem(MA_STORE) || 'null');
+      if (Array.isArray(v)) return new Set(v.filter((n) => MA_LIST.includes(n)));
+    } catch (e) { /* 忽略损坏的本地状态 */ }
+    return new Set(MA_LIST);
+  };
+  const maShown = loadMA();
   let kChart = null;
   let klineTimer = null;
   let klineKey = '';
@@ -693,6 +704,25 @@
       setTimeout(fin, ms);
     });
 
+  function renderMA() {
+    const box = $('#kmMA');
+    if (!box) return;
+    box.innerHTML = '';
+    MA_LIST.forEach((n) => {
+      const b = el('button', 'mchip' + (maShown.has(n) ? ' on' : ''), 'MA' + n);
+      b.type = 'button';
+      b.onclick = () => {
+        if (maShown.has(n)) maShown.delete(n);
+        else maShown.add(n);
+        b.classList.toggle('on', maShown.has(n));
+        try { localStorage.setItem(MA_STORE, JSON.stringify([...maShown])); } catch (e) { /* 忽略 */ }
+        if (kChart) kChart.setMAEnabled([...maShown]);
+      };
+      box.appendChild(b);
+    });
+    if (kChart) kChart.setMAEnabled([...maShown]);
+  }
+
   function openKline(key) {
     const q = (S.quotes || []).find((x) => x.key === key);
     $('#klineModal').hidden = false;
@@ -715,6 +745,7 @@
 
     if (!kChart) kChart = new window.KlineChart($('#kmCanvas'));
     else kChart.reset();              // ← 清掉上一个标的的图（残留 bug）
+    renderMA();
     loadKline(key, CFG.DEFAULT_PERIOD || '1d');
     scheduleKlineRefresh();
   }
@@ -725,19 +756,23 @@
   }
 
   // ---- K线取数根数（按周期给到「源侧真实上限」，而不是一刀切 1000）----
-  //   日K/周K/月K → **20000**：东财 `lmt` **没有上限**，给多少给多少；新浪 `datalen` 同理。
-  //   ⚠ 之前写 8000 是**我们自己写的请求值**，不是源的上限 ——
-  //     实测纳斯达克（100.NDX）lmt=8000 → 8000 根，lmt=20000 → **8865 根**（1991-08-12 起）；
-  //     道指这类 1896 年起的品种能到 20000 根（66 年）。
-  //   分钟级 → 保持 1000：源侧本身就封顶（5 分钟 1536 根、1 分钟只有当天 240 根），
-  //     再多也没有。
+  //   日K/周K/月K/年K → **20000**：东财 `lmt` **没有上限**，给多少给多少；新浪 `datalen` 同理。
+  //   分钟级 → 2000：
+  //     · 东财 5m 实测 1536 根、1m 只有当天 240 根；15/30/60m 也在千根量级
+  //     · 新浪分钟固定 **1023 根**，但**指数和场内 ETF 都有**（东财对 ETF 只给最近一天）
+  //     · 腾讯分钟 320 根
+  //   ⇒ 给 2000，让每个源回到自己的上限，最后由 app.js 的 apply 取「最新且根数最多」的那条。
   const klineLimit = (period) =>
-    period === '1d' || period === '1w' || period === '1M' ? 20000 : 1000;
+    (period === '1d' || period === '1w' || period === '1M' || period === '1y') ? 20000 : 2000;
 
   async function loadKline(key, period) {
     const myId = ++klineReqId;          // 请求令牌：过期响应一律丢弃
     klineKey = key;
     klinePeriod = period;
+    // 年K 是「月K 聚合」出来的派生周期：取数一律取月K，落图前再聚合
+    const isYear = period === '1y';
+    const fetchPeriod = isYear ? '1M' : period;
+    $('#kmMA').hidden = isYear;         // 年K 只有几十根，均线没有意义
     document.querySelectorAll('.pchip').forEach((b) => b.classList.toggle('on', b.dataset.period === period));
 
     const note = $('#kmNote');
@@ -756,14 +791,23 @@
     const apply = (bars, src, rank) => {
       if (myId !== klineReqId) return false;
       if (!bars || !bars.length) return false;
-      const last = String(bars[bars.length - 1].t || '');
+      // ⚠ 分钟级的时间戳格式不统一：新浪是 `YYYY-MM-DD HH:MM:SS`，东财/腾讯是 `YYYY-MM-DD HH:MM`。
+      //   直接字符串比较会出现「15:00:00 比 15:00 大」→ 先到的新浪数据反而挡住后到的东财。
+      //   统一截到分钟再比。
+      const last = isMinute()
+        ? String(bars[bars.length - 1].t || '').slice(0, 16)
+        : String(bars[bars.length - 1].t || '');
       if (isMinute()) {
-        // ---- 分钟级：按**新鲜度**比，不是按根数比 ----
-        //   直连（东财）只有今天的几十根，本地快照有几百根但停在**上一次刷新**（最多 1 小时前）
-        //   ⇒ 若还按根数判，本地会把今天的实时数据盖掉，用户看到的反而是上一次刷新。
-        //   规则：最后一根时间新的赢；一样新则直连赢。
+        // ---- 分钟级：先比「最后一根时间」，再比根数 ----
+        //   直连（东财）可能只有今天的几十根，本地快照有几百根但停在**上一次刷新**
+        //   ⇒ 不能只按根数比，否则本地会把今天的实时数据盖掉。
+        //   但多个直连源之间（东财 1536 / 新浪 1023 / 腾讯 320）最后一根时间通常一样，
+        //   旧规则「同时间只看优先级」会让先到的腾讯 320 根赢掉新浪 1023 根 ⇒ 现在同时间比根数。
         if (shown && last < shownLast) return false;
-        if (shown && last === shownLast && rank <= shownRank) return false;
+        if (shown && last === shownLast) {
+          if (bars.length < shown) return false;
+          if (bars.length === shown && rank <= shownRank) return false;
+        }
       } else {
         // ---- 日/周/月：按**根数**比（历史越长越好） ----
         if (bars.length < shown) return false;
@@ -775,8 +819,12 @@
       kChart.setData(bars, period);
       // 口径说明（组合标的的代理品种）必须显示出来，不能让用户以为看到的就是报价源本身
       const caliber = window.MarketData.getKlineNote ? window.MarketData.getKlineNote(key) : '';
+      const span = isYear
+        ? `${String(bars[0].t).slice(0, 4)} → ${String(bars[bars.length - 1].t).slice(0, 4)}`
+        : `${bars[0].t} → ${bars[bars.length - 1].t}`;
       note.textContent =
-        `${bars.length} 根 · ${bars[0].t} → ${bars[bars.length - 1].t} · ${src}` +
+        `${bars.length} 根 · ${span} · ${src}` +
+        (isYear && !/聚合/.test(src) ? '（由月K聚合）' : '') +
         (caliber ? ` · ${caliber}` : '');
       notifyUpgrade();
       return true;
@@ -788,17 +836,30 @@
     window.MarketData.localKline(key, period)
       .then((bars) => apply(
         bars,
-        isMinute()
-          ? '本地预生成（分钟快照·服务端每小时刷新）'
-          : '本地预生成（近 4 年）',
+        isYear
+          ? '本地预生成（月K聚合）'
+          : isMinute()
+            ? '本地预生成（分钟快照·服务端每小时刷新）'
+            : '本地预生成（近 4 年）',
         0
       ))
       .catch(() => false);
 
     await window.MarketData
-      .fetchKlineRemote(key, period, klineLimit(period), (bars, src) => apply(bars, src, 1))
+      .fetchKlineRemote(key, fetchPeriod, klineLimit(fetchPeriod), (bars, src) => apply(
+        isYear ? window.MarketData.aggregateYear(bars) : bars, src, 1
+      ))
       .catch(() => false);
     if (myId !== klineReqId) return;      // 期间用户已经切到别的标的/周期了
+
+    // 年K 兜底：月K 取不到（例如中债只有日频）就用日K 聚合
+    if (isYear && shown === 0) {
+      try {
+        await window.MarketData.fetchKlineRemote(key, '1d', 20000, (bars, src) =>
+          apply(window.MarketData.aggregateYear(bars), src, 1));
+      } catch (e) { /* 日K 也没有 */ }
+      if (myId !== klineReqId) return;
+    }
 
     // ---- 第 2 波：直连没给够根数 ⇒ 拉服务端预生成的全量日K ----
     // 宽限 3 秒：给可能更慢但更全的源留窗口，避免在它还在路上时白耗 Pages 带宽。
@@ -835,7 +896,7 @@
   function scheduleKlineRefresh() {
     clearTimeout(klineTimer);
     const q = (S.quotes || []).find((x) => x.key === klineKey);
-    if (!q || !isTrading(q.market)) return;
+    if (!q || !isTrading(q.market) || klinePeriod === '1y') return;
     klineTimer = setTimeout(async () => {
       if ($('#klineModal').hidden) return;
       const myId = klineReqId;            // 期间是否换过标的/周期

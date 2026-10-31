@@ -373,6 +373,15 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
 }
 .pchip:hover { border-color: var(--accent); color: var(--accent); }
 .pchip.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.km-ma { display: flex; gap: .3rem; flex-wrap: wrap; margin: -.35rem 0 .65rem; }
+.mchip {
+  padding: .2rem .5rem; min-height: 26px;
+  font-family: var(--sans); font-size: .72rem;
+  border: 1px solid var(--rule); border-radius: 4px;
+  background: var(--surface); color: var(--ink-mute); cursor: pointer;
+}
+.mchip:hover { border-color: var(--accent); }
+.mchip.on { border-color: var(--accent); color: var(--accent); background: var(--code-bg); font-weight: 600; }
 .km-canvas { height: 440px; }
 .km-note {
   margin-top: .6rem; font-size: .8rem; color: var(--ink-mute);
