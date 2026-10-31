@@ -273,12 +273,12 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 
 ### 6.3 本机定时任务
 
-| 任务 | 计划 | 脚本 |
-|---|---|---|
-| 上午盘快照 | `5 12 * * 1-5` | `scripts\snapshot-collect-and-push.ps1` |
-| 收盘快照 + 宏观 | `30 16 * * 1-5` | `scripts\portfolio-collect-and-push.ps1` |
-| 失败重试 | `35 16 * * 1-5` | 读 `logs\last-portfolio-status.json`，失败才补跑 |
-| 远端同步 | `0 */4 * * *` | `scripts\pull-remote.ps1` |
+| 任务 | 计划 | 脚本 | cron_id |
+|---|---|---|---|
+| 上午盘快照 | `5 12 * * 1-5` | `scripts\snapshot-collect-and-push.ps1` | `8333a316-198e-4ca6-9a66-2e65a3c76643` |
+| 收盘快照 + 宏观 | `30 16 * * 1-5` | `scripts\portfolio-collect-and-push.ps1` | `9b31e4b6-fa07-44ce-83f4-67c8d1eb5aa2` |
+| 失败重试 | `35 16 * * 1-5` | 读 `logs\last-portfolio-status.json`，失败才补跑 | `95efe173-0c21-4250-8240-695641e49677` |
+| 远端同步 | `0 */4 * * *` | `scripts\pull-remote.ps1` | `6f7816d3-da5f-4eda-9030-476a55684b6a` |
 
 Windows 回退任务 `MacroNews-Collect` 默认每 120 分钟，`wscript + run-hidden.vbs` 零窗口启动。
 
