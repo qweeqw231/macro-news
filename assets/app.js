@@ -60,6 +60,51 @@
     CMDTY: '大宗商品', SGE: '上海金', FX: '外汇', ETF: '场内ETF',
   };
 
+  // 行情搜索：57 个标的靠肉眼滚太慢。按中文名 / key（含 ETF 代码）/ 英文缩写筛选，
+  // 别名只补「名字里不含、但大家会搜」的少数词（黄金 / 原油 / 汇率 / 纳指…），不做拼音。
+  // 分组名（港股 / 美股 / 大宗商品…）也进匹配，输入即筛整组。
+  const MKT_ALIAS = {
+    ndx: '纳指 nasdaq',
+    xau: '黄金 金价 gold',
+    xag: '白银 银价 silver',
+    brent: '原油 油价 布油 oil',
+    sge_au9999: '黄金 金价 au9999',
+    usdcny: '汇率 人民币 cny',
+    cgb_1y: '国债 收益率 债券 bond',
+    hsi: '恒指 恒生 hang seng',
+    hs_tech: '恒科',
+    sh_comp: '上证 沪指',
+  };
+  let mktQ = '';
+  const quoteSearchText = (q) =>
+    [q.name, q.key, q.code, MKT_ALIAS[q.key], MARKET_LABEL[q.market]]
+      .filter(Boolean).join(' ').toLowerCase();
+
+  function applyQuoteFilter() {
+    const box = $('#quotes');
+    if (!box) return;
+    const tokens = mktQ.toLowerCase().split(/\s+/).filter(Boolean);
+    let total = 0;
+    let shown = 0;
+    box.querySelectorAll('.mkt').forEach((g) => {
+      let any = false;
+      g.querySelectorAll('.q').forEach((card) => {
+        total++;
+        const hit = !tokens.length ||
+          tokens.every((t) => (card.dataset.search || '').includes(t));
+        card.hidden = !hit;
+        if (hit) { any = true; shown++; }
+      });
+      g.hidden = !any;
+    });
+    const meta = $('#mqMeta');
+    if (!meta) return;
+    if (!total) { meta.textContent = ''; return; }
+    meta.textContent = tokens.length
+      ? (shown ? `命中 ${shown} / ${total} 个标的` : `没有匹配「${mktQ.trim()}」的标的`)
+      : `共 ${total} 个标的`;
+  }
+
   // 交易时段判断（北京时间；小时可 >24 表示跨零点，如美股 21:30–次日 04:00）
   function inRange(h, a, b) {
     return b <= 24 ? (h >= a && h < b) : (h >= a || h < b - 24);
@@ -174,6 +219,7 @@
           const card = el('a', 'q');
           card.href = '#';
           card.dataset.key = q.key;
+          card.dataset.search = quoteSearchText(q);
           card.title = '查看 K 线图';
           const head = el('div', 'q-hd');
           head.appendChild(el('span', 'q-name', q.name));
@@ -191,6 +237,7 @@
         frag.appendChild(g);
       });
     box.replaceChildren(frag);
+    applyQuoteFilter();   // 轮询重绘后保持当前筛选结果
 
     $('#quoteTime').textContent =
       '更新于 ' + new Date(generatedAt).toLocaleString('zh-CN', { hour12: false }) +
@@ -974,12 +1021,14 @@
   // HTML 默认用短版（窄屏首帧就不会截断），桌面再换成完整提示。
   const Q_PLACEHOLDER_FULL = '全文检索：标题 / 摘要 / 来源（如：降息、CPI、黄金、原油）';
   const Q_PLACEHOLDER_SHORT = '搜索：降息、CPI、黄金…';
+  const MQ_PLACEHOLDER_FULL = '搜标的：名称 / 代码 / 英文缩写（如：恒生、黄金、spx、563360）';
+  const MQ_PLACEHOLDER_SHORT = '搜标的：恒生、黄金、563360…';
   const syncSearchPlaceholder = () => {
+    const narrow = window.matchMedia('(max-width: 640px)').matches;
     const q = $('#q');
-    if (!q) return;
-    q.placeholder = window.matchMedia('(max-width: 640px)').matches
-      ? Q_PLACEHOLDER_SHORT
-      : Q_PLACEHOLDER_FULL;
+    if (q) q.placeholder = narrow ? Q_PLACEHOLDER_SHORT : Q_PLACEHOLDER_FULL;
+    const mq = $('#mq');
+    if (mq) mq.placeholder = narrow ? MQ_PLACEHOLDER_SHORT : MQ_PLACEHOLDER_FULL;
   };
 
   async function boot() {
@@ -1026,6 +1075,18 @@
     $('#moreBtn').onclick = () => { S.shown += PAGE; renderFeed(); };
     $('#q').addEventListener('input', (e) => onSearchInput(e.target.value));
     $('#qClear').onclick = () => { $('#q').value = ''; onSearchInput(''); };
+    // 行情搜索：无需防抖（57 张卡片），输入即筛
+    $('#mq').addEventListener('input', (e) => {
+      mktQ = e.target.value;
+      $('#mqClear').hidden = !mktQ;
+      applyQuoteFilter();
+    });
+    $('#mqClear').onclick = () => {
+      $('#mq').value = '';
+      mktQ = '';
+      $('#mqClear').hidden = true;
+      applyQuoteFilter();
+    };
     syncSearchPlaceholder();
     window.addEventListener('resize', syncSearchPlaceholder);
 
