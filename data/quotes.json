@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T00:37:33.101Z",
+  "generatedAt": "2026-10-31T04:13:41.333Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -241,16 +241,17 @@
     },
     {
       "key": "ndx",
-      "name": "纳指100",
+      "name": "纳斯达克100",
       "market": "US",
-      "price": 29402.51,
-      "open": 29421.18,
-      "high": 29517.8,
-      "low": 29257.05,
-      "prevClose": 29813.16,
-      "changePct": -1.38,
-      "updatedAt": "2026-10-29T17:15:59+08:00",
-      "note": ""
+      "price": 28384.85,
+      "open": 28604.92,
+      "high": 28713.45,
+      "low": 28093.25,
+      "prevClose": 29402.51,
+      "volume": 2208196816,
+      "changePct": -3.46,
+      "updatedAt": "2026-10-31T04:00:00+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "xau",
