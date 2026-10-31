@@ -107,6 +107,9 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 挂在 `snapshot.yml` 里：`scripts/collect-macro-if-due.mjs` 每 30 分钟检查一次，
 只有**北京工作日 17:00 后、且当天还没有记录**时才真正采集（17:13 / 17:43 天然重试）。
 17:00 是下限：中债 1Y 曲线要 17:00 后才发布，16:30 采会把昨天的值当今天。
+每次门禁还会先跑 `scripts/backfill-macro.mjs --days 14`：补最近 14 天缺失的日记录
+（两融/10Y 美债按目标日期取，1Y 国债补当日 K 线，社融/CPI/PMI 取最近一条月度值）；
+没有缺口时只读一次文件，不发请求。
 **不再读写 `quotes.json`**（行情已全部并入链路 ①，避免用旧值覆盖高频结果）。
 
 ### 2.5 链路 ⑤：本机回退与同步
@@ -247,6 +250,9 @@ powershell -ExecutionPolicy Bypass -File scripts\register-pull-task.ps1
 
 # 手动验证宏观源（--force 忽略门禁，--dry-run 不写盘）
 node scripts\collect-macro-if-due.mjs --force --dry-run
+
+# 跨天回补宏观（默认最近 7 天、不含今天；云端门禁自动跑的是最近 14 天）
+node scripts\backfill-macro.mjs --days 7 --dry-run
 
 # 手动采集一次（新闻 + 行情，通常由 Actions 跑）
 node src/collect.mjs

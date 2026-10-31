@@ -32,6 +32,17 @@ const wd = bj.getUTCDay(); // 0 = 周日 … 6 = 周六
 
 const say = (m) => console.log(`[macro-gate] ${m}`);
 
+// 先补历史缺口（默认最近 14 天、不含今天）：云端某天全失败时，下一次运行会自愈。
+// 没有缺口时只读一次文件，不发请求。
+if (!DRY) {
+  const r = spawnSync(
+    process.execPath,
+    ['scripts/backfill-macro.mjs', '--days', '14', '--quiet'],
+    { cwd: ROOT, stdio: 'inherit' }
+  );
+  if (r.status !== 0) say('历史缺口回补失败，继续处理当天');
+}
+
 if (!FORCE) {
   if (wd === 0 || wd === 6) {
     say(`${day} 是周末，跳过`);

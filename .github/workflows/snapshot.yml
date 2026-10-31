@@ -51,6 +51,7 @@ on:
       - 'src/portfolio-collect.mjs'
       - 'src/aggregate.mjs'
       - 'scripts/collect-macro-if-due.mjs'
+      - 'scripts/backfill-macro.mjs'
 
 permissions:
   contents: write

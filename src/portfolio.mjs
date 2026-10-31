@@ -662,27 +662,30 @@ function estimateSgeAu9999(quotes, prevQuotes) {
 // 规格书 §8 把这一组放在「第二阶段（按月）」，但 §0 的说明又要求每天写入。
 // 这里按「能取到就取，取不到就跳过该条」实现，不因单项缺失而整轮失败。
 
-/** 两融余额：沪深两市融资余额合计（亿元） */
-async function fetchMargin() {
-  // 上交所：融资余额（元）
+/** 两融余额：沪深两市融资余额合计（亿元）。day 省略时取最新交易日。 */
+export async function fetchMargin(day) {
+  // 上交所返回最近 N 个交易日（tradeDate 参数实测被忽略），按 opDate 挑目标日
   const sse = await get(
     'https://query.sse.com.cn/marketdata/tradedata/queryMargin.do' +
-      '?isPagination=true&tradeDate=&pageHelp.pageSize=3&pageHelp.pageNo=1' +
+      '?isPagination=true&tradeDate=&pageHelp.pageSize=60&pageHelp.pageNo=1' +
       '&pageHelp.beginPage=1&pageHelp.cacheSize=1&pageHelp.endPage=1',
     { json: true, headers: { Referer: 'https://www.sse.com.cn/' }, retries: 1 }
   );
-  const d0 = sse?.pageHelp?.data?.[0];
+  const rows = sse?.pageHelp?.data || [];
+  const want = day ? String(day).replace(/-/g, '') : '';
+  const d0 = want ? rows.find((r) => String(r?.opDate || '') === want) : rows[0];
+  if (!d0) throw new Error(`上交所两融数据缺失${day ? `（${day}）` : ''}`);
   const sseRzye = Number(d0?.rzye);
   if (!Number.isFinite(sseRzye)) throw new Error('上交所两融数据缺失');
 
   // 深交所：融资余额（亿元），接口需要显式日期，取上交所返回的交易日
   const opDate = String(d0?.opDate || '');
-  const day = opDate.length === 8
+  const szDay = opDate.length === 8
     ? `${opDate.slice(0, 4)}-${opDate.slice(4, 6)}-${opDate.slice(6, 8)}`
     : ymd(new Date());
   const szse = await get(
     `https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1837_xxpl` +
-      `&TABKEY=tab1&txtDate=${day}&random=0.3`,
+      `&TABKEY=tab1&txtDate=${szDay}&random=0.3`,
     { json: true, headers: { Referer: 'https://www.szse.cn/market/stock/financing/index.html' }, retries: 1 }
   );
   const sd = Array.isArray(szse) ? szse[0]?.data?.[0] : null;
@@ -698,17 +701,20 @@ async function fetchMargin() {
   };
 }
 
-/** 10Y 美债收益率（%）：FRED DGS10 */
-async function fetchUs10y() {
+/** 10Y 美债收益率（%）：FRED DGS10。day 省略时取最近值；指定时取该日或之前最近的有效值。 */
+export async function fetchUs10y(day) {
+  const end = day || ymd(new Date());
+  const endMs = Date.parse(end + 'T00:00:00Z');
+  const start = new Date(endMs - 10 * 86400000).toISOString().slice(0, 10);
   const csv = await get(
-    'https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&cosd=' + ymd(new Date(Date.now() - 30 * 86400000)),
+    `https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&cosd=${start}&coed=${end}`,
     { headers: { Referer: 'https://fred.stlouisfed.org/' }, retries: 1 }
   );
   const lines = csv.trim().split(/\r?\n/);
   for (let i = lines.length - 1; i >= 1; i--) {
     const [date, v] = lines[i].split(',');
     const val = num(v);
-    if (val !== null && val > 0) {
+    if (val !== null && val > 0 && date <= end) {
       return { key: 'us10y', name: '10Y美债', value: val, unit: '%', source: 'FRED', note: date };
     }
   }
