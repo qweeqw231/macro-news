@@ -1,0 +1,58 @@
+{
+  "at": "2026-11-01",
+  "from": "2026-10-18",
+  "to": "2026-10-31",
+  "filled": 0,
+  "noData": 8,
+  "skipped": 6,
+  "errors": [
+    {
+      "date": "2026-10-19",
+      "margin": "fetch failed",
+      "us10y": "This operation was aborted",
+      "cgb": "已有"
+    },
+    {
+      "date": "2026-10-20",
+      "margin": "fetch failed",
+      "us10y": "This operation was aborted",
+      "cgb": "已有"
+    },
+    {
+      "date": "2026-10-21",
+      "margin": "fetch failed",
+      "us10y": "This operation was aborted",
+      "cgb": "已有"
+    },
+    {
+      "date": "2026-10-22",
+      "margin": "fetch failed",
+      "us10y": "This operation was aborted",
+      "cgb": "已有"
+    },
+    {
+      "date": "2026-10-23",
+      "margin": "fetch failed",
+      "us10y": "This operation was aborted",
+      "cgb": "已有"
+    },
+    {
+      "date": "2026-10-26",
+      "margin": "fetch failed",
+      "us10y": "This operation was aborted",
+      "cgb": "已有"
+    },
+    {
+      "date": "2026-10-27",
+      "margin": "fetch failed",
+      "us10y": "This operation was aborted",
+      "cgb": "已有"
+    },
+    {
+      "date": "2026-10-28",
+      "margin": "fetch failed",
+      "us10y": "This operation was aborted",
+      "cgb": "已有"
+    }
+  ]
+}
