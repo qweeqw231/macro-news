@@ -22,6 +22,7 @@ import { aggregateDaily } from '../src/aggregate.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MACRO_FILE = path.join(ROOT, 'data', 'macro', 'daily.json');
+const STATUS_FILE = path.join(ROOT, 'data', 'macro', '_backfill-status.json');
 const CGB_FILE = path.join(ROOT, 'data', 'kline', 'cgb_1y.json');
 const CGB_1W = path.join(ROOT, 'data', 'kline', 'cgb_1y_1w.json');
 const CGB_1M = path.join(ROOT, 'data', 'kline', 'cgb_1y_1M.json');
@@ -94,6 +95,7 @@ async function main() {
   let filled = 0;
   let skipped = 0;
   let noData = 0;
+  const errors = [];
 
   for (let day = lo; day <= hi; day = addDays(day, 1)) {
     if (weekday(day) === 0 || weekday(day) === 6) {
@@ -139,8 +141,22 @@ async function main() {
 
     if (!dailyItems.length) {
       noData++;
+      errors.push({
+        date: day,
+        margin: mRes.status === 'fulfilled' ? 'ok' : String(mRes.reason?.message || mRes.reason),
+        us10y: uRes.status === 'fulfilled' ? 'ok' : String(uRes.reason?.message || uRes.reason),
+        cgb: cgbText,
+      });
       detail(`${day}：两融/美债均无数据，跳过（cgb ${cgbText}）`);
       continue;
+    }
+    if (mRes.status !== 'fulfilled' || uRes.status !== 'fulfilled') {
+      errors.push({
+        date: day,
+        margin: mRes.status === 'fulfilled' ? 'ok' : String(mRes.reason?.message || mRes.reason),
+        us10y: uRes.status === 'fulfilled' ? 'ok' : String(uRes.reason?.message || uRes.reason),
+        cgb: cgbText,
+      });
     }
 
     const monthly = nearestMonthly(day);
@@ -171,6 +187,20 @@ async function main() {
         bars: sub,
       });
     }
+  }
+
+  if (!DRY && (filled > 0 || noData > 0)) {
+    // 诊断文件：云端回补失败时（例如 Actions 访问不了两融接口）能直接从仓库里看到原因。
+    // 用「日期」而不是精确时刻，避免同一天重复运行时反复产生提交。
+    writeJSON(STATUS_FILE, {
+      at: bjToday(),
+      from: lo,
+      to: hi,
+      filled,
+      noData,
+      skipped,
+      errors: errors.sort((a, b) => a.date.localeCompare(b.date)),
+    });
   }
 
   say(

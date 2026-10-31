@@ -17,6 +17,7 @@
   - 社融 / CPI / PMI 是月度值：从现有记录里取离目标日最近的一条，不伪造当日发布值。
 - 云端门禁 `collect-macro-if-due.mjs` 每次先跑 `backfill-macro.mjs --days 14`：
   某天全失败时，后续任一运行会自动补上；没有缺口时只读文件、不发请求。
+  回补失败时写 `data/macro/_backfill-status.json`（含各日期失败原因），用于排查云端源可达性。
 
 ### 实测
 
