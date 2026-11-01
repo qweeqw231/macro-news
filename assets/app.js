@@ -33,6 +33,36 @@
       ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])
     );
 
+  // ---------- 刷新前后保持页面状态 ----------
+  // 只存 sessionStorage：同一标签页刷新有效，新窗口/次日不会突然弹出旧阅读器。
+  const UI_KEY = 'macroNewsUI.v1';
+  let uiState = null;
+  try { uiState = JSON.parse(sessionStorage.getItem(UI_KEY) || 'null'); } catch { uiState = null; }
+
+  function saveUI() {
+    try {
+      const readerOpen = $('#readerModal') && !$('#readerModal').hidden;
+      const rdBox = $('#readerModal')?.querySelector('.rd-box');
+      const list = S.visible || S.items;
+      const it = readerOpen && readerIdx >= 0 ? list[readerIdx] : null;
+      const klineOpen = $('#klineModal') && !$('#klineModal').hidden;
+      sessionStorage.setItem(UI_KEY, JSON.stringify({
+        v: 1,
+        view: S.view,
+        filter: S.filter,
+        shown: S.shown,
+        y: window.scrollY || 0,
+        reader: it ? {
+          id: it.id || '',
+          url: it.url || '',
+          day: String(it.time || '').slice(0, 10),
+          y: rdBox ? rdBox.scrollTop : 0,
+        } : null,
+        kline: klineOpen && klineKey ? { key: klineKey, period: klinePeriod } : null,
+      }));
+    } catch { /* 隐私模式/配额满：不影响页面 */ }
+  }
+
   async function jget(name, cache) {
     // 缓存策略按「新鲜度 vs 重复下载」逐项决定（见各调用点）：
     //   no-store（默认）：latest / quotes / 今天的归档天 —— 首屏与 15s 轮询必须拿最新；
@@ -320,25 +350,32 @@
 
   // ---------- 站内阅读器 ----------
   let readerIdx = -1;
+  let readerScroll = null;   // null = 保留当前滚动位置（异步补全文重绘时）；数字 = 本次打开的目标位置
 
   function fmtFullTime(iso) {
     const d = new Date(iso);
     return isNaN(d) ? '' : d.toLocaleString('zh-CN', { hour12: false });
   }
 
-  function openReader(idx) {
+  function openReader(idx, restoreScroll = 0) {
     const list = S.visible || S.items;
     if (idx < 0 || idx >= list.length) return;
     readerIdx = idx;
-    renderReader();
+    readerScroll = Number(restoreScroll) || 0;
+    // ⚠ 必须先显示 modal 再 render：隐藏状态下 .rd-box 没有布局高度，
+    //   直接设 scrollTop 会被浏览器钳成 0（刷新恢复阅读器视口时实测）。
     $('#readerModal').hidden = false;
     document.body.style.overflow = 'hidden';
+    renderReader();
+    saveUI();
   }
 
   function closeReader() {
     readerIdx = -1;
+    readerScroll = null;
     $('#readerModal').hidden = true;
     document.body.style.overflow = '';
+    saveUI();
   }
 
   // 搜索结果来自 search.json —— 只有 title + summary，**没有正文**；
@@ -412,15 +449,20 @@
     if (it.url) { link.href = it.url; link.hidden = false; } else { link.hidden = true; }
     $('#rdPrev').disabled = readerIdx <= 0;
     $('#rdNext').disabled = readerIdx >= list.length - 1;
+    const rdBox = $('#readerModal').querySelector('.rd-box');
+    const keep = readerScroll == null ? rdBox.scrollTop : readerScroll;
     body.scrollTop = 0;
-    $('#readerModal').querySelector('.rd-box').scrollTop = 0;
+    rdBox.scrollTop = keep;     // 刷新恢复 / 异步补全文时都保留视口
+    readerScroll = null;
   }
 
   function stepReader(d) {
     const n = readerIdx + d;
     if (n < 0 || n >= (S.visible || S.items).length) return;
+    readerScroll = 0;           // 切换上/下一条时从顶部开始
     readerIdx = n;
     renderReader();
+    saveUI();
   }
 
   function renderFilters() {
@@ -821,7 +863,7 @@
     if (kChart) kChart.setMAEnabled(enabledMA());
   }
 
-  function openKline(key) {
+  function openKline(key, period = CFG.DEFAULT_PERIOD || '1d') {
     const q = (S.quotes || []).find((x) => x.key === key);
     $('#klineModal').hidden = false;
     $('#kmName').textContent = q ? q.name : key;
@@ -844,13 +886,14 @@
     if (!kChart) kChart = new window.KlineChart($('#kmCanvas'));
     else kChart.reset();              // ← 清掉上一个标的的图（残留 bug）
     renderMA();
-    loadKline(key, CFG.DEFAULT_PERIOD || '1d');
+    loadKline(key, period);
     scheduleKlineRefresh();
   }
 
   function closeKline() {
     clearTimeout(klineTimer);
     $('#klineModal').hidden = true;
+    saveUI();
   }
 
   // ---- K线取数根数（按周期给到「源侧真实上限」，而不是一刀切 1000）----
@@ -867,6 +910,7 @@
     const myId = ++klineReqId;          // 请求令牌：过期响应一律丢弃
     klineKey = key;
     klinePeriod = period;
+    saveUI();                            // 刷新前记住当前标的与周期
     // 年K 是「月K 聚合」出来的派生周期：取数一律取月K，落图前再聚合
     const isYear = period === '1y';
     const fetchPeriod = isYear ? '1M' : period;
@@ -1081,6 +1125,40 @@
     if (mq) mq.placeholder = narrow ? MQ_PLACEHOLDER_SHORT : MQ_PLACEHOLDER_FULL;
   };
 
+  // 刷新恢复：先恢复要闻流视口/阅读器，再等行情就绪后恢复 K 线弹窗。
+  function restoreFeedUI() {
+    if (!uiState || S.view !== 'feed') return;
+    const wantShown = Math.max(PAGE, Number(uiState.shown) || PAGE);
+    const filterChanged = uiState.filter && uiState.filter !== S.filter;
+    if (filterChanged || wantShown > S.shown) {
+      if (filterChanged) S.filter = uiState.filter;
+      S.shown = Math.max(S.shown, wantShown);
+      renderFilters();
+      renderFeed();
+    }
+    if (Number.isFinite(uiState.y)) {
+      const apply = () => {
+        if (alignState) alignState.userMoved = true;  // 别让 ResizeObserver 把视口拽回区块顶部
+        window.scrollTo({ top: uiState.y, behavior: 'auto' });
+      };
+      requestAnimationFrame(apply);
+      setTimeout(apply, 250);   // 行情卡/列表异步长高后再对齐一次
+    }
+    if (!uiState.reader) return;
+    const list = S.visible || S.items;
+    const { id, url } = uiState.reader;
+    const idx = list.findIndex((i) =>
+      (id && i.id === id) || (url && i.url === url)
+    );
+    if (idx >= 0) openReader(idx, Number(uiState.reader.y) || 0);
+  }
+
+  function restoreKlineUI() {
+    if (!uiState || !uiState.kline || S.view !== 'market') return;
+    if (!$('#klineModal').hidden) return;
+    openKline(uiState.kline.key, uiState.kline.period || (CFG.DEFAULT_PERIOD || '1d'));
+  }
+
   async function boot() {
     // file:// 下浏览器会拦截 fetch()，页面必然空白。
     // 与其让用户对着白屏发呆，不如直接说明原因和解决办法。
@@ -1120,7 +1198,8 @@
       if (v && v !== S.view) showView(v);
     });
     // 带着 #view-xxx 打开时直接进对应视图（instant：首帧不要看到平滑滚动）
-    const initialView = viewFromHash();
+    // 没有 hash 时退回刷新前保存的视图；hash 优先，避免分享链接被本地状态覆盖。
+    const initialView = viewFromHash() || (uiState && uiState.view) || null;
     if (initialView) showView(initialView, true);
     $('#moreBtn').onclick = () => { S.shown += PAGE; renderFeed(); };
     $('#q').addEventListener('input', (e) => onSearchInput(e.target.value));
@@ -1143,7 +1222,7 @@
     syncSearchPlaceholder();
     window.addEventListener('resize', syncSearchPlaceholder);
 
-    renderQuotes().then(startQuotePolling);
+    renderQuotes().then(startQuotePolling).catch(() => {}).then(restoreKlineUI);
     try {
       const d = await jget('latest.json');
       S.base = d.items;
@@ -1159,7 +1238,11 @@
     } catch (e) {
       $('#feed').innerHTML = `<div class="empty">数据载入失败：${esc(e.message)}<br>请先运行 <code>node src/collect.mjs</code></div>`;
     }
+    restoreFeedUI();
   }
+
+  window.addEventListener('pagehide', saveUI);
+  window.addEventListener('beforeunload', saveUI);
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

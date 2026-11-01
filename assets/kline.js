@@ -544,17 +544,23 @@ class KlineChart {
     //（2026-11-01 实测：375px 屏、90 根日K，「25-07-07」互相压住）。
     const sampleTicks = [fmtTick(view[0].t), fmtTick(view[view.length - 1].t)];
     const labelW = Math.max(...sampleTicks.map((s) => ctx.measureText(s).width));
-    const gap = 12;
-    const maxLabels = Math.max(2, Math.floor(plotW / (labelW + gap)));
+    const gap = 14;
+    // 首尾各留半个标签宽度，比单纯 plotW/(labelW+gap) 更保守
+    const maxLabels = Math.max(2, Math.floor((plotW - labelW) / (labelW + gap)) + 1);
     const tick = Math.max(1, Math.ceil(n / maxLabels));
-    view.forEach((b, i) => {
-      if (i % tick) return;
-      const txt = fmtTick(b.t);
-      const half = ctx.measureText(txt).width / 2;
-      // 首尾标签往绘图区内收，避免压到左侧留白或右侧价格轴
-      const x = Math.max(pad.l + half, Math.min(w - pad.r - half, xOf(i)));
+    // 从最新一根向左排：保证最新日期一定有标签；逐像素做碰撞检测，
+    // 放不下就跳过（不再强行画满 5 个，避免首尾钳制后间距不匀、相互压字）。
+    let prevLeft = Infinity;
+    for (let i = n - 1; i >= 0; i -= tick) {
+      const txt = fmtTick(view[i].t);
+      const tw = ctx.measureText(txt).width;
+      const x = Math.max(pad.l + tw / 2, Math.min(w - pad.r - tw / 2, xOf(i)));
+      const left = x - tw / 2;
+      const right = x + tw / 2;
+      if (right > prevLeft - gap) continue;
       ctx.fillText(txt, x, h - pad.b / 2 - 2);
-    });
+      prevLeft = left;
+    }
 
     // ---- 十字光标 + 浮窗 ----
     if (this.hover >= 0 && this.hover < n) {
