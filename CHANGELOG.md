@@ -12,6 +12,8 @@
   当前 DB 约 **458 MB**。暂不接静态站，等数据稳定后再把最近 1 年接回。
 - 工具：`import-archive.mjs`（导入现有 archive）、`backfill-chinanews.mjs`（按日归档）、
   `backfill-pbc.mjs`（央行列表分页）、`query.mjs`（检索 / 统计 / VACUUM）。
+- 早报链路：`query.mjs` 增加 `--from/--to/--json` 日期窗口；`brief-candidates.mjs`
+  按宏观关键词打分、跨源去重后输出候选清单，供每天 09:00 的 AI 早报挑选 ≤10 条。
 
 ## [2.1.0] - 2026-11-01
 
