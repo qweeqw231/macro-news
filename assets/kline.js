@@ -538,10 +538,22 @@ class KlineChart {
 
     ctx.fillStyle = '#8a8a8a';
     ctx.textAlign = 'center';
-    const tick = Math.max(1, Math.floor(n / 6));
+    ctx.font = '11px system-ui';
+    // 时间刻度随缩放自适应：先按当前标签宽度算出这条轴上最多放几个标签，
+    // 再反推每隔多少根画一个。否则固定 n/6 在手机上一定会叠字
+    //（2026-11-01 实测：375px 屏、90 根日K，「25-07-07」互相压住）。
+    const sampleTicks = [fmtTick(view[0].t), fmtTick(view[view.length - 1].t)];
+    const labelW = Math.max(...sampleTicks.map((s) => ctx.measureText(s).width));
+    const gap = 12;
+    const maxLabels = Math.max(2, Math.floor(plotW / (labelW + gap)));
+    const tick = Math.max(1, Math.ceil(n / maxLabels));
     view.forEach((b, i) => {
       if (i % tick) return;
-      ctx.fillText(fmtTick(b.t), xOf(i), h - pad.b / 2 - 2);
+      const txt = fmtTick(b.t);
+      const half = ctx.measureText(txt).width / 2;
+      // 首尾标签往绘图区内收，避免压到左侧留白或右侧价格轴
+      const x = Math.max(pad.l + half, Math.min(w - pad.r - half, xOf(i)));
+      ctx.fillText(txt, x, h - pad.b / 2 - 2);
     });
 
     // ---- 十字光标 + 浮窗 ----
