@@ -77,9 +77,26 @@
     hs_tech: '恒科',
     sh_comp: '上证 沪指',
   };
+  // 行情卡片要显示「能搜索到的代码」：A股指数 000001、ETF 563360、恒指 HSI…
+  const CODE_MAP = {
+    sh_comp: '000001', sz_comp: '399001', chinext: '399006', star50: '000688',
+    bse50: '899050', csi300: '000300', csi500: '000905', csi1000: '000852',
+    hsi: 'HSI', hs_tech: 'HSTECH',
+    dji: 'DJI', ixic: 'IXIC', spx: 'SPX', n225: 'N225',
+    dax: 'DAX', cac40: 'CAC40', ukx: 'FTSE',
+    ndx: 'NDX', xau: 'XAU', xag: 'XAG', brent: 'BRENT',
+    sge_au9999: 'AU9999', usdcny: 'USDCNY', cgb_1y: 'CGB1Y',
+  };
+  const codeOf = (q) => {
+    if (q.code) return String(q.code);
+    if (CODE_MAP[q.key]) return CODE_MAP[q.key];
+    const k = String(q.key || '');
+    if (k.startsWith('etf_')) return k.slice(4);
+    return k.toUpperCase();
+  };
   let mktQ = '';
   const quoteSearchText = (q) =>
-    [q.name, q.key, q.code, MKT_ALIAS[q.key], MARKET_LABEL[q.market]]
+    [q.name, q.key, codeOf(q), MKT_ALIAS[q.key], MARKET_LABEL[q.market]]
       .filter(Boolean).join(' ').toLowerCase();
 
   function applyQuoteFilter() {
@@ -224,7 +241,10 @@
           card.dataset.search = quoteSearchText(q);
           card.title = '查看 K 线图';
           const head = el('div', 'q-hd');
-          head.appendChild(el('span', 'q-name', q.name));
+          const nameBox = el('div', 'q-name-box');
+          nameBox.appendChild(el('span', 'q-name', q.name));
+          nameBox.appendChild(el('span', 'q-code', codeOf(q)));
+          head.appendChild(nameBox);
           const px = el('span', `q-px ${up ? 'up' : 'down'}`, fmtNum(q.price));
           head.appendChild(px);
           card.appendChild(head);

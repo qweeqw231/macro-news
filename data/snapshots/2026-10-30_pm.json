@@ -2,7 +2,7 @@
   "date": "2026-10-30",
   "session": "pm",
   "sessionLabel": "收盘",
-  "capturedAt": "2026-10-30T14:24:10+08:00",
+  "capturedAt": "2026-11-01T11:31:09+08:00",
   "generator": "src/snapshot.mjs",
   "targets": {
     "am": {
@@ -17,9 +17,17 @@
   },
   "coverage": {
     "total": 57,
-    "ok": 57,
-    "missing": 0,
-    "missingDetail": {}
+    "ok": 50,
+    "missing": 7,
+    "missingDetail": {
+      "ndx": "日频值无法回溯（仅当日有效）",
+      "xau": "日频值无法回溯（仅当日有效）",
+      "xag": "日频值无法回溯（仅当日有效）",
+      "brent": "日频值无法回溯（仅当日有效）",
+      "sge_au9999": "日频值无法回溯（仅当日有效）",
+      "usdcny": "日频值无法回溯（仅当日有效）",
+      "cgb_1y": "日频值无法回溯（仅当日有效）"
+    }
   },
   "isTradingDay": true,
   "quotes": {
@@ -27,141 +35,141 @@
       "name": "上证指数",
       "market": "CN",
       "kind": "index",
-      "price": 3615.52,
+      "price": 3599.02,
       "prevClose": 3651.43,
-      "changePct": -0.9835,
+      "changePct": -1.4353,
       "open": 3605.65,
       "high": 3660.21,
       "low": 3595.26,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "sz_comp": {
       "name": "深证成指",
       "market": "CN",
       "kind": "index",
-      "price": 10932.02,
+      "price": 10833.78,
       "prevClose": 11138.2,
-      "changePct": -1.8511,
+      "changePct": -2.7331,
       "open": 10871.13,
       "high": 11171.58,
-      "low": 10853.6,
-      "asOf": null,
+      "low": 10833.78,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "chinext": {
       "name": "创业板指",
       "market": "CN",
       "kind": "index",
-      "price": 2443.82,
+      "price": 2413.63,
       "prevClose": 2517.59,
-      "changePct": -2.9302,
+      "changePct": -4.1293,
       "open": 2434.8,
       "high": 2518.24,
-      "low": 2427.24,
-      "asOf": null,
+      "low": 2413.63,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "star50": {
       "name": "科创50",
       "market": "CN",
       "kind": "index",
-      "price": 1175.86,
+      "price": 1160.84,
       "prevClose": 1228.09,
-      "changePct": -4.2529,
+      "changePct": -5.476,
       "open": 1190.95,
       "high": 1218.8,
-      "low": 1175.11,
-      "asOf": null,
+      "low": 1159.57,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "bse50": {
       "name": "北证50",
       "market": "CN",
       "kind": "index",
-      "price": 898.51,
+      "price": 885.74,
       "prevClose": 910.08,
-      "changePct": -1.2713,
+      "changePct": -2.6745,
       "open": 893.56,
       "high": 924.96,
-      "low": 893.14,
-      "asOf": null,
+      "low": 885.74,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "csi300": {
       "name": "沪深300",
       "market": "CN",
       "kind": "index",
-      "price": 4002.41,
+      "price": 3985.5,
       "prevClose": 4041.84,
-      "changePct": -0.9755,
+      "changePct": -1.3939,
       "open": 3985.24,
       "high": 4046.87,
       "low": 3968.86,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "csi500": {
       "name": "中证500",
       "market": "CN",
       "kind": "index",
-      "price": 6329.54,
+      "price": 6266.19,
       "prevClose": 6453.72,
-      "changePct": -1.9242,
+      "changePct": -2.9058,
       "open": 6318.16,
       "high": 6483.01,
-      "low": 6303.82,
-      "asOf": null,
+      "low": 6266.19,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "csi1000": {
       "name": "中证1000",
       "market": "CN",
       "kind": "index",
-      "price": 6230.22,
+      "price": 6161.23,
       "prevClose": 6378.78,
-      "changePct": -2.329,
+      "changePct": -3.4105,
       "open": 6243.98,
       "high": 6428.58,
-      "low": 6207.85,
-      "asOf": null,
+      "low": 6161.23,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "hsi": {
       "name": "恒生指数",
       "market": "HK",
       "kind": "index",
-      "price": 23324.61,
+      "price": 23294.42,
       "prevClose": 22958.65,
-      "changePct": 1.594,
+      "changePct": 1.4625,
       "open": 23011.29,
       "high": 23400.02,
       "low": 22947.96,
-      "asOf": null,
+      "asOf": "2026-10-30T16:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "hs_tech": {
       "name": "恒生科技",
       "market": "HK",
       "kind": "index",
-      "price": 3762.64,
+      "price": 3754.9,
       "prevClose": 3744.14,
-      "changePct": 0.4941,
+      "changePct": 0.2874,
       "open": 3720.49,
       "high": 3809.71,
       "low": 3706.3,
-      "asOf": null,
+      "asOf": "2026-10-30T16:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "dji": {
       "name": "道琼斯",
@@ -173,9 +181,9 @@
       "open": 52086.13,
       "high": 52405.88,
       "low": 52086.13,
-      "asOf": null,
+      "asOf": "2026-10-29",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": "该市场当日尚未收盘，取最近一个已收盘交易日"
     },
     "ixic": {
       "name": "纳斯达克",
@@ -187,9 +195,9 @@
       "open": 26201.82,
       "high": 26286.46,
       "low": 26053.16,
-      "asOf": null,
+      "asOf": "2026-10-29",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": "该市场当日尚未收盘，取最近一个已收盘交易日"
     },
     "spx": {
       "name": "标普500",
@@ -201,23 +209,23 @@
       "open": 7699.61,
       "high": 7732.21,
       "low": 7690.94,
-      "asOf": null,
+      "asOf": "2026-10-29",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": "该市场当日尚未收盘，取最近一个已收盘交易日"
     },
     "n225": {
       "name": "日经225",
       "market": "JP",
       "kind": "index",
-      "price": 63102.98,
+      "price": 63290.11,
       "prevClose": 64659.47,
-      "changePct": -2.4072,
+      "changePct": -2.1178,
       "open": 64344.37,
       "high": 64589.04,
       "low": 62711.42,
-      "asOf": null,
+      "asOf": "2026-10-30",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "dax": {
       "name": "德国DAX",
@@ -229,9 +237,9 @@
       "open": 25724.02,
       "high": 26106.19,
       "low": 25720.69,
-      "asOf": null,
+      "asOf": "2026-10-29",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": "该市场当日尚未收盘，取最近一个已收盘交易日"
     },
     "cac40": {
       "name": "法国CAC40",
@@ -243,9 +251,9 @@
       "open": 7931.91,
       "high": 7998.12,
       "low": 7923.22,
-      "asOf": null,
+      "asOf": "2026-10-29",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": "该市场当日尚未收盘，取最近一个已收盘交易日"
     },
     "ukx": {
       "name": "英国富时100",
@@ -257,23 +265,23 @@
       "open": 10694.02,
       "high": 10773.7,
       "low": 10694.02,
-      "asOf": null,
+      "asOf": "2026-10-29",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": "该市场当日尚未收盘，取最近一个已收盘交易日"
     },
     "kospi": {
       "name": "韩国KOSPI",
       "market": "KR",
       "kind": "index",
-      "price": 5713.21,
+      "price": 5730.74,
       "prevClose": 5937.66,
-      "changePct": -3.7801,
+      "changePct": -3.4849,
       "open": 5760.35,
       "high": 5784.98,
       "low": 5599.42,
-      "asOf": null,
+      "asOf": "2026-10-30",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_563360": {
       "name": "中证A500ETF",
@@ -281,15 +289,15 @@
       "kind": "etf",
       "theme": "宽基",
       "region": "CN",
-      "price": 1.093,
+      "price": 1.086,
       "prevClose": 1.107,
-      "changePct": -1.2647,
+      "changePct": -1.897,
       "open": 1.095,
       "high": 1.11,
       "low": 1.085,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159819": {
       "name": "人工智能ETF",
@@ -297,15 +305,15 @@
       "kind": "etf",
       "theme": "科技AI",
       "region": "CN",
-      "price": 1.353,
+      "price": 1.333,
       "prevClose": 1.402,
-      "changePct": -3.495,
+      "changePct": -4.9215,
       "open": 1.365,
       "high": 1.4,
-      "low": 1.351,
-      "asOf": null,
+      "low": 1.333,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159530": {
       "name": "机器人ETF",
@@ -313,15 +321,15 @@
       "kind": "etf",
       "theme": "科技AI",
       "region": "CN",
-      "price": 1.262,
+      "price": 1.238,
       "prevClose": 1.287,
-      "changePct": -1.9425,
+      "changePct": -3.8073,
       "open": 1.25,
       "high": 1.322,
-      "low": 1.25,
-      "asOf": null,
+      "low": 1.238,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_588200": {
       "name": "科创芯片ETF",
@@ -329,15 +337,15 @@
       "kind": "etf",
       "theme": "科技AI",
       "region": "CN",
-      "price": 0.787,
+      "price": 0.775,
       "prevClose": 0.819,
-      "changePct": -3.9072,
+      "changePct": -5.3724,
       "open": 0.791,
       "high": 0.821,
-      "low": 0.785,
-      "asOf": null,
+      "low": 0.775,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159516": {
       "name": "半导体设备ETF",
@@ -345,15 +353,15 @@
       "kind": "etf",
       "theme": "科技AI",
       "region": "CN",
-      "price": 0.451,
+      "price": 0.443,
       "prevClose": 0.47,
-      "changePct": -4.0426,
+      "changePct": -5.7447,
       "open": 0.452,
       "high": 0.474,
-      "low": 0.449,
-      "asOf": null,
+      "low": 0.442,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_158050": {
       "name": "创业板算力ETF",
@@ -361,15 +369,15 @@
       "kind": "etf",
       "theme": "科技AI",
       "region": "CN",
-      "price": 0.683,
+      "price": 0.67,
       "prevClose": 0.715,
-      "changePct": -4.4755,
+      "changePct": -6.2937,
       "open": 0.692,
       "high": 0.716,
-      "low": 0.674,
-      "asOf": null,
+      "low": 0.67,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159732": {
       "name": "消费电子ETF",
@@ -377,15 +385,15 @@
       "kind": "etf",
       "theme": "科技AI",
       "region": "CN",
-      "price": 0.995,
+      "price": 0.981,
       "prevClose": 1.035,
-      "changePct": -3.8647,
+      "changePct": -5.2174,
       "open": 0.99,
       "high": 1.033,
-      "low": 0.99,
-      "asOf": null,
+      "low": 0.981,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_513050": {
       "name": "中概互联网ETF",
@@ -393,15 +401,15 @@
       "kind": "etf",
       "theme": "互联网",
       "region": "US",
-      "price": 0.935,
+      "price": 0.932,
       "prevClose": 0.92,
-      "changePct": 1.6304,
+      "changePct": 1.3043,
       "open": 0.916,
       "high": 0.942,
       "low": 0.915,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159792": {
       "name": "港股通互联网ETF",
@@ -409,15 +417,15 @@
       "kind": "etf",
       "theme": "互联网",
       "region": "HK",
-      "price": 0.5,
+      "price": 0.498,
       "prevClose": 0.494,
-      "changePct": 1.2146,
+      "changePct": 0.8097,
       "open": 0.489,
       "high": 0.504,
       "low": 0.488,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_513530": {
       "name": "港股通红利ETF",
@@ -425,15 +433,15 @@
       "kind": "etf",
       "theme": "港股",
       "region": "HK",
-      "price": 1.536,
+      "price": 1.533,
       "prevClose": 1.508,
-      "changePct": 1.8568,
+      "changePct": 1.6578,
       "open": 1.512,
       "high": 1.538,
       "low": 1.51,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_513120": {
       "name": "港股创新药ETF",
@@ -441,15 +449,15 @@
       "kind": "etf",
       "theme": "港股",
       "region": "HK",
-      "price": 1.165,
+      "price": 1.155,
       "prevClose": 1.187,
-      "changePct": -1.8534,
+      "changePct": -2.6959,
       "open": 1.181,
       "high": 1.2,
       "low": 1.152,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_512170": {
       "name": "医疗ETF",
@@ -463,9 +471,9 @@
       "open": 0.33,
       "high": 0.343,
       "low": 0.327,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159992": {
       "name": "创新药ETF",
@@ -473,15 +481,15 @@
       "kind": "etf",
       "theme": "医药",
       "region": "CN",
-      "price": 0.789,
+      "price": 0.785,
       "prevClose": 0.785,
-      "changePct": 0.5096,
+      "changePct": 0,
       "open": 0.783,
       "high": 0.811,
       "low": 0.772,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_512690": {
       "name": "酒ETF",
@@ -489,15 +497,15 @@
       "kind": "etf",
       "theme": "消费",
       "region": "CN",
-      "price": 0.433,
+      "price": 0.432,
       "prevClose": 0.411,
-      "changePct": 5.3528,
+      "changePct": 5.1095,
       "open": 0.411,
       "high": 0.436,
       "low": 0.411,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159766": {
       "name": "旅游ETF",
@@ -505,15 +513,15 @@
       "kind": "etf",
       "theme": "消费",
       "region": "CN",
-      "price": 0.524,
+      "price": 0.522,
       "prevClose": 0.517,
-      "changePct": 1.354,
+      "changePct": 0.9671,
       "open": 0.514,
       "high": 0.528,
       "low": 0.514,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_512880": {
       "name": "证券ETF",
@@ -521,15 +529,15 @@
       "kind": "etf",
       "theme": "金融",
       "region": "CN",
-      "price": 0.965,
+      "price": 0.962,
       "prevClose": 0.973,
-      "changePct": -0.8222,
+      "changePct": -1.1305,
       "open": 0.967,
       "high": 0.978,
       "low": 0.959,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_512800": {
       "name": "银行ETF",
@@ -543,9 +551,9 @@
       "open": 0.89,
       "high": 0.894,
       "low": 0.882,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_515220": {
       "name": "煤炭ETF",
@@ -553,15 +561,15 @@
       "kind": "etf",
       "theme": "资源",
       "region": "CN",
-      "price": 1.242,
+      "price": 1.238,
       "prevClose": 1.229,
-      "changePct": 1.0578,
+      "changePct": 0.7323,
       "open": 1.228,
       "high": 1.246,
       "low": 1.213,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_512400": {
       "name": "有色金属ETF",
@@ -569,15 +577,15 @@
       "kind": "etf",
       "theme": "资源",
       "region": "CN",
-      "price": 1.411,
+      "price": 1.395,
       "prevClose": 1.423,
-      "changePct": -0.8433,
+      "changePct": -1.9677,
       "open": 1.407,
       "high": 1.435,
       "low": 1.39,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_516150": {
       "name": "稀土ETF",
@@ -585,15 +593,15 @@
       "kind": "etf",
       "theme": "资源",
       "region": "CN",
-      "price": 1.405,
+      "price": 1.388,
       "prevClose": 1.422,
-      "changePct": -1.1955,
+      "changePct": -2.391,
       "open": 1.408,
       "high": 1.439,
-      "low": 1.398,
-      "asOf": null,
+      "low": 1.388,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_512660": {
       "name": "军工ETF",
@@ -601,15 +609,15 @@
       "kind": "etf",
       "theme": "军工制造",
       "region": "CN",
-      "price": 0.991,
+      "price": 0.982,
       "prevClose": 1.019,
-      "changePct": -2.7478,
+      "changePct": -3.631,
       "open": 1.005,
       "high": 1.018,
-      "low": 0.99,
-      "asOf": null,
+      "low": 0.979,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_560280": {
       "name": "工程机械ETF",
@@ -617,15 +625,15 @@
       "kind": "etf",
       "theme": "军工制造",
       "region": "CN",
-      "price": 1.304,
+      "price": 1.295,
       "prevClose": 1.332,
-      "changePct": -2.1021,
+      "changePct": -2.7778,
       "open": 1.318,
       "high": 1.328,
       "low": 1.29,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159755": {
       "name": "电池ETF",
@@ -633,15 +641,15 @@
       "kind": "etf",
       "theme": "新能源",
       "region": "CN",
-      "price": 0.732,
+      "price": 0.728,
       "prevClose": 0.732,
-      "changePct": 0,
+      "changePct": -0.5464,
       "open": 0.724,
       "high": 0.75,
       "low": 0.721,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_515790": {
       "name": "光伏ETF",
@@ -649,15 +657,15 @@
       "kind": "etf",
       "theme": "新能源",
       "region": "CN",
-      "price": 0.676,
+      "price": 0.669,
       "prevClose": 0.691,
-      "changePct": -2.1708,
+      "changePct": -3.1838,
       "open": 0.683,
       "high": 0.693,
-      "low": 0.674,
-      "asOf": null,
+      "low": 0.669,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159611": {
       "name": "电力ETF",
@@ -665,15 +673,15 @@
       "kind": "etf",
       "theme": "公用农业地产",
       "region": "CN",
-      "price": 1.03,
+      "price": 1.026,
       "prevClose": 1.034,
-      "changePct": -0.3868,
+      "changePct": -0.7737,
       "open": 1.033,
       "high": 1.036,
       "low": 1.023,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159865": {
       "name": "养殖ETF",
@@ -681,15 +689,15 @@
       "kind": "etf",
       "theme": "公用农业地产",
       "region": "CN",
-      "price": 0.512,
+      "price": 0.51,
       "prevClose": 0.515,
-      "changePct": -0.5825,
+      "changePct": -0.9709,
       "open": 0.513,
       "high": 0.516,
       "low": 0.508,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_512200": {
       "name": "房地产ETF",
@@ -697,15 +705,15 @@
       "kind": "etf",
       "theme": "公用农业地产",
       "region": "CN",
-      "price": 1.122,
+      "price": 1.112,
       "prevClose": 1.131,
-      "changePct": -0.7958,
+      "changePct": -1.6799,
       "open": 1.125,
       "high": 1.138,
       "low": 1.109,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159869": {
       "name": "游戏ETF",
@@ -713,15 +721,15 @@
       "kind": "etf",
       "theme": "传媒",
       "region": "CN",
-      "price": 0.96,
+      "price": 0.953,
       "prevClose": 1.009,
-      "changePct": -4.8563,
+      "changePct": -5.55,
       "open": 0.995,
       "high": 0.996,
-      "low": 0.959,
-      "asOf": null,
+      "low": 0.953,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_512890": {
       "name": "红利低波ETF",
@@ -729,15 +737,15 @@
       "kind": "etf",
       "theme": "红利风格",
       "region": "CN",
-      "price": 1.246,
+      "price": 1.243,
       "prevClose": 1.236,
-      "changePct": 0.8091,
+      "changePct": 0.5663,
       "open": 1.236,
       "high": 1.248,
       "low": 1.227,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_159201": {
       "name": "自由现金流ETF",
@@ -745,15 +753,15 @@
       "kind": "etf",
       "theme": "红利风格",
       "region": "CN",
-      "price": 1.165,
+      "price": 1.164,
       "prevClose": 1.158,
-      "changePct": 0.6045,
+      "changePct": 0.5181,
       "open": 1.153,
       "high": 1.17,
       "low": 1.148,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_518880": {
       "name": "黄金ETF",
@@ -761,15 +769,15 @@
       "kind": "etf",
       "theme": "跨资产",
       "region": "CN",
-      "price": 8.126,
+      "price": 8.115,
       "prevClose": 8.224,
-      "changePct": -1.1916,
+      "changePct": -1.3254,
       "open": 8.16,
       "high": 8.176,
-      "low": 8.123,
-      "asOf": null,
+      "low": 8.112,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
+      "note": ""
     },
     "etf_511990": {
       "name": "华宝添益ETF",
@@ -783,109 +791,9 @@
       "open": 100.005,
       "high": 100.008,
       "low": 100.002,
-      "asOf": null,
+      "asOf": "2026-10-30T15:00:00+08:00",
       "priceSource": "dailyK",
-      "note": "preclose"
-    },
-    "ndx": {
-      "name": "纳指100",
-      "market": "US",
-      "kind": "portfolio",
-      "price": 29402.51,
-      "prevClose": 29813.16,
-      "changePct": -1.3774,
-      "open": 29421.18,
-      "high": 29517.8,
-      "low": 29257.05,
-      "asOf": null,
-      "priceSource": "daily",
-      "note": "preclose"
-    },
-    "xau": {
-      "name": "伦敦金",
-      "market": "CMDTY",
-      "kind": "portfolio",
-      "price": 3988.11,
-      "prevClose": 4021.23,
-      "changePct": -0.8236,
-      "open": 4023.79,
-      "high": 4026.24,
-      "low": 3986.68,
-      "asOf": null,
-      "priceSource": "daily",
-      "note": "preclose"
-    },
-    "xag": {
-      "name": "伦敦银",
-      "market": "CMDTY",
-      "kind": "portfolio",
-      "price": 50.94,
-      "prevClose": 52.14,
-      "changePct": -2.3015,
-      "open": 52.16,
-      "high": 52.21,
-      "low": 50.85,
-      "asOf": null,
-      "priceSource": "daily",
-      "note": "preclose"
-    },
-    "brent": {
-      "name": "布伦特原油",
-      "market": "CMDTY",
-      "kind": "portfolio",
-      "price": 112.19,
-      "prevClose": 110.8,
-      "changePct": 1.2545,
-      "open": 111.61,
-      "high": 114.07,
-      "low": 111.03,
-      "asOf": null,
-      "priceSource": "daily",
-      "note": "preclose"
-    },
-    "sge_au9999": {
-      "name": "上海金Au99.99",
-      "market": "SGE",
-      "kind": "portfolio",
-      "price": 865.26,
-      "prevClose": 868.99,
-      "changePct": -0.4292,
-      "open": 869.3,
-      "high": 873.8,
-      "low": 863.05,
-      "asOf": null,
-      "priceSource": "daily",
-      "note": "preclose"
-    },
-    "usdcny": {
-      "name": "人民币中间价",
-      "market": "FX",
-      "kind": "portfolio",
-      "price": 6.7138,
-      "prevClose": 6.7147,
-      "changePct": -0.0134,
-      "open": null,
-      "high": null,
-      "low": null,
-      "asOf": null,
-      "priceSource": "daily",
-      "note": "preclose"
-    },
-    "cgb_1y": {
-      "name": "1Y国债收益率",
-      "market": "CN",
-      "kind": "portfolio",
-      "price": 1.1649,
-      "prevClose": 1.1693,
-      "changePct": -0.3763,
-      "open": null,
-      "high": null,
-      "low": null,
-      "asOf": null,
-      "priceSource": "daily",
-      "note": "preclose"
+      "note": ""
     }
-  },
-  "preclose": true,
-  "note": "capturedAt 14:24:10 早于收盘（CN 15:00 / HK 16:00），价格为盘中值，不得当作收盘价；各项 asOf 已置空"
+  }
 }

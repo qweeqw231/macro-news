@@ -262,6 +262,14 @@ async function buildSnapshot(date, session) {
   const now = beijingNow();
   const isToday = date === now.date;
 
+  // ⚠ 生成器自身的最后一道闸：main 会过滤 jobs，但任何调用方（含未来的新入口）
+  //   都不能在当天收盘前生成 pm。否则会把盘中日 K 标成 15:00/16:00 收盘价。
+  if (isToday && now.hm < SESSIONS[session].readyAt) {
+    throw new Error(
+      `拒绝生成 ${date} ${session}：当前 ${now.hm}，未到 ${SESSIONS[session].readyAt}`
+    );
+  }
+
   // ---- 1. 组合日频值（只在当日有效）----
   let portfolio = new Map();
   if (isToday) {
@@ -423,6 +431,19 @@ async function buildSnapshot(date, session) {
     ...(Object.keys(minuteFail).length ? { kline5m: minuteFail } : {}),
   };
 
+  // ⚠ pm 的 A股/ETF/港股必须是「日 K 官方收盘价」；任何 asOf 为空或 preclose
+  //   的条目都不允许进入快照。2026-10-30 事故就是这类盘中值被贴上了收盘标签。
+  if (session === 'pm') {
+    const bad = [];
+    for (const [key, q] of Object.entries(quotes)) {
+      if (!['CN', 'ETF', 'HK'].includes(q.market)) continue;
+      if (q.priceSource !== 'dailyK' || !q.asOf || q.note === 'preclose') bad.push(key);
+    }
+    if (bad.length) {
+      throw new Error(`拒绝生成 pm 快照：${bad.slice(0, 5).join('、')} 不是收盘价`);
+    }
+  }
+
   // 非交易日判定：一个 A 股指数都拿不到价 → 这一天没有交易，别写文件
   const cnIndex = quotes.sh_comp || quotes.csi300 || quotes.sz_comp;
 
@@ -454,6 +475,17 @@ function snapshotFile(date, session) {
 
 /** 写盘；内容与既有文件一致则跳过（避免 git 反复存同样的 blob） */
 async function writeSnapshot(file, doc) {
+  // 最后一道写盘闸：preclose / asOf 为空的 A股、ETF、港股一律禁止落盘。
+  // 这类文件比缺一份快照更危险，下游无法分辨它是收盘价还是盘中价。
+  const bad = [];
+  if (doc.preclose === true) bad.push('top-level preclose');
+  for (const [key, q] of Object.entries(doc.quotes || {})) {
+    if (q.note === 'preclose') bad.push(key);
+    else if (['CN', 'ETF', 'HK'].includes(q.market) && !q.asOf) bad.push(key);
+  }
+  if (bad.length) {
+    throw new Error(`拒绝写入 preclose 快照：${bad.slice(0, 5).join('、')}`);
+  }
   const text = JSON.stringify(doc, null, 2);
   if (existsSync(file)) {
     try {

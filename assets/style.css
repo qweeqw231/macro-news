@@ -139,7 +139,9 @@ body { overflow-wrap: break-word; }
 }
 .q:hover { border-color: var(--accent); transform: translateY(-1px); }
 .q-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 0.4rem; }
-.q-name { font-size: 0.8rem; color: var(--ink-mute); font-family: var(--sans); }
+.q-name-box { min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.q-name { font-size: 0.8rem; color: var(--ink-mute); font-family: var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.q-code { font-family: var(--sans); font-size: 0.64rem; color: var(--ink-faint); letter-spacing: 0.06em; font-variant-numeric: tabular-nums; margin-top: 0.08rem; }
 .q-px { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .q-chg { font-size: 0.78rem; font-family: var(--sans); font-variant-numeric: tabular-nums; margin-top: 0.1rem; }
 .q-chg .up, .q-px.up { color: var(--up); }
