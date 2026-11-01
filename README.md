@@ -121,6 +121,29 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 | Windows `MacroNews-Collect` | 120 分钟 | 云端正常时基本不产出；云端挂掉时接管（静默无窗口） |
 | Windows `MacroNews-Pull` | 4 小时 | `git merge --ff-only` 把远端产物拉回本机，**绝不覆盖工作区** |
 
+### 2.6 链路 ⑥：每日早报（09:00，本机固定对话）
+
+**不产出站点数据**，只写本地文件：`.local/briefings/YYYY-MM-DD.{json,md}`。
+
+| 环节 | 实现 |
+|---|---|
+| 触发 | minimax 定时任务 `macro-news 宏观早报（每日 09:00）`，cron `0 9 * * *`（Asia/Shanghai），**固定对话**（同一个任务专用对话，历史累积可回溯） |
+| 同步 | `scripts/pull-remote.ps1` → `node scripts/news-db/import-archive.mjs`（把 `data/archive/*.json` 入库） |
+| 候选 | `node scripts/news-db/brief-candidates.mjs --from <昨天> --to <今天> --limit 120`（按宏观关键词打分、跨源去重） |
+| 挑选 | **AI 判断**：≤10 条，按「中国政策/央行/利率/PMI/财政 > 三大央行/美国数据 > 地缘/原油/黄金/美元 > A股/港股/美股主线」排序；同一事件多源报道合并成一条 |
+| 产物 | `.local/briefings/YYYY-MM-DD.json`（结构化）+ `.md`（人读版），并把 Markdown 全文回帖到对话 |
+
+**新闻库** `.local/news.db`（SQLite + FTS5，中文 bigram 分词）：52 万条量级；
+近 60 天有全文/摘要，5 年历史以标题+链接为主（中新网回填约 50 万条）。
+
+⚠ 两个实测坑（早报任务会天天踩，所以写进指令里）：
+1. **库里的 `published_at` 是「入库时刻」不是原始发布时间，且格式不统一** ——
+   `+08:00` 结尾的是抓取源（东方财富/新浪财经/华尔街见闻），原样用；
+   `Z` 结尾的是 UTC（中新网/国家统计局/美联储/欧洲央行），**要 +8 小时**再转北京时间。
+   校验锚点：统计局 PMI 那条 `2026-10-31T01:30:01Z` → 北京时间 9:30，正是官方发布时刻。
+2. **同一篇文章在库里可能有两行**：中新网回填行是 date 精度占位（`T12:00:00+08:00`、summary 为空），
+   采集行才有全文 ⇒ 取时间与链接要用**有 summary 的那一行**。
+
 ---
 
 ## 3. 采集规格（口径）
@@ -327,6 +350,10 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 `MacroNews-Collect` / `MacroNews-Pull` 均用 `wscript + run-hidden.vbs` 零窗口启动，
 `-StartWhenAvailable` 允许睡眠/关机后补跑。
 
+此外还有一条 **minimax 定时任务**（不是 Windows 计划任务）：
+`macro-news 宏观早报（每日 09:00）`（cron `0 9 * * *`，Asia/Shanghai，固定对话）——
+见 §2.6。它只读新闻库、只写 `.local/briefings/`，**不碰站点文件、不提交 git**。
+
 > minimax 的 4 个旧任务（12:05 上午快照、16:30 收盘+宏观、16:35 重试、4 小时同步）
 > 已于 2026-10-31 全部下线。若控制台里还能看到，直接停用/删除即可；本仓库不再依赖它们。
 
@@ -417,6 +444,10 @@ macro-news/
 │   ├── archive/       按天新闻（含正文）
 │   ├── kline/         日/周/月 + _full + min/
 │   └── macro/daily.json
+├── .local/             本机私有（已在 .gitignore）
+│   ├── news.db         新闻库（SQLite + FTS5，52 万条）
+│   └── briefings/      每日早报 YYYY-MM-DD.json / .md
+├── scripts/news-db/    新闻库：db · import-archive · brief-candidates · query · backfill-*
 ├── src/
 │   ├── collect.mjs    新闻 + 行情主程序（--no-kline / --kline-only）
 │   ├── sources.mjs    新闻源 + 18 指数适配器 + fetchKline
