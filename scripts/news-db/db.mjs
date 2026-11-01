@@ -41,6 +41,31 @@ export function titleHash(title, date) {
   return sha1(n + '|' + String(date || '').slice(0, 10));
 }
 
+/** epoch(ms) → 北京时间 ISO（+08:00），不依赖运行机器的时区 */
+function isoBeijing(ms) {
+  const t = new Date(ms + 8 * 3600 * 1000);
+  const p = (n) => String(n).padStart(2, '0');
+  return (
+    `${t.getUTCFullYear()}-${p(t.getUTCMonth() + 1)}-${p(t.getUTCDate())}T` +
+    `${p(t.getUTCHours())}:${p(t.getUTCMinutes())}:${p(t.getUTCSeconds())}+08:00`
+  );
+}
+
+/**
+ * published_at 统一成北京时间 ISO 字符串。
+ *
+ * 库里的格式是混的：以 `Z` 结尾的是 **UTC**（比北京慢 8 小时，直接 slice 出来会整天错位），
+ * 带 `+08:00` 的原样用；日期符串只有年月日的按当天 00:00 算。
+ * 只用于展示 / 早报时间窗，检索排序一律用整数 `published_ts`（已经是 epoch 秒）。
+ */
+export function normalizePublishedAt(s) {
+  const str = String(s || '').trim();
+  if (!str) return '';
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return `${str}T00:00:00+08:00`;
+  const t = Date.parse(str);
+  return Number.isFinite(t) ? isoBeijing(t) : '';
+}
+
 export function openDb(file = DEFAULT_DB) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const db = new DatabaseSync(file);

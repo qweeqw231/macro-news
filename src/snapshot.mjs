@@ -129,7 +129,7 @@ function bjDate(ms) {
   return `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}`;
 }
 /** 日 K「日期 D」这根何时收完 */
-function barClosedAt(market, date) {
+export function barClosedAt(market, date) {
   const spec = BAR_CLOSED_AT[market] || '15:00';
   const plus = spec.endsWith('+1');
   return bjStamp(date, plus ? spec.slice(0, 5) : spec, plus ? 1 : 0);
@@ -140,7 +140,7 @@ function barClosedAt(market, date) {
  * @param {string} date   快照日期 YYYY-MM-DD（北京时间）
  * @param {'am'|'pm'} session
  */
-function lastClosedBarDate(market, date, session) {
+export function lastClosedBarDate(market, date, session) {
   const asOf = bjStamp(date, SNAPSHOT_CAPTURE_HM[session]);
   let d = date;
   for (let i = 0; i < 10; i++) {
@@ -603,7 +603,14 @@ async function main() {
   console.log(`[snapshot] 完成：新写 ${written} 份，跳过 ${skipped} 份，用时 ${Date.now() - started}ms`);
 }
 
-main().catch((err) => {
-  console.error('[snapshot] 致命错误', err);
-  process.exit(1);
-});
+// 只在被直接执行时跑 main：离线测试会 import 本文件取 barClosedAt / lastClosedBarDate，
+// 若无条件是调用，一 import 就会开始跑采集（会发网络请求、写快照）。
+const isDirectRun =
+  process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (isDirectRun) {
+  main().catch((err) => {
+    console.error('[snapshot] 致命错误', err);
+    process.exit(1);
+  });
+}

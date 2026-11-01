@@ -23,6 +23,37 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.1.3] - 2026-11-01
+
+### 新增
+
+- **页脚链路健康**：状态灯（绿=正常 / 棕=注意 / 红=异常）+ 一行摘要
+  「云端/本机 · 采集 X 前 · 源 N/M · 最新新闻 X 前 · 行情 时点 · 宏观 N/M · 库 N 条 / D 天」。
+  全部派生自现有 `_last-run.json` / `latest.json` / `quotes.json`，**不新增心跳文件**
+  （采集每 15 分钟就可能提交一次 `data/`，再加状态文件只会让仓库继续膨胀）。
+  来源失败 / 宏观失败 / 行情错误写进 `title`，悬停可见。
+- **`_last-run.json` 增加 `runner`**（`cloud` / `local`）：页脚据此显示最后一次写入是哪台机器。
+- **离线回归测试** `tests/`（`node --test "tests/*.test.mjs"`，11 项，不联网、不写数据）：
+  - `paths`：`data/` 下不允许出现仅大小写不同的条目 —— `<key>_1m.json` 与 `<key>_1M.json`
+    在 Windows 与 Pages 会同名，2026-10-30 曾把 6 个标的的月 K 覆盖成 1 分钟数据；
+  - `published-at`：`normalizePublishedAt()` 把 `Z`（UTC）统一换算到 `+08:00`，纯日期按当天 00:00；
+  - `snapshot-closed`：`BAR_CLOSED_AT` / `lastClosedBarDate()` 的边界
+    （pm 16:02：A股/ETF/港股/日韩取当天，欧美取前一天；am 12:05 一律取前一天）。
+- **视觉设计契约**（README §8.1 + `style.css` 顶部冻结注释）：令牌表、文件归属、换色 recipe；
+  明确 mcf 血缘与「不跟随 / 不合并 `--mcf-*`」的决定。
+
+### 变更
+
+- **本机 `MacroNews-Collect` 改为陈旧度驱动**：先读 `data/latest.json` 的最新条目，
+  不到 45 分钟（`-NewsStaleMinutes`，0 = 每轮都采）就整轮跳过新闻/行情采集；
+  云端 15 分钟一轮正常时本机不再重复采，云端排程器丢事件时最多 45 分钟后接管。
+- `brief-candidates.mjs` 的 `date` 改用 `normalizePublishedAt()`，不再把 UTC 行截断后直接展示。
+
+### 修正
+
+- 页脚在 `macroFail` 为 `{}`（无失败时）会抛 `macroFail.forEach is not a function`，
+  整行变成错误信息；改为按实际形状取数组 / 取 key。
+
 ## [2.1.2] - 2026-11-01
 
 ### 新增

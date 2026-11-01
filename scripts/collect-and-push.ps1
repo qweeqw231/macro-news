@@ -6,11 +6,13 @@
 #   -NoKline          完全跳过日/周/月 K 线（只要新闻，最快）
 #   -MinuteKline      顺带刷新分钟 K（data/kline/min/）
 #   -KlineStaleHours  日 K 快照超过这个小时数才补刷一次（默认 6；0 = 每轮都刷）
+#   -NewsStaleMinutes 最新新闻超过这个分钟数才真正采集（默认 45；0 = 每轮都采）
 
 param(
     [switch]$NoKline,
     [switch]$MinuteKline,
-    [int]$KlineStaleHours = 6
+    [int]$KlineStaleHours = 6,
+    [int]$NewsStaleMinutes = 45
 )
 
 $ErrorActionPreference = 'Continue'
@@ -41,14 +43,54 @@ Get-ChildItem $logDir -Filter 'collect-*.log' -ErrorAction SilentlyContinue |
 
 Say "=== 采集开始 ==="
 
-# ---- 1. 采集（新闻 + 行情快照）----
-# ⚠ 一律带 --no-kline：日/周/月 K 由第 2 步按「陈旧度」单独刷。
-#   每轮都刷 K 线的话，每轮要打 21×3=63 个请求，本机 IP 会被东财打到熔断，
-#   而且慢 8 倍（602 秒 vs 1~2 分钟）—— 定时任务的性价比全毁在这里。
-$nodeOut = & node src\collect.mjs --no-kline 2>&1 | Out-String
-$nodeOut.TrimEnd() -split "`r?`n" | ForEach-Object { Say $_ }
-if ($LASTEXITCODE -ne 0) {
-    Say "采集进程返回非 0（$LASTEXITCODE），仍尝试检查是否有新数据"
+# ---- 1. 陈旧度判定：云端还活着就不重复采 ----
+# 云端 collect.yml 每 15 分钟一轮（另有 30 分钟备份 cron）。本机每 120 分钟一轮，
+# 默认只在「新闻已经超过 45 分钟没更新」时才真正采集：
+#   · 云端正常 → 本机跳过，省掉 8 个源 + 行情的请求，也不产生空提交；
+#   · 云端停摆（2026-10-30 实测排程器丢掉 3.75 小时的 schedule 事件）→ 45 分钟后本机接管。
+# 判据看 latest.json 的**最新条目时间**，而不是 _last-run.json 的 startedAt：
+# 采集器内容没变时不重写文件（省 git），startedAt 在安静时段会显得很旧。
+$latestFile = Join-Path $root 'data\latest.json'
+$newsAgeMin = $null
+if (Test-Path $latestFile) {
+    try {
+        $latest = ConvertFrom-Json (Get-Content $latestFile -Raw -Encoding UTF8)
+        $newest = $latest.items | Sort-Object { [double]$_.ts } -Descending | Select-Object -First 1
+        if ($newest) {
+            if ($newest.ts) {
+                $t = ([datetime]'1970-01-01T00:00:00Z').AddSeconds([int64]$newest.ts).ToLocalTime()
+            } else {
+                $t = [datetime]$newest.time
+            }
+            $newsAgeMin = [math]::Round(((Get-Date) - $t).TotalMinutes, 0)
+        }
+    } catch {
+        Say "latest.json 解析失败：$($_.Exception.Message)"
+    }
+}
+
+$needCollect = $true
+if ($null -ne $newsAgeMin -and $newsAgeMin -lt 0) {
+    # 最新条目「在未来」= 本机或远端的时钟不同步。若照常按「新鲜」跳过，本机兜底会永远不跑。
+    Say "最新条目时间在未来（$newsAgeMin 分钟），时钟可能不同步 —— 按陈旧处理，本机接管采集"
+} elseif ($null -ne $newsAgeMin -and $NewsStaleMinutes -gt 0 -and $newsAgeMin -lt $NewsStaleMinutes) {
+    $needCollect = $false
+    Say "最新条目 $newsAgeMin 分钟前（阈值 $NewsStaleMinutes），云端链路在线，跳过新闻/行情采集"
+} elseif ($null -eq $newsAgeMin) {
+    Say "读不到最新条目时间，本机直接采集"
+} else {
+    Say "最新条目 $newsAgeMin 分钟前（阈值 $NewsStaleMinutes），本机接管采集"
+}
+
+if ($needCollect) {
+    # ⚠ 一律带 --no-kline：日/周/月 K 由第 2 步按「陈旧度」单独刷。
+    #   每轮都刷 K 线的话，每轮要打 21×3=63 个请求，本机 IP 会被东财打到熔断，
+    #   而且慢 8 倍（602 秒 vs 1~2 分钟）—— 定时任务的性价比全毁在这里。
+    $nodeOut = & node src\collect.mjs --no-kline 2>&1 | Out-String
+    $nodeOut.TrimEnd() -split "`r?`n" | ForEach-Object { Say $_ }
+    if ($LASTEXITCODE -ne 0) {
+        Say "采集进程返回非 0（$LASTEXITCODE），仍尝试检查是否有新数据"
+    }
 }
 
 # ---- 2. 日/周/月 K（按陈旧度刷，不是每轮都刷）----

@@ -6,7 +6,7 @@
 // 输出 JSON（stdout），供 AI 早报任务挑选最终 ≤10 条。
 
 import path from 'node:path';
-import { openDb, stats, DEFAULT_DB } from './db.mjs';
+import { openDb, DEFAULT_DB, normalizePublishedAt } from './db.mjs';
 
 const arg = (name, dflt) => {
   const i = process.argv.indexOf('--' + name);
@@ -67,7 +67,9 @@ const out = [...best.values()]
   .slice(0, LIMIT)
   .map((r, i) => ({
     rank: i + 1,
-    date: String(r.published_at).slice(0, 16),
+    // 统一成北京时间再截断：库里混着 Z（UTC）与 +08:00 两种写法，
+    // 直接 slice 会让 UTC 行整体差 8 小时（AI 早报会把它当成「昨晚」的旧闻）。
+    date: normalizePublishedAt(r.published_at).slice(0, 16),
     source: r.source,
     channel: r.channel,
     title: r.title,

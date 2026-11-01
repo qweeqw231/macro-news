@@ -290,6 +290,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\portfolio-collect-an
 
 # 只刷新当前交易时段的最后一根日K（看结果不写盘加 --dry-run）
 node scripts/update-kline-last.mjs --dry-run
+
+# 离线回归测试（不联网、不写数据）：文件名大小写冲突 / publishedAt 时区 / 快照「已收拢」
+node --test "tests/*.test.mjs"
 ```
 
 页签是 `href="#view-xxx"` 真链接：可收藏、可分享、没 JS 也能跳转。
@@ -347,6 +350,11 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 | 本机回退采集 | 每 120 分钟 | `scripts\collect-and-push.ps1` | `scripts\register-task.ps1` |
 | 远端同步 | 每 4 小时 | `scripts\pull-remote.ps1` | `scripts\register-pull-task.ps1` |
 
+`MacroNews-Collect` 是**陈旧度驱动**的：每轮先看 `data/latest.json` 的最新条目，
+不到 `-NewsStaleMinutes`（默认 45）分钟就整轮跳过新闻/行情采集 —— 云端 15 分钟一轮正常时，
+本机一次都不会重复采；云端排程器丢事件时，最多 45 分钟后本机接管。
+日/周/月 K 同理按 `-KlineStaleHours`（默认 6）判新鲜度。
+
 `MacroNews-Collect` / `MacroNews-Pull` 均用 `wscript + run-hidden.vbs` 零窗口启动，
 `-StartWhenAvailable` 允许睡眠/关机后补跑。
 
@@ -355,7 +363,9 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 见 §2.6。它只读新闻库、只写 `.local/briefings/`，**不碰站点文件、不提交 git**。
 
 > minimax 的 4 个旧任务（12:05 上午快照、16:30 收盘+宏观、16:35 重试、4 小时同步）
-> 已于 2026-10-31 全部下线。若控制台里还能看到，直接停用/删除即可；本仓库不再依赖它们。
+> 已于 2026-10-31 下线；2026-11-01 又停用了列表里残留的一个 12:05 任务（用户已核对）。
+> 本仓库不依赖它们：快照与宏观走 `snapshot.yml`，远端同步走 `MacroNews-Pull`。
+> **09:00 宏观早报仍在运行**（见 §2.6），它只读新闻库、不碰站点数据。
 
 ---
 
@@ -398,6 +408,53 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 8. **数据按新鲜度分级缓存**：`latest` / `quotes` / 今天的归档天用 `no-store`
    （首屏、15s 轮询、当天仍在增长）；`search` / `index` / `_last-run` / 历史归档天用浏览器缓存
    （Pages `max-age=600`）；打开过的「天」在内存里最多留 3 个（LRU），重复打开不再下载 ~166KB（gzip）。
+9. **链路健康直接派生，不加心跳文件**：页脚的状态灯只读 `_last-run.json`（源成败 / 云端还是本机）、
+   `latest.json`（最新一条新闻的时间）、`quotes.json`（各卡片的源时间）。
+   采集每 15 分钟就可能提交一次 `data/`，再写一个「心跳」只会让仓库继续膨胀；
+   `_last-run.json` 的 `startedAt` 在安静时段会偏旧（内容没变就不重写），所以新鲜度以
+   **最新条目时间**为准。
+
+### 8.1 视觉契约（改样式前先看这里）
+
+**血缘**：本站视觉继承自 `micro-control-finance`（学术论文风 · 衬线正文 · 纸白底 · 单主色）。
+相似是血缘，不是复制。**mcf 的 `--mcf-*` 令牌与本站的通用名已经漂移，不要同步、不要合并**
+（两站各自演进，共享令牌包不在本仓库职责内）。本站以 `assets/style.css` 的 `:root` 为唯一真值。
+
+| 令牌 | 值 | 用途 |
+|---|---|---|
+| `--bg` / `--surface` | `#fdfdfb` / `#ffffff` | 纸面底 / 卡片底 |
+| `--ink` / `--ink-soft` / `--ink-mute` / `--ink-faint` | `#1a1a1a` / `#3a3a3a` / `#6b6b6b` / `#9a9a9a` | 正文 / 次要 / 说明 / 占位 |
+| `--rule` / `--rule-strong` | `#e5e2da` / `#c9c4b7` | 细分割线 / 表头重线 |
+| `--accent` / `--accent-soft` | `#2c5e8e` / `#d6e3ee` | 主色（链接、选中、强调条）/ 浅底 |
+| `--warm` | `#8b5a2b` | 暖棕：note 左边框、页脚「注意」灯 |
+| `--up` / `--down` | `#b3261e` / `#1a6b3c` | 涨 / 跌（**文字**用深色，纸面上才够对比度） |
+| `--code-bg` | `#f5f3ec` | 代码块 / 表头底 |
+| `--serif` / `--sans` | 宋体栈 / 黑体栈 | 正文衬线；按钮、表头、数字用无衬线 |
+
+**文件归属**（颜色只能从这几处来）：
+
+| 文件 | 负责 |
+|---|---|
+| `assets/style.css` | 全站布局、排版、组件、页脚状态灯；**站点唯一的 CSS** |
+| `assets/kline.js` | 图表专用色：`UP=#d93025` / `DOWN=#1a9e5f`（比 CSS 令牌更亮：细线与蜡烛在纸面上才看得清）、`MA_COLOR`（5/10/20/30/60/120/250）、坐标轴灰 `#8a8a8a` |
+| `assets/app.js` | 页面渲染：只给元素加类名（`.up` / `.down` / `.ft-state`），颜色全部交给 style.css |
+| `assets/market.js` | 行情 / K 线取数，不涉及颜色（图表由 kline.js 画） |
+| `assets/icon.svg` | 站点图标：主色描边 + 暖棕折线 + 纸白底（换主色/纸色时同步这里） |
+
+**换色 recipe（只动这几处，别全局替换色值）**：
+
+1. 换主色：`--accent` + `--accent-soft`（style.css），再同步 `icon.svg` 描边；
+   `kline.js` 的 `MA_COLOR[10]` 若想让均线跟着变，也在这里改。
+2. 换纸色：`--bg` / `--surface` / `--code-bg` / `--rule` / `--rule-strong` **一起调**，
+   否则分割线会「浮」在底色上。
+3. 换涨跌色：CSS 的 `--up` / `--down` 与 `kline.js` 的 `UP` / `DOWN` **两处都要改**
+   （两套色是有意的，不是遗漏：文字要深、细线要亮）。
+
+**三条硬约束**：
+
+- 正文衬线、按钮/表头/数字无衬线；数字一律 `tabular-nums`。
+- 触控目标 ≥ 40px（手机按钮 40 / 34px，底部导航 4 等分 + 安全区）。
+- canvas 的颜色只认 `kline.js` 里的常量，CSS 覆盖不到它（图表不读 CSS 变量）。
 
 ---
 

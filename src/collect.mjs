@@ -337,6 +337,9 @@ async function main() {
   const prevLog = await readJSON(logFile, {});
   const logObj = {
     ...prevLog,
+    // 哪台机器在喂数据：云端 Actions / 本机 Windows 任务。页脚据此显示「云端」「本机」，
+    // 排查时也能一眼看出最后一次写入是谁做的（两边都会提交这个文件）。
+    runner: process.env.GITHUB_ACTIONS ? 'cloud' : 'local',
     startedAt: startedAt.toISOString(),
     durationMs: Date.now() - startedAt.getTime(),
     sources: perSource.map(({ id, label, ok, items, ms, error }) => ({

@@ -1,7 +1,13 @@
 /* ============================================================
-   宏观资讯台 · 样式
+   宏观资讯台 · 样式 —— 站点唯一的 CSS（视觉契约见 README §8.1）
    设计原则：与 micro-control-finance 研究站同源（学术论文风 · 衬线 · 克制）
    响应式：沿用研究站验证过的移动端方案（抽屉导航 / 触控 ≥40px / 表格横滚）
+
+   ⚠ 令牌已冻结（mcf v1.0 快照，2026-11-01）：
+     · 不要跟随 mcf 的 --mcf-* 演进，也不要合并成共享令牌包（两站已漂移）；
+     · 换色只改下面 :root 的对应几项（recipe 见 README §8.1）；涨跌色还要同步
+       assets/kline.js 的 UP / DOWN —— canvas 不读 CSS 变量；
+     · 新组件复用这里的变量，不要写字面色值。
    ============================================================ */
 
 :root {
@@ -264,6 +270,11 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
   font-size: 0.8125rem; color: var(--ink-mute);
 }
 .ft p { margin: 0.3rem 0; }
+/* 页脚链路健康灯：绿=正常 / 暖棕=注意 / 红=异常（沿用全站涨跌色与强调色，不新增色号） */
+.ft-state { font-weight: 600; }
+.ft-state.ok { color: var(--down); }
+.ft-state.warn { color: var(--warm); }
+.ft-state.bad { color: var(--up); }
 
 /* ============================================================
    响应式

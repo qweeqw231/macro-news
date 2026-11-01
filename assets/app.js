@@ -756,25 +756,81 @@
     }
   }
 
-  // ---------- 页脚：采集概况 ----------
+  // ---------- 页脚：链路健康 ----------
   //
   // ⚠ 这里原本是一个独立的「运行状态」页签，但它的内容就是页脚那一行 ⇒ 页签冗余，
-  //   已按用户意见取消这个导航项（2026-10-29）。
-  //   概况改为直接渲染到页脚，任何视图下都看得到。
+  //   已按用户意见取消这个导航项（2026-10-29）。概况改为直接渲染到页脚，任何视图下都看得到。
+  //
+  // 健康摘要只读**现有**三份数据（`_last-run.json` / `latest.json` / `quotes.json`），
+  // 不新增心跳文件：采集每 15 分钟就可能提交一次 data/，再加一份状态文件只会让仓库继续膨胀。
+  // 注意「最近一次采集」是采集器自己记录的开始时间，而采集器**内容没变时不重写文件**（省 git），
+  // 所以安静时段这个时间会偏旧 —— 真正的新鲜度看「最新一条新闻」的相对时间。
+  const agoMin = (iso) => {
+    const t = Date.parse(iso || '');
+    return Number.isFinite(t) ? Math.round((Date.now() - t) / 60000) : null;
+  };
+  const agoText = (min) => {
+    if (min == null) return '—';
+    if (min <= 1) return '刚刚';
+    if (min < 60) return `${min} 分钟前`;
+    const h = Math.round(min / 60);
+    return h < 48 ? `${h} 小时前` : `${Math.round(h / 24)} 天前`;
+  };
+
   async function renderFoot() {
-    const el = $('#ftMeta');
+    const box = $('#ftMeta');
     try {
       const { last, total, days } = await loadRunMeta();
+      // 字段形状要按实际产物校验：`macroOk` 是数组，而 `macroFail` 在无失败时写的是 `{}`，
+      // 直接 forEach 会抛「is not a function」，把整行页脚变成错误信息。
+      const srcs = Array.isArray(last.sources) ? last.sources : [];
+      const srcBad = srcs.filter((s) => !s.ok);
+      const macroOk = Array.isArray(last.macroOk) ? last.macroOk : [];
+      const macroFail = Array.isArray(last.macroFail) ? last.macroFail : Object.keys(last.macroFail || {});
+      const runMin = agoMin(last.startedAt);
+      const news = (S.items || [])[0] || null;
+      const newsMin = news ? agoMin(news.time) : null;
+      // 行情时点优先用每张卡片自带的源时间：休市时它停在上一交易日，属正常，不做报警
+      const quoteTs = (Array.isArray(S.quotes) ? S.quotes : [])
+        .map((q) => Date.parse(q.updatedAt || ''))
+        .filter((t) => Number.isFinite(t));
+      const quoteAt = quoteTs.length ? Math.max(...quoteTs) : Date.parse(last.at || '');
+
+      // 状态灯：源失败、采集停摆优先于「新闻暂时没有新的」
+      let level = 'ok';
+      let state = '链路正常';
+      if (runMin != null && runMin > 24 * 60) { level = 'bad'; state = '采集可能停摆'; }
+      else if (runMin != null && runMin > 180) { level = 'warn'; state = '采集滞后'; }
+      if (srcBad.length && level !== 'bad') {
+        level = 'warn';
+        state = `${srcs.length - srcBad.length}/${srcs.length} 源失败`;
+      }
+
       const bits = [];
-      if (last.startedAt) bits.push('最近一次采集 ' + new Date(last.startedAt).toLocaleString('zh-CN', { hour12: false }));
-      if (last.durationMs != null) bits.push('耗时 ' + last.durationMs + ' ms');
-      if (last.added != null) bits.push('本次新增 ' + last.added + ' 条');
-      if (last.quotes != null) bits.push('行情快照 ' + last.quotes + ' 项');
-      bits.push('库内 ' + total + ' 条 / ' + days + ' 天');
-      el.textContent = bits.join(' · ');
+      if (last.runner === 'cloud') bits.push('云端');
+      else if (last.runner === 'local') bits.push('本机');
+      if (runMin != null) bits.push('采集 ' + agoText(runMin));
+      if (srcs.length) bits.push(`源 ${srcs.length - srcBad.length}/${srcs.length}`);
+      if (newsMin != null) bits.push('最新新闻 ' + agoText(newsMin));
+      // 直连行情没有源时间戳（是刚取的），写「实时」才不会让人以为卡片停在旧时点
+      if (S.quotesRealtime) bits.push('行情 直连实时');
+      else if (Number.isFinite(quoteAt)) bits.push('行情 ' + fmtTime(new Date(quoteAt).toISOString()));
+      if (macroOk.length || macroFail.length) bits.push(`宏观 ${macroOk.length}/${macroOk.length + macroFail.length}`);
+      bits.push(`库 ${total.toLocaleString('zh-CN')} 条 / ${days} 天`);
+
+      box.textContent = '';
+      box.appendChild(el('span', `ft-state ${level}`, '● ' + state));
+      box.appendChild(document.createTextNode(' · ' + bits.join(' · ')));
+
+      // 失败细节放进 title：页脚只留一行，悬停才看长原因
+      const why = [];
+      srcBad.forEach((s) => why.push(`${s.label}${s.error ? '：' + s.error : ''}`));
+      macroFail.forEach((m) => why.push('宏观失败：' + m));
+      if (last.quoteError) why.push('行情：' + last.quoteError);
+      box.title = why.length ? why.join('\n') : '最近一次采集：全部来源正常';
     } catch (e) {
-      // 运行状态读不到就退回快照信息（latest.json 那条）
-      if (!el.textContent) el.textContent = '运行状态读取失败：' + esc(e.message);
+      // 读不到运行状态就保留 boot 里先写下的快照信息，别把有信息的一行换成报错
+      if (!box.textContent) box.textContent = '运行状态读取失败：' + (e && e.message ? e.message : e);
     }
   }
 
@@ -1222,7 +1278,9 @@
     syncSearchPlaceholder();
     window.addEventListener('resize', syncSearchPlaceholder);
 
-    renderQuotes().then(startQuotePolling).catch(() => {}).then(restoreKlineUI);
+    // 行情加载完再刷一次页脚：健康摘要里的「行情」时点来自 quotes.json 各卡片的源时间，
+    // 而 renderQuotes 与下面的 latest.json 是两个并发链，先到先得的顺序不固定。
+    renderQuotes().then(startQuotePolling).catch(() => {}).then(restoreKlineUI).then(() => renderFoot());
     try {
       const d = await jget('latest.json');
       S.base = d.items;
