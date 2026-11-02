@@ -924,6 +924,20 @@
     return runMeta;
   }
 
+  // 早报状态（data/_briefing-status.json，2.2.1 起）：页脚用来显示「早报 09:02 / 补跑中 / 失败 / 未记录」。
+  // 单文件、一天写 1~3 次；读不到（还没接入）按空处理，不影响页脚其它信息。
+  let briefStatus = null;
+  let briefPromise = null;
+  function loadBriefStatus() {
+    if (briefStatus) return Promise.resolve(briefStatus);
+    if (!briefPromise) {
+      briefPromise = jget('_briefing-status.json', 'default')
+        .then((d) => { briefStatus = d || { days: {} }; return briefStatus; })
+        .catch(() => { briefStatus = { days: {} }; briefPromise = null; return briefStatus; });
+    }
+    return briefPromise;
+  }
+
   async function renderSources() {
     const box = $('#sources');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
@@ -981,7 +995,8 @@
   async function renderFoot() {
     const box = $('#ftMeta');
     try {
-      const { last, total, days } = await loadRunMeta();
+      // 早报状态与采集概况并行取：前者是单独的小文件，失败不影响整行
+      const [{ last, total, days }, brief] = await Promise.all([loadRunMeta(), loadBriefStatus()]);
       // 字段形状要按实际产物校验：`macroOk` 是数组，而 `macroFail` 在无失败时写的是 `{}`，
       // 直接 forEach 会抛「is not a function」，把整行页脚变成错误信息。
       const srcs = Array.isArray(last.sources) ? last.sources : [];
@@ -1022,6 +1037,35 @@
       box.textContent = '';
       box.appendChild(el('span', `ft-state ${level}`, '● ' + state));
       box.appendChild(document.createTextNode(' · ' + bits.join(' · ')));
+
+      // 早报状态：独立 token，不改变上面的总灯（避免早报问题把行情/新闻的正常状态染红）
+      const bj = new Date(Date.now() + 8 * 3600 * 1000);
+      const today = bj.toISOString().slice(0, 10);
+      const nowMin = bj.getUTCHours() * 60 + bj.getUTCMinutes();
+      const rec = (brief.days || {})[today];
+      let bTxt = '';
+      let bLvl = '';
+      if (rec && rec.status === 'done') {
+        const when = rec.endedAt || rec.startedAt || '';
+        bTxt = '早报 ' + (when ? fmtTime(when) : '完成');
+        bLvl = 'ok';
+      } else if (rec && rec.status === 'running') {
+        bTxt = '早报 补跑中';
+        bLvl = 'warn';
+      } else if (rec && (rec.status === 'failed' || rec.status === 'timeout')) {
+        bTxt = '早报 失败';
+        bLvl = 'bad';
+      } else if (nowMin >= 9 * 60 + 30) {
+        // 09:30 后既没有状态记录、也没有 done：说明当天早报没生成（或 ensure 没跑）
+        bTxt = '早报 未记录';
+        bLvl = 'warn';
+      }
+      if (bTxt) {
+        box.appendChild(document.createTextNode(' · '));
+        const sp = el('span', `ft-state ${bLvl}`, bTxt);
+        if (rec && rec.reason) sp.title = rec.reason;
+        box.appendChild(sp);
+      }
 
       // 失败细节放进 title：页脚只留一行，悬停才看长原因
       const why = [];

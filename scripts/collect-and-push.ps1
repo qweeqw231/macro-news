@@ -123,20 +123,43 @@ if ($MinuteKline) {
     if ($LASTEXITCODE -ne 0) { Say "分钟K刷新返回非 0（$LASTEXITCODE），旧快照保留" }
 }
 
-# ---- 4. 是否有变化 ----
+# ---- 4. 只暂存采集链路自己生成的文件（白名单）----
 # 注意：不要写成 `git add ... 2>&1 | Out-Null`。
 # PowerShell 5.1 下把原生命令的输出管道给 Out-Null 时，该命令可能根本不执行
 # （表现为 add 没生效、后续 commit 报 "no changes added to commit"）。
 # `$null =` 才是既执行又丢弃输出的正确写法。
-$null = git add -- data
+#
+# ⚠ 以前是 `git add -- data`（整个目录）：任何落在 data/ 下的意外产物都会被打包推送。
+#   2026-11-02 实测：2.2.1 模拟误写的规则版早报与 _briefing-status.json 就是这样上的远端。
+#   现在只提交本任务真正会写的文件：
+#     · data/archive/<今天|昨天>.json（按需新建；其余日期由云端采集提交）
+#     · data/kline/**（已跟踪文件的更新；新标的文件由云端 kline-full.yml 提交）
+#     · latest / index / search / quotes / _last-run
+#     · _briefing-status.json（早报兜底状态，单文件、低频；页脚要读它才看得见）
+#   briefings / history / snapshots / macro 不归本任务，绝不顺手提交。
+$today = Get-Date -Format 'yyyy-MM-dd'
+$yesterday = (Get-Date).AddDays(-1).ToString('yyyy-MM-dd')
+$fixed = @(
+    'data/latest.json', 'data/index.json', 'data/search.json',
+    'data/quotes.json', 'data/_last-run.json', 'data/_briefing-status.json'
+)
+# -u 只暂存「已跟踪文件」的修改，不会把未跟踪的意外新增文件扫进来
+$null = git add -u -- data/archive data/kline
+foreach ($d in @($today, $yesterday)) {
+    $p = "data/archive/$d.json"
+    if (Test-Path $p) { $null = git add -- $p }
+}
+foreach ($p in $fixed) {
+    if (Test-Path $p) { $null = git add -- $p }
+}
 
-$dirty = @(git status --porcelain -- data)
-if ($dirty.Count -eq 0) {
+$staged = @(git diff --cached --name-only)
+if ($staged.Count -eq 0) {
     Say "无新数据，跳过提交与推送"
     exit 0
 }
 
-Say "检测到 $($dirty.Count) 个数据文件有变化"
+Say "检测到 $($staged.Count) 个数据文件有变化"
 
 # ---- 5. 先提交，再合并（顺序不能反）----
 # ⚠ 2026-10-30 实测：原顺序是「先 fetch+merge，后 commit」，但脚本在合并前已经

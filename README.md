@@ -145,6 +145,20 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 2. **同一篇文章在库里可能有两行**：中新网回填行是 date 精度占位（`T12:00:00+08:00`、summary 为空），
    采集行才有全文 ⇒ 取时间与链接要用**有 summary 的那一行**。
 
+**容错（2.2.1）**
+
+- `node scripts/briefing/generate.mjs --date YYYY-MM-DD` 是确定性入口：
+  取数 → 候选（`brief-candidates`）→ 规则组装 → `.tmp` + rename 原子写（本地 `.local/briefings/`
+  与站点 `data/briefings/`），同名覆盖、可重复运行。
+- `node scripts/briefing/ensure.mjs` 每次扫最近 7 天：缺/不完整就补，今天要过 **09:30**（09:00 + 30 分钟宽限）
+  才补；本地已有完整 AI 产物则**只发布、不重新生成**。
+- 状态写 `data/_briefing-status.json`（单文件、保留 14 天，非高频）：页脚显示
+  `早报 09:02`（绿）/ `早报 补跑中`（棕）/ `早报 失败`（红）/ `早报 未记录`（棕）。
+- 防重入锁 `.local/briefing.lock`（pid + 启动时刻，20 分钟失效）；单日硬超时 15 分钟，
+  超时以退出码 124 结束并记录原因。
+- 判据**不看 `generatedAt`**（它是开始时刻，11-02 事故里写着 09:02、实际 12:15 才落盘）：
+  文件存在、JSON 可解析、`items > 0`、`overview` 非空，新产物另有 `endedAt`。
+
 ### 2.7 链路 ⑦：近一年历史切片（离线导出）
 
 **不是定时任务**，需要时手动跑；读本地新闻库，只写静态文件。
@@ -266,6 +280,7 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 | `data/kline/min/<key>_<period>.json` | 7 个标的 × 5 个分钟周期 | 链路 ② |
 | `data/macro/daily.json` | 5 个宏观指标日频序列 | 链路 ④ |
 | `data/_last-run.json` | 各链路运行状态（字段并存，读改写） | 所有链路 |
+| `data/_briefing-status.json` | 早报生成状态（最近 14 天，页脚读取） | `scripts/briefing/*` |
 
 **给 AI / 脚本的读取规则**
 
@@ -320,7 +335,12 @@ node scripts/export-history.mjs --days 365
 # 把本地早报发布到站点（只复制 JSON；Markdown 版留在 .local）
 Copy-Item .local\briefings\*.json data\briefings\ -Force
 
-# 离线回归测试（不联网、不写盘）：切片选取/索引、早报摘要、文件名大小写、时区、快照口径
+# 早报：确定性生成某天 / 扫最近 7 天补缺（--dry-run 只打印计划）
+node scripts/briefing/generate.mjs --date 2026-11-02
+node scripts/briefing/ensure.mjs --dry-run
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\briefing\run-ensure.ps1
+
+# 离线回归测试（不联网、不写盘）：切片/早报判据/锁/补跑、文件名大小写、时区、采集白名单
 node --test "tests/*.test.mjs"
 ```
 
@@ -448,6 +468,9 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 11. **早报与归档同键、展开才取正文**：索引只多 `hasBriefing` + 一行 ≤80 字 `briefLine`，
     不新增索引文件、不在首屏/归档页预取 365 份早报；折叠块展开时才请求当天 JSON，
     历史日 `max-age=600`、当日 `no-store`。
+12. **早报容错用确定性脚本兜底，不信任 agent 上下文**：状态文件单列（`_briefing-status.json`），
+    判据只看产物完整性与 `endedAt`（不看 `generatedAt`）；补跑只处理缺失/不完整，
+    本地已有完整 AI 产物只发布不重写；模拟与测试一律写临时目录（见 2.2.1 规范 §13/§14）。
 
 ### 8.1 视觉契约（改样式前先看这里）
 
@@ -556,7 +579,8 @@ macro-news/
 │   ├── portfolio.mjs  7 个组合行情 + 5 个宏观指标
 │   └── portfolio-collect.mjs  宏观 + 1Y国债日K（每工作日 17:00 后，云端）
 ├── scripts/           serve · export-history · push-data.sh · update-kline-{full,minute,last} · 各 PowerShell 任务
-├── docs/superpowers/specs/  设计文档（含 2026-11-02 历史新闻 2.2.0）
+├── scripts/briefing/  generate · ensure · core · run-ensure.ps1（早报生成与兜底）
+├── docs/superpowers/specs/  设计文档（2.2.0 历史新闻 / 2.2.1 早报容错）
 └── worker/gh-cron/    Cloudflare 外部触发器（窄职责，仅 dispatch）
 ```
 

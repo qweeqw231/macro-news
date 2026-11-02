@@ -23,6 +23,41 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.2.1] - 2026-11-02
+
+### 新增
+
+- **确定性早报入口** `scripts/briefing/generate.mjs --date YYYY-MM-DD`：
+  取数（archive → SQLite）→ 复用 `brief-candidates` 打分 → 规则组装 → `.tmp` + rename 原子写
+  （`.local/briefings/` 与 `data/briefings/` 同名覆盖、可重复运行）。规则版结构不变，
+  新增 `endedAt`；`overview` 取自事件型标题（跳过早餐/盘前/提醒类汇总稿），`watch` 为空（AI 版可覆盖）。
+- **自动补跑** `scripts/briefing/ensure.mjs`：扫最近 7 天，缺失/不完整按日期升序补；
+  今天到 **09:30**（09:00 + 30 分钟宽限）才补；本地产物完整时只发布、不重新生成；
+  单日失败不影响后续；`scripts/briefing/run-ensure.ps1` 供计划任务调用（日志 `logs/briefing-*.log`）。
+- **完成判据**：文件存在 + JSON 可解析 + `items > 0` + `overview` 非空；新产物另有 `endedAt`。
+  **不看 `generatedAt`**（11-02 事故里它写着 09:02、实际 12:15 才落盘）。
+- **状态与可见性** `data/_briefing-status.json`（单文件、保留 14 天、原子写）：
+  记录日期 / 阶段 / 起止时刻 / 退出码 / 候选数 / 条数 / 原因；页脚增加独立 token
+  `早报 09:02`（绿）/ `早报 补跑中`（棕）/ `早报 失败`（红）/ `早报 未记录`（棕）。
+- **防重入与超时**：`.local/briefing.lock`（pid + 启动时刻，20 分钟失效）；
+  单日硬超时 15 分钟（进程内看门狗 + ensure 父进程 kill），退出码 124。
+- **测试** `tests/briefing-core.test.mjs`（8 项）与 `tests/collect-whitelist.test.mjs`（3 项）：
+  原子写、幂等、三种判据、锁接管、补跑顺序、宽限/跨日、参数透传、采集白名单。
+- 设计文档 `docs/superpowers/specs/2026-11-02-briefing-resilience-design.md`（含现状事实、
+  判据、时间窗、锁、超时、根因排查、硬约束与 Lessons）。
+
+### 修正
+
+- 🔴 **本机采集提交收紧为白名单**：`scripts/collect-and-push.ps1` 原来 `git add -- data`
+  整目录提交，2026-11-02 把模拟误写的规则版早报与 `_briefing-status.json` 一并推上远端。
+  现在只暂存 `data/archive`（已跟踪修改 + 今天/昨天）、`data/kline`（已跟踪修改）与
+  5 个固定 JSON；`briefings/history/snapshots/macro` 一律不提交。新增静态测试防止改回。
+- 🟠 **恢复被覆盖的 AI 早报**：从 `988632f` 还原 `data/briefings/2026-11-01.json`、
+  `2026-11-02.json` 原文（哈希一致），删除事故产物 `2026-10-30/31` 与状态文件；
+  清理提交正常推送（非 force）。`data/index.json` 由下一次采集按恢复后的文件重建。
+- `ensure` 调 `generate` 时**显式传全部路径**（`--out/--site-out/--status/--lock/--db/--archive`），
+  修复“临时目录模拟却写进仓库默认目录”的事故根因；新增参数透传测试。
+
 ## [2.2.0] - 2026-11-02
 
 ### 新增
