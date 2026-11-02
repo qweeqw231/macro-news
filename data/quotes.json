@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T21:22:40.446Z",
+  "generatedAt": "2026-11-02T21:37:39.576Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -192,7 +192,7 @@
       "high": 25799.46,
       "low": 25145.95,
       "prevClose": 25437,
-      "volume": 7887535360,
+      "volume": 7926185472,
       "changePct": -1.07,
       "updatedAt": "2026-11-03T05:00:00+08:00",
       "source": "eastmoney"
@@ -206,7 +206,7 @@
       "high": 7662.23,
       "low": 7539.38,
       "prevClose": 7580.07,
-      "volume": 2884420192,
+      "volume": 3549319008,
       "changePct": -0.51,
       "updatedAt": "2026-11-03T04:59:47+08:00",
       "source": "eastmoney"
@@ -802,7 +802,7 @@
       "high": 28753.39,
       "low": 27967.44,
       "prevClose": 28384.85,
-      "volume": 1606893824,
+      "volume": 1611955168,
       "changePct": -1.39,
       "updatedAt": "2026-11-03T05:00:00+08:00",
       "source": "eastmoney"
@@ -811,39 +811,39 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 3945.36,
+      "price": 3944.67,
       "open": 3881.88,
       "high": 3970.23,
       "low": 3881.88,
       "prevClose": 3876.69,
-      "changePct": 1.77,
-      "updatedAt": "2026-11-03T05:21:00+08:00",
+      "changePct": 1.75,
+      "updatedAt": "2026-11-03T05:36:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 50.53,
+      "price": 50.52,
       "open": 49.09,
       "high": 51.25,
       "low": 49.06,
       "prevClose": 49.09,
-      "changePct": 2.93,
-      "updatedAt": "2026-11-03T05:21:00+08:00",
+      "changePct": 2.91,
+      "updatedAt": "2026-11-03T05:36:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 104.11,
+      "price": 104.25,
       "open": 111.69,
       "high": 112.41,
       "low": 103.28,
       "prevClose": 113.43,
-      "changePct": -8.22,
-      "updatedAt": "2026-11-03T05:21:41+08:00",
+      "changePct": -8.09,
+      "updatedAt": "2026-11-03T05:37:03+08:00",
       "note": ""
     },
     {
