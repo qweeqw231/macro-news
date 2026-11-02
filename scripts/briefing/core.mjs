@@ -145,6 +145,27 @@ export function parseBackfillRange(from, to) {
   return { from, to, days };
 }
 
+/**
+ * 状态不变式：done ⇔ 存在对应产物；missed ⇔ 不存在产物；done 的 source 必须与文件一致。
+ * @param {object} records  status.days
+ * @param {Map<string,{source:string}>} files  已存在且完整的早报（day → {source}）
+ * @returns {Array<{day,kind}>} 违规项
+ */
+export function checkStatusInvariants(records, files) {
+  const bad = [];
+  const map = files instanceof Map ? files : new Map();
+  for (const [day, rec] of Object.entries(records || {})) {
+    if (!rec) continue;
+    const f = map.get(day);
+    if (rec.status === 'done' && !f) bad.push({ day, kind: 'done_without_file' });
+    if (rec.status === 'missed' && f) bad.push({ day, kind: 'missed_with_file' });
+    if (rec.status === 'done' && f && rec.source && rec.source !== f.source) {
+      bad.push({ day, kind: 'source_mismatch', want: f.source, got: rec.source });
+    }
+  }
+  return bad;
+}
+
 /** 原子写：先 `.tmp` 再 rename；Windows 下目标被占用时退化为「删目标再改名」 */
 export function atomicWriteText(file, text) {
   fs.mkdirSync(path.dirname(file), { recursive: true });

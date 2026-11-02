@@ -14,6 +14,7 @@ import {
   beijingNow,
   buildBriefing,
   checkBriefing,
+  checkStatusInvariants,
   deadlinePassed,
   generateArgs,
   normalizeBriefingSource,
@@ -176,6 +177,33 @@ test('手动补齐窗口必须显式传 from/to', () => {
   const r = parseBackfillRange('2026-10-30', '2026-11-01');
   assert.equal(r.days, 3);
   assert.throws(() => parseBackfillRange('2026-11-02', '2026-10-30'), /非法/);
+});
+
+test('状态不变式：done ⇔ 有文件、missed ⇔ 无文件、source 一致', () => {
+  const files = new Map([
+    ['2026-11-01', { source: 'ai' }],
+    ['2026-11-02', { source: 'ai' }],
+  ]);
+  const bad = checkStatusInvariants({
+    '2026-11-01': { status: 'done', source: 'ai' },
+    '2026-11-02': { status: 'missed', source: '' },
+    '2026-11-03': { status: 'done', source: 'ai' },
+  }, files);
+  assert.deepEqual(
+    bad.map((x) => `${x.day}:${x.kind}`).sort(),
+    ['2026-11-02:missed_with_file', '2026-11-03:done_without_file']
+  );
+
+  assert.deepEqual(
+    checkStatusInvariants({
+      '2026-11-01': { status: 'done', source: 'ai' },
+      '2026-11-03': { status: 'missed', source: '' },
+    }, files),
+    []
+  );
+
+  const mix = checkStatusInvariants({ '2026-11-01': { status: 'done', source: 'rule' } }, files);
+  assert.equal(mix[0].kind, 'source_mismatch');
 });
 
 test('宽限边界与跨日：09:29 未到、09:30 到点；UTC 17:30 是北京次日', () => {

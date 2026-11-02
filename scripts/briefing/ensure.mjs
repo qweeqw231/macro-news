@@ -19,11 +19,13 @@ import {
   DEADLINE_HM,
   GRACE_MIN,
   HARD_TIMEOUT_MS,
+  STATUS_KEEP_DAYS,
   acquireLock,
   addDays,
   atomicWriteText,
   beijingNow,
   checkBriefing,
+  checkStatusInvariants,
   generateArgs,
   normalizeBriefingSource,
   parseBackfillRange,
@@ -83,28 +85,77 @@ function checkDay(d) {
   return { ...site, complete: site.complete, localComplete: local.complete };
 }
 
-/** 已完整但没有状态记录的天，补一条 done（页脚才有东西可显示） */
-function recordExisting(d) {
-  const site = checkBriefing(siteFile(d));
-  if (!site.complete) return;
-  const rec = readStatus(STATUS).days[d] || {};
-  if (rec.status === 'done' && rec.endedAt && rec.source) return;
-  let endedAt = NOW.iso;
-  try { endedAt = beijingNow(fs.statSync(siteFile(d)).mtimeMs).iso; } catch { /* ignore */ }
-  let source = 'ai';
-  try { source = normalizeBriefingSource(JSON.parse(fs.readFileSync(siteFile(d), 'utf8'))); } catch { /* ignore */ }
-  updateStatus(STATUS, d, {
-    status: 'done',
-    stage: 'done',
-    endedAt,
-    exitCode: 0,
-    items: site.items,
-    reason: '',
-    source,
-    generator: rec.generator || 'existing',
-    startedAt: rec.startedAt || endedAt,
-    attempt: rec.attempt || 0,
-  });
+/** 扫描站点目录里所有完整早报（day → {source, items}） */
+function listSiteBriefings() {
+  const map = new Map();
+  try {
+    for (const f of fs.readdirSync(SITE_OUT)) {
+      const m = /^(\d{4}-\d{2}-\d{2})\.json$/.exec(f);
+      if (!m) continue;
+      const d = m[1];
+      const chk = checkBriefing(path.join(SITE_OUT, f));
+      if (!chk.complete) continue;
+      let source = 'ai';
+      try {
+        source = normalizeBriefingSource(JSON.parse(fs.readFileSync(path.join(SITE_OUT, f), 'utf8')));
+      } catch { /* ignore */ }
+      map.set(d, { source, items: chk.items });
+    }
+  } catch { /* 目录不存在 */ }
+  return map;
+}
+
+/**
+ * 状态不变式校正（2.2.3）：
+ *   · 有文件 → 必须是 done，source 取实际文件；
+ *   · done 但文件不存在 → 纠正为 missed；
+ *   · 最后跑一遍 checkStatusInvariants，仍有违规就返回（调用方退出码 1）。
+ */
+function reconcileStatus() {
+  const files = listSiteBriefings();
+  const cutoff = addDays(TODAY, -(STATUS_KEEP_DAYS - 1));
+  for (const [d, meta] of files) {
+    if (d < cutoff) continue;
+    const rec = readStatus(STATUS).days[d] || {};
+    if (rec.status === 'done' && rec.source === meta.source && rec.endedAt && Number(rec.items) === meta.items) {
+      continue;
+    }
+    let endedAt = rec.endedAt;
+    if (!endedAt) {
+      try { endedAt = beijingNow(fs.statSync(path.join(SITE_OUT, `${d}.json`)).mtimeMs).iso; } catch { endedAt = NOW.iso; }
+    }
+    updateStatus(STATUS, d, {
+      status: 'done',
+      stage: 'done',
+      endedAt,
+      exitCode: 0,
+      items: meta.items,
+      reason: rec.status && rec.status !== 'done' ? '' : (rec.reason || ''),
+      source: meta.source,
+      generator: rec.generator || 'existing',
+      startedAt: rec.startedAt || endedAt,
+      attempt: rec.attempt || 0,
+    });
+  }
+  // done 但产物不存在 → missed（不变式另一方向）
+  for (const [d, rec] of Object.entries(readStatus(STATUS).days)) {
+    if (d < cutoff) continue;
+    if (rec.status === 'done' && !files.has(d)) {
+      updateStatus(STATUS, d, {
+        status: 'missed',
+        stage: 'missed',
+        source: '',
+        items: 0,
+        reason: '状态为 done 但产物不存在（已自动纠正）',
+        generator: 'missed',
+      });
+    }
+  }
+  const bad = checkStatusInvariants(readStatus(STATUS).days, files);
+  if (bad.length) {
+    log(`[briefing] 状态不变式违规：${bad.map((x) => `${x.day}:${x.kind}`).join('、')}`);
+  }
+  return bad;
 }
 
 function syncArchives() {
@@ -207,7 +258,10 @@ function main() {
 
     if (!plan.length) {
       log(BACKFILL ? '[briefing] 补齐窗口内无需补跑' : '[briefing] 今天无需补跑（完整或在宽限内）');
-      if (!DRY && !BACKFILL) recordExisting(TODAY);
+      if (!DRY && !BACKFILL) {
+        const bad = reconcileStatus();
+        if (bad.length) return 1;
+      }
       return 0;
     }
     log(`[briefing] 补跑计划：${plan.map((x) => `${x.date}(${x.action})`).join(' → ')}`);
@@ -283,7 +337,10 @@ function main() {
       }
     }
 
-    if (!BACKFILL) recordExisting(TODAY);
+    if (!BACKFILL) {
+      const bad = reconcileStatus();
+      if (bad.length) return 1;
+    }
     log(
       `[briefing] 完成：成功 ${okCount} / 失败 ${failCount} · ` +
         `总用时 ${((Date.now() - t0) / 1000).toFixed(1)}s`

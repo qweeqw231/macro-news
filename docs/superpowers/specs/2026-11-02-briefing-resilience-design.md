@@ -263,3 +263,16 @@ agent 任务不再写早报内容，只做「触发 + 失败摘录」。
 | 状态文件 | 每日记录 `source`（`ai` / `rule` / 空） |
 | 页脚 | `rule` 显示 `早报 自动 HH:MM`（暖棕）；`ai` 为绿色；不改链路健康总灯 |
 | 覆盖保护 | 已有完整 AI 早报时 `generate` 拒绝覆盖，除非显式 `--force` |
+
+## 16. 2.2.3 元数据与状态修正
+
+1. **AI 原文只补 `source:"ai"`**：两份历史文件各追加一行，正文/条数/时间/watch 不变；
+   回归测试 `tests/briefing-metadata.test.mjs` 用「剔除 source 后的 SHA256」锁定内容。
+2. **状态必须如实**：新增 `checkStatusInvariants()`：
+   - `done` ⇔ 存在完整早报文件；
+   - `missed` ⇔ 不存在文件（且未成功生成）；
+   - `done.source` 必须与实际文件一致。
+3. **每次 ensure 先校正再校验**：`reconcileStatus()` 扫描 `data/briefings/`，
+   把「有文件但缺记录/记录为 missed」的天补成 `done`，把「done 但文件没了」纠正为 `missed`；
+   校正后仍有违规 → 退出码 1，不再静默。
+4. 只补当天、不自动补历史的语义不变（§4）。
