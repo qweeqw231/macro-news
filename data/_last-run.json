@@ -1,41 +1,41 @@
 {
-  "startedAt": "2026-11-02T12:52:37.102Z",
-  "durationMs": 58693,
+  "startedAt": "2026-11-02T13:07:37.441Z",
+  "durationMs": 38906,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 5210
+      "ms": 5071
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1380
+      "ms": 1568
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 3809
+      "ms": 1998
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 1017
+      "ms": 631
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": false,
       "count": 0,
-      "ms": 3053,
+      "ms": 2666,
       "error": "fetch failed"
     },
     {
@@ -43,25 +43,26 @@
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1785
+      "ms": 889
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 2136
+      "ms": 1213
     },
     {
       "id": "stats",
       "label": "国家统计局",
-      "ok": true,
-      "count": 25,
-      "ms": 48740
+      "ok": false,
+      "count": 0,
+      "ms": 33984,
+      "error": "RSS 全部入口失败：/sj/zxfb/rss.xml → This operation was aborted"
     }
   ],
-  "quotes": 49,
-  "added": 28,
+  "quotes": 55,
+  "added": 22,
   "at": "2026-10-30T19:28:29+08:00",
   "ok": [
     "ndx",
@@ -83,6 +84,5 @@
   "macroFail": {},
   "portfolioQuotes": 7,
   "portfolioDurationMs": 2218,
-  "runner": "cloud",
-  "quoteError": "6/52 失败：东财批量失败：HTTP 502"
+  "runner": "cloud"
 }
