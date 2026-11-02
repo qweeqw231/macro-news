@@ -145,7 +145,7 @@ npx wrangler deploy --keep-vars --message "add <key>"
 | 历史快照缺口 | 新增标的前的快照没有该 key | **定案：不回填**；只保证新增日之后 |
 | Windows 大小写 | `1m`（分钟）与 `1M`（月K）同名 | 分钟文件必须放 `data/kline/min/` |
 | Worker 映射漂移 | 代理对 cac40/hs_tech 静默降级 | 跑 `tests/worker-indices.test.mjs`，逐项 compare |
-| 总数漏改 | README 仍写 19 指数 / 58 标的 | 按 `INDICES.length` + ETF + 组合重新算 |
+| 总数漏改 | README 仍写旧数字（当前真值：20 指数 / 59 标的） | 按 `INDICES.length` + ETF + 组合重新算 |
 | 整目录提交 | 把 `.local/`、日志、缓存带进 git | 只 `git add` 白名单文件；不要 `git add -A` |
 
 ## 演练脚本
