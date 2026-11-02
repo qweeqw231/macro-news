@@ -126,6 +126,8 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 - **不再有本机准点任务**：2026-10-31 起 minimax 的 12:05 / 16:30 快照任务已下线。
   时点价一律取 K 线，晚采不影响数值（`capturedAt` 会晚，`asOf` 与价格不变）。
 - **不可覆盖**：`data/snapshots/YYYY-MM-DD_am|pm.json` 一个时点一个文件，只写一次。
+- **历史定案**：新增行情标的后，只保证新增日之后的 am/pm 快照包含它；
+  历史快照缺口**不回填、不重写**（时点价事后无法还原，宁可缺，不补造）。
 - **取价**：一律走 K 线（历史数据可回溯），规则见 §3.2。
 
 ### 2.4 链路 ④：宏观（17:00 后，云端）
@@ -153,6 +155,10 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 **2.3.0 起：管道归脚本，写作归 LLM**。中间产物在 `.local/runs/YYYY-MM-DD/`
 （`input.json` → `outline.json` → `draft.json` → `final.json`，`.local/` 不进 git）；
 `publish` 通过校验后才写 `data/briefings/YYYY-MM-DD.json`（与归档日期同键绑定，见 §2.7）。
+
+> mcode 任务提示词是**手写成品**，优先级高于 `prepare` 生成的 `prompt.md`：
+> [mcode 早报任务提示词](file:///c:/Work/Minimax_Work/macro-news/docs/superpowers/specs/2026-11-02-mcode-briefing-task-prompt.md)。
+> 两者冲突时以任务提示词为准；`prompt.md` 只作当天数据入口与补充。
 
 | 环节 | 实现 |
 |---|---|

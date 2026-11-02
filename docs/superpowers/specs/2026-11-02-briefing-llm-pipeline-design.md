@@ -205,6 +205,10 @@ publish --date
 
 ## 7. 调度契约（交给用户执行，不自动修改 mcode 任务）
 
+**优先级：mcode 任务提示词 > `.local/runs/<date>/prompt.md`。**
+任务提示词是手写成品（见 `2026-11-02-mcode-briefing-task-prompt.md`），写作契约写死在任务里；
+`prompt.md` 只作当天数据入口与补充，模板被改坏不会静默降低写作质量。两边冲突时以任务提示词为准。
+
 ### 7.1 命令
 
 ```powershell
