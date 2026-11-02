@@ -770,6 +770,7 @@
     a.appendChild(el('div', 'day-d', d.day));
     a.appendChild(el('div', 'day-n', d.count + ' 条'));
     if (d.source === 'rule') a.appendChild(el('span', 'day-tag', '自动摘要'));
+    else if (d.source === 'draft') a.appendChild(el('span', 'day-tag', '事实清单'));
     a.onclick = open;
     box.appendChild(a);
 
@@ -857,7 +858,7 @@
           kind: 'live',
           hasBriefing: !!d.hasBriefing,
           briefLine: d.briefLine || '',
-          source: d.hasBriefing ? (d.source === 'rule' ? 'rule' : 'ai') : '',
+          source: d.hasBriefing ? (d.source === 'rule' || d.source === 'draft' ? d.source : 'ai') : '',
         });
       });
       (hist.days || []).forEach((d) => {
@@ -869,7 +870,7 @@
           kind: 'hist',
           hasBriefing: !!d.hasBriefing,
           briefLine: d.briefLine || '',
-          source: d.hasBriefing ? (d.source === 'rule' ? 'rule' : 'ai') : '',
+          source: d.hasBriefing ? (d.source === 'rule' || d.source === 'draft' ? d.source : 'ai') : '',
         });
       });
       const list = [...map.values()].sort((a, b) => (a.day < b.day ? 1 : -1));
@@ -1054,10 +1055,18 @@
           // 兜底产物要能一眼看出来（不等于链路故障，所以用暖棕而不是红）
           bTxt = '早报 自动 ' + (when ? fmtTime(when) : '完成');
           bLvl = 'warn';
+        } else if (rec.source === 'draft') {
+          // 2.3.0：LLM 定稿不可用时的确定性事实清单，同样必须可辨别
+          bTxt = '早报 事实清单 ' + (when ? fmtTime(when) : '完成');
+          bLvl = 'warn';
         } else {
           bTxt = '早报 ' + (when ? fmtTime(when) : '完成');
           bLvl = 'ok';
         }
+      } else if (rec && rec.status === 'awaiting') {
+        // prepare 已完成、LLM 还没定稿：独立提示，不改变链路健康总灯
+        bTxt = rec.stage === 'awaiting-publish' ? '早报 待发布' : '早报 待写作';
+        bLvl = 'warn';
       } else if (rec && rec.status === 'running') {
         bTxt = '早报 补跑中';
         bLvl = 'warn';

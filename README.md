@@ -123,16 +123,17 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 
 ### 2.6 链路 ⑥：每日早报（09:00，本机固定对话）
 
-**本地生成，按需发布到站点**：`.local/briefings/YYYY-MM-DD.{json,md}` 是原始产物；
-站上读取 `data/briefings/YYYY-MM-DD.json`（与归档日期同键绑定，见 §2.7）。
+**2.3.0 起：管道归脚本，写作归 LLM**。中间产物在 `.local/runs/YYYY-MM-DD/`
+（`input.json` → `outline.json` → `draft.json` → `final.json`，`.local/` 不进 git）；
+`publish` 通过校验后才写 `data/briefings/YYYY-MM-DD.json`（与归档日期同键绑定，见 §2.7）。
 
 | 环节 | 实现 |
 |---|---|
-| 触发 | minimax 定时任务 `macro-news 宏观早报（每日 09:00）`，cron `0 9 * * *`（Asia/Shanghai），**固定对话**（同一个任务专用对话，历史累积可回溯） |
-| 同步 | `scripts/pull-remote.ps1` → `node scripts/news-db/import-archive.mjs`（把 `data/archive/*.json` 入库） |
-| 候选 | `node scripts/news-db/brief-candidates.mjs --from <昨天> --to <今天> --limit 120`（按宏观关键词打分、跨源去重） |
-| 挑选 | **AI 判断**：≤10 条，按「中国政策/央行/利率/PMI/财政 > 三大央行/美国数据 > 地缘/原油/黄金/美元 > A股/港股/美股主线」排序；同一事件多源报道合并成一条 |
-| 产物 | `.local/briefings/YYYY-MM-DD.json`（结构化）+ `.md`（人读版），并把 Markdown 全文回帖到对话 |
+| 触发 | minimax 定时任务 `macro-news 宏观早报（每日 09:00）`，cron `0 9 * * *`（Asia/Shanghai），**固定对话**（同一个任务专用对话，历史累积可回溯）。2.3.0 的三段式调度由用户在 mcode 侧执行，仓库不自动改任务 |
+| prepare | `node scripts/briefing/prepare.mjs --date <今天>`：同步/导入 archive → `brief-candidates` 去重打分 → 固化 `input.json`（不发布、不进仓库） |
+| 写作 | **LLM 判断**：读 `.local/runs/<date>/prompt.md`，按 schema 写 `outline.json` → `draft.json` → `final.json`；≤10 条，同一事件多源合并 |
+| publish | `node scripts/briefing/publish.mjs --date <今天>`：校验 schema / 条数 / 来源可追溯 / `inputSha`，通过才原子写站点与本地，并更新索引、状态 |
+| 产物 | `.local/briefings/YYYY-MM-DD.json` + `.md`（本地）+ `data/briefings/YYYY-MM-DD.json`（站点） |
 
 **新闻库** `.local/news.db`（SQLite + FTS5，中文 bigram 分词）：52 万条量级；
 近 60 天有全文/摘要，5 年历史以标题+链接为主（中新网回填约 50 万条）。
@@ -145,20 +146,31 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 2. **同一篇文章在库里可能有两行**：中新网回填行是 date 精度占位（`T12:00:00+08:00`、summary 为空），
    采集行才有全文 ⇒ 取时间与链接要用**有 summary 的那一行**。
 
-**容错（2.2.1）**
+**三段式（2.3.0）**
 
-- `node scripts/briefing/generate.mjs --date YYYY-MM-DD` 是确定性入口：
-  取数 → 候选（`brief-candidates`）→ 规则组装 → `.tmp` + rename 原子写（本地 `.local/briefings/`
-  与站点 `data/briefings/`），同名覆盖、可重复运行。
-- `node scripts/briefing/ensure.mjs` **自动模式只补今天**：今天过 **09:30**（09:00 + 30 分钟宽限）
-  仍未完整才补；本地已有完整 AI 产物则**只发布、不重新生成**。
-  **历史缺口不生成任何早报**，只在状态文件里标 `missed`（宁缺不假）。
+```
+prepare --date（脚本，确定性）
+  → input.json / prompt.md（.local/runs/<date>/，不发布）
+LLM 写作（语义判断）
+  → outline.json → draft.json → final.json（分段检查点，可续写）
+publish --date（脚本，确定性）
+  → 校验通过才写 data/briefings/，否则 missed 或 source:"draft" 事实清单
+```
+
+- **幂等**：`prepare` 发现 `input.json` 已存在就复用（不重抓、不产生第二套候选）；
+  LLM 从最近有效检查点续写；`publish` 遇到站点已有完整 AI 早报**永不覆盖**。
+- **降级不冒充**：LLM 不可用/定稿不合格 → 不写文件并标 `missed`；
+  显式加 `--draft-on-fail` 才写 `source:"draft"` 的事实清单（只有标题/来源/时间/链接，无 AI 摘要）。
+  `source` 取值：`ai`（LLM 定稿，无角标）、`draft`（事实清单）、`rule`（仅人工显式 `generate.mjs`）。
+- `node scripts/briefing/ensure.mjs` **自动模式只补今天**：今天过 **09:30** 仍未完整时，
+  只运行 `prepare` 固化输入并标 `awaiting`，**不再自动生成规则版**；本地已有完整 AI 产物则只发布。
+  历史缺口不生成任何早报，只在状态文件里标 `missed`（宁缺不假）。
   需要人工补历史时显式给 `--backfill-from/--backfill-to`（默认关闭、不参与调度）。
-- 兜底产物带 `source:"rule"` + `generator:"rule-v1"`；AI 产物为 `source:"ai"`，
-  旧文件缺字段按 `ai` 兼容（不改写历史文件）。`generate` 拒绝覆盖已有完整 AI 早报（除非 `--force`）。
 - 状态写 `data/_briefing-status.json`（单文件、保留 14 天，非高频）：页脚显示
-  `早报 09:02`（绿，AI）/ `早报 自动 09:02`（棕，规则版）/ `早报 补跑中` / `早报 失败` / `早报 未记录`。
-- 防重入锁 `.local/briefing.lock`（pid + 启动时刻，20 分钟失效）；单日硬超时 15 分钟，
+  `早报 09:02`（绿，AI）/ `早报 事实清单 09:35`（棕，draft）/ `早报 自动`（棕，rule）/
+  `早报 待写作` / `早报 待发布` / `早报 补跑中` / `早报 失败` / `早报 未记录`。
+- 防重入锁 `.local/briefing.lock`（ensure，pid + 启动时刻，20 分钟失效）与
+  `.local/runs/<date>/run.lock`（prepare/publish 共用）；单日硬超时 15 分钟，
   超时以退出码 124 结束并记录原因。
 - 判据**不看 `generatedAt`**（它是开始时刻，11-02 事故里写着 09:02、实际 12:15 才落盘）：
   文件存在、JSON 可解析、`items > 0`、`overview` 非空，新产物另有 `endedAt`。
@@ -341,12 +353,19 @@ node scripts/export-history.mjs --days 365
 # 把本地早报发布到站点（只复制 JSON；Markdown 版留在 .local）
 Copy-Item .local\briefings\*.json data\briefings\ -Force
 
-# 早报：确定性生成某天 / 扫今天补缺（--dry-run 只打印计划）
-node scripts/briefing/generate.mjs --date 2026-11-02
+# 早报三段式（2.3.0）：prepare 固化输入 → LLM 写 outline/draft/final → publish 校验发布
+node scripts/briefing/prepare.mjs --date 2026-11-02
+node scripts/briefing/publish.mjs --date 2026-11-02
+node scripts/briefing/publish.mjs --date 2026-11-02 --draft-on-fail   # 降级事实清单
+
+# 早报兜底（只补当天；缺失时只 prepare，等待 LLM，不再自动生成规则版）
 node scripts/briefing/ensure.mjs --dry-run
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\briefing\run-ensure.ps1
 
-# 手动补历史（默认关闭，必须显式给起止日期；不参与自动调度）
+# 规则版只保留为人工显式工具（不参与自动调度；正常流程不要用）
+node scripts/briefing/generate.mjs --date 2026-11-02
+
+# 手动补历史（默认关闭，必须显式给起止日期；只 prepare 快照，不生成规则版）
 node scripts/briefing/ensure.mjs --backfill-from 2026-10-30 --backfill-to 2026-11-01
 
 # 离线回归测试（不联网、不写盘）：切片/早报判据/锁/补跑、文件名大小写、时区、采集白名单
@@ -477,9 +496,10 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 11. **早报与归档同键、展开才取正文**：索引只多 `hasBriefing` + 一行 ≤80 字 `briefLine`，
     不新增索引文件、不在首屏/归档页预取 365 份早报；折叠块展开时才请求当天 JSON，
     历史日 `max-age=600`、当日 `no-store`。
-12. **早报容错用确定性脚本兜底，不信任 agent 上下文**：状态文件单列（`_briefing-status.json`），
-    判据只看产物完整性与 `endedAt`（不看 `generatedAt`）；补跑只处理缺失/不完整，
-    本地已有完整 AI 产物只发布不重写；模拟与测试一律写临时目录（见 2.2.1 规范 §13/§14）。
+12. **管道归脚本，写作归 LLM（2.3.0）**：脚本只做取数、去重、候选打分、输入固化、校验、落盘、
+    索引、状态、锁、判据；语义判断全部交给 LLM。状态文件单列（`_briefing-status.json`），
+    判据只看产物完整性与 `endedAt`（不看 `generatedAt`）；补跑缺失时只 prepare 快照，
+    不生成规则版；模拟与测试一律写临时目录（见 2.2.1 规范 §13/§14、2.3.0 规范）。
 
 ### 8.1 视觉契约（改样式前先看这里）
 
@@ -575,7 +595,8 @@ macro-news/
 │   └── macro/daily.json
 ├── .local/             本机私有（已在 .gitignore）
 │   ├── news.db         新闻库（SQLite + FTS5，52 万条）
-│   └── briefings/      每日早报 YYYY-MM-DD.json / .md
+│   ├── briefings/      每日早报 YYYY-MM-DD.json / .md
+│   └── runs/           2.3.0 三段式中间产物（input/outline/draft/final + prompt）
 ├── scripts/news-db/    新闻库：db · history-slice · import-archive · brief-candidates · query · backfill-*
 ├── src/
 │   ├── collect.mjs    新闻 + 行情主程序（--no-kline / --kline-only）
@@ -588,8 +609,8 @@ macro-news/
 │   ├── portfolio.mjs  7 个组合行情 + 5 个宏观指标
 │   └── portfolio-collect.mjs  宏观 + 1Y国债日K（每工作日 17:00 后，云端）
 ├── scripts/           serve · export-history · push-data.sh · update-kline-{full,minute,last} · 各 PowerShell 任务
-├── scripts/briefing/  generate · ensure · core · run-ensure.ps1（早报生成与兜底）
-├── docs/superpowers/specs/  设计文档（2.2.0 历史新闻 / 2.2.1 早报容错）
+├── scripts/briefing/  prepare · publish · pipeline · generate · ensure · core · run-ensure.ps1（早报三段式与兜底）
+├── docs/superpowers/specs/  设计文档（2.2.0 历史新闻 / 2.2.1 早报容错 / 2.3.0 三段式）
 └── worker/gh-cron/    Cloudflare 外部触发器（窄职责，仅 dispatch）
 ```
 

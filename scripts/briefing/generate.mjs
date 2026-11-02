@@ -1,7 +1,9 @@
 // scripts/briefing/generate.mjs
-// 确定性早报入口：取数 → 候选 → 规则组装 → 原子落盘（本地 + 站点副本）→ 状态。
+// 规则版早报（人工显式调用）。2.3.0 起**不参与自动调度**：自动链路走 prepare → LLM → publish，
+// 缺失时宁可 missed，也不再用规则版冒充早报。
 //
 // 设计文档：docs/superpowers/specs/2026-11-02-briefing-resilience-design.md
+//            docs/superpowers/specs/2026-11-02-briefing-llm-pipeline-design.md
 //
 // 用法：
 //   node scripts/briefing/generate.mjs --date 2026-11-02

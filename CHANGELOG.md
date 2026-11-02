@@ -23,6 +23,46 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.3.0] - 2026-11-02
+
+### 新增
+
+- **早报三段式**：`prepare`（取数/去重/候选打分/输入固化）→ **LLM 写作**
+  （`outline.json` → `draft.json` → `final.json`）→ `publish`（校验/原子发布/索引/状态）。
+  脚本不再生成摘要正文；语义判断全部交给 LLM。
+- **输入快照复用**：`.local/runs/<date>/input.json` 已存在时 `prepare` 直接复用，
+  不重抓、不重算候选；`--force` 才重建，旧检查点因 `inputSha` 变化自动作废。
+- **分段检查点**：`prepare` 输出 `next`（outline/draft/final/publish），LLM 从最近有效检查点续写；
+  `prompt.md` 随 `prepare` 落盘，包含路径、schema、写作口径与续写规则。
+- **`publish` 校验**：JSON/schema、`date`、`inputSha`、`stage:"final"`、`overview` 非空、
+  `items` 3~10 条、字段非空、`url` 可追溯、`source` 与候选一致、主链接去重、`watch` 0~6 条。
+- **降级不冒充**：无定稿/校验失败 → 不写文件并标 `missed`；显式 `--draft-on-fail` 才写
+  `source:"draft"` 的事实清单（只有标题/来源/时间/链接，无 AI 摘要）。
+  `source` 扩展为 `ai | rule | draft`；`ai` 无角标，`draft` 显示「事实清单」，`rule` 保留「自动摘要」。
+- **状态 `awaiting`**：`prepare` 完成后页脚显示「早报 待写作/待发布」；`publish` 成功写 `done`，
+  失败写 `missed`，状态不变式继续成立。
+- **索引即时更新**：`publish` 只改已存在日期的 `data/index.json` 与 `data/history/index.json`，
+  透传 `hasBriefing/briefLine/source`；没有归档条目的日期不新增。
+- **AI 覆盖保护**：站点已有完整 `source:"ai"` 早报时，`publish` 永不覆盖，只校正状态为 `done/ai`。
+
+### 变更
+
+- `ensure.mjs` 自动模式缺失当天只调用 `prepare`，**不再自动生成规则版**；
+  `generate.mjs` 仅保留为人工显式工具，不参与自动调度。
+- `planCatchup` 的补跑动作由 `generate` 改为 `prepare`；ensure 子进程参数改为
+  `prepareArgs()`（显式传 `--runs/--status/--db/--archive`）。
+
+### 测试
+
+- 新增 `tests/briefing-pipeline.test.mjs`：快照复用（移走 archive/DB 仍复用）、检查点续写、
+  schema 拒绝、`missed`/`draft` 降级不冒充、AI 覆盖保护、发布原子性、索引透传；
+  全套 **50 项**通过，只写临时目录、不联网。
+
+### 文档
+
+- 新增 `docs/superpowers/specs/2026-11-02-briefing-llm-pipeline-design.md`：
+  三段式边界、运行目录、schema、校验、降级、调度契约与 LLM 提示词全文。
+
 ## [2.2.3] - 2026-11-02
 
 ### 修正

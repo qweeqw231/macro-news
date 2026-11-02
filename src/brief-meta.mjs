@@ -38,7 +38,8 @@ export function readBriefingMeta(dir) {
     try {
       const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
       // 2.2.2：旧产物没有 source → 按 AI 处理（不回写历史文件）
-      const source = j && j.source === 'rule' ? 'rule' : 'ai';
+      // 2.3.0：draft 是降级事实清单，必须保留来源，不能误判成 ai
+      const source = j && (j.source === 'rule' || j.source === 'draft') ? j.source : 'ai';
       out.set(m[1], { briefLine: briefLineOf(j), source });
     } catch {
       // 损坏的早报不应拖垮索引：标记为「有文件但无摘要」，前端只会显示「当日早报」

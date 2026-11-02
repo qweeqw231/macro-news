@@ -16,7 +16,6 @@ import {
   checkBriefing,
   checkStatusInvariants,
   deadlinePassed,
-  generateArgs,
   normalizeBriefingSource,
   parseBackfillRange,
   planCatchup,
@@ -24,6 +23,7 @@ import {
   shouldSkipExisting,
   updateStatus,
 } from '../scripts/briefing/core.mjs';
+import { prepareArgs } from '../scripts/briefing/pipeline.mjs';
 import { buildIndex } from '../scripts/news-db/history-slice.mjs';
 
 const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'brief-core-'));
@@ -149,23 +149,27 @@ test('历史缺口只标 missed：不含今天、不产出条目', () => {
   assert.ok(!idx.days.some((x) => x.d === '2026-10-30'), 'missed 不进索引');
 });
 
-test('source：旧文件缺字段按 ai；rule 透传到索引', () => {
+test('source：旧文件缺字段按 ai；rule/draft 原样保留并透传到索引', () => {
   assert.equal(normalizeBriefingSource({}), 'ai');
   assert.equal(normalizeBriefingSource({ source: 'ai' }), 'ai');
   assert.equal(normalizeBriefingSource({ source: 'rule' }), 'rule');
+  assert.equal(normalizeBriefingSource({ source: 'draft' }), 'draft');
 
   const idx = buildIndex([
     { d: '2026-11-02', n: 1, b: 1, hasBriefing: true, source: 'ai' },
     { d: '2026-11-01', n: 1, b: 1, hasBriefing: true, source: 'rule' },
+    { d: '2026-10-31', n: 1, b: 1, hasBriefing: true, source: 'draft' },
   ], {});
   assert.equal(idx.days[0].source, 'ai');
   assert.equal(idx.days[1].source, 'rule');
+  assert.equal(idx.days[2].source, 'draft');
 });
 
 test('AI 产物不被覆盖：shouldSkipExisting 只在 ai 且未 force 时为真', () => {
   assert.equal(shouldSkipExisting({ complete: true, source: 'ai' }), true);
   assert.equal(shouldSkipExisting({ complete: true, source: undefined }), true);
   assert.equal(shouldSkipExisting({ complete: true, source: 'rule' }), false);
+  assert.equal(shouldSkipExisting({ complete: true, source: 'draft' }), false);
   assert.equal(shouldSkipExisting({ complete: false, source: 'ai' }), false);
   assert.equal(shouldSkipExisting({ complete: true, source: 'ai', force: true }), false);
 });
@@ -235,20 +239,19 @@ test('规则版早报：≤10 条、override 概览不选汇总稿、why / ended
 });
 
 test('ensure 子进程参数显式携带全部路径（防止写进仓库默认目录）', () => {
-  const s = generateArgs({
+  const s = prepareArgs({
     date: '2026-11-02',
-    out: 'C:/t/out',
-    siteOut: 'C:/t/site',
+    runs: 'C:/t/runs',
     status: 'C:/t/status.json',
-    lock: 'C:/t/lock',
     db: 'C:/t/news.db',
     archive: 'C:/t/archive',
+    noImport: true,
     quiet: true,
   }).join(' ');
   for (const want of [
-    '--date 2026-11-02', '--no-lock', '--no-import',
-    '--out C:/t/out', '--site-out C:/t/site', '--status C:/t/status.json',
-    '--lock C:/t/lock', '--db C:/t/news.db', '--archive C:/t/archive', '--quiet',
+    '--date 2026-11-02', '--no-import',
+    '--runs C:/t/runs', '--status C:/t/status.json',
+    '--db C:/t/news.db', '--archive C:/t/archive', '--quiet',
   ]) {
     assert.ok(s.includes(want), `缺少参数：${want}`);
   }

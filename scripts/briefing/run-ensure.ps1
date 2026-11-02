@@ -1,6 +1,7 @@
 ﻿# scripts\briefing\run-ensure.ps1
 # 早报兜底入口（供 Windows 计划任务 / mcode 调度调用）：
-#   node scripts\briefing\ensure.mjs → 缺哪天补哪天（今天过 09:30 才补）
+#   node scripts\briefing\ensure.mjs → 缺失当天只 prepare 输入快照（今天过 09:30 才补），
+#   等待 LLM 写作；不再自动生成规则版。历史缺口只标 missed。
 #
 # 用法：
 #   powershell -NoProfile -ExecutionPolicy Bypass -File scripts\briefing\run-ensure.ps1

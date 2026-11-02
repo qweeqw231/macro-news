@@ -69,14 +69,17 @@
 | 今天完整 | — | `skip` |
 | 今天缺失/不完整，未到 09:30 | — | `skip`（还不到宽限） |
 | 今天缺失/不完整，已过 09:30 | 完整（AI 已生成但没发布） | `publish`：原子复制到 `data/briefings/`，**不重新生成** |
-| 今天缺失/不完整，已过 09:30 | 也缺失/不完整 | `generate`：规则版兜底 |
+| 今天缺失/不完整，已过 09:30 | 也缺失/不完整 | `prepare`：只固化输入快照、标 `awaiting`，等待 LLM 写作；2.3.0 起**不再生成规则版** |
 
 - **历史日期不再自动生成任何早报**。最近的缺口只在状态文件里标 `missed`（日期 + 原因），
   不产出 JSON、不进索引，`hasBriefing` 保持 false。
   依据：早报是 AI 写的判断性内容，用规则版补历史等于造假资产 —— **宁缺不假**。
 - 手动补齐（默认关闭，不参与自动调度）：`--backfill-from YYYY-MM-DD --backfill-to YYYY-MM-DD`，
-  两个参数必须同时给出；窗口内的日期按升序处理，规则同上（完整跳过 / 本地完整发布 / 否则生成）。
+  两个参数必须同时给出；窗口内的日期按升序处理，规则同上（完整跳过 / 本地完整发布 / 否则 `prepare`）。
 - 单日失败不影响其它日期（继续补，但整体退出码 1）。
+- **2.3.0 更新**：自动链路不再生成规则版；缺失时只 `prepare` 输入快照，降级由 `publish` 标
+  `missed` 或 `source:"draft"` 事实清单。详见
+  `docs/superpowers/specs/2026-11-02-briefing-llm-pipeline-design.md`。
 
 ## 5. 锁
 
@@ -202,20 +205,23 @@ buildBriefing(规则组装) → status(write) → 原子写 JSON/MD → 原子�
 - 半成品：写截断 JSON → 判 `invalid` → 覆盖修复；
 - 超期：`--now-hm 09:40` + 今天缺失 → 进入补跑队列。
 
-## 12. 第二阶段（调度切换，待第一阶段验收后执行）
+## 12. 第二阶段（2.3.0 已实施）
 
-目标：mcode 任务只负责调度，不再在 agent 上下文里做生成。
+2.3.0 已按「管道归脚本、写作归 LLM」落地三段式（`prepare` / LLM 检查点 / `publish`），
+本节的「mcode 只调度」目标已由新文档承接，旧 `run-ensure.ps1` 仅作兜底，不再自动生成规则版。
 
 建议切换后的任务指令（示例，**不自动修改任何 mcode 任务**）：
 
 ```
 每天 09:00（Asia/Shanghai）执行：
-powershell -NoProfile -ExecutionPolicy Bypass -File C:\Work\Minimax_Work\macro-news\scripts\briefing\run-ensure.ps1
+node scripts\briefing\prepare.mjs --date <今天>
+读取 .local\runs\<今天>\prompt.md，按 schema 写 outline.json / draft.json / final.json
+09:35 执行 node scripts\briefing\publish.mjs --date <今天>
 若退出码非 0，把 data/_briefing-status.json 里今天的记录回帖到对话。
 ```
 
-另配一条每 30 分钟（08:30–12:00）的兜底调度，执行同一个脚本；脚本内部只在「缺失/
-未完整且已到 09:30」时才生成，因此白天重复调用不会重复消耗。
+另配一条每 30 分钟（08:30–12:00）的兜底调度，执行 `ensure.mjs`；它只在「缺失且已到 09:30」时
+`prepare`，不会重复写作、不会生成规则版。
 agent 任务不再写早报内容，只做「触发 + 失败摘录」。
 
 ## 13. 硬约束
@@ -235,7 +241,7 @@ agent 任务不再写早报内容，只做「触发 + 失败摘录」。
 | 影响 | 远端两份 AI 早报被换成规则版；多出两份不该存在的早报与状态文件；`data/index.json` 把 10-30/31 标成 `hasBriefing`。 |
 | 恢复 | 从事故前最后一个含 AI 原文的提交 `988632f` 恢复 11-01/11-02；删除 10-30/31 与状态文件；清理提交 `f94a7ab` 正常推送（不 force）。`data/index.json` 由下一次采集按恢复后的文件重建。 |
 | 根因 1 | 子进程参数没有白名单/透传约束。 |
-| 修复 1 | `generateArgs()` 统一拼参数，ensure 必须显式传全部路径；新增测试「ensure 子进程参数显式携带全部路径」。 |
+| 修复 1 | 统一用参数拼装函数（2.2.x 的 `generateArgs()`，2.3.0 起改为 `prepareArgs()`），ensure 必须显式传全部路径；新增测试「ensure 子进程参数显式携带全部路径」。 |
 | 根因 2 | 本机采集任务整目录 `git add -- data`，把「不属于采集链路的文件」也提交了。 |
 | 修复 2 | 改为白名单：`git add -u -- data/archive data/kline` + 今天/昨天 archive + 5 个固定 JSON；新增静态测试 `tests/collect-whitelist.test.mjs`，禁止整目录 add 与 briefings/history/snapshots/macro。 |
 | 教训 | 「临时目录模拟」必须同时约束子进程路径；自动化落盘前先确认目标路径；提交范围必须白名单，不能假设目录里只有自己的文件。 |

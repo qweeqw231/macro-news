@@ -77,11 +77,12 @@ export function checkBriefing(file) {
 
 /**
  * 最近 N 天的补跑计划（按日期升序，今天最后）。
+ * 2.3.0 起缺失当天只做 `prepare`（固化输入快照，交给 LLM 写作），不再自动生成规则版。
  * @param {object} o
  * @param {string} o.today 北京今天
  * @param {string} o.nowHm 北京当前时刻
  * @param {(day:string)=>{complete:boolean, localComplete:boolean}} o.check
- * @returns {Array<{date:string, action:'publish'|'generate'}>}
+ * @returns {Array<{date:string, action:'publish'|'prepare'}>}
  */
 export function planCatchup({
   today,
@@ -99,7 +100,7 @@ export function planCatchup({
     // 今天要到宽限之后才补；历史日**不再自动生成**（2.2.2 起只扫今天）
     if (date === today && !deadlinePassed(nowHm, deadline, graceMin)) continue;
     if (date !== today) continue;
-    out.push({ date, action: r.localComplete ? 'publish' : 'generate' });
+    out.push({ date, action: r.localComplete ? 'publish' : 'prepare' });
   }
   return out;
 }
@@ -118,9 +119,10 @@ export function scanMissed({ today, days = 7, check }) {
   return out.sort();
 }
 
-/** 旧产物没有 source 字段 → 按 AI 处理（不回写历史文件） */
+/** 旧产物没有 source 字段 → 按 AI 处理（不回写历史文件）；2.3.0 起保留 draft */
 export function normalizeBriefingSource(doc) {
-  return doc && doc.source === 'rule' ? 'rule' : 'ai';
+  if (doc && (doc.source === 'rule' || doc.source === 'draft')) return doc.source;
+  return 'ai';
 }
 
 /** 已存在完整 AI 早报时拒绝覆盖；规则版可以被重新生成 */
@@ -318,26 +320,7 @@ export function briefingMarkdown(b) {
   });
   lines.push('## 观察项', '');
   if (b.watch && b.watch.length) b.watch.forEach((w) => lines.push(`- ${w}`));
-  else lines.push('- （规则版暂无观察项，等待 AI 版补充）');
+  else lines.push(b.source === 'draft' ? '- （事实清单暂无观察项）' : '- （规则版暂无观察项，等待 AI 版补充）');
   lines.push('');
   return lines.join('\n');
-}
-
-/**
- * ensure 调用 generate 的参数。
- * ⚠ 必须显式带上所有路径：ensure 的测试/模拟会用临时目录，漏传就会写进仓库默认目录
- * （2026-11-02 实测踩过：模拟补跑把 data/briefings 下的真实早报覆盖成了规则版）。
- */
-export function generateArgs({
-  date, out, siteOut, status, lock, db, archive, quiet = false,
-}) {
-  const a = ['--date', date, '--no-lock', '--no-import'];
-  if (out) a.push('--out', out);
-  if (siteOut) a.push('--site-out', siteOut);
-  if (status) a.push('--status', status);
-  if (lock) a.push('--lock', lock);
-  if (db) a.push('--db', db);
-  if (archive) a.push('--archive', archive);
-  if (quiet) a.push('--quiet');
-  return a;
 }
