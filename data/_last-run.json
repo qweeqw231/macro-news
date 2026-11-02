@@ -1,86 +1,65 @@
 {
-  "startedAt": "2026-11-02T15:52:55.170Z",
-  "durationMs": 28214,
+  "runner": "local",
+  "startedAt": "2026-11-02T15:54:12.021Z",
+  "durationMs": 16602,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 2742
+      "ms": 2877
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 231
+      "ms": 451
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 168
+      "ms": 262
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 202
+      "ms": 280
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 52
+      "ms": 281
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 886
+      "ms": 1142
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 595
+      "ms": 2416
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 26367
+      "ms": 11629
     }
   ],
-  "quotes": 56,
-  "added": 36,
-  "at": "2026-10-30T19:28:29+08:00",
-  "ok": [
-    "ndx",
-    "xau",
-    "xag",
-    "brent",
-    "sge_au9999",
-    "usdcny",
-    "cgb_1y"
-  ],
-  "fail": {},
-  "macroOk": [
-    "margin",
-    "us10y",
-    "social_financing",
-    "cpi",
-    "pmi"
-  ],
-  "macroFail": {},
-  "portfolioQuotes": 7,
-  "portfolioDurationMs": 2218,
-  "runner": "local"
+  "quotes": 59,
+  "added": 32
 }
