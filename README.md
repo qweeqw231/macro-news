@@ -6,7 +6,7 @@
 |---|---|
 | 站点 | **https://qweeqw231.github.io/macro-news/** |
 | 形态 | 纯静态站（GitHub Pages）+ 定时采集写 JSON，**不需要服务器 / 数据库** |
-| 数据规模 | **57 个行情标的**（18 指数 + 32 场内 ETF + 7 组合）、5 个宏观指标、8 个新闻源 |
+| 数据规模 | **58 个行情标的**（19 指数 + 32 场内 ETF + 7 组合）、5 个宏观指标、8 个新闻源 |
 | 前端 | 原生 JS + Canvas 手绘 K 线，零依赖 |
 
 **读法**：第 1 节是全局地图；第 2~3 节是**规格（事实）**；第 4 节是数据契约；第 5~7 节是使用/部署/排障；**设计原因集中在第 8 节**，不和操作步骤混在一起。历史与被弃用的方案放最后。
@@ -20,7 +20,7 @@
 | 页签 | 内容 |
 |---|---|
 | 要闻流 | 搜索 + 频道筛选 + 最新快讯（默认视图） |
-| 行情 | 57 个标的的行情卡，支持按名称 / 代码 / 英文缩写搜索；点卡片打开 K 线抽屉 |
+| 行情 | 58 个标的的行情卡，支持按名称 / 代码 / 英文缩写搜索；点卡片打开 K 线抽屉 |
 | 归档 | 按天列出条目数，点某天看当天全部 |
 | 来源 | 8 个新闻源的状态 / 条数 / 耗时 / 错误 |
 
@@ -60,7 +60,7 @@
 ```
                       ┌──────────────── 链路 ① 每 15 分钟 ───────────────┐
 Cloudflare Worker ──> │ collect.yml → collect.mjs                        │
-（外部 cron）        │   新闻 + 51 个标的行情 + 6 个组合行情             │──> commit/push
+（外部 cron）        │   新闻 + 52 个标的行情 + 6 个组合行情             │──> commit/push
                       └──────────────────────────────────────────────────┘
                       ┌──────────────── 链路 ② K 线 ─────────────────────┐
                       │ kline-full.yml   每天 12:23 全量日/周/月K          │
@@ -76,18 +76,45 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 
 - **触发**：Cloudflare Worker Cron → GitHub `workflow_dispatch`（仓库内 `schedule` 只作冗余）。
 - **动作**：`node src/collect.mjs --no-kline`
-- **行情**：东财 `ulist.np` 批量一次拿完 **51 个**（18 指数 + 32 ETF + 纳指100）；
+- **行情**：东财 `ulist.np` 批量一次拿完 **52 个**（19 指数 + 32 ETF + 纳指100）；
   组合行情由 `fetchPortfolioQuotesFast` 补充：`xau/xag/brent` 每轮刷新，
   `sge_au9999/usdcny/cgb_1y` 只在发布时刻（15:30 / 09:15 / 17:00）且存量不是今天时刷新。
 - **新闻**：8 个源独立容错，条目按 `id` 幂等去重，按天写 `archive/`；
   `latest.json` 存最近 200 条（首屏），`search.json` 存全库检索索引（只有标题+摘要）。
 - **推送**：`scripts/push-data.sh`（fetch + rebase 重试，只有 `data/` 变化才提交）。
 
+**指数名录（19 个）**
+
+| 分组 | key | 名称 | 代码 | 东财 secid | 腾讯 |
+|---|---|---|---|---|---|
+| A股 | `sh_comp` | 上证指数 | 000001 | `1.000001` | `sh000001` |
+| A股 | `sz_comp` | 深证成指 | 399001 | `0.399001` | `sz399001` |
+| A股 | `chinext` | 创业板指 | 399006 | `0.399006` | `sz399006` |
+| A股 | `star50` | 科创50 | 000688 | `1.000688` | `sh000688` |
+| A股 | `bse50` | 北证50 | 899050 | `0.899050` | `bj899050` |
+| A股 | `csi300` | 沪深300 | 000300 | `1.000300` | `sh000300` |
+| A股 | `sse50` | 上证50 | 000016 | `1.000016` | `sh000016` |
+| A股 | `csi500` | 中证500 | 000905 | `1.000905` | `sh000905` |
+| A股 | `csi1000` | 中证1000 | 000852 | `1.000852` | `sh000852` |
+| 港股 | `hsi` | 恒生指数 | HSI | `100.HSI` | `hkHSI` |
+| 港股 | `hs_tech` | 恒生科技 | HSTECH | `124.HSTECH` | `hkHSTECH` |
+| 美股 | `dji` | 道琼斯 | DJI | `100.DJIA` | `usDJI` |
+| 美股 | `ixic` | 纳斯达克 | IXIC | `100.NDX` | `usIXIC` |
+| 美股 | `spx` | 标普500 | SPX | `100.SPX` | `usINX` |
+| 日本 | `n225` | 日经225 | N225 | `100.N225` | — |
+| 欧洲 | `dax` | 德国DAX | DAX | `100.GDAXI` | — |
+| 欧洲 | `cac40` | 法国CAC40 | CAC40 | `100.FCHI` | — |
+| 英国 | `ukx` | 英国富时100 | FTSE | `100.FTSE` | — |
+| 韩国 | `kospi` | 韩国KOSPI | KOSPI | `100.KS11` | — |
+
+`上证50` 的 `000016` 是**上交所指数代码**；东财 `QuoteID=1.000016`、腾讯 `sh000016`，
+两源返回的名称均为「上证50」（2026-11-02 核对，见 CHANGELOG）。
+
 ### 2.2 链路 ②：K 线（每天全量 + 每小时最后一根）
 
 - **全量**（`kline-full.yml`，UTC 04:23 = 北京 12:23）：
-  - `scripts/update-kline-full.mjs`：8 个 CN 指数的全量日 K（`_full.json`）
-  - `node src/collect.mjs --kline-only`：25 个标的 × 日/周/月（`<key>.json` / `_1w` / `_1M`）
+  - `scripts/update-kline-full.mjs`：9 个 CN 指数的全量日 K（`_full.json`）
+  - `node src/collect.mjs --kline-only`：26 个标的 × 日/周/月（`<key>.json` / `_1w` / `_1M`）
 - **分钟 + 最后一根**（`kline-minute.yml`，每小时 :17）：
   - `scripts/update-kline-minute.mjs`：7 个标的 × 5 个分钟周期（`min/`）
   - `scripts/update-kline-last.mjs`：只 upsert **当前处于交易时段**品种的最后一根日 K
@@ -232,7 +259,7 @@ publish --date（脚本，确定性）
 | 项 | 规则 |
 |---|---|
 | 主源 | 东财 `kline/get`，`klt=101/102/103`，`fqt=1` |
-| 备源 | 腾讯（CN 8 + 港 2 + 美 3 指数）→ 新浪（CN 8 个）→ 新浪外盘（伦敦金/银、布伦特）→ 本地文件 |
+| 备源 | 腾讯（CN 9 + 港 2 + 美 3 指数）→ 新浪（CN 9 个）→ 新浪外盘（伦敦金/银、布伦特）→ 本地文件 |
 | 根数 | 前端日/周/月请求 **20000**；服务端预生成 **1000 / 1821 / 500** 根 |
 | 盘中 bar | 交易日会返回**当天未收盘**的 bar，K 线图显示为「活蜡烛」——绘图行为，不影响快照 |
 | 日期 | bar 的 `t` 是**交易所当地日期**；周/月优先直接取源，源没有时用日 K 聚合 |
@@ -255,7 +282,7 @@ publish --date（脚本，确定性）
 
 | 标的 | 刷新 |
 |---|---|
-| 18 指数 + 32 ETF + `ndx` | 每 15 分钟（东财批量，纳指100 与 K 线同源 `100.NDX100`） |
+| 19 指数 + 32 ETF + `ndx` | 每 15 分钟（东财批量，纳指100 与 K 线同源 `100.NDX100`） |
 | `xau` / `xag` / `brent` | 每 15 分钟（腾讯 `hf_*`） |
 | `sge_au9999` | 15:30 后、存量不是今天才取（上金所日行情表） |
 | `usdcny` | 09:15 后、存量不是今天才取（中国货币网） |
@@ -283,9 +310,9 @@ publish --date（脚本，确定性）
 
 | 文件 | 内容 | 谁写 |
 |---|---|---|
-| `data/quotes.json` | 57 个标的快照（18 指数 + 32 ETF + 7 组合） | 链路 ① |
-| `data/snapshots/YYYY-MM-DD_am.json` | 上午盘时点价（57 项） | 链路 ③ |
-| `data/snapshots/YYYY-MM-DD_pm.json` | 收盘时点价（57 项） | 链路 ③ |
+| `data/quotes.json` | 58 个标的快照（19 指数 + 32 ETF + 7 组合） | 链路 ① |
+| `data/snapshots/YYYY-MM-DD_am.json` | 上午盘时点价（58 项；新增标的前的历史文件 57 项） | 链路 ③ |
+| `data/snapshots/YYYY-MM-DD_pm.json` | 收盘时点价（58 项；新增标前的历史文件 57 项） | 链路 ③ |
 | `data/archive/YYYY-MM-DD.json` | 按天归档新闻，**含正文** | 链路 ① |
 | `data/history/YYYY-MM-DD.json` | 近一年历史切片（**只有标题/摘要**，单日 ≤400 条） | `scripts/export-history.mjs` |
 | `data/history/index.json` | 历史切片索引（含 `hasBriefing` / `briefLine` / `source`） | 同上 |
@@ -293,8 +320,8 @@ publish --date（脚本，确定性）
 | `data/latest.json` | 最近 200 条（首屏） | 链路 ① |
 | `data/search.json` | 全库检索索引（**只有标题+摘要**，约 10 MB） | 链路 ① |
 | `data/index.json` | 按天归档索引（含 `hasBriefing` / `briefLine` / `source`） | 链路 ① |
-| `data/kline/<key>.json` / `_1w` / `_1M` | 25 个标的 × 日/周/月 | 链路 ② |
-| `data/kline/<key>_full.json` | 8 个 CN 指数的全量日 K（紧凑数组 `[t,o,c,h,l,v]`） | 链路 ② |
+| `data/kline/<key>.json` / `_1w` / `_1M` | 26 个标的 × 日/周/月 | 链路 ② |
+| `data/kline/<key>_full.json` | 9 个 CN 指数的全量日 K（紧凑数组 `[t,o,c,h,l,v]`） | 链路 ② |
 | `data/kline/min/<key>_<period>.json` | 7 个标的 × 5 个分钟周期 | 链路 ② |
 | `data/macro/daily.json` | 5 个宏观指标日频序列 | 链路 ④ |
 | `data/_last-run.json` | 各链路运行状态（字段并存，读改写） | 所有链路 |
@@ -568,8 +595,8 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 
 | 类别 | 源 | 取什么 | 备源 |
 |---|---|---|---|
-| 行情 | 东财 `ulist.np` | 18 指数 + 32 ETF 最新价（1 个请求） | 腾讯 `qt.gtimg.cn` |
-| K 线 | 东财 `push2his` | 日/周/月 + 分钟 | 腾讯 `ifzq.gtimg.cn`；新浪（仅 CN 8 指数） |
+| 行情 | 东财 `ulist.np` | 19 指数 + 32 ETF 最新价（1 个请求） | 腾讯 `qt.gtimg.cn` |
+| K 线 | 东财 `push2his` | 日/周/月 + 分钟 | 腾讯 `ifzq.gtimg.cn`；新浪（仅 CN 9 指数） |
 | 组合 | 腾讯 `hf_XAU` / `hf_XAG` / `hf_OIL` / `usNDX` | 伦敦金/银、布伦特、纳指100 | 东财 `100.NDX100` |
 | 组合 | 上金所官网 | 上海金 Au99.99 | 估算回退（note=estimated） |
 | 组合 | 中国货币网 `ccpr.json` | 人民币中间价 | 东财 `133.USDCNH`（离岸） |
@@ -601,7 +628,7 @@ macro-news/
 ├── src/
 │   ├── collect.mjs    新闻 + 行情主程序（--no-kline / --kline-only）
 │   ├── brief-meta.mjs 早报索引元信息（hasBriefing / briefLine）
-│   ├── sources.mjs    新闻源 + 18 指数适配器 + fetchKline
+│   ├── sources.mjs    新闻源 + 19 指数适配器 + fetchKline
 │   ├── quotes.mjs     批量行情（东财 → 腾讯）
 │   ├── kline.mjs      日 K / 5 分钟 K（东财 → 腾讯）
 │   ├── em.mjs         镜像 / 限速 / 退避 / 熔断 / 缓存

@@ -40,6 +40,7 @@
     { key: 'star50',  secid: '1.000688', market: 'CN', name: '科创50' },
     { key: 'bse50',   secid: '0.899050', market: 'CN', name: '北证50' },
     { key: 'csi300',  secid: '1.000300', market: 'CN', name: '沪深300' },
+    { key: 'sse50',   secid: '1.000016', market: 'CN', name: '上证50' },
     { key: 'csi500',  secid: '1.000905', market: 'CN', name: '中证500' },
     { key: 'csi1000', secid: '1.000852', market: 'CN', name: '中证1000' },
     { key: 'hsi',     secid: '100.HSI',  market: 'HK', name: '恒生指数' },
@@ -147,7 +148,7 @@
   //   之前写成 web.ifzq.gtimg.cn 会让「腾讯兜底 K 线」整条路径静默失效。
   const TX_CODE = {
     sh_comp: 'sh000001', sz_comp: 'sz399001', chinext: 'sz399006', star50: 'sh000688',
-    bse50: 'bj899050', csi300: 'sh000300', csi500: 'sh000905', csi1000: 'sh000852',
+    bse50: 'bj899050', csi300: 'sh000300', sse50: 'sh000016', csi500: 'sh000905', csi1000: 'sh000852',
     hsi: 'hkHSI', hs_tech: 'hkHSTECH',
     dji: 'usDJI', ixic: 'usIXIC', spx: 'usINX',
     // 纳指100：东财批量失败时靠腾讯补（与 100.NDX100 同品种，收盘逐位一致）
@@ -359,7 +360,7 @@
   const SINA_CODE = {
     sh_comp: 'sh000001', sz_comp: 'sz399001', chinext: 'sz399006',
     star50: 'sh000688', bse50: 'bj899050', csi300: 'sh000300',
-    csi500: 'sh000905', csi1000: 'sh000852',
+    sse50: 'sh000016', csi500: 'sh000905', csi1000: 'sh000852',
   };
   const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200 };
   // 分钟周期：新浪的 CN_MarketDataService 对**指数和场内 ETF 都有效**，

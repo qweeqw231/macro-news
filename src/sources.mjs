@@ -338,10 +338,11 @@ export const INDICES = [
   { key: 'star50',    name: '科创50',     market: 'CN', secid: '1.000688', sina: 'sh000688', tx: 'sh000688' },
   { key: 'bse50',     name: '北证50',     market: 'CN', secid: '0.899050', sina: 'bj899050', tx: 'bj899050' },
   { key: 'csi300',    name: '沪深300',    market: 'CN', secid: '1.000300', sina: 'sh000300', tx: 'sh000300' },
+  { key: 'sse50',     name: '上证50',     market: 'CN', secid: '1.000016', sina: 'sh000016', tx: 'sh000016' },
   { key: 'csi500',    name: '中证500',    market: 'CN', secid: '1.000905', sina: 'sh000905', tx: 'sh000905' },
   { key: 'csi1000',   name: '中证1000',   market: 'CN', secid: '1.000852', sina: 'sh000852', tx: 'sh000852' },
   // 港股
-  // ⚠ 新浪**只有 CN 的 8 个指数**可用（2026-10-30 实测）：
+  // ⚠ 新浪**只有 CN 的 9 个指数**可用（2026-10-30 实测 8 个；2026-11-02 新增 sse50 后 9 个）：
   //   hkHSI / hkHSTECH / usDJI / usIXIC / usINX 的 json_v2 与 jsonp_v2 都返回 **null**。
   //   ⇒ 这几个标的的新浪字段一律置 null，别写一个"看起来有"其实取不到的值。
   { key: 'hsi',       name: '恒生指数',   market: 'HK', secid: '100.HSI',   sina: null,    tx: 'hkHSI' },
@@ -417,7 +418,7 @@ export const PORTFOLIO_KLINE = [
   },
 ];
 
-/** 按 key 找 K 线取数目标：先 17 个指数，再组合标的。 */
+/** 按 key 找 K 线取数目标：先 19 个指数，再组合标的。 */
 export function klineTarget(key) {
   return INDICES.find((i) => i.key === key) || PORTFOLIO_KLINE.find((i) => i.key === key) || null;
 }
@@ -427,7 +428,7 @@ let quoteError = '';
 export function getQuoteError() { return quoteError; }
 
 /**
- * 采集全部行情：17 个指数 + 32 只场内 ETF + 纳指100。
+ * 采集全部行情：19 个指数 + 32 只场内 ETF + 纳指100。
  *
  * ⚠ 纳指100（ndx）虽属组合标的，但它是**只在美股时段交易的股指**：
  *   组合采集每天 16:30（美股开盘前）才跑一次 ⇒ 卡片会停在上一交易日，
@@ -435,7 +436,7 @@ export function getQuoteError() { return quoteError; }
  *   放进这里之后，卡片与 K 线同源（东财 100.NDX100）、同频（15 分钟）。
  *
  * ⚠ 走**批量**端点（东财 ulist.np），不是逐只 stock/get：
- *   · 批量一次拿完 51 个标的，请求数从 51 降到 1；
+ *   · 批量一次拿完 52 个标的，请求数从 52 降到 1；
  *   · 东财的限流是**按接口**的 —— 实测打密之后 stock/get 与 kline 端点会被
  *     socket 级拒绝，而 ulist 仍然正常，所以批量端点同时也是更抗限流的选择。
  *   · 详见 src/quotes.mjs 的口径说明（含「ulist 对 ETF 也有效」这条更正）。
@@ -469,10 +470,10 @@ export async function fetchQuotes() {
 //   · 东财 lmt 给多少给多少：日K 3000 根（12.3 年）、周K 1821 根（35.8 年）、月K 431 根（36 年）；
 //   · 腾讯在 n>1000 时**直接返回空** —— 拿它当主源，港股/美股的长历史根本取不到
 //     （道指周K 最多到 2007 年，东财能到 1896 年）；
-//   · 新浪 datalen 也能给 3000，但只覆盖 CN 的 8 个指数。
+//   · 新浪 datalen 也能给 3000，但只覆盖 CN 的 9 个指数。
 // ⇒ 与前端直连保持同一口径（东财 → 腾讯 → 本地）。
 //
-// sina / tx 来自 INDICES：新浪只覆盖 CN 8 个，腾讯覆盖港股 + 美股，都是备源。
+// sina / tx 来自 INDICES：新浪只覆盖 CN 9 个，腾讯覆盖港股 + 美股，都是备源。
 // ⚠ 2026-10-30 补 1m / 15m：前端周期表有 1分/5分/15分/30分/60分，
 //   而服务端原先只有 5m/30m/60m ⇒ 服务端预生成分钟K 时 1m/15m 会直接被跳过。
 const EM_KLT = { '1d': 101, '1w': 102, '1M': 103, '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60 };
@@ -483,7 +484,7 @@ const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '1m': 1, '5m': 5, '15m':
 const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
 export function klineAvailable(key) {
-  // 东财按 secid 能取到全部 17 个指数（含恒生科技 / 日经 / DAX / 富时 / KOSPI）；
+  // 东财按 secid 能取到全部 19 个指数（含恒生科技 / 日经 / DAX / 富时 / KOSPI）；
   // 组合标的中 xau **没有**东财 secid（东财无现货伦敦金），走新浪外盘；
   // sge_au9999 有东财 secid 也有上金所官网。
   const t = klineTarget(key);
@@ -599,7 +600,7 @@ async function sgeDaily(instid) {
  *   · 组合大宗（伦敦金/银/布伦特）：**新浪外盘优先**（实测 XAG 5187 根 / XAU 5186 根 /
  *     OIL 2587 根，都从 2006~2016 起），东财（122.XAG / 112.B00Y / 101.GC00Y）次之；
  *   · 上海金：东财优先（`118.AU9999` 2004 起 5552 根）→ 上金所官网（2016 起 2391 根）；
- *   · 指数：东财优先（lmt 无上限）→ 新浪 CN（仅 8 个 CN 指数）→ 腾讯（封顶 1000 根）。
+ *   · 指数：东财优先（lmt 无上限）→ 新浪 CN（仅 9 个 CN 指数）→ 腾讯（封顶 1000 根）。
  *
  * @returns {{name:string, run:() => Promise<object[]>}[]}
  */

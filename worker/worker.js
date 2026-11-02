@@ -23,6 +23,7 @@ const INDICES = {
   star50: { secid: '1.000688', sina: 'sh000688', market: 'CN' },
   bse50: { secid: '0.899050', sina: 'bj899050', market: 'CN' },
   csi300: { secid: '1.000300', sina: 'sh000300', market: 'CN' },
+  sse50: { secid: '1.000016', sina: 'sh000016', market: 'CN' },
   csi500: { secid: '1.000905', sina: 'sh000905', market: 'CN' },
   csi1000: { secid: '1.000852', sina: 'sh000852', market: 'CN' },
   hsi: { secid: '100.HSI', tx: 'hkHSI', market: 'HK' },

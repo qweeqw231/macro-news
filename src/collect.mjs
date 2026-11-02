@@ -102,7 +102,7 @@ async function collectKlines(startedAt, onlyKeys) {
   const klineSkip = [];
   const { INDICES, PORTFOLIO_KLINE, fetchKline, klineAvailable, klineTarget, getKlineSource } =
     await import('./sources.mjs');
-  // 17 个指数 + 4 个组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）
+  // 19 个指数 + 4 个组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）
   const all = [...INDICES.map((i) => i.key), ...PORTFOLIO_KLINE.map((i) => i.key)];
   const keys = onlyKeys && onlyKeys.length ? all.filter((k) => onlyKeys.includes(k)) : all;
   const KLINE_SPEC = [
@@ -314,7 +314,7 @@ async function main() {
   });
   if (quotes.length) {
     // 按 key 合并写入：保留 portfolio-collect.mjs 写入的其它 key。
-    // 本任务负责 INDICES 里的 17 个指数 + 32 只 ETF + 纳指100（ndx 在 15 分钟级别单独刷新，
+    // 本任务负责 INDICES 里的 19 个指数 + 32 只 ETF + 纳指100（ndx 在 15 分钟级别单独刷新，
     // 否则美股收盘后要等到第二天 16:30 的组合采集才更新）；若整份覆盖，
     // 组合行情（xau/xag/...）会在下一次运行里被抹掉。
     const quotesFile = path.join(DATA, 'quotes.json');

@@ -436,6 +436,9 @@ async function buildSnapshot(date, session) {
   if (session === 'pm') {
     const bad = [];
     for (const [key, q] of Object.entries(quotes)) {
+      // 组合标的（cgb_1y / xau…）走日频源，不是日 K；它们的 asOf 由源自己给出，
+      // 不能套用「A股/ETF/港股必须是 dailyK」这条闸（否则 17:00 后补 pm 必被误杀）。
+      if (q.kind === 'portfolio') continue;
       if (!['CN', 'ETF', 'HK'].includes(q.market)) continue;
       if (q.priceSource !== 'dailyK' || !q.asOf || q.note === 'preclose') bad.push(key);
     }
@@ -480,6 +483,7 @@ async function writeSnapshot(file, doc) {
   const bad = [];
   if (doc.preclose === true) bad.push('top-level preclose');
   for (const [key, q] of Object.entries(doc.quotes || {})) {
+    if (q.kind === 'portfolio') continue; // 组合日频值不走日 K，asOf 由源给出
     if (q.note === 'preclose') bad.push(key);
     else if (['CN', 'ETF', 'HK'].includes(q.market) && !q.asOf) bad.push(key);
   }
