@@ -23,6 +23,46 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.2.0] - 2026-11-02
+
+### 新增
+
+- **近一年历史新闻接入静态站**（`.local/news.db` → `data/history/`）：
+  - `scripts/export-history.mjs` 按日导出每日切片（`YYYY-MM-DD.json`）+ `index.json`；
+  - 窗口为「到昨天为止 365 天」，**只导 `data/archive/` 未覆盖的缺口**（gap-only），
+    已存在的切片默认不覆盖（`--force` 才重写），文件写一次即不可变；
+  - 单日上限 400 条（同 hash 去重后按「官方 / 全文 / 来源权重」取），摘要截断 160 字，
+    1 字母键 + 省略空字段；实测 **304 个切片 / 69,731 条 / 15.1 MB**（单日最大 88.4 KB）；
+  - 体积闸：单日 300 KB / 总量 30 MB，超限以退出码 3 停下且**写盘前**判定。
+- **归档页历史入口**：顶部「历史新闻」面板（覆盖范围 / 条数 / 说明）+ 日期跳转；
+  日网格合并 archive 与 history，历史天标注来源；`openDay(day, kind)` 统一路由。
+  两个索引只在切到「归档」时并行请求，首屏/行情/要闻流不预取。
+- **早报与归档同键绑定**：`data/briefings/YYYY-MM-DD.json`（沿用现有早报结构）；
+  `index.json` 与 `history/index.json` 各增加 `hasBriefing`（默认 false）与
+  `briefLine`（`overview` 折叠为 ≤80 字）——**不新增索引文件、不新增首屏请求**。
+  归档当日卡片内渲染原生 `<details>` 折叠块：默认一行主线摘要，展开才取早报正文并显示
+  `watch` 观察项；无早报时不渲染、不占位、不报错。
+  展开状态并入现有 `sessionStorage`（`briefOpen`），刷新后恢复。
+- **设计文档** `docs/superpowers/specs/2026-11-02-history-news-design.md`：
+  切片格式 / 字段 / 索引 / 读取路径 / 缓存 / 体积预算 / 早报绑定 / 风险回退。
+- **离线回归测试** `tests/history-slice.test.mjs`（9 项）：UTC→北京日期、365 天窗口、
+  去重优先级、封顶、字段精简、索引排序与早报字段透传、`briefLineOf` 截断。
+  测试总数达到 20 项，全部不联网、不写盘。
+
+### 变更
+
+- `data/index.json` 的每日条目新增 `hasBriefing` / `briefLine`（`src/collect.mjs` 生成）。
+- `assets/app.js` 的 `getDay()` 增加 `kind` 路由（`archive` / `history`），LRU 键改为
+  `kind:day`；历史条目归一化为 archive 字段形状并打 `_hist`，阅读器不再回读 archive 补全文。
+- 归档页日期跳转与日网格共用同一份 `dayIndex`；无历史索引（未导出）时面板隐藏、归档照常可用。
+- README 增补 §2.7 历史切片链路、数据契约、读取规则、体积与「历史不参与全文检索」的限制。
+
+### 修正
+
+- 早报折叠块刷新恢复时，`<details open>` 的 `toggle` 事件是异步派发的，会出现
+  「块展开了但正文没加载」；恢复逻辑改为显式 `loadBriefing()`，并对同一天的请求做
+  in-flight 去重。
+
 ## [2.1.3] - 2026-11-01
 
 ### 新增

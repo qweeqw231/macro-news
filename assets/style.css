@@ -240,6 +240,48 @@ body { overflow-wrap: break-word; }
 .day-d { font-family: var(--sans); font-weight: 600; font-variant-numeric: tabular-nums; }
 .day-n { font-family: var(--sans); font-size: 0.8rem; color: var(--ink-mute); margin-top: 0.15rem; }
 
+/* ---------- 归档页：近一年历史入口（日期跳转） ---------- */
+.hist {
+  border: 1px solid var(--rule); background: var(--surface); border-radius: 6px;
+  padding: 1rem 1.15rem; margin: 0 0 1.1rem;
+}
+.hist-hd { display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
+.hist-hd h2 { font-size: 1.05rem; margin: 0; }
+.hist-sub { margin: 0.35rem 0 0; color: var(--ink-mute); font-size: 0.85rem; }
+.hist-jump { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.8rem; flex-wrap: wrap; }
+.hist-jump label { font-size: 0.85rem; color: var(--ink-soft); }
+.hist-jump input {
+  font-family: var(--sans); font-size: 0.9rem; padding: 0.4rem 0.5rem;
+  border: 1px solid var(--rule-strong); border-radius: 4px;
+  background: var(--bg); color: var(--ink); min-height: 38px;
+}
+.hist-jump button {
+  font-family: var(--sans); font-size: 0.9rem; padding: 0.4rem 0.9rem; min-height: 38px;
+  border: 1px solid var(--rule-strong); border-radius: 4px;
+  background: var(--code-bg); color: var(--ink); cursor: pointer;
+}
+.hist-jump button:hover { border-color: var(--accent); color: var(--accent); }
+.hist-hint { font-size: 0.8rem; color: var(--warm); }
+
+/* 有早报的当日卡片：折叠块（默认一行主线摘要，展开看观察项） */
+.day.has-brief { padding: 0; text-align: left; }
+.day.has-brief.expanded { grid-column: 1 / -1; }
+.day.has-brief .day-open {
+  display: block; padding: 0.8rem 0.9rem; color: var(--ink); text-decoration: none;
+  text-align: center;
+}
+.day.has-brief .day-open:hover { background: var(--code-bg); }
+.day-brief { border-top: 1px dashed var(--rule); padding: 0.5rem 0.9rem 0.7rem; }
+.day-brief summary {
+  cursor: pointer; color: var(--ink-soft); font-size: 0.8rem; line-height: 1.45;
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+}
+.day-brief[open] summary { -webkit-line-clamp: unset; color: var(--ink); }
+.brief-body { margin-top: 0.55rem; }
+.brief-overview { margin: 0.2rem 0 0.5rem; color: var(--ink-soft); font-size: 0.85rem; line-height: 1.65; }
+.brief-watch { margin: 0.2rem 0 0; padding-left: 1.1rem; color: var(--ink-soft); font-size: 0.85rem; }
+.brief-watch li { margin: 0.3rem 0; line-height: 1.6; }
+
 /* ---------- 来源 / 状态表 ---------- */
 .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1rem 0; }
 table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }

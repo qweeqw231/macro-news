@@ -18,6 +18,7 @@
     fuse: null,
     shown: PAGE,
     archive: null,
+    hist: null,       // 近一年历史切片索引（归档页打开时才加载）
     total: 0,        // 库内总条数（用于标注当前列表的母集）
   };
 
@@ -46,6 +47,14 @@
       const list = S.visible || S.items;
       const it = readerOpen && readerIdx >= 0 ? list[readerIdx] : null;
       const klineOpen = $('#klineModal') && !$('#klineModal').hidden;
+      // 归档页早报折叠块的展开状态：并入同一份 sessionStorage，刷新后还在
+      const briefOpen = (() => {
+        try {
+          return [...document.querySelectorAll('#days .day.has-brief.expanded')]
+            .map((x) => x.dataset.day)
+            .filter(Boolean);
+        } catch { return []; }
+      })();
       sessionStorage.setItem(UI_KEY, JSON.stringify({
         v: 1,
         view: S.view,
@@ -59,6 +68,7 @@
           y: rdBox ? rdBox.scrollTop : 0,
         } : null,
         kline: klineOpen && klineKey ? { key: klineKey, period: klinePeriod } : null,
+        briefOpen,
       }));
     } catch { /* 隐私模式/配额满：不影响页面 */ }
   }
@@ -390,20 +400,57 @@
   const beijingDay = (d = new Date()) =>
     new Date(d.getTime() + 8 * 3600 * 1000).toISOString().slice(0, 10);
 
-  async function getDay(day) {
-    const today = day === beijingDay();
-    const hit = dayCache.get(day);
+  async function getDay(day, kind = 'live') {
+    const today = kind === 'live' && day === beijingDay();
+    const key = kind + ':' + day;
+    const hit = dayCache.get(key);
     if (hit && (!today || Date.now() - hit.at < DAY_FRESH_MS)) return hit.data;
-    // 历史天不会变 → 交给 Pages 的 max-age=600；今天还在增长 → 必须拿最新
-    const data = await jget(`archive/${day}.json`, today ? 'no-store' : 'default');
-    if (hit) dayCache.delete(day);        // 重新插入到队尾（LRU）
-    dayCache.set(day, { at: Date.now(), data });
+    // 历史天不会变 → 交给 Pages 的 max-age=600；今天还在增长 → 必须拿最新。
+    // 历史切片（history/）永远是过去日期，因此一律走浏览器缓存。
+    const file = kind === 'hist' ? `history/${day}.json` : `archive/${day}.json`;
+    const raw = await jget(file, today ? 'no-store' : 'default');
+    const data = kind === 'hist' ? normalizeHistDoc(raw) : raw;
+    if (hit) dayCache.delete(key);        // 重新插入到队尾（LRU）
+    dayCache.set(key, { at: Date.now(), data });
     if (dayCache.size > DAY_CACHE_MAX) dayCache.delete(dayCache.keys().next().value);
     return data;
   }
 
+  /**
+   * 历史切片是压过的 1 字母键（i/t/s/u/c/o/k/p），这里还原成与 archive 相同的形状，
+   * 上层的列表 / 筛选 / 阅读器都不用改。历史条目没有正文，打 _hist 标记：
+   * 阅读器不会再按天回读 archive 补全文（那天本来就只有标题/摘要）。
+   */
+  function histTime(ts) {
+    const n = Number(ts);
+    if (!Number.isFinite(n) || n <= 0) return '';
+    return new Date((n + 8 * 3600) * 1000).toISOString().slice(0, 19) + '+08:00';
+  }
+
+  function normalizeHistDoc(doc) {
+    if (!doc || !Array.isArray(doc.items)) return { items: [] };
+    return {
+      ...doc,
+      src: 'history',
+      items: doc.items.map((x) => ({
+        id: x.i || '',
+        title: x.t || '',
+        summary: x.s || '',
+        url: x.u || '',
+        channel: x.c || '',
+        source: x.o || '',
+        kind: x.k || 'news',
+        content: '',
+        time: histTime(x.p),
+        _hist: 1,
+      })),
+    };
+  }
+
   async function fetchFullItem(it) {
     if (!it) return it;
+    // 历史切片只有摘要：同一天再读一次也是同一份摘要，不做无意义的请求
+    if (it._hist) return it;
     if ((it.content || '').trim()) return it;
     const day = String(it.time || '').slice(0, 10);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return it;
@@ -665,34 +712,185 @@
     return indexPromise;
   }
 
+  // 近一年历史切片的索引：只在归档页打开时加载；缺失（还没导出）按空处理，
+  // 不能因为 404 让整个归档页挂掉。
+  let histPromise = null;
+  function loadHistoryIndex() {
+    if (S.hist) return Promise.resolve(S.hist);
+    if (!histPromise) {
+      histPromise = jget('history/index.json', 'default')
+        .then((d) => { S.hist = d || { days: [] }; return S.hist; })
+        .catch(() => { S.hist = { days: [] }; histPromise = null; return S.hist; });
+    }
+    return histPromise;
+  }
+
+  // 日期跳转用：day → {day, count, kind, hasBriefing}
+  let dayIndex = new Map();
+
+  function renderHistPanel(hist, list) {
+    const panel = $('#histPanel');
+    if (!panel) return;
+    const hasHist = hist && Array.isArray(hist.days) && hist.days.length > 0;
+    panel.hidden = !hasHist;
+    if (!hasHist) return;
+    const sub = $('#histSub');
+    if (sub) {
+      sub.textContent =
+        `近一年历史 ${hist.days.length} 天 · ${hist.from} ~ ${hist.to} · ` +
+        `${(hist.total || 0).toLocaleString('zh-CN')} 条 · 仅标题/摘要；` +
+        '更近的日期在下方归档卡片（带全文）';
+    }
+    const inp = $('#histDate');
+    if (inp && list.length) {
+      inp.min = list[list.length - 1].day;
+      inp.max = list[0].day;
+      if (!inp.value) inp.value = list[0].day;
+    }
+    const hint = $('#histHint');
+    if (hint) hint.textContent = '';
+  }
+
+  function dayCard(d) {
+    const open = (e) => { e.preventDefault(); openDay(d.day, d.kind); };
+    if (!d.hasBriefing) {
+      const a = el('a', 'day');
+      a.href = '#';
+      a.appendChild(el('div', 'day-d', d.day));
+      a.appendChild(el('div', 'day-n', d.count + ' 条'));
+      a.onclick = open;
+      return a;
+    }
+    // 有早报的天：卡片里多一个折叠块。默认一行主线摘要，点开才取完整早报（观察项），
+    // 避免归档页为了 365 张卡片预取 365 份早报正文。
+    const box = el('div', 'day has-brief');
+    box.dataset.day = d.day;
+    const a = el('a', 'day-open');
+    a.href = '#';
+    a.appendChild(el('div', 'day-d', d.day));
+    a.appendChild(el('div', 'day-n', d.count + ' 条'));
+    a.onclick = open;
+    box.appendChild(a);
+
+    const det = el('details', 'day-brief');
+    const sum = el('summary', 'brief-line', d.briefLine || '当日早报');
+    if (d.briefLine) sum.title = d.briefLine;
+    det.appendChild(sum);
+    const body = el('div', 'brief-body');
+    det.appendChild(body);
+    det.addEventListener('toggle', () => {
+      box.classList.toggle('expanded', det.open);
+      if (det.open) loadBriefing(d.day, body);
+      saveUI();
+    });
+    box.appendChild(det);
+    return box;
+  }
+
+  // 早报正文只在折叠块展开时取；同一天缓存一次（历史日不可变，今天按 no-store 取最新）
+  const briefCache = new Map();
+  const briefInflight = new Map();
+  function getBriefing(day) {
+    if (briefCache.has(day)) return Promise.resolve(briefCache.get(day));
+    if (!briefInflight.has(day)) {
+      const today = day === beijingDay();
+      const p = jget(`briefings/${day}.json`, today ? 'no-store' : 'default')
+        .then((b) => { briefCache.set(day, b); briefInflight.delete(day); return b; })
+        .catch((e) => { briefInflight.delete(day); throw e; });
+      briefInflight.set(day, p);
+    }
+    return briefInflight.get(day);
+  }
+
+  async function loadBriefing(day, body) {
+    if (!body || body.dataset.loaded || body.dataset.loading) return;
+    body.dataset.loading = '1';
+    body.innerHTML = '<div class="skeleton">早报载入中…</div>';
+    try {
+      const b = await getBriefing(day);
+      body.innerHTML = '';
+      if (b.overview) body.appendChild(el('p', 'brief-overview', b.overview));
+      const watch = Array.isArray(b.watch) ? b.watch.filter(Boolean) : [];
+      if (watch.length) {
+        const ul = el('ul', 'brief-watch');
+        watch.forEach((t) => ul.appendChild(el('li', null, t)));
+        body.appendChild(ul);
+      }
+      if (!b.overview && !watch.length) {
+        body.appendChild(el('p', 'brief-overview', '当日早报暂无正文'));
+      }
+      body.dataset.loaded = '1';
+    } catch (e) {
+      body.innerHTML = `<div class="skeleton">早报载入失败：${esc(e.message)}</div>`;
+      body.dataset.loaded = '1';
+    } finally {
+      delete body.dataset.loading;
+    }
+  }
+
+  function restoreBriefOpen() {
+    const open = uiState && Array.isArray(uiState.briefOpen) ? uiState.briefOpen : [];
+    if (!open.length) return;
+    document.querySelectorAll('#days .day.has-brief').forEach((box) => {
+      if (!open.includes(box.dataset.day)) return;
+      const det = box.querySelector('details');
+      if (!det) return;
+      det.open = true;
+      // 不依赖 toggle 事件：它是异步派发的，恢复时可能还没触发（实测刷新后块开了、内容没加载）
+      box.classList.add('expanded');
+      loadBriefing(box.dataset.day, box.querySelector('.brief-body'));
+    });
+  }
+
   async function renderArchive() {
     const box = $('#days');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
     try {
-      const idx = await loadIndex();
-      box.innerHTML = '';
-      if (!idx.days.length) { box.appendChild(el('div', 'empty', '暂无归档')); return; }
-      idx.days.forEach((d) => {
-        const a = el('a', 'day');
-        a.href = '#';
-        a.appendChild(el('div', 'day-d', d.day));
-        a.appendChild(el('div', 'day-n', d.count + ' 条'));
-        a.onclick = (e) => { e.preventDefault(); openDay(d.day); };
-        box.appendChild(a);
+      // 两个索引并行取：archive（62 天，带全文）+ history（近一年缺口，标题/摘要）
+      const [idx, hist] = await Promise.all([loadIndex(), loadHistoryIndex()]);
+      const map = new Map();
+      (idx.days || []).forEach((d) => {
+        map.set(d.day, {
+          day: d.day,
+          count: d.count || 0,
+          kind: 'live',
+          hasBriefing: !!d.hasBriefing,
+          briefLine: d.briefLine || '',
+        });
       });
+      (hist.days || []).forEach((d) => {
+        // 同一天两边都有时用 archive：那份带正文，历史切片只有摘要
+        if (!d || !d.d || map.has(d.d)) return;
+        map.set(d.d, {
+          day: d.d,
+          count: d.n || 0,
+          kind: 'hist',
+          hasBriefing: !!d.hasBriefing,
+          briefLine: d.briefLine || '',
+        });
+      });
+      const list = [...map.values()].sort((a, b) => (a.day < b.day ? 1 : -1));
+      dayIndex = map;
+      renderHistPanel(hist, list);
+      box.innerHTML = '';
+      if (!list.length) { box.appendChild(el('div', 'empty', '暂无归档')); return; }
+      const frag = document.createDocumentFragment();
+      list.forEach((d) => frag.appendChild(dayCard(d)));
+      box.appendChild(frag);
+      restoreBriefOpen();
     } catch (e) {
       box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
     }
   }
 
   // 打开过的「天」放内存（见 getDay）：切走再点不用重下。
-  async function openDay(day) {
+  async function openDay(day, kind = 'live') {
     closeReader();
     showView('feed');
     const box = $('#feed');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
     try {
-      const d = await getDay(day);
+      const d = await getDay(day, kind);
       S.items = d.items;
       S.filter = 'all';
       S.q = '';
@@ -701,7 +899,10 @@
       S.shown = PAGE;
       renderFilters();
       renderFeed();
-      $('#qMeta').textContent = `归档：${day} · ${d.items.length} 条`;
+      $('#qMeta').textContent =
+        kind === 'hist'
+          ? `历史：${day} · ${d.items.length} 条（仅标题/摘要，正文请点原文）`
+          : `归档：${day} · ${d.items.length} 条`;
     } catch (e) {
       box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
     }
@@ -1275,6 +1476,26 @@
       $('#mqClear').hidden = true;
       applyQuoteFilter();
     };
+    // 归档页日期跳转：history 切片与 archive 共用同一个 openDay，按 dayIndex 里登记的来源路由
+    const histForm = $('#histForm');
+    if (histForm) {
+      histForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const day = ($('#histDate') || {}).value || '';
+        const hint = $('#histHint');
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+          if (hint) hint.textContent = '请选择日期';
+          return;
+        }
+        const hit = dayIndex.get(day);
+        if (!hit) {
+          if (hint) hint.textContent = '该日没有归档（仅保留近一年）';
+          return;
+        }
+        if (hint) hint.textContent = '';
+        openDay(hit.day, hit.kind);
+      });
+    }
     syncSearchPlaceholder();
     window.addEventListener('resize', syncSearchPlaceholder);
 

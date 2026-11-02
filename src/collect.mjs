@@ -17,6 +17,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SOURCES, fetchQuotes, getQuoteError } from './sources.mjs';
 import { fetchPortfolioQuotesFast } from './portfolio.mjs';
+import { readBriefingMeta } from './brief-meta.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -249,12 +250,21 @@ async function main() {
   }
 
   // ---- 重建索引 + 最新快照 ----
+  // 早报与归档「同键绑定」：索引里只多一个 hasBriefing 与一句 ≤80 字的 briefLine，
+  // 不新增索引文件、不预取早报正文（完整 JSON 在归档卡片展开时才请求）。
+  const briefs = readBriefingMeta(path.join(DATA, 'briefings'));
   const files = (await import('node:fs')).readdirSync(ARCHIVE).filter((f) => f.endsWith('.json'));
   const days = [];
   let allCount = 0;
   for (const f of files.sort()) {
     const d = await readJSON(path.join(ARCHIVE, f), { day: f.replace('.json', ''), items: [] });
-    days.push({ day: d.day, count: d.items.length });
+    const b = briefs.get(d.day);
+    days.push({
+      day: d.day,
+      count: d.items.length,
+      hasBriefing: !!b,
+      ...(b && b.briefLine ? { briefLine: b.briefLine } : {}),
+    });
     allCount += d.items.length;
   }
   days.sort((a, b) => (a.day < b.day ? 1 : -1));
