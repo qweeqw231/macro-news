@@ -59,21 +59,24 @@
 是否迟到看**状态记录的 `endedAt` / 文件 mtime**，不看内容里的开始时刻。
 **为什么半成品能被识别**：原子写保证正常产物不会残缺；一旦有人绕过脚本直接写，截断的 JSON 会解析失败。
 
-## 4. 时间窗口与自动补跑
+## 4. 时间窗口与自动补跑（2.2.2 起：只补当天）
 
 - 预期完成时刻 `09:00`，宽限 `+30 分钟` → **09:30** 之后仍未完整才算「超期」；
-- 每次 `ensure` 启动扫**最近 7 天**（含今天），逐日判定：
+- `ensure` 自动模式**只处理今天**：
 
 | 站点产物 | 本地产物 | 动作 |
 |---|---|---|
-| 完整 | — | `skip` |
-| 缺失/不完整 | 完整（AI 已生成但没发布） | `publish`：原子复制到 `data/briefings/`，**不重新生成** |
-| 缺失/不完整 | 也缺失/不完整 | `generate`：跑确定性生成 |
-| 今天且未到 09:30 | — | `skip`（还不到宽限） |
+| 今天完整 | — | `skip` |
+| 今天缺失/不完整，未到 09:30 | — | `skip`（还不到宽限） |
+| 今天缺失/不完整，已过 09:30 | 完整（AI 已生成但没发布） | `publish`：原子复制到 `data/briefings/`，**不重新生成** |
+| 今天缺失/不完整，已过 09:30 | 也缺失/不完整 | `generate`：规则版兜底 |
 
-- 补跑顺序：**按日期升序**（最早的一天先补），今天排在最后；
-- 单日失败不影响后面的日期（继续补，但整体退出码 1）；
-- 已完整的历史日不会重跑，避免把 AI 版本覆盖成规则版。
+- **历史日期不再自动生成任何早报**。最近的缺口只在状态文件里标 `missed`（日期 + 原因），
+  不产出 JSON、不进索引，`hasBriefing` 保持 false。
+  依据：早报是 AI 写的判断性内容，用规则版补历史等于造假资产 —— **宁缺不假**。
+- 手动补齐（默认关闭，不参与自动调度）：`--backfill-from YYYY-MM-DD --backfill-to YYYY-MM-DD`，
+  两个参数必须同时给出；窗口内的日期按升序处理，规则同上（完整跳过 / 本地完整发布 / 否则生成）。
+- 单日失败不影响其它日期（继续补，但整体退出码 1）。
 
 ## 5. 锁
 
@@ -99,8 +102,8 @@
   "days": {
     "2026-11-02": {
       "date": "2026-11-02",
-      "status": "running|done|failed|timeout|skipped",
-      "stage": "start|import|select|write|done|publish",
+      "status": "running|done|failed|timeout|missed|skipped",
+      "stage": "start|import|select|write|done|publish|missed",
       "startedAt": "09:00:26",
       "endedAt": "09:02:10",
       "exitCode": 0,
@@ -108,7 +111,8 @@
       "items": 10,
       "reason": "",
       "durationMs": 104000,
-      "generator": "deterministic|publish|existing"
+      "generator": "rule-v1|publish|existing|missed",
+      "source": "ai|rule|"
     }
   }
 }
@@ -158,10 +162,12 @@ buildBriefing(规则组装) → status(write) → 原子写 JSON/MD → 原子�
 | `overview` | `今日主线：` + 得分最高的 2~3 条标题 |
 | `items` | `brief-candidates` 前 10 条；`why` = 命中的宏观关键词 / 来源权重 |
 | `watch` | 空数组（规则版没有前瞻判断；AI 版可覆盖） |
+| `source` | `rule`（2.2.2）；AI 产物为 `ai`，旧文件缺字段时按 `ai` 处理 |
+| `generator` | `rule-v1`（规则版生成器标识） |
 | `endedAt` | 本次真正写完的时刻（新增字段，用来判断「按时」） |
 
-**覆盖语义**：`generate` 本身同名覆盖（重复运行结果一致 = 幂等）；但 `ensure` **只在缺失/
-不完整时**调用它，因此不会把 AI 已完成的早报降级。
+**覆盖语义**：`generate` 同名覆盖（重复运行结果一致 = 幂等）；但 **2.2.2 起拒绝覆盖已存在的
+完整 AI 早报**（`source` 缺失或 `ai`，且未加 `--force`），只允许覆盖规则版。
 
 ## 9. 站点发布
 
@@ -233,3 +239,27 @@ agent 任务不再写早报内容，只做「触发 + 失败摘录」。
 | 根因 2 | 本机采集任务整目录 `git add -- data`，把「不属于采集链路的文件」也提交了。 |
 | 修复 2 | 改为白名单：`git add -u -- data/archive data/kline` + 今天/昨天 archive + 5 个固定 JSON；新增静态测试 `tests/collect-whitelist.test.mjs`，禁止整目录 add 与 briefings/history/snapshots/macro。 |
 | 教训 | 「临时目录模拟」必须同时约束子进程路径；自动化落盘前先确认目标路径；提交范围必须白名单，不能假设目录里只有自己的文件。 |
+
+## 15. 2.2.2 语义修正：宁缺不假 + 来源标记
+
+### 15.1 只补当天，历史缺口只标 `missed`
+
+- 自动模式 `ensure` 只处理**今天**；历史日期不再生成任何早报。
+- 最近 `--scan-days`（默认 7）的历史缺口写入状态 `status=missed`，
+  `reason=历史日期不自动生成（早报是 AI 判断性内容，宁缺不假）`；不写 JSON、不进索引，
+  `hasBriefing` 保持 false。
+- 手动补齐必须显式给 `--backfill-from` 与 `--backfill-to`，默认关闭、不参与调度。
+- **理由**：早报的价值在 AI 的判断（主线性、为什么、观察项），规则版只能拼标题；
+  用它补历史会制造看似真实、实则机器拼装的“假资产”，与项目「宁缺不假」的口径冲突。
+
+### 15.2 兜底产物加 `source` 标记
+
+| 位置 | 规则 |
+|---|---|
+| 早报 JSON | 规则版写 `source:"rule"` + `generator:"rule-v1"`；AI 版为 `source:"ai"` |
+| 旧文件 | **不改写**；缺字段时读取端按 `ai` 处理 |
+| 索引 | `hasBriefing` 为 true 时透传 `source`（不新增文件、不新增请求） |
+| 归档卡片 | `rule` 显示「自动摘要」角标；`ai` 不显示 |
+| 状态文件 | 每日记录 `source`（`ai` / `rule` / 空） |
+| 页脚 | `rule` 显示 `早报 自动 HH:MM`（暖棕）；`ai` 为绿色；不改链路健康总灯 |
+| 覆盖保护 | 已有完整 AI 早报时 `generate` 拒绝覆盖，除非显式 `--force` |

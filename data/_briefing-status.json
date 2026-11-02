@@ -1,7 +1,72 @@
 {
   "v": 1,
-  "updatedAt": "2026-11-02T17:42:10+08:00",
+  "updatedAt": "2026-11-02T18:09:31+08:00",
   "days": {
+    "2026-10-27": {
+      "date": "2026-10-27",
+      "status": "missed",
+      "stage": "missed",
+      "endedAt": "2026-11-02T18:09:31+08:00",
+      "exitCode": 0,
+      "candidates": 0,
+      "items": 0,
+      "source": "",
+      "reason": "历史日期不自动生成（早报是 AI 判断性内容，宁缺不假）",
+      "durationMs": 0,
+      "generator": "missed"
+    },
+    "2026-10-28": {
+      "date": "2026-10-28",
+      "status": "missed",
+      "stage": "missed",
+      "endedAt": "2026-11-02T18:09:31+08:00",
+      "exitCode": 0,
+      "candidates": 0,
+      "items": 0,
+      "source": "",
+      "reason": "历史日期不自动生成（早报是 AI 判断性内容，宁缺不假）",
+      "durationMs": 0,
+      "generator": "missed"
+    },
+    "2026-10-29": {
+      "date": "2026-10-29",
+      "status": "missed",
+      "stage": "missed",
+      "endedAt": "2026-11-02T18:09:31+08:00",
+      "exitCode": 0,
+      "candidates": 0,
+      "items": 0,
+      "source": "",
+      "reason": "历史日期不自动生成（早报是 AI 判断性内容，宁缺不假）",
+      "durationMs": 0,
+      "generator": "missed"
+    },
+    "2026-10-30": {
+      "date": "2026-10-30",
+      "status": "missed",
+      "stage": "missed",
+      "endedAt": "2026-11-02T18:09:31+08:00",
+      "exitCode": 0,
+      "candidates": 0,
+      "items": 0,
+      "source": "",
+      "reason": "历史日期不自动生成（早报是 AI 判断性内容，宁缺不假）",
+      "durationMs": 0,
+      "generator": "missed"
+    },
+    "2026-10-31": {
+      "date": "2026-10-31",
+      "status": "missed",
+      "stage": "missed",
+      "endedAt": "2026-11-02T18:09:31+08:00",
+      "exitCode": 0,
+      "candidates": 0,
+      "items": 0,
+      "source": "",
+      "reason": "历史日期不自动生成（早报是 AI 判断性内容，宁缺不假）",
+      "durationMs": 0,
+      "generator": "missed"
+    },
     "2026-11-02": {
       "date": "2026-11-02",
       "status": "done",
@@ -12,7 +77,8 @@
       "reason": "",
       "generator": "existing",
       "startedAt": "2026-11-02T17:32:14+08:00",
-      "attempt": 0
+      "attempt": 0,
+      "source": "ai"
     }
   }
 }

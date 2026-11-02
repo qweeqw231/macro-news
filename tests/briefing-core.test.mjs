@@ -16,8 +16,14 @@ import {
   checkBriefing,
   deadlinePassed,
   generateArgs,
+  normalizeBriefingSource,
+  parseBackfillRange,
   planCatchup,
+  scanMissed,
+  shouldSkipExisting,
+  updateStatus,
 } from '../scripts/briefing/core.mjs';
+import { buildIndex } from '../scripts/news-db/history-slice.mjs';
 
 const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'brief-core-'));
 after(() => {
@@ -109,23 +115,67 @@ test('锁：首次成功、二次拒绝、超时接管、释放后可重入', ()
   d.release();
 });
 
-test('补跑计划：升序、本地完整只发布、今天未到 09:30 不补', () => {
+test('补跑计划：只补今天、09:30 边界、绝不含历史日', () => {
   const check = (d) => ({
-    complete: d === '2026-11-01',
-    localComplete: d === '2026-10-31',
+    complete: false,
+    localComplete: d === '2026-11-02',
   });
   const before = planCatchup({
-    today: '2026-11-02', nowHm: '09:00', days: 3, check,
+    today: '2026-11-02', nowHm: '09:29', days: 1, check,
   });
-  assert.deepEqual(before, [{ date: '2026-10-31', action: 'publish' }]);
+  assert.deepEqual(before, []);
 
   const after = planCatchup({
-    today: '2026-11-02', nowHm: '09:31', days: 3, check,
+    today: '2026-11-02', nowHm: '09:30', days: 1, check,
   });
-  assert.deepEqual(after, [
-    { date: '2026-10-31', action: 'publish' },
-    { date: '2026-11-02', action: 'generate' },
-  ]);
+  assert.deepEqual(after, [{ date: '2026-11-02', action: 'publish' }]);
+
+  // 即使调用方给了 7 天，历史日也不会进入自动补跑
+  const wide = planCatchup({
+    today: '2026-11-02', nowHm: '09:30', days: 7, check,
+  });
+  assert.deepEqual(wide, [{ date: '2026-11-02', action: 'publish' }]);
+});
+
+test('历史缺口只标 missed：不含今天、不产出条目', () => {
+  const check = (d) => ({ complete: d === '2026-11-01', localComplete: false });
+  const missed = scanMissed({ today: '2026-11-02', days: 4, check });
+  assert.deepEqual(missed, ['2026-10-30', '2026-10-31']);
+
+  const st = file('status-missed.json');
+  updateStatus(st, '2026-10-30', { status: 'missed', reason: '历史日期不自动生成' });
+  const idx = buildIndex([{ d: '2026-11-02', n: 1, b: 1, hasBriefing: true, source: 'ai' }], {});
+  assert.ok(!idx.days.some((x) => x.d === '2026-10-30'), 'missed 不进索引');
+});
+
+test('source：旧文件缺字段按 ai；rule 透传到索引', () => {
+  assert.equal(normalizeBriefingSource({}), 'ai');
+  assert.equal(normalizeBriefingSource({ source: 'ai' }), 'ai');
+  assert.equal(normalizeBriefingSource({ source: 'rule' }), 'rule');
+
+  const idx = buildIndex([
+    { d: '2026-11-02', n: 1, b: 1, hasBriefing: true, source: 'ai' },
+    { d: '2026-11-01', n: 1, b: 1, hasBriefing: true, source: 'rule' },
+  ], {});
+  assert.equal(idx.days[0].source, 'ai');
+  assert.equal(idx.days[1].source, 'rule');
+});
+
+test('AI 产物不被覆盖：shouldSkipExisting 只在 ai 且未 force 时为真', () => {
+  assert.equal(shouldSkipExisting({ complete: true, source: 'ai' }), true);
+  assert.equal(shouldSkipExisting({ complete: true, source: undefined }), true);
+  assert.equal(shouldSkipExisting({ complete: true, source: 'rule' }), false);
+  assert.equal(shouldSkipExisting({ complete: false, source: 'ai' }), false);
+  assert.equal(shouldSkipExisting({ complete: true, source: 'ai', force: true }), false);
+});
+
+test('手动补齐窗口必须显式传 from/to', () => {
+  assert.equal(parseBackfillRange(null, null), null);
+  assert.throws(() => parseBackfillRange('2026-10-30', null), /同时指定/);
+  assert.throws(() => parseBackfillRange(null, '2026-10-30'), /同时指定/);
+  const r = parseBackfillRange('2026-10-30', '2026-11-01');
+  assert.equal(r.days, 3);
+  assert.throws(() => parseBackfillRange('2026-11-02', '2026-10-30'), /非法/);
 });
 
 test('宽限边界与跨日：09:29 未到、09:30 到点；UTC 17:30 是北京次日', () => {
@@ -148,6 +198,8 @@ test('规则版早报：≤10 条、override 概览不选汇总稿、why / ended
   const b = buildBriefing({ date: '2026-11-02', candidates: rows, now: Date.UTC(2026, 10, 2, 1, 0) });
   assert.equal(b.items.length, 10);
   assert.ok(b.endedAt);
+  assert.equal(b.source, 'rule');
+  assert.equal(b.generator, 'rule-v1');
   assert.ok(b.overview.startsWith('今日主线：'));
   assert.ok(!b.overview.includes('早餐'), '概览应跳过汇总稿');
   assert.ok(b.items.every((x) => x.why && x.rank >= 1));

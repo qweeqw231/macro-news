@@ -23,6 +23,8 @@ import {
   beijingNow,
   buildBriefing,
   briefingMarkdown,
+  checkBriefing,
+  normalizeBriefingSource,
   readStatus,
   updateStatus,
 } from './core.mjs';
@@ -57,6 +59,7 @@ const SYNC = flag('sync');
 const NO_IMPORT = flag('no-import');
 const NO_SITE = flag('no-site');
 const NO_LOCK = flag('no-lock');
+const FORCE = flag('force');
 const QUIET = flag('quiet');
 
 const log = (...a) => { if (!QUIET) console.log(...a); };
@@ -186,6 +189,27 @@ function main() {
 
     stage = 'write';
     mark({ status: 'running', stage, candidates, attempt: (Number(prev.attempt) || 0) + 1 });
+    const outFile = path.join(OUT, `${DATE}.json`);
+    const siteFile = path.join(SITE_OUT, `${DATE}.json`);
+    // 2.2.2：绝不覆盖已有的 AI 早报（规则版只用于“当天缺失”的兜底）
+    const prevLocal = checkBriefing(outFile);
+    if (!FORCE && prevLocal.complete) {
+      let prevDoc = null;
+      try { prevDoc = JSON.parse(fs.readFileSync(outFile, 'utf8')); } catch { /* ignore */ }
+      if (normalizeBriefingSource(prevDoc) === 'ai') {
+        if (!NO_SITE && !checkBriefing(siteFile).complete) {
+          atomicWriteText(siteFile, fs.readFileSync(outFile, 'utf8'));
+        }
+        mark({
+          status: 'done', stage: 'done', endedAt: beijingNow().iso, exitCode: 0,
+          candidates, items: prevLocal.items, reason: '已存在 AI 早报，未覆盖',
+          durationMs: Date.now() - started, generator: 'existing', source: 'ai',
+          attempt: (Number(prev.attempt) || 0) + 1,
+        });
+        log('[briefing] 已存在 AI 早报，跳过生成');
+        return 0;
+      }
+    }
     const doc = buildBriefing({ date: DATE, candidates: cand.items, limit: LIMIT });
     const jsonText = JSON.stringify(doc, null, 2);
     const jsonFile = path.join(OUT, `${DATE}.json`);
@@ -206,7 +230,8 @@ function main() {
       items: doc.items.length,
       reason: '',
       durationMs: Date.now() - started,
-      generator: 'deterministic',
+      generator: 'rule-v1',
+      source: 'rule',
       attempt: (Number(prev.attempt) || 0) + 1,
     });
     log(

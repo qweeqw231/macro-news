@@ -271,6 +271,11 @@ body { overflow-wrap: break-word; }
   text-align: center;
 }
 .day.has-brief .day-open:hover { background: var(--code-bg); }
+.day-tag {
+  display: inline-block; margin-top: 0.35rem; padding: 0.1rem 0.4rem;
+  font-family: var(--sans); font-size: 0.68rem; color: var(--warm);
+  border: 1px solid var(--rule-strong); border-radius: 3px; background: var(--code-bg);
+}
 .day-brief { border-top: 1px dashed var(--rule); padding: 0.5rem 0.9rem 0.7rem; }
 .day-brief summary {
   cursor: pointer; color: var(--ink-soft); font-size: 0.8rem; line-height: 1.45;

@@ -20,12 +20,16 @@ import {
   GRACE_MIN,
   HARD_TIMEOUT_MS,
   acquireLock,
+  addDays,
   atomicWriteText,
   beijingNow,
   checkBriefing,
   generateArgs,
+  normalizeBriefingSource,
+  parseBackfillRange,
   planCatchup,
   readStatus,
+  scanMissed,
   updateStatus,
 } from './core.mjs';
 import { importArchive } from '../news-db/import-archive.mjs';
@@ -48,7 +52,15 @@ const num = (name, dflt) => {
 const NOW = beijingNow();
 const TODAY = arg('today', NOW.date);
 const NOW_HM = arg('now-hm', NOW.hm);
-const DAYS = num('days', 7);
+const SCAN_DAYS = num('scan-days', 7);
+const BACKFILL = (() => {
+  try {
+    return parseBackfillRange(arg('backfill-from', null), arg('backfill-to', null));
+  } catch (e) {
+    console.error(`[briefing] ${e.message}`);
+    process.exit(1);
+  }
+})();
 const DB = path.resolve(ROOT, arg('db', '.local/news.db'));
 const ARCHIVE = path.resolve(ROOT, arg('archive', 'data/archive'));
 const OUT = path.resolve(ROOT, arg('out', '.local/briefings'));
@@ -76,9 +88,11 @@ function recordExisting(d) {
   const site = checkBriefing(siteFile(d));
   if (!site.complete) return;
   const rec = readStatus(STATUS).days[d] || {};
-  if (rec.status === 'done' && rec.endedAt) return;
+  if (rec.status === 'done' && rec.endedAt && rec.source) return;
   let endedAt = NOW.iso;
   try { endedAt = beijingNow(fs.statSync(siteFile(d)).mtimeMs).iso; } catch { /* ignore */ }
+  let source = 'ai';
+  try { source = normalizeBriefingSource(JSON.parse(fs.readFileSync(siteFile(d), 'utf8'))); } catch { /* ignore */ }
   updateStatus(STATUS, d, {
     status: 'done',
     stage: 'done',
@@ -86,6 +100,7 @@ function recordExisting(d) {
     exitCode: 0,
     items: site.items,
     reason: '',
+    source,
     generator: rec.generator || 'existing',
     startedAt: rec.startedAt || endedAt,
     attempt: rec.attempt || 0,
@@ -108,6 +123,8 @@ function publish(d) {
   const chk = checkBriefing(localFile(d));
   if (!chk.complete) throw new Error(`${d} 本地早报不完整，无法发布`);
   const text = fs.readFileSync(localFile(d), 'utf8');
+  let source = 'ai';
+  try { source = normalizeBriefingSource(JSON.parse(text)); } catch { /* ignore */ }
   atomicWriteText(siteFile(d), text);
   const t = beijingNow();
   updateStatus(STATUS, d, {
@@ -121,6 +138,7 @@ function publish(d) {
     reason: '本地已有完整早报，仅发布到站点',
     durationMs: 0,
     generator: 'publish',
+    source,
   });
 }
 
@@ -129,7 +147,11 @@ function main() {
     console.error(`[briefing] today 格式不对：${TODAY}`);
     return 1;
   }
-  log(`[briefing] ensure 启动：今天 ${TODAY}，当前 ${NOW_HM}，扫最近 ${DAYS} 天`);
+  if (BACKFILL) {
+    log(`[briefing] ensure 手动补齐 ${BACKFILL.from}..${BACKFILL.to}（${BACKFILL.days} 天）`);
+  } else {
+    log(`[briefing] ensure 启动：今天 ${TODAY}，当前 ${NOW_HM}；自动补跑只处理今天，历史缺口只标 missed`);
+  }
 
   let lock = null;
   if (!DRY) {
@@ -143,18 +165,49 @@ function main() {
   }
 
   try {
-    const plan = planCatchup({
-      today: TODAY,
-      nowHm: NOW_HM,
-      days: DAYS,
-      deadline: DEADLINE_HM,
-      graceMin: GRACE_MIN,
-      check: checkDay,
-    });
+    let plan = [];
+    let missed = [];
+    if (BACKFILL) {
+      // 手动补齐：只有显式给出窗口才会跑，不参与自动调度
+      for (let d = BACKFILL.from; d <= BACKFILL.to; d = addDays(d, 1)) {
+        const c = checkDay(d);
+        if (c.complete) continue;
+        plan.push({ date: d, action: c.localComplete ? 'publish' : 'generate' });
+      }
+    } else {
+      plan = planCatchup({
+        today: TODAY,
+        nowHm: NOW_HM,
+        days: 1,           // 2.2.2：只补今天
+        deadline: DEADLINE_HM,
+        graceMin: GRACE_MIN,
+        check: checkDay,
+      });
+      missed = scanMissed({ today: TODAY, days: SCAN_DAYS, check: checkDay });
+      if (!DRY) {
+        for (const d of missed) {
+          const rec = readStatus(STATUS).days[d] || {};
+          if (rec.status === 'done' || rec.status === 'missed') continue;
+          updateStatus(STATUS, d, {
+            status: 'missed',
+            stage: 'missed',
+            endedAt: beijingNow().iso,
+            exitCode: 0,
+            candidates: 0,
+            items: 0,
+            source: '',
+            reason: '历史日期不自动生成（早报是 AI 判断性内容，宁缺不假）',
+            durationMs: 0,
+            generator: 'missed',
+          });
+        }
+      }
+      if (missed.length) log(`[briefing] 历史缺口只标记、不补：${missed.join('、')}`);
+    }
 
     if (!plan.length) {
-      log('[briefing] 无需补跑：最近 7 天产物均完整（或在宽限内）');
-      if (!DRY) recordExisting(TODAY);
+      log(BACKFILL ? '[briefing] 补齐窗口内无需补跑' : '[briefing] 今天无需补跑（完整或在宽限内）');
+      if (!DRY && !BACKFILL) recordExisting(TODAY);
       return 0;
     }
     log(`[briefing] 补跑计划：${plan.map((x) => `${x.date}(${x.action})`).join(' → ')}`);
@@ -230,7 +283,7 @@ function main() {
       }
     }
 
-    recordExisting(TODAY);
+    if (!BACKFILL) recordExisting(TODAY);
     log(
       `[briefing] 完成：成功 ${okCount} / 失败 ${failCount} · ` +
         `总用时 ${((Date.now() - t0) / 1000).toFixed(1)}s`

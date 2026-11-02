@@ -173,6 +173,7 @@ function main() {
         b: fs.statSync(file).size,
         hasBriefing: !!b,
         briefLine: b ? b.briefLine : '',
+        source: b ? b.source : '',
       });
     } catch (e) {
       console.error(`[history] 跳过损坏的切片 ${d}: ${e.message}`);
@@ -186,6 +187,7 @@ function main() {
       b: p.bytes,
       hasBriefing: !!b,
       briefLine: b ? b.briefLine : '',
+      source: b ? b.source : '',
     });
   }
   const dayEntries = [...entryMap.values()];

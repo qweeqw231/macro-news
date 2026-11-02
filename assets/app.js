@@ -769,6 +769,7 @@
     a.href = '#';
     a.appendChild(el('div', 'day-d', d.day));
     a.appendChild(el('div', 'day-n', d.count + ' 条'));
+    if (d.source === 'rule') a.appendChild(el('span', 'day-tag', '自动摘要'));
     a.onclick = open;
     box.appendChild(a);
 
@@ -856,6 +857,7 @@
           kind: 'live',
           hasBriefing: !!d.hasBriefing,
           briefLine: d.briefLine || '',
+          source: d.hasBriefing ? (d.source === 'rule' ? 'rule' : 'ai') : '',
         });
       });
       (hist.days || []).forEach((d) => {
@@ -867,6 +869,7 @@
           kind: 'hist',
           hasBriefing: !!d.hasBriefing,
           briefLine: d.briefLine || '',
+          source: d.hasBriefing ? (d.source === 'rule' ? 'rule' : 'ai') : '',
         });
       });
       const list = [...map.values()].sort((a, b) => (a.day < b.day ? 1 : -1));
@@ -1047,8 +1050,14 @@
       let bLvl = '';
       if (rec && rec.status === 'done') {
         const when = rec.endedAt || rec.startedAt || '';
-        bTxt = '早报 ' + (when ? fmtTime(when) : '完成');
-        bLvl = 'ok';
+        if (rec.source === 'rule') {
+          // 兜底产物要能一眼看出来（不等于链路故障，所以用暖棕而不是红）
+          bTxt = '早报 自动 ' + (when ? fmtTime(when) : '完成');
+          bLvl = 'warn';
+        } else {
+          bTxt = '早报 ' + (when ? fmtTime(when) : '完成');
+          bLvl = 'ok';
+        }
       } else if (rec && rec.status === 'running') {
         bTxt = '早报 补跑中';
         bLvl = 'warn';

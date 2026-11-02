@@ -86,7 +86,7 @@ export function checkBriefing(file) {
 export function planCatchup({
   today,
   nowHm,
-  days = 7,
+  days = 1,
   deadline = DEADLINE_HM,
   graceMin = GRACE_MIN,
   check,
@@ -96,11 +96,53 @@ export function planCatchup({
     const date = addDays(today, -i);
     const r = check(date) || {};
     if (r.complete) continue;
-    // 今天要到宽限之后才补；历史日随时可补
+    // 今天要到宽限之后才补；历史日**不再自动生成**（2.2.2 起只扫今天）
     if (date === today && !deadlinePassed(nowHm, deadline, graceMin)) continue;
+    if (date !== today) continue;
     out.push({ date, action: r.localComplete ? 'publish' : 'generate' });
   }
   return out;
+}
+
+/**
+ * 历史缺口（不含今天）：只用于在状态文件里标 `missed`，**不生成任何产物**。
+ * 「早报是 AI 写的判断性内容，用规则版补历史等于造假资产」——宁缺不假。
+ */
+export function scanMissed({ today, days = 7, check }) {
+  const out = [];
+  for (let i = 1; i < Math.max(1, days); i++) {
+    const date = addDays(today, -i);
+    const r = check(date) || {};
+    if (!r.complete) out.push(date);
+  }
+  return out.sort();
+}
+
+/** 旧产物没有 source 字段 → 按 AI 处理（不回写历史文件） */
+export function normalizeBriefingSource(doc) {
+  return doc && doc.source === 'rule' ? 'rule' : 'ai';
+}
+
+/** 已存在完整 AI 早报时拒绝覆盖；规则版可以被重新生成 */
+export function shouldSkipExisting({ complete, source, force = false }) {
+  return !!complete && normalizeBriefingSource({ source }) === 'ai' && !force;
+}
+
+/**
+ * 手动补齐窗口：必须同时给 from / to，默认关闭（不参与自动调度）。
+ * @returns {{from:string,to:string,days:number}|null}
+ */
+export function parseBackfillRange(from, to) {
+  if (!from && !to) return null;
+  if (!from || !to) throw new Error('手动补齐必须同时指定 --backfill-from 与 --backfill-to');
+  for (const d of [from, to]) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || Number.isNaN(Date.parse(d + 'T00:00:00Z'))) {
+      throw new Error(`日期格式不对：${d}`);
+    }
+  }
+  if (from > to) throw new Error(`补齐窗口非法：${from} 晚于 ${to}`);
+  const days = Math.round((Date.parse(to + 'T00:00:00Z') - Date.parse(from + 'T00:00:00Z')) / DAY_MS) + 1;
+  return { from, to, days };
 }
 
 /** 原子写：先 `.tmp` 再 rename；Windows 下目标被占用时退化为「删目标再改名」 */
@@ -235,6 +277,8 @@ export function buildBriefing({ date, candidates, now = Date.now(), limit = 10 }
     date,
     generatedAt: iso,
     endedAt: iso,
+    source: 'rule',
+    generator: 'rule-v1',
     window: { from: addDays(date, -1), to: date },
     overview,
     items,

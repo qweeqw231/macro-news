@@ -150,10 +150,14 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 - `node scripts/briefing/generate.mjs --date YYYY-MM-DD` 是确定性入口：
   取数 → 候选（`brief-candidates`）→ 规则组装 → `.tmp` + rename 原子写（本地 `.local/briefings/`
   与站点 `data/briefings/`），同名覆盖、可重复运行。
-- `node scripts/briefing/ensure.mjs` 每次扫最近 7 天：缺/不完整就补，今天要过 **09:30**（09:00 + 30 分钟宽限）
-  才补；本地已有完整 AI 产物则**只发布、不重新生成**。
+- `node scripts/briefing/ensure.mjs` **自动模式只补今天**：今天过 **09:30**（09:00 + 30 分钟宽限）
+  仍未完整才补；本地已有完整 AI 产物则**只发布、不重新生成**。
+  **历史缺口不生成任何早报**，只在状态文件里标 `missed`（宁缺不假）。
+  需要人工补历史时显式给 `--backfill-from/--backfill-to`（默认关闭、不参与调度）。
+- 兜底产物带 `source:"rule"` + `generator:"rule-v1"`；AI 产物为 `source:"ai"`，
+  旧文件缺字段按 `ai` 兼容（不改写历史文件）。`generate` 拒绝覆盖已有完整 AI 早报（除非 `--force`）。
 - 状态写 `data/_briefing-status.json`（单文件、保留 14 天，非高频）：页脚显示
-  `早报 09:02`（绿）/ `早报 补跑中`（棕）/ `早报 失败`（红）/ `早报 未记录`（棕）。
+  `早报 09:02`（绿，AI）/ `早报 自动 09:02`（棕，规则版）/ `早报 补跑中` / `早报 失败` / `早报 未记录`。
 - 防重入锁 `.local/briefing.lock`（pid + 启动时刻，20 分钟失效）；单日硬超时 15 分钟，
   超时以退出码 124 结束并记录原因。
 - 判据**不看 `generatedAt`**（它是开始时刻，11-02 事故里写着 09:02、实际 12:15 才落盘）：
@@ -270,11 +274,11 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 | `data/snapshots/YYYY-MM-DD_pm.json` | 收盘时点价（57 项） | 链路 ③ |
 | `data/archive/YYYY-MM-DD.json` | 按天归档新闻，**含正文** | 链路 ① |
 | `data/history/YYYY-MM-DD.json` | 近一年历史切片（**只有标题/摘要**，单日 ≤400 条） | `scripts/export-history.mjs` |
-| `data/history/index.json` | 历史切片索引（含 `hasBriefing` / `briefLine`） | 同上 |
-| `data/briefings/YYYY-MM-DD.json` | 当日早报（`overview` + `watch` + `items`，与归档同键） | 链路 ⑥ → 手动发布 |
+| `data/history/index.json` | 历史切片索引（含 `hasBriefing` / `briefLine` / `source`） | 同上 |
+| `data/briefings/YYYY-MM-DD.json` | 当日早报（`overview` + `watch` + `items` + `source`，与归档同键） | 链路 ⑥ / `scripts/briefing/*` |
 | `data/latest.json` | 最近 200 条（首屏） | 链路 ① |
 | `data/search.json` | 全库检索索引（**只有标题+摘要**，约 10 MB） | 链路 ① |
-| `data/index.json` | 按天归档索引（含 `hasBriefing` / `briefLine`） | 链路 ① |
+| `data/index.json` | 按天归档索引（含 `hasBriefing` / `briefLine` / `source`） | 链路 ① |
 | `data/kline/<key>.json` / `_1w` / `_1M` | 25 个标的 × 日/周/月 | 链路 ② |
 | `data/kline/<key>_full.json` | 8 个 CN 指数的全量日 K（紧凑数组 `[t,o,c,h,l,v]`） | 链路 ② |
 | `data/kline/min/<key>_<period>.json` | 7 个标的 × 5 个分钟周期 | 链路 ② |
@@ -335,10 +339,13 @@ node scripts/export-history.mjs --days 365
 # 把本地早报发布到站点（只复制 JSON；Markdown 版留在 .local）
 Copy-Item .local\briefings\*.json data\briefings\ -Force
 
-# 早报：确定性生成某天 / 扫最近 7 天补缺（--dry-run 只打印计划）
+# 早报：确定性生成某天 / 扫今天补缺（--dry-run 只打印计划）
 node scripts/briefing/generate.mjs --date 2026-11-02
 node scripts/briefing/ensure.mjs --dry-run
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\briefing\run-ensure.ps1
+
+# 手动补历史（默认关闭，必须显式给起止日期；不参与自动调度）
+node scripts/briefing/ensure.mjs --backfill-from 2026-10-30 --backfill-to 2026-11-01
 
 # 离线回归测试（不联网、不写盘）：切片/早报判据/锁/补跑、文件名大小写、时区、采集白名单
 node --test "tests/*.test.mjs"

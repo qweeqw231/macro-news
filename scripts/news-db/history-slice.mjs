@@ -132,6 +132,8 @@ export function buildIndex(days, { generatedAt = '' } = {}) {
       };
       const line = String(x.briefLine || '').replace(/\s+/g, ' ').trim().slice(0, 80);
       if (o.hasBriefing && line) o.briefLine = line;
+      // 2.2.2：来源标记随索引透传；旧产物缺字段按 ai
+      if (o.hasBriefing) o.source = x.source === 'rule' ? 'rule' : 'ai';
       return o;
     });
   const doc = { v: HISTORY_VERSION };

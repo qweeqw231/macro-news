@@ -264,6 +264,7 @@ async function main() {
       count: d.items.length,
       hasBriefing: !!b,
       ...(b && b.briefLine ? { briefLine: b.briefLine } : {}),
+      ...(b ? { source: b.source } : {}),
     });
     allCount += d.items.length;
   }
