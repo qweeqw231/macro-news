@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T21:54:11.901Z",
+  "generatedAt": "2026-11-02T22:07:44.338Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -192,7 +192,7 @@
       "high": 25799.46,
       "low": 25145.95,
       "prevClose": 25437,
-      "volume": 7947791360,
+      "volume": 7968512512,
       "changePct": -1.07,
       "updatedAt": "2026-11-03T05:00:00+08:00",
       "source": "eastmoney"
@@ -802,7 +802,7 @@
       "high": 28753.39,
       "low": 27967.44,
       "prevClose": 28384.85,
-      "volume": 1614776624,
+      "volume": 1621404304,
       "changePct": -1.39,
       "updatedAt": "2026-11-03T05:00:00+08:00",
       "source": "eastmoney"
@@ -811,39 +811,39 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 3946.22,
+      "price": 3946.47,
       "open": 3881.88,
       "high": 3970.23,
       "low": 3881.88,
       "prevClose": 3876.69,
-      "changePct": 1.79,
-      "updatedAt": "2026-11-03T05:53:00+08:00",
+      "changePct": 1.8,
+      "updatedAt": "2026-11-03T05:58:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 50.59,
+      "price": 50.62,
       "open": 49.09,
       "high": 51.25,
       "low": 49.06,
       "prevClose": 49.09,
-      "changePct": 3.06,
-      "updatedAt": "2026-11-03T05:53:00+08:00",
+      "changePct": 3.12,
+      "updatedAt": "2026-11-03T05:58:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 104.14,
+      "price": 104.19,
       "open": 111.69,
       "high": 112.41,
       "low": 103.28,
       "prevClose": 113.43,
-      "changePct": -8.19,
-      "updatedAt": "2026-11-03T05:53:59+08:00",
+      "changePct": -8.15,
+      "updatedAt": "2026-11-03T06:07:51+08:00",
       "note": ""
     },
     {
