@@ -21,3 +21,6 @@ tmp/
 
 # wrangler 本地构建/状态缓存
 .wrangler/
+
+# 浏览器实测/调试截图
+.screenshots/

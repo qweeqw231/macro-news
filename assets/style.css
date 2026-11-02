@@ -152,6 +152,13 @@ body { overflow-wrap: break-word; }
 .q-chg { font-size: 0.78rem; font-family: var(--sans); font-variant-numeric: tabular-nums; margin-top: 0.1rem; }
 .q-chg .up, .q-px.up { color: var(--up); }
 .q-chg .down, .q-px.down { color: var(--down); }
+.q-time {
+  margin-top: 0.12rem; font-family: var(--sans); font-size: 0.64rem;
+  color: var(--ink-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.q-time.state-ok { color: var(--down); }
+.q-time.state-warn { color: var(--warm); }
+.q-time.state-local { color: var(--ink-faint); }
 
 .skeleton { color: var(--ink-faint); font-size: 0.9rem; padding: 1rem; }
 
@@ -404,11 +411,19 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
   box-shadow: 0 12px 28px rgba(0,0,0,.16);
 }
 .km-hd { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .6rem; }
-.km-title { display: flex; align-items: baseline; gap: .7rem; }
+.km-title { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; }
 .km-title strong { font-size: 1.15rem; }
 .km-price { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 .km-price.up { color: var(--up); }
 .km-price.down { color: var(--down); }
+.km-meta {
+  font-family: var(--sans); font-size: .72rem; color: var(--ink-mute);
+  white-space: normal; word-break: keep-all; line-height: 1.35;
+}
+.km-meta.state-ok { color: var(--down); }
+.km-meta.state-warn { color: var(--warm); }
+.km-meta.state-local { color: var(--ink-faint); }
+.km-meta .km-meta-short { display: none; }
 .km-close {
   width: 34px; height: 34px; flex-shrink: 0;
   border: 1px solid var(--rule); border-radius: 5px;
@@ -447,6 +462,9 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
     padding: .85rem .9rem calc(1rem + env(safe-area-inset-bottom));
     overflow-y: auto; overscroll-behavior: contain;
   }
+  .km-meta { flex-basis: 100%; margin-left: 0; }
+  .km-meta .km-meta-full { display: none; }
+  .km-meta .km-meta-short { display: inline; }
   /* 画布高度跟着视口走：小屏（iPhone SE 667）不会被按钮挤没 */
   .km-canvas { height: min(340px, 42vh); }
   .pchip { min-height: 40px; padding: .4rem .75rem; }

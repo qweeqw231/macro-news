@@ -295,6 +295,13 @@ publish --date（脚本，确定性）
 | `usdcny` | 09:15 后、存量不是今天才取（中国货币网） |
 | `cgb_1y` | 17:00 后、存量不是今天才取（中债曲线） |
 
+**新鲜度三态（2.4.0）**：只有拿到**可证的源时间**（东财 `f124` / 腾讯时间字段）才允许标「实时」；
+源时间 ≤ **5 分钟** = 实时，> 5 分钟或没有源时间 = 延迟，直连全失败回落 `data/quotes.json` = 本地快照。
+报价链路总预算 **2 秒**（东财 1.2s → 腾讯 0.8s），超时立即回落，不再空转十几秒。
+卡片、`#quoteTime`、页脚共用同一套文案（`assets/quote-status.js`，纯逻辑、Node 测试共用）。
+K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三态`：直连源写「东财/新浪/腾讯」，
+本地预生成写「本地预生成」，并标「本地快照」；切换周期时跟随该周期最后一根的时间。
+
 ### 3.5 夜盘与「未来蜡烛」
 
 上海金等有夜盘的品种，周五夜盘（20:00–次日 02:30）**归属下一交易日**，东财会把它标成
@@ -424,7 +431,21 @@ node --test "tests/*.test.mjs"
 > 本机到 `github.com` 的 HTTPS 会被重置，git 走 SSH-443（仓库已配 `insteadOf`）；
 > `github.io` 是否可达取决于当时网络。
 
-### 6.2 Cloudflare Worker（外部 cron，一次性）
+### 6.2 Cloudflare Worker（外部 cron + 行情采样备份）
+
+仓库里有**两个** Worker，职责不同，不要混：
+
+| Worker | 目录 | 作用 |
+|---|---|---|
+| `macro-news-cron` | `worker/gh-cron/` | 外部 cron：定时 `workflow_dispatch` 触发 Actions |
+| `macro-news-proxy` | `worker/worker.js` | 行情采样备份：`/quote`、`/kline`、`/health` |
+
+**行情代理的定位是「定时采样备份」，不是读者入口**：前端（`market.js` / `app.js` / `config.js`）
+与采集器都不调用 `workers.dev`；读者直连东财/腾讯，失败回落本地快照。
+`workers.dev` 在本机**仅开代理时可访问**（域名被 DNS 污染），所以它只用于开发验证与备用采样。
+2.4.0 起 `/quote` 的回退顺序为：东财三镜像（`push2` / `1.push2` / `push2delay`）→ 腾讯 `qt.gtimg.cn`
+→ Yahoo chart；每条 `quotes[]` 带 `source: eastmoney|tencent|yahoo` 与 `updatedAt`（源时间）。
+`/kline` 只覆盖 20 个指数（`INDICES`），组合标的（xau/xag/brent 等）返回 400，前端不经此路径取 K 线。
 
 GitHub 自带 `schedule` 实测只兑现约 3%，所以触发搬到仓库外：
 
@@ -651,9 +672,9 @@ macro-news/
 ## 附录 C：历史与被弃用
 
 - **GitHub schedule 时代**：曾用 `*/5` 声明 5 分钟，实测 3~6 小时一次；已由 Worker 外部触发取代。
-- **Cloudflare Worker 行情代理（已弃用）**：早期想用 Worker 代理行情绕过 CORS，
-  实测 `workers.dev` 被 DNS 污染、国内不可达；且东财接口本身带 CORS，代理不再需要。
-  `worker/` 目录仅保留用于海外或绑定自定义域名。
+- **Cloudflare Worker 行情代理**：早期想用它绕 CORS 给读者供数，实测 `workers.dev` 被 DNS 污染、
+  国内不可达；且东财接口本身带 CORS ⇒ **不再作为读者入口**。2.4.0 重新启用为**定时采样备份**
+  （东财三镜像 → 腾讯 → Yahoo，输出 `source`），前端与采集器均不依赖它；`/kline` 仅覆盖 20 个指数。
 - **串行 K 线 fallback**：已被三源并发赛马取代。
 - **16:30 组合行情链路**：已被并入 15 分钟链路；宏观改到云端 **17:00 后**（2026-10-31）。
 - **minimax 定时任务**：曾承担 12:05 / 16:30 快照、16:30 宏观、4 小时同步；

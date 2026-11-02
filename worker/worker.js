@@ -41,6 +41,19 @@ const INDICES = {
 
 const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '5m': 5, '30m': 30, '60m': 60 };
 const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
+const QUOTE_HOSTS = [
+  'https://push2.eastmoney.com',
+  'https://1.push2.eastmoney.com',
+  'https://push2delay.eastmoney.com',
+];
+// 腾讯没有代码的海外指数，用 Yahoo 最后兜底（CAC40/DAX/N225/KOSPI/FTSE）
+const YAHOO_CODE = {
+  '100.FCHI': '^FCHI',
+  '100.GDAXI': '^GDAXI',
+  '100.N225': '^N225',
+  '100.KS11': '^KS11',
+  '100.FTSE': '^FTSE',
+};
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36';
 
@@ -58,77 +71,181 @@ function json(data, status = 200) {
   });
 }
 
-async function upstream(url, referer) {
+async function upstream(url, referer, timeoutMs = 10000, asBuffer = false) {
   const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 10000);
+  const t = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
     const r = await fetch(url, {
       signal: ctrl.signal,
       headers: { 'User-Agent': UA, Referer: referer || 'https://finance.eastmoney.com/' },
     });
-    return await r.text();
+    return asBuffer ? r.arrayBuffer() : r.text();
   } finally {
     clearTimeout(t);
   }
 }
 
 // ---------- 实时行情 ----------
+const num = (v) => {
+  if (v === undefined || v === null || v === '' || v === '-' || v === '—') return null;
+  const x = Number(v);
+  return Number.isFinite(x) ? x : null;
+};
+const isoFromEpoch = (sec) => {
+  const t = Number(sec);
+  if (!Number.isFinite(t) || t <= 0) return new Date().toISOString();
+  const d = new Date(t * 1000 + 8 * 3600 * 1000);
+  const p = (x) => String(x).padStart(2, '0');
+  return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}T` +
+    `${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())}+08:00`;
+};
+const parseTencentTime = (s) => {
+  const m = String(s || '').match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
+  return m ? `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}+08:00` : null;
+};
+
+/** secid → 腾讯代码；腾讯没有的海外指数返回 null */
+function tencentCodeFor(secid) {
+  const meta = Object.values(INDICES).find((x) => x.secid === secid);
+  if (meta && meta.tx) return meta.tx;
+  const m = String(secid || '').match(/^([01])\.(\d{6})$/);
+  if (!m) return null;
+  return (m[1] === '1' ? 'sh' : 'sz') + m[2];
+}
+function yahooCodeFor(secid) {
+  return YAHOO_CODE[secid] || null;
+}
+function decodeGbk(buf) {
+  try { return new TextDecoder('gbk').decode(buf); } catch { return new TextDecoder().decode(buf); }
+}
+
+/** 解析腾讯批量文本；wanted = [{secid,key,code,name}] */
+function parseTencentQuotes(text, wanted) {
+  const byCode = new Map(wanted.map((w) => [w.code, w]));
+  const out = [];
+  for (const line of String(text).split(';')) {
+    const m = line.match(/v_([^=]+)="([^"]*)"/);
+    if (!m) continue;
+    const w = byCode.get(m[1]);
+    if (!w) continue;
+    const a = m[2].split('~');
+    if (a.length < 35) continue;
+    const price = num(a[3]);
+    if (price == null) continue;
+    out.push({
+      secid: w.secid,
+      key: w.key || '',
+      name: a[1] || w.name || '',
+      price,
+      prevClose: num(a[4]),
+      open: num(a[5]),
+      high: num(a[33]),
+      low: num(a[34]),
+      volume: num(a[6]),
+      changePct: num(a[32]),
+      updatedAt: parseTencentTime(a[30]),
+      source: 'tencent',
+    });
+  }
+  return out;
+}
+
+/** Yahoo chart → quote；wanted = {secid,key,name} */
+function parseYahooQuote(j, wanted) {
+  const meta = j && j.chart && j.chart.result && j.chart.result[0] && j.chart.result[0].meta;
+  if (!meta) return null;
+  const price = num(meta.regularMarketPrice);
+  if (price == null) return null;
+  const prev = num(meta.chartPreviousClose) != null ? num(meta.chartPreviousClose) : num(meta.previousClose);
+  return {
+    secid: wanted.secid,
+    key: wanted.key || '',
+    name: meta.shortName || wanted.name || '',
+    price,
+    prevClose: prev,
+    open: num(meta.regularMarketOpen),
+    high: num(meta.regularMarketDayHigh),
+    low: num(meta.regularMarketDayLow),
+    volume: num(meta.regularMarketVolume),
+    changePct: prev ? Number(((price - prev) / prev * 100).toFixed(2)) : null,
+    updatedAt: isoFromEpoch(meta.regularMarketTime),
+    source: 'yahoo',
+  };
+}
+
+/** 东财批量：三个镜像主机并发，谁先给非空 data.diff 用谁 */
+async function fetchEmBatch(ids) {
+  const fields = 'f2,f3,f5,f12,f13,f14,f15,f16,f17,f18,f124';
+  const qs = `fltt=2&invt=2&secids=${encodeURIComponent(ids.join(','))}&fields=${fields}`;
+  const tries = QUOTE_HOSTS.map(async (h) => {
+    const text = await upstream(`${h}/api/qt/ulist.np/get?${qs}`, 'https://quote.eastmoney.com/', 6000);
+    const j = JSON.parse(text);
+    if (!j || !j.data || !Array.isArray(j.data.diff) || !j.data.diff.length) {
+      throw new Error('empty');
+    }
+    return j.data.diff;
+  });
+  try { return await Promise.any(tries); } catch { return []; }
+}
+
 async function handleQuote(url) {
   const ids = (url.searchParams.get('secids') || '1.000001,100.DJIA').split(',').filter(Boolean);
-  const keys = url.searchParams.get('keys') || '';           // 可选：与 secids 同序，用于回填 name
+  const keys = url.searchParams.get('keys') || '';
   const keyList = keys ? keys.split(',') : [];
-  const n = (v) => (v === undefined || v === null || v === '-' || v === '—' ? null : Number(v));
-  const isoCN = (sec) => {
-    const t = Number(sec);
-    if (!Number.isFinite(t) || t <= 0) return new Date().toISOString();
-    const d = new Date(t * 1000 + 8 * 3600 * 1000);
-    const p = (x) => String(x).padStart(2, '0');
-    return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}T` +
-      `${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())}+08:00`;
-  };
+  const wanted = ids.map((secid, i) => ({ secid, key: keyList[i] || '', name: '' }));
+  const found = new Map();
 
-  // 主源：ulist.np 批量（与站点采集同一端点；stock/get 会被东财按接口限流）
-  try {
-    const fields = 'f2,f3,f5,f12,f13,f14,f15,f16,f17,f18,f124';
-    const u = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2` +
-      `&secids=${encodeURIComponent(ids.join(','))}&fields=${fields}`;
-    const j = JSON.parse(await upstream(u));
-    const diff = Array.isArray(j?.data?.diff) ? j.data.diff : [];
-    const out = [];
-    for (const d of diff) {
-      const secid = `${d.f13}.${d.f12}`;
-      const idx = ids.indexOf(secid);
-      if (idx < 0 || !d.f14) continue;
-      out.push({
-        key: keyList[idx] || '',
-        name: d.f14,
-        price: n(d.f2), open: n(d.f17), high: n(d.f15), low: n(d.f16),
-        prevClose: n(d.f18), volume: n(d.f5), changePct: n(d.f3),
-        updatedAt: isoCN(d.f124),
-        source: 'eastmoney',
-      });
-    }
-    if (out.length) return json({ updatedAt: new Date().toISOString(), quotes: out });
-  } catch { /* 批量失败 → 单只兜底 */ }
-
-  const out = [];
-  for (let i = 0; i < ids.length; i++) {
-    try {
-      const u = `https://push2.eastmoney.com/api/qt/stock/get?fltt=2&invt=2&secid=${ids[i]}&fields=f43,f44,f45,f46,f47,f57,f58,f60,f170`;
-      const j = JSON.parse(await upstream(u));
-      const d = j?.data;
-      if (!d?.f58) continue;
-      out.push({
-        key: keyList[i] || '',
-        name: d.f58,
-        price: n(d.f43), open: n(d.f46), high: n(d.f44), low: n(d.f45),
-        prevClose: n(d.f60), volume: n(d.f47), changePct: n(d.f170),
-        updatedAt: new Date().toISOString(),
-        source: 'eastmoney',
-      });
-    } catch { /* 单个失败不影响其他 */ }
+  // 1) 东财批量
+  const diff = await fetchEmBatch(ids);
+  for (const d of diff) {
+    const secid = `${d.f13}.${d.f12}`;
+    const w = wanted.find((x) => x.secid === secid);
+    if (!w) continue;
+    const price = num(d.f2);
+    if (price == null) continue;
+    found.set(secid, {
+      secid,
+      key: w.key,
+      name: d.f14 || '',
+      price,
+      open: num(d.f17), high: num(d.f15), low: num(d.f16),
+      prevClose: num(d.f18), volume: num(d.f5), changePct: num(d.f3),
+      updatedAt: isoFromEpoch(d.f124),
+      source: 'eastmoney',
+    });
   }
-  return json({ updatedAt: new Date().toISOString(), quotes: out });
+
+  // 2) 腾讯备源（CN/ETF/港/美；ETF 由 secid 推导）
+  const missing = wanted.filter((w) => !found.has(w.secid));
+  const txWanted = missing
+    .map((w) => ({ ...w, code: tencentCodeFor(w.secid) }))
+    .filter((w) => w.code);
+  if (txWanted.length) {
+    try {
+      const buf = await upstream(
+        'https://qt.gtimg.cn/q=' + txWanted.map((w) => w.code).join(','),
+        'https://gu.qq.com/', 8000, true
+      );
+      for (const q of parseTencentQuotes(decodeGbk(buf), txWanted)) found.set(q.secid, q);
+    } catch { /* 继续 Yahoo */ }
+  }
+
+  // 3) Yahoo 最后兜底（CAC40/DAX/N225/KOSPI/FTSE）
+  for (const w of wanted.filter((x) => !found.has(x.secid))) {
+    const sym = yahooCodeFor(w.secid);
+    if (!sym) continue;
+    try {
+      const text = await upstream(
+        `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1m&range=1d`,
+        'https://finance.yahoo.com/', 6000
+      );
+      const q = parseYahooQuote(JSON.parse(text), w);
+      if (q) found.set(q.secid, q);
+    } catch { /* 该标的缺失，不编造 */ }
+  }
+
+  const quotes = wanted.map((w) => found.get(w.secid)).filter(Boolean);
+  return json({ updatedAt: new Date().toISOString(), quotes });
 }
 
 // ---------- K线 ----------
@@ -193,3 +310,6 @@ export default {
     }, 404);
   },
 };
+
+// 供离线测试使用（Cloudflare 允许 default + 命名导出并存）
+export { INDICES, tencentCodeFor, yahooCodeFor, parseTencentQuotes, parseYahooQuote };

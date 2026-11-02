@@ -204,26 +204,24 @@
   let lastQuoteSig = '';
   async function renderQuotes() {
     const box = $('#quotes');
+    const now = Date.now();
+    const QS = window.MacroQuoteStatus || {};
     let quotes = null;
-    let generatedAt = null;
-    let realtime = false;
+    let live = null;
     let localQuotes = null;
     let localGeneratedAt = null;
 
-    // 优先直连东方财富实时行情（国内可达、带 CORS），失败再回退本地采集快照
+    // 优先直连东方财富/腾讯实时行情（预算 2s），失败再回退本地采集快照
     if (window.MarketData) {
       try {
-        const live = await window.MarketData.fetchQuotes();
-        if (live && live.length) {
-          quotes = live;
-          generatedAt = new Date().toISOString();
-          realtime = true;
+        const l = await window.MarketData.fetchQuotes();
+        if (l && l.length) {
+          live = l.map((q) => ({ ...q, __fromLocal: false }));
         }
       } catch (e) { /* 直连失败，走本地快照 */ }
     }
     // 本地快照始终读一次：直连行情只覆盖指数+ETF，
     // 组合行情（ndx/xau/sge/usdcny/cgb）与「云端补采的 ETF」都在 quotes.json 里。
-    // 合并后两者同屏，且不会出现「实时模式下反而看不到某些标的」。
     try {
       const d = await jget('quotes.json');
       if (d && Array.isArray(d.quotes)) {
@@ -232,23 +230,80 @@
       }
     } catch (e) { /* 本地快照不可用 */ }
 
-    if (!quotes) {
+    if (!live) {
       if (!localQuotes) {
         box.innerHTML = '<div class="skeleton">行情载入失败：实时源与本地快照均不可用</div>';
         return;
       }
-      quotes = localQuotes;
-      generatedAt = localGeneratedAt;
-    } else if (localQuotes) {
-      const seen = new Set(quotes.map((q) => q.key));
-      const extra = localQuotes.filter((q) => !seen.has(q.key));
-      if (extra.length) quotes = [...quotes, ...extra];
+      quotes = localQuotes.map((q) => ({ ...q, __fromLocal: true }));
+    } else {
+      quotes = live;
+      if (localQuotes) {
+        const seen = new Set(quotes.map((q) => q.key));
+        const extra = localQuotes
+          .filter((q) => !seen.has(q.key))
+          .map((q) => ({ ...q, __fromLocal: true }));
+        if (extra.length) quotes = [...quotes, ...extra];
+      }
+    }
+
+    const statusOf = (q) => {
+      if (!QS.quoteStatus) {
+        return {
+          state: q.__fromLocal ? 'local' : 'delayed',
+          card: q.__fromLocal ? '本地快照' : '延迟（无源时间）',
+          summary: q.__fromLocal ? '本地快照' : '数据时间未知 · 延迟',
+          footer: q.__fromLocal ? '行情 本地快照' : '行情 延迟（无源时间）',
+        };
+      }
+      return QS.quoteStatus({
+        sourceTime: q.updatedAt,
+        now,
+        fromLocal: !!q.__fromLocal,
+      });
+    };
+
+    // 全局状态只看直连主数据；组合类的本地快照按卡片单独标，不把全局拉成“本地”。
+    let globalStatus;
+    if (live) {
+      const liveTimes = live.map((q) => q.updatedAt).filter(Boolean);
+      const allHaveTime = liveTimes.length === live.length;
+      const states = live.map((q) => statusOf(q).state);
+      const worst = QS.worstState ? QS.worstState(states) : (states.includes('delayed') ? 'delayed' : 'realtime');
+      // 全局取“最差”那一档：延迟时用最旧源时间，避免 max(源时间) 把全局误判成实时
+      const msList = liveTimes.map((t) => Date.parse(t)).filter(Number.isFinite);
+      const sourceTime = allHaveTime && msList.length
+        ? new Date(worst === 'delayed' ? Math.min(...msList) : Math.max(...msList)).toISOString()
+        : null;
+      globalStatus = QS.quoteStatus
+        ? QS.quoteStatus({ sourceTime, now, fromLocal: worst === 'local' })
+        : { state: worst, summary: '行情 ' + worst, footer: '行情 ' + worst };
+      if (worst === 'delayed' && !allHaveTime) {
+        globalStatus = QS.quoteStatus({ sourceTime: null, now, fromLocal: false });
+      }
+    } else {
+      const localTimes = quotes.map((q) => q.updatedAt).filter(Boolean);
+      const msList = localTimes.map((t) => Date.parse(t)).filter(Number.isFinite);
+      // ⚠ 必须回成 ISO 字符串：quoteStatus/ageMs 用 Date.parse(sourceTime)，
+      //   直接传毫秒数会被当成非法字符串 ⇒ 汇总退化成「数据时间未知」。
+      const sourceTime = msList.length
+        ? new Date(Math.max(...msList)).toISOString()
+        : localGeneratedAt;
+      globalStatus = QS.quoteStatus
+        ? QS.quoteStatus({ sourceTime, now, fromLocal: true })
+        : { state: 'local', summary: '本地快照', footer: '行情 本地快照' };
     }
 
     S.quotes = quotes;
-    S.quotesRealtime = realtime;
-    // 行情没变就不重绘，避免轮询时闪烁
-    const sig = quotes.map((q) => q.key + q.price).join('|');
+    S.quoteState = globalStatus.state;
+    S.quoteStatusText = globalStatus.summary;
+    S.quoteUpdatedAt = globalStatus.state === 'local' ? (globalStatus.sourceTime || null) : null;
+    const qt = $('#quoteTime');
+    if (qt) qt.textContent = globalStatus.summary;
+
+    // 行情没变就不重绘；按分钟分桶，保证“延迟/陈旧度”文案会随时间更新
+    const sig = quotes.map((q) => q.key + q.price + (q.updatedAt || '')).join('|') +
+      '|' + globalStatus.state + '|' + Math.floor(now / 60000);
     if (sig === lastQuoteSig) return;
     lastQuoteSig = sig;
 
@@ -295,6 +350,10 @@
           chg.appendChild(el('span', up ? 'up' : 'down', `${up ? '▲' : '▼'} ${fmtNum(Math.abs(amt))}`));
           chg.appendChild(el('span', up ? 'up' : 'down', `  ${Math.abs(q.changePct || 0).toFixed(2)}%`));
           card.appendChild(chg);
+          const st = statusOf(q);
+          const tm = el('div', 'q-time', st.card);
+          tm.classList.add(st.state === 'realtime' ? 'state-ok' : st.state === 'local' ? 'state-local' : 'state-warn');
+          card.appendChild(tm);
           grid.appendChild(card);
         });
         g.appendChild(grid);
@@ -302,10 +361,6 @@
       });
     box.replaceChildren(frag);
     applyQuoteFilter();   // 轮询重绘后保持当前筛选结果
-
-    $('#quoteTime').textContent =
-      '更新于 ' + new Date(generatedAt).toLocaleString('zh-CN', { hour12: false }) +
-      (realtime ? ' · 实时' : ' · 本地快照');
   }
 
   // 交易时段内加快轮询，其余时间放慢
@@ -1012,11 +1067,6 @@
       const runMin = agoMin(last.startedAt);
       const news = (S.items || [])[0] || null;
       const newsMin = news ? agoMin(news.time) : null;
-      // 行情时点优先用每张卡片自带的源时间：休市时它停在上一交易日，属正常，不做报警
-      const quoteTs = (Array.isArray(S.quotes) ? S.quotes : [])
-        .map((q) => Date.parse(q.updatedAt || ''))
-        .filter((t) => Number.isFinite(t));
-      const quoteAt = quoteTs.length ? Math.max(...quoteTs) : Date.parse(last.at || '');
 
       // 状态灯：源失败、采集停摆优先于「新闻暂时没有新的」
       let level = 'ok';
@@ -1034,9 +1084,8 @@
       if (runMin != null) bits.push('采集 ' + agoText(runMin));
       if (srcs.length) bits.push(`源 ${srcs.length - srcBad.length}/${srcs.length}`);
       if (newsMin != null) bits.push('最新新闻 ' + agoText(newsMin));
-      // 直连行情没有源时间戳（是刚取的），写「实时」才不会让人以为卡片停在旧时点
-      if (S.quotesRealtime) bits.push('行情 直连实时');
-      else if (Number.isFinite(quoteAt)) bits.push('行情 ' + fmtTime(new Date(quoteAt).toISOString()));
+      // 与 #quoteTime 共用同一段三态文案，避免一处实时一处快照
+      bits.push(S.quoteStatusText || '行情 未记录');
       if (macroOk.length || macroFail.length) bits.push(`宏观 ${macroOk.length}/${macroOk.length + macroFail.length}`);
       bits.push(`库 ${total.toLocaleString('zh-CN')} 条 / ${days} 天`);
 
@@ -1227,6 +1276,23 @@
   const klineLimit = (period) =>
     (period === '1d' || period === '1w' || period === '1M' || period === '1y') ? 20000 : 2000;
 
+  /** K线头部标记：来源 / 数据时间 / 相对陈旧度 / 三态；桌面长文、窄屏短文由 CSS 切换 */
+  function renderKlineMeta(bars, src, period) {
+    const box = $('#kmMeta');
+    if (!box) return;
+    const QS = window.MacroQuoteStatus;
+    if (!QS || !QS.klineMarker) {
+      box.textContent = src || '';
+      return;
+    }
+    const m = QS.klineMarker({ src, bars, period, now: Date.now() });
+    box.className = 'km-meta ' +
+      (m.state === 'realtime' ? 'state-ok' : m.state === 'local' ? 'state-local' : 'state-warn');
+    box.innerHTML =
+      `<span class="km-meta-full">${esc(m.full)}</span>` +
+      `<span class="km-meta-short">${esc(m.short)}</span>`;
+  }
+
   async function loadKline(key, period) {
     const myId = ++klineReqId;          // 请求令牌：过期响应一律丢弃
     klineKey = key;
@@ -1239,7 +1305,9 @@
     document.querySelectorAll('.pchip').forEach((b) => b.classList.toggle('on', b.dataset.period === period));
 
     const note = $('#kmNote');
-    note.textContent = '加载中…';
+    const meta = $('#kmMeta');
+    note.textContent = '';
+    if (meta) meta.textContent = '加载中…';
     kChart.setData([], period);          // ← 立刻清空画布，绝不留上一个标的的图
     maBars = 0;
     renderMA();
@@ -1285,15 +1353,11 @@
       // 数据变长后，原本「根数不足」的均线会自动变为可用（按钮取消置灰、曲线开始绘制）
       maBars = bars.length;
       renderMA();
-      // 口径说明（组合标的的代理品种）必须显示出来，不能让用户以为看到的就是报价源本身
+      // 口径说明（组合标的的代理品种）必须显示出来，不能让用户以为看到的就是报价源本身。
+      // 来源/时间/根数/状态统一进 #kmMeta；图下只保留口径说明，避免两处口径冲突。
       const caliber = window.MarketData.getKlineNote ? window.MarketData.getKlineNote(key) : '';
-      const span = isYear
-        ? `${String(bars[0].t).slice(0, 4)} → ${String(bars[bars.length - 1].t).slice(0, 4)}`
-        : `${bars[0].t} → ${bars[bars.length - 1].t}`;
-      note.textContent =
-        `${bars.length} 根 · ${span} · ${src}` +
-        (isYear && !/聚合/.test(src) ? '（由月K聚合）' : '') +
-        (caliber ? ` · ${caliber}` : '');
+      note.textContent = caliber || '';
+      renderKlineMeta(bars, src, period);
       notifyUpgrade();
       return true;
     };
@@ -1343,6 +1407,8 @@
     }
 
     if (myId === klineReqId && shown === 0) {
+      const metaBox = $('#kmMeta');
+      if (metaBox) metaBox.textContent = '无数据';
       // 分钟级若是「全网本来就没有同口径的分钟源」，要说清楚**为什么**，
       // 别让用户以为页面坏了（2026-10-30：伦敦金/布伦特原油属于这一类）。
       const minuteReason = isMinute() && window.MarketData.getMinuteUnavailableReason

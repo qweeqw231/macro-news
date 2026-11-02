@@ -27,7 +27,7 @@
   ];
   // ulist 批量行情字段：f2 价 / f3 涨跌幅 / f5 量 / f12 代码 / f13 市场 / f14 名称 /
   //   f15 高 / f16 低 / f17 开 / f18 昨收
-  const QUOTE_FIELDS = 'f2,f3,f5,f12,f13,f14,f15,f16,f17,f18';
+  const QUOTE_FIELDS = 'f2,f3,f5,f12,f13,f14,f15,f16,f17,f18,f124';
   const KLINE_FIELDS1 = 'f1,f2,f3,f4,f5,f6';
   const KLINE_FIELDS2 = 'f51,f52,f53,f54,f55,f56,f57';
 
@@ -203,6 +203,26 @@
   const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
   const num = (v) => (v === undefined || v === null || v === '-' || v === '' ? null : Number(v));
+  const QS = () => window.MacroQuoteStatus || {};
+  const QUOTE_TOTAL_BUDGET_MS = 2000;
+  const QUOTE_EM_BUDGET_MS = 1200;
+  const QUOTE_TX_BUDGET_MS = 800;
+
+  /** 给 promise 加硬超时；超时后原 promise 即使稍后完成也不会改变结果 */
+  function withTimeout(promise, ms, label) {
+    return new Promise((resolve, reject) => {
+      let done = false;
+      const timer = setTimeout(() => {
+        if (done) return;
+        done = true;
+        reject(new Error(label + '超时 ' + Math.max(0, ms) + 'ms'));
+      }, Math.max(0, ms));
+      Promise.resolve(promise).then(
+        (v) => { if (!done) { done = true; clearTimeout(timer); resolve(v); } },
+        (e) => { if (!done) { done = true; clearTimeout(timer); reject(e); } }
+      );
+    });
+  }
 
   async function req(url, timeout, asText) {
     const ctrl = new AbortController();
@@ -275,7 +295,7 @@
       'quote',
       QUOTE_HOSTS,
       (h) => `${h}/api/qt/ulist.np/get?${qs}`,
-      8000,
+      QUOTE_EM_BUDGET_MS,
       (j) => (j && j.data && j.data.diff && j.data.diff.length ? j.data.diff : null)
     );
     return diff
@@ -286,6 +306,9 @@
           key: meta.key, name: meta.name, market: meta.market,
           price: num(d.f2), open: num(d.f17), high: num(d.f15), low: num(d.f16),
           prevClose: num(d.f18), volume: num(d.f5), changePct: num(d.f3),
+          // f124 是源时间戳；没有它就不能标“实时”
+          updatedAt: QS().fromEpoch ? QS().fromEpoch(d.f124) : null,
+          source: 'eastmoney',
         };
       })
       .filter(Boolean);
@@ -296,7 +319,7 @@
     const pairs = META.filter((m) => TX_CODE[m.key]).map((m) => [TX_CODE[m.key], m]);
     if (!pairs.length) throw new Error('腾讯无可用指数');
     const byCode = new Map(pairs.map((p) => [p[0], p[1]]));
-    const text = await req('https://qt.gtimg.cn/q=' + pairs.map((p) => p[0]).join(','), 8000, true);
+    const text = await req('https://qt.gtimg.cn/q=' + pairs.map((p) => p[0]).join(','), QUOTE_TX_BUDGET_MS, true);
     const out = [];
     for (const line of String(text).split(';')) {
       const m = line.match(/v_([^=]+)="([^"]*)"/);
@@ -305,11 +328,13 @@
       if (!meta) continue;
       const a = m[2].split('~');
       if (a.length < 35) continue;
-      // 腾讯字段：3 价 / 4 昨收 / 5 开 / 6 量 / 32 涨跌幅 / 33 高 / 34 低
+      // 腾讯字段：3 价 / 4 昨收 / 5 开 / 6 量 / 30 源时间 / 32 涨跌幅 / 33 高 / 34 低
       out.push({
         key: meta.key, name: meta.name, market: meta.market,
         price: num(a[3]), prevClose: num(a[4]), open: num(a[5]),
         volume: num(a[6]), high: num(a[33]), low: num(a[34]), changePct: num(a[32]),
+        updatedAt: QS().parseTencentTime ? QS().parseTencentTime(a[30]) : null,
+        source: 'tencent',
       });
     }
     if (!out.length) throw new Error('腾讯返回空数据');
@@ -317,11 +342,22 @@
   }
 
   async function fetchQuotes() {
-    try {
-      return await fetchQuotesEM();
-    } catch (e) {
-      return await fetchQuotesTX();
+    const API = window.MacroQuoteStatus;
+    if (API && API.runQuoteBudget) {
+      return API.runQuoteBudget({ em: fetchQuotesEM, tx: fetchQuotesTX });
     }
+    const t0 = Date.now();
+    try {
+      const em = await withTimeout(fetchQuotesEM(), QUOTE_EM_BUDGET_MS, '东财报价');
+      if (em && em.length) return em;
+    } catch (e) { /* 东财失败 → 腾讯 */ }
+    const remain = Math.max(0, QUOTE_TOTAL_BUDGET_MS - (Date.now() - t0));
+    const txBudget = Math.min(QUOTE_TX_BUDGET_MS, remain || QUOTE_TX_BUDGET_MS);
+    try {
+      const tx = await withTimeout(fetchQuotesTX(), txBudget, '腾讯报价');
+      if (tx && tx.length) return tx;
+    } catch (e) { /* 腾讯也失败 → 本地快照 */ }
+    throw new Error('东财/腾讯报价均失败（预算 ' + QUOTE_TOTAL_BUDGET_MS + 'ms）');
   }
 
   // ---- K线主源：东财（全 17 指数，含分钟） ----
