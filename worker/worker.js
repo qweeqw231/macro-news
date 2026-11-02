@@ -17,22 +17,23 @@
  */
 
 const INDICES = {
-  sh_comp: { secid: '1.000001', sina: 'sh000001', market: 'CN' },
-  sz_comp: { secid: '0.399001', sina: 'sz399001', market: 'CN' },
-  chinext: { secid: '0.399006', sina: 'sz399006', market: 'CN' },
-  star50: { secid: '1.000688', sina: 'sh000688', market: 'CN' },
-  bse50: { secid: '0.899050', sina: 'bj899050', market: 'CN' },
-  csi300: { secid: '1.000300', sina: 'sh000300', market: 'CN' },
-  sse50: { secid: '1.000016', sina: 'sh000016', market: 'CN' },
-  csi500: { secid: '1.000905', sina: 'sh000905', market: 'CN' },
-  csi1000: { secid: '1.000852', sina: 'sh000852', market: 'CN' },
+  sh_comp: { secid: '1.000001', sina: 'sh000001', tx: 'sh000001', market: 'CN' },
+  sz_comp: { secid: '0.399001', sina: 'sz399001', tx: 'sz399001', market: 'CN' },
+  chinext: { secid: '0.399006', sina: 'sz399006', tx: 'sz399006', market: 'CN' },
+  star50: { secid: '1.000688', sina: 'sh000688', tx: 'sh000688', market: 'CN' },
+  bse50: { secid: '0.899050', sina: 'bj899050', tx: 'bj899050', market: 'CN' },
+  csi300: { secid: '1.000300', sina: 'sh000300', tx: 'sh000300', market: 'CN' },
+  sse50: { secid: '1.000016', sina: 'sh000016', tx: 'sh000016', market: 'CN' },
+  csi500: { secid: '1.000905', sina: 'sh000905', tx: 'sh000905', market: 'CN' },
+  csi1000: { secid: '1.000852', sina: 'sh000852', tx: 'sh000852', market: 'CN' },
   hsi: { secid: '100.HSI', tx: 'hkHSI', market: 'HK' },
-  hs_tech: { secid: '124.HSTECH', market: 'HK' },
+  hs_tech: { secid: '124.HSTECH', tx: 'hkHSTECH', market: 'HK' },
   dji: { secid: '100.DJIA', tx: 'usDJI', us: true, market: 'US' },
   ixic: { secid: '100.NDX', tx: 'usIXIC', us: true, market: 'US' },
   spx: { secid: '100.SPX', tx: 'usINX', us: true, market: 'US' },
   n225: { secid: '100.N225', market: 'JP' },
   dax: { secid: '100.GDAXI', market: 'EU' },
+  cac40: { secid: '100.FCHI', market: 'EU' },
   ukx: { secid: '100.FTSE', market: 'UK' },
   kospi: { secid: '100.KS11', market: 'KR' },
 };
@@ -75,22 +76,54 @@ async function handleQuote(url) {
   const ids = (url.searchParams.get('secids') || '1.000001,100.DJIA').split(',').filter(Boolean);
   const keys = url.searchParams.get('keys') || '';           // 可选：与 secids 同序，用于回填 name
   const keyList = keys ? keys.split(',') : [];
-  const fields = 'f43,f44,f45,f46,f47,f57,f58,f60,f170';
-  const out = [];
+  const n = (v) => (v === undefined || v === null || v === '-' || v === '—' ? null : Number(v));
+  const isoCN = (sec) => {
+    const t = Number(sec);
+    if (!Number.isFinite(t) || t <= 0) return new Date().toISOString();
+    const d = new Date(t * 1000 + 8 * 3600 * 1000);
+    const p = (x) => String(x).padStart(2, '0');
+    return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}T` +
+      `${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())}+08:00`;
+  };
 
+  // 主源：ulist.np 批量（与站点采集同一端点；stock/get 会被东财按接口限流）
+  try {
+    const fields = 'f2,f3,f5,f12,f13,f14,f15,f16,f17,f18,f124';
+    const u = `https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&invt=2` +
+      `&secids=${encodeURIComponent(ids.join(','))}&fields=${fields}`;
+    const j = JSON.parse(await upstream(u));
+    const diff = Array.isArray(j?.data?.diff) ? j.data.diff : [];
+    const out = [];
+    for (const d of diff) {
+      const secid = `${d.f13}.${d.f12}`;
+      const idx = ids.indexOf(secid);
+      if (idx < 0 || !d.f14) continue;
+      out.push({
+        key: keyList[idx] || '',
+        name: d.f14,
+        price: n(d.f2), open: n(d.f17), high: n(d.f15), low: n(d.f16),
+        prevClose: n(d.f18), volume: n(d.f5), changePct: n(d.f3),
+        updatedAt: isoCN(d.f124),
+        source: 'eastmoney',
+      });
+    }
+    if (out.length) return json({ updatedAt: new Date().toISOString(), quotes: out });
+  } catch { /* 批量失败 → 单只兜底 */ }
+
+  const out = [];
   for (let i = 0; i < ids.length; i++) {
     try {
-      const u = `https://push2.eastmoney.com/api/qt/stock/get?fltt=2&invt=2&secid=${ids[i]}&fields=${fields}`;
+      const u = `https://push2.eastmoney.com/api/qt/stock/get?fltt=2&invt=2&secid=${ids[i]}&fields=f43,f44,f45,f46,f47,f57,f58,f60,f170`;
       const j = JSON.parse(await upstream(u));
       const d = j?.data;
       if (!d?.f58) continue;
-      const n = (v) => (v === undefined || v === null || v === '-' ? null : Number(v));
       out.push({
         key: keyList[i] || '',
         name: d.f58,
         price: n(d.f43), open: n(d.f46), high: n(d.f44), low: n(d.f45),
         prevClose: n(d.f60), volume: n(d.f47), changePct: n(d.f170),
         updatedAt: new Date().toISOString(),
+        source: 'eastmoney',
       });
     } catch { /* 单个失败不影响其他 */ }
   }

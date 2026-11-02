@@ -18,3 +18,6 @@ tmp/
 
 # 本地新闻数据库（独立于静态站，绝不进 git）
 .local/
+
+# wrangler 本地构建/状态缓存
+.wrangler/
