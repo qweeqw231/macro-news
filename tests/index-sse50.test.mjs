@@ -42,7 +42,7 @@ test('前端与 Worker：卡片 / K 线 / 搜索 / 代理都认识 sse50', () =>
   assert.ok(app.includes('sse50: \'上证50 上证 蓝筹 sse50 sse 50\''), 'app.js 搜索别名缺少 sse50');
 
   const worker = read('worker/worker.js');
-  assert.ok(worker.includes("sse50: { secid: '1.000016', sina: 'sh000016', market: 'CN' }"),
+  assert.ok(worker.includes("sse50: { secid: '1.000016', sina: 'sh000016', tx: 'sh000016', market: 'CN' }"),
     'worker.js 缺少 sse50');
 });
 
@@ -91,9 +91,9 @@ test('当日 am 快照保持新增标的前的 57 项（时点快照不重写，
   assert.equal(snap.capturedAt, '2026-11-02T12:14:00+08:00');
 });
 
-test('quotes.json：卡片含上证50，且总数 58', () => {
+test('quotes.json：卡片含上证50，且总数 59', () => {
   const doc = json('data/quotes.json');
-  assert.equal(doc.quotes.length, 58);
+  assert.equal(doc.quotes.length, 59);
   const q = doc.quotes.find((x) => x.key === 'sse50');
   assert.ok(q, 'quotes.json 缺少 sse50');
   assert.equal(q.name, '上证50');

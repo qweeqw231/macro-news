@@ -51,7 +51,7 @@ const LIMIT = 20000;
 const MIN_BARS = 1050;
 
 const today = new Date().toISOString().slice(0, 10);
-// 目标 = 19 个指数 + 4 个组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）
+// 目标 = 20 个指数 + 4 个组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）
 const ALL_TARGETS = [...INDICES, ...PORTFOLIO_KLINE];
 const list = ONLY ? ALL_TARGETS.filter((i) => i.key === ONLY) : ALL_TARGETS;
 
