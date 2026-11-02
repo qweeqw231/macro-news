@@ -1,0 +1,1833 @@
+{
+  "v": 2,
+  "generatedAt": "2026-11-02T12:54:55+08:00",
+  "from": "2025-11-02",
+  "to": "2026-09-19",
+  "total": 69731,
+  "days": [
+    {
+      "d": "2026-09-19",
+      "n": 129,
+      "b": 29274,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-09-12",
+      "n": 204,
+      "b": 46460,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-09-08",
+      "n": 255,
+      "b": 58124,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-09-07",
+      "n": 262,
+      "b": 60192,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-09-06",
+      "n": 136,
+      "b": 30780,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-09-05",
+      "n": 179,
+      "b": 40498,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-09-03",
+      "n": 284,
+      "b": 65215,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-09-02",
+      "n": 293,
+      "b": 67447,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-09-01",
+      "n": 251,
+      "b": 57249,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-30",
+      "n": 123,
+      "b": 27701,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-29",
+      "n": 124,
+      "b": 27935,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-28",
+      "n": 309,
+      "b": 70123,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-23",
+      "n": 82,
+      "b": 18446,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-22",
+      "n": 99,
+      "b": 22245,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-19",
+      "n": 289,
+      "b": 65344,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-18",
+      "n": 270,
+      "b": 61473,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-16",
+      "n": 112,
+      "b": 25530,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-15",
+      "n": 158,
+      "b": 35543,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-14",
+      "n": 248,
+      "b": 56424,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-13",
+      "n": 224,
+      "b": 50413,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-12",
+      "n": 201,
+      "b": 45632,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-11",
+      "n": 210,
+      "b": 47395,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-10",
+      "n": 198,
+      "b": 44913,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-09",
+      "n": 128,
+      "b": 28772,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-08",
+      "n": 165,
+      "b": 37279,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-07",
+      "n": 285,
+      "b": 64417,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-06",
+      "n": 221,
+      "b": 50309,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-05",
+      "n": 254,
+      "b": 57480,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-04",
+      "n": 211,
+      "b": 47261,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-03",
+      "n": 199,
+      "b": 45002,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-02",
+      "n": 88,
+      "b": 19679,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-08-01",
+      "n": 134,
+      "b": 30554,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-31",
+      "n": 313,
+      "b": 71285,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-30",
+      "n": 297,
+      "b": 67596,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-29",
+      "n": 312,
+      "b": 70667,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-28",
+      "n": 276,
+      "b": 62723,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-27",
+      "n": 236,
+      "b": 53942,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-26",
+      "n": 96,
+      "b": 21675,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-25",
+      "n": 152,
+      "b": 34407,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-24",
+      "n": 348,
+      "b": 78764,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-23",
+      "n": 294,
+      "b": 66552,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-22",
+      "n": 333,
+      "b": 75721,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-21",
+      "n": 308,
+      "b": 69886,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-20",
+      "n": 248,
+      "b": 56138,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-19",
+      "n": 139,
+      "b": 31296,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-18",
+      "n": 145,
+      "b": 33318,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-17",
+      "n": 300,
+      "b": 68113,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-16",
+      "n": 282,
+      "b": 64465,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-15",
+      "n": 290,
+      "b": 65984,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-14",
+      "n": 237,
+      "b": 53380,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-13",
+      "n": 225,
+      "b": 51111,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-12",
+      "n": 72,
+      "b": 16709,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-11",
+      "n": 193,
+      "b": 44339,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-10",
+      "n": 286,
+      "b": 65101,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-09",
+      "n": 301,
+      "b": 68404,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-08",
+      "n": 314,
+      "b": 72075,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-07",
+      "n": 236,
+      "b": 53956,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-06",
+      "n": 254,
+      "b": 57804,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-05",
+      "n": 112,
+      "b": 25629,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-04",
+      "n": 133,
+      "b": 30931,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-03",
+      "n": 258,
+      "b": 58734,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-02",
+      "n": 302,
+      "b": 68194,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-07-01",
+      "n": 278,
+      "b": 74330,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-30",
+      "n": 263,
+      "b": 59475,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-29",
+      "n": 243,
+      "b": 55007,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-28",
+      "n": 72,
+      "b": 16538,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-27",
+      "n": 137,
+      "b": 31083,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-26",
+      "n": 292,
+      "b": 66971,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-25",
+      "n": 303,
+      "b": 68532,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-24",
+      "n": 256,
+      "b": 57880,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-23",
+      "n": 276,
+      "b": 62280,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-22",
+      "n": 276,
+      "b": 62215,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-21",
+      "n": 88,
+      "b": 19592,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-20",
+      "n": 90,
+      "b": 20064,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-19",
+      "n": 108,
+      "b": 23779,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-18",
+      "n": 320,
+      "b": 72603,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-17",
+      "n": 379,
+      "b": 86534,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-16",
+      "n": 307,
+      "b": 69162,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-15",
+      "n": 247,
+      "b": 55293,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-14",
+      "n": 114,
+      "b": 26189,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-13",
+      "n": 197,
+      "b": 45317,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-12",
+      "n": 288,
+      "b": 64976,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-11",
+      "n": 297,
+      "b": 67159,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-10",
+      "n": 305,
+      "b": 69444,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-09",
+      "n": 248,
+      "b": 55935,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-08",
+      "n": 283,
+      "b": 63077,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-07",
+      "n": 89,
+      "b": 20085,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-06",
+      "n": 115,
+      "b": 25669,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-05",
+      "n": 306,
+      "b": 69026,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-04",
+      "n": 213,
+      "b": 48329,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-03",
+      "n": 266,
+      "b": 60686,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-02",
+      "n": 273,
+      "b": 61977,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-06-01",
+      "n": 206,
+      "b": 46263,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-31",
+      "n": 123,
+      "b": 27715,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-30",
+      "n": 146,
+      "b": 33560,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-29",
+      "n": 292,
+      "b": 66820,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-28",
+      "n": 291,
+      "b": 66503,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-27",
+      "n": 300,
+      "b": 67952,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-26",
+      "n": 258,
+      "b": 58975,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-25",
+      "n": 242,
+      "b": 54984,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-24",
+      "n": 117,
+      "b": 26663,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-23",
+      "n": 166,
+      "b": 38102,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-22",
+      "n": 288,
+      "b": 65413,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-21",
+      "n": 245,
+      "b": 55358,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-20",
+      "n": 303,
+      "b": 68918,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-19",
+      "n": 279,
+      "b": 63357,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-18",
+      "n": 305,
+      "b": 70046,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-17",
+      "n": 133,
+      "b": 30594,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-16",
+      "n": 235,
+      "b": 53262,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-15",
+      "n": 253,
+      "b": 57278,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-14",
+      "n": 257,
+      "b": 57736,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-13",
+      "n": 239,
+      "b": 54202,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-12",
+      "n": 237,
+      "b": 53599,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-11",
+      "n": 233,
+      "b": 53067,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-10",
+      "n": 127,
+      "b": 28562,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-09",
+      "n": 228,
+      "b": 51724,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-08",
+      "n": 272,
+      "b": 61948,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-07",
+      "n": 226,
+      "b": 50804,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-06",
+      "n": 226,
+      "b": 50964,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-05",
+      "n": 119,
+      "b": 26705,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-04",
+      "n": 130,
+      "b": 29275,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-03",
+      "n": 109,
+      "b": 25044,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-02",
+      "n": 107,
+      "b": 24551,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-05-01",
+      "n": 148,
+      "b": 33434,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-30",
+      "n": 306,
+      "b": 70907,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-29",
+      "n": 331,
+      "b": 75445,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-28",
+      "n": 303,
+      "b": 68787,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-27",
+      "n": 301,
+      "b": 68370,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-26",
+      "n": 143,
+      "b": 32455,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-25",
+      "n": 144,
+      "b": 33040,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-24",
+      "n": 367,
+      "b": 83634,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-23",
+      "n": 318,
+      "b": 72723,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-22",
+      "n": 338,
+      "b": 77535,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-21",
+      "n": 317,
+      "b": 71570,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-20",
+      "n": 256,
+      "b": 58533,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-19",
+      "n": 90,
+      "b": 20502,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-18",
+      "n": 155,
+      "b": 35281,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-17",
+      "n": 341,
+      "b": 77866,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-16",
+      "n": 344,
+      "b": 78127,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-15",
+      "n": 316,
+      "b": 71858,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-14",
+      "n": 272,
+      "b": 61739,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-13",
+      "n": 236,
+      "b": 53999,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-12",
+      "n": 147,
+      "b": 33475,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-11",
+      "n": 147,
+      "b": 32552,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-10",
+      "n": 269,
+      "b": 61376,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-09",
+      "n": 271,
+      "b": 60985,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-08",
+      "n": 296,
+      "b": 67024,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-07",
+      "n": 231,
+      "b": 52070,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-06",
+      "n": 86,
+      "b": 19201,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-05",
+      "n": 123,
+      "b": 27316,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-04",
+      "n": 108,
+      "b": 24369,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-03",
+      "n": 307,
+      "b": 68836,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-02",
+      "n": 315,
+      "b": 70867,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-04-01",
+      "n": 351,
+      "b": 79387,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-31",
+      "n": 293,
+      "b": 66600,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-30",
+      "n": 268,
+      "b": 61090,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-29",
+      "n": 132,
+      "b": 30207,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-28",
+      "n": 136,
+      "b": 30791,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-27",
+      "n": 300,
+      "b": 68397,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-26",
+      "n": 285,
+      "b": 64972,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-25",
+      "n": 292,
+      "b": 67353,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-24",
+      "n": 262,
+      "b": 59422,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-23",
+      "n": 248,
+      "b": 56314,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-22",
+      "n": 118,
+      "b": 27233,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-21",
+      "n": 129,
+      "b": 29256,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-20",
+      "n": 247,
+      "b": 56351,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-19",
+      "n": 252,
+      "b": 56891,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-18",
+      "n": 298,
+      "b": 67486,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-17",
+      "n": 260,
+      "b": 58518,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-16",
+      "n": 251,
+      "b": 56553,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-15",
+      "n": 132,
+      "b": 29783,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-14",
+      "n": 120,
+      "b": 27236,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-13",
+      "n": 276,
+      "b": 62693,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-12",
+      "n": 297,
+      "b": 67424,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-11",
+      "n": 274,
+      "b": 63202,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-10",
+      "n": 246,
+      "b": 55733,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-09",
+      "n": 281,
+      "b": 64109,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-08",
+      "n": 183,
+      "b": 42062,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-07",
+      "n": 187,
+      "b": 44202,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-06",
+      "n": 324,
+      "b": 75869,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-05",
+      "n": 390,
+      "b": 90521,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-04",
+      "n": 331,
+      "b": 75564,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-03",
+      "n": 283,
+      "b": 63753,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-02",
+      "n": 358,
+      "b": 80170,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-03-01",
+      "n": 244,
+      "b": 55320,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-28",
+      "n": 346,
+      "b": 77253,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-27",
+      "n": 289,
+      "b": 65511,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-26",
+      "n": 239,
+      "b": 54648,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-25",
+      "n": 247,
+      "b": 55812,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-24",
+      "n": 264,
+      "b": 59444,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-23",
+      "n": 95,
+      "b": 21281,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-22",
+      "n": 76,
+      "b": 16993,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-21",
+      "n": 90,
+      "b": 20539,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-20",
+      "n": 95,
+      "b": 21283,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-19",
+      "n": 62,
+      "b": 14019,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-18",
+      "n": 100,
+      "b": 22089,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-17",
+      "n": 69,
+      "b": 15411,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-16",
+      "n": 76,
+      "b": 17305,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-15",
+      "n": 78,
+      "b": 17486,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-14",
+      "n": 202,
+      "b": 45455,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-13",
+      "n": 220,
+      "b": 50194,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-12",
+      "n": 247,
+      "b": 55912,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-11",
+      "n": 295,
+      "b": 67067,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-10",
+      "n": 232,
+      "b": 53093,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-09",
+      "n": 229,
+      "b": 52103,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-08",
+      "n": 84,
+      "b": 19096,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-07",
+      "n": 121,
+      "b": 27147,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-06",
+      "n": 322,
+      "b": 72621,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-05",
+      "n": 300,
+      "b": 68564,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-04",
+      "n": 280,
+      "b": 63938,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-03",
+      "n": 305,
+      "b": 68977,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-02",
+      "n": 254,
+      "b": 57763,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-02-01",
+      "n": 147,
+      "b": 33184,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-31",
+      "n": 180,
+      "b": 41100,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-30",
+      "n": 334,
+      "b": 75214,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-29",
+      "n": 358,
+      "b": 81363,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-28",
+      "n": 385,
+      "b": 87721,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-27",
+      "n": 341,
+      "b": 77369,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-26",
+      "n": 313,
+      "b": 70172,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-25",
+      "n": 105,
+      "b": 23760,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-24",
+      "n": 112,
+      "b": 25935,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-23",
+      "n": 315,
+      "b": 70835,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-22",
+      "n": 259,
+      "b": 58986,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-21",
+      "n": 305,
+      "b": 69900,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-20",
+      "n": 255,
+      "b": 57705,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-19",
+      "n": 300,
+      "b": 67962,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-18",
+      "n": 97,
+      "b": 22179,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-17",
+      "n": 148,
+      "b": 33753,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-16",
+      "n": 339,
+      "b": 77075,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-15",
+      "n": 313,
+      "b": 70976,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-14",
+      "n": 341,
+      "b": 77854,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-13",
+      "n": 277,
+      "b": 62660,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-12",
+      "n": 231,
+      "b": 52384,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-11",
+      "n": 126,
+      "b": 27949,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-10",
+      "n": 112,
+      "b": 25069,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-09",
+      "n": 296,
+      "b": 66731,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-08",
+      "n": 287,
+      "b": 65333,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-07",
+      "n": 306,
+      "b": 69506,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-06",
+      "n": 277,
+      "b": 62497,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-05",
+      "n": 259,
+      "b": 58715,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-04",
+      "n": 255,
+      "b": 57324,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-03",
+      "n": 160,
+      "b": 35751,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-02",
+      "n": 114,
+      "b": 25883,
+      "hasBriefing": false
+    },
+    {
+      "d": "2026-01-01",
+      "n": 190,
+      "b": 42379,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-31",
+      "n": 299,
+      "b": 67798,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-30",
+      "n": 316,
+      "b": 71401,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-29",
+      "n": 299,
+      "b": 67401,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-28",
+      "n": 145,
+      "b": 32508,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-27",
+      "n": 154,
+      "b": 35104,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-26",
+      "n": 278,
+      "b": 64003,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-25",
+      "n": 289,
+      "b": 65871,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-24",
+      "n": 293,
+      "b": 67249,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-23",
+      "n": 263,
+      "b": 60247,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-22",
+      "n": 273,
+      "b": 62380,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-21",
+      "n": 89,
+      "b": 20074,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-20",
+      "n": 116,
+      "b": 26208,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-19",
+      "n": 282,
+      "b": 64388,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-18",
+      "n": 313,
+      "b": 70933,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-17",
+      "n": 310,
+      "b": 70568,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-16",
+      "n": 282,
+      "b": 64091,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-15",
+      "n": 266,
+      "b": 60420,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-14",
+      "n": 114,
+      "b": 25508,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-13",
+      "n": 129,
+      "b": 28930,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-12",
+      "n": 317,
+      "b": 71961,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-11",
+      "n": 310,
+      "b": 70202,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-10",
+      "n": 297,
+      "b": 67782,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-09",
+      "n": 272,
+      "b": 61789,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-08",
+      "n": 253,
+      "b": 57882,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-07",
+      "n": 136,
+      "b": 31132,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-06",
+      "n": 144,
+      "b": 32783,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-05",
+      "n": 311,
+      "b": 70737,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-04",
+      "n": 282,
+      "b": 63598,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-03",
+      "n": 306,
+      "b": 70153,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-02",
+      "n": 245,
+      "b": 55514,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-12-01",
+      "n": 287,
+      "b": 64296,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-30",
+      "n": 105,
+      "b": 23744,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-29",
+      "n": 121,
+      "b": 28037,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-28",
+      "n": 305,
+      "b": 69667,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-27",
+      "n": 276,
+      "b": 62718,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-26",
+      "n": 243,
+      "b": 55791,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-25",
+      "n": 234,
+      "b": 53355,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-24",
+      "n": 205,
+      "b": 46380,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-23",
+      "n": 97,
+      "b": 22032,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-22",
+      "n": 127,
+      "b": 28877,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-21",
+      "n": 245,
+      "b": 56109,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-20",
+      "n": 220,
+      "b": 50263,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-19",
+      "n": 278,
+      "b": 63693,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-18",
+      "n": 246,
+      "b": 55588,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-17",
+      "n": 212,
+      "b": 48495,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-16",
+      "n": 149,
+      "b": 33648,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-15",
+      "n": 137,
+      "b": 31368,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-14",
+      "n": 307,
+      "b": 70492,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-13",
+      "n": 223,
+      "b": 50869,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-12",
+      "n": 261,
+      "b": 59788,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-11",
+      "n": 256,
+      "b": 58587,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-10",
+      "n": 230,
+      "b": 52484,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-09",
+      "n": 132,
+      "b": 30562,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-08",
+      "n": 174,
+      "b": 40409,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-07",
+      "n": 329,
+      "b": 75288,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-06",
+      "n": 300,
+      "b": 68860,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-05",
+      "n": 330,
+      "b": 75899,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-04",
+      "n": 289,
+      "b": 65732,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-03",
+      "n": 248,
+      "b": 56566,
+      "hasBriefing": false
+    },
+    {
+      "d": "2025-11-02",
+      "n": 116,
+      "b": 26738,
+      "hasBriefing": false
+    }
+  ]
+}
