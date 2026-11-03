@@ -2,7 +2,7 @@
   "v": 2,
   "updatedAt": "2026-11-03",
   "verifiedAt": "2026-11-03",
-  "note": "只列交易所「全天不交易」的休市日；半日市（如港交所平安夜/除夕、Euronext 12-24/12-31）不列入。周末由交易时段逻辑单独处理。",
+  "note": "markets = 全天休市日；halfDays = 提前收市的交易日（closeTime 为交易所本地时间）。周末由交易时段逻辑单独处理。",
   "coverage": { "from": "2026-01-01", "to": "2027-12-31" },
   "coverageByMarket": {
     "JP": { "from": "2026-01-01", "to": "2027-12-31" },
@@ -85,12 +85,37 @@
     ],
     "KR": []
   },
+  "halfDays": {
+    "HK": [
+      { "date": "2026-02-16", "closeTime": "12:00", "sessionNote": "农历新年前夕：仅早市 09:30-12:00，无午市", "source": "HKEX 通告 CT/075/25；《交易所规则》圣诞/新年/农历新年前夕无午市" },
+      { "date": "2026-12-24", "closeTime": "12:00", "sessionNote": "平安夜：仅早市 09:30-12:00，无午市", "source": "HKEX 通告 CT/075/25；《交易所规则》圣诞前夕无午市" },
+      { "date": "2026-12-31", "closeTime": "12:00", "sessionNote": "除夕：仅早市 09:30-12:00，无午市", "source": "HKEX 通告 CT/075/25；《交易所规则》新年前夕无午市" },
+      { "date": "2027-02-05", "closeTime": "12:00", "sessionNote": "农历新年前夕：仅早市 09:30-12:00，无午市", "source": "HKEX 通告 CT/077/26；《交易所规则》农历新年前夕无午市" },
+      { "date": "2027-12-24", "closeTime": "12:00", "sessionNote": "平安夜：仅早市 09:30-12:00，无午市", "source": "HKEX 通告 CT/077/26；《交易所规则》圣诞前夕无午市" },
+      { "date": "2027-12-31", "closeTime": "12:00", "sessionNote": "除夕：仅早市 09:30-12:00，无午市", "source": "HKEX 通告 CT/077/26；《交易所规则》新年前夕无午市" }
+    ],
+    "FR": [
+      { "date": "2026-12-24", "closeTime": "14:00", "sessionNote": "半日市：收市拍卖 14:00 CET", "source": "Euronext 2026 Holiday Calendar（Half Trading Day）；14:00 依据 Euronext 2025 年末附录 4-01（同规则），2026 年末附录尚未发布" },
+      { "date": "2026-12-31", "closeTime": "14:00", "sessionNote": "半日市：收市拍卖 14:00 CET", "source": "Euronext 2026 Holiday Calendar（Half Trading Day）；14:00 依据 Euronext 2025 年末附录 4-01（同规则），2026 年末附录尚未发布" }
+    ],
+    "UK": [
+      { "date": "2026-12-24", "closeTime": "12:30", "sessionNote": "半日市：12:30 London time 起进入收市流程", "source": "LSE Business days：24 Dec 2026 收盘流程 12:30 London" },
+      { "date": "2026-12-31", "closeTime": "12:30", "sessionNote": "半日市：12:30 London time 起进入收市流程", "source": "LSE Business days：31 Dec 2026 收盘流程 12:30 London" },
+      { "date": "2027-12-24", "closeTime": "12:30", "sessionNote": "半日市：12:30 London time 起进入收市流程", "source": "LSE Business days：24 Dec 2027 收盘流程 12:30 London" },
+      { "date": "2027-12-31", "closeTime": "12:30", "sessionNote": "半日市：12:30 London time 起进入收市流程", "source": "LSE Business days：31 Dec 2027 收盘流程 12:30 London" }
+    ],
+    "US": [
+      { "date": "2026-11-27", "closeTime": "13:00", "sessionNote": "感恩节次日：13:00 ET 提前收市", "source": "NYSE Holidays & Trading Hours（2026-11-27 early close 1:00 p.m. ET）" },
+      { "date": "2026-12-24", "closeTime": "13:00", "sessionNote": "平安夜：13:00 ET 提前收市", "source": "NYSE Holidays & Trading Hours（2026-12-24 early close 1:00 p.m. ET）" },
+      { "date": "2027-11-26", "closeTime": "13:00", "sessionNote": "感恩节次日：13:00 ET 提前收市", "source": "NYSE Holidays & Trading Hours（2027-11-26 early close 1:00 p.m. ET）" }
+    ]
+  },
   "gaps": {
     "CN": "2026 已按上交所官网休市安排逐条核对；2027 安排通常于 2026 年 12 月发布，尚未公布 ⇒ 2027 不标注「休市」，按交易时段显示「已收盘」。",
     "HK": "2026/2027 均已按港交所官方通告核对，无缺口。",
     "KR": "KRX 官方 Market Closing(Holiday) 页面为 JS 动态渲染，本次未能取得完整、可核验的休市表（仅见零散临时休市通告），故不编造，整表留空：KR 一律按交易时段显示「已收盘」。",
-    "DE": "2026/2027 均已按德意志交易所官方交易日历核对（含 12-24/12-31 结算日无交易）；无缺口。",
-    "FR": "2026 已按 Euronext 官方假期表核对（仅列巴黎全天休市日，12-24/12-31 为半日市不列入）；2027 表尚未发布 ⇒ 2027 不标注「休市」。",
+    "DE": "2026/2027 全天休市日均已按德意志交易所官方交易日历核对（含 12-24/12-31 结算日无交易）；Xetra 无「半日市」，12-30 缩短交易未查到 2026 官方公告，未纳入。",
+    "FR": "2026-12-24/12-31 为 Euronext 官方 Half Trading Day；14:00 CET 收市时点依据 2025 年末附录（官方同规则），2026 年末附录尚未发布，若发布后时间有变需更新。",
     "UK": "2026/2027 均已按 LSE 官方 Business days 页核对（LSE 明确遵循英格兰及威尔士银行假日）；2026 上半年日期另以 gov.uk 银行假日表复核。"
   }
 }

@@ -188,6 +188,121 @@ test('假日表：所有日期都是工作日（周末不重复登记）', () =>
   }
 });
 
+// ---------- 2.4.7：半日市 ----------
+test('港股 2026-12-24 平安夜：收市前实时，12:00 后已收盘（半日市）', () => {
+  const before = QS.quoteStatus({
+    sourceTime: '2026-12-24T11:48:00+08:00',
+    now: BJ('2026-12-24T11:50:00'),
+    market: 'HK',
+    calendar: CAL,
+  });
+  assert.equal(before.state, 'realtime');
+  assert.equal(before.card, '11:48 · 实时');
+  const after = QS.quoteStatus({
+    sourceTime: '2026-12-24T12:00:00+08:00',
+    now: BJ('2026-12-24T12:10:00'),
+    market: 'HK',
+    calendar: CAL,
+  });
+  assert.equal(after.state, 'closed');
+  assert.equal(after.card, '已收盘（半日市） · 12-24 12:00');
+  assert.equal(after.halfDay, true);
+  assert.equal(QS.sessionAt('HK', BJ('2026-12-24T12:05:00'), CAL).phase, 'post');
+});
+
+test('港股半日市：源返回上一交易日旧价也归已收盘，不标延迟', () => {
+  const r = QS.quoteStatus({
+    sourceTime: '2026-12-23T16:00:00+08:00',
+    now: BJ('2026-12-24T18:00:00'),
+    market: 'HK',
+    calendar: CAL,
+  });
+  assert.equal(r.state, 'closed');
+  assert.equal(r.card, '已收盘（半日市） · 12-23 16:00');
+});
+
+test('法股 2026-12-24 半日市：14:00 CET 前实时，之后已收盘', () => {
+  const before = QS.quoteStatus({
+    sourceTime: '2026-12-24T20:25:00+08:00',
+    now: BJ('2026-12-24T20:28:00'),
+    market: 'FR',
+    calendar: CAL,
+  });
+  assert.equal(before.state, 'realtime');
+  const after = QS.quoteStatus({
+    sourceTime: '2026-12-24T21:00:00+08:00',
+    now: BJ('2026-12-24T21:10:00'),
+    market: 'FR',
+    calendar: CAL,
+  });
+  assert.equal(after.state, 'closed');
+  assert.equal(after.card, '已收盘（半日市） · 12-24 21:00');
+});
+
+test('英股 2026-12-24 半日市：12:30 London 前实时，之后已收盘', () => {
+  const before = QS.quoteStatus({
+    sourceTime: '2026-12-24T20:18:00+08:00',
+    now: BJ('2026-12-24T20:20:00'),
+    market: 'UK',
+    calendar: CAL,
+  });
+  assert.equal(before.state, 'realtime');
+  const after = QS.quoteStatus({
+    sourceTime: '2026-12-24T20:30:00+08:00',
+    now: BJ('2026-12-24T20:35:00'),
+    market: 'UK',
+    calendar: CAL,
+  });
+  assert.equal(after.state, 'closed');
+  assert.equal(after.card, '已收盘（半日市） · 12-24 20:30');
+});
+
+test('美股 2026-11-27 感恩节次日：13:00 ET 前实时，之后已收盘', () => {
+  const before = QS.quoteStatus({
+    sourceTime: '2026-11-28T01:50:00+08:00',
+    now: BJ('2026-11-28T01:55:00'),
+    market: 'US',
+    calendar: CAL,
+  });
+  assert.equal(before.state, 'realtime');
+  const after = QS.quoteStatus({
+    sourceTime: '2026-11-28T02:00:00+08:00',
+    now: BJ('2026-11-28T02:15:00'),
+    market: 'US',
+    calendar: CAL,
+  });
+  assert.equal(after.state, 'closed');
+  assert.equal(after.card, '已收盘（半日市） · 11-28 02:00');
+});
+
+test('非半日市日期不受影响：港股 2026-12-23 下午仍交易中', () => {
+  const r = QS.sessionAt('HK', BJ('2026-12-23T15:00:00'), CAL);
+  assert.equal(r.phase, 'open');
+  assert.equal(r.halfDay, false);
+});
+
+test('半日市表：日期在覆盖范围内、closeTime 合法、且不与全天休市冲突', () => {
+  assert.ok(CAL.halfDays, '缺少 halfDays');
+  for (const [market, list] of Object.entries(CAL.halfDays)) {
+    const cov = CAL.coverageByMarket[market];
+    assert.ok(cov, market + ' 缺少 coverageByMarket');
+    for (const h of list) {
+      assert.match(h.date, /^\d{4}-\d{2}-\d{2}$/, market);
+      assert.ok(h.date >= cov.from && h.date <= cov.to, `${market} ${h.date} 超出覆盖范围`);
+      assert.match(h.closeTime, /^\d{2}:\d{2}$/, `${market} ${h.date} closeTime 格式`);
+      assert.ok((CAL.markets[market] || []).indexOf(h.date) < 0, `${market} ${h.date} 不能同时是全天休市`);
+      assert.ok(h.sessionNote && h.source, `${market} ${h.date} 缺少说明或来源`);
+    }
+  }
+});
+
+test('半日市表：2026-12-24 巴黎/伦敦/香港都在表内，Xetra 不在（全天休市）', () => {
+  assert.ok(QS.halfDayFor('HK', '2026-12-24', CAL));
+  assert.ok(QS.halfDayFor('FR', '2026-12-24', CAL));
+  assert.ok(QS.halfDayFor('UK', '2026-12-24', CAL));
+  assert.equal(QS.halfDayFor('DE', '2026-12-24', CAL), null);
+});
+
 test('全局标题：有实时市场时显示“部分市场已收盘 · 最新”', () => {
   const now = BJ('2026-11-03T12:22:00');
   const items = [

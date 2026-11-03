@@ -335,9 +335,24 @@ JPX / NYSE / 上交所 / 港交所 / Xetra / Euronext Paris / LSE，2026 全年 
 KRX 官方页面为 JS 动态渲染、未能取得可核验的完整表，`markets.KR` 保持空表并写入 `gaps`。
 缺表或超出 `coverageByMarket` 时只按交易时段显示 `已收盘`，**绝不猜休市**。
 维护：每年 12 月更新一次（下一年的官方日历通常已发布），更新
-`coverage` / `coverageByMarket` / `markets` / `sources` / `verifiedAt` / `updatedAt`；
+`coverage` / `coverageByMarket` / `halfDays` / `markets` / `sources` / `verifiedAt` / `updatedAt`；
 测试锁定每个市场 `coverageByMarket.to >= 2026-12-31`、每个市场至少一条假日用例，
 并禁止把周末写进假日表。
+
+**半日市（2.4.7）**：`halfDays` 按市场列出 `date` / `closeTime`（交易所本地时间）/
+`sessionNote` / `source`。半日市当天只保留 `closeTime` 之前的交易窗口，收盘后显示
+`已收盘（半日市） · 12-24 12:00`；即使价格源仍返回上一交易日的旧价，也归「已收盘」，
+不会误标「延迟」。已覆盖：
+
+| 市场 | 日期 | 收市 | 依据 |
+|---|---|---|---|
+| HK | 2026-02-16 / 12-24 / 12-31；2027-02-05 / 12-24 / 12-31 | 12:00 | HKEX 通告 CT/075/25、CT/077/26；交易所规则「前夕无午市」 |
+| FR | 2026-12-24 / 12-31 | 14:00 CET | Euronext 2026 Holiday Calendar（Half Trading Day）；时点依据 2025 年末附录 |
+| UK | 2026/2027 的 12-24 / 12-31 | 12:30 London | LSE Business days（收盘流程 12:30） |
+| US | 2026-11-27 / 12-24；2027-11-26 | 13:00 ET | NYSE Holidays & Trading Hours |
+
+Xetra 的 12-24/12-31 是**全天不交易**（已列在 `markets.DE`），没有半日市；12-30 缩短交易
+未查到 2026 官方公告，未纳入，写在 `gaps`。
 
 K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三态`：直连源写「东财/新浪/腾讯」，
 本地预生成写「本地预生成」，并标「本地快照」；切换周期时跟随该周期最后一根的时间。

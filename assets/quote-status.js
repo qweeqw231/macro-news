@@ -167,6 +167,50 @@
     return set;
   }
 
+  // =============== 半日市（2.4.7） ===============
+  // halfDays 条目：{date:'YYYY-MM-DD', closeTime:'12:00', sessionNote, source}
+  // 半日市当天只保留 closeTime 之前的交易窗口；收盘后不再显示「交易中」。
+  function parseHm(s) {
+    var m = String(s || '').match(/^(\d{1,2}):(\d{2})$/);
+    if (!m) return null;
+    var hh = Number(m[1]);
+    var mm = Number(m[2]);
+    if (hh < 0 || hh > 23 || mm < 0 || mm > 59) return null;
+    return hh * 60 + mm;
+  }
+
+  function halfDayFor(market, date, calendar) {
+    var arr = (calendar && calendar.halfDays && calendar.halfDays[market]) || [];
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] && arr[i].date === date) return arr[i];
+    }
+    return null;
+  }
+
+  /** 某日的有效交易窗口（半日市截断到 closeTime） */
+  function sessionWindows(market, date, calendar) {
+    var cfg = MARKET_SESSIONS[market];
+    if (!cfg) return [];
+    var hd = halfDayFor(market, date, calendar);
+    if (!hd) return cfg.windows;
+    var close = parseHm(hd.closeTime);
+    if (close == null) return cfg.windows;
+    return cfg.windows
+      .map(function (w) { return [w[0], Math.min(w[1], close)]; })
+      .filter(function (w) { return w[0] < w[1]; });
+  }
+
+  /** 某日的收盘分钟（半日市用 closeTime） */
+  function closeMinutesFor(market, date, calendar) {
+    var hd = halfDayFor(market, date, calendar);
+    if (hd) {
+      var c = parseHm(hd.closeTime);
+      if (c != null) return c;
+    }
+    var cfg = MARKET_SESSIONS[market];
+    return cfg ? cfg.windows[cfg.windows.length - 1][1] : null;
+  }
+
   function isTradingDay(market, dateStr, calendar) {
     var wd = weekdayOf(dateStr);
     if (!Number.isFinite(wd) || wd === 0 || wd === 6) return false;
@@ -181,14 +225,20 @@
     var cfg = MARKET_SESSIONS[market];
     if (!cfg) return { known: false, phase: 'unknown' };
     var p = tzParts(now, cfg.tz);
-    var base = { known: true, phase: 'post', local: p, tz: cfg.tz, holiday: false };
+    var hd = halfDayFor(market, p.date, calendar);
+    var base = {
+      known: true, phase: 'post', local: p, tz: cfg.tz, holiday: false,
+      halfDay: !!hd,
+      closeTime: hd ? hd.closeTime : null,
+    };
     if (holidaySet(market, calendar)[p.date]) {
       base.phase = 'holiday';
       base.holiday = true;
       return base;
     }
     if (p.wd === 0 || p.wd === 6) { base.phase = 'weekend'; return base; }
-    var wins = cfg.windows;
+    var wins = sessionWindows(market, p.date, calendar);
+    if (!wins.length) { base.phase = 'post'; return base; }
     if (p.minutes < wins[0][0]) { base.phase = 'pre'; return base; }
     for (var i = 0; i < wins.length; i++) {
       var a = wins[i][0];
@@ -208,10 +258,11 @@
     var cfg = MARKET_SESSIONS[market];
     if (!cfg) return null;
     var p = tzParts(now, cfg.tz);
-    var closeMin = cfg.windows[cfg.windows.length - 1][1];
     for (var i = 0; i <= 14; i++) {
       var date = shiftDate(p.date, -i);
       if (!isTradingDay(market, date, calendar)) continue;
+      var closeMin = closeMinutesFor(market, date, calendar);
+      if (closeMin == null) continue;
       var ms = zonedToUtc(date, closeMin, cfg.tz);
       if (ms <= Number(now)) {
         var hh = String(Math.floor(closeMin / 60)).padStart(2, '0');
@@ -235,11 +286,22 @@
     }
     var lc = lastCloseBefore(market, now, calendar);
     var src = Date.parse(sourceTime || '');
+    var isHalfPost = !!(info.halfDay && info.phase === 'post' && lc
+      && info.local && lc.date === info.local.date);
+    // 半日市收盘后：哪怕源仍返回上一交易日的旧价，也归「已收盘」，
+    // 不能让提前收市被误标成「延迟」。
+    if (isHalfPost && Number.isFinite(src)) {
+      return {
+        state: 'closed', phase: 'post', hasTime: true, ageMs: age,
+        lastClose: lc, halfDay: true,
+      };
+    }
     // 源时间达到/超过最近一次收盘 ⇒ 这是“收盘价”，不是“陈旧延迟”
     if (lc && Number.isFinite(src) && src >= lc.ms - 2 * 60 * 1000) {
       return {
         state: info.phase === 'holiday' ? 'holiday' : 'closed',
         phase: info.phase, hasTime: true, ageMs: age, lastClose: lc,
+        halfDay: isHalfPost,
       };
     }
     return { state: 'delayed', phase: info.phase, hasTime: true, ageMs: age, lastClose: lc };
@@ -306,7 +368,8 @@
     if (c.state === 'closed' || c.state === 'holiday') {
       var stamp = clock(opts.sourceTime, now, true);
       var lbl = c.state === 'holiday' ? '休市'
-        : (c.phase === 'lunch' ? '午间休市' : '已收盘');
+        : (c.phase === 'lunch' ? '午间休市'
+          : (c.halfDay ? '已收盘（半日市）' : '已收盘'));
       var rel0 = relativeAge(opts.sourceTime, now, {});
       return {
         state: c.state,
@@ -317,6 +380,7 @@
         label: lbl,
         ageMs: c.ageMs,
         phase: c.phase,
+        halfDay: !!c.halfDay,
       };
     }
     if (c.state === 'local') {
@@ -556,6 +620,9 @@
     classifySession: classifySession,
     sessionAt: sessionAt,
     lastCloseBefore: lastCloseBefore,
+    halfDayFor: halfDayFor,
+    sessionWindows: sessionWindows,
+    closeMinutesFor: closeMinutesFor,
     tzParts: tzParts,
     worstState: worstState,
     relativeAge: relativeAge,
