@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url';
 import { SOURCES, fetchQuotes, getQuoteError } from './sources.mjs';
 import { fetchPortfolioQuotesFast } from './portfolio.mjs';
 import { readBriefingMeta } from './brief-meta.mjs';
+import { dedupeItems } from './news-dedupe.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -188,7 +189,7 @@ async function main() {
       if (!merged.has(it.id)) merged.set(it.id, it);
     }
   }
-  const fresh = [...merged.values()].sort((a, b) => b.ts - a.ts);
+  const fresh = dedupeItems([...merged.values()]).sort((a, b) => b.ts - a.ts);
   console.log(`[collect] 窗口内去重后新增候选：${fresh.length} 条`);
 
   // ---- 行情 ----
@@ -237,15 +238,22 @@ async function main() {
   for (const [day, items] of byDay) {
     const file = path.join(ARCHIVE, `${day}.json`);
     const existing = await readJSON(file, { day, items: [] });
-    const seen = new Set(existing.items.map((i) => i.id));
-    const add = items.filter((i) => !seen.has(i.id));
-    if (add.length) {
-      existing.items = [...add, ...existing.items]
-        .sort((a, b) => b.ts - a.ts)
-        .slice(0, 800);
+    const existingIds = new Set(existing.items.map((i) => i.id));
+    // 2.4.5：不仅去重本轮新条目，也把**已归档**的同文重复合并掉。
+    // 华尔街见闻同一篇快讯会以两个 id（A股/全球）返回，旧版本已把两条都写进归档；
+    // 每次重建本日文件时重新跑一遍 dedupe，历史当日数据即可自愈。
+    const mergedItems = dedupeItems([...items, ...existing.items])
+      .sort((a, b) => b.ts - a.ts)
+      .slice(0, 800);
+    const newOnes = mergedItems.filter((i) => !existingIds.has(i.id)).length;
+    const removed = existing.items.length + newOnes - mergedItems.length;
+    if (newOnes || mergedItems.length !== existing.items.length) {
+      existing.items = mergedItems;
       await writeJSON(file, existing);
-      addedTotal += add.length;
-      console.log(`  → ${day}.json  +${add.length}（累计 ${existing.items.length}）`);
+      addedTotal += newOnes;
+      console.log(
+        `  → ${day}.json  +${newOnes}${removed > 0 ? ` · 合并重复 -${removed}` : ''}（累计 ${existing.items.length}）`
+      );
     }
   }
 
