@@ -222,7 +222,7 @@ body { overflow-wrap: break-word; }
   background: var(--accent-soft); color: var(--accent);
 }
 .item-src.official { background: #f5e6d3; color: var(--warm); }
-.item-title { font-size: 1rem; line-height: 1.55; }
+.item-title { font-size: 1rem; line-height: 1.55; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; word-break: break-word; }
 .item-sum { font-size: 0.875rem; color: var(--ink-mute); margin-top: 0.2rem; line-height: 1.6; }
 .item-sum.clamp { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 

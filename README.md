@@ -85,6 +85,10 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
   写归档时对「本轮新增 + 已有条目」重新跑一遍合并，因此旧数据里的双频道重复会在
   下一次采集时自愈。按天写 `archive/`；`latest.json` 存最近 200 条（首屏），
   `search.json` 存全库检索索引（只有标题+摘要）。
+- **标题（2.4.6）**：无独立标题的快讯取正文**第一整句**，完整入 `title`，不再硬截 40 字；
+  需要短版时只在标点边界（`。！？；` → `，、`）断开并加 `…`，找不到标点就返回全文。
+  前端 `.item-title` 用 `-webkit-line-clamp: 2` 多行省略，不做字符截断。
+  历史数据可用 `node scripts/repair-archive.mjs` 从 `content` 回填（幂等）。
 - **推送**：`scripts/push-data.sh`（fetch + rebase 重试，只有 `data/` 变化才提交）。
 
 **指数名录（20 个）**

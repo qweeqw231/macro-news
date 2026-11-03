@@ -5,6 +5,7 @@
 import { ETFS, etfTxCode } from './etf.mjs';
 import { fetchBatchQuotes } from './quotes.mjs';
 import { emGetJSON, KLINE_HOSTS } from './em.mjs';
+import { titleFromText } from './news-title.mjs';
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
@@ -171,8 +172,8 @@ async function wallstreetcn() {
         time: ts ? isoFromUnix(ts) : new Date().toISOString(),
         source: '华尔街见闻',
         channel: label,
-        // 快讯多数无独立标题：用正文首段当标题，正文完整存入 content
-        title: rawTitle || text.slice(0, 40),
+        // 快讯多数无独立标题：用正文第一整句当标题（完整保留，不硬截 40 字）
+        title: rawTitle || titleFromText(text),
         summary: rawTitle ? summarize(text) : '',
         content: clip(text, 4000),
         url: absUrl(uri, 'https://wallstreetcn.com/livenews/global'),
