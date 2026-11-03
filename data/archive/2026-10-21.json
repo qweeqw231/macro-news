@@ -449,18 +449,6 @@
       "kind": "news"
     },
     {
-      "id": "7k3z6",
-      "ts": 1792613174,
-      "time": "2026-10-22T04:06:14.000+08:00",
-      "source": "华尔街见闻",
-      "channel": "美股",
-      "title": "德国思爱普Sap三季度非IFRS云营收66.7亿欧元，分析师预期65.7亿美元。",
-      "summary": "",
-      "content": "德国思爱普Sap三季度非IFRS云营收66.7亿欧元，分析师预期65.7亿美元。",
-      "url": "https://wallstreetcn.com/livenews/3182950",
-      "kind": "news"
-    },
-    {
       "id": "119ixom",
       "ts": 1792624798,
       "time": "2026-10-22T07:19:58.000+08:00",
@@ -1994,6 +1982,18 @@
       "summary": "IBM第三季度营收超出分析师预期，此前延迟的大部分基础设施订单已重新落地，显示相关业务正在恢复。IBM周三盘后公布，截至9月30日的季度营收增长约5%，至171亿美元。包括大型机服务器在内的基础设施业务营收增长4%，至37亿美元，两项数据均高于彭博汇总的分析师平均预期。IBM首席…",
       "content": "IBM第三季度营收超出分析师预期，此前延迟的大部分基础设施订单已重新落地，显示相关业务正在恢复。IBM周三盘后公布，截至9月30日的季度营收增长约5%，至171亿美元。包括大型机服务器在内的基础设施业务营收增长4%，至37亿美元，两项数据均高于彭博汇总的分析师平均预期。IBM首席财务官Jim Kavanaugh表示，今年早些时候推迟的大型机及相关软件交易中，约三分之二目前已经签约。",
       "url": "https://wallstreetcn.com/livenews/3182951",
+      "kind": "news"
+    },
+    {
+      "id": "7k3z6",
+      "ts": 1792613174,
+      "time": "2026-10-22T04:06:14.000+08:00",
+      "source": "华尔街见闻",
+      "channel": "美股",
+      "title": "德国思爱普Sap三季度非IFRS云营收66.7亿欧元，分析师预期65.7亿美元。",
+      "summary": "",
+      "content": "德国思爱普Sap三季度非IFRS云营收66.7亿欧元，分析师预期65.7亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3182950",
       "kind": "news"
     },
     {
@@ -9672,6 +9672,21 @@
       "content": "2026年4月30日，兰石重装及控股股东兰石集团收到甘肃证监局《行政处罚决定书》（〔2026〕3号至11号），长达五年的资金占用案正式落地。",
       "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-10-21/doc-inivynsm5440934.shtml",
       "kind": "news"
+    },
+    {
+      "id": "1jgn0is",
+      "ts": 1792556100,
+      "time": "2026-10-21T04:15:00.000Z",
+      "source": "欧洲央行",
+      "channel": "政策/利率",
+      "title": "Philip R. Lane: Euro liquidity lines and the international monetary system",
+      "summary": "",
+      "content": "",
+      "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261021~401d6c4b70.en.html",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
     }
   ]
 }
