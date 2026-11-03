@@ -23,6 +23,29 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.2] - 2026-11-03
+
+### 新增
+
+- **`publish --push`（发布即入库）**：发布成功后只提交
+  `data/briefings/<date>.json` / `data/index.json` / `data/history/index.json` /
+  `data/_briefing-status.json` 四个路径；push 前 `fetch + rebase` 重试。
+  **push 失败不回滚已发布文件**，状态写 `pushed:false / pushError / pushAt:''`；
+  页脚显示 `早报 已发布未入库`。命令退出码保持 0（发布已成功）。
+- **本机采集兜底**：`collect-and-push.ps1` 只放行今天/昨天已存在的单个早报文件；
+  静态测试锁定「不得整目录 add briefings」。
+- **索引不变式**：`hasBriefing=true` ⇔ 文件存在且已被 git 跟踪；
+  新增 `tests/briefing-index-invariant.test.mjs` 正反两向检查。
+
+### 修正
+
+- 补交 2026-11-03 早报文件（发布产物未入库导致线上 404、索引被云端回退为 false）。
+
+### 测试
+
+- 新增 `tests/briefing-push.test.mjs`（7 项）+ `briefing-index-invariant`（2 项），
+  `collect-whitelist` 拆出「早报单文件」一项；全套 **111 项**通过，离线、只写临时目录。
+
 ## [2.4.1] - 2026-11-03
 
 ### 新增

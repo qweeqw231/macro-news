@@ -36,12 +36,22 @@ test('采集脚本使用白名单：archive/kline 已跟踪修改 + 固定文件
   assert.ok(text.includes("data/archive/$d.json"), '缺少今天/昨天 archive 的显式 add');
 });
 
-test('采集脚本不提交早报 / 历史切片 / 快照 / 宏观', () => {
+test('采集脚本不提交历史切片 / 快照 / 宏观', () => {
   const commandLines = text
     .split(/\r?\n/)
     .filter((l) => !l.trim().startsWith('#'))
     .join('\n');
-  for (const forbidden of ['data/briefings', 'data/history', 'data/snapshots', 'data/macro']) {
+  for (const forbidden of ['data/history', 'data/snapshots', 'data/macro']) {
     assert.ok(!commandLines.includes(forbidden), `命令里不应出现 ${forbidden}`);
   }
+});
+
+test('早报只放行今天/昨天的单文件，不整目录 add', () => {
+  const commandLines = text
+    .split(/\r?\n/)
+    .filter((l) => !l.trim().startsWith('#'))
+    .join('\n');
+  assert.ok(commandLines.includes('data/briefings/$d.json'), '缺少早报单文件兜底');
+  assert.ok(!/git add\s+--?\s*data\/briefings(?![\/\w$])/m.test(commandLines),
+    '不允许整目录 add data/briefings');
 });

@@ -13,6 +13,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { beijingNow, updateStatus } from './core.mjs';
 import { publishRun } from './pipeline.mjs';
+import { commitAndPush } from './git-push.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -33,6 +34,8 @@ const DATA_DIR = path.resolve(ROOT, arg('data-dir', 'data'));
 const DRAFT_ON_FAIL = flag('draft-on-fail');
 const NO_LOCK = flag('no-lock');
 const QUIET = flag('quiet');
+// 2.4.2：发布即入库（只提交早报相关 4 个路径；失败不回滚已发布文件）
+const PUSH = flag('push');
 
 function main() {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(DATE)) {
@@ -54,7 +57,23 @@ function main() {
       const tag = r.degraded ? '降级事实清单' : r.skipped ? '跳过（已有 AI 早报）' : '完成';
       console.error(`[briefing] publish ${DATE}：${tag} · ${r.reason || r.code}`);
     }
-    console.log(JSON.stringify(r, null, 2));
+
+    // 发布成功后入库；失败只记录，不撤稿、不重写已发布文件
+    let push = null;
+    if (PUSH && r.ok) {
+      push = commitAndPush({ root: ROOT, date: DATE, log: QUIET ? undefined : (m) => console.error(m) });
+      try {
+        updateStatus(STATUS, DATE, {
+          pushed: !!push.pushed,
+          pushError: push.error || '',
+          pushAt: push.pushed ? beijingNow().iso : '',
+        });
+      } catch { /* 状态写失败不影响已发布文件 */ }
+      if (!push.pushed && !QUIET) {
+        console.error(`[briefing] 已发布但未入库：${push.error}`);
+      }
+    }
+    console.log(JSON.stringify({ ...r, push }, null, 2));
     if (r.code === 'locked') return 2;
     if (!r.ok || r.degraded) return 1;
     return 0;

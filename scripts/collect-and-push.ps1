@@ -136,7 +136,8 @@ if ($MinuteKline) {
 #     · data/kline/**（已跟踪文件的更新；新标的文件由云端 kline-full.yml 提交）
 #     · latest / index / search / quotes / _last-run
 #     · _briefing-status.json（早报兜底状态，单文件、低频；页脚要读它才看得见）
-#   briefings / history / snapshots / macro 不归本任务，绝不顺手提交。
+#   briefings 只放行「今天/昨天」的单个已存在文件（2.4.2：publish 漏推时兜底）；
+#   **绝不整目录 add data/briefings**；history / snapshots / macro 不归本任务。
 $today = Get-Date -Format 'yyyy-MM-dd'
 $yesterday = (Get-Date).AddDays(-1).ToString('yyyy-MM-dd')
 $fixed = @(
@@ -148,6 +149,9 @@ $null = git add -u -- data/archive data/kline
 foreach ($d in @($today, $yesterday)) {
     $p = "data/archive/$d.json"
     if (Test-Path $p) { $null = git add -- $p }
+    # 2.4.2 兜底：只提交当天/昨天已存在的早报文件（不整目录 add）
+    $bp = "data/briefings/$d.json"
+    if (Test-Path $bp) { $null = git add -- $bp }
 }
 foreach ($p in $fixed) {
     if (Test-Path $p) { $null = git add -- $p }

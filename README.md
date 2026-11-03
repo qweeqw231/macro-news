@@ -166,7 +166,7 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 | 触发 | minimax 定时任务 `macro-news 宏观早报（每日 09:00）`，cron `0 9 * * *`（Asia/Shanghai），**固定对话**（同一个任务专用对话，历史累积可回溯）。2.3.0 的三段式调度由用户在 mcode 侧执行，仓库不自动改任务 |
 | prepare | `node scripts/briefing/prepare.mjs --date <今天>`：同步/导入 archive → `brief-candidates` 去重打分 → 固化 `input.json`（不发布、不进仓库） |
 | 写作 | **LLM 判断**：读 `.local/runs/<date>/prompt.md`，按 schema 写 `outline.json` → `draft.json` → `final.json`；≤10 条，同一事件多源合并 |
-| publish | `node scripts/briefing/publish.mjs --date <今天>`：校验 schema / 条数 / 来源可追溯 / `inputSha`，通过才原子写站点与本地，并更新索引、状态 |
+| publish | `node scripts/briefing/publish.mjs --date <今天> --push`：校验 schema / 条数 / 来源可追溯 / `inputSha`，通过才原子写站点与本地，并更新索引、状态；`--push` 只提交早报相关 4 个路径（见 §2.6.1） |
 | 产物 | `.local/briefings/YYYY-MM-DD.json` + `.md`（本地）+ `data/briefings/YYYY-MM-DD.json`（站点） |
 
 **新闻库** `.local/news.db`（SQLite + FTS5，中文 bigram 分词）：52 万条量级；
@@ -210,6 +210,19 @@ publish --date（脚本，确定性）
   文件存在、JSON 可解析、`items > 0`、`overview` 非空，新产物另有 `endedAt`。
 - **状态不变式（2.2.3）**：存在早报文件的日子必须是 `done` 且 `source` 与文件一致；
   `missed` 只用于「无文件且未成功生成」。每次 `ensure` 会先校正再校验，违规时退出码 1。
+
+**发布即入库（2.4.2）**
+
+`publish --date <今天> --push` 在发布成功后自动：
+
+1. 只 `git add --` 4 个路径：`data/briefings/<date>.json`、`data/index.json`、
+   `data/history/index.json`、`data/_briefing-status.json`（**不整目录 add**）；
+2. `git fetch origin main` → `git rebase origin/main` → `git push origin HEAD:main`；
+3. push/rebase 失败**不回滚已发布文件**，状态写 `pushed:false / pushError`，
+   页脚显示 `早报 已发布未入库`（悬停看原因）。
+
+兜底：本机 `collect-and-push.ps1` 每 120 分钟只放行**今天/昨天已存在**的单个早报文件。
+不变式：`hasBriefing=true` ⇔ 文件存在且已被 git 跟踪（`tests/briefing-index-invariant.test.mjs` 锁定）。
 
 ### 2.7 链路 ⑦：近一年历史切片（离线导出）
 

@@ -1132,7 +1132,11 @@
       let bLvl = '';
       if (rec && rec.status === 'done') {
         const when = rec.endedAt || rec.startedAt || '';
-        if (rec.source === 'rule') {
+        if (rec.pushed === false) {
+          // 2.4.2：published 成功但 git 推送失败 —— 站点文件已写，仓库/线上还没有
+          bTxt = '早报 已发布未入库';
+          bLvl = 'warn';
+        } else if (rec.source === 'rule') {
           // 兜底产物要能一眼看出来（不等于链路故障，所以用暖棕而不是红）
           bTxt = '早报 自动 ' + (when ? fmtTime(when) : '完成');
           bLvl = 'warn';
@@ -1162,7 +1166,7 @@
       if (bTxt) {
         box.appendChild(document.createTextNode(' · '));
         const sp = el('span', `ft-state ${bLvl}`, bTxt);
-        if (rec && rec.reason) sp.title = rec.reason;
+        if (rec && (rec.pushError || rec.reason)) sp.title = rec.pushError || rec.reason;
         box.appendChild(sp);
       }
 
