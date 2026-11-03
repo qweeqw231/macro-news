@@ -1,6 +1,6 @@
 {
   "v": 1,
-  "updatedAt": "2026-11-03T13:12:35+08:00",
+  "updatedAt": "2026-11-03T13:12:47+08:00",
   "days": {
     "2026-10-27": {
       "date": "2026-10-27",
@@ -107,9 +107,9 @@
       "durationMs": 11,
       "generator": "existing",
       "attempt": 1,
-      "pushed": null,
+      "pushed": true,
       "pushError": "",
-      "pushAt": ""
+      "pushAt": "2026-11-03T13:12:47+08:00"
     }
   }
 }
