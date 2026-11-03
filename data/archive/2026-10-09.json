@@ -4029,7 +4029,7 @@
       "source": "美联储",
       "channel": "政策/利率",
       "title": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
-      "summary": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed ins…",
+      "summary": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
       "content": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
       "url": "https://www.federalreserve.gov/newsevents/pressreleases/other20261009a.htm",
       "kind": "official",
@@ -6832,21 +6832,6 @@
       "content": "Anthropic、OpenAI等AI公司的高管正在私下推演，一旦发生灾难性AI事件，公众和政治层面可能出现反抗的情景。（Axios）",
       "url": "https://wallstreetcn.com/livenews/3176142",
       "kind": "news"
-    },
-    {
-      "id": "16s4ybt",
-      "ts": 1791538200,
-      "time": "2026-10-09T09:30:00.000Z",
-      "source": "国家统计局",
-      "channel": "官方数据",
-      "title": "2026年9月下旬流通领域重要生产资料市场价格变动情况",
-      "summary": "中国统计信息服务中心 卓创资讯 据对全国流通领域9大类50种重要生产资料市场价格的监测显示，2026年9月下旬与9月中旬相比，22种产品价格上涨，23种下降，5种持平。 2026年9月下旬流通领域重要生产资料市场价格变动情况 产品名称单位本期价格（元）比上期价格涨跌（元）涨跌幅（…",
-      "content": "中国统计信息服务中心 卓创资讯 据对全国流通领域9大类50种重要生产资料市场价格的监测显示，2026年9月下旬与9月中旬相比，22种产品价格上涨，23种下降，5种持平。 2026年9月下旬流通领域重要生产资料市场价格变动情况 产品名称单位本期价格（元）比上期价格涨跌（元）涨跌幅（%）一、黑色金属 螺纹钢（...",
-      "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261008_1965465.html",
-      "kind": "official",
-      "tags": [
-        "中国宏观"
-      ]
     },
     {
       "id": "tbgum",
@@ -9679,6 +9664,36 @@
       "content": "【商务部公布2027年原油非国营贸易进口允许量总量、申请条件和申请程序】根据《中华人民共和国货物进出口管理条例》和我国加入世贸组织的有关承诺，商务部制定了《2027年原油非国营贸易进口允许量总量、申请条件和申请程序》，现予公布。",
       "url": "http://finance.eastmoney.com/news/1356,202610093890745123.html",
       "kind": "news"
+    },
+    {
+      "id": "16s4ybt",
+      "ts": 1791509400,
+      "time": "2026-10-09T01:30:00.000Z",
+      "source": "国家统计局",
+      "channel": "官方数据",
+      "title": "2026年9月下旬流通领域重要生产资料市场价格变动情况",
+      "summary": "中国统计信息服务中心 卓创资讯 据对全国流通领域9大类50种重要生产资料市场价格的监测显示，2026年9月下旬与9月中旬相比，22种产品价格上涨，23种下降，5种持平。 2026年9月下旬流通领域重要生产资料市场价格变动情况 产品名称单位本期价格（元）比上期价格涨跌（元）涨跌幅（%）一、黑色金属 螺纹钢（...",
+      "content": "中国统计信息服务中心 卓创资讯 据对全国流通领域9大类50种重要生产资料市场价格的监测显示，2026年9月下旬与9月中旬相比，22种产品价格上涨，23种下降，5种持平。 2026年9月下旬流通领域重要生产资料市场价格变动情况 产品名称单位本期价格（元）比上期价格涨跌（元）涨跌幅（%）一、黑色金属 螺纹钢（...",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261008_1965465.html",
+      "kind": "official",
+      "tags": [
+        "中国宏观"
+      ]
+    },
+    {
+      "id": "168hr41",
+      "ts": 1791491400,
+      "time": "2026-10-08T20:30:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+      "summary": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money launde…",
+      "content": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261008a.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
     }
   ]
 }
