@@ -1,6 +1,6 @@
 {
   "v": 1,
-  "updatedAt": "2026-11-03T09:03:49+08:00",
+  "updatedAt": "2026-11-03T13:09:05+08:00",
   "days": {
     "2026-10-27": {
       "date": "2026-10-27",
@@ -97,15 +97,15 @@
       "date": "2026-11-03",
       "status": "done",
       "stage": "publish",
-      "startedAt": "2026-11-03T09:03:49+08:00",
-      "endedAt": "2026-11-03T09:03:49+08:00",
+      "startedAt": "2026-11-03T13:09:05+08:00",
+      "endedAt": "2026-11-03T13:09:05+08:00",
       "exitCode": 0,
       "candidates": 120,
       "items": 10,
       "source": "ai",
-      "reason": "",
-      "durationMs": 13,
-      "generator": "llm-v1",
+      "reason": "已存在 AI 早报，未覆盖",
+      "durationMs": 19,
+      "generator": "existing",
       "attempt": 1
     }
   }

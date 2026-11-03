@@ -22,8 +22,11 @@ export function pushPathsFor(date) {
   ];
 }
 
+// ⚠ execFileSync 在 encoding 下**直接返回 stdout 字符串**（不是 {stdout}）
 const defaultExec = (cmd, args, opts) =>
   execFileSync(cmd, args, { ...opts, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+
+const outText = (r) => (typeof r === 'string' ? r : String((r && r.stdout) || ''));
 
 function errText(e) {
   const s = (e && (e.stderr || e.message)) || String(e);
@@ -44,12 +47,12 @@ export function commitAndPush(o) {
   if (!paths.length) return { pushed: false, committed: false, error: '没有可提交的早报文件' };
 
   exec('git', ['add', '--', ...paths], { cwd: root });
-  const staged = String(exec('git', ['diff', '--cached', '--name-only'], { cwd: root }).stdout || '').trim();
+  const staged = outText(exec('git', ['diff', '--cached', '--name-only'], { cwd: root })).trim();
   let committed = false;
   let commit = null;
   if (staged) {
-    const out = String(
-      exec('git', ['commit', '-m', `data: 早报入库 ${date}`], { cwd: root }).stdout || ''
+    const out = outText(
+      exec('git', ['commit', '-m', `data: 早报入库 ${date}`], { cwd: root })
     ).trim();
     committed = true;
     commit = out.split('\n')[0] || null;
@@ -62,7 +65,8 @@ export function commitAndPush(o) {
     return { pushed: false, committed, commit, error: `fetch 失败：${errText(e)}` };
   }
   try {
-    exec('git', ['rebase', 'origin/main'], { cwd: root });
+    // 采集器可能同时在改 data/：autostash 避免“index contains uncommitted changes”
+    exec('git', ['rebase', '--autostash', 'origin/main'], { cwd: root });
   } catch (e) {
     // 明确回到干净状态；**不 reset 已发布文件**
     try { exec('git', ['rebase', '--abort'], { cwd: root }); } catch { /* ignore */ }

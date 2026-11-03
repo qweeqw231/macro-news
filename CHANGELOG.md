@@ -40,11 +40,14 @@
 ### 修正
 
 - 补交 2026-11-03 早报文件（发布产物未入库导致线上 404、索引被云端回退为 false）。
+- `git-push` 识别 `execFileSync` 的**字符串返回值**（首版误取 `.stdout` 导致暂存后不提交、
+  rebase 报 `index contains uncommitted changes`）；rebase 改用 `--autostash`，
+  避免采集器同时改 `data/` 时阻塞。
 
 ### 测试
 
-- 新增 `tests/briefing-push.test.mjs`（7 项）+ `briefing-index-invariant`（2 项），
-  `collect-whitelist` 拆出「早报单文件」一项；全套 **111 项**通过，离线、只写临时目录。
+- 新增 `tests/briefing-push.test.mjs`（8 项）+ `briefing-index-invariant`（2 项），
+  `collect-whitelist` 拆出「早报单文件」一项；全套 **112 项**通过，离线、只写临时目录。
 
 ## [2.4.1] - 2026-11-03
 
