@@ -224,6 +224,11 @@ publish --date（脚本，确定性）
 兜底：本机 `collect-and-push.ps1` 每 120 分钟只放行**今天/昨天已存在**的单个早报文件。
 不变式：`hasBriefing=true` ⇔ 文件存在且已被 git 跟踪（`tests/briefing-index-invariant.test.mjs` 锁定）。
 
+归档页早报（2.4.3）：折叠只显示索引里的 `briefLine`；展开时**才**拉取当天
+`data/briefings/<date>.json`（历史 `default`、当日 `no-store`），渲染
+`overview + items + watch`，并把 summary 换成 `当日早报 · N 条 · HH:MM 生成` 以避免同句重复。
+首屏不预取（实测 0 个 `briefings` 请求）；单份 10 KB，Pages 带宽下线上展开约 40 秒属正常。
+
 ### 2.7 链路 ⑦：近一年历史切片（离线导出）
 
 **不是定时任务**，需要时手动跑；读本地新闻库，只写静态文件。

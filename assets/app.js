@@ -862,14 +862,23 @@
     box.appendChild(a);
 
     const det = el('details', 'day-brief');
-    const sum = el('summary', 'brief-line', d.briefLine || '当日早报');
+    const briefLine = d.briefLine || '当日早报';
+    det.dataset.brief = briefLine;
+    const sum = el('summary', 'brief-line', briefLine);
     if (d.briefLine) sum.title = d.briefLine;
     det.appendChild(sum);
     const body = el('div', 'brief-body');
     det.appendChild(body);
     det.addEventListener('toggle', () => {
       box.classList.toggle('expanded', det.open);
-      if (det.open) loadBriefing(d.day, body);
+      if (det.open) {
+        loadBriefing(d.day, body);
+      } else {
+        // 收起时恢复摘要；展开后摘要会被替换成中性信息行，避免与 overview 重复
+        sum.textContent = det.dataset.brief || '当日早报';
+        sum.title = sum.textContent;
+        det.classList.remove('brief-loaded');
+      }
       saveUI();
     });
     box.appendChild(det);
@@ -891,27 +900,98 @@
     return briefInflight.get(day);
   }
 
+  // 早报正文完整渲染（2.4.3）：overview → items → watch；只在展开时拉取。
+  const briefHm = (iso) => {
+    const d = new Date(iso || '');
+    if (isNaN(d.getTime())) return '';
+    return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  };
+  function briefMetaText(b) {
+    const n = Array.isArray(b && b.items) ? b.items.length : 0;
+    const hm = briefHm(b && (b.endedAt || b.generatedAt));
+    return `当日早报${n ? ' · ' + n + ' 条' : ''}${hm ? ' · ' + hm + ' 生成' : ''}`;
+  }
+  function renderBriefItems(body, items) {
+    const list = el('ol', 'brief-items');
+    items.forEach((it, i) => {
+      const li = el('li', 'brief-item');
+      const hd = el('div', 'brief-item-hd');
+      hd.appendChild(el('span', 'brief-rank', String(it.rank || i + 1)));
+      const title = it.title || '';
+      if (it.url) {
+        const a = el('a', 'brief-item-title', title);
+        a.href = it.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        hd.appendChild(a);
+      } else {
+        hd.appendChild(el('div', 'brief-item-title', title));
+      }
+      li.appendChild(hd);
+      if (it.summary) li.appendChild(el('p', 'brief-item-summary', it.summary));
+      if (it.why) li.appendChild(el('p', 'brief-why', `为什么重要：${it.why}`));
+      const meta = [it.source, it.publishedAt].filter(Boolean).join(' · ');
+      if (meta) li.appendChild(el('div', 'brief-item-meta', meta));
+      if (Array.isArray(it.refs) && it.refs.length) {
+        const refs = el('div', 'brief-refs');
+        refs.appendChild(el('span', null, '参考：'));
+        it.refs.forEach((u, k) => {
+          const a = el('a', null, `[${k + 1}]`);
+          a.href = u;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          refs.appendChild(a);
+        });
+        li.appendChild(refs);
+      }
+      list.appendChild(li);
+    });
+    body.appendChild(list);
+  }
   async function loadBriefing(day, body) {
     if (!body || body.dataset.loaded || body.dataset.loading) return;
     body.dataset.loading = '1';
     body.innerHTML = '<div class="skeleton">早报载入中…</div>';
+    const det = body.closest('details');
+    const sum = det ? det.querySelector('summary') : null;
     try {
       const b = await getBriefing(day);
+      const items = Array.isArray(b.items) ? b.items.filter(Boolean) : [];
+      const watch = Array.isArray(b.watch) ? b.watch.filter(Boolean) : [];
       body.innerHTML = '';
       if (b.overview) body.appendChild(el('p', 'brief-overview', b.overview));
-      const watch = Array.isArray(b.watch) ? b.watch.filter(Boolean) : [];
+      if (items.length) renderBriefItems(body, items);
       if (watch.length) {
+        body.appendChild(el('div', 'brief-watch-hd', '观察项'));
         const ul = el('ul', 'brief-watch');
         watch.forEach((t) => ul.appendChild(el('li', null, t)));
         body.appendChild(ul);
       }
-      if (!b.overview && !watch.length) {
-        body.appendChild(el('p', 'brief-overview', '当日早报暂无正文'));
+      if (!b.overview && !items.length) {
+        // 缺字段降级：不伪造正文，保留折叠摘要并说明
+        const msg = el('p', 'brief-overview', '该日早报正文缺失（只有摘要）');
+        body.appendChild(msg);
+        if (det && det.dataset.brief) body.appendChild(el('p', 'brief-overview', det.dataset.brief));
+      }
+      // 展开后把摘要行换成中性信息，消除与 overview 同句重复
+      if (sum && (b.overview || items.length || watch.length)) {
+        const meta = briefMetaText(b);
+        sum.textContent = meta;
+        sum.title = meta;
+        if (det) det.classList.add('brief-loaded');
       }
       body.dataset.loaded = '1';
     } catch (e) {
-      body.innerHTML = `<div class="skeleton">早报载入失败：${esc(e.message)}</div>`;
-      body.dataset.loaded = '1';
+      delete body.dataset.loaded;
+      body.innerHTML = '';
+      body.appendChild(el('div', 'skeleton', `早报载入失败：${e && e.message ? e.message : e}`));
+      const retry = el('button', 'mchip', '重试');
+      retry.type = 'button';
+      retry.onclick = () => {
+        delete body.dataset.loaded;
+        loadBriefing(day, body);
+      };
+      body.appendChild(retry);
     } finally {
       delete body.dataset.loading;
     }
