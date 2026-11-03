@@ -61,6 +61,10 @@ function main() {
     // 发布成功后入库；失败只记录，不撤稿、不重写已发布文件
     let push = null;
     if (PUSH && r.ok) {
+      // 先清掉上一轮的失败痕迹，避免把 pushed:false 提交进仓库
+      try {
+        updateStatus(STATUS, DATE, { pushed: null, pushError: '', pushAt: '' });
+      } catch { /* ignore */ }
       push = commitAndPush({ root: ROOT, date: DATE, log: QUIET ? undefined : (m) => console.error(m) });
       try {
         updateStatus(STATUS, DATE, {
