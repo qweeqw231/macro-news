@@ -105,11 +105,13 @@
     // ⚠ 口径差异必须如实标注（klineNote 会显示在 K 线注记上）：
     //   · 纳指100 → 100.NDX100：与腾讯 usNDX 末根收盘**完全一致**（29402.51）⇒ 同品种
     //   · 伦敦金 → 新浪外盘 XAU：其末根开/高/低与新浪实时 hf_XAU **逐个吻合**
-    //     ⇒ 它就是**现货伦敦金**，与报价源同品种（东财没有现货 secid）
+    //     ⇒ 它就是**现货伦敦金**，与报价源同品种；东财 122.XAU 也是现货（同日收盘差 <0.1%），
+    //       仅用于分钟周期（klineSecid），日/周/月仍走新浪外盘
     //   · 上海金 → 118.AU9999：name=黄金9999，**就是上金所 Au99.99** ⇒ 同品种
     //   · 中间价 → 133.USDCNH：中国货币网只有当天接口、没有历史 ⇒ 用离岸价作代理
     { key: 'ndx',        secid: '100.NDX100', klineSecid: '100.NDX100', market: 'US', name: '纳指100', klineNote: '' },
-    { key: 'xau',        sinaGlobal: 'XAU',        market: 'CMDTY', name: '伦敦金',        klineNote: '现货黄金（新浪外盘 XAU）：报价源在 04:55 冻结，官方 05:00 收盘，差约 1 美元（0.04%）' },
+    // 伦敦金：日/周/月 = 新浪外盘 XAU；分钟 = 东财 122.XAU（现货，同日收盘差 <0.1%）
+    { key: 'xau',        klineSecid: '122.XAU', emMinuteOnly: true, sinaGlobal: 'XAU', market: 'CMDTY', name: '伦敦金', klineNote: '日/周/月：新浪外盘 XAU；分钟：东财 122.XAU（黄金/美元·现货，同日收盘差 <0.1%）。报价源 04:55 冻结，官方 05:00 收盘' },
     { key: 'sge_au9999', klineSecid: '118.AU9999', market: 'SGE',   name: '上海金Au99.99', klineNote: '' },
     // 伦敦银：新浪外盘 XAG（现货白银/美元，5187 根 / 2006 起）；东财 122.XAG 同一条线
     //   （末根差 0.03~0.12、年均差 <0.7%）且历史更长（8950 根 / 1992 起）⇒ 可作第二源
@@ -131,8 +133,8 @@
 
   // 某些标的**全网都没有同口径的分钟源** ⇒ 与其甩一句「加载失败」，
   // 不如说清楚**为什么没有**（用户看到的是事实，不是一个像 bug 的报错）。
+  // 2026-11-03：伦敦金已接入东财 122.XAU 分钟（现货、同日收盘差 <0.1%），不再属于「无分钟」。
   const NO_MINUTE_REASON = {
-    xau: '新浪外盘只提供日线（MinKLine 接口一律 __ERROR），东财也没有现货黄金 secid ⇒ 全网无同口径分钟源',
     brent: '布伦特只有新浪外盘的日线；东财 112.B00Y 是「当月连续结算价」，与报价口径在换月时基差可达 6% ⇒ 刻意不混用',
   };
   const getMinuteUnavailableReason = (key) => NO_MINUTE_REASON[key] || '';
@@ -644,7 +646,13 @@
       );
     };
 
-    add('东财直连', () => fetchKlineEM(key, period, limit));
+    // xau 的东财 secid 只用于分钟：日/周/月/年必须继续由新浪外盘提供，
+    // 否则东财更快会抢先用「同一条线但不同源」的日线顶掉新浪（口径虽近，仍应保持原源）。
+    const meta = byKey.get(key);
+    const isDaily = period === '1d' || period === '1w' || period === '1M' || period === '1y';
+    if (!(meta && meta.emMinuteOnly && isDaily)) {
+      add('东财直连', () => fetchKlineEM(key, period, limit));
+    }
     if (SINA_CODE[key] && SINA_SCALE[period]) {
       add('新浪直连（全量历史）', () => fetchKlineSina(key, period));
     }

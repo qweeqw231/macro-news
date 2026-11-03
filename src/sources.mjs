@@ -385,10 +385,14 @@ export const PORTFOLIO_KLINE = [
     klineNote: '',
   },
   {
-    // 伦敦金：唯一历史源 = 新浪外盘（现货）。**刻意不挂东财 101.GC00Y** ——
-    // 那是 COMEX 黄金期货（主力连续），与现货有基差，挂上会让同一张图忽而是现货忽而是期货。
-    key: 'xau', name: '伦敦金', market: 'CMDTY', secid: null, sina: null, tx: null,
-    sinaGlobal: 'XAU', klineNote: '',
+    // 伦敦金：日/周/月 = 新浪外盘 XAU（现货，2006 起 5183 根）；
+    // 分钟 = 东财 122.XAU「黄金/美元·现货」。
+    // 口径核对（2026-11-03，15 个交易日）：两者同日收盘最大差 **0.054%**，是同一标的同一条线。
+    // **仍不挂东财 101.GC00Y** —— 那是 COMEX 黄金期货（主力连续），与现货有基差，
+    //   挂上会让同一张图忽而是现货忽而是期货。
+    key: 'xau', name: '伦敦金', market: 'CMDTY', secid: '122.XAU', sina: null, tx: null,
+    sinaGlobal: 'XAU', emMinuteOnly: true,
+    klineNote: '日/周/月：新浪外盘 XAU；分钟：东财 122.XAU（黄金/美元·现货，同日收盘差 <0.1%）',
   },
   {
     key: 'sge_au9999', name: '上海金Au99.99', market: 'SGE', secid: '118.AU9999', sina: null,
@@ -696,7 +700,14 @@ function klineProviders(idx, period, limit) {
     },
   });
 
-  if (idx.sinaGlobal) { pushSinaGlobal(); pushEm(); }
+  if (idx.sinaGlobal) {
+    pushSinaGlobal();
+    // xau 的东财 secid 只用于分钟：日/周/月继续由新浪外盘提供。
+    // ⚠ 不能让东财参与日线 —— update-kline-full 用 longest=true 取「根数最多」，
+    //   东财 8961 根会顶掉新浪 5183 根，把日线源悄悄换掉（虽然同一条线，但口径变了）。
+    const dailyPeriod = period === '1d' || period === '1w' || period === '1M';
+    if (!(idx.emMinuteOnly && dailyPeriod)) pushEm();
+  }
   else if (idx.sge) { pushEm(); pushSge(); }
   else { pushEm(); pushSina(); pushTx(); }
   return P;

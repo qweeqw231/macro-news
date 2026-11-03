@@ -117,7 +117,7 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
   - `scripts/update-kline-full.mjs`：10 个 CN 指数的全量日 K（`_full.json`）
   - `node src/collect.mjs --kline-only`：27 个标的 × 日/周/月（`<key>.json` / `_1w` / `_1M`）
 - **分钟 + 最后一根**（`kline-minute.yml`，每小时 :17）：
-  - `scripts/update-kline-minute.mjs`：7 个标的 × 5 个分钟周期（`min/`）
+  - `scripts/update-kline-minute.mjs`：8 个标的 × 5 个分钟周期（`min/`）
   - `scripts/update-kline-last.mjs`：只 upsert **当前处于交易时段**品种的最后一根日 K
     （上海金夜盘这类「未来蜡烛」要随采集动态更新，每天一次不够）
 
@@ -336,7 +336,7 @@ K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三�
 | `data/index.json` | 按天归档索引（含 `hasBriefing` / `briefLine` / `source`） | 链路 ① |
 | `data/kline/<key>.json` / `_1w` / `_1M` | 27 个标的 × 日/周/月 | 链路 ② |
 | `data/kline/<key>_full.json` | 10 个 CN 指数的全量日 K（紧凑数组 `[t,o,c,h,l,v]`） | 链路 ② |
-| `data/kline/min/<key>_<period>.json` | 7 个标的 × 5 个分钟周期 | 链路 ② |
+| `data/kline/min/<key>_<period>.json` | 8 个标的 × 5 个分钟周期（含伦敦金） | 链路 ② |
 | `data/macro/daily.json` | 5 个宏观指标日频序列 | 链路 ④ |
 | `data/_last-run.json` | 各链路运行状态（字段并存，读改写） | 所有链路 |
 | `data/_briefing-status.json` | 早报生成状态（最近 14 天，页脚读取） | `scripts/briefing/*` |
@@ -612,8 +612,11 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 - `data/archive/` 持续增长，一年后值得重新评估归档策略。
 - 上海金 17:00 前、中债曲线傍晚才发布，当天看准确收盘价用 `etf_518880`（黄金 ETF）。
 - **现货金/银的报价源（腾讯/新浪 `hf_*`）在 04:55 冻结**，官方 05:00 收盘。2026-10-30 实测：
-  伦敦金 3876.69（04:55）vs Wind 3875.19 / 同花顺 3875.06 / 支付宝 3875.02，差约 1.67（0.04%）；
-  东财现货 `122.XAU` 更新到 04:59（3875.55），但没有对应的 K 线接口。
+  伦敦金 3876.69（04:55）vs Wind 3875.19 / 同花顺 3875.06 / 支付宝 3875.02，差约 1.67（0.04%）。
+- **伦敦金分钟 K**：东财 `122.XAU`「黄金/美元·现货」有日线与 1m/5m/15m/30m/60m（2026-11-03 实测）；
+  与新浪外盘 `XAU` 同日收盘 **15 个交易日最大差 0.054%**，是同一标的同一条线。
+  口径分工：**日/周/月走新浪外盘**（2006 起 5183 根），**分钟走东财 122.XAU**；
+  国际商品没有多年分钟历史（1m ≈ 1~2 个交易日、5m/30m 数百根），缺就缺，不用日线伪造。
 - **布伦特是连续合约**（新浪外盘 OIL）：与新闻里的「12 月合约」存在基差，
   2026-10-30 连续 113.4 vs 12 月合约 117.64（约 4 美元），但涨跌幅一致（+2.4%）。
 
