@@ -17,8 +17,12 @@
   var QUOTE_TOTAL_BUDGET_MS = 2000;
   var QUOTE_EM_BUDGET_MS = 1200;
   var QUOTE_TX_BUDGET_MS = 800;
-  var STATE_LABEL = { realtime: '实时', delayed: '延迟', local: '本地快照' };
-  var STATE_RANK = { realtime: 0, delayed: 1, local: 2 };
+  var STATE_LABEL = {
+    realtime: '实时', delayed: '延迟', local: '本地快照',
+    closed: '已收盘', holiday: '休市',
+  };
+  // 全局“最差”排序：本地快照 > 延迟 > 休市 > 已收盘 > 实时
+  var STATE_RANK = { realtime: 0, closed: 1, holiday: 2, delayed: 3, local: 4 };
   var BJ_MS = 8 * 3600 * 1000;
 
   function pad(n) { return String(n).padStart(2, '0'); }
@@ -88,6 +92,157 @@
     return out;
   }
 
+  // =============== 交易时段 / 假日（2.4.1 第四态） ===============
+  //
+  // ⚠ 一律用 IANA 时区换算（Intl），不写死 +08:00：美/欧有夏令时，
+  //   写死偏移会在 DST 前后错一小时。
+  var MARKET_SESSIONS = {
+    CN:    { tz: 'Asia/Shanghai',    windows: [[570, 690], [780, 900]] },  // 09:30-11:30 / 13:00-15:00
+    ETF:   { tz: 'Asia/Shanghai',    windows: [[570, 690], [780, 900]] },
+    HK:    { tz: 'Asia/Hong_Kong',   windows: [[570, 720], [780, 960]] },  // 09:30-12:00 / 13:00-16:00
+    JP:    { tz: 'Asia/Tokyo',       windows: [[540, 690], [750, 930]] },  // 09:00-11:30 / 12:30-15:30
+    KR:    { tz: 'Asia/Seoul',       windows: [[540, 930]] },              // 09:00-15:30
+    US:    { tz: 'America/New_York', windows: [[570, 960]] },              // 09:30-16:00
+    EU:    { tz: 'Europe/Berlin',    windows: [[540, 1050]] },             // 09:00-17:30（德/法）
+    UK:    { tz: 'Europe/London',    windows: [[480, 990]] },              // 08:00-16:30
+  };
+  var WD = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+  /** IANA 时区下的本地年月日/时分/星期 */
+  function tzParts(ms, tz) {
+    var fmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz, hour12: false, hourCycle: 'h23',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', weekday: 'short',
+    });
+    var o = {};
+    fmt.formatToParts(new Date(Number(ms))).forEach(function (p) { o[p.type] = p.value; });
+    var hh = Number(o.hour) % 24;
+    return {
+      y: Number(o.year), m: Number(o.month), d: Number(o.day),
+      hh: hh, mm: Number(o.minute), wd: WD[o.weekday],
+      date: o.year + '-' + o.month + '-' + o.day,
+      minutes: hh * 60 + Number(o.minute),
+    };
+  }
+
+  /** 某毫秒在指定时区的 UTC 偏移（毫秒） */
+  function tzOffsetMs(ms, tz) {
+    var p = tzParts(ms, tz);
+    return Date.UTC(p.y, p.m - 1, p.d, p.hh, p.mm) - Number(ms);
+  }
+
+  /** 时区本地「日期 + 当日分钟」→ UTC 毫秒（两遍修正 DST） */
+  function zonedToUtc(dateStr, minutes, tz) {
+    var a = String(dateStr).split('-').map(Number);
+    var hh = Math.floor(minutes / 60);
+    var mm = minutes % 60;
+    var guess = Date.UTC(a[0], a[1] - 1, a[2], hh, mm);
+    var t = guess - tzOffsetMs(guess, tz);
+    return guess - tzOffsetMs(t, tz);
+  }
+
+  function shiftDate(dateStr, deltaDays) {
+    var a = String(dateStr).split('-').map(Number);
+    var d = new Date(Date.UTC(a[0], a[1] - 1, a[2] + deltaDays));
+    var p = function (n) { return String(n).padStart(2, '0'); };
+    return d.getUTCFullYear() + '-' + p(d.getUTCMonth() + 1) + '-' + p(d.getUTCDate());
+  }
+
+  function weekdayOf(dateStr) {
+    var a = String(dateStr).split('-').map(Number);
+    return new Date(Date.UTC(a[0], a[1] - 1, a[2])).getUTCDay();
+  }
+
+  function holidaySet(market, calendar) {
+    var cal = calendar || {};
+    var cov = cal.coverage || {};
+    var arr = (cal.markets && cal.markets[market]) || [];
+    var set = {};
+    // 超出表覆盖范围 ⇒ 不猜：返回空集合，只按交易时段显示“已收盘”
+    if (!cov.from || !cov.to || String(cal.updatedAt || '').length === 0) return set;
+    arr.forEach(function (d) { if (d >= cov.from && d <= cov.to) set[d] = 1; });
+    return set;
+  }
+
+  function isTradingDay(market, dateStr, calendar) {
+    var wd = weekdayOf(dateStr);
+    if (!Number.isFinite(wd) || wd === 0 || wd === 6) return false;
+    return !holidaySet(market, calendar)[dateStr];
+  }
+
+  /**
+   * 当前市场阶段：open / lunch / pre / post / weekend / holiday / unknown
+   * @returns {{known:boolean, phase:string, local?:object, tz?:string}}
+   */
+  function sessionAt(market, now, calendar) {
+    var cfg = MARKET_SESSIONS[market];
+    if (!cfg) return { known: false, phase: 'unknown' };
+    var p = tzParts(now, cfg.tz);
+    var base = { known: true, phase: 'post', local: p, tz: cfg.tz, holiday: false };
+    if (holidaySet(market, calendar)[p.date]) {
+      base.phase = 'holiday';
+      base.holiday = true;
+      return base;
+    }
+    if (p.wd === 0 || p.wd === 6) { base.phase = 'weekend'; return base; }
+    var wins = cfg.windows;
+    if (p.minutes < wins[0][0]) { base.phase = 'pre'; return base; }
+    for (var i = 0; i < wins.length; i++) {
+      var a = wins[i][0];
+      var b = wins[i][1];
+      if (p.minutes >= a && p.minutes < b) { base.phase = 'open'; return base; }
+      if (i < wins.length - 1 && p.minutes >= b && p.minutes < wins[i + 1][0]) {
+        base.phase = 'lunch';
+        return base;
+      }
+    }
+    base.phase = 'post';
+    return base;
+  }
+
+  /** 最近一次已完成的收盘（本地日期 + 收盘分钟 → UTC 毫秒） */
+  function lastCloseBefore(market, now, calendar) {
+    var cfg = MARKET_SESSIONS[market];
+    if (!cfg) return null;
+    var p = tzParts(now, cfg.tz);
+    var closeMin = cfg.windows[cfg.windows.length - 1][1];
+    for (var i = 0; i <= 14; i++) {
+      var date = shiftDate(p.date, -i);
+      if (!isTradingDay(market, date, calendar)) continue;
+      var ms = zonedToUtc(date, closeMin, cfg.tz);
+      if (ms <= Number(now)) {
+        var hh = String(Math.floor(closeMin / 60)).padStart(2, '0');
+        var mm = String(closeMin % 60).padStart(2, '0');
+        return { ms: ms, date: date, hm: hh + ':' + mm };
+      }
+    }
+    return null;
+  }
+
+  function classifySession(sourceTime, now, market, calendar) {
+    var age = ageMs(sourceTime, now);
+    var info = sessionAt(market, now, calendar);
+    if (!info.known) return classifyState(sourceTime, now, false);
+    if (age == null) return { state: 'delayed', phase: info.phase, hasTime: false, ageMs: null };
+    if (info.phase === 'open') {
+      return {
+        state: age <= REALTIME_MAX_AGE_MS ? 'realtime' : 'delayed',
+        phase: info.phase, hasTime: true, ageMs: age,
+      };
+    }
+    var lc = lastCloseBefore(market, now, calendar);
+    var src = Date.parse(sourceTime || '');
+    // 源时间达到/超过最近一次收盘 ⇒ 这是“收盘价”，不是“陈旧延迟”
+    if (lc && Number.isFinite(src) && src >= lc.ms - 2 * 60 * 1000) {
+      return {
+        state: info.phase === 'holiday' ? 'holiday' : 'closed',
+        phase: info.phase, hasTime: true, ageMs: age, lastClose: lc,
+      };
+    }
+    return { state: 'delayed', phase: info.phase, hasTime: true, ageMs: age, lastClose: lc };
+  }
+
   /** 相对陈旧度：刚刚 / N 分钟前 / N 小时前 / 昨日收盘 / N 天前 */
   function relativeAge(sourceTime, now, opts) {
     var o = opts || {};
@@ -139,10 +294,29 @@
   function quoteStatus(o) {
     var opts = o || {};
     var now = opts.now == null ? Date.now() : opts.now;
-    var c = classifyState(opts.sourceTime, now, !!opts.fromLocal);
+    var fromLocal = !!opts.fromLocal;
+    var c = fromLocal
+      ? classifyState(opts.sourceTime, now, true)
+      : classifySession(opts.sourceTime, now, opts.market, opts.calendar);
     var tm = clock(opts.sourceTime, now, false);
     var age = relativeAge(opts.sourceTime, now, {});
     var label = STATE_LABEL[c.state];
+    if (c.state === 'closed' || c.state === 'holiday') {
+      var stamp = clock(opts.sourceTime, now, true);
+      var lbl = c.state === 'holiday' ? '休市'
+        : (c.phase === 'lunch' ? '午间休市' : '已收盘');
+      var rel0 = relativeAge(opts.sourceTime, now, {});
+      return {
+        state: c.state,
+        card: lbl + (stamp ? ' · ' + stamp : ''),
+        summary: lbl + (stamp ? ' · ' + stamp : '') +
+          (rel0 !== '时间未知' ? ' · ' + rel0 : ''),
+        footer: '行情 ' + lbl,
+        label: lbl,
+        ageMs: c.ageMs,
+        phase: c.phase,
+      };
+    }
     if (c.state === 'local') {
       var data = tm ? '数据时间 ' + tm : '数据时间未知';
       return {
@@ -172,6 +346,84 @@
       footer: c.state === 'realtime' ? '行情 实时' : ('行情 延迟' + (age && age !== '刚刚' ? ' ' + age : '')),
       label: label,
       ageMs: c.ageMs,
+    };
+  }
+
+  /**
+   * 全局标题：不再取跨市场最旧时间。
+   * @param {{state:string, sourceTime?:string}[]} items
+   */
+  function aggregateStatus(items, nowMs) {
+    var now = nowMs == null ? Date.now() : nowMs;
+    var list = (items || []).filter(function (x) { return x && x.state; });
+    if (!list.length) {
+      return { state: 'delayed', summary: '行情 未记录', footer: '行情 未记录', label: '延迟' };
+    }
+    var times = [];
+    list.forEach(function (x) {
+      var t = Date.parse(x.sourceTime || '');
+      if (Number.isFinite(t)) times.push(t);
+    });
+    var latestISO = times.length ? new Date(Math.max.apply(null, times)).toISOString() : null;
+    var latestClock = latestISO ? clock(latestISO, now, false) : '';
+    var real = list.filter(function (x) { return x.state === 'realtime'; });
+    var closed = list.filter(function (x) { return x.state === 'closed' || x.state === 'holiday'; });
+    var delayed = list.filter(function (x) { return x.state === 'delayed'; });
+
+    if (real.length) {
+      if (closed.length || delayed.length) {
+        var suffix = latestClock ? ' · 最新 ' + latestClock : '';
+        return {
+          state: 'realtime',
+          summary: '部分市场已收盘' + suffix,
+          footer: '行情 部分已收盘' + suffix,
+          label: '实时',
+        };
+      }
+      var age = relativeAge(latestISO, now, {});
+      return {
+        state: 'realtime',
+        summary: '更新于 ' + latestClock + ' · ' + age + ' · 实时',
+        footer: '行情 实时',
+        label: '实时',
+      };
+    }
+    if (closed.length && !delayed.length) {
+      var allHoliday = closed.every(function (x) { return x.state === 'holiday'; });
+      var lbl = allHoliday ? '休市' : '全市场已收盘';
+      return {
+        state: 'closed',
+        summary: lbl + (latestClock ? ' · 最近收盘 ' + latestClock : ''),
+        footer: '行情 ' + lbl,
+        label: '已收盘',
+      };
+    }
+    if (closed.length && delayed.length) {
+      var suffix2 = latestClock ? ' · 最新 ' + latestClock : '';
+      return {
+        state: 'delayed',
+        summary: '部分市场已收盘' + suffix2,
+        footer: '行情 部分已收盘' + suffix2,
+        label: '延迟',
+      };
+    }
+    // 全部延迟：沿用 2.4.0 的“最旧源时间”口径
+    var oldestISO = times.length ? new Date(Math.min.apply(null, times)).toISOString() : null;
+    if (!oldestISO) {
+      return {
+        state: 'delayed',
+        summary: '数据时间未知 · 延迟',
+        footer: '行情 延迟（无源时间）',
+        label: '延迟',
+      };
+    }
+    var oldClock = clock(oldestISO, now, false);
+    var oldAge = relativeAge(oldestISO, now, {});
+    return {
+      state: 'delayed',
+      summary: '更新于 ' + oldClock + ' · ' + oldAge + ' · 延迟',
+      footer: '行情 延迟' + (oldAge !== '刚刚' ? ' ' + oldAge : ''),
+      label: '延迟',
     };
   }
 
@@ -297,11 +549,17 @@
     fromEpoch: fromEpoch,
     parseBarTime: parseBarTime,
     ageMs: ageMs,
+    MARKET_SESSIONS: MARKET_SESSIONS,
     classifyState: classifyState,
+    classifySession: classifySession,
+    sessionAt: sessionAt,
+    lastCloseBefore: lastCloseBefore,
+    tzParts: tzParts,
     worstState: worstState,
     relativeAge: relativeAge,
     clock: clock,
     quoteStatus: quoteStatus,
+    aggregateStatus: aggregateStatus,
     shortSource: shortSource,
     klineMarker: klineMarker,
   };

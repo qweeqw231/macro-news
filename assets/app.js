@@ -9,6 +9,20 @@
   const DATA = 'data';   // 与 index.html 同级（GitHub Pages 从仓库根发布）
   const PAGE = 40;
 
+  // 2.4.1：交易所假日表（assets/market-calendar.json）。
+  // 只用于“休市/已收盘”判定；加载失败或超出覆盖范围时按交易时段降级，绝不猜假日。
+  let MARKET_CAL = null;
+  let calendarPromise = null;
+  function ensureCalendar() {
+    if (!calendarPromise) {
+      calendarPromise = fetch('assets/market-calendar.json', { cache: 'default' })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((j) => { MARKET_CAL = j; return j; })
+        .catch(() => null);
+    }
+    return calendarPromise;
+  }
+
   const S = {
     view: 'feed',
     filter: 'all',
@@ -171,6 +185,12 @@
     return b <= 24 ? (h >= a && h < b) : (h >= a || h < b - 24);
   }
   function isTrading(market, now = new Date()) {
+    // 2.4.1：优先用 IANA 时区 + 假日表的统一时段模型（否则日本文化の日会显示“交易中”）
+    const QSx = window.MacroQuoteStatus;
+    if (QSx && QSx.sessionAt && MARKET_CAL) {
+      const info = QSx.sessionAt(market, now.getTime(), MARKET_CAL);
+      if (info.known) return info.phase === 'open';
+    }
     const wd = now.getDay();
     const h = now.getHours() + now.getMinutes() / 60;
     if (wd === 0) return false;                          // 周日休市
@@ -260,12 +280,20 @@
         sourceTime: q.updatedAt,
         now,
         fromLocal: !!q.__fromLocal,
+        market: q.market,
+        calendar: MARKET_CAL,
       });
     };
 
     // 全局状态只看直连主数据；组合类的本地快照按卡片单独标，不把全局拉成“本地”。
     let globalStatus;
-    if (live) {
+    if (live && QS.aggregateStatus) {
+      // 2.4.1：按市场交易时段/假日聚合，不再用“跨市场最旧时间”拖垮全局标题
+      globalStatus = QS.aggregateStatus(
+        live.map((q) => ({ state: statusOf(q).state, sourceTime: q.updatedAt })),
+        now
+      );
+    } else if (live) {
       const liveTimes = live.map((q) => q.updatedAt).filter(Boolean);
       const allHaveTime = liveTimes.length === live.length;
       const states = live.map((q) => statusOf(q).state);
@@ -352,7 +380,9 @@
           card.appendChild(chg);
           const st = statusOf(q);
           const tm = el('div', 'q-time', st.card);
-          tm.classList.add(st.state === 'realtime' ? 'state-ok' : st.state === 'local' ? 'state-local' : 'state-warn');
+          tm.classList.add(st.state === 'realtime' ? 'state-ok'
+            : (st.state === 'local' || st.state === 'closed' || st.state === 'holiday')
+              ? 'state-local' : 'state-warn');
           card.appendChild(tm);
           grid.appendChild(card);
         });
@@ -1631,6 +1661,8 @@
 
     // 行情加载完再刷一次页脚：健康摘要里的「行情」时点来自 quotes.json 各卡片的源时间，
     // 而 renderQuotes 与下面的 latest.json 是两个并发链，先到先得的顺序不固定。
+    // 2.4.1：先加载假日表（本地小文件），首屏就能正确区分“已收盘/休市”。
+    await ensureCalendar();
     renderQuotes().then(startQuotePolling).catch(() => {}).then(restoreKlineUI).then(() => renderFoot());
     try {
       const d = await jget('latest.json');
