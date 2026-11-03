@@ -280,7 +280,7 @@
         sourceTime: q.updatedAt,
         now,
         fromLocal: !!q.__fromLocal,
-        market: q.market,
+        market: q.calendarMarket || q.market,
         calendar: MARKET_CAL,
       });
     };
@@ -350,7 +350,7 @@
       .sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b))
       .forEach((mk) => {
         const list = groups.get(mk);
-        const open = list.some((q) => isTrading(q.market));
+        const open = list.some((q) => isTrading(q.calendarMarket || q.market));
         const g = el('div', 'mkt');
         const h = el('div', 'mkt-hd');
         h.appendChild(el('span', 'mkt-name', MARKET_LABEL[mk] || mk));

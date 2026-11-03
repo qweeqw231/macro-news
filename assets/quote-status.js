@@ -104,6 +104,8 @@
     KR:    { tz: 'Asia/Seoul',       windows: [[540, 930]] },              // 09:00-15:30
     US:    { tz: 'America/New_York', windows: [[570, 960]] },              // 09:30-16:00
     EU:    { tz: 'Europe/Berlin',    windows: [[540, 1050]] },             // 09:00-17:30（德/法）
+    DE:    { tz: 'Europe/Berlin',    windows: [[540, 1050]] },             // Xetra 09:00-17:30 CET
+    FR:    { tz: 'Europe/Berlin',    windows: [[540, 1050]] },             // Euronext Paris 09:00-17:30 CET
     UK:    { tz: 'Europe/London',    windows: [[480, 990]] },              // 08:00-16:30
   };
   var WD = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };

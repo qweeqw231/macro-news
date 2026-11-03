@@ -23,6 +23,30 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.4] - 2026-11-03
+
+### 新增
+
+- **交易日历补齐**（`assets/market-calendar.json`）：在既有 JPX / NYSE 之外，新增
+  上交所（SSE，2026）、港交所（HKEX，2026+2027）、Xetra（2026+2027）、
+  Euronext Paris（2026）、LSE（2026+2027）的**全天休市日**，逐条标注官方来源与核实日期
+  （`verifiedAt: 2026-11-03`）；新增 `coverageByMarket` 记录每个市场的实际覆盖终点。
+  - 德/法新增 `calendarMarket`（DAX→DE、CAC40→FR）与独立交易时段，修复此前两者共用
+    `EU` 假日集合的问题；页面分组仍显示为「欧洲」。
+  - KRX 官方休市页为 JS 动态渲染、本次未能取得可核验的完整表 ⇒ `markets.KR` 保持空表，
+    在 `gaps` 说明，不编造。
+  - CN / FR 的 2027 官方安排尚未发布 ⇒ 只覆盖到 2026-12-31，超出后按交易时段显示
+    `已收盘`（不猜休市）。
+- **早报「已入库」状态**：`publish --push` 在早报文件推送成功后，追加一次**只含**
+  `data/_briefing-status.json` 的状态提交，把 `pushed:true` 推到线上；二次提交失败时
+  写 `statusCommit:false / statusError`，不影响已入库的早报文件。
+
+### 测试
+
+- `tests/market-session.test.mjs` 新增 CN/HK/DE/FR/UK 每个市场至少一条假日用例、
+  逐市场覆盖终点、周末不得入表、KR 保持空表；`tests/briefing-push.test.mjs` 新增
+  `commitStatusPush` 的白名单与「干净时不重复推送」用例。全套 **127 项**通过。
+
 ## [2.4.3] - 2026-11-03
 
 ### 修正

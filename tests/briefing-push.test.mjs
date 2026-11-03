@@ -8,7 +8,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pushPathsFor, commitAndPush } from '../scripts/briefing/git-push.mjs';
+import { pushPathsFor, commitAndPush, commitStatusPush } from '../scripts/briefing/git-push.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLISH = fs.readFileSync(path.join(ROOT, 'scripts', 'briefing', 'publish.mjs'), 'utf8');
@@ -126,4 +126,58 @@ test('采集兜底：只放行今天/昨天的单文件，禁止整目录', () =
 test('页脚：pushed=false 显示“已发布未入库”', () => {
   assert.match(APP, /rec\.pushed === false/);
   assert.match(APP, /早报 已发布未入库/);
+});
+
+// ---------- 2.4.4：pushed 状态二次提交 ----------
+test('状态二次提交：只 add data/_briefing-status.json 并推送', () => {
+  const dir = sandbox();
+  fs.writeFileSync(path.join(dir, 'data', '_briefing-status.json'), '{"days":{}}');
+  const calls = [];
+  const exec = (cmd, args) => {
+    calls.push(args.join(' '));
+    if (args[0] === 'diff') return 'data/_briefing-status.json\n';
+    if (args[0] === 'commit') return '[main def456] data: 记录早报入库 2026-11-03\n';
+    return '';
+  };
+  try {
+    const r = commitStatusPush({
+      root: dir,
+      statusPath: path.join(dir, 'data', '_briefing-status.json'),
+      date: '2026-11-03',
+      exec,
+    });
+    assert.equal(r.pushed, true);
+    assert.equal(r.committed, true);
+    assert.ok(calls[0].startsWith('add -- data/_briefing-status.json'), '只允许状态文件');
+    assert.ok(!calls[0].includes('briefings/'), '不得顺手提交早报正文');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('状态二次提交：文件内容未变（已 pushed:true）时不重复提交/推送', () => {
+  const dir = sandbox();
+  fs.writeFileSync(path.join(dir, 'data', '_briefing-status.json'), '{"days":{}}');
+  const calls = [];
+  const exec = (cmd, args) => { calls.push(args.join(' ')); return ''; };
+  try {
+    const r = commitStatusPush({
+      root: dir,
+      statusPath: path.join(dir, 'data', '_briefing-status.json'),
+      date: '2026-11-03',
+      exec,
+    });
+    assert.equal(r.pushed, true);
+    assert.equal(r.committed, false);
+    assert.deepEqual(calls.map((c) => c.split(' ')[0]), ['add', 'diff'], '干净时不 fetch/rebase/push');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('publish 源码锁定：成功后调用 commitStatusPush', () => {
+  assert.match(PUBLISH, /import \{ commitAndPush, commitStatusPush \}/);
+  assert.match(PUBLISH, /if \(push\.pushed\) \{/);
+  assert.match(PUBLISH, /commitStatusPush\(\{/);
+  assert.match(PUBLISH, /statusCommit: false/);
 });

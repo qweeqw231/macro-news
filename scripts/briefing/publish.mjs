@@ -13,7 +13,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { beijingNow, updateStatus } from './core.mjs';
 import { publishRun } from './pipeline.mjs';
-import { commitAndPush } from './git-push.mjs';
+import { commitAndPush, commitStatusPush } from './git-push.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -71,8 +71,27 @@ function main() {
           pushed: !!push.pushed,
           pushError: push.error || '',
           pushAt: push.pushed ? beijingNow().iso : '',
+          statusCommit: null,
+          statusError: '',
         });
       } catch { /* 状态写失败不影响已发布文件 */ }
+      // 2.4.4：早报文件已入库后，再把 pushed:true 的状态文件单独提交一次，
+      // 否则线上 _briefing-status.json 长期显示 pushed:null（读者无法判断是否入库）。
+      if (push.pushed) {
+        const sp = commitStatusPush({
+          root: ROOT,
+          statusPath: STATUS,
+          date: DATE,
+          log: QUIET ? undefined : (m) => console.error(m),
+        });
+        push.statusCommit = !!sp.pushed;
+        if (!sp.pushed) {
+          try {
+            updateStatus(STATUS, DATE, { statusCommit: false, statusError: sp.error || '' });
+          } catch { /* ignore */ }
+          if (!QUIET) console.error(`[briefing] 状态二次提交失败：${sp.error}`);
+        }
+      }
       if (!push.pushed && !QUIET) {
         console.error(`[briefing] 已发布但未入库：${push.error}`);
       }

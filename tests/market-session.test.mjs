@@ -117,6 +117,77 @@ test('假日表必须覆盖到 2027-12-31（防悄悄过期）', () => {
   assert.ok(CAL.sources && CAL.sources.JP && CAL.sources.US);
 });
 
+// ---------- 2.4.4：补齐 CN / HK / DE / FR / UK 后的逐市场假日用例 ----------
+// 每个市场至少一条：假日当天、源时间停在最近一次收盘 ⇒ holiday（不是 delayed）。
+test('A股 2026-10-01 国庆：休市', () => {
+  const r = QS.quoteStatus({
+    sourceTime: '2026-09-30T15:00:00+08:00',
+    now: BJ('2026-10-01T10:00:00'),
+    market: 'CN',
+    calendar: CAL,
+  });
+  assert.equal(r.state, 'holiday');
+  assert.equal(r.card, '休市 · 09-30 15:00');
+});
+
+test('港股 2026-10-19 重阳：休市；2027-01-01 新年：休市', () => {
+  const a = QS.quoteStatus({
+    sourceTime: '2026-10-16T16:00:00+08:00',
+    now: BJ('2026-10-19T12:00:00'),
+    market: 'HK',
+    calendar: CAL,
+  });
+  assert.equal(a.state, 'holiday');
+  const b = QS.sessionAt('HK', BJ('2027-01-01T12:00:00'), CAL);
+  assert.equal(b.phase, 'holiday');
+});
+
+test('德/法 2026-05-01 劳动节：休市', () => {
+  const cases = [
+    ['DE', '2026-04-30T23:30:00+08:00'],
+    ['FR', '2026-04-30T23:30:00+08:00'],
+  ];
+  for (const [market, sourceTime] of cases) {
+    const r = QS.quoteStatus({
+      sourceTime,
+      now: BJ('2026-05-01T12:00:00'),
+      market,
+      calendar: CAL,
+    });
+    assert.equal(r.state, 'holiday', market);
+  }
+});
+
+test('英股 2026-08-31 夏季银行假日：休市；2027-05-03 五月假日：休市', () => {
+  const r = QS.quoteStatus({
+    sourceTime: '2026-08-28T23:30:00+08:00',
+    now: BJ('2026-08-31T12:00:00'),
+    market: 'UK',
+    calendar: CAL,
+  });
+  assert.equal(r.state, 'holiday');
+  assert.equal(QS.sessionAt('UK', BJ('2027-05-03T12:00:00'), CAL).phase, 'holiday');
+});
+
+test('假日表：逐市场覆盖终点不得早于 2026-12-31，KR 无官方表时保持空表', () => {
+  for (const m of ['JP', 'US', 'CN', 'HK', 'DE', 'FR', 'UK']) {
+    const c = CAL.coverageByMarket && CAL.coverageByMarket[m];
+    assert.ok(c, m + ' 缺少 coverageByMarket');
+    assert.ok(c.to >= '2026-12-31', m + ' 覆盖终点过早：' + c.to);
+  }
+  assert.equal((CAL.markets.KR || []).length, 0, 'KR 未取得官方完整表，不得编造');
+  assert.match(CAL.gaps.KR, /未能取得/);
+});
+
+test('假日表：所有日期都是工作日（周末不重复登记）', () => {
+  for (const [market, dates] of Object.entries(CAL.markets)) {
+    for (const d of dates) {
+      const wd = new Date(d + 'T00:00:00Z').getUTCDay();
+      assert.ok(wd >= 1 && wd <= 5, `${market} ${d} 是周末，不应写入假日表`);
+    }
+  }
+});
+
 test('全局标题：有实时市场时显示“部分市场已收盘 · 最新”', () => {
   const now = BJ('2026-11-03T12:22:00');
   const items = [

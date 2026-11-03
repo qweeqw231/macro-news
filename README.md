@@ -319,11 +319,17 @@ publish --date（脚本，确定性）
 报价链路总预算 **2 秒**（东财 1.2s → 腾讯 0.8s），超时立即回落，不再空转十几秒。
 卡片、`#quoteTime`、页脚共用同一套文案（`assets/quote-status.js`，纯逻辑、Node 测试共用）。
 
-交易时段用 IANA 时区（`Intl`）换算，不写死 +08:00：CN/ETF/HK/JP/KR/US/EU/UK 各有时段与午休，
-美/欧 DST 已覆盖测试。假日表 `assets/market-calendar.json` 已录入 JPX / NYSE 2026–2027；
-CN/HK/KR/EU/UK 暂未从官方页面核实，留空并在 `gaps` 说明 —— 缺表时只按交易时段显示 `已收盘`，
-**绝不猜休市**。维护：每年 12 月更新一次（下一年的官方日历通常已发布），
-更新 `coverage.to` / `markets` / `sources` / `updatedAt`；测试锁定 `coverage.to >= 2027-12-31`。
+交易时段用 IANA 时区（`Intl`）换算，不写死 +08:00：CN/ETF/HK/JP/KR/US/DE/FR/UK 各有时段与午休，
+美/欧 DST 已覆盖测试。假日表 `assets/market-calendar.json`（2.4.4 补齐）：
+JPX / NYSE / 上交所 / 港交所 / Xetra / Euronext Paris / LSE，2026 全年 + 2027（CN/FR 的 2027
+官方表尚未发布，留空并写入 `gaps`）。德/法在页面上仍归 `EU` 分组，但每张卡片用
+`calendarMarket`（DAX→DE、CAC40→FR）单独判假日，避免「Xetra 休市、巴黎开市」被合并。
+KRX 官方页面为 JS 动态渲染、未能取得可核验的完整表，`markets.KR` 保持空表并写入 `gaps`。
+缺表或超出 `coverageByMarket` 时只按交易时段显示 `已收盘`，**绝不猜休市**。
+维护：每年 12 月更新一次（下一年的官方日历通常已发布），更新
+`coverage` / `coverageByMarket` / `markets` / `sources` / `verifiedAt` / `updatedAt`；
+测试锁定每个市场 `coverageByMarket.to >= 2026-12-31`、每个市场至少一条假日用例，
+并禁止把周末写进假日表。
 
 K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三态`：直连源写「东财/新浪/腾讯」，
 本地预生成写「本地预生成」，并标「本地快照」；切换周期时跟随该周期最后一根的时间。

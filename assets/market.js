@@ -50,9 +50,9 @@
     { key: 'ixic',    secid: '100.NDX',  market: 'US', name: '纳斯达克' },
     { key: 'spx',     secid: '100.SPX',  market: 'US', name: '标普500' },
     { key: 'n225',    secid: '100.N225', market: 'JP', name: '日经225' },
-    { key: 'dax',     secid: '100.GDAXI', market: 'EU', name: '德国DAX' },
+    { key: 'dax',     secid: '100.GDAXI', market: 'EU', calendarMarket: 'DE', name: '德国DAX' },
     // 法国CAC40：secid 由东财搜索接口反查（input=法国CAC40 → Code=FCHI, MktNum=100）
-    { key: 'cac40',   secid: '100.FCHI', market: 'EU', name: '法国CAC40' },
+    { key: 'cac40',   secid: '100.FCHI', market: 'EU', calendarMarket: 'FR', name: '法国CAC40' },
     { key: 'ukx',     secid: '100.FTSE', market: 'UK', name: '英国富时100' },
     { key: 'kospi',   secid: '100.KS11', market: 'KR', name: '韩国KOSPI' },
     // ---- 场内 ETF（32 只）----
