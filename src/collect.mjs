@@ -121,7 +121,7 @@ async function collectKlines(startedAt, onlyKeys) {
         const file = path.join(DATA, 'kline', `${key}${spec.suffix}.json`);
         const prev = await readJSON(file, null);
         const incoming = await fetchKline(key, spec.period, spec.limit);
-        // 2.5.0：短序列不得覆盖长序列（见 src/kline-guard.mjs）
+        // 2.4.10：短序列不得覆盖长序列（见 src/kline-guard.mjs）
         const decision = decideBars(prev && prev.bars, incoming);
         if (decision.action === 'reject') {
           console.log(

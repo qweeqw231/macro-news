@@ -87,7 +87,7 @@ for (const idx of list) {
       throw new Error(`只取到 ${bars ? bars.length : 0} 根，不足 ${MIN_BARS} 根，不当全量写`);
     }
     const incoming = bars.map((b) => [b.t, b.o, b.c, b.h, b.l, b.v]);
-    // 2.5.0：短序列不得覆盖长序列
+    // 2.4.10：短序列不得覆盖长序列
     let outBars = incoming;
     if (existsSync(file)) {
       try {

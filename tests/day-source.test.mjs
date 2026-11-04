@@ -1,5 +1,5 @@
 // tests/day-source.test.mjs
-// 2.5.0：同一天 archive / history 取值规则（阈值 20，显式可见）。
+// 2.4.10：同一天 archive / history 取值规则（阈值 20，显式可见）。
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';

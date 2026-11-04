@@ -66,7 +66,7 @@ const meta = (period) => ({
 });
 async function flush() {
   bars.sort((a, b) => String(a.t).localeCompare(String(b.t)));
-  // 2.5.0：短序列不得覆盖长序列
+  // 2.4.10：短序列不得覆盖长序列
   if (existsSync(OUT)) {
     try {
       const old = JSON.parse(await readFile(OUT, 'utf8'));

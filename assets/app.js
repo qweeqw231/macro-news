@@ -1025,7 +1025,7 @@
       const histMap = new Map((hist.days || []).filter((d) => d && d.d).map((d) => [d.d, d]));
       const allDays = new Set([...archMap.keys(), ...histMap.keys()]);
 
-      // 2.5.0：同一天用 archive 还是 history，由显式规则决定（assets/day-source.js）
+      // 2.4.10：同一天用 archive 还是 history，由显式规则决定（assets/day-source.js）
       const decide = (a, h) => {
         if (window.MacroDaySource) {
           return window.MacroDaySource.decideDaySource({ archiveCount: a, historyCount: h });

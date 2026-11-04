@@ -1,5 +1,6 @@
 // scripts/news-db/db.mjs
-// 本地新闻库：SQLite + FTS5（bigram 中文分词），独立于静态站，数据库放 .local/news.db。
+// 本地新闻库：SQLite + FTS5（bigram 中文分词），数据库放 .local/news.db。
+// 历史切片已接入静态站（2.2.0 上线，2.4.10 补齐 09-20~10-04）；切片只有标题/来源/时间/链接，无摘要/正文。
 //
 // 为什么不用 search.json：它现在 10.7MB / 1.9 万条，浏览器 Fuse 还能撑；
 // 5 年回补会到几十万条，必须交给 SQLite，静态站只保留最近窗口。

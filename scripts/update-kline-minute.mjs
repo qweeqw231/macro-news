@@ -210,7 +210,7 @@ outer: for (const period of periodList) {
     }
 
     const incoming = bars.map((b) => [b.t, b.o, b.c, b.h, b.l, b.v]);
-    // 2.5.0：短序列不得覆盖长序列
+    // 2.4.10：短序列不得覆盖长序列
     let outBars = incoming;
     let oldDoc = null;
     if (existsSync(file)) {

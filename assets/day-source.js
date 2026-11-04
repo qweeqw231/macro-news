@@ -1,5 +1,5 @@
 /* assets/day-source.js
- * 归档页「同一天用 archive 全文还是 history 切片」的显式规则（2.5.0）。
+ * 归档页「同一天用 archive 全文还是 history 切片」的显式规则（2.4.10）。
  * 纯函数；浏览器挂到 window.MacroDaySource，Node 测试可 require。
  *
  * 规则（阈值 20，明确写在这里，不藏在渲染逻辑里）：

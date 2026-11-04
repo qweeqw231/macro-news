@@ -1,5 +1,5 @@
 // tests/kline-guard.test.mjs
-// 2.5.0：K 线短序列覆盖守卫。纯函数，离线。
+// 2.4.10：K 线短序列覆盖守卫。纯函数，离线。
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
