@@ -56,6 +56,16 @@ export function mergeBars(existing, incoming) {
 }
 
 /**
+ * 增量 upsert：把 incoming 的时间键覆盖到现有序列上，并保留非零成交量。
+ * 用于「只刷新最后 N 根」的路径（scripts/update-kline-last.mjs）：
+ * incoming 天然比现有序列短，不能直接走 decideBars（会被判成 shorter 而整体拒绝）。
+ */
+export function upsertBars(existing, incoming) {
+  const old = Array.isArray(existing) ? existing : [];
+  return mergeBars(old, preserveVolumes(old, incoming));
+}
+
+/**
  * @param {Array} existing 现有文件 bars（可为空/未定义）
  * @param {Array} incoming 本次抓取 bars
  * @returns {{action:'accept'|'reject'|'merge', bars:Array, reason:string}}

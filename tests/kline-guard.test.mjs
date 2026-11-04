@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { decideBars, mergeBars, barTime, barVolume } from '../src/kline-guard.mjs';
+import { decideBars, mergeBars, barTime, barVolume, upsertBars } from '../src/kline-guard.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
@@ -93,10 +93,40 @@ test('成交量保护也适用于数组行（分钟/全量）', () => {
   assert.equal(d.bars[0][1], 2);
 });
 
+test('增量 upsert：只刷新最后几根时保留历史与成交量', () => {
+  const old = [
+    { t: '2026-10-28', o: 1, h: 1, l: 1, c: 1, v: 800 },
+    { t: '2026-10-29', o: 1, h: 1, l: 1, c: 1, v: 900 },
+    { t: '2026-10-30', o: 1, h: 1, l: 1, c: 1, v: 1000 },
+  ];
+  const latest = [
+    { t: '2026-10-29', o: 2, h: 2, l: 2, c: 2, v: 0 },
+    { t: '2026-10-30', o: 2, h: 2, l: 2, c: 2, v: 0 },
+    { t: '2026-11-02', o: 2, h: 2, l: 2, c: 2, v: 0 },
+  ];
+  const out = upsertBars(old, latest);
+  assert.deepEqual(
+    out.map(barTime),
+    ['2026-10-28', '2026-10-29', '2026-10-30', '2026-11-02']
+  );
+  assert.equal(barVolume(out[1]), 900, '旧的成交量必须保留');
+  assert.equal(barVolume(out[2]), 1000, '旧的成交量必须保留');
+  assert.equal(out[1].c, 2, 'OHLC 仍按新数据更新');
+  assert.equal(out[3].c, 2, '新增的最后几根要接上');
+});
+
 test('写 K 线的脚本都接入共享守卫', () => {
   assert.match(read('src/collect.mjs'), /import \{ decideBars \} from '\.\/kline-guard\.mjs'/);
   assert.match(read('src/collect.mjs'), /const decision = decideBars\(prev && prev\.bars, incoming\)/);
   assert.match(read('scripts/update-kline-minute.mjs'), /decideBars\(oldDoc\.bars, incoming\)/);
   assert.match(read('scripts/update-kline-full.mjs'), /decideBars\(old\.bars, incoming\)/);
   assert.match(read('scripts/backfill-cgb1y.mjs'), /decideBars\(old\.bars, bars\)/);
+});
+
+test('只刷新最后一根的脚本也必须经过守卫（2.4.11 漏网点）', () => {
+  const src = read('scripts/update-kline-last.mjs');
+  assert.match(src, /import \{ upsertBars \} from '\.\.\/src\/kline-guard\.mjs'/);
+  assert.match(src, /const bars = upsertBars\(old\.bars, latest\)/);
+  // 不能再回到「Map 直接覆盖」：上金所官网无 volume，会抹掉东财成交量
+  assert.doesNotMatch(src, /new Map\(\(old\.bars/);
 });

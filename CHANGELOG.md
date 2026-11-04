@@ -36,6 +36,27 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.13] - 2026-11-05
+
+> 审计发现：2.4.11 的成交量守卫漏掉了「只刷新最后一根日 K」的写入链路。
+
+### 修正
+
+- **`scripts/update-kline-last.mjs` 未接入 `kline-guard`**：该脚本每小时把最近 5 根日 K
+  用 `Map` 直接覆盖回 `<key>.json`。2026-11-04 14:28 UTC 的 `kline-minute.yml` 运行中，
+  东财取数失败后降级到上金所官网（`Dailyhq` 无 volume），把 `sge_au9999` 的
+  10-29/10-30/11-02/11-03/11-04 五根成交量从 800426/931776/1067524/744278/799134 写成 0。
+- `src/kline-guard.mjs` 新增 `upsertBars(existing, incoming)`：按时间键 upsert，
+  并保留 incoming 中为 0 的成交量。适用于「只刷新最后 N 根」的短序列路径
+  （不能直接用 `decideBars` —— 短序列会被判 `shorter` 而整体拒绝）。
+- `update-kline-last.mjs` 改用 `upsertBars(old.bars, latest)`，不再整段覆盖。
+
+### 测试
+
+- `tests/kline-guard.test.mjs` 新增 2 项：`upsertBars` 保留历史与成交量；
+  静态锁住 `update-kline-last.mjs` 必须 import/调用 `upsertBars`、不得回到 Map 覆盖。
+  全套 **187 项**通过。
+
 ## [2.4.12] - 2026-11-05
 
 > 本条目曾拟定为 2.5.0，按版本规则降为补丁位：本次是刷新路径的重绘优化与状态保持修复，

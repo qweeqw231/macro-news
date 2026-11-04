@@ -17,6 +17,7 @@ import { fileURLToPath } from 'node:url';
 import {
   INDICES, PORTFOLIO_KLINE, fetchKline, klineAvailable, klineTarget, getKlineSource,
 } from '../src/sources.mjs';
+import { upsertBars } from '../src/kline-guard.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -76,9 +77,10 @@ async function main() {
       // 只取最近 5 根：够覆盖「今天 + 上一交易日」，不会把全量历史拖下来
       const latest = await fetchKline(key, '1d', 5);
       const old = JSON.parse(await readFile(file, 'utf8'));
-      const merged = new Map((old.bars || []).map((b) => [b.t, b]));
-      for (const b of latest) merged.set(b.t, b);
-      const bars = [...merged.values()].sort((a, b) => String(a.t).localeCompare(String(b.t)));
+      // 2.4.12 补丁位：按时间键 upsert，并保留非零成交量。
+      //   上金所官网兜底没有 volume（全部 0），以前这里用 Map 直接覆盖，
+      //   一次 SGE 源切换就把最近 5 根的东财成交量抹成 0（2026-11-04 14:28 UTC 实测）。
+      const bars = upsertBars(old.bars, latest);
       const changed = JSON.stringify(bars) !== JSON.stringify(old.bars || []);
       if (!changed) { skipped++; continue; }
 
