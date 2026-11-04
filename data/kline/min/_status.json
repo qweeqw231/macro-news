@@ -1,13 +1,9 @@
 {
-  "generatedAt": "2026-11-04T09:50:05.529Z",
-  "ok": 19,
-  "failed": 0,
-  "failures": [],
-  "rejected": [
-    "dax/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "cac40/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "ukx/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "xag/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "xau/5m: shorter（新 1000 根 < 现有 1003 根）"
-  ]
+  "generatedAt": "2026-11-04T10:18:09.788Z",
+  "ok": 0,
+  "failed": 1,
+  "failures": [
+    "n225/5m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)"
+  ],
+  "rejected": []
 }
