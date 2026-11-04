@@ -844,6 +844,7 @@
     if (!d.hasBriefing) {
       const a = el('a', 'day');
       a.href = '#';
+      if (d.reason) a.title = d.reason;
       a.appendChild(el('div', 'day-d', d.day));
       a.appendChild(el('div', 'day-n', d.count + ' 条'));
       a.onclick = open;
@@ -855,6 +856,7 @@
     box.dataset.day = d.day;
     const a = el('a', 'day-open');
     a.href = '#';
+    if (d.reason) a.title = d.reason;
     a.appendChild(el('div', 'day-d', d.day));
     a.appendChild(el('div', 'day-n', d.count + ' 条'));
     if (d.source === 'rule') a.appendChild(el('span', 'day-tag', '自动摘要'));
@@ -1016,31 +1018,43 @@
     const box = $('#days');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
     try {
-      // 两个索引并行取：archive（62 天，带全文）+ history（近一年缺口，标题/摘要）
+      // 两个索引并行取：archive（带全文）+ history（归档前缺口，仅标题/来源/时间）
       const [idx, hist] = await Promise.all([loadIndex(), loadHistoryIndex()]);
       const map = new Map();
-      (idx.days || []).forEach((d) => {
-        map.set(d.day, {
-          day: d.day,
-          count: d.count || 0,
-          kind: 'live',
-          hasBriefing: !!d.hasBriefing,
-          briefLine: d.briefLine || '',
-          source: d.hasBriefing ? (d.source === 'rule' || d.source === 'draft' ? d.source : 'ai') : '',
+      const archMap = new Map((idx.days || []).map((d) => [d.day, d]));
+      const histMap = new Map((hist.days || []).filter((d) => d && d.d).map((d) => [d.d, d]));
+      const allDays = new Set([...archMap.keys(), ...histMap.keys()]);
+
+      // 2.5.0：同一天用 archive 还是 history，由显式规则决定（assets/day-source.js）
+      const decide = (a, h) => {
+        if (window.MacroDaySource) {
+          return window.MacroDaySource.decideDaySource({ archiveCount: a, historyCount: h });
+        }
+        if (a <= 0 && h <= 0) return { kind: 'none', count: 0, reason: '该日无归档与历史数据' };
+        if (a >= 20) return { kind: 'archive', count: a, reason: '归档全文' };
+        if (h > 0) return {
+          kind: 'history', count: h,
+          reason: `该日归档仅 ${a} 条，已改用历史切片 ${h} 条（仅标题/来源/时间，正文请点原文）`,
+        };
+        return { kind: 'archive', count: a, reason: '归档全文（该日无历史切片可补）' };
+      };
+
+      for (const day of allDays) {
+        const a = archMap.get(day);
+        const h = histMap.get(day);
+        const dec = decide(a ? a.count || 0 : 0, h ? h.n || 0 : 0);
+        if (dec.kind === 'none') continue;
+        const base = dec.kind === 'history' ? h : a;
+        map.set(day, {
+          day,
+          count: dec.count,
+          kind: dec.kind === 'history' ? 'hist' : 'live',
+          reason: dec.reason,
+          hasBriefing: !!base.hasBriefing,
+          briefLine: base.briefLine || '',
+          source: base.hasBriefing ? (base.source === 'rule' || base.source === 'draft' ? base.source : 'ai') : '',
         });
-      });
-      (hist.days || []).forEach((d) => {
-        // 同一天两边都有时用 archive：那份带正文，历史切片只有摘要
-        if (!d || !d.d || map.has(d.d)) return;
-        map.set(d.d, {
-          day: d.d,
-          count: d.n || 0,
-          kind: 'hist',
-          hasBriefing: !!d.hasBriefing,
-          briefLine: d.briefLine || '',
-          source: d.hasBriefing ? (d.source === 'rule' || d.source === 'draft' ? d.source : 'ai') : '',
-        });
-      });
+      }
       const list = [...map.values()].sort((a, b) => (a.day < b.day ? 1 : -1));
       dayIndex = map;
       renderHistPanel(hist, list);
@@ -1071,10 +1085,12 @@
       S.shown = PAGE;
       renderFilters();
       renderFeed();
+      const info = dayIndex.get(day);
+      const reason = info && info.reason ? ' · ' + info.reason : '';
       $('#qMeta').textContent =
         kind === 'hist'
-          ? `历史：${day} · ${d.items.length} 条（仅标题/来源/时间，正文请点原文）`
-          : `归档：${day} · ${d.items.length} 条`;
+          ? `历史：${day} · ${d.items.length} 条${reason || ' · 仅标题/来源/时间，正文请点原文'}`
+          : `归档：${day} · ${d.items.length} 条${reason}`;
     } catch (e) {
       box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
     }

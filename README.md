@@ -132,6 +132,9 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 - **分钟 + 最后一根**（`kline-minute.yml`，每小时 :17）：
   - `scripts/update-kline-minute.mjs`：8 个标的 × 5 个分钟周期（`min/`）
   - `scripts/update-kline-last.mjs`：只 upsert **当前处于交易时段**品种的最后一根日 K
+  - **短覆盖守卫（2.5.0）**：所有写 `data/kline/` 的脚本统一走 `src/kline-guard.mjs`。
+    新结果首根更晚且更短 → 拒绝并记录（`rejected: shorter`）；等长但末根更新 / 更长 → 接受；
+    更长但中间有缺口 → 按时间键 union 合并。绝不静默用短序列覆盖长历史。
     （上海金夜盘这类「未来蜡烛」要随采集动态更新，每天一次不够）
 
 ### 2.3 链路 ③：时点快照（云端 30 分钟兜底）
@@ -261,6 +264,11 @@ publish --date（脚本，确定性）
 
 历史切片**只有标题/来源/时间，没有摘要与正文**（正文在 `archive/` 的日期里）；`search.json` 不覆盖历史，
 全文检索仍只搜最近 62 天 —— 这是刻意的，365 天全量索引在浏览器里不可行（见 §9）。
+
+**同一天用哪份（2.5.0）**：archive 条数 **≥ 20** 时用归档全文；`< 20` 且存在历史切片时，
+改用历史切片并在列表上方显示原因（如「该日归档仅 3 条，已改用历史切片 243 条（仅标题/来源/时间，
+正文请点原文）」）。规则在 `assets/day-source.js`，阈值显式可见、可测试，不藏在渲染里。
+补齐占位日切片：`node scripts/export-history.mjs --from <起> --to <止> --include-archived --force`。
 
 ---
 
