@@ -1,15 +1,16 @@
 {
-  "generatedAt": "2026-11-04T13:50:05.075Z",
-  "ok": 17,
+  "generatedAt": "2026-11-04T14:20:18.415Z",
+  "ok": 16,
   "failed": 0,
   "failures": [],
   "rejected": [
     "dax/5m: shorter（新 1000 根 < 现有 1003 根）",
     "cac40/5m: shorter（新 1000 根 < 现有 1003 根）",
     "ukx/5m: shorter（新 1000 根 < 现有 1003 根）",
+    "sge_au9999/5m: shorter（新 1000 根 < 现有 1022 根）",
     "xag/5m: shorter（新 1000 根 < 现有 1003 根）",
     "xau/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "sge_au9999/30m: shorter（新 212 根 < 现有 234 根）",
-    "sge_au9999/15m: shorter（新 424 根 < 现有 468 根）"
+    "sge_au9999/30m: shorter（新 213 根 < 现有 234 根）",
+    "sge_au9999/1m: shorter（新 140 根 < 现有 780 根）"
   ]
 }
