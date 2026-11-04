@@ -53,6 +53,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchKline, getKlineSource, klineTarget } from '../src/sources.mjs';
 import { decideBars } from '../src/kline-guard.mjs';
+import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -146,6 +147,7 @@ console.log(
 
 let changed = 0;
 let same = 0;
+let locked = 0;
 const failures = [];
 const rejected = [];
 const results = [];
@@ -210,59 +212,70 @@ outer: for (const period of periodList) {
     }
 
     const incoming = bars.map((b) => [b.t, b.o, b.c, b.h, b.l, b.v]);
-    // 2.4.10：短序列不得覆盖长序列
-    let outBars = incoming;
-    let oldDoc = null;
-    if (existsSync(file)) {
-      try { oldDoc = JSON.parse(await readFile(file, 'utf8')); } catch { oldDoc = null; }
-      if (oldDoc) {
-        const d = decideBars(oldDoc.bars, incoming);
-        if (d.action === 'reject') {
-          rejected.push(`${key}/${period}: shorter（新 ${incoming.length} 根 < 现有 ${(oldDoc.bars || []).length} 根）`);
-          console.log(`  ⛔ ${key.padEnd(9)} ${period.padEnd(3)} rejected: shorter，保留现有文件`);
-          await sleep(GAP_MS);
-          continue;
+    const lock = await acquireKlineLock(key);
+    if (!lock.ok) {
+      locked++;
+      console.log(`  ${lockSkipText(key, lock)}`);
+      await sleep(GAP_MS);
+      continue;
+    }
+    try {
+      // 2.4.10：短序列不得覆盖长序列
+      let outBars = incoming;
+      let oldDoc = null;
+      if (existsSync(file)) {
+        try { oldDoc = JSON.parse(await readFile(file, 'utf8')); } catch { oldDoc = null; }
+        if (oldDoc) {
+          const d = decideBars(oldDoc.bars, incoming);
+          if (d.action === 'reject') {
+            rejected.push(`${key}/${period}: shorter（新 ${incoming.length} 根 < 现有 ${(oldDoc.bars || []).length} 根）`);
+            console.log(`  ⛔ ${key.padEnd(9)} ${period.padEnd(3)} rejected: shorter，保留现有文件`);
+            await sleep(GAP_MS);
+            continue;
+          }
+          outBars = d.bars;
         }
-        outBars = d.bars;
       }
-    }
 
-    const payload = {
-      key,
-      name: meta.name,
-      market: meta.market,
-      period,
-      generatedAt: new Date().toISOString(),
-      source: `服务端预生成的分钟K（limit=${spec.limit}）· 取数源：${getKlineSource() || '未知'}`,
-      caliber: meta.klineNote || '',
-      // 紧凑数组行：[t,o,c,h,l,v]
-      bars: outBars,
-    };
-    const text = JSON.stringify(payload);
+      const payload = {
+        key,
+        name: meta.name,
+        market: meta.market,
+        period,
+        generatedAt: new Date().toISOString(),
+        source: `服务端预生成的分钟K（limit=${spec.limit}）· 取数源：${getKlineSource() || '未知'}`,
+        caliber: meta.klineNote || '',
+        // 紧凑数组行：[t,o,c,h,l,v]
+        bars: outBars,
+      };
+      const text = JSON.stringify(payload);
 
-    // 内容没变就不写 —— 免得每次跑都产生一个「只有 generatedAt 变了」的提交
-    let unchanged = false;
-    if (oldDoc) {
-      if (JSON.stringify(oldDoc.bars || []) === JSON.stringify(payload.bars)) unchanged = true;
-    }
-
-    if (unchanged) {
-      same++;
-      console.log(
-        `  ${key.padEnd(9)} ${period.padEnd(3)} ${String(payload.bars.length).padStart(4)} 根  内容未变，跳过`
-      );
-    } else {
-      if (!DRY) {
-        await mkdir(OUT_DIR, { recursive: true });
-        await writeFile(file, text, 'utf8');
+      // 内容没变就不写 —— 免得每次跑都产生一个「只有 generatedAt 变了」的提交
+      let unchanged = false;
+      if (oldDoc) {
+        if (JSON.stringify(oldDoc.bars || []) === JSON.stringify(payload.bars)) unchanged = true;
       }
-      changed++;
-      console.log(
-        `  ${key.padEnd(9)} ${period.padEnd(3)} ${String(payload.bars.length).padStart(4)} 根  ` +
-        `${payload.bars[0][0]} → ${payload.bars[payload.bars.length - 1][0]}  [${getKlineSource() || '未知源'}]${DRY ? '（dry-run）' : ''}`
-      );
+
+      if (unchanged) {
+        same++;
+        console.log(
+          `  ${key.padEnd(9)} ${period.padEnd(3)} ${String(payload.bars.length).padStart(4)} 根  内容未变，跳过`
+        );
+      } else {
+        if (!DRY) {
+          await mkdir(OUT_DIR, { recursive: true });
+          await writeFile(file, text, 'utf8');
+        }
+        changed++;
+        console.log(
+          `  ${key.padEnd(9)} ${period.padEnd(3)} ${String(payload.bars.length).padStart(4)} 根  ` +
+          `${payload.bars[0][0]} → ${payload.bars[payload.bars.length - 1][0]}  [${getKlineSource() || '未知源'}]${DRY ? '（dry-run）' : ''}`
+        );
+      }
+      results.push({ key, period, bars: payload.bars.length, from: payload.bars[0][0], to: payload.bars[payload.bars.length - 1][0] });
+    } finally {
+      await releaseKlineLock(lock);
     }
-    results.push({ key, period, bars: payload.bars.length, from: payload.bars[0][0], to: payload.bars[payload.bars.length - 1][0] });
     await sleep(GAP_MS);
   }
 }
@@ -297,7 +310,7 @@ if (!DRY) {
 }
 
 console.log(
-  `[update-kline-minute] 更新 ${changed} 个 / 无变化 ${same} 个 / 拒绝 ${rejected.length} 个（短覆盖） / 失败 ${failures.length} 个` +
+  `[update-kline-minute] 更新 ${changed} 个 / 无变化 ${same} 个 / 锁占用 ${locked} 个 / 拒绝 ${rejected.length} 个（短覆盖） / 失败 ${failures.length} 个` +
   (throttleHit ? '（本轮因东财限流提前收手）' : '')
 );
 if (rejected.length) {

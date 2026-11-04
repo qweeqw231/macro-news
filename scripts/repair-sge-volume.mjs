@@ -18,6 +18,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchKline, aggregateBars, getKlineSource } from '../src/sources.mjs';
 import { mergeBars, barVolume } from '../src/kline-guard.mjs';
+import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIR = path.join(ROOT, 'data', 'kline');
@@ -28,44 +29,57 @@ const read = async (f) => JSON.parse(await readFile(path.join(DIR, f), 'utf8'));
 const write = (f, obj) => writeFile(path.join(DIR, f), JSON.stringify(obj, null, 2), 'utf8');
 
 async function main() {
-  const old = await read('sge_au9999.json');
   const incoming = await fetchKline('sge_au9999', '1d', 1000);
   const src = getKlineSource();
   if (src !== '东方财富') throw new Error(`本次取数源是「${src}」，没有成交量；请稍后重试`);
   if (incoming.filter((b) => b.v > 0).length < 900) throw new Error('东财返回的成交量异常（>0 少于 900 根）');
 
-  const merged = mergeBars(old.bars, incoming);
-  const filled = merged.filter((b) => barVolume(b) > 0);
-  const firstFilled = filled[0];
-  const lastFilled = filled[filled.length - 1];
-  const before = old.bars.filter((b) => barVolume(b) > 0).length;
-
-  console.log(`[sge-volume] 现有 ${old.bars.length} 根 / volume>0 ${before}`);
-  console.log(`[sge-volume] 合并后 ${merged.length} 根 / volume>0 ${filled.length}；`
-    + `覆盖 ${firstFilled && firstFilled.t} → ${lastFilled && lastFilled.t}`);
-
-  if (!APPLY) {
-    console.log('[sge-volume] dry-run，未写盘');
-    return;
+  let lock = null;
+  if (APPLY) {
+    lock = await acquireKlineLock('sge_au9999');
+    if (!lock.ok) {
+      console.log(`[sge-volume] ${lockSkipText('sge_au9999', lock)}`);
+      return;
+    }
   }
 
-  await write('sge_au9999.json', {
-    ...BASE,
-    period: '1d',
-    generatedAt: new Date().toISOString(),
-    source: '东方财富（成交量回填 2.4.11）',
-    bars: merged,
-  });
-  for (const [unit, period, suffix] of [['week', '1w', '_1w'], ['month', '1M', '_1M']]) {
-    const bars = aggregateBars(merged, unit);
-    await write(`sge_au9999${suffix}.json`, {
+  try {
+    const old = await read('sge_au9999.json');
+    const merged = mergeBars(old.bars, incoming);
+    const filled = merged.filter((b) => barVolume(b) > 0);
+    const firstFilled = filled[0];
+    const lastFilled = filled[filled.length - 1];
+    const before = old.bars.filter((b) => barVolume(b) > 0).length;
+
+    console.log(`[sge-volume] 现有 ${old.bars.length} 根 / volume>0 ${before}`);
+    console.log(`[sge-volume] 合并后 ${merged.length} 根 / volume>0 ${filled.length}；`
+      + `覆盖 ${firstFilled && firstFilled.t} → ${lastFilled && lastFilled.t}`);
+
+    if (!APPLY) {
+      console.log('[sge-volume] dry-run，未写盘');
+      return;
+    }
+
+    await write('sge_au9999.json', {
       ...BASE,
-      period,
+      period: '1d',
       generatedAt: new Date().toISOString(),
-      source: '本地聚合自 sge_au9999 日线（成交量回填 2.4.11）',
-      bars,
+      source: '东方财富（成交量回填 2.4.11）',
+      bars: merged,
     });
-    console.log(`[sge-volume] ${period} ${bars.length} 根，volume>0 ${bars.filter((b) => b.v > 0).length}`);
+    for (const [unit, period, suffix] of [['week', '1w', '_1w'], ['month', '1M', '_1M']]) {
+      const bars = aggregateBars(merged, unit);
+      await write(`sge_au9999${suffix}.json`, {
+        ...BASE,
+        period,
+        generatedAt: new Date().toISOString(),
+        source: '本地聚合自 sge_au9999 日线（成交量回填 2.4.11）',
+        bars,
+      });
+      console.log(`[sge-volume] ${period} ${bars.length} 根，volume>0 ${bars.filter((b) => b.v > 0).length}`);
+    }
+  } finally {
+    if (lock) await releaseKlineLock(lock);
   }
 }
 

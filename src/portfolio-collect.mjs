@@ -22,6 +22,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchMacroIndicators, fetchCgbCurveOneY } from './portfolio.mjs';
 import { aggregateDaily } from './aggregate.mjs';
+import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -124,51 +125,60 @@ async function main() {
     } catch { /* 当天没有曲线就继续往前找 */ }
   }
   if (Number.isFinite(cgbVal)) {
-    const klineFile = path.join(DATA, 'kline', 'cgb_1y.json');
-    const old = await readJSON(klineFile, { bars: [] });
-    const bars = Array.isArray(old.bars) ? old.bars.slice() : [];
-    const srcDay = cgbDate;
-    const bar = { t: srcDay, o: cgbVal, c: cgbVal, h: cgbVal, l: cgbVal, v: 0 };
-    const i = bars.findIndex((b) => b.t === srcDay);
-    if (i >= 0) bars[i] = bar;
-    else bars.push(bar);
-    bars.sort((a, b) => String(a.t).localeCompare(String(b.t)));
-    const klineChanged = await writeJSONIfChanged(klineFile, {
-      key: 'cgb_1y',
-      name: '1Y国债收益率',
-      market: 'CN',
-      period: '1d',
-      generatedAt: at,
-      source: '中债国债收益率曲线（queryGjqxInfo）',
-      bars,
-    });
-    console.log(
-      `  kline/cgb_1y.json：${bars.length} 根（最新 ${bars[bars.length - 1]?.t} = ` +
-      `${bars[bars.length - 1]?.c}%）${klineChanged ? '' : ' · 内容未变，跳过写盘'}`
-    );
+    const lock = await acquireKlineLock('cgb_1y');
+    if (!lock.ok) {
+      console.log(`  ${lockSkipText('cgb_1y', lock)}（cgb_1y 本轮不写）`);
+    } else {
+      try {
+        const klineFile = path.join(DATA, 'kline', 'cgb_1y.json');
+        const old = await readJSON(klineFile, { bars: [] });
+        const bars = Array.isArray(old.bars) ? old.bars.slice() : [];
+        const srcDay = cgbDate;
+        const bar = { t: srcDay, o: cgbVal, c: cgbVal, h: cgbVal, l: cgbVal, v: 0 };
+        const i = bars.findIndex((b) => b.t === srcDay);
+        if (i >= 0) bars[i] = bar;
+        else bars.push(bar);
+        bars.sort((a, b) => String(a.t).localeCompare(String(b.t)));
+        const klineChanged = await writeJSONIfChanged(klineFile, {
+          key: 'cgb_1y',
+          name: '1Y国债收益率',
+          market: 'CN',
+          period: '1d',
+          generatedAt: at,
+          source: '中债国债收益率曲线（queryGjqxInfo）',
+          bars,
+        });
+        console.log(
+          `  kline/cgb_1y.json：${bars.length} 根（最新 ${bars[bars.length - 1]?.t} = ` +
+          `${bars[bars.length - 1]?.c}%）${klineChanged ? '' : ' · 内容未变，跳过写盘'}`
+        );
 
-    // ---- 顺带预生成周K / 月K ----
-    // 前端点「周K / 月K」时会读 `data/kline/cgb_1y_1w.json` / `_1M.json`；
-    // 没有这两个文件就得回退到「在浏览器端用日K 聚合」，
-    // 而日K 文件有 500KB —— 线上按本机 5~30 KB/s 的带宽重下一次要 20~100 秒。
-    // ⇒ 后端提前聚合好（口径见 src/aggregate.mjs），前端点一下就能开。
-    for (const [period, unit] of [['1w', 'week'], ['1M', 'month']]) {
-      const sub = aggregateDaily(bars, unit);
-      if (!sub.length) continue;
-      const f = path.join(DATA, 'kline', `cgb_1y_${period}.json`);
-      const changed = await writeJSONIfChanged(f, {
-        key: 'cgb_1y',
-        name: '1Y国债收益率',
-        market: 'CN',
-        period,
-        generatedAt: at,
-        source: '中债国债收益率曲线（queryGjqxInfo）· 由日K聚合',
-        bars: sub,
-      });
-      console.log(
-        `  kline/cgb_1y_${period}.json：${sub.length} 根` +
-        `${changed ? '' : ' · 内容未变，跳过写盘'}`
-      );
+        // ---- 顺带预生成周K / 月K ----
+        // 前端点「周K / 月K」时会读 `data/kline/cgb_1y_1w.json` / `_1M.json`；
+        // 没有这两个文件就得回退到「在浏览器端用日K 聚合」，
+        // 而日K 文件有 500KB —— 线上按本机 5~30 KB/s 的带宽重下一次要 20~100 秒。
+        // ⇒ 后端提前聚合好（口径见 src/aggregate.mjs），前端点一下就能开。
+        for (const [period, unit] of [['1w', 'week'], ['1M', 'month']]) {
+          const sub = aggregateDaily(bars, unit);
+          if (!sub.length) continue;
+          const f = path.join(DATA, 'kline', `cgb_1y_${period}.json`);
+          const changed = await writeJSONIfChanged(f, {
+            key: 'cgb_1y',
+            name: '1Y国债收益率',
+            market: 'CN',
+            period,
+            generatedAt: at,
+            source: '中债国债收益率曲线（queryGjqxInfo）· 由日K聚合',
+            bars: sub,
+          });
+          console.log(
+            `  kline/cgb_1y_${period}.json：${sub.length} 根` +
+            `${changed ? '' : ' · 内容未变，跳过写盘'}`
+          );
+        }
+      } finally {
+        await releaseKlineLock(lock);
+      }
     }
   }
 

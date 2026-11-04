@@ -20,6 +20,7 @@ import { fetchPortfolioQuotesFast } from './portfolio.mjs';
 import { readBriefingMeta } from './brief-meta.mjs';
 import { dedupeItems } from './news-dedupe.mjs';
 import { decideBars } from './kline-guard.mjs';
+import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -102,6 +103,7 @@ async function writeJSONIfChanged(file, obj) {
 async function collectKlines(startedAt, onlyKeys) {
   const klineOk = [];
   const klineSkip = [];
+  let lockSkipped = 0;
   const { INDICES, PORTFOLIO_KLINE, fetchKline, klineAvailable, klineTarget, getKlineSource } =
     await import('./sources.mjs');
   // 20 个指数 + 4 个组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）
@@ -119,28 +121,39 @@ async function collectKlines(startedAt, onlyKeys) {
     for (const spec of KLINE_SPEC) {
       try {
         const file = path.join(DATA, 'kline', `${key}${spec.suffix}.json`);
-        const prev = await readJSON(file, null);
         const incoming = await fetchKline(key, spec.period, spec.limit);
-        // 2.4.10：短序列不得覆盖长序列（见 src/kline-guard.mjs）
-        const decision = decideBars(prev && prev.bars, incoming);
-        if (decision.action === 'reject') {
-          console.log(
-            `  ⛔ ${key} ${spec.period} rejected: shorter（新 ${incoming.length} 根 < 现有 ${(prev.bars || []).length} 根），保留现有文件`
-          );
+        const lock = await acquireKlineLock(key);
+        if (!lock.ok) {
+          lockSkipped++;
+          console.log(`  ${lockSkipText(key, lock)}`);
+          await new Promise((r) => setTimeout(r, 250));
           continue;
         }
-        const bars = decision.bars;
-        await writeJSONIfChanged(file, {
-          key,
-          name: meta?.name || key,
-          market: meta?.market || '',
-          period: spec.period,
-          generatedAt: startedAt.toISOString(),
-          // 取数源写进文件：离线快照必须能自证是哪来的（东财 / 新浪 / 新浪外盘 / 上金所 / 腾讯）
-          source: getKlineSource() || '',
-          bars,
-        });
-        done.push(`${spec.period}:${bars.length}${decision.action === 'merge' ? '/merge' : ''}`);
+        try {
+          const prev = await readJSON(file, null);
+          // 2.4.10：短序列不得覆盖长序列（见 src/kline-guard.mjs）
+          const decision = decideBars(prev && prev.bars, incoming);
+          if (decision.action === 'reject') {
+            console.log(
+              `  ⛔ ${key} ${spec.period} rejected: shorter（新 ${incoming.length} 根 < 现有 ${(prev.bars || []).length} 根），保留现有文件`
+            );
+            continue;
+          }
+          const bars = decision.bars;
+          await writeJSONIfChanged(file, {
+            key,
+            name: meta?.name || key,
+            market: meta?.market || '',
+            period: spec.period,
+            generatedAt: startedAt.toISOString(),
+            // 取数源写进文件：离线快照必须能自证是哪来的（东财 / 新浪 / 新浪外盘 / 上金所 / 腾讯）
+            source: getKlineSource() || '',
+            bars,
+          });
+          done.push(`${spec.period}:${bars.length}${decision.action === 'merge' ? '/merge' : ''}`);
+        } finally {
+          await releaseKlineLock(lock);
+        }
       } catch (err) {
         // 单个周期失败不影响其它周期（例如某源不支持月K）
       }
@@ -151,7 +164,7 @@ async function collectKlines(startedAt, onlyKeys) {
     else klineSkip.push(key);
   }
   console.log(
-    `[collect] K线：${klineOk.length} 个标的 × ${KLINE_SPEC.length} 个周期，跳过 ${klineSkip.length} 个（${klineSkip.join(', ') || '无'}）`
+    `[collect] K线：${klineOk.length} 个标的 × ${KLINE_SPEC.length} 个周期，跳过 ${klineSkip.length} 个（${klineSkip.join(', ') || '无'}），锁占用 ${lockSkipped} 次`
   );
   if (klineOk.length) console.log(`[collect] K线明细：${klineOk.join(' ')}`);
 }

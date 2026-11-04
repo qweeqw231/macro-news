@@ -36,6 +36,31 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.15] - 2026-11-05
+
+> 写盘锁：`data/kline/` 按标的一把锁（同一文件系统内有效）。
+
+### 修正
+
+- 新增 `src/kline-lock.mjs`：`.cache/locks/kline-<key>.lock`，`open(..., 'wx')` 原子创建；
+  锁内含 `{key,pid,host,at,token}`；默认 **5 分钟**陈旧阈值，过期后通过原子 `rename` 接管；
+  释放时校验 token，旧持有者不会误删新锁。
+- 接入 8 条写入路径：`src/collect.mjs`、`update-kline-minute`、`update-kline-full`、
+  `update-kline-last`、`backfill-cgb1y`、`backfill-macro`、`portfolio-collect`、
+  `repair-sge-volume`。锁只包「读旧文件 → 合并 → 写盘」，不包 `fetchKline`，持锁通常 <1 秒。
+- 拿不到锁：跳过该标的并打印 `⏭ <key> 跳过：写锁被占用（pid…，已持有 …s）`；
+  不等待、不强写、不算失败，不改变原有退出码与产物格式。
+- 边界：GitHub Actions 不同 runner 文件系统隔离，本锁**不能跨 runner 互斥**；
+  跨 runner 仍靠 2.4.14 的触发错峰 + `push-data.sh` 的 rebase 重试 + `kline-guard`。
+- 本机 `MacroNews-Collect` 不先 pull 的问题本次**不处理**，只记录。
+- `cgb_1y` 仍无 `kline-guard`（单一源、成交量恒 0）；本次锁只覆盖写入互斥。
+
+### 测试
+
+- 新增 `tests/kline-lock.test.mjs`（7 项）：并发只有一个成功、拿不到锁不执行回调、
+  释放后可重取、陈旧锁接管且旧持有者不能误删、锁路径隔离、
+  八个写入脚本必须接线、锁占用不算失败。全套 **201 项**通过。
+
 ## [2.4.14] - 2026-11-05
 
 > 触发去重（配置层）：Cloudflare 为主触发，GitHub `schedule` 只做错峰兜底。

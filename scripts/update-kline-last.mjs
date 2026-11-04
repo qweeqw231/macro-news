@@ -18,6 +18,7 @@ import {
   INDICES, PORTFOLIO_KLINE, fetchKline, klineAvailable, klineTarget, getKlineSource,
 } from '../src/sources.mjs';
 import { upsertBars } from '../src/kline-guard.mjs';
+import { withKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -63,7 +64,7 @@ function activeNow(market, now) {
 async function main() {
   const now = beijingNow();
   const keys = [...INDICES, ...PORTFOLIO_KLINE].map((x) => x.key);
-  let updated = 0, skipped = 0, failed = 0;
+  let updated = 0, skipped = 0, failed = 0, locked = 0;
 
   for (const key of keys) {
     if (!klineAvailable(key)) { skipped++; continue; }
@@ -76,27 +77,37 @@ async function main() {
     try {
       // 只取最近 5 根：够覆盖「今天 + 上一交易日」，不会把全量历史拖下来
       const latest = await fetchKline(key, '1d', 5);
-      const old = JSON.parse(await readFile(file, 'utf8'));
-      // 2.4.12 补丁位：按时间键 upsert，并保留非零成交量。
-      //   上金所官网兜底没有 volume（全部 0），以前这里用 Map 直接覆盖，
-      //   一次 SGE 源切换就把最近 5 根的东财成交量抹成 0（2026-11-04 14:28 UTC 实测）。
-      const bars = upsertBars(old.bars, latest);
-      const changed = JSON.stringify(bars) !== JSON.stringify(old.bars || []);
-      if (!changed) { skipped++; continue; }
+      const res = await withKlineLock(key, async () => {
+        const old = JSON.parse(await readFile(file, 'utf8'));
+        // 2.4.12 补丁位：按时间键 upsert，并保留非零成交量。
+        //   上金所官网兜底没有 volume（全部 0），以前这里用 Map 直接覆盖，
+        //   一次 SGE 源切换就把最近 5 根的东财成交量抹成 0（2026-11-04 14:28 UTC 实测）。
+        const bars = upsertBars(old.bars, latest);
+        const changed = JSON.stringify(bars) !== JSON.stringify(old.bars || []);
+        if (!changed) return { changed: false };
 
-      const doc = {
-        ...old,
-        key,
-        name: old.name || meta?.name || key,
-        market: old.market || meta?.market || '',
-        period: '1d',
-        generatedAt: new Date().toISOString(),
-        source: getKlineSource() || old.source || '',
-        bars,
-      };
-      if (!DRY_RUN) await writeFile(file, JSON.stringify(doc, null, 2), 'utf8');
+        const doc = {
+          ...old,
+          key,
+          name: old.name || meta?.name || key,
+          market: old.market || meta?.market || '',
+          period: '1d',
+          generatedAt: new Date().toISOString(),
+          source: getKlineSource() || old.source || '',
+          bars,
+        };
+        if (!DRY_RUN) await writeFile(file, JSON.stringify(doc, null, 2), 'utf8');
+        return { changed: true, last: latest[latest.length - 1] };
+      });
+      if (!res.ok) {
+        locked++;
+        console.log(`  ${lockSkipText(key, res)}`);
+        await new Promise((r) => setTimeout(r, 400));
+        continue;
+      }
+      if (!res.value.changed) { skipped++; continue; }
       updated++;
-      const last = latest[latest.length - 1];
+      const last = res.value.last;
       console.log(`  ${key}：最后一根 ${last.t} 收 ${last.c}${DRY_RUN ? '（dry-run 不写盘）' : ''}`);
     } catch (err) {
       failed++;
@@ -106,7 +117,7 @@ async function main() {
     await new Promise((r) => setTimeout(r, 400));
   }
 
-  console.log(`[kline-last] 更新 ${updated} 个 · 跳过 ${skipped} 个 · 失败 ${failed} 个`);
+  console.log(`[kline-last] 更新 ${updated} 个 · 跳过 ${skipped} 个 · 锁占用 ${locked} 个 · 失败 ${failed} 个`);
 }
 
 main().catch((err) => {

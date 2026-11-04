@@ -26,6 +26,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { INDICES, PORTFOLIO_KLINE, fetchKline, getKlineSource } from '../src/sources.mjs';
 import { decideBars } from '../src/kline-guard.mjs';
+import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -62,6 +63,7 @@ let changed = 0;
 let skipped = 0;
 let failed = 0;
 let rejected = 0;
+let locked = 0;
 
 for (const idx of list) {
   const file = path.join(OUT_DIR, `${idx.key}_full.json`);
@@ -87,47 +89,57 @@ for (const idx of list) {
       throw new Error(`只取到 ${bars ? bars.length : 0} 根，不足 ${MIN_BARS} 根，不当全量写`);
     }
     const incoming = bars.map((b) => [b.t, b.o, b.c, b.h, b.l, b.v]);
-    // 2.4.10：短序列不得覆盖长序列
-    let outBars = incoming;
-    if (existsSync(file)) {
-      try {
-        const old = JSON.parse(await readFile(file, 'utf8'));
-        const d = decideBars(old.bars, incoming);
-        if (d.action === 'reject') {
-          rejected++;
-          console.log(`  ⛔ ${idx.key.padEnd(9)} rejected: shorter（新 ${incoming.length} 根 < 现有 ${(old.bars || []).length} 根），保留现有文件`);
-          continue;
+    const lock = await acquireKlineLock(idx.key);
+    if (!lock.ok) {
+      locked++;
+      console.log(`  ${lockSkipText(idx.key, lock)}`);
+      continue;
+    }
+    try {
+      // 2.4.10：短序列不得覆盖长序列
+      let outBars = incoming;
+      if (existsSync(file)) {
+        try {
+          const old = JSON.parse(await readFile(file, 'utf8'));
+          const d = decideBars(old.bars, incoming);
+          if (d.action === 'reject') {
+            rejected++;
+            console.log(`  ⛔ ${idx.key.padEnd(9)} rejected: shorter（新 ${incoming.length} 根 < 现有 ${(old.bars || []).length} 根），保留现有文件`);
+            continue;
+          }
+          outBars = d.bars;
+          if (d.action === 'merge') console.log(`  ↻ ${idx.key.padEnd(9)} 合并缺口后 ${outBars.length} 根`);
+        } catch {
+          /* 损坏文件 → 直接覆盖 */
         }
-        outBars = d.bars;
-        if (d.action === 'merge') console.log(`  ↻ ${idx.key.padEnd(9)} 合并缺口后 ${outBars.length} 根`);
-      } catch {
-        /* 损坏文件 → 直接覆盖 */
       }
-    }
-    if (!DRY) {
-      await mkdir(OUT_DIR, { recursive: true });
-      await writeFile(
-        file,
-        JSON.stringify({
-          key: idx.key,
-          name: idx.name,
-          market: idx.market,
-          period: '1d',
-          generatedAt: new Date().toISOString(),
-          // 取数源与口径都写进文件：全量文件是「离线快照」，必须能自证是哪来的
-          source: `服务端预生成的全量日K（limit=${LIMIT}）· 取数源：${getKlineSource() || '未知'}`,
-          caliber: idx.klineNote || '',
-          // 紧凑数组行：[t,o,c,h,l,v]
-          bars: outBars,
-        }),
-        'utf8'
+      if (!DRY) {
+        await mkdir(OUT_DIR, { recursive: true });
+        await writeFile(
+          file,
+          JSON.stringify({
+            key: idx.key,
+            name: idx.name,
+            market: idx.market,
+            period: '1d',
+            generatedAt: new Date().toISOString(),
+            // 取数源与口径都写进文件：全量文件是「离线快照」，必须能自证是哪来的
+            source: `服务端预生成的全量日K（limit=${LIMIT}）· 取数源：${getKlineSource() || '未知'}`,
+            caliber: idx.klineNote || '',
+            // 紧凑数组行：[t,o,c,h,l,v]
+            bars: outBars,
+          }),
+          'utf8'
+        );
+      }
+      changed++;
+      console.log(
+        `  ${idx.key.padEnd(9)} ${String(outBars.length).padStart(6)} 根  ` +
+        `${outBars[0][0]} → ${outBars[outBars.length - 1][0]}  [${getKlineSource() || '未知源'}]${DRY ? '（dry-run）' : ''}`
       );
+    } finally {
+      await releaseKlineLock(lock);
     }
-    changed++;
-    console.log(
-      `  ${idx.key.padEnd(9)} ${String(outBars.length).padStart(6)} 根  ` +
-      `${outBars[0][0]} → ${outBars[outBars.length - 1][0]}  [${getKlineSource() || '未知源'}]${DRY ? '（dry-run）' : ''}`
-    );
   } catch (e) {
     failed++;
     console.log(`  ⚠ ${idx.key.padEnd(9)} 失败：${String(e.message).slice(0, 90)}`);
@@ -135,6 +147,6 @@ for (const idx of list) {
 }
 
 console.log(
-  `[update-kline-full] 更新 ${changed} 个 / 跳过 ${skipped} 个（今天已更新） / 拒绝 ${rejected} 个（短覆盖） / 失败 ${failed} 个`
+  `[update-kline-full] 更新 ${changed} 个 / 跳过 ${skipped} 个（今天已更新） / 锁占用 ${locked} 个 / 拒绝 ${rejected} 个（短覆盖） / 失败 ${failed} 个`
 );
 if ((failed || rejected) && !changed) process.exitCode = 1;

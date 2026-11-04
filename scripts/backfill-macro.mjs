@@ -20,6 +20,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchMargin, fetchUs10y, fetchCgbCurveOneY } from '../src/portfolio.mjs';
 import { aggregateDaily } from '../src/aggregate.mjs';
+import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MACRO_FILE = path.join(ROOT, 'data', 'macro', 'daily.json');
@@ -195,17 +196,26 @@ async function main() {
     writeJSON(MACRO_FILE, list.slice(0, 400));
   }
   if (cgbChanged && !DRY) {
-    const at = new Date().toISOString();
-    writeJSON(CGB_FILE, { ...cgbDoc, generatedAt: at, bars });
-    for (const [period, unit] of [['1w', 'week'], ['1M', 'month']]) {
-      const sub = aggregateDaily(bars, unit);
-      if (!sub.length) continue;
-      writeJSON(period === '1w' ? CGB_1W : CGB_1M, {
-        key: 'cgb_1y', name: '1Y国债收益率', market: 'CN', period,
-        generatedAt: at,
-        source: '中债国债收益率曲线（queryGjqxInfo）· 由日K聚合',
-        bars: sub,
-      });
+    const lock = await acquireKlineLock('cgb_1y');
+    if (!lock.ok) {
+      console.log(`  ${lockSkipText('cgb_1y', lock)}（cgb_1y 本轮不写）`);
+    } else {
+      try {
+        const at = new Date().toISOString();
+        writeJSON(CGB_FILE, { ...cgbDoc, generatedAt: at, bars });
+        for (const [period, unit] of [['1w', 'week'], ['1M', 'month']]) {
+          const sub = aggregateDaily(bars, unit);
+          if (!sub.length) continue;
+          writeJSON(period === '1w' ? CGB_1W : CGB_1M, {
+            key: 'cgb_1y', name: '1Y国债收益率', market: 'CN', period,
+            generatedAt: at,
+            source: '中债国债收益率曲线（queryGjqxInfo）· 由日K聚合',
+            bars: sub,
+          });
+        }
+      } finally {
+        await releaseKlineLock(lock);
+      }
     }
   }
 
