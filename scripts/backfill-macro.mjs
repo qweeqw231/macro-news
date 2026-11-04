@@ -20,6 +20,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchMargin, fetchUs10y, fetchCgbCurveOneY } from '../src/portfolio.mjs';
 import { aggregateDaily } from '../src/aggregate.mjs';
+import { mergeBars } from '../src/kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -202,9 +203,12 @@ async function main() {
     } else {
       try {
         const at = new Date().toISOString();
-        writeJSON(CGB_FILE, { ...cgbDoc, generatedAt: at, bars });
+        // 锁内重读一次：避免覆盖拿到锁之前别的进程刚追加的 cgb 日 K。
+        const latestDoc = readJSON(CGB_FILE, cgbDoc);
+        const mergedBars = mergeBars(bars, Array.isArray(latestDoc.bars) ? latestDoc.bars : []);
+        writeJSON(CGB_FILE, { ...latestDoc, generatedAt: at, bars: mergedBars });
         for (const [period, unit] of [['1w', 'week'], ['1M', 'month']]) {
-          const sub = aggregateDaily(bars, unit);
+          const sub = aggregateDaily(mergedBars, unit);
           if (!sub.length) continue;
           writeJSON(period === '1w' ? CGB_1W : CGB_1M, {
             key: 'cgb_1y', name: '1Y国债收益率', market: 'CN', period,
