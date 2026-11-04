@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T17:19:54.708Z",
+  "generatedAt": "2026-11-04T17:49:49.521Z",
   "ok": 14,
   "failed": 0,
   "failures": [],
@@ -12,7 +12,7 @@
     "xau/5m: shorter（新 1000 根 < 现有 1003 根）",
     "n225/30m: shorter（新 242 根 < 现有 253 根）",
     "kospi/30m: shorter（新 247 根 < 现有 260 根）",
-    "sge_au9999/30m: shorter（新 219 根 < 现有 234 根）",
-    "sge_au9999/1m: shorter（新 319 根 < 现有 780 根）"
+    "sge_au9999/30m: shorter（新 220 根 < 现有 234 根）",
+    "sge_au9999/1m: shorter（新 349 根 < 现有 780 根）"
   ]
 }
