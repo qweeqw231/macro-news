@@ -535,6 +535,18 @@ GitHub 自带 `schedule` 实测只兑现约 3%，所以触发搬到仓库外：
 | `13,43 * * * *` | `snapshot.yml` |
 | `17,47 * * * *` | `kline-minute.yml`（UTC 04:17 那轮附带 `kline-full.yml`） |
 
+**GitHub `schedule` 只做错峰兜底**（主触发是上面的 Cloudflare cron）：
+
+| 任务 | GitHub 兜底 | 与 CF 主触发的关系 |
+|---|---|---|
+| `collect.yml` | `12,42 * * * *` | 与 CF 所有轮次不同分钟（+5 分钟；CF 每 15 分钟一轮，见 workflow 注释） |
+| `snapshot.yml` | `3,33 * * * *` | +20 分钟 |
+| `kline-minute.yml` | `2 * * * *` | +15 分钟；04 点这一轮顺带刷新日/周/月 K |
+| `kline-full.yml` | `8 5 * * *`（05:08） | +51 分钟（全量单轮最长 30 分钟，避免并发写 `_full.json`） |
+
+日K / 周K / 月K 的每日刷新由 `kline-minute.yml` 在 UTC 04 点执行（CF 04:47 / GH 04:02），
+`kline-full.yml` 只写 `<key>_full.json`。
+
 ```bash
 # 1) GitHub → Developer settings → Fine-grained tokens
 #    Repository access: 只选 macro-news；Permissions: Actions → Read and write

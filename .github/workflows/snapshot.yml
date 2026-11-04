@@ -21,8 +21,8 @@ name: 时点快照 + 宏观兜底
 
 on:
   schedule:
-    # 每半小时一次（北京时间 13 分 / 43 分各一次，避开整点高峰）
-    - cron: '13,43 * * * *'
+    # 主触发在 Cloudflare：:13/:43。GitHub 兜底错峰到 :03/:33（+20 分钟）。
+    - cron: '3,33 * * * *'
   workflow_dispatch:
     inputs:
       backfill:

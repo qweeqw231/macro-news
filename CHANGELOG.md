@@ -36,6 +36,34 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.14] - 2026-11-05
+
+> 触发去重（配置层）：Cloudflare 为主触发，GitHub `schedule` 只做错峰兜底。
+
+### 修正
+
+- **同一分钟重复触发**：`kline-minute`（CF `:17/:47` + GH `:17`）、
+  `collect`（CF `:07/:22/:37/:52` + GH 同分钟 + `:14/:44`）、
+  `snapshot`（CF `:13/:43` + GH 同分钟）全部改为不同分钟。
+- GitHub 兜底：`collect` → `12,42`；`snapshot` → `3,33`；`kline-minute` → `2`；
+  `kline-full` → `05:08`。所有 workflow 保留 `workflow_dispatch`。
+- **CF 04:17 的内部并发**：CF 在该分钟同时 dispatch `kline-minute` 与 `kline-full`。
+  将 `collect --kline-only`（日/周/月 K）从 `kline-full` 移到 `kline-minute` 的
+  「UTC 04 点」步骤（CF 04:47 / GH 04:02）：`kline-full` 只写 `_full.json`，
+  04:17 的 minute 只写分钟快照 + 最后一根日 K，两边文件集合不相交。
+- 10~25 分钟偏移的两个例外（已写入 workflow 注释）：
+  `collect` 的 CF 主轮次每 15 分钟一轮，不存在与所有轮次相距 10~25 分钟的分钟位，
+  取 `:12/:42`（5 分钟错峰、2 次/小时）；`kline-full` 单轮最长 30 分钟，
+  取 `05:08`（+51 分钟）避免与 CF 04:17 并发写同一个 `_full.json`。
+- Cloudflare `worker/gh-cron/` **未改动、未部署**：cron 仍是
+  `7,22,37,52` / `13,43` / `17,47`；本次只改 GitHub 侧与 workflow 职责。
+
+### 测试
+
+- 新增 `tests/trigger-schedule.test.mjs`（7 项静态断言）：CF 与 GH 不同分钟、
+  分钟/快照偏移 10~25、full 错开 ≥45 分钟、四个 workflow 保留手动触发、
+  日/周/月 K 只在 `kline-minute` 刷新。全套 **194 项**通过。
+
 ## [2.4.13] - 2026-11-05
 
 > 审计发现：2.4.11 的成交量守卫漏掉了「只刷新最后一根日 K」的写入链路。

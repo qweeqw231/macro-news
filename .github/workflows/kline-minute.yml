@@ -22,10 +22,9 @@ name: 分钟K刷新
 
 on:
   schedule:
-    # 每小时第 17 分钟。
-    # ⚠ 刻意**避开整点**（GitHub 排程队列在整点最堵），
-    #   也避开 snapshot.yml 的 :13/:43 和 collect.yml 的 :07/:14/:22/:37/:44/:52。
-    - cron: '17 * * * *'
+    # 主触发在 Cloudflare：:17/:47。GitHub 兜底错峰到 :02（+15 分钟，每小时一次）。
+    # ⚠ 不再与 CF 任何一轮同分钟；也不在 04:32 附近跑（避开 04:17 的 kline-full）。
+    - cron: '2 * * * *'
   # 允许手动触发，方便验证
   workflow_dispatch:
   # 改了取数逻辑 / 本文件就立刻跑一次（不用等定时）。
@@ -50,8 +49,9 @@ jobs:
   kline-minute:
     runs-on: ubuntu-latest
     # ⚠ 35 个请求、每个之间还隔着 1.2 秒（东财按 IP 限流，打太密会被挂住），
-    #   再加上单请求 20 秒硬超时 ⇒ 最坏情况接近 20 分钟，给足时间。
-    timeout-minutes: 30
+    #   再加上单请求 20 秒硬超时 ⇒ 最坏情况接近 20 分钟；
+    #   04 点这一轮还要顺带刷新日/周/月 K（63 个请求），给到 45 分钟。
+    timeout-minutes: 45
 
     steps:
       - name: 检出代码
@@ -84,10 +84,27 @@ jobs:
 
       # 顺带刷新「当前交易时段」的最后一根日K：
       # 上海金等有夜盘的品种会出现「未来蜡烛」，这根 bar 需要随采集动态更新，
-      # 每天 12:23 一次的 kline-full 不够。脚本只 upsert 最后一根，代价很小。
+      # 每天一次的全量/日K刷新不够。脚本只 upsert 最后一根，代价很小。
       - name: 刷新最后一根日K
         continue-on-error: true
         run: node scripts/update-kline-last.mjs
+
+      # 日/周/月 K 每天刷一次。原先在 kline-full 的 `collect --kline-only`，挪到这里的原因：
+      #   CF 会在 04:17 **同时** dispatch kline-minute 和 kline-full；
+      #   full 现在只写 _full.json，日/周/月改在 04:47（CF）或 04:02（GitHub 兜底）写，
+      #   两边的文件集合不相交 ⇒ 同一分钟不再有两个入口写同一批日 K。
+      - name: 每天刷新日/周/月K（UTC 04 点）
+        continue-on-error: true
+        run: |
+          h=$(date -u +%H)
+          m=$(date -u +%M)
+          ev='${{ github.event_name }}'
+          if [ "$h" = "04" ] && { [ "$m" -ge 40 ] || [ "$ev" = "schedule" ]; }; then
+            echo "刷新日/周/月K（UTC $h:$m，event=$ev）"
+            node src/collect.mjs --kline-only
+          else
+            echo "跳过日/周/月K：仅 UTC 04 点执行（当前 $h:$m，event=$ev）"
+          fi
 
       - name: 提交并推送（仅在数据有变化时）
         # ⚠ 必须整行加引号：plain scalar 里的 `: ` 会让 YAML 解析失败

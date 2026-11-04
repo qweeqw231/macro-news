@@ -2,12 +2,9 @@ name: 全量日K刷新
 
 # 每天生成一次「服务端预生成的全量日K」：data/kline/<key>_full.json
 #
-# 另外在这一轮里**顺带刷新日K / 周K / 月K**（data/kline/<key>.json / _1w.json / _1M.json）：
-#   · 2026-10-30 之前，这三档是由 collect.yml 每轮顺带刷的；
-#   · 现在要闻流采集改成 `--no-kline`（只抓新闻，快、且不打扰东财），
-#     日/周/月 K 挪到这里每日刷一次 —— 日K 每天变、周K 一周变、月K 一月变，一天足够；
-#   · 好处：把「每轮 63 个 K 线请求」从「每 ~9 分钟」降到「每天一次」，
-#     撞东财按 IP 限流的概率小一个数量级（限流是常态，不是意外）。
+# ⚠ 本 workflow **只写 _full.json**。日K / 周K / 月K（data/kline/<key>.json / _1w / _1M）
+#   由 kline-minute.yml 的「UTC 04 点」步骤刷新：CF 在 04:17 会同时 dispatch 两个 workflow，
+#   放在这里会与同分钟的任务写同一批日 K。
 #
 # 为什么必须放在 Actions 而不是只在本地跑（2026-10-30 实测）：
 #   · 东财 push2his 对**消费级 IP**会做 socket 级拒绝（`UND_ERR_SOCKET`），
@@ -23,8 +20,10 @@ name: 全量日K刷新
 
 on:
   schedule:
-    # UTC 04:23 = 北京 12:23（避开通盘与本地 16:30 那轮）
-    - cron: '23 4 * * *'
+    # 主触发在 Cloudflare：UTC 04:17（随 minute cron 附带 dispatch）。
+    # GitHub 兜底错峰到 05:08：kline-full 单轮最长 30 分钟，放在 +10~25 分钟会与主触发并发写
+    # 同一个 _full.json；这里取 +51 分钟。GH 只写 _full.json（日/周/月由 kline-minute 刷新）。
+    - cron: '8 5 * * *'
   # 允许手动触发，方便验证
   workflow_dispatch:
   # 改了取数逻辑 / 本文件就立刻跑一次（不用等定时）。
@@ -66,13 +65,10 @@ jobs:
       - name: 生成全量日K
         run: node scripts/update-kline-full.mjs
 
-      # 日K / 周K / 月K（21 个标的 × 3 个周期）—— 每天才刷一次，搬到这里
-      # ⚠ 单个周期失败不影响其它周期（采集器内部逐周期 try/catch），
-      #   失败时保留上一轮的旧文件，不会把图表打空。
-      - name: 刷新日K / 周K / 月K
-        continue-on-error: true
-        run: node src/collect.mjs --kline-only
+      # 日/周/月 K 已挪到 kline-minute.yml 的「UTC 04 点」步骤：
+      #   若在此处继续跑 collect --kline-only，CF 04:17 会与同分钟的 kline-minute 写同一批日 K。
+      # 本 workflow 只负责 _full.json。
 
       - name: 提交并推送（仅在数据有变化时）
         # ⚠ 必须整行加引号：plain scalar 里的 `: ` 会让 YAML 解析失败
-        run: 'bash scripts/push-data.sh data/kline MSG_PREFIX="data: K线日更（全量 + 日/周/月）"'
+        run: 'bash scripts/push-data.sh data/kline MSG_PREFIX="data: 全量日K刷新"'
