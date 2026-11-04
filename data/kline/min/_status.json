@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T18:50:04.207Z",
+  "generatedAt": "2026-11-04T19:20:16.609Z",
   "ok": 12,
   "failed": 0,
   "failures": [],
@@ -13,8 +13,8 @@
     "n225/30m: shorter（新 242 根 < 现有 253 根）",
     "kospi/30m: shorter（新 247 根 < 现有 260 根）",
     "sge_au9999/30m: shorter（新 221 根 < 现有 234 根）",
-    "n225/60m: shorter（新 132 根 < 现有 138 根）",
-    "kospi/60m: shorter（新 133 根 < 现有 140 根）",
-    "sge_au9999/60m: shorter（新 111 根 < 现有 117 根）"
+    "n225/15m: shorter（新 484 根 < 现有 506 根）",
+    "kospi/15m: shorter（新 494 根 < 现有 520 根）",
+    "sge_au9999/15m: shorter（新 442 根 < 现有 468 根）"
   ]
 }
