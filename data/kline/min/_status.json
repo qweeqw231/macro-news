@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-11-04T09:50:05.529Z",
+  "ok": 19,
+  "failed": 0,
+  "failures": [],
+  "rejected": [
+    "dax/5m: shorter（新 1000 根 < 现有 1003 根）",
+    "cac40/5m: shorter（新 1000 根 < 现有 1003 根）",
+    "ukx/5m: shorter（新 1000 根 < 现有 1003 根）",
+    "xag/5m: shorter（新 1000 根 < 现有 1003 根）",
+    "xau/5m: shorter（新 1000 根 < 现有 1003 根）"
+  ]
+}
