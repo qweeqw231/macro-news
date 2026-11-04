@@ -379,6 +379,7 @@ async function main() {
   // 若整份覆盖，组合行情那套运行日志会在下一次本任务运行（每 5 分钟）里被清空。
   const logFile = path.join(DATA, '_last-run.json');
   const prevLog = await readJSON(logFile, {});
+  // 2.4.17：读改写保留 unknown 字段（含 localSync 本机同步状态），不要整文件重建
   const logObj = {
     ...prevLog,
     // 哪台机器在喂数据：云端 Actions / 本机 Windows 任务。页脚据此显示「云端」「本机」，

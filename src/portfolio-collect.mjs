@@ -212,6 +212,7 @@ async function main() {
   // 本任务只更新宏观相关字段（行情字段归 collect.mjs）。
   const logFile = path.join(DATA, '_last-run.json');
   const prevLog = await readJSON(logFile, {});
+  // 2.4.17：保留 collect.mjs / 本机写入的 localSync 等未知字段
   const nextLog = { ...prevLog, at: atCN, macroOk: mOk, macroFail: mFail, macroDurationMs: Date.now() - started };
   delete nextLog.portfolioQuotes;
   delete nextLog.portfolioDurationMs;

@@ -36,6 +36,41 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.17] - 2026-11-05
+
+> 本机同步跳过不再只写日志：`_last-run.json` 新增 `localSync`，页脚可见。
+
+### 新增
+
+- `data/_last-run.json` 新增独立子对象：
+  `localSync: { result, reason, at, consecutiveSkips }`。
+  result 枚举：`up-to-date` / `ff-only` / `stash-restored` / `merge` /
+  `skipped:fetch-failed` / `skipped:stash-failed` / `skipped:ff-only-failed` /
+  `skipped:stash-pop-conflict` / `skipped:unmerged` / `skipped:merge-conflict`。
+- 计数：`skipped:*` 每次 +1；同步成功（up-to-date / ff-only / stash-restored / merge）重置 0。
+- 页脚新增独立 token：0 次不显示；1~2 次琥珀「本机同步跳过 N 轮 · 原因」；
+  ≥3 次红色。**不改变既有链路总灯**，文案明确写“本机同步跳过”，不写成“采集停摆”。
+
+### 修正
+
+- 本机 `collect-and-push.ps1` 在跳过分支通过 `scripts/local-sync-write.mjs` 写 `localSync`；
+  成功轮写入并重置计数。
+- 跳过轮只发布 `_last-run.json`：仅当 HEAD 与 `origin/main` 同步时
+  `git commit -- data/_last-run.json` + push；fetch 失败/分叉时只写本地，记
+  `localSync:publish=offline|skipped-not-at-origin`（无法强推，也不制造无法推送的提交）。
+- `src/collect.mjs` / `src/portfolio-collect.mjs` 确认都是读改写（`...prevLog`），
+  保留 `localSync` 等未知字段；本版加注释与测试锁住，未改成整文件重建。
+- 前端资源串 `20261105b` → `20261105c`（新增 `assets/local-sync.js`）。
+
+### 测试
+
+- 新增 `tests/local-sync.test.mjs`（8 项）：计数递增/重置、原因映射、0/1/3 阈值颜色文案、
+  合并保留云端字段、CLI 连续 1→2→0 且云端字段不变、两个云端写者保留未知字段、
+  页脚调用与总灯独立、本机脚本跳过分支只提交 `_last-run.json`。
+- 临时 remote + 冲突仓库实测：stash pop 冲突发布 `consecutiveSkips=1`，下一轮 unmerged
+  发布 `2`；`[collect]` 未执行，stash/冲突保留。
+- 全套 **218 项**通过。
+
 ## [2.4.16] - 2026-11-05
 
 > 本机 `MacroNews-Collect` 改为「先同步再跑」，并去掉 `merge -X ours`。

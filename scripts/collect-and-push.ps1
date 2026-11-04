@@ -68,6 +68,70 @@ function Say-Guard($phase) {
 }
 $guardBefore = Say-Guard '启动'
 
+# 2.4.17：把本机同步结果写进 data/_last-run.json 的 localSync 子对象
+function Write-LocalSync($result) {
+    $cli = Join-Path $root 'scripts\local-sync-write.mjs'
+    if (-not (Test-Path $cli)) {
+        Say "localSync: 写盘脚本缺失（$cli）"
+        return $false
+    }
+    $out = & node $cli --root $root --result $result 2>&1 | Out-String
+    if ($LASTEXITCODE -ne 0) {
+        $first = ($out.Trim() -split "`r?`n" | Select-Object -First 1)
+        Say "localSync: 写入失败（$result）：$first"
+        return $false
+    }
+    Say "localSync: $($out.Trim())"
+    return $true
+}
+
+# 跳过轮只发布状态文件：仅在 HEAD 与 origin/main 同步时提交，不 merge、不 force
+function Publish-LocalSync($result) {
+    if (-not (Write-LocalSync $result)) { return }
+
+    $oldSsh = $env:GIT_SSH_COMMAND
+    $env:GIT_SSH_COMMAND = 'ssh -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=3'
+    $fetchOut = & git fetch origin main 2>&1 | Out-String
+    $fetchOk = ($LASTEXITCODE -eq 0)
+    if ($null -eq $oldSsh) {
+        Remove-Item Env:\GIT_SSH_COMMAND -ErrorAction SilentlyContinue
+    } else {
+        $env:GIT_SSH_COMMAND = $oldSsh
+    }
+    if (-not $fetchOk) {
+        Say "localSync:publish=offline（fetch 失败，状态仅写本地）"
+        return
+    }
+
+    # 只有 HEAD == origin/main 才提交状态，避免在分叉/落后时制造无法推送的本地提交
+    $behind = [int](& git rev-list --count HEAD..origin/main 2>$null)
+    $ahead = [int](& git rev-list --count origin/main..HEAD 2>$null)
+    if ($behind -ne 0 -or $ahead -ne 0) {
+        Say "localSync:publish=skipped-not-at-origin（behind=$behind ahead=$ahead；状态仅写本地）"
+        return
+    }
+
+    $null = git add -- data/_last-run.json
+    $commitOut = & git commit -m "data: 本机同步跳过（$result）" -- data/_last-run.json 2>&1 | Out-String
+    if ($LASTEXITCODE -ne 0) {
+        $first = ($commitOut.Trim() -split "`r?`n" | Select-Object -First 1)
+        Say "localSync:publish=commit-failed（$first）"
+        return
+    }
+    for ($i = 1; $i -le 2; $i++) {
+        $pushOut = & git push origin main 2>&1 | Out-String
+        if ($LASTEXITCODE -eq 0) {
+            Say "localSync:publish=ok（$result）"
+            return
+        }
+        if ($i -lt 2) { Start-Sleep -Seconds 5 }
+        else {
+            $first = ($pushOut.Trim() -split "`r?`n" | Select-Object -First 1)
+            Say "localSync:publish=push-failed（$first；本地提交保留，下一轮再试）"
+        }
+    }
+}
+
 # ---- 0.1 先同步再跑（2.4.16）----
 # 底线：不做硬重置、不做路径级覆盖、不用 ours 合并策略、不强制推送。
 # 同步失败/冲突时宁可本轮不采集，也不覆盖本地文件。
@@ -77,6 +141,7 @@ if (-not $headBefore) { $headBefore = 'unknown' }
 $unmerged = @(& git ls-files -u 2>$null)
 if ($unmerged.Count -gt 0) {
     Say "sync: head=$headBefore result=skipped:unmerged（存在未合并文件，先人工解决；本轮不采集）"
+    if (-not $SyncOnly) { Publish-LocalSync 'skipped:unmerged' }
     exit 0
 }
 
@@ -100,6 +165,10 @@ if (-not $fetchOk) {
     $first = ($fetchOut.Trim() -split "`r?`n" | Select-Object -First 1)
     Say "sync: head=$headBefore behind=unknown ahead=unknown dirty=$dirty result=skipped:fetch-failed head_after=$headBefore stash=none（$first）"
     Say "同步失败，本轮不采集、不提交；下一轮重试。"
+    if (-not $SyncOnly) {
+        $null = Write-LocalSync 'skipped:fetch-failed'
+        Say "localSync:publish=offline（fetch 失败，状态仅写本地）"
+    }
     exit 0
 }
 
@@ -190,8 +259,17 @@ Say ("sync: head={0} behind={1} ahead={2} dirty={3} result={4} head_after={5} st
     $headBefore, $behind, $ahead, $dirty, $syncResult, $headAfter, $stashState)
 
 if ($syncResult -like 'skipped:*') {
+    if (-not $SyncOnly) { Publish-LocalSync $syncResult }
     Say "同步未完成（$syncResult），本轮不采集、不提交；下一轮重试。"
     exit 0
+}
+
+# 同步成功：把结果写进 localSync（成功轮重置 consecutiveSkips）
+if (-not $SyncOnly) {
+    $lsResult = $syncResult
+    if ($syncResult -eq 'ff-only' -and $stashState -eq 'restored') { $lsResult = 'stash-restored' }
+    if ($syncResult -eq 'merge' -and $stashState -eq 'restored') { $lsResult = 'stash-restored' }
+    $null = Write-LocalSync $lsResult
 }
 
 # 同步更新了代码/HEAD 时再复核一次守卫（旧代码检查已在启动时做过）

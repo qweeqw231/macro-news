@@ -581,6 +581,8 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 本机一次都不会重复采；云端排程器丢事件时，最多 45 分钟后本机接管。
 日/周/月 K 同理按 `-KlineStaleHours`（默认 6）判新鲜度。
 2.4.16 起不再使用 `-X ours`；任何合并冲突只 abort/保留 stash，不覆盖本地文件。
+同步跳过会写入 `data/_last-run.json` 的 `localSync`，页脚显示「本机同步跳过 N 轮」：
+0 次不显示、1~2 次琥珀、≥3 次红色；它不改变既有链路总灯。
 
 `MacroNews-Collect` / `MacroNews-Pull` 均用 `wscript + run-hidden.vbs` 零窗口启动，
 `-StartWhenAvailable` 允许睡眠/关机后补跑。

@@ -1371,6 +1371,17 @@
         box.appendChild(sp);
       }
 
+      // 2.4.17：本机同步兜底 token —— 独立于总灯，不改变链路健康 level
+      const lsView = window.MacroLocalSync && window.MacroLocalSync.localSyncView
+        ? window.MacroLocalSync.localSyncView(last.localSync)
+        : null;
+      if (lsView && lsView.show) {
+        box.appendChild(document.createTextNode(' · '));
+        const sp = el('span', `ft-state ${lsView.level}`, lsView.text);
+        sp.title = lsView.title;
+        box.appendChild(sp);
+      }
+
       // 失败细节放进 title：页脚只留一行，悬停才看长原因
       const why = [];
       srcBad.forEach((s) => why.push(`${s.label}${s.error ? '：' + s.error : ''}`));
