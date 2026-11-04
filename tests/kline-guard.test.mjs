@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { decideBars, mergeBars, barTime } from '../src/kline-guard.mjs';
+import { decideBars, mergeBars, barTime, barVolume } from '../src/kline-guard.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
@@ -65,6 +65,32 @@ test('兼容紧凑数组行（分钟/全量）', () => {
   const merged = mergeBars(old, ['2026-01-01 09:10', '2026-01-01 09:15'].map((t) => arr(t)));
   assert.equal(merged.length, 4);
   assert.equal(barTime(merged[3]), '2026-01-01 09:15');
+});
+
+test('成交量保护：上金所 v=0 不得覆盖东财已有成交量', () => {
+  const old = [
+    { t: '2026-10-28', o: 1, h: 1, l: 1, c: 1, v: 800 },
+    { t: '2026-10-29', o: 1, h: 1, l: 1, c: 1, v: 900 },
+    { t: '2026-10-30', o: 1, h: 1, l: 1, c: 1, v: 1000 },
+  ];
+  const sge = [
+    { t: '2026-10-28', o: 2, h: 2, l: 2, c: 2, v: 0 },
+    { t: '2026-10-29', o: 2, h: 2, l: 2, c: 2, v: 0 },
+    { t: '2026-10-30', o: 2, h: 2, l: 2, c: 2, v: 0 },
+  ];
+  const d = decideBars(old, sge);
+  assert.equal(d.action, 'accept');
+  assert.deepEqual(d.bars.map(barVolume), [800, 900, 1000], 'volume 必须保留');
+  assert.equal(d.bars[0].c, 2, 'OHLC 仍按新数据更新');
+});
+
+test('成交量保护也适用于数组行（分钟/全量）', () => {
+  const old = [[ '2026-11-04 09:00', 1, 1, 1, 1, 500 ]];
+  const next = [[ '2026-11-04 09:00', 2, 2, 2, 2, 0 ]];
+  const d = decideBars(old, next);
+  assert.equal(d.action, 'accept');
+  assert.equal(d.bars[0][5], 500);
+  assert.equal(d.bars[0][1], 2);
 });
 
 test('写 K 线的脚本都接入共享守卫', () => {

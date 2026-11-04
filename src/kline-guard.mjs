@@ -18,6 +18,35 @@ export function barTime(b) {
   return String((b && b.t) || '');
 }
 
+/** 成交量：对象行 v，数组行 [5] */
+export function barVolume(b) {
+  if (Array.isArray(b)) return Number(b[5]) || 0;
+  return Number((b && b.v)) || 0;
+}
+
+function withVolume(b, v) {
+  if (Array.isArray(b)) {
+    const c = b.slice();
+    c[5] = v;
+    return c;
+  }
+  return { ...b, v };
+}
+
+/**
+ * 成交量保护：incoming 的 0 成交量不得覆盖现有非零成交量。
+ * 上金所官网日线没有 volume 字段（全部 v=0），东财有；两者会交替写同一个文件。
+ * 只保护成交量，OHLC/时间仍按 incoming 更新。
+ */
+export function preserveVolumes(existing, incoming) {
+  const oldVol = new Map((existing || []).map((b) => [barTime(b), barVolume(b)]));
+  return (incoming || []).map((b) => {
+    if (barVolume(b) > 0) return b;
+    const v = oldVol.get(barTime(b));
+    return v > 0 ? withVolume(b, v) : b;
+  });
+}
+
 /** 按时间键 union；同键用 incoming 覆盖（更新值），结果按时间升序 */
 export function mergeBars(existing, incoming) {
   const map = new Map();
@@ -50,16 +79,21 @@ export function decideBars(existing, incoming) {
   }
 
   const missingOld = [...oldKeys].some((k) => !newKeys.has(k));
+  const keepVol = (bars) => preserveVolumes(old, bars);
 
   // 2) 等长/更长、覆盖现有全部时间键、末根不倒退 ⇒ 正常接受
   if (next.length >= old.length && !missingOld && newLast >= oldLast) {
-    return { action: 'accept', bars: next, reason: next.length > old.length ? 'longer' : 'same-length-newer' };
+    return {
+      action: 'accept',
+      bars: keepVol(next),
+      reason: next.length > old.length ? 'longer' : 'same-length-newer',
+    };
   }
 
   // 3) 其余：短但末根更新 / 更长但中间有缺口 ⇒ 合并保留历史
   return {
     action: 'merge',
-    bars: mergeBars(old, next),
+    bars: mergeBars(old, keepVol(next)),
     reason: missingOld ? 'gap-merge' : 'shorter-merge',
   };
 }

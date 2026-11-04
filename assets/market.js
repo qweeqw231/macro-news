@@ -112,7 +112,7 @@
     { key: 'ndx',        secid: '100.NDX100', klineSecid: '100.NDX100', market: 'US', name: '纳指100', klineNote: '' },
     // 伦敦金：日/周/月 = 新浪外盘 XAU；分钟 = 东财 122.XAU（现货，同日收盘差 <0.1%）
     { key: 'xau',        klineSecid: '122.XAU', emMinuteOnly: true, sinaGlobal: 'XAU', market: 'CMDTY', name: '伦敦金', klineNote: '日/周/月：新浪外盘 XAU；分钟：东财 122.XAU（黄金/美元·现货，同日收盘差 <0.1%）。报价源 04:55 冻结，官方 05:00 收盘' },
-    { key: 'sge_au9999', klineSecid: '118.AU9999', market: 'SGE',   name: '上海金Au99.99', klineNote: '' },
+    { key: 'sge_au9999', klineSecid: '118.AU9999', market: 'SGE',   name: '上海金Au99.99', klineNote: '成交量来自东财 118.AU9999，覆盖 2022-09-19 起；2022-09-15/16 无成交量数据（不估算）' },
     // 伦敦银：新浪外盘 XAG（现货白银/美元，5187 根 / 2006 起）；东财 122.XAG 同一条线
     //   （末根差 0.03~0.12、年均差 <0.7%）且历史更长（8950 根 / 1992 起）⇒ 可作第二源
     //   ⚠ 腾讯的 hf_SI 是「纽约白银」（COMEX 期货），不是伦敦银，别用错
