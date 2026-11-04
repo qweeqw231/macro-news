@@ -181,3 +181,68 @@ test('publish 源码锁定：成功后调用 commitStatusPush', () => {
   assert.match(PUBLISH, /commitStatusPush\(\{/);
   assert.match(PUBLISH, /statusCommit: false/);
 });
+
+// ---------- 2.4.8：rebase 与采集器改同一份 index.json 的冲突 ----------
+test('index.json 冲突：以远端计数为底、叠加本地早报字段后继续 rebase', () => {
+  const dir = sandbox();
+  fs.writeFileSync(path.join(dir, 'data', 'index.json'), '{}');
+  fs.writeFileSync(path.join(dir, 'data', 'history', 'index.json'), '{"days":[]}');
+  const ours = {
+    days: [{ day: '2026-11-04', count: 302, hasBriefing: true, briefLine: '早报摘要', source: 'ai' }],
+  };
+  const theirs = {
+    days: [{ day: '2026-11-04', count: 345, hasBriefing: false }, { day: '2026-11-03', count: 700 }],
+  };
+  const calls = [];
+  const exec = (cmd, args) => {
+    calls.push(args.join(' '));
+    if (args[0] === 'rebase' && args[1] === '--autostash') {
+      throw new Error('CONFLICT (content): Merge conflict in data/index.json');
+    }
+    if (args[0] === 'diff' && args.includes('--diff-filter=U')) return 'data/index.json\n';
+    if (args[0] === 'show' && args[1] === ':2:data/index.json') return JSON.stringify(ours);
+    if (args[0] === 'show' && args[1] === ':3:data/index.json') return JSON.stringify(theirs);
+    if (args[0] === 'diff') return 'data/index.json\n';
+    if (args[0] === 'commit') return '[main abc123] data: 早报入库 2026-11-04\n';
+    return '';
+  };
+  try {
+    const r = commitAndPush({ root: dir, date: '2026-11-04', exec });
+    assert.equal(r.pushed, true);
+    const merged = JSON.parse(fs.readFileSync(path.join(dir, 'data', 'index.json'), 'utf8'));
+    const e = merged.days.find((x) => x.day === '2026-11-04');
+    assert.equal(e.count, 345, '计数必须取远端最新值');
+    assert.equal(e.hasBriefing, true, '早报字段必须保留本地值');
+    assert.equal(e.briefLine, '早报摘要');
+    assert.equal(e.source, 'ai');
+    assert.ok(calls.some((c) => c === 'rebase --continue'));
+    assert.ok(!calls.some((c) => /push --force/.test(c)));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('非派生索引冲突：仍然中止 rebase 并返回 conflict，不自动乱合', () => {
+  const dir = sandbox();
+  const calls = [];
+  const exec = (cmd, args) => {
+    calls.push(args.join(' '));
+    if (args[0] === 'rebase' && args[1] === '--autostash') throw new Error('CONFLICT');
+    if (args[0] === 'diff' && args.includes('--diff-filter=U')) return 'data/archive/2026-11-04.json\n';
+    if (args[0] === 'diff') return 'data/index.json\n';
+    if (args[0] === 'commit') return '[main abc] x\n';
+    return '';
+  };
+  try {
+    const r = commitAndPush({ root: dir, date: '2026-11-03', exec });
+    assert.equal(r.pushed, false);
+    assert.equal(r.kind, 'conflict');
+    assert.ok(calls.some((c) => c === 'rebase --abort'));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('publish 状态记录 pushErrorKind', () => {
+  assert.match(PUBLISH, /pushErrorKind: push\.kind/);
+});

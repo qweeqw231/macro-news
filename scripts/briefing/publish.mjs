@@ -70,6 +70,7 @@ function main() {
         updateStatus(STATUS, DATE, {
           pushed: !!push.pushed,
           pushError: push.error || '',
+          pushErrorKind: push.kind || '',
           pushAt: push.pushed ? beijingNow().iso : '',
           statusCommit: null,
           statusError: '',

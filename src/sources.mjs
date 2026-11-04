@@ -68,9 +68,53 @@ function isoFromUnix(sec) {
   return new Date((sec + 8 * 3600) * 1000).toISOString().replace('Z', '+08:00');
 }
 
-function isoFromDate(str) {
-  const d = new Date(str);
-  return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+// ---------- RSS 时间解析（2.4.8） ----------
+//
+// 事故：国家统计局 RSS 的 pubDate 是「2026-11-04 09:30:00」——北京时间、不带时区。
+// Node 会按**进程本地时区**解析：本机（Asia/Shanghai）得到 01:30Z（正确），
+// GitHub Actions（UTC）得到 09:30Z，前端再 +8 ⇒ 显示 17:30。
+// 因此无时区字符串必须按**来源时区**显式换算，不能依赖 runner 的 TZ。
+const DEFAULT_FEED_TZ = 'Asia/Shanghai';
+
+function tzOffsetMs(ms, tz) {
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone: tz, hour12: false, hourCycle: 'h23',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+  });
+  const o = {};
+  fmt.formatToParts(new Date(ms)).forEach((p) => { o[p.type] = p.value; });
+  const hh = Number(o.hour) % 24;
+  return Date.UTC(Number(o.year), Number(o.month) - 1, Number(o.day),
+    hh, Number(o.minute), Number(o.second)) - Number(ms);
+}
+
+/** 时区本地时间 → UTC 毫秒（两遍修正 DST） */
+function zonedToUtc(y, mo, d, h, mi, s, tz) {
+  const guess = Date.UTC(y, mo - 1, d, h, mi, s);
+  const t = guess - tzOffsetMs(guess, tz);
+  return guess - tzOffsetMs(t, tz);
+}
+
+/**
+ * 解析 RSS 日期。
+ * - 带时区（Z / ±HH:MM / ±HHMM / GMT / UTC）→ 直接按该时区；
+ * - 不带时区（如国家统计局 `2026-11-04 09:30:00`）→ 按 `tz`（默认 Asia/Shanghai）解释。
+ * @returns {number|null} UTC 毫秒
+ */
+export function parseFeedDate(value, tz = DEFAULT_FEED_TZ) {
+  const s = String(value == null ? '' : value).trim();
+  if (!s) return null;
+  if (/(?:Z|[+-]\d{2}:?\d{2}|\bGMT\b|\bUTC\b)\s*$/i.test(s)) {
+    const t = Date.parse(s);
+    return Number.isFinite(t) ? t : null;
+  }
+  const m = /^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})(?::(\d{2}))?/.exec(s);
+  if (m) {
+    return zonedToUtc(+m[1], +m[2], +m[3], +m[4], +m[5], +(m[6] || 0), tz);
+  }
+  const t = Date.parse(s);
+  return Number.isFinite(t) ? t : null;
 }
 
 // 正文/摘要统一截断，避免单条过长撑大 data 文件
@@ -281,7 +325,7 @@ async function pbcNews() {
  * 解析成功但**一条标题都取不到**也算这个入口不可用（继续试下一个），
  * 否则会悄悄采到一个 0 条的源还标成「成功」。
  */
-function rssSource({ name, channel, url, urls, limit = 30, tag = '', timeout = 15000, retries = 0 }) {
+function rssSource({ name, channel, url, urls, limit = 30, tag = '', timeout = 15000, retries = 0, tz = DEFAULT_FEED_TZ }) {
   const candidates = urls && urls.length ? urls : [url];
   return async () => {
     const errors = [];
@@ -294,12 +338,13 @@ function rssSource({ name, channel, url, urls, limit = 30, tag = '', timeout = 1
           continue;
         }
         return items.slice(0, limit).map((i) => {
-          const d = new Date(i.date);
-          const ts = Number.isNaN(d.getTime()) ? 0 : Math.floor(d.getTime() / 1000);
+          const ms = parseFeedDate(i.date, tz);
+          const ts = ms == null ? 0 : Math.floor(ms / 1000);
           return {
             id: stableId('rss', name, i.link || i.title),
             ts,
-            time: i.date ? isoFromDate(i.date) : new Date().toISOString(),
+            // 统一用解析后的时间：不要把原始字符串再交给 new Date() 二次解释
+            time: ms == null ? new Date().toISOString() : new Date(ms).toISOString(),
             source: name,
             channel,
             title: i.title,
@@ -829,6 +874,9 @@ export const SOURCES = [
       tag: '中国宏观',
       timeout: 30000,
       retries: 1,
+      // pubDate 无时区（`2026-11-04 09:30:00`），必须按北京时间解释：
+      // 否则云端 UTC runner 会把 09:30 当成 09:30Z，前端再 +8 显示成 17:30。
+      tz: 'Asia/Shanghai',
     }),
   },
 ];

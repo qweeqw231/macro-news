@@ -23,6 +23,35 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.8] - 2026-11-04
+
+### 修正
+
+- **国家统计局时间被多加 8 小时**：统计局 RSS 的 `pubDate` 是
+  `2026-11-04 09:30:00`（北京时间、无时区）。Node 按**进程本地时区**解析：
+  本机（Asia/Shanghai）得到 01:30Z（正确），GitHub Actions（UTC）得到 09:30Z，
+  前端再 +8 ⇒ 显示 17:30。新增 `parseFeedDate(value, tz)`：带时区的时间戳原样解析，
+  无时区的按来源 `tz`（默认 `Asia/Shanghai`）换算；`rssSource` 统一用解析后的 ms，
+  不再把原始字符串交给 `new Date()` 二次解释。国家统计局适配器显式声明
+  `tz: 'Asia/Shanghai'`。
+- **历史回填**：新增 `scripts/repair-nbs-time.mjs`，抓取统计局原文页
+  `<meta name="PubDate">` 逐条比对，只修「归档比原文晚约 480 分钟」的条目。
+  实测 46 条国家统计局记录中 **13 条**可精确回填（09:30→01:30Z、10:00→02:00Z 等）；
+  另 **8 条**为 -720 分钟（原因不明，未动），25 条本来就正确。
+- **publish 与采集器同时改 index.json 导致 rebase 冲突**：2026-11-04 09:02 首次
+  `publish --push` 在 rebase 时与 08:53 的采集提交冲突（`data/index.json` 同一天
+  `count` 与 `hasBriefing` 两侧都改），abort 后返回失败；09:05 重跑才成功。
+  `git-push.mjs` 现在只对 `data/index.json` / `data/history/index.json` 的冲突自动合并：
+  **以远端最新计数为底，叠加本地这一天的 `hasBriefing/briefLine/source`**，然后
+  `rebase --continue`；其它文件冲突仍中止。失败结果新增 `kind`
+  （`fetch` / `conflict` / `push` / `no-files`），写入状态 `pushErrorKind`。
+
+### 测试
+
+- 新增 `tests/feed-time.test.mjs`（6 项）：无时区按来源时区、UTC runner 不偏移、
+  显式时区原样、回填仅认约 +480 分钟；`tests/briefing-push.test.mjs` 新增 3 项：
+  index 冲突自动合并、非派生冲突中止、`pushErrorKind` 接线。全套 **160 项**通过。
+
 ## [2.4.7] - 2026-11-03
 
 ### 新增

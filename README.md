@@ -89,6 +89,11 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
   需要短版时只在标点边界（`。！？；` → `，、`）断开并加 `…`，找不到标点就返回全文。
   前端 `.item-title` 用 `-webkit-line-clamp: 2` 多行省略，不做字符截断。
   历史数据可用 `node scripts/repair-archive.mjs` 从 `content` 回填（幂等）。
+- **RSS 时间（2.4.8）**：带时区（`Z` / `±HH:MM` / `GMT`）的 `pubDate` 原样解析；
+  不带时区的（如统计局 `2026-11-04 09:30:00`）按来源 `tz` 解释（中国源默认
+  `Asia/Shanghai`），**不依赖 runner 的本地时区**。历史偏移可用
+  `node scripts/repair-nbs-time.mjs --apply` 回填：只修与统计局原文页
+  `<meta name="PubDate">` 恰好差 +480 分钟的条目，其它差异不动。
 - **推送**：`scripts/push-data.sh`（fetch + rebase 重试，只有 `data/` 变化才提交）。
 
 **指数名录（20 个）**
@@ -226,8 +231,12 @@ publish --date（脚本，确定性）
 1. 只 `git add --` 4 个路径：`data/briefings/<date>.json`、`data/index.json`、
    `data/history/index.json`、`data/_briefing-status.json`（**不整目录 add**）；
 2. `git fetch origin main` → `git rebase origin/main` → `git push origin HEAD:main`；
-3. push/rebase 失败**不回滚已发布文件**，状态写 `pushed:false / pushError`，
+3. push/rebase 失败**不回滚已发布文件**，状态写 `pushed:false / pushError / pushErrorKind`，
    页脚显示 `早报 已发布未入库`（悬停看原因）。
+4. **rebase 冲突（2.4.8）**：采集器与发布器同时改 `data/index.json` 时，若冲突只落在
+   `data/index.json` / `data/history/index.json`，自动以**远端最新计数**为底、
+   叠加本地这一天的 `hasBriefing/briefLine/source`，然后 `rebase --continue`；
+   其它任何文件冲突仍中止，绝不 force push。
 
 兜底：本机 `collect-and-push.ps1` 每 120 分钟只放行**今天/昨天已存在**的单个早报文件。
 不变式：`hasBriefing=true` ⇔ 文件存在且已被 git 跟踪（`tests/briefing-index-invariant.test.mjs` 锁定）。

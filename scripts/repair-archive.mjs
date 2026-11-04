@@ -42,6 +42,55 @@ async function writeJSON(file, obj) {
   await writeFile(file, JSON.stringify(obj, null, 2), 'utf8');
 }
 
+/**
+ * 用归档重建 index / latest / search（与 collect 同口径）。
+ * 供 repair-archive 与 repair-nbs-time 共用。
+ */
+export async function rebuildDerived(docs, dataDir = DATA) {
+  const briefs = readBriefingMeta(path.join(dataDir, 'briefings'));
+  const days = docs.map((d) => {
+    const b = briefs.get(d.day);
+    return {
+      day: d.day,
+      count: d.items.length,
+      hasBriefing: !!b,
+      ...(b && b.briefLine ? { briefLine: b.briefLine } : {}),
+      ...(b ? { source: b.source } : {}),
+    };
+  }).sort((a, b) => (a.day < b.day ? 1 : -1));
+  const allCount = docs.reduce((n, d) => n + d.items.length, 0);
+
+  await writeJSON(path.join(dataDir, 'index.json'), {
+    generatedAt: new Date().toISOString(),
+    total: allCount,
+    days,
+  });
+
+  const sorted = [...docs].sort((a, b) => (a.day < b.day ? 1 : -1));
+  const latest = sorted.flatMap((d) => d.items).sort((a, b) => b.ts - a.ts).slice(0, 200);
+  await writeJSON(path.join(dataDir, 'latest.json'), {
+    generatedAt: new Date().toISOString(),
+    total: allCount,
+    items: latest,
+  });
+
+  const searchItems = sorted.flatMap((d) => d.items.map((it) => ({
+    id: it.id,
+    ts: it.ts,
+    time: it.time,
+    source: it.source,
+    channel: it.channel,
+    title: it.title,
+    summary: (it.summary || '').slice(0, 220),
+    url: it.url,
+  })));
+  await writeJSON(path.join(dataDir, 'search.json'), {
+    generatedAt: new Date().toISOString(),
+    total: searchItems.length,
+    items: searchItems,
+  });
+}
+
 const stats = { files: 0, items: 0, deduped: 0, retitled: 0, changedFiles: 0 };
 
 /** 旧采集器的硬截特征：title 恰好 40 字，且正文以它开头 */
@@ -87,50 +136,7 @@ async function main() {
   }
 
   // 派生文件重建（只在 archive 有变化时才写，避免无谓提交）
-  if (stats.changedFiles) {
-    const briefs = readBriefingMeta(path.join(DATA, 'briefings'));
-    const days = docs.map((d) => {
-      const b = briefs.get(d.day);
-      return {
-        day: d.day,
-        count: d.items.length,
-        hasBriefing: !!b,
-        ...(b && b.briefLine ? { briefLine: b.briefLine } : {}),
-        ...(b ? { source: b.source } : {}),
-      };
-    }).sort((a, b) => (a.day < b.day ? 1 : -1));
-    const allCount = docs.reduce((n, d) => n + d.items.length, 0);
-
-    await writeJSON(path.join(DATA, 'index.json'), {
-      generatedAt: new Date().toISOString(),
-      total: allCount,
-      days,
-    });
-
-    const sorted = [...docs].sort((a, b) => (a.day < b.day ? 1 : -1));
-    const latest = sorted.flatMap((d) => d.items).sort((a, b) => b.ts - a.ts).slice(0, 200);
-    await writeJSON(path.join(DATA, 'latest.json'), {
-      generatedAt: new Date().toISOString(),
-      total: allCount,
-      items: latest,
-    });
-
-    const searchItems = sorted.flatMap((d) => d.items.map((it) => ({
-      id: it.id,
-      ts: it.ts,
-      time: it.time,
-      source: it.source,
-      channel: it.channel,
-      title: it.title,
-      summary: (it.summary || '').slice(0, 220),
-      url: it.url,
-    })));
-    await writeJSON(path.join(DATA, 'search.json'), {
-      generatedAt: new Date().toISOString(),
-      total: searchItems.length,
-      items: searchItems,
-    });
-  }
+  if (stats.changedFiles) await rebuildDerived(docs, DATA);
 
   console.log(`[repair] ${stats.files} 个归档 / ${stats.items} 条；`
     + `合并重复 -${stats.deduped}；回填标题 ${stats.retitled}；改写 ${stats.changedFiles} 个文件`
@@ -141,4 +147,5 @@ if (!existsSync(ARCHIVE)) {
   console.error('[repair] 找不到 data/archive');
   process.exit(1);
 }
-main().catch((e) => { console.error('[repair] 失败', e); process.exit(1); });
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isMain) main().catch((e) => { console.error('[repair] 失败', e); process.exit(1); });
