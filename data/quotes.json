@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T21:52:39.883Z",
+  "generatedAt": "2026-11-04T22:07:40.450Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -192,7 +192,7 @@
       "high": 26048.83,
       "low": 25602.14,
       "prevClose": 25372.01,
-      "volume": 8532510464,
+      "volume": 8567192832,
       "changePct": 1.44,
       "updatedAt": "2026-11-05T05:00:00+08:00",
       "source": "eastmoney"
@@ -802,7 +802,7 @@
       "high": 28829.66,
       "low": 28276.22,
       "prevClose": 28180.26,
-      "volume": 1885038832,
+      "volume": 1889061232,
       "changePct": 0.91,
       "updatedAt": "2026-11-05T05:00:00+08:00",
       "source": "eastmoney"
@@ -811,26 +811,26 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 4060.3,
+      "price": 4060.01,
       "open": 3930.14,
       "high": 4070.34,
       "low": 3919.85,
       "prevClose": 3930.09,
       "changePct": 3.31,
-      "updatedAt": "2026-11-05T05:51:00+08:00",
+      "updatedAt": "2026-11-05T05:58:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 52.19,
+      "price": 52.2,
       "open": 49.77,
       "high": 52.44,
       "low": 48.93,
       "prevClose": 49.77,
-      "changePct": 4.86,
-      "updatedAt": "2026-11-05T05:51:00+08:00",
+      "changePct": 4.88,
+      "updatedAt": "2026-11-05T05:58:00+08:00",
       "note": ""
     },
     {
@@ -842,8 +842,8 @@
       "high": 104.96,
       "low": 93.22,
       "prevClose": 103.6,
-      "changePct": -8.8,
-      "updatedAt": "2026-11-05T05:52:07+08:00",
+      "changePct": -8.81,
+      "updatedAt": "2026-11-05T06:03:50+08:00",
       "note": ""
     },
     {
