@@ -823,10 +823,11 @@
     if (!hasHist) return;
     const sub = $('#histSub');
     if (sub) {
-      sub.textContent =
-        `近一年历史 ${hist.days.length} 天 · ${hist.from} ~ ${hist.to} · ` +
-        `${(hist.total || 0).toLocaleString('zh-CN')} 条 · 仅标题/摘要；` +
-        '更近的日期在下方归档卡片（带全文）';
+      sub.textContent = window.MacroHistorySummary
+        ? window.MacroHistorySummary.summary(hist, list)
+        : `归档前历史 ${hist.days.length} 天 · ${hist.from} ~ ${hist.to} · ` +
+          `${(hist.total || 0).toLocaleString('zh-CN')} 条 · 仅标题/来源/时间，不含正文；` +
+          `${hist.to} 之后在下方归档卡片（带全文）`;
     }
     const inp = $('#histDate');
     if (inp && list.length) {
@@ -1072,7 +1073,7 @@
       renderFeed();
       $('#qMeta').textContent =
         kind === 'hist'
-          ? `历史：${day} · ${d.items.length} 条（仅标题/摘要，正文请点原文）`
+          ? `历史：${day} · ${d.items.length} 条（仅标题/来源/时间，正文请点原文）`
           : `归档：${day} · ${d.items.length} 条`;
     } catch (e) {
       box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
