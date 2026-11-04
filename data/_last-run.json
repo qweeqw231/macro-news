@@ -1,42 +1,42 @@
 {
   "runner": "cloud",
-  "startedAt": "2026-11-04T05:22:40.480Z",
-  "durationMs": 28300,
+  "startedAt": "2026-11-04T05:37:42.068Z",
+  "durationMs": 35647,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 6435
+      "ms": 5571
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1950
+      "ms": 1374
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1802
+      "ms": 1679
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 280
+      "ms": 1295
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": false,
       "count": 0,
-      "ms": 2002,
+      "ms": 2950,
       "error": "fetch failed"
     },
     {
@@ -44,23 +44,24 @@
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 733
+      "ms": 1315
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1105
+      "ms": 2146
     },
     {
       "id": "stats",
       "label": "国家统计局",
-      "ok": true,
-      "count": 25,
-      "ms": 23919
+      "ok": false,
+      "count": 0,
+      "ms": 31056,
+      "error": "RSS 全部入口失败：/sj/zxfb/rss.xml → fetch failed"
     }
   ],
   "quotes": 56,
-  "added": 18
+  "added": 20
 }
