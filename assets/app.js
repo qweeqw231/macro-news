@@ -81,7 +81,16 @@
           day: String(it.time || '').slice(0, 10),
           y: rdBox ? rdBox.scrollTop : 0,
         } : null,
-        kline: klineOpen && klineKey ? { key: klineKey, period: klinePeriod } : null,
+        kline: klineOpen && klineKey ? {
+          key: klineKey,
+          period: klinePeriod,
+          // 2.4.12：恢复途中（图表还没落图）优先沿用待恢复视图，别把 reset() 的 90 根默认值写回
+          ...((pendingKlineView && pendingKlineView.key === klineKey && pendingKlineView.period === klinePeriod)
+            ? { barsShown: pendingKlineView.barsShown, offset: pendingKlineView.offset }
+            : (kChart && kChart.getView ? kChart.getView() : {})),
+        } : null,
+        // 2.4.12：归档页打开的某一天（刷新后仍在原位，不回到最新要闻流）
+        day: S.view === 'feed' && openedDay ? { day: openedDay.day, kind: openedDay.kind } : null,
         briefOpen,
       }));
     } catch { /* 隐私模式/配额满：不影响页面 */ }
@@ -221,6 +230,80 @@
     return Number(v).toLocaleString('zh-CN', { minimumFractionDigits: d, maximumFractionDigits: d });
   }
 
+  // 2.4.12：15s 轮询时原地更新，不整块 replaceChildren。
+  // 整块重建会把卡片节点全部换掉：焦点丢失、过渡动画重启、滚动锚点抖动，
+  // 而且每次都要重新创建 60+ 个 DOM 节点。这里按 data-key 对齐后只改真正变化的字段。
+  // 卡片集合/顺序变了（标的新增或消失）才返回 false，由调用方回退整块重建。
+  function patchQuotes(quotes, statusOf) {
+    const box = $('#quotes');
+    if (!box) return false;
+    const groups = new Map();
+    quotes.forEach((q) => {
+      if (!groups.has(q.market)) groups.set(q.market, []);
+      groups.get(q.market).push(q);
+    });
+    const ORDER = ['CN', 'ETF', 'HK', 'US', 'JP', 'EU', 'UK', 'KR', 'CMDTY', 'SGE', 'FX'];
+    const mks = [...groups.keys()].sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b));
+    const groupEls = [...box.querySelectorAll('.mkt')];
+    if (groupEls.length !== mks.length) return false;
+
+    for (let gi = 0; gi < mks.length; gi++) {
+      const mk = mks[gi];
+      const g = groupEls[gi];
+      const list = groups.get(mk);
+      const cards = [...g.querySelectorAll('.q')];
+      if (cards.length !== list.length) return false;
+      const nameEl = g.querySelector('.mkt-hd .mkt-name');
+      const stateEl = g.querySelector('.mkt-hd .mkt-state');
+      if (!nameEl || !stateEl) return false;
+      if (nameEl.textContent !== (MARKET_LABEL[mk] || mk)) return false;
+      // 交易中/休市随开盘收盘切换，但分组结构不动
+      const open = list.some((q) => isTrading(q.calendarMarket || q.market));
+      const stateTxt = open ? '交易中' : '休市';
+      if (stateEl.textContent !== stateTxt) stateEl.textContent = stateTxt;
+      stateEl.classList.toggle('open', open);
+
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        const q = list[i];
+        if (card.dataset.key !== q.key) return false;
+        const px = card.querySelector('.q-px');
+        const chg = card.querySelector('.q-chg');
+        const tm = card.querySelector('.q-time');
+        if (!px || !chg || !tm) return false;
+        const spans = chg.querySelectorAll('span');
+        if (spans.length < 2) return false;
+
+        const up = (q.changePct || 0) >= 0;
+        const pxTxt = fmtNum(q.price);
+        if (px.textContent !== pxTxt) px.textContent = pxTxt;
+        px.classList.toggle('up', up);
+        px.classList.toggle('down', !up);
+
+        const amt = (q.price || 0) - (q.prevClose || 0);
+        const t1 = `${up ? '▲' : '▼'} ${fmtNum(Math.abs(amt))}`;
+        const t2 = `  ${Math.abs(q.changePct || 0).toFixed(2)}%`;
+        if (spans[0].textContent !== t1) spans[0].textContent = t1;
+        if (spans[1].textContent !== t2) spans[1].textContent = t2;
+        const cls = up ? 'up' : 'down';
+        if (spans[0].className !== cls) spans[0].className = cls;
+        if (spans[1].className !== cls) spans[1].className = cls;
+
+        const st = statusOf(q);
+        if (tm.textContent !== st.card) tm.textContent = st.card;
+        const ok = st.state === 'realtime';
+        const local = st.state === 'local' || st.state === 'closed' || st.state === 'holiday';
+        tm.classList.toggle('state-ok', ok);
+        tm.classList.toggle('state-local', local);
+        tm.classList.toggle('state-warn', !ok && !local);
+
+        const search = quoteSearchText(q);
+        if (card.dataset.search !== search) card.dataset.search = search;
+      }
+    }
+    return true;
+  }
+
   let lastQuoteSig = '';
   async function renderQuotes() {
     const box = $('#quotes');
@@ -334,6 +417,12 @@
       '|' + globalStatus.state + '|' + Math.floor(now / 60000);
     if (sig === lastQuoteSig) return;
     lastQuoteSig = sig;
+
+    // 2.4.12：结构不变时只改数值/颜色/时间，静态外框与卡片节点原样保留。
+    if (patchQuotes(quotes, statusOf)) {
+      applyQuoteFilter();
+      return;
+    }
 
     // 用 fragment 一次性替换：`innerHTML=''` 再逐个 append 会让仪表盘在渲染过程中
     // 高度塌成 0（既闪一下，又把「视口对齐」的基准位置弄乱）
@@ -763,6 +852,7 @@
 
   function showView(v, instant) {
     S.view = v;
+    if (v === 'feed') openedDay = null;   // 切回要闻流才清；openDay 在 showView 之后重新设置
     closeReader();
     document.querySelectorAll('.tab, .mnav-item').forEach((t) => {
       const on = t.dataset.view === v;
@@ -1002,7 +1092,8 @@
 
   function restoreBriefOpen() {
     const open = uiState && Array.isArray(uiState.briefOpen) ? uiState.briefOpen : [];
-    if (!open.length) return;
+    if (!open.length) return Promise.resolve();
+    const jobs = [];
     document.querySelectorAll('#days .day.has-brief').forEach((box) => {
       if (!open.includes(box.dataset.day)) return;
       const det = box.querySelector('details');
@@ -1010,8 +1101,20 @@
       det.open = true;
       // 不依赖 toggle 事件：它是异步派发的，恢复时可能还没触发（实测刷新后块开了、内容没加载）
       box.classList.add('expanded');
-      loadBriefing(box.dataset.day, box.querySelector('.brief-body'));
+      jobs.push(loadBriefing(box.dataset.day, box.querySelector('.brief-body')));
     });
+    return Promise.all(jobs);
+  }
+
+  // 2.4.12：归档页刷新后停在原位。早报正文是异步到达的，页面会先矮后高，
+  // 所以等 brief 全部落位后再对齐（只做一次，之后用户自己滚动不受干扰）。
+  let archiveScrollDone = false;
+  function restoreArchiveScroll() {
+    if (archiveScrollDone || !uiState || uiState.view !== 'archive') return;
+    if (!Number.isFinite(uiState.y)) return;
+    archiveScrollDone = true;
+    if (alignState) alignState.userMoved = true;   // 别让 ResizeObserver 把页面拽回区块顶部
+    window.scrollTo({ top: uiState.y, behavior: 'auto' });
   }
 
   async function renderArchive() {
@@ -1063,7 +1166,7 @@
       const frag = document.createDocumentFragment();
       list.forEach((d) => frag.appendChild(dayCard(d)));
       box.appendChild(frag);
-      restoreBriefOpen();
+      restoreBriefOpen().then(restoreArchiveScroll, restoreArchiveScroll);
     } catch (e) {
       box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
     }
@@ -1091,6 +1194,7 @@
         kind === 'hist'
           ? `历史：${day} · ${d.items.length} 条${reason || ' · 仅标题/来源/时间，正文请点原文'}`
           : `归档：${day} · ${d.items.length} 条${reason}`;
+      openedDay = { day, kind };   // 2.4.12：刷新后仍停在这一天
     } catch (e) {
       box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
     }
@@ -1304,6 +1408,8 @@
   let klineTimer = null;
   let klineKey = '';
   let klinePeriod = '1d';
+  let pendingKlineView = null;   // 2.4.12：刷新后待恢复的缩放/视窗
+  let openedDay = null;          // 2.4.12：当前打开的归档日（feed 视图内）
   let maBars = 0;            // 当前周期数据的总根数：决定 MA_n 是否可画（0 = 数据还没到）
   // 请求令牌：每次取数 +1。
   // ⚠ 没有它会出两个 bug：
@@ -1481,6 +1587,12 @@
       shownRank = rank;
       shownLast = last;
       kChart.setData(bars, period);
+      // 2.4.12：首帧落图后恢复刷新前的缩放与视窗位置（只恢复一次）
+      if (pendingKlineView && pendingKlineView.key === key && pendingKlineView.period === period) {
+        const v = pendingKlineView;
+        pendingKlineView = null;
+        kChart.setView(v);
+      }
       // 数据变长后，原本「根数不足」的均线会自动变为可用（按钮取消置灰、曲线开始绘制）
       maBars = bars.length;
       renderMA();
@@ -1644,15 +1756,25 @@
   };
 
   // 刷新恢复：先恢复要闻流视口/阅读器，再等行情就绪后恢复 K 线弹窗。
-  function restoreFeedUI() {
+  async function restoreFeedUI() {
     if (!uiState || S.view !== 'feed') return;
     const wantShown = Math.max(PAGE, Number(uiState.shown) || PAGE);
-    const filterChanged = uiState.filter && uiState.filter !== S.filter;
-    if (filterChanged || wantShown > S.shown) {
-      if (filterChanged) S.filter = uiState.filter;
-      S.shown = Math.max(S.shown, wantShown);
-      renderFilters();
-      renderFeed();
+    // 2.4.12：刷新前停在归档页某一天 → 先按原样重开该天，不跳回最新要闻流。
+    const savedDay = uiState.day;
+    if (savedDay && savedDay.day) {
+      await openDay(savedDay.day, savedDay.kind || 'live');
+      if (wantShown > S.shown) {
+        S.shown = wantShown;
+        renderFeed();
+      }
+    } else {
+      const filterChanged = uiState.filter && uiState.filter !== S.filter;
+      if (filterChanged || wantShown > S.shown) {
+        if (filterChanged) S.filter = uiState.filter;
+        S.shown = Math.max(S.shown, wantShown);
+        renderFilters();
+        renderFeed();
+      }
     }
     if (Number.isFinite(uiState.y)) {
       const apply = () => {
@@ -1674,6 +1796,7 @@
   function restoreKlineUI() {
     if (!uiState || !uiState.kline || S.view !== 'market') return;
     if (!$('#klineModal').hidden) return;
+    pendingKlineView = uiState.kline;   // 2.4.12：连同 barsShown/offset 一起恢复
     openKline(uiState.kline.key, uiState.kline.period || (CFG.DEFAULT_PERIOD || '1d'));
   }
 

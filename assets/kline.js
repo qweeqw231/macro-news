@@ -60,6 +60,27 @@ class KlineChart {
     this.render();
   }
 
+  /** 2.4.12：导出视窗状态（刷新前存 sessionStorage） */
+  getView() {
+    return { barsShown: this.barsShown, offset: this.offset };
+  }
+
+  /** 2.4.12：恢复视窗状态；不重建 canvas，只重设缩放/偏移后 render */
+  setView(v) {
+    if (!v) return;
+    const n = Number(v.barsShown);
+    if (Number.isFinite(n) && n > 0) {
+      const lim = this._zoomLimits();
+      this.barsShown = Math.max(lim.min, Math.min(lim.max, n));
+      this._zoomTarget = this.barsShown;
+    }
+    const off = Number(v.offset);
+    if (Number.isFinite(off) && off >= 0) {
+      this.offset = Math.max(0, Math.min(this._maxOffset(), Math.round(off)));
+    }
+    this.render();
+  }
+
   /**
    * 清空画面并复位视图状态。
    *

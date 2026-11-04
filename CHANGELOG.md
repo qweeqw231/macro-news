@@ -36,6 +36,33 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.12] - 2026-11-05
+
+> 本条目曾拟定为 2.5.0，按版本规则降为补丁位：本次是刷新路径的重绘优化与状态保持修复，
+> 没有新增用户可见功能，也不涉及用户可见错误数据/数据丢失。
+
+### 修正
+
+- **刷新/轮询不再整体推倒重绘**：
+  - 行情卡片：15s 轮询在卡片集合与顺序不变时走 `patchQuotes()`，只更新价格、涨跌额/幅、
+    涨跌色、状态文案与状态色；`data-key` 或分组结构变化才回退整块 `replaceChildren`。
+  - K 线抽屉：`KlineChart` 单例复用画布；`setData` 保留 `barsShown/offset`；
+    新增 `getView()/setView()`，刷新后首帧落图再恢复缩放级别与视窗位置；
+    `saveUI` 把视窗写入 `macroNewsUI.v1`，恢复途中不会被 `reset()` 的 90 根默认值覆盖。
+  - 归档页：保存打开的某一天，刷新后 `openDay(day, kind)` 回到当天，不跳回最新要闻流；
+    早报展开状态沿用 `briefOpen`，正文重新载入但不收起；`restoreArchiveScroll()` 在
+    早报正文落位后恢复滚动位置，并停掉 ResizeObserver 的自动纠偏。
+- 不回退 2.1.2 的 sessionStorage 恢复（`UI_KEY` 不变），本次是在其之上扩展字段。
+
+### 测试
+
+- 新增 `tests/refresh-incremental.test.mjs`（7 项静态断言）：patch 在 replaceChildren 之前、
+  结构不一致回退、`setData` 不重置视窗、`getView/setView` 存取、`saveUI/restore` 链路、
+  归档展开与滚动恢复、归档某天恢复。全套 **185 项**通过。
+- 浏览器验收：桌面 1440×900 与 390×844 各一组刷新前后截图，路径见
+  `docs/verify/2.4.12/`；逐区域判定表见
+  `docs/superpowers/specs/2026-11-05-refresh-incremental-2.4.12-design.md`。
+
 ## [2.4.11] - 2026-11-05
 
 ### 修正
