@@ -36,6 +36,34 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.16] - 2026-11-05
+
+> 本机 `MacroNews-Collect` 改为「先同步再跑」，并去掉 `merge -X ours`。
+
+### 修正
+
+- 每轮启动先 `git fetch origin main`，比较 `HEAD` 与 `origin/main`：
+  - 落后且干净 → `merge --ff-only`；
+  - 落后且有已跟踪改动 → `git stash push -- <paths>` → ff-only → `stash pop`；
+  - 分叉 → 普通 `merge --no-edit origin/main`，冲突 `merge --abort` + 跳过本轮；
+  - fetch 失败 / stash 失败 / pop 冲突 / 未合并遗留 → 记日志并跳过本轮，**不采集、不提交**。
+- 去掉提交后与推送重试里的 `-X ours`，改为普通 merge；冲突 abort，本地提交保留，
+  下一轮重试（必要时人工处理）。不 force、不硬重置、不路径级覆盖。
+- 每轮日志写 `sync: head=… behind=… ahead=… dirty=… result=… head_after=… stash=…`。
+- 启动自检 `src/kline-lock.mjs` + `update-kline-last` 的 `upsertBars`；缺失记
+  `guard:missing`，**仍然继续采集**。
+- 保持 `wscript.exe + run-hidden.vbs` 静默宿主；新增 `-SyncOnly` 仅用于临时仓库验证。
+- fetch 设置 SSH 连接/存活超时（`ConnectTimeout=15`），避免落后很多或网络异常时长时间阻塞。
+
+### 测试
+
+- 新增 `tests/collect-sync.test.mjs`（9 项静态断言）：同步在采集前、ff-only/stash、
+  普通 merge/abort、禁止 `-X ours`/硬重置/路径覆盖/force、HEAD 日志、
+  guard 自检、wscript 静默宿主、`-SyncOnly` 不进入注册任务、SSH 超时。
+- 临时 git 仓库实测：干净落后→ff-only；脏落后→stash→ff-only→pop（本地改动保留）；
+  pop 冲突→stash 保留+跳过；未合并遗留→直接跳过；fetch 失败→跳过。
+- 全套 **210 项**通过。
+
 ## [2.4.15] - 2026-11-05
 
 > 写盘锁：`data/kline/` 按标的一把锁（同一文件系统内有效）。

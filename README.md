@@ -574,10 +574,13 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 | 本机回退采集 | 每 120 分钟 | `scripts\collect-and-push.ps1` | `scripts\register-task.ps1` |
 | 远端同步 | 每 4 小时 | `scripts\pull-remote.ps1` | `scripts\register-pull-task.ps1` |
 
-`MacroNews-Collect` 是**陈旧度驱动**的：每轮先看 `data/latest.json` 的最新条目，
-不到 `-NewsStaleMinutes`（默认 45）分钟就整轮跳过新闻/行情采集 —— 云端 15 分钟一轮正常时，
+`MacroNews-Collect` 是**先同步、再按陈旧度**驱动的：每轮先 `git fetch origin main`
+比较 `HEAD`/`origin/main`（落后且干净 → ff-only；有已跟踪改动 → stash → ff-only → pop；
+分叉走普通 merge，冲突 abort 跳过）；同步结果与 `HEAD` 短哈希写入日志。
+之后再**看** `data/latest.json` 的最新条目，不到 `-NewsStaleMinutes`（默认 45）分钟就整轮跳过新闻/行情采集 —— 云端 15 分钟一轮正常时，
 本机一次都不会重复采；云端排程器丢事件时，最多 45 分钟后本机接管。
 日/周/月 K 同理按 `-KlineStaleHours`（默认 6）判新鲜度。
+2.4.16 起不再使用 `-X ours`；任何合并冲突只 abort/保留 stash，不覆盖本地文件。
 
 `MacroNews-Collect` / `MacroNews-Pull` 均用 `wscript + run-hidden.vbs` 零窗口启动，
 `-StartWhenAvailable` 允许睡眠/关机后补跑。

@@ -7,12 +7,15 @@
 #   -MinuteKline      顺带刷新分钟 K（data/kline/min/）
 #   -KlineStaleHours  日 K 快照超过这个小时数才补刷一次（默认 6；0 = 每轮都刷）
 #   -NewsStaleMinutes 最新新闻超过这个分钟数才真正采集（默认 45；0 = 每轮都采）
+#   -SyncOnly         只做同步与守卫自检，不采集（临时仓库验证用）
 
 param(
     [switch]$NoKline,
     [switch]$MinuteKline,
     [int]$KlineStaleHours = 6,
-    [int]$NewsStaleMinutes = 45
+    [int]$NewsStaleMinutes = 45,
+    # 只做同步与自检，不采集（用于临时仓库验证 2.4.16 的同步逻辑）
+    [switch]$SyncOnly
 )
 
 $ErrorActionPreference = 'Continue'
@@ -42,6 +45,164 @@ Get-ChildItem $logDir -Filter 'collect-*.log' -ErrorAction SilentlyContinue |
     ForEach-Object { Remove-Item $_.FullName -Force -ErrorAction SilentlyContinue }
 
 Say "=== 采集开始 ==="
+
+# ---- 0. 启动自检：确认写锁/成交量守卫已接线（缺失只告警，不停摆）----
+function Get-GuardStatus {
+    $lock = Join-Path $root 'src\kline-lock.mjs'
+    $last = Join-Path $root 'scripts\update-kline-last.mjs'
+    if (-not (Test-Path $lock) -or -not (Test-Path $last)) { return 'missing' }
+    try {
+        $txt = Get-Content $last -Raw -Encoding UTF8
+        if ($txt -match 'upsertBars') { return 'ok' }
+    } catch { }
+    return 'missing'
+}
+function Say-Guard($phase) {
+    $st = Get-GuardStatus
+    if ($st -eq 'ok') {
+        Say "guard:ok（$phase：src/kline-lock.mjs + update-kline-last/upsertBars）"
+    } else {
+        Say "🛡 guard:missing（$phase：src\kline-lock.mjs 缺失或 update-kline-last 未引用 upsertBars）—— 继续采集，但本轮可能缺少写锁/成交量保护"
+    }
+    return $st
+}
+$guardBefore = Say-Guard '启动'
+
+# ---- 0.1 先同步再跑（2.4.16）----
+# 底线：不做硬重置、不做路径级覆盖、不用 ours 合并策略、不强制推送。
+# 同步失败/冲突时宁可本轮不采集，也不覆盖本地文件。
+$headBefore = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
+if (-not $headBefore) { $headBefore = 'unknown' }
+
+$unmerged = @(& git ls-files -u 2>$null)
+if ($unmerged.Count -gt 0) {
+    Say "sync: head=$headBefore result=skipped:unmerged（存在未合并文件，先人工解决；本轮不采集）"
+    exit 0
+}
+
+$dirtyPaths = @()
+$dirtyPaths += @(& git diff --name-only 2>$null)
+$dirtyPaths += @(& git diff --cached --name-only 2>$null)
+$dirtyPaths = @($dirtyPaths | Where-Object { $_ } | Sort-Object -Unique)
+$dirty = if ($dirtyPaths.Count -gt 0) { 'yes' } else { 'no' }
+
+$oldSsh = $env:GIT_SSH_COMMAND
+$env:GIT_SSH_COMMAND = 'ssh -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=3'
+$fetchOut = & git fetch origin main 2>&1 | Out-String
+$fetchOk = ($LASTEXITCODE -eq 0)
+if ($null -eq $oldSsh) {
+    Remove-Item Env:\GIT_SSH_COMMAND -ErrorAction SilentlyContinue
+} else {
+    $env:GIT_SSH_COMMAND = $oldSsh
+}
+
+if (-not $fetchOk) {
+    $first = ($fetchOut.Trim() -split "`r?`n" | Select-Object -First 1)
+    Say "sync: head=$headBefore behind=unknown ahead=unknown dirty=$dirty result=skipped:fetch-failed head_after=$headBefore stash=none（$first）"
+    Say "同步失败，本轮不采集、不提交；下一轮重试。"
+    exit 0
+}
+
+$behind = [int](& git rev-list --count HEAD..origin/main 2>$null)
+$ahead = [int](& git rev-list --count origin/main..HEAD 2>$null)
+
+function Push-Stash($paths, $msg) {
+    $out = & git stash push -m $msg -- $paths 2>&1 | Out-String
+    if ($LASTEXITCODE -eq 0) { return $true }
+    $first = ($out.Trim() -split "`r?`n" | Select-Object -First 1)
+    Say "sync: stash 失败：$first"
+    return $false
+}
+function Pop-Stash {
+    $out = & git stash pop 2>&1 | Out-String
+    if ($LASTEXITCODE -eq 0) { return $true }
+    $first = ($out.Trim() -split "`r?`n" | Select-Object -First 1)
+    Say "sync: stash pop 冲突（stash 保留，未强解）：$first"
+    return $false
+}
+
+$headAfter = $headBefore
+$stashState = 'none'
+$syncResult = ''
+$stashMsg = "macro-news sync $(Get-Date -Format 'yyyyMMdd-HHmmss')"
+
+if ($behind -eq 0) {
+    $syncResult = 'up-to-date'
+} elseif ($ahead -eq 0) {
+    $ok = $true
+    if ($dirty -eq 'yes') {
+        $ok = Push-Stash $dirtyPaths $stashMsg
+        if ($ok) { $stashState = 'pending' }
+    }
+    if (-not $ok) {
+        $syncResult = 'skipped:stash-failed'
+    } else {
+        $mergeOut = & git merge --ff-only origin/main 2>&1 | Out-String
+        if ($LASTEXITCODE -ne 0) {
+            $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
+            Say "sync: ff-only 失败：$first"
+            if ($stashState -eq 'pending') {
+                if (Pop-Stash) { $stashState = 'restored' } else { $stashState = 'kept' }
+            }
+            if ($stashState -eq 'kept') { $syncResult = 'skipped:stash-pop-conflict' }
+            else { $syncResult = 'skipped:ff-only-failed' }
+        } else {
+            $headAfter = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
+            if ($stashState -eq 'pending') {
+                if (Pop-Stash) { $stashState = 'restored' } else { $stashState = 'kept' }
+            }
+            if ($stashState -eq 'kept') { $syncResult = 'skipped:stash-pop-conflict' }
+            else { $syncResult = 'ff-only' }
+        }
+    }
+} else {
+    # 本地有未推提交且远端也前进：普通 merge，冲突则 abort，不覆盖任何本地提交
+    $ok = $true
+    if ($dirty -eq 'yes') {
+        $ok = Push-Stash $dirtyPaths $stashMsg
+        if ($ok) { $stashState = 'pending' }
+    }
+    if (-not $ok) {
+        $syncResult = 'skipped:stash-failed'
+    } else {
+        $mergeOut = & git merge --no-edit origin/main 2>&1 | Out-String
+        if ($LASTEXITCODE -ne 0) {
+            $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
+            Say "sync: merge 冲突，abort（本地提交保留，未 reset）：$first"
+            $null = & git merge --abort 2>&1
+            if ($stashState -eq 'pending') {
+                if (Pop-Stash) { $stashState = 'restored' } else { $stashState = 'kept' }
+            }
+            if ($stashState -eq 'kept') { $syncResult = 'skipped:stash-pop-conflict' }
+            else { $syncResult = 'skipped:merge-conflict' }
+        } else {
+            $headAfter = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
+            if ($stashState -eq 'pending') {
+                if (Pop-Stash) { $stashState = 'restored' } else { $stashState = 'kept' }
+            }
+            if ($stashState -eq 'kept') { $syncResult = 'skipped:stash-pop-conflict' }
+            else { $syncResult = 'merge' }
+        }
+    }
+}
+
+Say ("sync: head={0} behind={1} ahead={2} dirty={3} result={4} head_after={5} stash={6}" -f `
+    $headBefore, $behind, $ahead, $dirty, $syncResult, $headAfter, $stashState)
+
+if ($syncResult -like 'skipped:*') {
+    Say "同步未完成（$syncResult），本轮不采集、不提交；下一轮重试。"
+    exit 0
+}
+
+# 同步更新了代码/HEAD 时再复核一次守卫（旧代码检查已在启动时做过）
+if ($headAfter -ne $headBefore -or $guardBefore -eq 'missing') {
+    $null = Say-Guard '同步后'
+}
+
+if ($SyncOnly) {
+    Say "sync-only：结束（不采集）"
+    exit 0
+}
 
 # ---- 1. 陈旧度判定：云端还活着就不重复采 ----
 # 云端 collect.yml 每 15 分钟一轮（另有 30 分钟备份 cron）。本机每 120 分钟一轮，
@@ -173,8 +334,8 @@ Say "检测到 $($staged.Count) 个数据文件有变化"
 #     Please commit your changes or stash them before you merge.
 #   合并失败 → 脚本「放弃本次提交」→ 本机备份一条都推不上去。
 #   正确顺序：**先 commit（工作区变干净），再 fetch+merge**。
-#   冲突只可能出在 data/（两边都改了同一份数据）⇒ -X ours 取**本地**版本：
-#   本地跑的是新代码，与远端旧代码写出的同一份数据语义可能不同（口径以本地为准）。
+#   2.4.16：去掉 ours 合并策略。普通 merge；冲突就 abort + 记日志 + 放弃本轮推送，
+#   本地提交保留，下一轮重试（必要时人工处理）。绝不强制推送或重置覆盖。
 $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
 $null = git commit -m "data: 宏观资讯自动采集（$stamp）"
 if ($LASTEXITCODE -ne 0) { Say "提交失败，跳过推送"; exit 1 }
@@ -184,11 +345,12 @@ $null = git fetch origin main
 if ($LASTEXITCODE -eq 0) {
     $behind = [int](git rev-list --count HEAD..origin/main 2>$null)
     if ($behind -gt 0) {
-        Say "远端领先 $behind 个提交，合并（data/ 冲突取本地）"
-        $null = git merge -X ours --no-edit origin/main
+        Say "远端领先 $behind 个提交，普通合并（冲突则 abort，保留本地提交）"
+        $mergeOut = & git merge --no-edit origin/main 2>&1 | Out-String
         if ($LASTEXITCODE -ne 0) {
-            Say "合并失败，放弃本次推送（下次运行再试；数据已提交在本地）"
-            $null = git merge --abort
+            $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
+            Say "合并冲突，abort：$first（本地提交保留；下一轮重试，必要时人工处理）"
+            $null = & git merge --abort 2>&1
             exit 1
         }
     }
@@ -224,10 +386,11 @@ for ($i = 1; $i -le 6; $i++) {
     Say "推送失败（第 $i 次）：$firstLine"
     if ($i -lt 6) {
         $null = git fetch origin main
-        $null = git merge -X ours --no-edit origin/main
+        $mergeOut = & git merge --no-edit origin/main 2>&1 | Out-String
         if ($LASTEXITCODE -ne 0) {
-            Say "合并失败，放弃重推（数据已存在本地提交里，下次运行会再推）"
-            $null = git merge --abort
+            $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
+            Say "合并冲突，abort，放弃重推（本地提交保留）：$first"
+            $null = & git merge --abort 2>&1
             break
         }
         Start-Sleep -Seconds 5
