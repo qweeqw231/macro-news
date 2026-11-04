@@ -19,6 +19,7 @@ import { SOURCES, fetchQuotes, getQuoteError } from './sources.mjs';
 import { fetchPortfolioQuotesFast } from './portfolio.mjs';
 import { readBriefingMeta } from './brief-meta.mjs';
 import { dedupeItems } from './news-dedupe.mjs';
+import { decideBars } from './kline-guard.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -117,8 +118,19 @@ async function collectKlines(startedAt, onlyKeys) {
     const done = [];
     for (const spec of KLINE_SPEC) {
       try {
-        const bars = await fetchKline(key, spec.period, spec.limit);
-        await writeJSONIfChanged(path.join(DATA, 'kline', `${key}${spec.suffix}.json`), {
+        const file = path.join(DATA, 'kline', `${key}${spec.suffix}.json`);
+        const prev = await readJSON(file, null);
+        const incoming = await fetchKline(key, spec.period, spec.limit);
+        // 2.5.0：短序列不得覆盖长序列（见 src/kline-guard.mjs）
+        const decision = decideBars(prev && prev.bars, incoming);
+        if (decision.action === 'reject') {
+          console.log(
+            `  ⛔ ${key} ${spec.period} rejected: shorter（新 ${incoming.length} 根 < 现有 ${(prev.bars || []).length} 根），保留现有文件`
+          );
+          continue;
+        }
+        const bars = decision.bars;
+        await writeJSONIfChanged(file, {
           key,
           name: meta?.name || key,
           market: meta?.market || '',
@@ -128,7 +140,7 @@ async function collectKlines(startedAt, onlyKeys) {
           source: getKlineSource() || '',
           bars,
         });
-        done.push(`${spec.period}:${bars.length}`);
+        done.push(`${spec.period}:${bars.length}${decision.action === 'merge' ? '/merge' : ''}`);
       } catch (err) {
         // 单个周期失败不影响其它周期（例如某源不支持月K）
       }

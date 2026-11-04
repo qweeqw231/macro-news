@@ -19,6 +19,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchCgbCurveOneY } from '../src/portfolio.mjs';
 import { aggregateDaily } from '../src/aggregate.mjs';
+import { decideBars } from '../src/kline-guard.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -65,6 +66,18 @@ const meta = (period) => ({
 });
 async function flush() {
   bars.sort((a, b) => String(a.t).localeCompare(String(b.t)));
+  // 2.5.0：短序列不得覆盖长序列
+  if (existsSync(OUT)) {
+    try {
+      const old = JSON.parse(await readFile(OUT, 'utf8'));
+      const d = decideBars(old.bars, bars);
+      if (d.action === 'reject') {
+        console.log(`  ⛔ cgb_1y rejected: shorter（新 ${bars.length} 根 < 现有 ${(old.bars || []).length} 根），保留现有文件`);
+        return;
+      }
+      bars = d.bars;
+    } catch { /* 损坏文件 → 覆盖 */ }
+  }
   await mkdir(path.dirname(OUT), { recursive: true });
   await writeFile(OUT, JSON.stringify({ ...meta('1d'), bars }, null, 2), 'utf8');
   // 周K / 月K 一并预生成：前端点「周K / 月K」时直接读小文件，
