@@ -23,6 +23,7 @@ import { decideBars } from './kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
 import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
+import { selectDayItems, OFFICIAL_RECENT_DAYS, isRecent } from './quota.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -206,14 +207,15 @@ async function main() {
 
   // ---- 时间窗过滤 ----
   // 官方源（央行/统计局等）发布频率低，最新一条可能在窗口之外；
-  // 若同样按 24h 过滤会被永久丢弃。标记 windowed:false 的源跳过窗口，
-  // 靠 archive 的 id 去重保证不重复入库。
+  // 若同样按 24h 过滤会被永久丢弃。标记 windowed:false 的源跳过 24h 窗口，
+  // 但仍只接受最近 7 天，避免 windowed:false 把几个月前的旧条目反复拉回。
   const cutoff = startedAt.getTime() - SINCE_HOURS * 3600 * 1000;
   const merged = new Map();
   for (const s of perSource) {
     for (const it of s.items) {
       const t = it.ts ? it.ts * 1000 : new Date(it.time).getTime();
       if (s.windowed && Number.isFinite(t) && t < cutoff) continue;
+      if (!s.windowed && Number.isFinite(t) && !isRecent(t, startedAt.getTime(), OFFICIAL_RECENT_DAYS)) continue;
       if (!merged.has(it.id)) merged.set(it.id, it);
     }
   }
@@ -269,9 +271,9 @@ async function main() {
     // 2.4.5：不仅去重本轮新条目，也把**已归档**的同文重复合并掉。
     // 华尔街见闻同一篇快讯会以两个 id（A股/全球）返回，旧版本已把两条都写进归档；
     // 每次重建本日文件时重新跑一遍 dedupe，历史当日数据即可自愈。
-    const mergedItems = dedupeItems([...items, ...existing.items])
-      .sort((a, b) => b.ts - a.ts)
-      .slice(0, 800);
+    const mergedItems = selectDayItems(
+      dedupeItems([...items, ...existing.items])
+    );
     const newOnes = mergedItems.filter((i) => !existingIds.has(i.id)).length;
     const removed = existing.items.length + newOnes - mergedItems.length;
     if (newOnes || mergedItems.length !== existing.items.length) {
