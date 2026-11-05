@@ -1,10 +1,114 @@
 {
-  "generatedAt": "2026-11-05T14:52:43.899Z",
+  "generatedAt": "2026-11-05T15:07:38.035Z",
   "windowDays": 62,
   "from": "2026-09-05",
   "days": 56,
   "total": 22217,
   "items": [
+    {
+      "id": "8ar7f1",
+      "ts": 1793891221,
+      "time": "2026-11-05T23:07:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "分析师：那些手头已拥有现成算力的公司将成为美国中期选举的赢家",
+      "url": "https://wallstreetcn.com/livenews/3195206"
+    },
+    {
+      "id": "141p50d",
+      "ts": 1793891149,
+      "time": "2026-11-05T23:05:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "阿根廷债券跌超1.5美分。",
+      "url": "https://wallstreetcn.com/livenews/3195205"
+    },
+    {
+      "id": "1ag3mto",
+      "ts": 1793891127,
+      "time": "2026-11-05T23:05:27.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Anthropic对20.7万次Claude会话开展人工智能用于科学研究的情况分析。",
+      "url": "https://wallstreetcn.com/livenews/3195204"
+    },
+    {
+      "id": "11j6co0",
+      "ts": 1793891057,
+      "time": "2026-11-05T23:04:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "同行股价暴跌后，美国中期选举提升了数据中心企业IPO的门槛",
+      "url": "https://wallstreetcn.com/livenews/3195203"
+    },
+    {
+      "id": "47lwp9",
+      "ts": 1793891041,
+      "time": "2026-11-05T15:04:01.000Z",
+      "source": "中新网",
+      "title": "向北开放势能持续释放 绥芬河迎来新增长极",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-05/10726940.shtml"
+    },
+    {
+      "id": "wtj3b2",
+      "ts": 1793891023,
+      "time": "2026-11-05T23:03:43.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国（国会山）民主党成员们将在掌管参议院之后调查摩根大通与爱泼斯坦的关系。",
+      "url": "https://wallstreetcn.com/livenews/3195202"
+    },
+    {
+      "id": "3gmq85",
+      "ts": 1793890863,
+      "time": "2026-11-05T23:01:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Meta Platforms跌3.3%，亚马逊跌1.2%，微软跌2.1%。",
+      "url": "https://wallstreetcn.com/livenews/3195201"
+    },
+    {
+      "id": "w74pjn",
+      "ts": 1793890838,
+      "time": "2026-11-05T15:00:38.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）前景可期 专家沪上共话金砖国家经贸合作",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-05/10726937.shtml"
+    },
+    {
+      "id": "ks386g",
+      "ts": 1793890829,
+      "time": "2026-11-05T23:00:29.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日活用户154万！DeepSeek Harness最新披露",
+      "url": "https://wallstreetcn.com/livenews/3195200"
+    },
+    {
+      "id": "1ili1m9",
+      "ts": 1793890723,
+      "time": "2026-11-05T22:58:43.000+08:00",
+      "source": "新浪财经",
+      "title": "巴尔金预计后续仍要加息，但节奏将趋于渐进",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-05/doc-inixtafs9343224.shtml"
+    },
+    {
+      "id": "1c9tjs6",
+      "ts": 1793890614,
+      "time": "2026-11-05T22:56:54.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美股AI硬件产业链遭遇集体抛售，芯片、存储、半导体设备及光通信板块普遍大幅下跌。",
+      "url": "https://wallstreetcn.com/livenews/3195199"
+    },
+    {
+      "id": "ksymp5",
+      "ts": 1793890597,
+      "time": "2026-11-05T22:56:37.000+08:00",
+      "source": "华尔街见闻",
+      "title": "特斯拉股价跌幅扩大至10%，马斯克旗下太空探索公司SpaceX跌7.5%。",
+      "url": "https://wallstreetcn.com/livenews/3195198"
+    },
+    {
+      "id": "bsb4m3",
+      "ts": 1793890535,
+      "time": "2026-11-05T22:55:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "智利国家铜业公司（Codelco）报告安迪纳矿区（Andina Division）发生尾矿泄漏。",
+      "url": "https://wallstreetcn.com/livenews/3195197"
+    },
     {
       "id": "1hkdhc0",
       "ts": 1793890247,
@@ -20,6 +124,30 @@
       "source": "华尔街见闻",
       "title": "闪迪、西部数据、希捷科技均跌超11%，AMD跌11%创7月份以来盘中新低。",
       "url": "https://wallstreetcn.com/livenews/3195195"
+    },
+    {
+      "id": "y99njk",
+      "ts": 1793890123,
+      "time": "2026-11-05T22:48:43.000+08:00",
+      "source": "东方财富",
+      "title": "（第九届进博会）中国欧盟商会副主席：许多欧洲公司在中国做全球生意",
+      "url": "http://finance.eastmoney.com/news/1352,202611053923871738.html"
+    },
+    {
+      "id": "1onfina",
+      "ts": 1793890123,
+      "time": "2026-11-05T22:48:43.000+08:00",
+      "source": "东方财富",
+      "title": "（第九届进博会）九年进博，见证中国开放引力",
+      "url": "http://finance.eastmoney.com/news/1354,202611053923869583.html"
+    },
+    {
+      "id": "19nb7c4",
+      "ts": 1793890080,
+      "time": "2026-11-05T22:48:00.000+08:00",
+      "source": "东方财富",
+      "title": "第九届进博会开幕：站在中国的十字路口 遇见一个开放的世界",
+      "url": "http://finance.eastmoney.com/news/1354,202611053923874436.html"
     },
     {
       "id": "veobpm",
@@ -150,6 +278,22 @@
       "url": "https://wallstreetcn.com/livenews/3195186"
     },
     {
+      "id": "1rgp38k",
+      "ts": 1793889180,
+      "time": "2026-11-05T22:33:00.000+08:00",
+      "source": "东方财富",
+      "title": "新华鲜报·第九届进博会丨这份首次发布的报告，为分享中国市场提供精准指南",
+      "url": "http://finance.eastmoney.com/news/1352,202611053923871534.html"
+    },
+    {
+      "id": "1nsjxba",
+      "ts": 1793889180,
+      "time": "2026-11-05T22:33:00.000+08:00",
+      "source": "东方财富",
+      "title": "第九届进博会丨《世界开放报告2026》发布，这些看点值得关注",
+      "url": "http://finance.eastmoney.com/news/1352,202611053923871376.html"
+    },
+    {
       "id": "1juy1zy",
       "ts": 1793889090,
       "time": "2026-11-05T22:31:30.000+08:00",
@@ -198,12 +342,28 @@
       "url": "https://wallstreetcn.com/livenews/3195182"
     },
     {
+      "id": "g9q8x0",
+      "ts": 1793888940,
+      "time": "2026-11-05T22:29:00.000+08:00",
+      "source": "东方财富",
+      "title": "第九届进博会丨进博手记：在全球创新中看见中国印记",
+      "url": "http://finance.eastmoney.com/news/1354,202611053923869190.html"
+    },
+    {
       "id": "yjy7mn",
       "ts": 1793888935,
       "time": "2026-11-05T22:28:55.000+08:00",
       "source": "东方财富",
       "title": "《世界开放报告2026》发布，中国与“一带一路”共建国家逆势扩大开放",
       "url": "http://finance.eastmoney.com/news/1346,202611053923855525.html"
+    },
+    {
+      "id": "1czvkhf",
+      "ts": 1793888880,
+      "time": "2026-11-05T22:28:00.000+08:00",
+      "source": "东方财富",
+      "title": "第九届进博会丨第九届进博会港澳台参展规模均扩大",
+      "url": "http://finance.eastmoney.com/news/1350,202611053923871684.html"
     },
     {
       "id": "1okg4vo",
@@ -702,6 +862,14 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-05/doc-inixtafn5446904.shtml"
     },
     {
+      "id": "1ipsxqc",
+      "ts": 1793885913,
+      "time": "2026-11-05T21:38:33.000+08:00",
+      "source": "东方财富",
+      "title": "中星微技术亮相2026北京安博会：芯智筑基，端侧可信，共创星元智算新时代",
+      "url": "http://finance.eastmoney.com/news/1350,202611053923875197.html"
+    },
+    {
       "id": "ko4syt",
       "ts": 1793885912,
       "time": "2026-11-05T21:38:32.000+08:00",
@@ -1196,6 +1364,14 @@
       "source": "新浪财经",
       "title": "维萨调查：尽管旅行高居愿望清单榜首，消费者仍选择购买实物礼品",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-05/doc-inixsvxn8782412.shtml"
+    },
+    {
+      "id": "1khofep",
+      "ts": 1793883060,
+      "time": "2026-11-05T20:51:00.000+08:00",
+      "source": "东方财富",
+      "title": "当AI越来越像人，青年何为？青年领军者齐聚乌镇共话竞争力",
+      "url": "http://finance.eastmoney.com/news/1350,202611053923875410.html"
     },
     {
       "id": "1opd74o",
@@ -6220,182 +6396,6 @@
       "source": "华尔街见闻",
       "title": "特朗普：弹劾我将“摧毁”民主党 不会解雇赫格塞思",
       "url": "https://wallstreetcn.com/livenews/3194789"
-    },
-    {
-      "id": "16lef90",
-      "ts": 1793859840,
-      "time": "2026-11-05T14:24:00.000+08:00",
-      "source": "东方财富",
-      "title": "前三季度深圳实际使用外资同比增长超60%",
-      "url": "http://finance.eastmoney.com/news/1350,202611053923435080.html"
-    },
-    {
-      "id": "nrpstd",
-      "ts": 1793859818,
-      "time": "2026-11-05T14:23:38.000+08:00",
-      "source": "华尔街见闻",
-      "title": "眼面防护具特殊防护强制性国家标准正式发布",
-      "url": "https://wallstreetcn.com/livenews/3194788"
-    },
-    {
-      "id": "zwu1xw",
-      "ts": 1793859661,
-      "time": "2026-11-05T14:21:01.000+08:00",
-      "source": "华尔街见闻",
-      "title": "科创半导体ETF华夏成交创历史最高纪录",
-      "url": "https://wallstreetcn.com/livenews/3194787"
-    },
-    {
-      "id": "1fhpu4o",
-      "ts": 1793859600,
-      "time": "2026-11-05T14:20:00.000+08:00",
-      "source": "新浪财经",
-      "title": "现货白银有望连涨两连阳，是趋势反转还是反弹？",
-      "url": "https://finance.sina.com.cn/money/nmetal/hjzx/2026-11-05/doc-inixsmis8780199.shtml"
-    },
-    {
-      "id": "1ebg0bd",
-      "ts": 1793859238,
-      "time": "2026-11-05T14:13:58.000+08:00",
-      "source": "华尔街见闻",
-      "title": "旅游板块午后拉升，华天酒店涨停，西域旅游、君亭酒店、众信旅游、桂林旅游、凯撒旅业跟涨。",
-      "url": "https://wallstreetcn.com/livenews/3194783"
-    },
-    {
-      "id": "15ovx97",
-      "ts": 1793859105,
-      "time": "2026-11-05T14:11:45.000+08:00",
-      "source": "华尔街见闻",
-      "title": "国家能源局公示“人工智能+”能源试点项目清单",
-      "url": "https://wallstreetcn.com/livenews/3194781"
-    },
-    {
-      "id": "1lflf4k",
-      "ts": 1793859023,
-      "time": "2026-11-05T14:10:23.000+08:00",
-      "source": "华尔街见闻",
-      "title": "A股算力租赁概念持续走高，青云科技20cm涨停，润建股份此前封板，品高股份、优刻得、创业黑马、润泽科技、奥雅股份均涨超10%。",
-      "url": "https://wallstreetcn.com/livenews/3194780"
-    },
-    {
-      "id": "1sq5sl",
-      "ts": 1793858998,
-      "time": "2026-11-05T14:09:58.000+08:00",
-      "source": "东方财富",
-      "title": "国务院国资委：加快培育壮大新兴产业和未来产业 以科技强牵引产业强、经济强",
-      "url": "http://finance.eastmoney.com/news/1355,202611053923422591.html"
-    },
-    {
-      "id": "1vfrpra",
-      "ts": 1793858994,
-      "time": "2026-11-05T14:09:54.000+08:00",
-      "source": "华尔街见闻",
-      "title": "算力租赁概念持续走高，青云科技20cm涨停，润建股份此前封板，品高股份、优刻得、创业黑马、润泽科技、奥雅股份均涨超10%。",
-      "url": "https://wallstreetcn.com/livenews/3194779"
-    },
-    {
-      "id": "1pcyeuo",
-      "ts": 1793858959,
-      "time": "2026-11-05T14:09:19.000+08:00",
-      "source": "新浪财经",
-      "title": "韩国金融当局称将密切关注美国中期选举后AI和贸易政策变化",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-05/doc-inixsezu8902024.shtml"
-    },
-    {
-      "id": "npgrz9",
-      "ts": 1793858922,
-      "time": "2026-11-05T14:08:42.000+08:00",
-      "source": "东方财富",
-      "title": "人工客服全忙、服务器过载 芒果超媒股价爆了！股民：“难受啊厉娜 卖飞10cm”",
-      "url": "http://finance.eastmoney.com/news/1354,202611053923414260.html"
-    },
-    {
-      "id": "1gf37k2",
-      "ts": 1793858826,
-      "time": "2026-11-05T14:07:06.000+08:00",
-      "source": "华尔街见闻",
-      "title": "罕见！马斯克悄悄删掉一条拉票帖文",
-      "url": "https://wallstreetcn.com/livenews/3194778"
-    },
-    {
-      "id": "1353ftn",
-      "ts": 1793858808,
-      "time": "2026-11-05T14:06:48.000+08:00",
-      "source": "东方财富",
-      "title": "第九届虹桥国际经济论坛发布《出口中国能力发展报告》",
-      "url": "http://finance.eastmoney.com/news/1350,202611053923422685.html"
-    },
-    {
-      "id": "1gfnfbz",
-      "ts": 1793858708,
-      "time": "2026-11-05T14:05:08.000+08:00",
-      "source": "华尔街见闻",
-      "title": "第九届虹桥国际经济论坛发布《出口中国能力发展报告》",
-      "url": "https://wallstreetcn.com/livenews/3194776"
-    },
-    {
-      "id": "abujxz",
-      "ts": 1793858653,
-      "time": "2026-11-05T06:04:13.000Z",
-      "source": "中新网",
-      "title": "“双11”把词元摆上货架 看不见的商品，账怎么算？",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-05/10726555.shtml"
-    },
-    {
-      "id": "ass8mm",
-      "ts": 1793858574,
-      "time": "2026-11-05T14:02:54.000+08:00",
-      "source": "东方财富",
-      "title": "全国铁路列车车次编排改革第一批车次变更即将实施",
-      "url": "http://finance.eastmoney.com/news/1350,202611053923410875.html"
-    },
-    {
-      "id": "ud42pc",
-      "ts": 1793858559,
-      "time": "2026-11-05T14:02:39.000+08:00",
-      "source": "华尔街见闻",
-      "title": "阿里云超节点Day0适配Kimi K3.1 Pro",
-      "url": "https://wallstreetcn.com/livenews/3194774"
-    },
-    {
-      "id": "xp3f4p",
-      "ts": 1793858473,
-      "time": "2026-11-05T14:01:13.000+08:00",
-      "source": "华尔街见闻",
-      "title": "德国商业银行第三季度净利润8.59亿欧元，市场预估8.452亿欧元。",
-      "url": "https://wallstreetcn.com/livenews/3194773"
-    },
-    {
-      "id": "sqz7x8",
-      "ts": 1793858441,
-      "time": "2026-11-05T06:00:41.000Z",
-      "source": "中新网",
-      "title": "中新网评：别把国乒热度做成假直播生意",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-05/10726554.shtml"
-    },
-    {
-      "id": "99oj34",
-      "ts": 1793858430,
-      "time": "2026-11-05T14:00:30.000+08:00",
-      "source": "华尔街见闻",
-      "title": "整点回顾：市场午后震荡回落，创业板指下行翻绿，权重股中际旭创跌超10%，新易盛跌超8%，天孚通信跌超6%，AI漫剧概念再度拉升，吉视传媒等多股涨停，个股依旧涨多跌少，沪深京三市超4400股飘红，成交达1.81万亿，较上日此时放量超3400亿。",
-      "url": "https://wallstreetcn.com/livenews/3194772"
-    },
-    {
-      "id": "ci1hz3",
-      "ts": 1793858416,
-      "time": "2026-11-05T14:00:16.000+08:00",
-      "source": "华尔街见闻",
-      "title": "A股零售股再度拉升，百大集团直线涨停，国光连锁此前封板，大东方、国芳集团、欧亚集团、新华百货涨幅居前。",
-      "url": "https://wallstreetcn.com/livenews/3194771"
-    },
-    {
-      "id": "17nu6qo",
-      "ts": 1793858381,
-      "time": "2026-11-05T13:59:41.000+08:00",
-      "source": "华尔街见闻",
-      "title": "零售股再度拉升，百大集团直线涨停，国光连锁此前封板，大东方、国芳集团、欧亚集团、新华百货涨幅居前。",
-      "url": "https://wallstreetcn.com/livenews/3194769"
     },
     {
       "id": "1pjxyko",
