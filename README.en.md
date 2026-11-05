@@ -189,10 +189,10 @@ SSE+SZSE / FRED are fallback only (measured unreachable from Actions). 1Y govern
 | publish | `node scripts/briefing/publish.mjs --date <today> --push`: validate schema / item count / source traceability / `inputSha`, then atomically write the site and local copy, update the index and status; `--push` commits only the 4 briefing-related paths (see "Publish means ingest" below) |
 | Output | `.local/briefings/YYYY-MM-DD.json` + `.md` (local) + `data/briefings/YYYY-MM-DD.json` (site) |
 
-**News database** `.local/news.db` (SQLite + FTS5, Chinese bigram tokenization): about 530k rows (529,006);
+**News database** `.local/news.db` (SQLite + FTS5, Chinese bigram tokenization): about 530k rows;
 the last 60 days have full text/summary, while the 5-year history is mostly title + link (China News Service backfill of about 500k).
 **Already wired into the static site**: 2.2.0 shipped the trailing-year history slices, 2.4.10 filled 09-20~10-04; currently
-**319 days / 72,553 items / through 2026-10-04**, and dates after 09-20 use the `archive/` full text.
+**the trailing year (about 320 days) / about 70k items / through 2026-10-04**, and dates after 09-20 use the `archive/` full text.
 History slices are mostly title/source/time/original link (136 with a summary), **with no body**.
 
 ⚠ Two measured pitfalls (the briefing task hits them every day, so they are written into the instructions):
@@ -267,14 +267,14 @@ No first-screen prefetch (measured 0 `briefings` requests); one briefing is 10 K
 
 | Stage | Implementation |
 |---|---|
-| Data source | `.local/news.db` (SQLite, 529,006 rows, from 2021-11) |
+| Data source | `.local/news.db` (SQLite, about 530k rows, from 2021-11) |
 | Export | `node scripts/export-history.mjs --days 365` → `data/history/YYYY-MM-DD.json` + `index.json` |
 | Scope | 365 days through **yesterday**; only dates not covered by `data/archive/` (gap-only); existing slices are not overwritten |
-| Status (2.4.10) | **319 days / 72,553 items / through 2026-10-04**; dates from 09-20 with archive placeholder files are filled by `--include-archived`, and dates after 09-20 use archive full text |
+| Status (2.4.10) | **the trailing year (about 320 days) / about 70k items / through 2026-10-04**; dates from 09-20 with archive placeholder files are filled by `--include-archived`, and dates after 09-20 use archive full text |
 | Fields | Mostly `title/source/time/original link` (136 with a summary), **no body** |
 | Gap | 09-04~10-04 Wallstreetcn/Eastmoney/Sina were not collected (source sites do not keep history beyond 30 days, so it cannot be backfilled); that period is dominated by China News Service/official sources |
 | Per-day cap | 400 items (after same-hash dedupe, selected by "official / full text / source weight"); **mostly title/source/time/link (a few with summary), no body** |
-| Size | Measured **319 slices / 72,553 items / 15.8 MB** (largest single day 88.4 KB) |
+| Size | Measured **about 320 slices / about 70k items / about 16 MB** (largest single day under 100 KB) |
 | Read | The archive page fetches `history/index.json` only when switched to "Archive"; a day's slice is fetched only when clicked; LRU 3 days, `max-age=600` |
 
 History slices are **mostly title/source/time (a few with summary), with no body** (the body lives in the `archive/` day files); `search.json`
@@ -291,7 +291,7 @@ the single implementation of `newsDay()` is in `assets/news-day.js`; archive fil
 GitHub Actions' original UTC day-cutting matches the new definition, and the local machine no longer cuts at Beijing midnight.
 **No history rewrite**: day files written before 2026-11-05 stay as-is; boundaries before the switch were written by a mix of UTC/Beijing calendar days
 and are uncertain, so we do not re-sort them just for tidiness. Measured now: `2026-11-04.json` has 800 items and
-`2026-11-05.json` has 527, all inside the new window; the switch causes no item-count jump or news changing days.
+`2026-11-05.json` has several hundred items, all inside the new window; the switch causes no item-count jump or news changing days.
 
 
 ---
@@ -427,7 +427,7 @@ What must hold is that it **updates with collection**:
 | `data/history/index.json` | History slice index (with `hasBriefing` / `briefLine` / `source`) | Same as above |
 | `data/briefings/YYYY-MM-DD.json` | The day's briefing (`overview` + `watch` + `items` + `source`, same key as the archive) | Pipeline ⑥ / `scripts/briefing/*` |
 | `data/latest.json` | Latest 200 items (first screen) | Pipeline ① |
-| `data/search.json` | Search index for the latest 62 news days (**title/source/time/link, no summary**, about 6.5 MB) | Pipeline ① |
+| `data/search.json` | Search index for the latest 62 news days (**title/source/time/link, no summary**, about 6 MB) | Pipeline ① |
 | `data/index.json` | By-day archive index (with `hasBriefing` / `briefLine` / `source`) | Pipeline ① |
 | `data/kline/<key>.json` / `_1w` / `_1M` | 27 instruments × daily/weekly/monthly | Pipeline ② |
 | `data/kline/<key>_full.json` | Full daily K for 26 instruments (20 indices + 6 portfolio) (compact arrays `[t,o,c,h,l,v]`) | Pipeline ② |
@@ -697,7 +697,7 @@ plus a per-workflow summary and local skip reasons; a snapshot is written to `.l
    **the newest item time**.
 10. **History slices are one file per day, gap-only**: one request per day, LRU by day, written once and immutable;
     days already covered by `archive/` (with full text) are not exported as a summary version again — otherwise the same day has two truths and another 6 MB.
-    Each day is compressed to 1-letter keys + omitted empty fields + a 400-item cap; measured 319 days at 15.8 MB total (30 MB budget gate).
+    Each day is compressed to 1-letter keys + omitted empty fields + a 400-item cap; measured about 320 days at about 16 MB total (30 MB budget gate).
 11. **Briefing shares the archive key and fetches its body only on expand**: the index only adds `hasBriefing` + one `briefLine` of ≤80 characters,
     with no new index file and no prefetch of 365 briefings on the first screen/archive page; the day's JSON is requested only when the collapsed block is expanded,
     with `max-age=600` for historical days and `no-store` for today.
@@ -753,9 +753,9 @@ Similarity is lineage, not copying. **mcf's `--mcf-*` tokens and this site's gen
 ## 9. Known limitations / TODO
 
 - News body coverage is not 100%: the PBoC and ECB have titles only (the originals are in PDFs).
-- `search.json` is about 6.5 MB (gzip ≈1.4 MB, latest 62 news days, no summary): **prefetched only when the search box is focused or typing starts**, so the first screen/archive no longer competes for bandwidth with it;
+- `search.json` is about 6 MB (gzip about 1–2 MB, latest 62 news days, no summary): **prefetched only when the search box is focused or typing starts**, so the first screen/archive no longer competes for bandwidth with it;
   the first full-text search must wait for the index to download (Pages bandwidth measured at 5~30 KB/s).
-- **Historical search is browse-based**: `data/history/` covers the trailing year (319 days / 15.8 MB, mostly titles, a few summaries),
+- **Historical search is browse-based**: `data/history/` covers the trailing year (about 320 days / about 16 MB, mostly titles, a few summaries),
   but `search.json` still covers only the latest ~62 days — a full 365-day index is about 60 MB, not feasible in a browser.
   For cross-year search, use the local `scripts/news-db/query.mjs`; do not pour it into the static site.
 - cron does not know official holidays: quotes keep the previous trading day, and snapshots simply write no file (normal behavior).
@@ -765,7 +765,7 @@ Similarity is lineage, not copying. **mcf's `--mcf-*` tokens and this site's gen
   London gold 3876.69 (04:55) vs Wind 3875.19 / Tonghuashun 3875.06 / Alipay 3875.02, a difference of about 1.67 (0.04%).
 - **London gold minute K**: Eastmoney `122.XAU` "gold/USD · spot" has daily and 1m/5m/15m/30m/60m (measured 2026-11-03);
   its same-day close differs from Sina global `XAU` by at most **0.054% over 15 trading days** — the same instrument and the same line.
-  Division of labor: **daily/weekly/monthly use Sina global** (5183 bars since 2006), **minute uses Eastmoney 122.XAU**;
+  Division of labor: **daily/weekly/monthly use Sina global** (thousands of bars since 2006), **minute uses Eastmoney 122.XAU**;
   international commodities have no multi-year minute history (1m ≈ 1~2 trading days, 5m/30m hundreds of bars); missing is missing, do not fake it with daily bars.
 - **Brent is a continuous contract** (Sina global OIL): it has a basis spread against the "December contract" in the news,
   2026-10-30 continuous 113.4 vs December contract 117.64 (about 4 USD), but the change is the same (+2.4%).
@@ -802,7 +802,7 @@ macro-news/
 │   ├── kline/         daily/weekly/monthly + _full + min/
 │   └── macro/daily.json
 ├── .local/            local private (already in .gitignore)
-│   ├── news.db        news database (SQLite + FTS5, 530k rows)
+│   ├── news.db        news database (SQLite + FTS5, about 530k rows)
 │   ├── briefings/     daily briefing YYYY-MM-DD.json / .md
 │   └── runs/          2.3.0 three-stage intermediates (input/outline/draft/final + prompt)
 ├── scripts/news-db/   news database: db · history-slice · import-archive · brief-candidates · query · backfill-*
