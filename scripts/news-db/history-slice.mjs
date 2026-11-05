@@ -8,7 +8,7 @@
 
 export const HISTORY_VERSION = 2;
 
-// 2.4.18：统一新闻日（北京 08:00 起算，等价 UTC 日期）。实现见 assets/news-day.js。
+// 2.4.19：统一新闻日（北京 08:00 起算，等价 UTC 日期）。实现见 assets/news-day.js。
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const ND = require('../../assets/news-day.js');

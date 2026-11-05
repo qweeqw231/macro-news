@@ -1,5 +1,5 @@
 // src/news-day.mjs
-// 2.4.18：服务端统一入口。实现只有一份（assets/news-day.js），避免两边算法漂移。
+// 2.4.19：服务端统一入口。实现只有一份（assets/news-day.js），避免两边算法漂移。
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);

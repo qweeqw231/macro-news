@@ -1,5 +1,5 @@
 // tests/news-day.test.mjs
-// 2.4.18：新闻日边界（北京 08:00 起算，等价 UTC 日期），锁死 TZ 无关性。
+// 2.4.19：新闻日边界（北京 08:00 起算，等价 UTC 日期），锁死 TZ 无关性。
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
