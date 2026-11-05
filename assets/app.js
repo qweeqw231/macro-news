@@ -564,7 +564,7 @@
     saveUI();
   }
 
-  // 搜索结果来自 search.json —— 只有 title + summary，**没有正文**；
+  // 搜索结果来自 search.json —— 只有 title/source/time/url，**没有正文也没有摘要**；
   // 完整正文存在按天的归档文件里（content 最多 4000 字）。
   // 所以打开一条没有正文的条目时，按日期去 data/archive/YYYY-MM-DD.json 取全文。
   //
@@ -573,7 +573,7 @@
   const DAY_CACHE_MAX = 3;
   const DAY_FRESH_MS = 5 * 60 * 1000;
   const dayCache = new Map();
-  // 2.4.18：新闻日 = 北京 08:00 起算（等价 UTC 日期），与归档文件名一致
+  // 2.4.19：新闻日 = 北京 08:00 起算（等价 UTC 日期），与归档文件名一致
   const newsDay = (d = new Date()) =>
     window.MacroNewsDay ? window.MacroNewsDay.newsDay(d) : new Date(d).toISOString().slice(0, 10);
 
@@ -721,8 +721,8 @@
     searchTimer = setTimeout(() => runSearch(v), 220);
   }
 
-  // 检索索引 `data/search.json` 有 6~10MB（gzip 后 ~2.7MB），
-  // 从 GitHub Pages 拉一次要**几十秒到几分钟**（本机实测带宽 5~30 KB/s）。
+  // 检索索引 `data/search.json` 只有最近 62 天、约 5.7MB（gzip 约 1.4MB），
+  // 从 GitHub Pages 拉一次要**几十秒**（本机实测带宽 5~30 KB/s）。
   // ⇒ **用户碰搜索框（focus）或开始输入时才预取**：首屏、归档、行情都不跟它抢带宽。
   //   还没下完时 qMeta 会显示「检索索引载入中…」。
   let searchIdxPromise = null;
@@ -736,10 +736,8 @@
             includeScore: true, ignoreLocation: true,
             minMatchCharLength: 2, threshold: 0.4, distance: 100,
             keys: [
-              { name: 'title', weight: 0.55 },
-              { name: 'summary', weight: 0.3 },
-              { name: 'source', weight: 0.1 },
-              { name: 'channel', weight: 0.05 },
+              { name: 'title', weight: 0.8 },
+              { name: 'source', weight: 0.2 },
             ],
           });
           return S.searchIdx;

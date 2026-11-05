@@ -84,7 +84,7 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
   `A股/中国 > 国内财经 > 外汇/大宗/美股 > 全球`，同频道保留正文更长的一条。
   写归档时对「本轮新增 + 已有条目」重新跑一遍合并，因此旧数据里的双频道重复会在
   下一次采集时自愈。按天写 `archive/`；`latest.json` 存最近 200 条（首屏），
-  `search.json` 存全库检索索引（只有标题+摘要）。
+  `search.json` 存最近 62 天检索索引（只有标题/来源/时间/链接，无摘要/正文）。
 - **标题（2.4.6）**：无独立标题的快讯取正文**第一整句**，完整入 `title`，不再硬截 40 字；
   需要短版时只在标点边界（`。！？；` → `，、`）断开并加 `…`，找不到标点就返回全文。
   前端 `.item-title` 用 `-webkit-line-clamp: 2` 多行省略，不做字符截断。
@@ -275,15 +275,16 @@ publish --date（脚本，确定性）
 | 体积 | 实测 **319 个切片 / 72,553 条 / 15.8 MB**（单日最大 88.4 KB） |
 | 读取 | 归档页切到「归档」时才取 `history/index.json`；点某天才取当天切片，LRU 3 天、`max-age=600` |
 
-历史切片**只有标题/来源/时间，没有摘要与正文**（正文在 `archive/` 的日期里）；`search.json` 不覆盖历史，
-全文检索仍只搜最近 62 天 —— 这是刻意的，365 天全量索引在浏览器里不可行（见 §9）。
+历史切片**只有标题/来源/时间，没有摘要与正文**（正文在 `archive/` 的日期里）；`search.json`
+只索引 archive 最近 **62 个新闻日**、且不含摘要（只有标题/来源/时间/链接），
+不覆盖 `history/` —— 365 天全量索引在浏览器里不可行（见 §9）。
 
 **同一天用哪份（2.4.10）**：archive 条数 **≥ 20** 时用归档全文；`< 20` 且存在历史切片时，
 改用历史切片并在列表上方显示原因（如「该日归档仅 3 条，已改用历史切片 243 条（仅标题/来源/时间，
 正文请点原文）」）。规则在 `assets/day-source.js`，阈值显式可见、可测试，不藏在渲染里。
 补齐占位日切片：`node scripts/export-history.mjs --from <起> --to <止> --include-archived --force`。
 
-**新闻日边界（2.4.18 起）**：统一为**北京 08:00 起算**（等价 UTC 自然日），
+**新闻日边界（2.4.19 起）**：统一为**北京 08:00 起算**（等价 UTC 自然日），
 `newsDay()` 唯一实现见 `assets/news-day.js`；归档文件、`index.json`、`latest.json`、
 `search.json`、历史切片与快照对账的日期判断都走它。因为北京 08:00 = UTC 00:00，
 GitHub Actions 原来的 UTC 切日与新口径一致，本机不再按北京零点切日。
@@ -426,7 +427,7 @@ K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三�
 | `data/history/index.json` | 历史切片索引（含 `hasBriefing` / `briefLine` / `source`） | 同上 |
 | `data/briefings/YYYY-MM-DD.json` | 当日早报（`overview` + `watch` + `items` + `source`，与归档同键） | 链路 ⑥ / `scripts/briefing/*` |
 | `data/latest.json` | 最近 200 条（首屏） | 链路 ① |
-| `data/search.json` | 全库检索索引（**只有标题+摘要**，约 10 MB） | 链路 ① |
+| `data/search.json` | 最近 62 个新闻日检索索引（**标题/来源/时间/链接，无摘要**，约 6.4 MB） | 链路 ① |
 | `data/index.json` | 按天归档索引（含 `hasBriefing` / `briefLine` / `source`） | 链路 ① |
 | `data/kline/<key>.json` / `_1w` / `_1M` | 27 个标的 × 日/周/月 | 链路 ② |
 | `data/kline/<key>_full.json` | 10 个 CN 指数的全量日 K（紧凑数组 `[t,o,c,h,l,v]`） | 链路 ② |
@@ -714,7 +715,7 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 ## 9. 已知限制 / 待办
 
 - 新闻正文覆盖率不是 100%：人民银行、欧洲央行只有标题（原文在 PDF 里）。
-- `search.json` 约 10 MB（gzip ≈2.7 MB）：**点搜索框或开始输入时才预取**，首屏/归档不再跟它抢带宽；
+- `search.json` 约 6.4 MB（gzip ≈1.4 MB，最近 62 新闻日、无摘要）：**点搜索框或开始输入时才预取**，首屏/归档不再跟它抢带宽；
   首次全文检索要等索引下载完（Pages 带宽实测 5~30 KB/s）。
 - **历史检索是浏览式的**：`data/history/` 覆盖近一年（304 天 / 15.1 MB，只有标题/摘要），
   但 `search.json` 仍只覆盖最近约 62 天 —— 365 天全量索引约 60 MB，浏览器里不可行。

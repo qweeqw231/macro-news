@@ -63,6 +63,29 @@
   同时具备**远端新计数**与**本地早报标记**；另有一例断言非白名单冲突仍然中止。
   此前 `tests/briefing-push.test.mjs` 用假 exec 固化的是**写反的** stage 语义，已一并改正。
 
+## [2.4.20] - 2026-11-05
+
+> `search.json` 限定最近 62 个新闻日，并去掉 220 字摘要。
+
+### 变更
+
+- `src/search-window.mjs`：`SEARCH_WINDOW_DAYS=62`、`searchCutoff()`、`inSearchWindow()`、
+  `compactSearchItem()`（只留 `id/ts/time/source/title/url`）。
+- `src/collect.mjs` 构建 `search.json` 时按 archive 文件名倒序，遇到窗口外日期立即停止；
+  元数据增加 `windowDays/from/days`。窗口外日期不再进索引。
+- `assets/app.js`：Fuse 索引去掉 `summary/channel`，权重改为 title 0.8 / source 0.2；
+  搜索结果不再有摘要行（字段本就不存在）。
+- 实测：全 archive + 220 字摘要 **12.66 MB / gzip 3.45 MB / 607 B 每条**；
+  62 天 + 无摘要 **6.43 MB / gzip 1.42 MB / 309 B 每条**（窗口内 56 个有文件日期、21,850 条）。
+  首次搜索下载约减半；代价是正文关键词不再参与命中（标题/来源仍可搜）。
+- `data/search.json` 已按新规则重建并入库。
+
+### 测试
+
+- 新增 `tests/search-window.test.mjs`（4 项）：62 天边界、字段仅 6 个、
+  collect 窗口 break/compact、Fuse 不再索引 summary/channel。全套 **231 项**通过。
+- 前端资源串保持 `20261105d`（app.js 有改动，已包含）。
+
 ## [2.4.19] - 2026-11-05
 
 > 统一新闻日边界：北京 08:00 起算（等价 UTC 自然日），不再依赖本机 TZ。

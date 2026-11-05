@@ -22,6 +22,7 @@ import { dedupeItems } from './news-dedupe.mjs';
 import { decideBars } from './kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
+import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -34,7 +35,7 @@ const argSince = process.argv.indexOf('--since');
 const SINCE_HOURS = argSince > -1 ? Number(process.argv[argSince + 1]) || 24 : 24;
 
 const pad = (n) => String(n).padStart(2, '0');
-// 2.4.18：新闻日统一走 src/news-day.mjs（北京 08:00 起算，等价 UTC 日期）
+// 2.4.19：新闻日统一走 src/news-day.mjs（北京 08:00 起算，等价 UTC 日期）
 // 不再使用 getFullYear/getMonth/getDate —— 本机 TZ=Asia/Shanghai 会按北京零点切日，
 // 与 GitHub Actions 的 UTC 切日不一致。
 
@@ -324,25 +325,23 @@ async function main() {
     days,
   });
 
-  // search.json：全库精简副本，供前端全文检索（只留检索需要的字段，控制体积）
+  // search.json：最近 62 个新闻日的精简副本（只有标题/来源/时间/链接，无摘要）
+  // 2.4.19：窗口外的 archive 日期不再进索引；220 字摘要去掉，体积约减半。
+  const searchFrom = searchCutoff(startedAt.getTime());
   const searchItems = [];
+  let searchDays = 0;
   for (const f of files.sort().reverse()) {
+    const day = f.replace('.json', '');
+    if (day < searchFrom) break;
     const d = await readJSON(path.join(ARCHIVE, f), { items: [] });
-    for (const it of d.items) {
-      searchItems.push({
-        id: it.id,
-        ts: it.ts,
-        time: it.time,
-        source: it.source,
-        channel: it.channel,
-        title: it.title,
-        summary: (it.summary || '').slice(0, 220),
-        url: it.url,
-      });
-    }
+    for (const it of d.items) searchItems.push(compactSearchItem(it));
+    searchDays++;
   }
   await writeJSONIfChanged(path.join(DATA, 'search.json'), {
     generatedAt: startedAt.toISOString(),
+    windowDays: SEARCH_WINDOW_DAYS,
+    from: searchFrom,
+    days: searchDays,
     total: searchItems.length,
     items: searchItems,
   });
