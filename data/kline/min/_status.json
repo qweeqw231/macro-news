@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-05T21:20:03.436Z",
-  "ok": 2,
+  "generatedAt": "2026-11-05T21:49:55.937Z",
+  "ok": 0,
   "failed": 0,
   "failures": [],
   "rejected": [
@@ -18,13 +18,15 @@
     "ukx/30m: shorter（新 239 根 < 现有 271 根）",
     "kospi/30m: shorter（新 247 根 < 现有 273 根）",
     "sge_au9999/30m: shorter（新 234 根 < 现有 260 根）",
-    "xag/30m: shorter（新 278 根 < 现有 280 根）",
-    "xau/30m: shorter（新 278 根 < 现有 280 根）",
+    "xag/30m: shorter（新 279 根 < 现有 280 根）",
+    "xau/30m: shorter（新 279 根 < 现有 280 根）",
     "n225/60m: shorter（新 132 根 < 现有 144 根）",
     "dax/60m: shorter（新 126 根 < 现有 143 根）",
     "cac40/60m: shorter（新 126 根 < 现有 143 根）",
     "ukx/60m: shorter（新 126 根 < 现有 143 根）",
     "kospi/60m: shorter（新 133 根 < 现有 147 根）",
-    "sge_au9999/60m: shorter（新 118 根 < 现有 143 根）"
+    "sge_au9999/60m: shorter（新 118 根 < 现有 143 根）",
+    "xag/60m: shorter（新 142 根 < 现有 166 根）",
+    "xau/60m: shorter（新 142 根 < 现有 166 根）"
   ]
 }
