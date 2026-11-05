@@ -614,6 +614,44 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 > 本仓库不依赖它们：快照与宏观走 `snapshot.yml`，远端同步走 `MacroNews-Pull`。
 > **09:00 宏观早报仍在运行**（见 §2.6），它只读新闻库、不碰站点数据。
 
+### 6.4 管道操作底账（2.4.22）
+
+`scripts/collect-and-push.ps1` 每轮结束（成功 / 跳过 / 失败）向
+`.local/metrics/collect-runs.jsonl` 追加一行 JSON 台账。`.local/` 已 gitignore，不入库：
+
+| 字段 | 说明 |
+|---|---|
+| `at` / `durationMs` | 结束时刻（UTC ISO）/ 本轮耗时 |
+| `host` / `mode` | 机器名 / `collect` 或 `sync-only` |
+| `result` / `skipReason` | `ok` / `skipped` / `failed`，以及跳过或失败原因 |
+| `headBefore` / `headAfter` | 同步前 / 结束时的 HEAD 短哈希 |
+| `behind` / `ahead` | 同步时与 `origin/main` 的差距 |
+| `filesWritten` / `commitCreated` | 本轮写入的数据文件数 / 是否创建提交 |
+| `syncResult` | `up-to-date` / `ff-only` / `merge` / `stash-restored` / `skipped:*` |
+
+`-SyncOnly` 记 `mode: "sync-only"`，只做同步自检，不计入采集轮次。
+
+随时复算：
+
+```powershell
+node scripts/ops-stats.mjs                 # 最近 14 天（与 Traffic 窗口对齐）
+node scripts/ops-stats.mjs --days 30       # 更长窗口；匿名配额 60 次/小时
+node scripts/ops-stats.mjs --no-network    # 只看本机台账
+```
+
+输出每日表：`日期 | GH 运行 | Pages 构建 | 本机采集 | 合计 | clone 当量`，
+并附按 workflow 汇总、本机跳过原因；快照写 `.local/metrics/ops-stats-<date>.json`（不入库）。
+
+**口径与误差**：
+- GH 运行来自匿名 `actions/runs`，按 `created` 转 Asia/Shanghai 分日；单日匿名分页上限
+  1,000 条，超出部分计为缺失；
+- Pages 构建直接计数同一份数据里的 `pages build and deployment`，缺失时回退
+  「一次 push 一次构建」的推断；
+- `clone 当量 = GH 运行 + Pages 构建`（1 运行 ≈ 1 clone）；本机是 fetch，不计入；
+- Traffic 按日数字需要 token，脚本不拉；请人工在 GitHub Insights → Traffic 读取 14 天值，
+  与表内 `clone 当量` 合计对照：Traffic 里超出底账的部分才可能是外部访问，
+  但**本底账不能指认外部 clone 来源**，只能证明我们自己的用量下限。
+
 ---
 
 ## 7. 排障（现象 → 真因 → 修法）

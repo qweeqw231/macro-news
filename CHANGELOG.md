@@ -36,6 +36,37 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.4.22] - 2026-11-05
+
+> 管道操作底账：本机运行台账 + 只读 GitHub/本地聚合，用于长期趋势与自证用量。
+
+### 新增
+
+- `scripts/collect-and-push.ps1` 每轮向 `.local/metrics/collect-runs.jsonl` 追加一行 JSON
+  （`at/host/mode/result/headBefore/headAfter/behind/ahead/filesWritten/commitCreated/skipReason/syncResult/durationMs`）。
+  覆盖 `up-to-date` / `ff-only` / `stash-restored` / `skipped:*` / 正常采集 / `-SyncOnly`；
+  `-SyncOnly` 记 `mode:"sync-only"`，不污染采集计数。所有分支在 `try/finally` 内，
+  写台账失败只告警、不改退出码；无 BOM UTF-8 追加。
+- `scripts/ops-stats.mjs`（只读）：匿名 GitHub `actions/runs` 按日/按 workflow 计数、
+  push 去重、Pages 构建计数、本机台账按新闻日聚合，输出每日操作次数表与
+  `.local/metrics/ops-stats-<date>.json` 快照；不写 `data/`、不提交。
+- `docs/superpowers/specs/2026-11-05-ops-metrics-2.4.22-design.md` 与 README §6.4：
+  字段、口径、误差（匿名单日分页上限 1,000、Pages 计数回退属推断、Traffic 需 token）。
+- 实测样例（2026-11-05，最近 14 天）：GH 运行 1,317、Pages 构建 1,118、本机采集 0
+  （另有 `sync-only` 1），合计 2,435，clone 当量 2,435；11-04 为 218 / 182 / 0。
+
+### 测试
+
+- 新增 `tests/ops-stats.test.mjs`（10 项）：分日/分 workflow、push 去重、Pages 单列、
+  台账成功/跳过/失败与原因分布、`sync-only` 排除、空白天补齐、分页/403、
+  只读静态断言与 PS1 台账字段/`try/finally`/退出码断言。全套 **249 项**通过。
+
+### 说明
+
+- 统计产物只写 `.local/`，**不提交到 `data/`**，避免为统计制造额外提交与 clone。
+- 本底账用于长期趋势与自证用量，**不能指认外部 clone 来源**。
+- 无前端改动，资源串保持 `20261105d`。
+
 ## [2.4.18] - 2026-11-05
 
 > 早报入库的 rebase 冲突合并语义此前写反，会静默抹掉当天早报标记。本次修正并补真实 git 端到端测试。

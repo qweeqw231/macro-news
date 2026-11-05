@@ -46,6 +46,53 @@ Get-ChildItem $logDir -Filter 'collect-*.log' -ErrorAction SilentlyContinue |
 
 Say "=== 采集开始 ==="
 
+# ---- 运行台账（2.4.22）----
+# 每轮结束（成功/跳过/失败）向 .local/metrics/collect-runs.jsonl 追加一行 JSON。
+# .local/ 已 gitignore；台账只用于自有管道用量的长期趋势，不入库、不进 data/。
+# 写台账失败只告警，不影响主流程与退出码。
+$runStart = Get-Date
+$metricsDir = Join-Path $root '.local\metrics'
+$ledgerFile = Join-Path $metricsDir 'collect-runs.jsonl'
+$runMode = 'collect'
+if ($SyncOnly) { $runMode = 'sync-only' }
+$runStats = [ordered]@{
+    at = ''
+    host = $env:COMPUTERNAME
+    mode = $runMode
+    result = 'failed'
+    headBefore = ''
+    headAfter = ''
+    behind = $null
+    ahead = $null
+    filesWritten = 0
+    commitCreated = $false
+    skipReason = ''
+    syncResult = ''
+    durationMs = 0
+}
+
+function Write-RunLedger {
+    $prevCode = $LASTEXITCODE
+    try {
+        $runStats.at = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+        $runStats.durationMs = [int]((Get-Date) - $runStart).TotalMilliseconds
+        try {
+            $h = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
+            if ($h) { $runStats.headAfter = $h }
+        } catch { }
+        if (-not (Test-Path $metricsDir)) {
+            New-Item -ItemType Directory -Path $metricsDir -Force | Out-Null
+        }
+        $line = ($runStats | ConvertTo-Json -Compress)
+        $enc = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::AppendAllText($ledgerFile, $line + "`n", $enc)
+    } catch {
+        try { Say "ledger: 写入失败（$($_.Exception.Message)）—— 不影响本轮结果" } catch { }
+    } finally {
+        $LASTEXITCODE = $prevCode
+    }
+}
+
 # ---- 0. 启动自检：确认写锁/成交量守卫已接线（缺失只告警，不停摆）----
 function Get-GuardStatus {
     $lock = Join-Path $root 'src\kline-lock.mjs'
@@ -118,6 +165,8 @@ function Publish-LocalSync($result) {
         Say "localSync:publish=commit-failed（$first）"
         return
     }
+    $runStats.commitCreated = $true
+    $runStats.filesWritten = 1
     for ($i = 1; $i -le 2; $i++) {
         $pushOut = & git push origin main 2>&1 | Out-String
         if ($LASTEXITCODE -eq 0) {
@@ -132,14 +181,20 @@ function Publish-LocalSync($result) {
     }
 }
 
+try {
+
 # ---- 0.1 先同步再跑（2.4.16）----
 # 底线：不做硬重置、不做路径级覆盖、不用 ours 合并策略、不强制推送。
 # 同步失败/冲突时宁可本轮不采集，也不覆盖本地文件。
 $headBefore = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
 if (-not $headBefore) { $headBefore = 'unknown' }
+$runStats.headBefore = $headBefore
 
 $unmerged = @(& git ls-files -u 2>$null)
 if ($unmerged.Count -gt 0) {
+    $runStats.result = 'skipped'
+    $runStats.skipReason = 'unmerged'
+    $runStats.syncResult = 'skipped:unmerged'
     Say "sync: head=$headBefore result=skipped:unmerged（存在未合并文件，先人工解决；本轮不采集）"
     if (-not $SyncOnly) { Publish-LocalSync 'skipped:unmerged' }
     exit 0
@@ -163,6 +218,9 @@ if ($null -eq $oldSsh) {
 
 if (-not $fetchOk) {
     $first = ($fetchOut.Trim() -split "`r?`n" | Select-Object -First 1)
+    $runStats.result = 'skipped'
+    $runStats.skipReason = 'fetch-failed'
+    $runStats.syncResult = 'skipped:fetch-failed'
     Say "sync: head=$headBefore behind=unknown ahead=unknown dirty=$dirty result=skipped:fetch-failed head_after=$headBefore stash=none（$first）"
     Say "同步失败，本轮不采集、不提交；下一轮重试。"
     if (-not $SyncOnly) {
@@ -174,6 +232,8 @@ if (-not $fetchOk) {
 
 $behind = [int](& git rev-list --count HEAD..origin/main 2>$null)
 $ahead = [int](& git rev-list --count origin/main..HEAD 2>$null)
+$runStats.behind = $behind
+$runStats.ahead = $ahead
 
 function Push-Stash($paths, $msg) {
     $out = & git stash push -m $msg -- $paths 2>&1 | Out-String
@@ -257,8 +317,11 @@ if ($behind -eq 0) {
 
 Say ("sync: head={0} behind={1} ahead={2} dirty={3} result={4} head_after={5} stash={6}" -f `
     $headBefore, $behind, $ahead, $dirty, $syncResult, $headAfter, $stashState)
+$runStats.syncResult = $syncResult
 
 if ($syncResult -like 'skipped:*') {
+    $runStats.result = 'skipped'
+    $runStats.skipReason = ($syncResult -replace '^skipped:', '')
     if (-not $SyncOnly) { Publish-LocalSync $syncResult }
     Say "同步未完成（$syncResult），本轮不采集、不提交；下一轮重试。"
     exit 0
@@ -278,6 +341,8 @@ if ($headAfter -ne $headBefore -or $guardBefore -eq 'missing') {
 }
 
 if ($SyncOnly) {
+    $runStats.result = 'ok'
+    $runStats.skipReason = 'sync-only'
     Say "sync-only：结束（不采集）"
     exit 0
 }
@@ -397,7 +462,10 @@ foreach ($p in $fixed) {
 }
 
 $staged = @(git diff --cached --name-only)
+$runStats.filesWritten = $staged.Count
 if ($staged.Count -eq 0) {
+    $runStats.result = 'skipped'
+    $runStats.skipReason = if ($needCollect) { 'no-data-changes' } else { 'news-fresh' }
     Say "无新数据，跳过提交与推送"
     exit 0
 }
@@ -416,7 +484,13 @@ Say "检测到 $($staged.Count) 个数据文件有变化"
 #   本地提交保留，下一轮重试（必要时人工处理）。绝不强制推送或重置覆盖。
 $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
 $null = git commit -m "data: 宏观资讯自动采集（$stamp）"
-if ($LASTEXITCODE -ne 0) { Say "提交失败，跳过推送"; exit 1 }
+if ($LASTEXITCODE -ne 0) {
+    $runStats.result = 'failed'
+    $runStats.skipReason = 'commit-failed'
+    Say "提交失败，跳过推送"
+    exit 1
+}
+$runStats.commitCreated = $true
 Say "已提交"
 
 $null = git fetch origin main
@@ -427,6 +501,8 @@ if ($LASTEXITCODE -eq 0) {
         $mergeOut = & git merge --no-edit origin/main 2>&1 | Out-String
         if ($LASTEXITCODE -ne 0) {
             $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
+            $runStats.result = 'failed'
+            $runStats.skipReason = 'merge-conflict'
             Say "合并冲突，abort：$first（本地提交保留；下一轮重试，必要时人工处理）"
             $null = & git merge --abort 2>&1
             exit 1
@@ -467,6 +543,8 @@ for ($i = 1; $i -le 6; $i++) {
         $mergeOut = & git merge --no-edit origin/main 2>&1 | Out-String
         if ($LASTEXITCODE -ne 0) {
             $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
+            $runStats.result = 'failed'
+            $runStats.skipReason = 'merge-conflict'
             Say "合并冲突，abort，放弃重推（本地提交保留）：$first"
             $null = & git merge --abort 2>&1
             break
@@ -475,5 +553,13 @@ for ($i = 1; $i -le 6; $i++) {
     }
 }
 if (-not $pushOk) {
+    $runStats.result = 'failed'
+    if (-not $runStats.skipReason) { $runStats.skipReason = 'push-failed' }
     Say "推送未成功：数据已安全保存在本地提交里，下次运行会自动重试。"
+} else {
+    $runStats.result = 'ok'
+}
+
+} finally {
+    Write-RunLedger
 }
