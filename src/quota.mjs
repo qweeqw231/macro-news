@@ -18,7 +18,7 @@ const tsOf = (it) => Number(it && it.ts) || 0;
 const byTsDesc = (a, b) => tsOf(b) - tsOf(a);
 
 export const isOfficial = (it) =>
-  !!it && (it.kind === 'official' || OFFICIAL_SOURCES.has(String(it.source || '')));
+  !!it && OFFICIAL_SOURCES.has(String(it.source || ''));
 
 export const isRecent = (t, now = Date.now(), days = OFFICIAL_RECENT_DAYS) =>
   Number.isFinite(t) && t >= now - days * 86400000;

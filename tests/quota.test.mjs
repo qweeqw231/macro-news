@@ -26,6 +26,20 @@ test('官方很少：全部保留，普通条目填满 800', () => {
   assert.ok(out.find((x) => x.id === 'o2'));
 });
 
+test('中新网 kind:official 不占官方四源配额', () => {
+  const strict = [
+    item('s1', 1, { source: '国家统计局', kind: 'official' }),
+    item('s2', 2, { source: '欧洲央行', kind: 'official' }),
+    item('s3', 3, { source: '中国人民银行', kind: 'official' }),
+  ];
+  const zx = Array.from({ length: 50 }, (_, i) =>
+    item(`z${i}`, 5000 + i, { source: '中新网', channel: '国内财经', kind: 'official' }));
+  const rest = Array.from({ length: 900 }, (_, i) => item(`n${i}`, 10000 + i, { channel: 'A股' }));
+  const out = selectDayItems([...rest, ...zx, ...strict]);
+  for (const s of strict) assert.ok(out.some((x) => x.id === s.id), `四源 ${s.id} 必须保留`);
+  assert.equal(out.length, 800);
+});
+
 test('官方条目不会被更新的普通快讯挤掉', () => {
   const official = Array.from({ length: 21 }, (_, i) => item(`o${i}`, i, { source: '国家统计局', kind: 'official' }));
   const rest = Array.from({ length: 1000 }, (_, i) => item(`n${i}`, 10000 + i, { channel: 'A股' }));
