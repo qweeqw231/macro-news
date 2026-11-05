@@ -1,25 +1,9 @@
 {
-  "generatedAt": "2026-11-04T23:49:54.258Z",
-  "ok": 7,
-  "failed": 0,
-  "failures": [],
-  "rejected": [
-    "dax/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "cac40/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "ukx/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "sge_au9999/5m: shorter（新 1000 根 < 现有 1022 根）",
-    "xag/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "xau/5m: shorter（新 1000 根 < 现有 1003 根）",
-    "n225/30m: shorter（新 242 根 < 现有 253 根）",
-    "dax/30m: shorter（新 237 根 < 现有 254 根）",
-    "cac40/30m: shorter（新 237 根 < 现有 254 根）",
-    "ukx/30m: shorter（新 237 根 < 现有 254 根）",
-    "kospi/30m: shorter（新 247 根 < 现有 260 根）",
-    "sge_au9999/30m: shorter（新 221 根 < 现有 234 根）",
-    "xag/30m: shorter（新 235 根 < 现有 280 根）",
-    "xau/30m: shorter（新 235 根 < 现有 280 根）",
-    "sge_au9999/1m: shorter（新 389 根 < 现有 780 根）",
-    "xag/1m: shorter（新 50 根 < 现有 1310 根）",
-    "xau/1m: shorter（新 50 根 < 现有 1310 根）"
-  ]
+  "generatedAt": "2026-11-05T00:18:05.766Z",
+  "ok": 0,
+  "failed": 1,
+  "failures": [
+    "n225/5m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)"
+  ],
+  "rejected": []
 }
