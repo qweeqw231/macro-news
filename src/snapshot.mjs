@@ -46,6 +46,7 @@ import { ETFS, etfTxCode } from './etf.mjs';
 import { fetchPortfolioQuotes } from './portfolio.mjs';
 import { fetchDailyK, fetchKline5m } from './kline.mjs';
 import { emPool } from './em.mjs';
+import { newsDay } from './news-day.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -59,13 +60,12 @@ const arg = (name, dflt) => {
 };
 
 const pad = (n) => String(n).padStart(2, '0');
-const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 
-/** 当前北京时间的日期与时刻 */
+/** 当前北京时间的新闻日 / 北京时刻 */
 function beijingNow(d = new Date()) {
   const t = new Date(d.getTime() + 8 * 3600 * 1000);
   return {
-    date: `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}`,
+    date: newsDay(d),
     hm: `${pad(t.getUTCHours())}:${pad(t.getUTCMinutes())}`,
   };
 }
@@ -522,7 +522,7 @@ async function main() {
   if (backfill > 0) {
     const base = Date.now();
     for (let i = 0; i < backfill; i++) {
-      const d = ymd(new Date(base - i * 86400000));
+      const d = newsDay(new Date(base - i * 86400000));
       for (const s of ['am', 'pm']) {
         if (!existsSync(snapshotFile(d, s))) jobs.push({ date: d, session: s });
       }

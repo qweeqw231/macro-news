@@ -10,6 +10,7 @@
 //   node scripts/news-db/backfill-chinanews.mjs --dry-run
 
 import path from 'node:path';
+import { newsToday } from '../../src/news-day.mjs';
 import { openDb, insertItems, setState, getState, stats, sha1, DEFAULT_DB } from './db.mjs';
 
 const arg = (name, dflt) => {
@@ -24,12 +25,11 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 const pad = (n) => String(n).padStart(2, '0');
 const addDays = (day, n) =>
   new Date(Date.parse(day + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
-const bjToday = () => new Date(Date.now() + 8 * 3600 * 1000).toISOString().slice(0, 10);
 
 // 只保留偏宏观/财经的频道；社会、体育、娱乐、文化等不进库
 const CHANNELS = (arg('channels', 'cj,gn,gj,ga,tw,hr,house,business,fortune,stock,ny')).split(',');
 
-const to = arg('to', addDays(bjToday(), -1));
+const to = arg('to', addDays(newsToday(), -1));
 const from = arg('from', addDays(to, -365 * 5));
 const maxDays = Number(arg('max-days', '99999'));
 

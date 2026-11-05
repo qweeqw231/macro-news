@@ -21,6 +21,7 @@ import { readBriefingMeta } from './brief-meta.mjs';
 import { dedupeItems } from './news-dedupe.mjs';
 import { decideBars } from './kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
+import { newsDay } from './news-day.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -33,8 +34,9 @@ const argSince = process.argv.indexOf('--since');
 const SINCE_HOURS = argSince > -1 ? Number(process.argv[argSince + 1]) || 24 : 24;
 
 const pad = (n) => String(n).padStart(2, '0');
-const dayKey = (d) =>
-  `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+// 2.4.18：新闻日统一走 src/news-day.mjs（北京 08:00 起算，等价 UTC 日期）
+// 不再使用 getFullYear/getMonth/getDate —— 本机 TZ=Asia/Shanghai 会按北京零点切日，
+// 与 GitHub Actions 的 UTC 切日不一致。
 
 async function readJSON(file, fallback) {
   if (!existsSync(file)) return fallback;
@@ -253,8 +255,7 @@ async function main() {
   // ---- 写入：按天归档 ----
   const byDay = new Map();
   for (const it of fresh) {
-    const d = it.time ? new Date(it.time) : startedAt;
-    const k = dayKey(Number.isNaN(d.getTime()) ? startedAt : d);
+    const k = newsDay(it.time || startedAt) || newsDay(startedAt);
     if (!byDay.has(k)) byDay.set(k, []);
     byDay.get(k).push(it);
   }

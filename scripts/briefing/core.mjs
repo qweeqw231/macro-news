@@ -9,6 +9,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { newsDay } from '../../src/news-day.mjs';
 
 export const STATUS_VERSION = 1;
 export const DEADLINE_HM = '09:00';     // 预期完成时刻
@@ -21,11 +22,11 @@ const BJ_MS = 8 * 3600 * 1000;
 const DAY_MS = 86400000;
 const pad = (n) => String(n).padStart(2, '0');
 
-/** 北京时间的日期 / 时刻 / ISO（不依赖运行机器时区） */
+/** 北京时间的日期 / 时刻 / ISO（日期走统一新闻日；时刻仍是北京墙钟） */
 export function beijingNow(now = Date.now()) {
   const t = new Date(now + BJ_MS);
   return {
-    date: `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}`,
+    date: newsDay(now),
     hm: `${pad(t.getUTCHours())}:${pad(t.getUTCMinutes())}`,
     iso: `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}T` +
       `${pad(t.getUTCHours())}:${pad(t.getUTCMinutes())}:${pad(t.getUTCSeconds())}+08:00`,

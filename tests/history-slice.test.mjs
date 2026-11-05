@@ -28,10 +28,10 @@ const row = (o) =>
     ...o,
   });
 
-test('beijingDay：UTC 跨零点换算成北京日期', () => {
-  // 2026-11-01 17:30 UTC = 2026-11-02 01:30 北京
+test('beijingDay：新闻日（北京 08:00 起算）', () => {
+  // 2026-11-01 17:30 UTC = 2026-11-02 01:30 北京（未到 08:00，仍属 11-01 新闻日）
   const ts = Date.UTC(2026, 10, 1, 17, 30) / 1000;
-  assert.equal(beijingDay(ts), '2026-11-02');
+  assert.equal(beijingDay(ts), '2026-11-01');
   assert.equal(beijingDay(1793518857), '2026-11-01');
   assert.equal(beijingDay(0), '');
   assert.equal(beijingDay(-1), '');

@@ -210,13 +210,14 @@ test('状态不变式：done ⇔ 有文件、missed ⇔ 无文件、source 一�
   assert.equal(mix[0].kind, 'source_mismatch');
 });
 
-test('宽限边界与跨日：09:29 未到、09:30 到点；UTC 17:30 是北京次日', () => {
+test('宽限边界与跨日：09:29 未到、09:30 到点；UTC 17:30 仍属前一新闻日', () => {
   assert.equal(deadlinePassed('09:29', '09:00', 30), false);
   assert.equal(deadlinePassed('09:30', '09:00', 30), true);
   assert.equal(deadlinePassed('08:00', '09:00', 0), false);
 
   const bj = beijingNow(Date.UTC(2026, 10, 1, 17, 30));
-  assert.equal(bj.date, '2026-11-02');
+  // 北京 11-02 01:30 未到 08:00 ⇒ 新闻日仍是 11-01
+  assert.equal(bj.date, '2026-11-01');
   assert.equal(bj.hm, '01:30');
 });
 

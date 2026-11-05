@@ -11,6 +11,7 @@
 //   node scripts/news-db/backfill-pbc.mjs --max-pages 20
 
 import path from 'node:path';
+import { newsToday } from '../../src/news-day.mjs';
 import { openDb, insertItems, setState, getState, stats, sha1, DEFAULT_DB } from './db.mjs';
 
 const arg = (name, dflt) => {
@@ -24,8 +25,7 @@ const BASE = 'https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/';
 
 const addDays = (day, n) =>
   new Date(Date.parse(day + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
-const bjToday = () => new Date(Date.now() + 8 * 3600 * 1000).toISOString().slice(0, 10);
-const to = arg('to', addDays(bjToday(), -1));
+const to = arg('to', addDays(newsToday(), -1));
 const from = arg('from', addDays(to, -365 * 5));
 const maxPages = Number(arg('max-pages', '9999'));
 

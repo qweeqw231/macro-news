@@ -573,11 +573,12 @@
   const DAY_CACHE_MAX = 3;
   const DAY_FRESH_MS = 5 * 60 * 1000;
   const dayCache = new Map();
-  const beijingDay = (d = new Date()) =>
-    new Date(d.getTime() + 8 * 3600 * 1000).toISOString().slice(0, 10);
+  // 2.4.18：新闻日 = 北京 08:00 起算（等价 UTC 日期），与归档文件名一致
+  const newsDay = (d = new Date()) =>
+    window.MacroNewsDay ? window.MacroNewsDay.newsDay(d) : new Date(d).toISOString().slice(0, 10);
 
   async function getDay(day, kind = 'live') {
-    const today = kind === 'live' && day === beijingDay();
+    const today = kind === 'live' && day === newsDay();
     const key = kind + ':' + day;
     const hit = dayCache.get(key);
     if (hit && (!today || Date.now() - hit.at < DAY_FRESH_MS)) return hit.data;
@@ -1326,7 +1327,7 @@
 
       // 早报状态：独立 token，不改变上面的总灯（避免早报问题把行情/新闻的正常状态染红）
       const bj = new Date(Date.now() + 8 * 3600 * 1000);
-      const today = bj.toISOString().slice(0, 10);
+      const today = newsDay();
       const nowMin = bj.getUTCHours() * 60 + bj.getUTCMinutes();
       const rec = (brief.days || {})[today];
       let bTxt = '';

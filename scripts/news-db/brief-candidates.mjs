@@ -12,6 +12,7 @@
 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { newsToday } from '../../src/news-day.mjs';
 import { openDb, DEFAULT_DB, normalizePublishedAt } from './db.mjs';
 
 export const KEYWORDS = [
@@ -33,8 +34,7 @@ export const SOURCE_SCORE = {
 export const addDays = (day, n) =>
   new Date(Date.parse(day + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
 
-export const beijingToday = (now = Date.now()) =>
-  new Date(now + 8 * 3600 * 1000).toISOString().slice(0, 10);
+export const beijingToday = (now = Date.now()) => newsToday(now);
 
 /**
  * 候选清单。

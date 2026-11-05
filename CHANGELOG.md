@@ -63,6 +63,33 @@
   同时具备**远端新计数**与**本地早报标记**；另有一例断言非白名单冲突仍然中止。
   此前 `tests/briefing-push.test.mjs` 用假 exec 固化的是**写反的** stage 语义，已一并改正。
 
+## [2.4.18] - 2026-11-05
+
+> 统一新闻日边界：北京 08:00 起算（等价 UTC 自然日），不再依赖本机 TZ。
+
+### 修正
+
+- 新增 `assets/news-day.js`（UMD，唯一实现）与 `src/news-day.mjs` 转出口：
+  `newsDay(t) = t 的 UTC 日历日期`，不调用本地时区日期 API。
+- 接入：`src/collect.mjs` 归档分组、`scripts/news-db/history-slice.mjs`
+  （beijingDay / beijingToday / dayWindow）、`backfill-chinanews`、`backfill-pbc`、
+  `brief-candidates`、`scripts/briefing/core.mjs`、`src/snapshot.mjs`、
+  `assets/app.js`（今日归档判断与页脚早报 key）。
+- `index.json` / `latest.json` / `search.json` 由 archive 文件名派生，自动跟随；
+  `export-history` 通过 history-slice 自动跟随。
+- 不回写历史：2026-11-05 之前（含 11-04/11-05 旧本机运行写入部分）保持原样；
+  切换日前的边界为 UTC/北京自然日混合口径，存在不确定性，已在 README 写明。
+- 实测现有 `2026-11-04.json` 800 条、`2026-11-05.json` 383 条，均全部落在新窗口
+  （窗口外 0 条），不会造成条数跳变或新闻换天；变化只影响未来本机 16:00–24:00 UTC 的写入。
+
+### 测试
+
+- 新增 `tests/news-day.test.mjs`（7 项）：07:59:59 / 08:00 / 08:00:01 / 09:30 /
+  00:00 / 23:59、`TZ=UTC` vs `TZ=Asia/Shanghai` 子进程完全一致、无本地日期 API、
+  所有调用点静态接线。
+- 更新 `history-slice` / `briefing-core` 预期；全套 **227 项**通过。
+- 前端资源串 `20261105c` → `20261105d`。
+
 ## [2.4.17] - 2026-11-05
 
 > 本机同步跳过不再只写日志：`_last-run.json` 新增 `localSync`，页脚可见。

@@ -8,6 +8,11 @@
 
 export const HISTORY_VERSION = 2;
 
+// 2.4.18：统一新闻日（北京 08:00 起算，等价 UTC 日期）。实现见 assets/news-day.js。
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const ND = require('../../assets/news-day.js');
+
 // 来源权重：官方发布 > 一线财经 > 门户。只用于同日去重与封顶时的取舍，不改展示顺序。
 const SOURCE_W = {
   中国人民银行: 7,
@@ -20,16 +25,13 @@ const SOURCE_W = {
   中新网: 3,
 };
 
-const BJ_SECONDS = 8 * 3600;
-const BJ_MS = BJ_SECONDS * 1000;
 const DAY_MS = 86400000;
 
-/** epoch 秒 → 北京日期 'YYYY-MM-DD'（不依赖运行机器的时区） */
+/** epoch 秒 → 新闻日 'YYYY-MM-DD'（北京 08:00 起算；不依赖运行机器 TZ） */
 export function beijingDay(ts) {
   const n = Number(ts);
   if (!Number.isFinite(n) || n <= 0) return '';
-  // ⚠ 单位：入参是**秒**，先把 8 小时（秒）加进去再乘 1000，不能加 BJ_MS（毫秒）
-  return new Date((n + BJ_SECONDS) * 1000).toISOString().slice(0, 10);
+  return ND.newsDay(n * 1000);
 }
 
 /** 'YYYY-MM-DD' 加减天数（按 UTC 日历算，避免夏令时/时区影响） */
@@ -38,9 +40,9 @@ export function addDays(day, n) {
   return new Date(t).toISOString().slice(0, 10);
 }
 
-/** 北京今天（可注入 now 便于测试） */
+/** 新闻今天（可注入 now 便于测试） */
 export function beijingToday(now = Date.now()) {
-  return new Date(now + BJ_MS).toISOString().slice(0, 10);
+  return ND.newsToday(now);
 }
 
 /**
