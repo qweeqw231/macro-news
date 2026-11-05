@@ -183,15 +183,17 @@ test('publish 源码锁定：成功后调用 commitStatusPush', () => {
 });
 
 // ---------- 2.4.8：rebase 与采集器改同一份 index.json 的冲突 ----------
+// ⚠️ rebase 冲突时：`:2:` = **上游**(origin/main)，`:3:` = **正在重放的本地提交**
+//    （2026-11-05 真实 git 实测确认；merge 才是 ours=当前 HEAD）
 test('index.json 冲突：以远端计数为底、叠加本地早报字段后继续 rebase', () => {
   const dir = sandbox();
   fs.writeFileSync(path.join(dir, 'data', 'index.json'), '{}');
   fs.writeFileSync(path.join(dir, 'data', 'history', 'index.json'), '{"days":[]}');
-  const ours = {
-    days: [{ day: '2026-11-04', count: 302, hasBriefing: true, briefLine: '早报摘要', source: 'ai' }],
-  };
-  const theirs = {
+  const upstream = {
     days: [{ day: '2026-11-04', count: 345, hasBriefing: false }, { day: '2026-11-03', count: 700 }],
+  };
+  const local = {
+    days: [{ day: '2026-11-04', count: 302, hasBriefing: true, briefLine: '早报摘要', source: 'ai' }],
   };
   const calls = [];
   const exec = (cmd, args) => {
@@ -200,8 +202,8 @@ test('index.json 冲突：以远端计数为底、叠加本地早报字段后继
       throw new Error('CONFLICT (content): Merge conflict in data/index.json');
     }
     if (args[0] === 'diff' && args.includes('--diff-filter=U')) return 'data/index.json\n';
-    if (args[0] === 'show' && args[1] === ':2:data/index.json') return JSON.stringify(ours);
-    if (args[0] === 'show' && args[1] === ':3:data/index.json') return JSON.stringify(theirs);
+    if (args[0] === 'show' && args[1] === ':2:data/index.json') return JSON.stringify(upstream);
+    if (args[0] === 'show' && args[1] === ':3:data/index.json') return JSON.stringify(local);
     if (args[0] === 'diff') return 'data/index.json\n';
     if (args[0] === 'commit') return '[main abc123] data: 早报入库 2026-11-04\n';
     return '';
@@ -215,8 +217,49 @@ test('index.json 冲突：以远端计数为底、叠加本地早报字段后继
     assert.equal(e.hasBriefing, true, '早报字段必须保留本地值');
     assert.equal(e.briefLine, '早报摘要');
     assert.equal(e.source, 'ai');
+    assert.ok(merged.days.some((x) => x.day === '2026-11-03'), '远端其它天必须保留');
     assert.ok(calls.some((c) => c === 'rebase --continue'));
     assert.ok(!calls.some((c) => /push --force/.test(c)));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('状态文件冲突：远端为底 + 本地当天的发布状态，语义合并后继续 rebase', () => {
+  const dir = sandbox();
+  fs.writeFileSync(path.join(dir, 'data', 'index.json'), '{}');
+  const upstream = {
+    v: 1,
+    updatedAt: '2026-11-05T08:00:00+08:00',
+    days: { '2026-11-04': { date: '2026-11-04', status: 'done', source: 'ai' } },
+  };
+  const local = {
+    v: 1,
+    updatedAt: '2026-11-05T09:00:00+08:00',
+    days: { '2026-11-05': { date: '2026-11-05', status: 'done', source: 'ai', items: 10 } },
+  };
+  const calls = [];
+  const exec = (cmd, args) => {
+    calls.push(args.join(' '));
+    if (args[0] === 'rebase' && args[1] === '--autostash') {
+      throw new Error('CONFLICT (content): Merge conflict in data/_briefing-status.json');
+    }
+    if (args[0] === 'diff' && args.includes('--diff-filter=U')) return 'data/_briefing-status.json\n';
+    if (args[0] === 'show' && args[1] === ':2:data/_briefing-status.json') return JSON.stringify(upstream);
+    if (args[0] === 'show' && args[1] === ':3:data/_briefing-status.json') return JSON.stringify(local);
+    if (args[0] === 'diff') return 'data/_briefing-status.json\n';
+    if (args[0] === 'commit') return '[main abc123] data: 早报入库 2026-11-05\n';
+    return '';
+  };
+  try {
+    const r = commitAndPush({ root: dir, date: '2026-11-05', exec });
+    assert.equal(r.pushed, true);
+    const merged = JSON.parse(fs.readFileSync(path.join(dir, 'data', '_briefing-status.json'), 'utf8'));
+    assert.equal(merged.days['2026-11-05'].status, 'done', '本地当天的发布状态必须保留');
+    assert.equal(merged.days['2026-11-05'].items, 10);
+    assert.equal(merged.days['2026-11-04'].status, 'done', '远端其它天必须保留');
+    assert.equal(merged.updatedAt, '2026-11-05T09:00:00+08:00', 'updatedAt 取较晚者');
+    assert.ok(calls.some((c) => c === 'rebase --continue'));
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }

@@ -241,10 +241,15 @@ publish --date（脚本，确定性）
 2. `git fetch origin main` → `git rebase origin/main` → `git push origin HEAD:main`；
 3. push/rebase 失败**不回滚已发布文件**，状态写 `pushed:false / pushError / pushErrorKind`，
    页脚显示 `早报 已发布未入库`（悬停看原因）。
-4. **rebase 冲突（2.4.8）**：采集器与发布器同时改 `data/index.json` 时，若冲突只落在
-   `data/index.json` / `data/history/index.json`，自动以**远端最新计数**为底、
-   叠加本地这一天的 `hasBriefing/briefLine/source`，然后 `rebase --continue`；
-   其它任何文件冲突仍中止，绝不 force push。
+4. **rebase 冲突（2.4.8，2.4.18 修正语义）**：采集器与发布器同时改 `data/index.json` /
+   `data/_briefing-status.json` 时自动语义合并后 `rebase --continue`：
+   - ⚠️ **rebase 冲突时 `:2:` = 上游（origin/main），`:3:` = 正在重放的本地提交**
+     （与 merge 的 ours/theirs 直觉相反；2026-11-05 真实 git 实测确认）。
+   - 合并基准 = **以 `:2:`（远端）最新计数为底**，叠加 `:3:`（本地）这一天的
+     `hasBriefing/briefLine/source`；状态文件同理 = 远端为底 + 本地当天的发布状态。
+     绝不做整文件取一侧。
+   - 冲突文件不在白名单（`data/index.json`、`data/history/index.json`、
+     `data/_briefing-status.json`）时仍然中止，绝不 force push。
 
 兜底：本机 `collect-and-push.ps1` 每 120 分钟只放行**今天/昨天已存在**的单个早报文件。
 不变式：`hasBriefing=true` ⇔ 文件存在且已被 git 跟踪（`tests/briefing-index-invariant.test.mjs` 锁定）。
