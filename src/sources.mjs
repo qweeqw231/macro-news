@@ -2,6 +2,7 @@
 // 全球宏观资讯 · 数据源适配器
 // 每个适配器返回统一 schema 的条目数组；单个源失败不影响整体采集。
 
+import https from 'node:https';
 import { ETFS, etfTxCode } from './etf.mjs';
 import { fetchBatchQuotes } from './quotes.mjs';
 import { emGetJSON, KLINE_HOSTS } from './em.mjs';
@@ -282,11 +283,116 @@ async function sinaFinance() {
 }
 
 // 中国人民银行 · 新闻发布（该站无 RSS，解析列表页 HTML）
+//
+// 为什么 PBC 单独走 node:https + family:4（2026-11-05 实测）：
+//   PBC 的 DNS 同时返回 A（27.148.154.33）和 AAAA（240e:d6:660b:5::bf），
+//   而 GitHub runner 没有 IPv6 出网路由；Node 22 的 autoSelectFamily 会给
+//   多地址中的第一个（IPv4）只留 250ms 建连时间，超时就放弃并转 IPv6，
+//   IPv6 立即 ENETUNREACH ⇒ 抛出 AggregateError，上层只看到 fetch failed。
+//   云端 586 轮里 77 次失败全部发生在这个 250ms 边界（建连 RTT 约 200ms）。
+//   family:4 走单地址连接路径，没有 250ms 计时器；实测 20/20 成功，
+//   包括 3.5s 的慢建连。降级仍保留原有 retries:1 预算：首轮 IPv4 HTTPS，
+//   失败后用原来的默认 fetch 再试一次，不额外增加尝试次数。
+const PBC_URL = 'https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html';
+const PBC_REFERER = 'https://www.pbc.gov.cn/';
+
+/** 单次默认 fetch；与旧 get() 的一次尝试完全一致（无重试）。 */
+export async function fetchTextOnce(url, { headers = {}, timeout = 25000 } = {}) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeout);
+  try {
+    const res = await fetch(url, {
+      signal: ctrl.signal,
+      headers: { 'User-Agent': UA, Accept: '*/*', ...headers },
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.text();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/** 单次 HTTPS 取文本，强制 IPv4（agent:false 保证是冷连接）。 */
+export async function httpsGetText(url, { headers = {}, timeout = 25000, _request = https.request } = {}) {
+  const u = new URL(url);
+  const opts = {
+    hostname: u.hostname,
+    port: u.port ? Number(u.port) : 443,
+    path: u.pathname + u.search,
+    method: 'GET',
+    headers: { 'User-Agent': UA, Accept: '*/*', ...headers },
+    agent: false,
+    family: 4,
+    servername: u.hostname,
+    timeout,
+  };
+
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const finish = (fn, value) => {
+      if (settled) return;
+      settled = true;
+      fn(value);
+    };
+
+    let req;
+    try {
+      req = _request(opts, (res) => {
+        if (res.statusCode < 200 || res.statusCode >= 300) {
+          res.resume?.();
+          finish(reject, new Error(`HTTP ${res.statusCode}`));
+          return;
+        }
+        let body = '';
+        res.setEncoding?.('utf8');
+        res.on('data', (chunk) => { body += chunk; });
+        res.on('end', () => finish(resolve, body));
+        res.on('aborted', () => finish(reject, Object.assign(new Error('response aborted'), { code: 'ECONNRESET' })));
+        res.on('error', (err) => finish(reject, err));
+      });
+    } catch (err) {
+      finish(reject, err);
+      return;
+    }
+
+    req.on('error', (err) => finish(reject, err));
+    req.on('timeout', () => {
+      req.destroy(Object.assign(new Error(`HTTPS timeout after ${timeout}ms`), { code: 'ETIMEDOUT' }));
+    });
+    req.end();
+  });
+}
+
+/**
+ * PBC 专用取数：首轮 IPv4 HTTPS，失败后在既有 retries 预算内回落默认 fetch。
+ * retries=1（PBC 的实际配置）⇒ 最多 2 次尝试：HTTPS → fetch。
+ */
+export async function fetchPbcHtml(url, {
+  headers = {},
+  timeout = 25000,
+  retries = 1,
+  _httpsGet = httpsGetText,
+  _fetchOnce = fetchTextOnce,
+} = {}) {
+  const attempts = retries + 1;
+  let lastErr;
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      return attempt === 0
+        ? await _httpsGet(url, { headers, timeout })
+        : await _fetchOnce(url, { headers, timeout });
+    } catch (err) {
+      lastErr = err;
+      if (attempt + 1 < attempts) await new Promise((r) => setTimeout(r, 800));
+    }
+  }
+  throw lastErr;
+}
+
 async function pbcNews() {
-  const html = await get(
-    'https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html',
-    { headers: { Referer: 'https://www.pbc.gov.cn/' }, timeout: 25000, retries: 1 }
-  );
+  const html = await fetchPbcHtml(PBC_URL, {
+    headers: { Referer: PBC_REFERER }, timeout: 25000, retries: 1,
+  });
   const re =
     /<a\s+href="(\/goutongjiaoliu\/113456\/113469\/\d+\/index\.html)"([^>]*)>([\s\S]*?)<\/a>([\s\S]{0,240}?)<span class="hui12">(\d{4}-\d{2}-\d{2})<\/span>/g;
   const out = [];
