@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T21:22:40.669Z",
+  "generatedAt": "2026-11-05T21:37:46.329Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -178,7 +178,7 @@
       "high": 53710.61,
       "low": 51486.82,
       "prevClose": 53356.12,
-      "volume": 852112288,
+      "volume": 854774048,
       "changePct": -3.44,
       "updatedAt": "2026-11-06T04:59:46+08:00",
       "source": "eastmoney"
@@ -192,7 +192,7 @@
       "high": 25559.03,
       "low": 24262.14,
       "prevClose": 25736.51,
-      "volume": 10740392448,
+      "volume": 10788759040,
       "changePct": -5.52,
       "updatedAt": "2026-11-06T05:00:00+08:00",
       "source": "eastmoney"
@@ -206,7 +206,7 @@
       "high": 7681.29,
       "low": 7350.35,
       "prevClose": 7688.62,
-      "volume": 4269032400,
+      "volume": 5032283904,
       "changePct": -4.36,
       "updatedAt": "2026-11-06T04:59:46+08:00",
       "source": "eastmoney"
@@ -802,7 +802,7 @@
       "high": 28078.18,
       "low": 26606.43,
       "prevClose": 28437.17,
-      "volume": 2596913632,
+      "volume": 2603109024,
       "changePct": -6.36,
       "updatedAt": "2026-11-06T05:00:00+08:00",
       "source": "eastmoney"
@@ -811,39 +811,39 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 4088.9,
+      "price": 4088.7,
       "open": 4064.1,
       "high": 4146.77,
       "low": 4057.76,
       "prevClose": 4060.01,
       "changePct": 0.71,
-      "updatedAt": "2026-11-06T05:21:00+08:00",
+      "updatedAt": "2026-11-06T05:36:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 51.76,
+      "price": 51.81,
       "open": 52.2,
       "high": 53.45,
       "low": 51.57,
       "prevClose": 52.2,
-      "changePct": -0.84,
-      "updatedAt": "2026-11-06T05:21:00+08:00",
+      "changePct": -0.75,
+      "updatedAt": "2026-11-06T05:37:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 98.66,
+      "price": 98.93,
       "open": 94.62,
-      "high": 98.83,
+      "high": 99.06,
       "low": 93.44,
       "prevClose": 94.62,
-      "changePct": 4.26,
-      "updatedAt": "2026-11-06T05:21:58+08:00",
+      "changePct": 4.55,
+      "updatedAt": "2026-11-06T05:37:04+08:00",
       "note": ""
     },
     {
