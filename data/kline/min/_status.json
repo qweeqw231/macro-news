@@ -1,8 +1,12 @@
 {
-  "generatedAt": "2026-11-05T07:49:52.598Z",
-  "ok": 4,
-  "failed": 0,
-  "failures": [],
+  "generatedAt": "2026-11-05T08:20:12.705Z",
+  "ok": 3,
+  "failed": 3,
+  "failures": [
+    "dax/1m: 只取到 5 根",
+    "cac40/1m: 只取到 5 根",
+    "ukx/1m: 只取到 20 根"
+  ],
   "rejected": [
     "n225/5m: shorter（新 1000 根 < 现有 1010 根）",
     "dax/5m: shorter（新 1000 根 < 现有 1003 根）",
@@ -14,15 +18,13 @@
     "xau/5m: shorter（新 1000 根 < 现有 1003 根）",
     "n225/30m: shorter（新 253 根 < 现有 264 根）",
     "dax/30m: shorter（新 237 根 < 现有 254 根）",
-    "cac40/30m: shorter（新 237 根 < 现有 254 根）",
-    "ukx/30m: shorter（新 237 根 < 现有 254 根）",
+    "cac40/30m: shorter（新 238 根 < 现有 254 根）",
+    "ukx/30m: shorter（新 238 根 < 现有 254 根）",
     "kospi/30m: shorter（新 260 根 < 现有 273 根）",
-    "xag/30m: shorter（新 251 根 < 现有 280 根）",
-    "xau/30m: shorter（新 251 根 < 现有 280 根）",
-    "dax/15m: shorter（新 473 根 < 现有 507 根）",
-    "cac40/15m: shorter（新 473 根 < 现有 507 根）",
-    "ukx/15m: shorter（新 473 根 < 现有 507 根）",
-    "xag/15m: shorter（新 498 根 < 现有 555 根）",
-    "xau/15m: shorter（新 498 根 < 现有 555 根）"
+    "sge_au9999/30m: shorter（新 234 根 < 现有 260 根）",
+    "xag/30m: shorter（新 252 根 < 现有 280 根）",
+    "xau/30m: shorter（新 252 根 < 现有 280 根）",
+    "xag/1m: shorter（新 561 根 < 现有 1310 根）",
+    "xau/1m: shorter（新 561 根 < 现有 1310 根）"
   ]
 }
