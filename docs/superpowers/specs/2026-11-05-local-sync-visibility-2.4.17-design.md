@@ -93,4 +93,4 @@
 | `footer-1.png` | 1 次 `skipped:fetch-failed` | `本机同步跳过 1 轮 · git fetch 失败`（琥珀 `ft-state warn`） |
 | `footer-3.png` | 3 次 `skipped:stash-pop-conflict` | `本机同步跳过 3 轮 · stash 恢复冲突`（红色 `ft-state bad`） |
 
-总灯未因 token 改变：截图中仍显示既有的「7/8 源失败」状态。
+总灯未因 token 改变：截图中仍显示既有的「7/8 源正常」状态。

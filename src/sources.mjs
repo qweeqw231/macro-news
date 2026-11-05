@@ -6,6 +6,7 @@ import { ETFS, etfTxCode } from './etf.mjs';
 import { fetchBatchQuotes } from './quotes.mjs';
 import { emGetJSON, KLINE_HOSTS } from './em.mjs';
 import { titleFromText } from './news-title.mjs';
+import { pbcTimeFromUrl } from './pbc-time.mjs';
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
@@ -294,11 +295,16 @@ async function pbcNews() {
     const attr = m[2].match(/title="([^"]*)"/);
     const title = stripTags(attr ? attr[1] : m[3]);
     if (!title) continue;
-    const ts = Math.floor(new Date(`${m[5]}T00:00:00+08:00`).getTime() / 1000);
+    // 2.5.0：优先用详情页 URL 的 14 位时间戳（真实时分）；解析失败回退到列表页日期。
+    // 回退不会抛错，也不会让整个源失败。
+    const exact = pbcTimeFromUrl(m[1]);
+    const fallbackTs = Math.floor(new Date(`${m[5]}T00:00:00+08:00`).getTime() / 1000);
+    const ts = exact ? exact.ts : fallbackTs;
+    if (!Number.isFinite(ts)) continue;
     out.push({
       id: stableId('pbc', m[1]),
       ts,
-      time: isoFromUnix(ts),
+      time: exact ? exact.time : isoFromUnix(ts),
       source: '中国人民银行',
       channel: '政策/监管',
       title,

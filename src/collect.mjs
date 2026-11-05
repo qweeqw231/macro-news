@@ -24,6 +24,7 @@ import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.m
 import { newsDay } from './news-day.mjs';
 import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
 import { selectDayItems, OFFICIAL_RECENT_DAYS, isRecent } from './quota.mjs';
+import { describeSourceError } from './source-error.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -199,8 +200,13 @@ async function main() {
         console.log(`  ✅ ${s.label.padEnd(12)} ${String(items.length).padStart(4)} 条  ${Date.now() - t0}ms`);
         return { id: s.id, label: s.label, ok: true, items, ms: Date.now() - t0, windowed: s.windowed !== false };
       } catch (err) {
-        console.log(`  ❌ ${s.label.padEnd(12)} ${String(err.message).slice(0, 60)}`);
-        return { id: s.id, label: s.label, ok: false, error: err.message, items: [], ms: Date.now() - t0, windowed: s.windowed !== false };
+        const cause = describeSourceError(err);
+        const causeText = cause.causeCode ? `（${cause.causeCode}）` : '';
+        console.log(`  ❌ ${s.label.padEnd(12)} ${String(err.message).slice(0, 60)}${causeText}`);
+        return {
+          id: s.id, label: s.label, ok: false, error: err.message, items: [],
+          ms: Date.now() - t0, windowed: s.windowed !== false, ...cause,
+        };
       }
     })
   );
@@ -389,8 +395,12 @@ async function main() {
     runner: process.env.GITHUB_ACTIONS ? 'cloud' : 'local',
     startedAt: startedAt.toISOString(),
     durationMs: Date.now() - startedAt.getTime(),
-    sources: perSource.map(({ id, label, ok, items, ms, error }) => ({
-      id, label, ok, count: items.length, ms, ...(error ? { error } : {}),
+    sources: perSource.map(({ id, label, ok, items, ms, error, causeCode, causeMessage }) => ({
+      id, label, ok, count: items.length, ms,
+      ...(error ? { error } : {}),
+      // 2.5.0：仅在新版有 cause 时出现；旧快照没有这两个字段，页面照常读
+      ...(causeCode ? { causeCode } : {}),
+      ...(causeMessage ? { causeMessage } : {}),
     })),
     quotes: quotes.length,
     added: addedTotal,

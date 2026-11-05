@@ -99,6 +99,9 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
   `Asia/Shanghai`），**不依赖 runner 的本地时区**。历史偏移可用
   `node scripts/repair-nbs-time.mjs --apply` 回填：只修与统计局原文页
   `<meta name="PubDate">` 恰好差 +480 分钟的条目，其它差异不动。
+- **PBOC 时间（2.5.0）**：列表页只有日期，采集改用详情页 URL 的 14 位
+  `YYYYMMDDHHMMSS`（按 `+08:00`）作为真实发布时间；解析失败回退到日期。
+  历史错日可用 `node scripts/backfill-pbc-days.mjs --root <仓库根>` 幂等回填。
 - **推送**：`scripts/push-data.sh`（fetch + rebase 重试，只有 `data/` 变化才提交）。
 
 **指数名录（20 个）**

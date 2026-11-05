@@ -96,6 +96,10 @@ Cloudflare Worker ──> │ after 17:00: collect-macro-if-due.mjs (idempotent)
   `Asia/Shanghai`), **not the runner's local time zone**. Historical offsets can be backfilled with
   `node scripts/repair-nbs-time.mjs --apply`: only entries that differ by exactly +480 minutes from the NBS original page's
   `<meta name="PubDate">` are fixed; other differences are left alone.
+- **PBOC time (2.5.0)**: the list page only exposes a date; collection now uses the 14-digit
+  `YYYYMMDDHHMMSS` in the detail-page URL (interpreted as `+08:00`) as the real publish time,
+  and falls back to the date if parsing fails. Historical wrong-day entries can be backfilled
+  idempotently with `node scripts/backfill-pbc-days.mjs --root <repo root>`.
 - **Push**: `scripts/push-data.sh` (fetch + rebase retry; commits only when `data/` changed).
 
 **Index list (20)**

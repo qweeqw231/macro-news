@@ -1305,7 +1305,7 @@
       else if (runMin != null && runMin > 180) { level = 'warn'; state = '采集滞后'; }
       if (srcBad.length && level !== 'bad') {
         level = 'warn';
-        state = `${srcs.length - srcBad.length}/${srcs.length} 源失败`;
+        state = `${srcs.length - srcBad.length}/${srcs.length} 源正常`;
       }
 
       const bits = [];
