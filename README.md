@@ -1,5 +1,7 @@
 # 宏观资讯台 · Macro News
 
+中文 | [English](README.en.md)
+
 全球宏观资讯自动采集与归档：**利率 · 汇率 · 政策 · 大宗 · A股/港美股**。
 
 | | |
@@ -47,7 +49,7 @@
 
 ## 2. 数据链路（先看这一节）
 
-采集分五条链路。**它们写不同的文件、互不覆盖**；`quotes.json` 只由链路 ① 写。
+采集分五条自动链路（早报与历史切片另见 §2.6 / §2.7）。**它们写不同的文件、互不覆盖**；`quotes.json` 只由链路 ① 写。
 
 | # | 链路 | 谁在跑 | 频率 | 写什么 |
 |---|---|---|---|---|
@@ -130,7 +132,7 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 ### 2.2 链路 ②：K 线（每天全量 + 每小时最后一根）
 
 - **全量**（`kline-full.yml`，UTC 04:23 = 北京 12:23）：
-  - `scripts/update-kline-full.mjs`：10 个 CN 指数的全量日 K（`_full.json`）
+  - `scripts/update-kline-full.mjs`：26 个标的（20 指数 + 6 组合）的全量日 K（`_full.json`）
   - `node src/collect.mjs --kline-only`：27 个标的 × 日/周/月（`<key>.json` / `_1w` / `_1M`）
 - **分钟 + 最后一根**（`kline-minute.yml`，每小时 :17）：
   - `scripts/update-kline-minute.mjs`：8 个标的 × 5 个分钟周期（`min/`）
@@ -187,14 +189,14 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 | 触发 | minimax 定时任务 `macro-news 宏观早报（每日 09:00）`，cron `0 9 * * *`（Asia/Shanghai），**固定对话**（同一个任务专用对话，历史累积可回溯）。2.3.0 的三段式调度由用户在 mcode 侧执行，仓库不自动改任务 |
 | prepare | `node scripts/briefing/prepare.mjs --date <今天>`：同步/导入 archive → `brief-candidates` 去重打分 → 固化 `input.json`（不发布、不进仓库） |
 | 写作 | **LLM 判断**：读 `.local/runs/<date>/prompt.md`，按 schema 写 `outline.json` → `draft.json` → `final.json`；≤10 条，同一事件多源合并 |
-| publish | `node scripts/briefing/publish.mjs --date <今天> --push`：校验 schema / 条数 / 来源可追溯 / `inputSha`，通过才原子写站点与本地，并更新索引、状态；`--push` 只提交早报相关 4 个路径（见 §2.6.1） |
+| publish | `node scripts/briefing/publish.mjs --date <今天> --push`：校验 schema / 条数 / 来源可追溯 / `inputSha`，通过才原子写站点与本地，并更新索引、状态；`--push` 只提交早报相关 4 个路径（见下文「发布即入库」） |
 | 产物 | `.local/briefings/YYYY-MM-DD.json` + `.md`（本地）+ `data/briefings/YYYY-MM-DD.json`（站点） |
 
-**新闻库** `.local/news.db`（SQLite + FTS5，中文 bigram 分词）：52 万条量级；
+**新闻库** `.local/news.db`（SQLite + FTS5，中文 bigram 分词）：约 53 万条（529,006 条）；
 近 60 天有全文/摘要，5 年历史以标题+链接为主（中新网回填约 50 万条）。
 **已接入静态站**：2.2.0 上线近一年历史切片，2.4.10 补齐 09-20~10-04；当前
 **319 天 / 72,553 条 / 截止 2026-10-04**，09-20 之后走 `archive/` 全文。
-历史切片只有标题/来源/时间/原文链接，**没有摘要与正文**。
+历史切片以标题/来源/时间/原文链接为主（136 条带摘要），**没有正文**。
 
 ⚠ 两个实测坑（早报任务会天天踩，所以写进指令里）：
 1. **库里的 `published_at` 是「入库时刻」不是原始发布时间，且格式不统一** ——
@@ -268,17 +270,17 @@ publish --date（脚本，确定性）
 
 | 环节 | 实现 |
 |---|---|
-| 数据源 | `.local/news.db`（SQLite，525,925 条，2021-11 起） |
+| 数据源 | `.local/news.db`（SQLite，529,006 条，2021-11 起） |
 | 导出 | `node scripts/export-history.mjs --days 365` → `data/history/YYYY-MM-DD.json` + `index.json` |
 | 范围 | 到**昨天**为止 365 天；只导 `data/archive/` 未覆盖的日期（gap-only），已存在的切片不覆盖 |
 | 现状（2.4.10） | **319 天 / 72,553 条 / 截止 2026-10-04**；09-20 起有 archive 占位文件的日期由 `--include-archived` 补切片，09-20 之后走归档全文 |
-| 字段 | 仅 `标题/来源/时间/原文链接`，**无摘要、无正文** |
+| 字段 | `标题/来源/时间/原文链接` 为主（136 条带摘要），**无正文** |
 | 缺口 | 09-04~10-04 华尔街见闻/东财/新浪未采集（源站不留 30 天以上历史，无法回补），该时段以中新网/官方源为主 |
-| 单日上限 | 400 条（同 hash 去重后按「官方 / 全文 / 来源权重」取）；**只有标题/来源/时间/链接，无摘要/正文** |
+| 单日上限 | 400 条（同 hash 去重后按「官方 / 全文 / 来源权重」取）；**以标题/来源/时间/链接为主（少量带摘要），无正文** |
 | 体积 | 实测 **319 个切片 / 72,553 条 / 15.8 MB**（单日最大 88.4 KB） |
 | 读取 | 归档页切到「归档」时才取 `history/index.json`；点某天才取当天切片，LRU 3 天、`max-age=600` |
 
-历史切片**只有标题/来源/时间，没有摘要与正文**（正文在 `archive/` 的日期里）；`search.json`
+历史切片**以标题/来源/时间为主（少量带摘要），没有正文**（正文在 `archive/` 的日期里）；`search.json`
 只索引 archive 最近 **62 个新闻日**、且不含摘要（只有标题/来源/时间/链接），
 不覆盖 `history/` —— 365 天全量索引在浏览器里不可行（见 §9）。
 
@@ -293,7 +295,7 @@ publish --date（脚本，确定性）
 GitHub Actions 原来的 UTC 切日与新口径一致，本机不再按北京零点切日。
 **不回写历史**：2026-11-05 之前已写入的日文件保持原样；切换日之前的边界由 UTC/北京自然日
 混合写入造成，存在不确定性，不为了整齐重排。实测现有 `2026-11-04.json` 800 条、
-`2026-11-05.json` 383 条，全部落在新窗口内，切换不会造成条数跳变或新闻换天。
+`2026-11-05.json` 527 条，全部落在新窗口内，切换不会造成条数跳变或新闻换天。
 
 
 ---
@@ -426,14 +428,14 @@ K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三�
 | `data/snapshots/YYYY-MM-DD_am.json` | 上午盘时点价（59 项；新增标的前的历史文件 57/58 项） | 链路 ③ |
 | `data/snapshots/YYYY-MM-DD_pm.json` | 收盘时点价（59 项；新增标前的历史文件 57/58 项） | 链路 ③ |
 | `data/archive/YYYY-MM-DD.json` | 按天归档新闻，**含正文** | 链路 ① |
-| `data/history/YYYY-MM-DD.json` | 近一年历史切片（**只有标题/摘要**，单日 ≤400 条） | `scripts/export-history.mjs` |
+| `data/history/YYYY-MM-DD.json` | 近一年历史切片（**以标题/来源/时间/链接为主，少量带摘要，无正文**，单日 ≤400 条） | `scripts/export-history.mjs` |
 | `data/history/index.json` | 历史切片索引（含 `hasBriefing` / `briefLine` / `source`） | 同上 |
 | `data/briefings/YYYY-MM-DD.json` | 当日早报（`overview` + `watch` + `items` + `source`，与归档同键） | 链路 ⑥ / `scripts/briefing/*` |
 | `data/latest.json` | 最近 200 条（首屏） | 链路 ① |
-| `data/search.json` | 最近 62 个新闻日检索索引（**标题/来源/时间/链接，无摘要**，约 6.4 MB） | 链路 ① |
+| `data/search.json` | 最近 62 个新闻日检索索引（**标题/来源/时间/链接，无摘要**，约 6.5 MB） | 链路 ① |
 | `data/index.json` | 按天归档索引（含 `hasBriefing` / `briefLine` / `source`） | 链路 ① |
 | `data/kline/<key>.json` / `_1w` / `_1M` | 27 个标的 × 日/周/月 | 链路 ② |
-| `data/kline/<key>_full.json` | 10 个 CN 指数的全量日 K（紧凑数组 `[t,o,c,h,l,v]`） | 链路 ② |
+| `data/kline/<key>_full.json` | 26 个标的（20 指数 + 6 组合）的全量日 K（紧凑数组 `[t,o,c,h,l,v]`） | 链路 ② |
 | `data/kline/min/<key>_<period>.json` | 8 个标的 × 5 个分钟周期（含伦敦金） | 链路 ② |
 | `data/macro/daily.json` | 5 个宏观指标日频序列 | 链路 ④ |
 | `data/_last-run.json` | 各链路运行状态（字段并存，读改写） | 所有链路 |
@@ -444,7 +446,7 @@ K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三�
 - 要**行情 / 宏观** → 读 `quotes.json` + `macro/daily.json`，不要自己抓接口。
 - 要**某天收盘价** → 读 `snapshots/`；`quotes.json` 里的 A股是实时价，不等于收盘价。
 - 要**新闻全文** → 读 `archive/` 的 `items[].content`；`search.json` 没有正文。
-- 要**近一年历史** → 读 `history/<day>.json`（只有标题/摘要）；同一天若 `archive/` 也有，以 archive 为准。
+- 要**近一年历史** → 读 `history/<day>.json`（以标题/来源/时间/链接为主，少量带摘要）；同一天若 `archive/` 也有，以 archive 为准。
 - 要**当日早报** → 读 `briefings/<day>.json`；索引里只有 `hasBriefing` + 一行 `briefLine`。
 - 不要顺手触发采集，也不要手工编辑 `data/`。
 
@@ -700,7 +702,7 @@ node scripts/ops-stats.mjs --no-network    # 只看本机台账
    **最新条目时间**为准。
 10. **历史切片按天单文件、只导缺口**：一天一次请求、LRU 按天、文件写一次就不可变；
     `archive/` 已覆盖的天（带全文）不再导摘要版 —— 否则同一天两个真相，还多 6 MB。
-    单日压到 1 字母键 + 省略空字段 + 400 条上限，实测 304 天共 15.1 MB（预算 30 MB 闸）。
+    单日压到 1 字母键 + 省略空字段 + 400 条上限，实测 319 天共 15.8 MB（预算 30 MB 闸）。
 11. **早报与归档同键、展开才取正文**：索引只多 `hasBriefing` + 一行 ≤80 字 `briefLine`，
     不新增索引文件、不在首屏/归档页预取 365 份早报；折叠块展开时才请求当天 JSON，
     历史日 `max-age=600`、当日 `no-store`。
@@ -756,9 +758,9 @@ node scripts/ops-stats.mjs --no-network    # 只看本机台账
 ## 9. 已知限制 / 待办
 
 - 新闻正文覆盖率不是 100%：人民银行、欧洲央行只有标题（原文在 PDF 里）。
-- `search.json` 约 6.4 MB（gzip ≈1.4 MB，最近 62 新闻日、无摘要）：**点搜索框或开始输入时才预取**，首屏/归档不再跟它抢带宽；
+- `search.json` 约 6.5 MB（gzip ≈1.4 MB，最近 62 新闻日、无摘要）：**点搜索框或开始输入时才预取**，首屏/归档不再跟它抢带宽；
   首次全文检索要等索引下载完（Pages 带宽实测 5~30 KB/s）。
-- **历史检索是浏览式的**：`data/history/` 覆盖近一年（304 天 / 15.1 MB，只有标题/摘要），
+- **历史检索是浏览式的**：`data/history/` 覆盖近一年（319 天 / 15.8 MB，以标题为主、少量带摘要），
   但 `search.json` 仍只覆盖最近约 62 天 —— 365 天全量索引约 60 MB，浏览器里不可行。
   需要跨年检索时用本机 `scripts/news-db/query.mjs`；不要把它倒进静态站。
 - cron 不认法定节假日：行情沿用上一交易日，快照直接不写文件（属正常行为）。
@@ -805,7 +807,7 @@ macro-news/
 │   ├── kline/         日/周/月 + _full + min/
 │   └── macro/daily.json
 ├── .local/             本机私有（已在 .gitignore）
-│   ├── news.db         新闻库（SQLite + FTS5，52 万条）
+│   ├── news.db         新闻库（SQLite + FTS5，53 万条）
 │   ├── briefings/      每日早报 YYYY-MM-DD.json / .md
 │   └── runs/           2.3.0 三段式中间产物（input/outline/draft/final + prompt）
 ├── scripts/news-db/    新闻库：db · history-slice · import-archive · brief-candidates · query · backfill-*
