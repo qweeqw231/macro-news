@@ -36,6 +36,45 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.5.1] - 2026-11-05
+
+> 补丁位：修复 PBOC 采集在 GitHub Actions 上间歇 `fetch failed`（云端 586 轮中 77 次失败）。
+
+### 修正
+
+- **PBOC 取数绕开 250ms Happy Eyeballs（P0）**：根因是 PBC 的 DNS 同时返回 A 与 AAAA，
+  而 GitHub-hosted runner 没有 IPv6 出网路由；Node 22 的 `autoSelectFamily` 对多地址中的
+  第一个地址只留 **250ms** 建连时间（`net.getDefaultAutoSelectFamilyAttemptTimeout()=250`）。
+  跨境建连 RTT 常态约 200ms，尾部超过 250ms 时连接被客户端主动放弃，转 IPv6 立即
+  `ENETUNREACH`，最终抛出 `AggregateError(ETIMEDOUT + ENETUNREACH)`，上层只看到
+  `fetch failed`。失败全部发生在 **TCP 建连层**；DNS、TLS、HTTP、WAF 已由对照实验排除
+  （TLS 1.2/1.3 均可握手、证书校验通过、curl 慢连接可成功）。
+- **实现**：`src/sources.mjs` 新增 `fetchPbcHtml`，首轮用 `node:https` + `family:4` +
+  `agent:false`（冷连接，走单地址路径，无 250ms 计时器）；失败后在原有 `retries:1`
+  预算内回落默认 `fetch`，总尝试数仍为 2 次，不额外增加超时。其他 7 个源未改动；
+  未改全局 `net.setDefaultAutoSelectFamilyAttemptTimeout`，未用 `dns.setDefaultResultOrder`。
+- **A/B 实测**（GitHub runner，各 60 次；每次 fork 子进程强制冷连接，A/B 交替执行）：
+  A（修复前默认 fetch）**12/60 失败（20.0%）**，失败耗时 283.2–302.2ms，全部为
+  `ETIMEDOUT(IPv4)+ENETUNREACH(IPv6)`；B（修复后）**0/60 失败（0.0%）**，
+  p90 2219ms、max 5719ms 均成功。B 的 20 次慢连接专项中，TCP 建连 >250ms 的 4 次
+  全部成功（最大 1252.6ms）。本次 A/B 仅 1 次 runner 运行，临时分支已删除。
+- **AAAA 清单**（同一次 runner 只读探测）：PBC / 东方财富 / 中新网 / 美联储 有 AAAA；
+  华尔街见闻 / 新浪 / 欧洲央行 / 统计局 无 AAAA。runner 无 IPv6 路由 ⇒ 有 AAAA 的源
+  均带同一潜在机制；本次 PBC 的 IPv4 TCP RTT 已达 1257ms（高风险），东方财富 195ms、
+  中新网 28ms、美联储 2.8ms（暂未触发，保持观察）。
+
+### 测试
+
+- 新增 `tests/pbc-fetch.test.mjs`：`family:4` / `agent:false` / UA / Referer / 25s 参数、
+  非 2xx 处理、连接错误码可被 `describeSourceError` 采集、HTTPS→fetch 降级可达、
+  降级不突破原 2 次尝试预算。
+- 全套 **270 项**通过（原 265 + 新增 5）。
+
+### 说明
+
+- 前端无改动，资源串保持 `20261105e`；未改 `data/`、`worker/`。
+- A/B 原始数据保留在 `.local/diag/pbc-ab-result.json`（本地产物，不入库）。
+
 ## [2.5.0] - 2026-11-05
 
 > **为什么进中版本**：修复会造成用户可见错误数据——54 条 PBOC 条目被归到前一个新闻日，
