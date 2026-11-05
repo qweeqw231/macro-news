@@ -1,10 +1,8 @@
 {
-  "generatedAt": "2026-11-05T20:19:20.174Z",
-  "ok": 0,
-  "failed": 1,
-  "failures": [
-    "sge_au9999/30m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；上金所官网失败(上金所不支持周期 30m)"
-  ],
+  "generatedAt": "2026-11-05T20:50:05.021Z",
+  "ok": 2,
+  "failed": 0,
+  "failures": [],
   "rejected": [
     "n225/5m: shorter（新 1000 根 < 现有 1010 根）",
     "dax/5m: shorter（新 1000 根 < 现有 1003 根）",
@@ -18,6 +16,15 @@
     "dax/30m: shorter（新 254 根 < 现有 271 根）",
     "cac40/30m: shorter（新 254 根 < 现有 271 根）",
     "ukx/30m: shorter（新 254 根 < 现有 271 根）",
-    "kospi/30m: shorter（新 247 根 < 现有 273 根）"
+    "kospi/30m: shorter（新 247 根 < 现有 273 根）",
+    "sge_au9999/30m: shorter（新 234 根 < 现有 260 根）",
+    "xag/30m: shorter（新 277 根 < 现有 280 根）",
+    "xau/30m: shorter（新 277 根 < 现有 280 根）",
+    "n225/1m: shorter（新 330 根 < 现有 660 根）",
+    "dax/1m: shorter（新 510 根 < 现有 1020 根）",
+    "cac40/1m: shorter（新 510 根 < 现有 1020 根）",
+    "ukx/1m: shorter（新 510 根 < 现有 1020 根）",
+    "kospi/1m: shorter（新 390 根 < 现有 780 根）",
+    "sge_au9999/1m: shorter（新 389 根 < 现有 1560 根）"
   ]
 }
