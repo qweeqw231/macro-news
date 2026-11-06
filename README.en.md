@@ -79,7 +79,9 @@ Cloudflare Worker ──> │ after 17:00: collect-macro-if-due.mjs (idempotent)
 - **Action**: `node src/collect.mjs --no-kline`
 - **Quotes**: Eastmoney `ulist.np` fetches all **53** instruments in one batch (20 indices + 32 ETFs + Nasdaq 100);
   portfolio quotes are filled in by `fetchPortfolioQuotesFast`: `xau/xag/brent` refresh every round,
-  while `sge_au9999/usdcny/cgb_1y` refresh only at publication times (15:30 / 09:15 / 17:00) and only when the stored value is not from today.
+  `sge_au9999` fetches Eastmoney `118.AU9999` every round while trading (day 09:00-15:30, night 20:00-02:30),
+  then adopts the official SGE daily quote once after the 15:30 close (2.6.0);
+  `usdcny/cgb_1y` refresh only at publication times (09:15 / 17:00) and only when the stored value is not from today.
 - **News**: 8 sources fail independently; items are first deduplicated idempotently by `id`, then by the 2.4.5 "same-story merge" rules:
   same `url`, or same source + same time + same body/title ⇒ keep only one; channels are resolved by specificity
   `A-shares/China > domestic finance > FX/commodities/US equities > global`, and within the same channel the longer body wins.
@@ -362,7 +364,7 @@ Each record carries `price / prevClose / changePct / asOf / priceSource / note`.
 |---|---|
 | 20 indices + 32 ETFs + `ndx` | Every 15 minutes (Eastmoney batch; Nasdaq 100 is same-source with the K-line `100.NDX100`) |
 | `xau` / `xag` / `brent` | Every 15 minutes (Tencent `hf_*`) |
-| `sge_au9999` | After 15:30 and only when the stored value is not today (SGE daily quote table) |
+| `sge_au9999` | Every round while trading (day 09:00-15:30 / night 20:00-02:30) from Eastmoney `118.AU9999`; after 15:30 the official SGE daily quote overrides (2.6.0) |
 | `usdcny` | After 09:15 and only when the stored value is not today (China Foreign Exchange Trade System) |
 | `cgb_1y` | After 17:00 and only when the stored value is not today (ChinaBond curve) |
 

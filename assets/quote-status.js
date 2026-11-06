@@ -107,6 +107,14 @@
     DE:    { tz: 'Europe/Berlin',    windows: [[540, 1050]] },             // Xetra 09:00-17:30 CET
     FR:    { tz: 'Europe/Berlin',    windows: [[540, 1050]] },             // Euronext Paris 09:00-17:30 CET
     UK:    { tz: 'Europe/London',    windows: [[480, 990]] },              // 08:00-16:30
+    // 上海金（上金所 Au99.99）：日盘 09:00-15:30，夜盘 20:00-次日 02:30。
+    //   · 夜盘窗口右端 1590 > 1440，sessionAt 用 minutes / minutes+1440 双判；
+    //   · tail:150 → 周六 00:00-02:30 仍算周五夜盘在交易；
+    //   · gapAsPost → 15:30-20:00 这段空档是「已收盘」，不是「午间休市」。
+    SGE:   {
+      tz: 'Asia/Shanghai', windows: [[540, 930], [1200, 1590]],
+      tail: 150, gapAsPost: true,
+    },
   };
   var WD = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
 
@@ -211,6 +219,21 @@
     return cfg ? cfg.windows[cfg.windows.length - 1][1] : null;
   }
 
+  /**
+   * 某日全部收盘时刻（分钟）。跨日市场（上海金夜盘到 1590）一天有两个收盘，
+   * 只取最后一个会把 15:30 的日盘收盘吞掉，所以 lastCloseBefore 用这个列表。
+   */
+  function closeMinutesAll(market, date, calendar) {
+    var cfg = MARKET_SESSIONS[market];
+    if (!cfg) return [];
+    var hd = halfDayFor(market, date, calendar);
+    if (hd) {
+      var c = parseHm(hd.closeTime);
+      if (c != null) return [c];
+    }
+    return cfg.windows.map(function (w) { return w[1]; });
+  }
+
   function isTradingDay(market, dateStr, calendar) {
     var wd = weekdayOf(dateStr);
     if (!Number.isFinite(wd) || wd === 0 || wd === 6) return false;
@@ -236,15 +259,30 @@
       base.holiday = true;
       return base;
     }
-    if (p.wd === 0 || p.wd === 6) { base.phase = 'weekend'; return base; }
+    if (p.wd === 0 || p.wd === 6) {
+      // 上海金周五夜盘会跨到周六 02:30：周六凌晨仍算交易中，周日整日休市
+      if (p.wd === 6 && cfg.tail && p.minutes < cfg.tail) { base.phase = 'open'; return base; }
+      base.phase = 'weekend';
+      return base;
+    }
     var wins = sessionWindows(market, p.date, calendar);
     if (!wins.length) { base.phase = 'post'; return base; }
-    if (p.minutes < wins[0][0]) { base.phase = 'pre'; return base; }
+    // 先判「在不在盘中」：跨日品种（上海金）凌晨 00:00-02:30 属于昨天窗口的尾巴，
+    // 若先做 p.minutes < wins[0][0] 的盘前判断，会把这段夜盘误判成 pre。
     for (var i = 0; i < wins.length; i++) {
       var a = wins[i][0];
       var b = wins[i][1];
-      if (p.minutes >= a && p.minutes < b) { base.phase = 'open'; return base; }
-      if (i < wins.length - 1 && p.minutes >= b && p.minutes < wins[i + 1][0]) {
+      if ((p.minutes >= a && p.minutes < b) ||
+          (b > 1440 && p.minutes + 1440 >= a && p.minutes + 1440 < b)) {
+        base.phase = 'open';
+        return base;
+      }
+    }
+    var crossDay = wins[wins.length - 1][1] > 1440;
+    if (!crossDay && p.minutes < wins[0][0]) { base.phase = 'pre'; return base; }
+    for (var k = 0; k < wins.length - 1; k++) {
+      if (p.minutes >= wins[k][1] && p.minutes < wins[k + 1][0]) {
+        if (cfg.gapAsPost) { base.phase = 'post'; return base; }
         base.phase = 'lunch';
         return base;
       }
@@ -261,13 +299,16 @@
     for (var i = 0; i <= 14; i++) {
       var date = shiftDate(p.date, -i);
       if (!isTradingDay(market, date, calendar)) continue;
-      var closeMin = closeMinutesFor(market, date, calendar);
-      if (closeMin == null) continue;
-      var ms = zonedToUtc(date, closeMin, cfg.tz);
-      if (ms <= Number(now)) {
-        var hh = String(Math.floor(closeMin / 60)).padStart(2, '0');
-        var mm = String(closeMin % 60).padStart(2, '0');
-        return { ms: ms, date: date, hm: hh + ':' + mm };
+      var ends = closeMinutesAll(market, date, calendar);
+      // 同日多个收盘要从晚到早找：上海金 16:00 时最近的收盘是当日 15:30，
+      // 而不是当日 02:30（那是前一交易日夜盘的尾巴）。
+      for (var j = ends.length - 1; j >= 0; j--) {
+        var ms = zonedToUtc(date, ends[j], cfg.tz);
+        if (ms <= Number(now)) {
+          // date/hm 一律从换算后的时刻反推：跨日收盘（1590 → 次日 02:30）不能直接除 60
+          var q = tzParts(ms, cfg.tz);
+          return { ms: ms, date: q.date, hm: pad(q.hh) + ':' + pad(q.mm) };
+        }
       }
     }
     return null;

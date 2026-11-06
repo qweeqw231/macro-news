@@ -239,7 +239,62 @@ async function fetchHfQuote(code, key, name, market) {
 // ⚠ 必须带 start_date/end_date，否则页面为空。
 // 表格列：日期|合约|开盘价|最高价|最低价|收盘价|涨跌（元）|涨跌幅|加权平均价|成交量...
 // 注意：涨跌幅带 % 号；「-」表示该合约当日无成交。
+//
+// 2.6.0：上海金原先只取上金所「每日行情」（收盘后才有当天行），
+// 导致整个交易日 quotes.json 里都是**上一交易日的收盘价**（11-06 盘中实测：884.09 = 11-05 收盘）。
+// 现在盘中改走东财 118.AU9999（就是上金所 Au99.99，同品种），收盘后仍由上金所官方日行情为准。
 async function fetchSgeAu9999() {
+  if (sgeInSession(beijingNowParts())) {
+    try {
+      return await fetchSgeLive();
+    } catch {
+      // 实时源失败 → 退回官方日行情（至少不是空值）
+    }
+  }
+  return fetchSgeOfficial();
+}
+
+/**
+ * 上海金交易时段（北京时间）：日盘 09:00-15:30，夜盘 20:00-次日 02:30。
+ * 与 scripts/update-kline-last.mjs 的 SGE 时段保持一致：周六只有 00:00-02:30（周五夜盘尾巴），周日休市。
+ */
+function sgeInSession(now) {
+  const h = Number(now.hm.slice(0, 2)) + Number(now.hm.slice(3)) / 60;
+  if (now.wd === 0) return false;
+  if (now.wd === 6) return h < 2.5;
+  return (h >= 9 && h < 15.5) || h >= 20 || h < 2.5;
+}
+
+/** 东财实时报价（118.AU9999）；f124 是源时间戳，没有它就不能标“实时” */
+async function fetchSgeLive() {
+  const j = await get(
+    'https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&secids=118.AU9999' +
+      '&fields=f2,f3,f12,f13,f14,f15,f16,f17,f18,f124',
+    { json: true, headers: { Referer: 'https://quote.eastmoney.com/' }, retries: 1 }
+  );
+  const d = j && j.data && j.data.diff && j.data.diff[0];
+  if (!d) throw new Error('东财 118.AU9999 返回空');
+  const price = num(d.f2);
+  if (price === null) throw new Error('东财 118.AU9999 无价格');
+  return {
+    key: 'sge_au9999',
+    name: '上海金Au99.99',
+    market: 'SGE',
+    price,
+    open: num(d.f17),
+    high: num(d.f15),
+    low: num(d.f16),
+    prevClose: num(d.f18),
+    changePct: num(d.f3),
+    // f124 是 epoch 秒（UTC 瞬时），这里统一写成北京时间 ISO（与其它源一样不带毫秒）
+    updatedAt: d.f124
+      ? `${new Date((Number(d.f124) + 8 * 3600) * 1000).toISOString().slice(0, 19)}+08:00`
+      : null,
+  };
+}
+
+/** 上金所官方日行情（收盘后发布，节假日回退到上一交易日） */
+async function fetchSgeOfficial() {
   // 休市/节假日：当天无数据 → 回退到上一交易日（最多回溯 7 天）
   let lastErr = null;
   for (let back = 0; back <= 7; back++) {
@@ -563,7 +618,11 @@ export async function fetchPortfolioQuotes(prevQuotes = []) {
 //   · 正在交易（ndx 已并入指数批量；xau/xag/brent 24 小时）→ 每轮取；
 //   · 一天只发布一次（上海金 15:30 / 中间价 09:15 / 1Y国债 17:00）
 //     → 过了发布时刻且存量不是今天的，才重取。
-const DAILY_PUBLISH = { sge_au9999: '15:30', usdcny: '09:15', cgb_1y: '17:00' };
+// 2.6.0：上海金移出「一天只发一次」名单 —— 它日盘/夜盘连续交易，
+// 15:30 之前一律沿用上一交易日收盘，卡片整天停在旧价（11-06 实测）。
+// 现在：盘中每轮取东财实时；15:30 收盘后再取一次上金所官方收盘价覆盖。
+const DAILY_PUBLISH = { usdcny: '09:15', cgb_1y: '17:00' };
+const SGE_CLOSE_HM = '15:30';
 
 /** 北京时间的 日期 / 时刻 / 星期（0=周日） */
 function beijingNowParts(d = new Date()) {
@@ -575,7 +634,21 @@ function beijingNowParts(d = new Date()) {
   };
 }
 
-function dueInFastFetch(key, prevQ, now) {
+/**
+ * 上海金是否该在本轮重取：
+ *   盘中（日盘/夜盘）→ 每轮都取，卡片跟着实时价走；
+ *   15:30 收盘后 → 只补一次官方收盘价（存量没写上「今天 15:30」就重试，幂等）；
+ *   其余时间（凌晨/早上/周末）→ 不取，避免拿同一个收盘价反复刷 quotes.json。
+ */
+function dueSge(prevQ, now) {
+  if (sgeInSession(now)) return true;
+  if (now.wd === 0 || now.wd === 6) return false;
+  if (now.hm < SGE_CLOSE_HM) return false;
+  return String(prevQ?.updatedAt || '').slice(0, 16) !== `${now.date}T${SGE_CLOSE_HM}`;
+}
+
+export function dueInFastFetch(key, prevQ, now) {
+  if (key === 'sge_au9999') return dueSge(prevQ, now);
   const publish = DAILY_PUBLISH[key];
   if (!publish) return true;                        // 交易中的品种：每轮都取
   if (now.wd === 0 || now.wd === 6) return false;   // 日频源周末不发布
@@ -611,6 +684,12 @@ export async function fetchPortfolioQuotesFast(prevQuotes = []) {
     const s = due[i];
     if (r.status === 'fulfilled' && r.value) {
       const q = { ...r.value };
+      // 官方日行情回退到上一交易日（note=carried）时，不能拿它盖掉更新鲜的盘中实时值：
+      // 15:30 刚过、当天官方行还没发布的十几分钟里，上一交易日收盘会把实时价顶回去。
+      const p0 = prev.get(s.key);
+      if (q.note === 'carried' && p0 && String(p0.updatedAt || '') > String(q.updatedAt || '')) {
+        return;
+      }
       if (q._srcDate) { cgbSrcDate = q._srcDate; delete q._srcDate; }
       quotes.push(q);
       ok.push(s.key);
