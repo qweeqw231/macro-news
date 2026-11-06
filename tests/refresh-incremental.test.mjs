@@ -25,7 +25,7 @@ function between(src, start, end) {
 test('轮询：结构不变时先 patch，整块重建只作兜底', () => {
   const body = between(app, 'function renderQuotes()', 'function startQuotePolling()');
   const patchCall = body.indexOf('if (patchQuotes(quotes, statusOf))');
-  const rebuild = body.indexOf('box.replaceChildren(frag)');
+  const rebuild = body.indexOf('box.replaceChildren(buildQuotes(quotes, statusOf))');
   assert.ok(patchCall >= 0, 'renderQuotes 必须先尝试 patchQuotes');
   assert.ok(rebuild > patchCall, 'patchQuotes 必须在 replaceChildren 之前');
   const branch = body.slice(patchCall, rebuild);

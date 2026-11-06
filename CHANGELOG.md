@@ -10,6 +10,41 @@
 **反例**：连续修 bug 不应因“数字用完了”而进位到中版本；2.4.x 可以继续到 2.4.11、2.4.12。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.7.1] - 2026-11-06
+
+> 补丁位：刷新恢复不再「闪一下、窗口重现」——先按快照把画面长回来，新数据只改数值。
+
+### 修正
+
+- **刷新仍有可见重绘**：刷新本身不会退出行情页与 K 线弹窗（2.4.12 的状态恢复），
+  但恢复顺序是「先取行情 → 再画卡片 → 最后开弹窗」，用户看到的是
+  空白网格 → 卡片弹出 → K 线窗口晚一步出现，即「闪一下，然后原窗口重现」。
+  - **行情网格**：新增 `saveQuoteCache` / `paintQuotesFromCache`。每次真正变化的渲染后
+    把**已渲染过的**卡片状态（含状态文案）存进 `sessionStorage['macroNewsQuotes.v1']`；
+    boot 时在 `await ensureCalendar()` 之后、取行情之前，用同一份 `buildQuotes()`
+    同步画回来。首帧就是离开时的样子；新数据到达后由 `patchQuotes` 只改数值/颜色/文案，
+    结构不变就不重建（`lastQuoteSig` 复位以保证一定会 patch，不会被「行情没变」跳过）。
+  - **K 线弹窗**：`restoreKlineUI()` 从 `renderQuotes().then(...)` 链尾移到取行情之前，
+    弹窗在首帧后立即打开；`saveUI` 额外记录弹窗名称与现价，`openKline` 在行情还没到
+    时先用它撑住头部，避免「先显示代码/空价、再跳一次」。
+  - `buildQuotes(quotes, statusOf)` 从 `renderQuotes` 抽出，整体重建与快照回填共用，
+    两条路径的 DOM 结构必须一致，`patchQuotes` 才能命中。
+- **缓存**：前端资源串 `20261106b → 20261106c`。
+
+### 未改动
+
+- 15 秒轮询节奏、`patchQuotes` 的原地更新逻辑、K 线数据的取数与缩放恢复均不变。
+- `sessionStorage` 不可用（隐私模式/配额满）时静默跳过：退化为原来的「取到再画」，不报错。
+
+### 测试
+
+- 新增 `tests/refresh-restore.test.mjs`（4 项）：`buildQuotes` 被两条路径共用；快照的存与取
+  （含「存快照必须在 patch 早返回之前」「必须复位 `lastQuoteSig`」）；boot 里
+  `paintQuotesFromCache` / `restoreKlineUI` 都在 `renderQuotes` 之前（禁止再挂回链尾）；
+  弹窗名称/现价的存取与兜底。
+- `tests/refresh-incremental.test.mjs` 同步改动后断言（重建调用改为 `buildQuotes`）。
+- 全套 **288 项**通过（284 + 4）。
+
 ## [2.7.0] - 2026-11-06
 
 > 中版本：新增用户可见能力——伦敦金 / 伦敦银 / 布伦特原油卡片由「本地快照」改为盘中实时刷新。

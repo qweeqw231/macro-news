@@ -84,6 +84,10 @@
         kline: klineOpen && klineKey ? {
           key: klineKey,
           period: klinePeriod,
+          // 2.7.1：名称/现价一起存。刷新时行情还没回来也能先把弹窗头部画对，
+          //   否则会先显示 key 或空价格，等 quotes.json 到了再改（又是一次跳动）。
+          name: ($('#kmName') || {}).textContent || '',
+          price: ($('#kmPrice') || {}).textContent || '',
           // 2.4.12：恢复途中（图表还没落图）优先沿用待恢复视图，别把 reset() 的 90 根默认值写回
           ...((pendingKlineView && pendingKlineView.key === klineKey && pendingKlineView.period === klinePeriod)
             ? { barsShown: pendingKlineView.barsShown, offset: pendingKlineView.offset }
@@ -305,6 +309,67 @@
   }
 
   let lastQuoteSig = '';
+
+  /**
+   * 把行情数组渲染成 `.mkt` 分组 + `.q` 卡片的 fragment。
+   * 两处复用：首次/结构变化的整体重建，以及刷新后用缓存快照「原样长回来」（2.7.1）。
+   */
+  function buildQuotes(quotes, statusOf) {
+    const frag = document.createDocumentFragment();
+    const groups = new Map();
+    quotes.forEach((q) => {
+      if (!groups.has(q.market)) groups.set(q.market, []);
+      groups.get(q.market).push(q);
+    });
+
+    // A 股置顶；场内 ETF 紧随其后
+    const ORDER = ['CN', 'ETF', 'HK', 'US', 'JP', 'EU', 'UK', 'KR', 'CMDTY', 'SGE', 'FX'];
+    [...groups.keys()]
+      .sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b))
+      .forEach((mk) => {
+        const list = groups.get(mk);
+        const open = list.some((q) => isTrading(q.calendarMarket || q.market));
+        const g = el('div', 'mkt');
+        const h = el('div', 'mkt-hd');
+        h.appendChild(el('span', 'mkt-name', MARKET_LABEL[mk] || mk));
+        h.appendChild(el('span', `mkt-state${open ? ' open' : ''}`, open ? '交易中' : '休市'));
+        g.appendChild(h);
+
+        const grid = el('div', 'mkt-grid');
+        list.forEach((q) => {
+          const up = (q.changePct || 0) >= 0;
+          const card = el('a', 'q');
+          card.href = '#';
+          card.dataset.key = q.key;
+          card.dataset.search = quoteSearchText(q);
+          card.title = '查看 K 线图';
+          const head = el('div', 'q-hd');
+          const nameBox = el('div', 'q-name-box');
+          nameBox.appendChild(el('span', 'q-name', q.name));
+          nameBox.appendChild(el('span', 'q-code', codeOf(q)));
+          head.appendChild(nameBox);
+          const px = el('span', `q-px ${up ? 'up' : 'down'}`, fmtNum(q.price));
+          head.appendChild(px);
+          card.appendChild(head);
+          const chg = el('div', 'q-chg');
+          const amt = (q.price || 0) - (q.prevClose || 0);
+          chg.appendChild(el('span', up ? 'up' : 'down', `${up ? '▲' : '▼'} ${fmtNum(Math.abs(amt))}`));
+          chg.appendChild(el('span', up ? 'up' : 'down', `  ${Math.abs(q.changePct || 0).toFixed(2)}%`));
+          card.appendChild(chg);
+          const st = statusOf(q);
+          const tm = el('div', 'q-time', st.card);
+          tm.classList.add(st.state === 'realtime' ? 'state-ok'
+            : (st.state === 'local' || st.state === 'closed' || st.state === 'holiday')
+              ? 'state-local' : 'state-warn');
+          card.appendChild(tm);
+          grid.appendChild(card);
+        });
+        g.appendChild(grid);
+        frag.appendChild(g);
+      });
+    return frag;
+  }
+
   async function renderQuotes() {
     const box = $('#quotes');
     const now = Date.now();
@@ -417,6 +482,9 @@
       '|' + globalStatus.state + '|' + Math.floor(now / 60000);
     if (sig === lastQuoteSig) return;
     lastQuoteSig = sig;
+    // 2.7.1：把这一份「已渲染」的卡片状态存进 sessionStorage，
+    //   刷新后首帧就能按原样长回来，随后 renderQuotes 只 patch 数值（见 paintQuotesFromCache）。
+    saveQuoteCache(quotes, statusOf, globalStatus.summary);
 
     // 2.4.12：结构不变时只改数值/颜色/时间，静态外框与卡片节点原样保留。
     if (patchQuotes(quotes, statusOf)) {
@@ -426,60 +494,44 @@
 
     // 用 fragment 一次性替换：`innerHTML=''` 再逐个 append 会让仪表盘在渲染过程中
     // 高度塌成 0（既闪一下，又把「视口对齐」的基准位置弄乱）
-    const frag = document.createDocumentFragment();
-    const groups = new Map();
-    quotes.forEach((q) => {
-      if (!groups.has(q.market)) groups.set(q.market, []);
-      groups.get(q.market).push(q);
-    });
-
-    // A 股置顶；场内 ETF 紧随其后
-    const ORDER = ['CN', 'ETF', 'HK', 'US', 'JP', 'EU', 'UK', 'KR', 'CMDTY', 'SGE', 'FX'];
-    [...groups.keys()]
-      .sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b))
-      .forEach((mk) => {
-        const list = groups.get(mk);
-        const open = list.some((q) => isTrading(q.calendarMarket || q.market));
-        const g = el('div', 'mkt');
-        const h = el('div', 'mkt-hd');
-        h.appendChild(el('span', 'mkt-name', MARKET_LABEL[mk] || mk));
-        h.appendChild(el('span', `mkt-state${open ? ' open' : ''}`, open ? '交易中' : '休市'));
-        g.appendChild(h);
-
-        const grid = el('div', 'mkt-grid');
-        list.forEach((q) => {
-          const up = (q.changePct || 0) >= 0;
-          const card = el('a', 'q');
-          card.href = '#';
-          card.dataset.key = q.key;
-          card.dataset.search = quoteSearchText(q);
-          card.title = '查看 K 线图';
-          const head = el('div', 'q-hd');
-          const nameBox = el('div', 'q-name-box');
-          nameBox.appendChild(el('span', 'q-name', q.name));
-          nameBox.appendChild(el('span', 'q-code', codeOf(q)));
-          head.appendChild(nameBox);
-          const px = el('span', `q-px ${up ? 'up' : 'down'}`, fmtNum(q.price));
-          head.appendChild(px);
-          card.appendChild(head);
-          const chg = el('div', 'q-chg');
-          const amt = (q.price || 0) - (q.prevClose || 0);
-          chg.appendChild(el('span', up ? 'up' : 'down', `${up ? '▲' : '▼'} ${fmtNum(Math.abs(amt))}`));
-          chg.appendChild(el('span', up ? 'up' : 'down', `  ${Math.abs(q.changePct || 0).toFixed(2)}%`));
-          card.appendChild(chg);
-          const st = statusOf(q);
-          const tm = el('div', 'q-time', st.card);
-          tm.classList.add(st.state === 'realtime' ? 'state-ok'
-            : (st.state === 'local' || st.state === 'closed' || st.state === 'holiday')
-              ? 'state-local' : 'state-warn');
-          card.appendChild(tm);
-          grid.appendChild(card);
-        });
-        g.appendChild(grid);
-        frag.appendChild(g);
-      });
-    box.replaceChildren(frag);
+    box.replaceChildren(buildQuotes(quotes, statusOf));
     applyQuoteFilter();   // 轮询重绘后保持当前筛选结果
+  }
+
+  // ---------- 行情快照缓存（2.7.1） ----------
+  // 为什么要它：浏览器刷新会清空 DOM，行情靠 fetch 回来再画，于是用户看到
+  //   行情页先是一屏空白 → 卡片弹出 → K 线弹窗再晚一步出现（「闪一下，窗口重现」）。
+  // 现在把上一次**已经渲染过的**卡片状态（含状态文案）存 sessionStorage，
+  //   boot 时同步画回来（首帧就是离开时的样子），新数据到达后由 patchQuotes 只改数值。
+  const QUOTE_CACHE_KEY = 'macroNewsQuotes.v1';
+
+  function saveQuoteCache(quotes, statusOf, summary) {
+    try {
+      const list = quotes.map((q) => {
+        const st = statusOf(q);
+        return { ...q, __state: st.state, __card: st.card };
+      });
+      sessionStorage.setItem(QUOTE_CACHE_KEY, JSON.stringify({ at: Date.now(), summary, quotes: list }));
+    } catch { /* 隐私模式 / 配额满：跳过，不影响页面 */ }
+  }
+
+  /** 用缓存快照把行情网格「原样」画回来；没有缓存或不在行情页则跳过。 */
+  function paintQuotesFromCache() {
+    if (S.view !== 'market') return false;
+    let snap = null;
+    try { snap = JSON.parse(sessionStorage.getItem(QUOTE_CACHE_KEY) || 'null'); } catch { snap = null; }
+    if (!snap || !Array.isArray(snap.quotes) || !snap.quotes.length) return false;
+    const box = $('#quotes');
+    if (!box) return false;
+    // S.quotes 先顶上：K 线弹窗恢复时用它取名称/现价，别等实时行情回来
+    S.quotes = snap.quotes;
+    const statusOf = (q) => ({ state: q.__state || 'local', card: q.__card || '本地快照' });
+    box.replaceChildren(buildQuotes(snap.quotes, statusOf));
+    const qt = $('#quoteTime');
+    if (qt && snap.summary) qt.textContent = snap.summary;
+    lastQuoteSig = '';        // 强制下一次 renderQuotes 走 patch（结构一致时不会重建）
+    applyQuoteFilter();
+    return true;
   }
 
   // 交易时段内加快轮询，其余时间放慢
@@ -1482,9 +1534,12 @@
 
   function openKline(key, period = CFG.DEFAULT_PERIOD || '1d') {
     const q = (S.quotes || []).find((x) => x.key === key);
+    // 刷新恢复时行情可能还没到：先用 sessionStorage 里存下的名称/现价把头部画对，
+    // 别先显示代码或空白再跳一次（2.7.1）。
+    const saved = uiState && uiState.kline && uiState.kline.key === key ? uiState.kline : null;
     $('#klineModal').hidden = false;
-    $('#kmName').textContent = q ? q.name : key;
-    $('#kmPrice').textContent = q ? fmtNum(q.price) : '';
+    $('#kmName').textContent = q ? q.name : (saved && saved.name ? saved.name : key);
+    $('#kmPrice').textContent = q ? fmtNum(q.price) : (saved && saved.price ? saved.price : '');
     $('#kmPrice').className = 'km-price ' + ((q?.changePct || 0) >= 0 ? 'up' : 'down');
 
     const periods = $('#kmPeriods');
@@ -1897,7 +1952,13 @@
     // 而 renderQuotes 与下面的 latest.json 是两个并发链，先到先得的顺序不固定。
     // 2.4.1：先加载假日表（本地小文件），首屏就能正确区分“已收盘/休市”。
     await ensureCalendar();
-    renderQuotes().then(startQuotePolling).catch(() => {}).then(restoreKlineUI).then(() => renderFoot());
+    // 2.7.1：刷新恢复分两步，都在取新数据之前完成——
+    //   ① 行情网格用 sessionStorage 里的快照同步画回来（首帧就是离开时的样子）；
+    //   ② K 线弹窗立刻打开（名称/现价取快照），不再挂在 renderQuotes 之后等 0.5~2s。
+    //   新数据回来时由 patchQuotes 只改数值/状态文案，结构一点不动。
+    paintQuotesFromCache();
+    restoreKlineUI();
+    renderQuotes().then(startQuotePolling).catch(() => {}).then(() => renderFoot());
     try {
       const d = await jget('latest.json');
       S.base = d.items;
