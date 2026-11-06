@@ -1,72 +1,71 @@
 {
   "runner": "cloud",
-  "startedAt": "2026-11-06T13:52:37.465Z",
-  "durationMs": 35601,
+  "startedAt": "2026-11-06T14:07:47.339Z",
+  "durationMs": 33018,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 4621
+      "ms": 4288
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1061
+      "ms": 1160
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 3874
+      "ms": 2465
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 916
+      "ms": 1054
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 3026
+      "ms": 2566
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1715
+      "ms": 1840
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 2139
+      "ms": 2408
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 20307
+      "ms": 29449
     }
   ],
-  "quotes": 51,
-  "added": 32,
+  "quotes": 59,
+  "added": 36,
   "localSync": {
     "result": "ff-only",
     "reason": "",
     "at": "2026-11-06T13:57:25.555Z",
     "consecutiveSkips": 0
-  },
-  "quoteError": "8/55 失败：东财批量失败：HTTP 502"
+  }
 }
