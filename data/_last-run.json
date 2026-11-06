@@ -64,9 +64,9 @@
   "quotes": 58,
   "added": 36,
   "localSync": {
-    "result": "ff-only",
-    "reason": "",
-    "at": "2026-11-06T09:54:28.985Z",
-    "consecutiveSkips": 0
+    "result": "skipped:stash-pop-conflict",
+    "reason": "stash 恢复冲突",
+    "at": "2026-11-06T11:54:21.141Z",
+    "consecutiveSkips": 1
   }
 }
