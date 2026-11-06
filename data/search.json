@@ -1,12 +1,292 @@
 {
-  "generatedAt": "2026-11-06T00:07:42.954Z",
+  "generatedAt": "2026-11-06T00:22:48.192Z",
   "windowDays": 62,
   "from": "2026-09-06",
   "days": 57,
-  "total": 22228,
+  "total": 22264,
   "items": [
     {
-      "id": "1593svw",
+      "id": "z2kuir",
+      "ts": 1793924560,
+      "time": "2026-11-06T08:22:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日经225指数跌超6%。",
+      "url": "https://wallstreetcn.com/livenews/3195432"
+    },
+    {
+      "id": "iimc1g",
+      "ts": 1793924533,
+      "time": "2026-11-06T08:22:13.000+08:00",
+      "source": "新浪财经",
+      "title": "易和国际控股授出合共8200万股奖励股份",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxma5132436.shtml"
+    },
+    {
+      "id": "1rttt4m",
+      "ts": 1793924513,
+      "time": "2026-11-06T08:21:53.000+08:00",
+      "source": "华尔街见闻",
+      "title": "摩根士丹利将亿纬锂能评级从平配上调至超配，目标价63元人民币。",
+      "url": "https://wallstreetcn.com/livenews/3195431"
+    },
+    {
+      "id": "1ekcey0",
+      "ts": 1793924505,
+      "time": "2026-11-06T08:21:45.000+08:00",
+      "source": "新浪财经",
+      "title": "韩股跌破5000点，今年第十次触发熔断机制",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxma5132216.shtml"
+    },
+    {
+      "id": "190nikj",
+      "ts": 1793924503,
+      "time": "2026-11-06T08:21:43.000+08:00",
+      "source": "新浪财经",
+      "title": "日经225指数迈向熊市 AI股抛售潮加剧",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxma5132200.shtml"
+    },
+    {
+      "id": "j0zcq3",
+      "ts": 1793924470,
+      "time": "2026-11-06T08:21:10.000+08:00",
+      "source": "新浪财经",
+      "title": "齐云山食品：每手买卖单位更改为100股",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxma5131865.shtml"
+    },
+    {
+      "id": "1vs6ffj",
+      "ts": 1793924431,
+      "time": "2026-11-06T08:20:31.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日本5年期国债收益率下行7.5个基点，至2.115%。",
+      "url": "https://wallstreetcn.com/livenews/3195430"
+    },
+    {
+      "id": "1mn8gzh",
+      "ts": 1793924414,
+      "time": "2026-11-06T08:20:14.000+08:00",
+      "source": "新浪财经",
+      "title": "齐云山食品：建议委任安永会计师事务所为上市后的首任核数师",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxma5131298.shtml"
+    },
+    {
+      "id": "1r8bp3l",
+      "ts": 1793924374,
+      "time": "2026-11-06T08:19:34.000+08:00",
+      "source": "华尔街见闻",
+      "title": "随着人工智能股抛售加剧，日经225指数较6月高点下跌20%，势将进入技术性熊市。",
+      "url": "https://wallstreetcn.com/livenews/3195429"
+    },
+    {
+      "id": "jyqjnd",
+      "ts": 1793924360,
+      "time": "2026-11-06T08:19:20.000+08:00",
+      "source": "新浪财经",
+      "title": "MOMENTA-W拟与上汽集团及延电科技成立合资公司",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxmh8979375.shtml"
+    },
+    {
+      "id": "2vyih2",
+      "ts": 1793924352,
+      "time": "2026-11-06T08:19:12.000+08:00",
+      "source": "新浪财经",
+      "title": "新亚制程索赔时效告急，仅剩六十余天",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixtxky8355757.shtml"
+    },
+    {
+      "id": "1hc0rec",
+      "ts": 1793924350,
+      "time": "2026-11-06T08:19:10.000+08:00",
+      "source": "新浪财经",
+      "title": "文投控股遭立案，处罚结论至今未落地",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixtxky8355557.shtml"
+    },
+    {
+      "id": "1936b4q",
+      "ts": 1793924348,
+      "time": "2026-11-06T08:19:08.000+08:00",
+      "source": "新浪财经",
+      "title": "天山股份遭证监会立案，财报核算问题先行曝光",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixtxmh8979774.shtml"
+    },
+    {
+      "id": "a89l2e",
+      "ts": 1793924347,
+      "time": "2026-11-06T08:19:07.000+08:00",
+      "source": "新浪财经",
+      "title": "佳缘科技领600万罚单，IPO期收入造假",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixtxmh8979617.shtml"
+    },
+    {
+      "id": "7mcmxt",
+      "ts": 1793924296,
+      "time": "2026-11-06T08:18:16.000+08:00",
+      "source": "新浪财经",
+      "title": "晶合集成拟回购5亿至8亿元A股股份",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxky8354324.shtml"
+    },
+    {
+      "id": "1k19sgs",
+      "ts": 1793924240,
+      "time": "2026-11-06T08:17:20.000+08:00",
+      "source": "新浪财经",
+      "title": "韩国Kospi指数跌破5000 分析师称已进入恐慌性抛售阶段",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxmh8978300.shtml"
+    },
+    {
+      "id": "iofh1d",
+      "ts": 1793924239,
+      "time": "2026-11-06T08:17:19.000+08:00",
+      "source": "新浪财经",
+      "title": "中国金石拟扩大张家坝矿山产能",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxma5129736.shtml"
+    },
+    {
+      "id": "mw5voh",
+      "ts": 1793924167,
+      "time": "2026-11-06T08:16:07.000+08:00",
+      "source": "新浪财经",
+      "title": "创想三维拟回购5000万美元H股",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxma5129071.shtml"
+    },
+    {
+      "id": "146o5tx",
+      "ts": 1793924141,
+      "time": "2026-11-06T08:15:41.000+08:00",
+      "source": "新浪财经",
+      "title": "时效只剩两个月出头，新亚制程的索赔窗口正在关闭",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixtxmk5626385.shtml"
+    },
+    {
+      "id": "gkoz5i",
+      "ts": 1793924140,
+      "time": "2026-11-06T08:15:40.000+08:00",
+      "source": "新浪财经",
+      "title": "立案一年半无结论，文投控股投资者还在等说法",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixtxmk5626119.shtml"
+    },
+    {
+      "id": "1eu2uon",
+      "ts": 1793924138,
+      "time": "2026-11-06T08:15:38.000+08:00",
+      "source": "新浪财经",
+      "title": "立案与责令改正同日落地，天山股份的账被翻到哪一层",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixtxmh8977678.shtml"
+    },
+    {
+      "id": "1djxi1x",
+      "ts": 1793924136,
+      "time": "2026-11-06T08:15:36.000+08:00",
+      "source": "新浪财经",
+      "title": "上市首年收入提前确认，佳缘科技领到600万罚单",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixtxky8353008.shtml"
+    },
+    {
+      "id": "1f85h8j",
+      "ts": 1793924104,
+      "time": "2026-11-06T08:15:04.000+08:00",
+      "source": "新浪财经",
+      "title": "IMAX CHINA：IMAX Corporation前三季度股东应占净利润1.33亿美元 同比增加289.71%",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxmh8977007.shtml"
+    },
+    {
+      "id": "1lveccr",
+      "ts": 1793924104,
+      "time": "2026-11-06T08:15:04.000+08:00",
+      "source": "新浪财经",
+      "title": "得州候任州长：该州将出台法律保护公民免受数据中心的影响",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxky8352566.shtml"
+    },
+    {
+      "id": "1sivgsi",
+      "ts": 1793924091,
+      "time": "2026-11-06T08:14:51.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日经225指数跌超5%，盘中跌破58000点。",
+      "url": "https://wallstreetcn.com/livenews/3195428"
+    },
+    {
+      "id": "12hrip8",
+      "ts": 1793924055,
+      "time": "2026-11-06T08:14:15.000+08:00",
+      "source": "华尔街见闻",
+      "title": "纳指期货转涨，此前跌超1%。",
+      "url": "https://wallstreetcn.com/livenews/3195426"
+    },
+    {
+      "id": "1ll1zkz",
+      "ts": 1793924026,
+      "time": "2026-11-06T08:13:46.000+08:00",
+      "source": "新浪财经",
+      "title": "中期选举后，特斯拉与SpaceX市值合计蒸发逾4500亿美元，马斯克身价跌破8000亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxmk5624770.shtml"
+    },
+    {
+      "id": "14kocae",
+      "ts": 1793924015,
+      "time": "2026-11-06T08:13:35.000+08:00",
+      "source": "新浪财经",
+      "title": "韩国Kospi指数下跌8% 暂停交易20分钟",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxma5127869.shtml"
+    },
+    {
+      "id": "1eiifsn",
+      "ts": 1793924013,
+      "time": "2026-11-06T08:13:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "特朗普称美股大跌赖民主党",
+      "url": "https://wallstreetcn.com/livenews/3195425"
+    },
+    {
+      "id": "13rxnro",
+      "ts": 1793923916,
+      "time": "2026-11-06T08:11:56.000+08:00",
+      "source": "新浪财经",
+      "title": "永利澳门控股股东Wynn Resorts, Limited三季度澳门业务经营收入约1.08亿美元 同比减少39.15%",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxmk5624133.shtml"
+    },
+    {
+      "id": "8bbj1g",
+      "ts": 1793923825,
+      "time": "2026-11-06T08:10:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日经225指数日内跌4%。",
+      "url": "https://wallstreetcn.com/livenews/3195424"
+    },
+    {
+      "id": "4rbjc8",
+      "ts": 1793923818,
+      "time": "2026-11-06T08:10:18.000+08:00",
+      "source": "新浪财经",
+      "title": "意力国际拟1.71亿港元收购Skyline VFX 67%股权 战略回归数码娱乐及AI媒体领域",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxmk5623464.shtml"
+    },
+    {
+      "id": "jbpknl",
+      "ts": 1793923777,
+      "time": "2026-11-06T08:09:37.000+08:00",
+      "source": "华尔街见闻",
+      "title": "MSCI亚太指数下跌2.2%至249.82点。",
+      "url": "https://wallstreetcn.com/livenews/3195423"
+    },
+    {
+      "id": "1yr8c0e",
+      "ts": 1793923680,
+      "time": "2026-11-06T08:08:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "进出口行发行1年期债券，规模15亿元，发行利率0.0000%，预期0.0000%，投标倍数1.00倍，边际倍数1.00倍。",
+      "url": "https://wallstreetcn.com/livenews/3195422"
+    },
+    {
+      "id": "1fig6lp",
+      "ts": 1793923674,
+      "time": "2026-11-06T08:07:54.000+08:00",
+      "source": "华尔街见闻",
+      "title": "瑞纳智能：公司为乌鲁木齐市2026年供热计量节能改造项目有线平衡阀管段采购及服务的第一中标候选人，投标报价2.02亿元，公示期为2026年11月6日至11月9日，尚未收到《中标通知书》。",
+      "url": "https://wallstreetcn.com/livenews/3195421"
+    },
+    {
+      "id": "ybtlzn",
       "ts": 1793923613,
       "time": "2026-11-06T08:06:53.000+08:00",
       "source": "华尔街见闻",
@@ -92,6 +372,14 @@
       "source": "华尔街见闻",
       "title": "中国即将发行或正在发行的国债和政策性金融债",
       "url": "https://wallstreetcn.com/livenews/3195413"
+    },
+    {
+      "id": "2uiqkr",
+      "ts": 1793923200,
+      "time": "2026-11-06T08:00:00.000+08:00",
+      "source": "东方财富",
+      "title": "公司贷款增速9.11%创同期新高，郑州银行的增量资金去了哪？",
+      "url": "http://bank.eastmoney.com/news/1174,202611063924173179.html"
     },
     {
       "id": "1g941fq",
@@ -222,11 +510,11 @@
       "url": "https://wallstreetcn.com/livenews/3195404"
     },
     {
-      "id": "1ppalsz",
+      "id": "in5bd9",
       "ts": 1793922365,
       "time": "2026-11-06T07:46:05.000+08:00",
       "source": "华尔街见闻",
-      "title": "美国得州当选州长：在出台切实保护得州人民的措施之前，必须停止当前处理数据中心的方式",
+      "title": "美国得州当选州长：在出台切实保护得州人民的措施之前，必须暂停数据中心的相关工作",
       "url": "https://wallstreetcn.com/livenews/3195403"
     },
     {
@@ -484,6 +772,14 @@
       "source": "新浪财经",
       "title": "银湖资本和PIF近期就收购游戏软件提供商Unity进行了谈判",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxky8323323.shtml"
+    },
+    {
+      "id": "96qhl3",
+      "ts": 1793920458,
+      "time": "2026-11-06T07:14:18.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国IRS公布2027年更高的资本利得税档",
+      "url": "https://wallstreetcn.com/livenews/3195427"
     },
     {
       "id": "1f7bz4",
@@ -1262,11 +1558,11 @@
       "url": "https://wallstreetcn.com/livenews/3195342"
     },
     {
-      "id": "1mnf0e7",
+      "id": "el0b1",
       "ts": 1793912545,
       "time": "2026-11-06T05:02:25.000+08:00",
       "source": "华尔街见闻",
-      "title": "英伟达收跌9.3%，市值单日蒸发4470亿美元。",
+      "title": "美国科技股七巨头市值单日合计蒸发1万亿美元。",
       "url": "https://wallstreetcn.com/livenews/3195341"
     },
     {
@@ -6436,14 +6732,6 @@
       "source": "新浪财经",
       "title": "商务部：对原产于美国的进口正丙醇继续征收反补贴税",
       "url": "https://finance.sina.com.cn/china/2026-11-05/doc-inixsrrs5584256.shtml"
-    },
-    {
-      "id": "5rqgb8",
-      "ts": 1793872642,
-      "time": "2026-11-05T09:57:22.000Z",
-      "source": "中新网",
-      "title": "重庆万吨商旅融合总部基地项目一期工程完工",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-05/10726730.shtml"
     },
     {
       "id": "1m78yeq",
