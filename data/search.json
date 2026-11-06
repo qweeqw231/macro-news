@@ -1,10 +1,338 @@
 {
-  "generatedAt": "2026-11-06T06:37:45.123Z",
+  "generatedAt": "2026-11-06T07:07:44.354Z",
   "windowDays": 62,
   "from": "2026-09-06",
   "days": 57,
-  "total": 22684,
+  "total": 22734,
   "items": [
+    {
+      "id": "1xyf4tv",
+      "ts": 1793948819,
+      "time": "2026-11-06T15:06:59.000+08:00",
+      "source": "华尔街见闻",
+      "title": "何立峰将赴加拿大主持第二次中加经济财金战略对话",
+      "url": "https://wallstreetcn.com/livenews/3195703"
+    },
+    {
+      "id": "19m4zjo",
+      "ts": 1793948794,
+      "time": "2026-11-06T15:06:34.000+08:00",
+      "source": "华尔街见闻",
+      "title": "何立峰将赴加拿大主持第二次中加经济财金战略对话",
+      "url": "https://wallstreetcn.com/livenews/3195702"
+    },
+    {
+      "id": "y3elz",
+      "ts": 1793948760,
+      "time": "2026-11-06T15:06:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "商务部：对原产于欧盟、日本的进口乙叉降冰片烯发起反倾销立案调查",
+      "url": "https://wallstreetcn.com/livenews/3195701"
+    },
+    {
+      "id": "m8fxzd",
+      "ts": 1793948605,
+      "time": "2026-11-06T15:03:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "商务部：对原产于欧盟、日本的进口乙叉降冰片烯发起反倾销立案调查",
+      "url": "https://wallstreetcn.com/livenews/3195699"
+    },
+    {
+      "id": "14fu0f9",
+      "ts": 1793948504,
+      "time": "2026-11-06T15:01:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "【创业板指缩量跌近4%，全市场下跌个股超4700只】 市场全天低开震荡，三大指数集体下挫。",
+      "url": "https://wallstreetcn.com/livenews/3195698"
+    },
+    {
+      "id": "z2yk",
+      "ts": 1793948449,
+      "time": "2026-11-06T15:00:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "11月6日收评：创业板指缩量跌近4%，全市场下跌个股超4700只",
+      "url": "https://wallstreetcn.com/livenews/3195695"
+    },
+    {
+      "id": "p9qv24",
+      "ts": 1793948424,
+      "time": "2026-11-06T15:00:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "商品期货收盘，苹果主力合约涨超5%，LU燃油涨超4%，焦炭、碳酸锂、红枣、沪镍涨超2%。",
+      "url": "https://wallstreetcn.com/livenews/3195693"
+    },
+    {
+      "id": "bvjse1",
+      "ts": 1793948423,
+      "time": "2026-11-06T15:00:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "驻冲绳美军决定将宵禁措施延长一个月",
+      "url": "https://wallstreetcn.com/livenews/3195692"
+    },
+    {
+      "id": "1ew13zz",
+      "ts": 1793948402,
+      "time": "2026-11-06T15:00:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "德国9月工业产出同比 0.4%，预期 1.2%，前值 2.3%。",
+      "url": "https://wallstreetcn.com/livenews/3195691"
+    },
+    {
+      "id": "3x5ln7",
+      "ts": 1793948402,
+      "time": "2026-11-06T15:00:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "德国9月工业产出环比 0.7%，预期 -0.1%，前值 2%。",
+      "url": "https://wallstreetcn.com/livenews/3195690"
+    },
+    {
+      "id": "ryfb1k",
+      "ts": 1793948293,
+      "time": "2026-11-06T14:58:13.000+08:00",
+      "source": "华尔街见闻",
+      "title": "2027年度全国煤炭交易会定于12月3日至4日召开",
+      "url": "https://wallstreetcn.com/livenews/3195689"
+    },
+    {
+      "id": "mwska3",
+      "ts": 1793948272,
+      "time": "2026-11-06T14:57:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "2027年度全国煤炭交易会定于12月3日至4日召开",
+      "url": "https://wallstreetcn.com/livenews/3195688"
+    },
+    {
+      "id": "irz73l",
+      "ts": 1793948261,
+      "time": "2026-11-06T06:57:41.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）首部《上海开放发展报告(2026)》蓝皮书发布",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727249.shtml"
+    },
+    {
+      "id": "6dsozb",
+      "ts": 1793948247,
+      "time": "2026-11-06T06:57:27.000Z",
+      "source": "中新网",
+      "title": "六部门联合发文促进适老用品产品消费",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727258.shtml"
+    },
+    {
+      "id": "7rluqs",
+      "ts": 1793948211,
+      "time": "2026-11-06T06:56:51.000Z",
+      "source": "中新网",
+      "title": "探访重庆渝中OPC社区：带着“大脑”来创业，链主订单送上门",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727251.shtml"
+    },
+    {
+      "id": "kn833a",
+      "ts": 1793948203,
+      "time": "2026-11-06T14:56:43.000+08:00",
+      "source": "华尔街见闻",
+      "title": "回购增持再贷款最新进展！10家沪市公司集中公告",
+      "url": "https://wallstreetcn.com/livenews/3195687"
+    },
+    {
+      "id": "1dkgeo",
+      "ts": 1793948131,
+      "time": "2026-11-06T06:55:31.000Z",
+      "source": "中新网",
+      "title": "从铁锤到数据：吉林“钢铁小镇”的数智转身",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727260.shtml"
+    },
+    {
+      "id": "bh395w",
+      "ts": 1793948121,
+      "time": "2026-11-06T14:55:21.000+08:00",
+      "source": "华尔街见闻",
+      "title": "香港投资推广署：将为内地黄金等贵金属企业提供一站式服务落地支持",
+      "url": "https://wallstreetcn.com/livenews/3195686"
+    },
+    {
+      "id": "ov8nue",
+      "ts": 1793948109,
+      "time": "2026-11-06T06:55:09.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）《虹桥海外综合服务体系建设白皮书（2026）》在沪发布",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727240.shtml"
+    },
+    {
+      "id": "r56vvc",
+      "ts": 1793948102,
+      "time": "2026-11-06T14:55:02.000+08:00",
+      "source": "新浪财经",
+      "title": "算力资产抛售潮延续 荷兰国际拟出售5亿美元数据中心贷款",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqhu5032601.shtml"
+    },
+    {
+      "id": "11awsle",
+      "ts": 1793948100,
+      "time": "2026-11-06T14:55:00.000+08:00",
+      "source": "东方财富",
+      "title": "中信证券展望：2027年行情宽度有望拓展",
+      "url": "http://finance.eastmoney.com/news/1354,202611063924773043.html"
+    },
+    {
+      "id": "66p44l",
+      "ts": 1793948059,
+      "time": "2026-11-06T14:54:19.000+08:00",
+      "source": "华尔街见闻",
+      "title": "泽连斯基向伊比利亚美洲国家点名求助",
+      "url": "https://wallstreetcn.com/livenews/3195685"
+    },
+    {
+      "id": "vv7dfx",
+      "ts": 1793948011,
+      "time": "2026-11-06T06:53:31.000Z",
+      "source": "中新网",
+      "title": "2030年我国充电基础设施将超4000万个",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727238.shtml"
+    },
+    {
+      "id": "iti3fx",
+      "ts": 1793947848,
+      "time": "2026-11-06T14:50:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "宁德时代入股智能传感器研发商灵动佳芯",
+      "url": "https://wallstreetcn.com/livenews/3195682"
+    },
+    {
+      "id": "1xq2uqq",
+      "ts": 1793947793,
+      "time": "2026-11-06T14:49:53.000+08:00",
+      "source": "新浪财经",
+      "title": "Anthropic为Claude上线个人理财功能",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqhs8252965.shtml"
+    },
+    {
+      "id": "t109u8",
+      "ts": 1793947748,
+      "time": "2026-11-06T14:49:08.000+08:00",
+      "source": "新浪财经",
+      "title": "美股暴跌，特朗普将责任归咎于民主党：你们的退休账户也跟着缩水了",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqhy8840872.shtml"
+    },
+    {
+      "id": "u5bvef",
+      "ts": 1793947738,
+      "time": "2026-11-06T14:48:58.000+08:00",
+      "source": "华尔街见闻",
+      "title": "鲁阳节能尾盘涨停，连续2日上演地天板。",
+      "url": "https://wallstreetcn.com/livenews/3195680"
+    },
+    {
+      "id": "2wcz1m",
+      "ts": 1793947719,
+      "time": "2026-11-06T14:48:39.000+08:00",
+      "source": "东方财富",
+      "title": "中英应密切合作，共同挖掘开放带来的发展机遇——专访英国驻华贸易使节韩瑞芬｜聚焦进博会",
+      "url": "http://finance.eastmoney.com/news/1350,202611063924767638.html"
+    },
+    {
+      "id": "312vjq",
+      "ts": 1793947685,
+      "time": "2026-11-06T14:48:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "成都高新区出台房产新政：购买参与活动房产项目新建住宅 每套补贴3万元消费券",
+      "url": "https://wallstreetcn.com/livenews/3195679"
+    },
+    {
+      "id": "3cq2q",
+      "ts": 1793947631,
+      "time": "2026-11-06T14:47:11.000+08:00",
+      "source": "东方财富",
+      "title": "成都高新区出台房产新政：购买参与活动房产项目新建住宅 每套补贴3万元消费券",
+      "url": "http://finance.eastmoney.com/news/1350,202611063924767453.html"
+    },
+    {
+      "id": "1b6w1zy",
+      "ts": 1793947547,
+      "time": "2026-11-06T14:45:47.000+08:00",
+      "source": "新浪财经",
+      "title": "爱彼迎创始人切斯基自掏腰包创办全新AI初创公司",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqia5486959.shtml"
+    },
+    {
+      "id": "1ulayyn",
+      "ts": 1793947537,
+      "time": "2026-11-06T14:45:37.000+08:00",
+      "source": "东方财富",
+      "title": "中国工信部加强智能体终端设备进网管理",
+      "url": "http://finance.eastmoney.com/news/1360,202611063924763462.html"
+    },
+    {
+      "id": "1jb0uob",
+      "ts": 1793947514,
+      "time": "2026-11-06T14:45:14.000+08:00",
+      "source": "新浪财经",
+      "title": "韩股收盘大跌逾6%，盘中一度跌破5000点",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqhs8249632.shtml"
+    },
+    {
+      "id": "ny8mtn",
+      "ts": 1793947500,
+      "time": "2026-11-06T14:45:00.000+08:00",
+      "source": "东方财富",
+      "title": "国家能源局：推动2030年虚拟电厂调节能力达5000万千瓦以上，机构看好软硬件需求快速放量丨盘中雷达",
+      "url": "http://finance.eastmoney.com/news/1355,202611063924760439.html"
+    },
+    {
+      "id": "t5r28y",
+      "ts": 1793947454,
+      "time": "2026-11-06T14:44:14.000+08:00",
+      "source": "新浪财经",
+      "title": "黑石：Anthropic预计将获得“垃圾”评级",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqhs8248841.shtml"
+    },
+    {
+      "id": "z5jam3",
+      "ts": 1793947443,
+      "time": "2026-11-06T14:44:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "河北发行5年期普通专项地方债，规模3.3200亿元，发行利率1.3400%，边际倍数1.81倍，倍数预期1.34；",
+      "url": "https://wallstreetcn.com/livenews/3195678"
+    },
+    {
+      "id": "phwlim",
+      "ts": 1793947397,
+      "time": "2026-11-06T14:43:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国东航进博会签署23份采购协议，签约总金额达5.4亿美元",
+      "url": "https://wallstreetcn.com/livenews/3195677"
+    },
+    {
+      "id": "1naocyj",
+      "ts": 1793947381,
+      "time": "2026-11-06T14:43:01.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达应对数据中心监管阻力：改造阿波罗旗下旧电信楼宇",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqhu5023747.shtml"
+    },
+    {
+      "id": "1cdbrje",
+      "ts": 1793947236,
+      "time": "2026-11-06T14:40:36.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中广核阿里5万千瓦光热电站首次并网发电",
+      "url": "https://wallstreetcn.com/livenews/3195675"
+    },
+    {
+      "id": "k8bcyw",
+      "ts": 1793947224,
+      "time": "2026-11-06T14:40:24.000+08:00",
+      "source": "新浪财经",
+      "title": "主要投资者如今正质疑Anthropic的1.5万亿美元估值",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqhu5021887.shtml"
+    },
+    {
+      "id": "1q1xubz",
+      "ts": 1793947110,
+      "time": "2026-11-06T14:38:30.000+08:00",
+      "source": "华尔街见闻",
+      "title": "宝马中国辟谣“车辆召回短信”：非官方发布，谨防诈骗。",
+      "url": "https://wallstreetcn.com/livenews/3195672"
+    },
     {
       "id": "v4etui",
       "ts": 1793947051,
@@ -22,20 +350,52 @@
       "url": "https://wallstreetcn.com/livenews/3195669"
     },
     {
-      "id": "1pvps81",
+      "id": "800635",
       "ts": 1793946935,
       "time": "2026-11-06T14:35:35.000+08:00",
       "source": "华尔街见闻",
-      "title": "日本政府养老投资基金（GPIF）季度亏损 5.25 万亿日元。",
+      "title": "日本GPIF因债券下跌遭遇六季度来首次亏损",
       "url": "https://wallstreetcn.com/livenews/3195667"
+    },
+    {
+      "id": "1671ncd",
+      "ts": 1793946907,
+      "time": "2026-11-06T14:35:07.000+08:00",
+      "source": "东方财富",
+      "title": "国务院食安办发布强化食品安全全链条监管创新案例",
+      "url": "http://finance.eastmoney.com/news/1350,202611063924765652.html"
+    },
+    {
+      "id": "tikynk",
+      "ts": 1793946858,
+      "time": "2026-11-06T14:34:18.000+08:00",
+      "source": "东方财富",
+      "title": "一朵医保云、一个呼救键，算力在天山南北“落地生根”",
+      "url": "http://finance.eastmoney.com/news/1354,202611063924760375.html"
+    },
+    {
+      "id": "13p1f97",
+      "ts": 1793946842,
+      "time": "2026-11-06T06:34:02.000Z",
+      "source": "中新网",
+      "title": "从全球创新到中国创造，波士顿科学携百余项创新成果八赴进博",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727232.shtml"
     },
     {
       "id": "yu539",
       "ts": 1793946839,
       "time": "2026-11-06T14:33:59.000+08:00",
       "source": "新浪财经",
-      "title": "今日“木头姐”调仓：前一天卖出SpaceX，第二天又买回5352万美元，同时减持1.34亿美元博通股票",
+      "title": "今日“木头姐”调仓：连续两天买入SpaceX，同时减持1.34亿美元博通股票",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqhy8831066.shtml"
+    },
+    {
+      "id": "1cq1dum",
+      "ts": 1793946826,
+      "time": "2026-11-06T06:33:46.000Z",
+      "source": "中新网",
+      "title": "中国工信部加强智能体终端设备进网管理",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727217.shtml"
     },
     {
       "id": "6l991b",
@@ -78,12 +438,36 @@
       "url": "https://wallstreetcn.com/livenews/3195663"
     },
     {
+      "id": "5qyepx",
+      "ts": 1793946660,
+      "time": "2026-11-06T14:31:00.000+08:00",
+      "source": "东方财富",
+      "title": "六部门：引导金融机构加大对为老服务设施建设等的支持力度",
+      "url": "http://finance.eastmoney.com/news/1352,202611063924760952.html"
+    },
+    {
       "id": "d9hbcb",
       "ts": 1793946635,
       "time": "2026-11-06T14:30:35.000+08:00",
       "source": "新浪财经",
       "title": "全球AI股抛售潮蔓延，日本日经225指数暴跌超6%，较历史高点回撤逾20%",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqia5477596.shtml"
+    },
+    {
+      "id": "1s0e7xa",
+      "ts": 1793946618,
+      "time": "2026-11-06T14:30:18.000+08:00",
+      "source": "东方财富",
+      "title": "市场监管总局公开征求《检验检测机构资质认定沙盒监管实施细则（征求意见稿）》意见",
+      "url": "http://finance.eastmoney.com/news/1350,202611063924765929.html"
+    },
+    {
+      "id": "1d709ii",
+      "ts": 1793946600,
+      "time": "2026-11-06T14:30:00.000+08:00",
+      "source": "东方财富",
+      "title": "六部门：打造城市老年友好消费场景",
+      "url": "http://finance.eastmoney.com/news/1355,202611063924761263.html"
     },
     {
       "id": "1krf6h3",
@@ -102,6 +486,14 @@
       "url": "https://wallstreetcn.com/livenews/3195661"
     },
     {
+      "id": "ac3xdz",
+      "ts": 1793946420,
+      "time": "2026-11-06T14:27:00.000+08:00",
+      "source": "东方财富",
+      "title": "全球粮市波动，中国人的饭碗端得稳吗？国家发改委三个字回应",
+      "url": "http://finance.eastmoney.com/news/1355,202611063924762263.html"
+    },
+    {
       "id": "2ioks7",
       "ts": 1793946409,
       "time": "2026-11-06T14:26:49.000+08:00",
@@ -116,6 +508,14 @@
       "source": "华尔街见闻",
       "title": "市场监管总局公开征求《检验检测机构资质认定沙盒监管实施细则（征求意见稿）》意见",
       "url": "https://wallstreetcn.com/livenews/3195658"
+    },
+    {
+      "id": "1v3ykg2",
+      "ts": 1793946360,
+      "time": "2026-11-06T14:26:00.000+08:00",
+      "source": "东方财富",
+      "title": "今冬供暖能源有保障吗？算力用电猛增怎么办？国家发改委回应",
+      "url": "http://finance.eastmoney.com/news/1355,202611063924762555.html"
     },
     {
       "id": "16s5r3j",
