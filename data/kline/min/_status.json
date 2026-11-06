@@ -1,8 +1,10 @@
 {
-  "generatedAt": "2026-11-06T11:20:17.012Z",
+  "generatedAt": "2026-11-06T11:49:10.172Z",
   "ok": 0,
-  "failed": 0,
-  "failures": [],
+  "failed": 1,
+  "failures": [
+    "cac40/30m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)"
+  ],
   "rejected": [
     "n225/5m: shorter（新 1000 根 < 现有 1010 根）",
     "dax/5m: shorter（新 1000 根 < 现有 1003 根）",
@@ -13,20 +15,6 @@
     "xag/5m: shorter（新 1000 根 < 现有 1003 根）",
     "xau/5m: shorter（新 1000 根 < 现有 1003 根）",
     "n225/30m: shorter（新 253 根 < 现有 264 根）",
-    "dax/30m: shorter（新 246 根 < 现有 271 根）",
-    "cac40/30m: shorter（新 246 根 < 现有 271 根）",
-    "ukx/30m: shorter（新 246 根 < 现有 271 根）",
-    "kospi/30m: shorter（新 260 根 < 现有 273 根）",
-    "sge_au9999/30m: shorter（新 247 根 < 现有 260 根）",
-    "xag/30m: shorter（新 258 根 < 现有 327 根）",
-    "xau/30m: shorter（新 258 根 < 现有 327 根）",
-    "n225/1m: shorter（新 330 根 < 现有 660 根）",
-    "dax/1m: shorter（新 185 根 < 现有 1020 根）",
-    "cac40/1m: shorter（新 185 根 < 现有 1020 根）",
-    "ukx/1m: shorter（新 200 根 < 现有 1020 根）",
-    "kospi/1m: shorter（新 390 根 < 现有 780 根）",
-    "sge_au9999/1m: shorter（新 780 根 < 现有 1560 根）",
-    "xag/1m: shorter（新 741 根 < 现有 2620 根）",
-    "xau/1m: shorter（新 741 根 < 现有 2621 根）"
+    "dax/30m: shorter（新 247 根 < 现有 271 根）"
   ]
 }
