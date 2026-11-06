@@ -616,21 +616,30 @@
   // 只存渲染需要的字段；正文只保留下方「当前可见」的那批（阅读器打开时直接有全文）
   const FEED_FIELDS = ['id', 'time', 'source', 'channel', 'title', 'summary', 'kind', 'url'];
 
+  // 要闻流的母集说明：空搜索时列表是「最新快照」，检索却覆盖全库 —— 不写清楚，
+  // 同一个分类会出现「带关键词的条数 > 不带的条数」这种看起来自相矛盾的数字。
+  const feedMetaText = () =>
+    `最新快照 ${(S.base || []).length} 条` +
+    (S.total ? ` · 库内共 ${S.total} 条（输入关键词可检索全库）` : '');
+
   function saveFeedCache() {
     try {
-      // 搜索结果与归档某天不进缓存：刷新后应回到最新要闻流
-      if (S.q || openedDay || !S.items || !S.items.length) return;
-      const want = Math.max(PAGE, S.shown);
-      const items = S.items.slice(0, want).map((it, i) => {
+      // 搜索结果与归档某天不进缓存：刷新后应回到最新要闻流。
+      // （归档某天只换 S.items，S.base 仍是最新快照 —— 用这条判断更稳，
+      //   不然「今天」这种当天归档会被当成最新流存下来，刷新后分类条数对不上。）
+      if (S.q || openedDay || !S.items || !S.items.length || S.items !== S.base) return;
+      // 整份 S.items（最新快照 200 条）都存：只存当前显示的 40 条的话，
+      // 刷新后分类条的计数会变成「全部 40」，与新数据的 200 条对不上。
+      const items = S.items.map((it, i) => {
         const o = {};
         FEED_FIELDS.forEach((k) => { if (it[k] != null) o[k] = it[k]; });
-        if (i < S.shown && it.content) o.content = it.content;
+        if (i < S.shown && it.content) o.content = it.content;   // 正文只留当前可见那批
         return o;
       });
       sessionStorage.setItem(FEED_CACHE_KEY, JSON.stringify({
         at: Date.now(),
         total: S.total,
-        qMeta: ($('#qMeta') || {}).textContent || '',
+        qMeta: feedMetaText(),
         items,
       }));
     } catch { /* 隐私模式 / 配额满：跳过，不影响页面 */ }
@@ -659,12 +668,15 @@
     renderFilters();
     renderFeed();
     const qm = $('#qMeta');
-    if (qm && snap.qMeta) qm.textContent = snap.qMeta;
+    if (qm) qm.textContent = snap.qMeta || feedMetaText();
     // 列表已经在 DOM 里、高度是真的 —— 滚动位置可以同步定位，首帧就是离开时的位置
     if (uiState && Number.isFinite(uiState.y)) {
       if (alignState) alignState.userMoved = true;
       window.scrollTo({ top: uiState.y, behavior: 'auto' });
     }
+    // 阅读器也要在首帧就打开：它原来挂在 latest.json 之后，晚 0.5~16s 才出现，
+    // 用户看到的就是「先列表、再弹窗」的一次重绘。
+    restoreReaderUI();
     feedPainted = true;
     return true;
   }
@@ -696,11 +708,10 @@
     if (nodes.length + off < list.length) return false;   // 旧列表比目标短：交给整块重建
 
     S.visible = visible;
+    syncReader();          // 补插后下标整体后移，阅读器的上/下一条要跟着对齐
+    renderFilters();       // 分类条数可能变（有计数签名，没变就不重建）
     const meta = $('#qMeta');
-    if (meta) {
-      meta.textContent = `最新快照 ${(S.base || []).length} 条` +
-        (S.total ? ` · 库内共 ${S.total} 条（输入关键词可检索全库）` : '');
-    }
+    if (meta) meta.textContent = feedMetaText();
     $('#moreBtn').hidden = S.shown >= visible.length;
 
     const drop = nodes.length + off - list.length;        // 被新条目挤出下限的旧节点
@@ -721,6 +732,7 @@
 
   // ---------- 站内阅读器 ----------
   let readerIdx = -1;
+  let readerKey = '';        // 打开时那条的 id：列表增量补插后用它重新定位（下标记会变）
   let readerScroll = null;   // null = 保留当前滚动位置（异步补全文重绘时）；数字 = 本次打开的目标位置
 
   function fmtFullTime(iso) {
@@ -732,6 +744,7 @@
     const list = S.visible || S.items;
     if (idx < 0 || idx >= list.length) return;
     readerIdx = idx;
+    readerKey = itemKey(list[idx]);
     readerScroll = Number(restoreScroll) || 0;
     // ⚠ 必须先显示 modal 再 render：隐藏状态下 .rd-box 没有布局高度，
     //   直接设 scrollTop 会被浏览器钳成 0（刷新恢复阅读器视口时实测）。
@@ -743,6 +756,7 @@
 
   function closeReader() {
     readerIdx = -1;
+    readerKey = '';
     readerScroll = null;
     $('#readerModal').hidden = true;
     document.body.style.overflow = '';
@@ -866,14 +880,40 @@
   }
 
   function stepReader(d) {
+    const list = S.visible || S.items;
     const n = readerIdx + d;
-    if (n < 0 || n >= (S.visible || S.items).length) return;
+    if (n < 0 || n >= list.length) return;
     readerScroll = 0;           // 切换上/下一条时从顶部开始
     readerIdx = n;
+    readerKey = itemKey(list[n]);
     renderReader();
     saveUI();
   }
 
+  // 列表增量补插后下标会整体后移：按打开时那条的 id 重新定位，
+  // 否则阅读器「上一条 / 下一条」会跳到别的新闻上。
+  function syncReader() {
+    if (readerIdx < 0 || !readerKey) return;
+    const list = S.visible || S.items || [];
+    if (itemKey(list[readerIdx]) === readerKey) return;
+    const i = list.findIndex((x) => itemKey(x) === readerKey);
+    if (i >= 0) readerIdx = i;
+  }
+
+  // 刷新恢复阅读器：按 id 优先、url 兜底在当前可见列表里定位，连滚动位置一起还原。
+  // 返回 false 表示这次没法恢复（没有快照 / 那条已不在列表里）。
+  function restoreReaderUI() {
+    if (!uiState || !uiState.reader || !$('#readerModal').hidden) return false;
+    const list = S.visible || S.items || [];
+    const { id, url } = uiState.reader;
+    const idx = list.findIndex((i) => (id && i.id === id) || (url && i.url === url));
+    if (idx < 0) return false;
+    openReader(idx, Number(uiState.reader.y) || 0);
+    return true;
+  }
+
+  // 分类条的计数签名：刷新后新快照到达时大多只多一两条，条数没变就不必重建这一排按钮
+  let filtersSig = '';
   function renderFilters() {
     const box = $('#filters');
     const counts = new Map();
@@ -881,6 +921,11 @@
       const k = i.channel || '其他';
       counts.set(k, (counts.get(k) || 0) + 1);
     });
+    const sig = S.filter + '|' + [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([k, n]) => `${k}:${n}`).join(',');
+    if (sig === filtersSig) return;
+    filtersSig = sig;
     box.innerHTML = '';
     const mk = (label, key, n) => {
       const b = el('button', `fchip${S.filter === key ? ' on' : ''}`, `${label} ${n}`);
@@ -940,11 +985,7 @@
       S.shown = PAGE;
       renderFilters();
       renderFeed();
-      // 标注母集：空搜索时列表是「最新快照」，检索却覆盖全库 —— 不写清楚，
-      // 同一个分类会出现「带关键词的条数 > 不带的条数」这种看起来自相矛盾的数字。
-      $('#qMeta').textContent =
-        `最新快照 ${(S.base || []).length} 条` +
-        (S.total ? ` · 库内共 ${S.total} 条（输入关键词可检索全库）` : '');
+      $('#qMeta').textContent = feedMetaText();
       return;
     }
     if (!S.searchIdx) {
@@ -1982,13 +2023,9 @@
       requestAnimationFrame(apply);
       setTimeout(apply, 250);   // 行情卡/列表异步长高后再对齐一次
     }
-    if (!uiState.reader) return;
-    const list = S.visible || S.items;
-    const { id, url } = uiState.reader;
-    const idx = list.findIndex((i) =>
-      (id && i.id === id) || (url && i.url === url)
-    );
-    if (idx >= 0) openReader(idx, Number(uiState.reader.y) || 0);
+    // 阅读器：正常情况下在 paintFeedFromCache 里已经随首帧打开了；
+    // 这里只是兜底（没有快照 / 打开的是归档某天）。
+    restoreReaderUI();
   }
 
   function restoreKlineUI() {

@@ -92,3 +92,26 @@ test('boot 顺序：要闻流回填早于假日表与新数据', () => {
   assert.ok(feedAt < latestAt, '要闻流回填必须在取 latest.json 之前');
   assert.match(bootBody, /if \(!patchFeed\(\)\) runSearch\(''\)/, '新数据到达时应先尝试增量对齐');
 });
+
+// 2.7.3：阅读器同样要在首帧打开，不能挂在 latest.json 之后（晚 0.5~16s 才弹出＝一次重绘）。
+test('阅读器：随快照首帧打开，重复调用不重绘', () => {
+  const paint = APP.slice(APP.indexOf('function paintFeedFromCache()'), APP.indexOf('function patchFeed()'));
+  assert.match(paint, /restoreReaderUI\(\)/, '首帧回填要一并恢复阅读器');
+  // 回填顺序：列表 → 滚动 → 阅读器
+  assert.ok(paint.indexOf('renderFeed()') < paint.indexOf('restoreReaderUI()'));
+  const restore = APP.slice(APP.indexOf('function restoreReaderUI()'), APP.indexOf('let filtersSig'));
+  assert.match(restore, /!\$\('#readerModal'\)\.hidden\) return false/, '已打开就不要重复渲染');
+  assert.match(restore, /openReader\(idx, Number\(uiState\.reader\.y\) \|\| 0\)/, '连阅读器视口一起还原');
+  // 补插后下标整体后移：阅读器按 id 重新定位，否则上/下一条会跳错
+  assert.match(APP, /syncReader\(\);/, '增量对齐后要校正阅读器下标');
+  assert.match(APP, /readerKey = itemKey\(list\[n\]\);/, '翻页时同步记下当前条目 id');
+});
+
+test('要闻流快照：存整份列表，归档天与搜索结果不入缓存', () => {
+  const save = APP.slice(APP.indexOf('function saveFeedCache()'), APP.indexOf('function paintFeedFromCache()'));
+  assert.match(save, /S\.items !== S\.base/, '归档某天不能写进缓存');
+  // 只存当前显示的 40 条会让刷新后的分类计数（全部 40）与快照条数（200）对不上
+  assert.doesNotMatch(save, /S\.items\.slice\(0, want\)/);
+  assert.match(save, /S\.items\.map\(/);
+  assert.match(save, /qMeta: feedMetaText\(\)/, '母集说明按数据算，别抄 DOM 里的旧值');
+});
