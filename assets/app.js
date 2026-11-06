@@ -314,7 +314,7 @@
    * 把行情数组渲染成 `.mkt` 分组 + `.q` 卡片的 fragment。
    * 两处复用：首次/结构变化的整体重建，以及刷新后用缓存快照「原样长回来」（2.7.1）。
    */
-  function buildQuotes(quotes, statusOf) {
+  function buildQuotes(quotes, statusOf, openMap) {
     const frag = document.createDocumentFragment();
     const groups = new Map();
     quotes.forEach((q) => {
@@ -328,7 +328,9 @@
       .sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b))
       .forEach((mk) => {
         const list = groups.get(mk);
-        const open = list.some((q) => isTrading(q.calendarMarket || q.market));
+        // openMap：刷新时假日表还没加载完（首帧同步回填），直接用快照里的开盘状态，
+        // 否则会先按本地时区降级判断、再被 patch 改回来——又是一次文案跳动。
+        const open = openMap ? !!openMap[mk] : list.some((q) => isTrading(q.calendarMarket || q.market));
         const g = el('div', 'mkt');
         const h = el('div', 'mkt-hd');
         h.appendChild(el('span', 'mkt-name', MARKET_LABEL[mk] || mk));
@@ -511,7 +513,15 @@
         const st = statusOf(q);
         return { ...q, __state: st.state, __card: st.card };
       });
-      sessionStorage.setItem(QUOTE_CACHE_KEY, JSON.stringify({ at: Date.now(), summary, quotes: list }));
+      // 分组的「交易中/休市」也一起存：首帧回填时假日表还没到，没有它就只能用
+      // 本地时区降级判断，先画错再改回来。
+      const groups = {};
+      quotes.forEach((q) => {
+        const mk = q.market;
+        if (!(mk in groups)) groups[mk] = false;
+        if (isTrading(q.calendarMarket || q.market)) groups[mk] = true;
+      });
+      sessionStorage.setItem(QUOTE_CACHE_KEY, JSON.stringify({ at: Date.now(), summary, groups, quotes: list }));
     } catch { /* 隐私模式 / 配额满：跳过，不影响页面 */ }
   }
 
@@ -526,7 +536,7 @@
     // S.quotes 先顶上：K 线弹窗恢复时用它取名称/现价，别等实时行情回来
     S.quotes = snap.quotes;
     const statusOf = (q) => ({ state: q.__state || 'local', card: q.__card || '本地快照' });
-    box.replaceChildren(buildQuotes(snap.quotes, statusOf));
+    box.replaceChildren(buildQuotes(snap.quotes, statusOf, snap.groups));
     const qt = $('#quoteTime');
     if (qt && snap.summary) qt.textContent = snap.summary;
     lastQuoteSig = '';        // 强制下一次 renderQuotes 走 patch（结构一致时不会重建）
@@ -546,14 +556,24 @@
   }
 
   // ---------- 渲染：条目 ----------
-  function itemNode(it, idx) {
+  // 条目身份：id 优先（搜索/历史切片都有），其次 url。
+  // 2.7.2：刷新回填与「顶部补插新条目」都靠它对齐旧节点，所以下标改成点击时算。
+  const itemKey = (it) => String((it && (it.id || it.url)) || '');
+  const idxOfItem = (it) => {
+    const list = S.visible || S.items || [];
+    const k = itemKey(it);
+    return k ? list.findIndex((x) => itemKey(x) === k) : -1;
+  };
+
+  function itemNode(it) {
     const a = el('article', 'item');
+    a.dataset.id = itemKey(it);
     a.tabIndex = 0;
     a.setAttribute('role', 'button');
     a.setAttribute('aria-label', `阅读：${it.title || ''}`);
-    a.onclick = () => openReader(idx);
+    a.onclick = () => openReader(idxOfItem(it));
     a.onkeydown = (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader(idx); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader(idxOfItem(it)); }
     };
     const hd = el('div', 'item-hd');
     hd.appendChild(el('span', 'item-time', fmtTime(it.time)));
@@ -582,8 +602,121 @@
       $('#moreBtn').hidden = true;
       return;
     }
-    list.forEach((it, i) => box.appendChild(itemNode(it, i)));
+    list.forEach((it) => box.appendChild(itemNode(it)));
     $('#moreBtn').hidden = S.shown >= visible.length;
+    saveFeedCache();
+  }
+
+  // ---------- 要闻流快照缓存（2.7.2） ----------
+  // 与行情快照同一个思路：浏览器刷新会清空 DOM，而 latest.json 要等网络
+  // （Pages TTFB 0.7~16s），于是「要闻载入中…」骨架 → 整列表弹出 → 再滚回原位，
+  // 看起来就是闪一下再重现。这里把已渲染的列表存进 sessionStorage，
+  // boot 时同步画回来（列表 + 滚动位置），新数据到达后只补插顶部新增条目。
+  const FEED_CACHE_KEY = 'macroNewsFeed.v1';
+  // 只存渲染需要的字段；正文只保留下方「当前可见」的那批（阅读器打开时直接有全文）
+  const FEED_FIELDS = ['id', 'time', 'source', 'channel', 'title', 'summary', 'kind', 'url'];
+
+  function saveFeedCache() {
+    try {
+      // 搜索结果与归档某天不进缓存：刷新后应回到最新要闻流
+      if (S.q || openedDay || !S.items || !S.items.length) return;
+      const want = Math.max(PAGE, S.shown);
+      const items = S.items.slice(0, want).map((it, i) => {
+        const o = {};
+        FEED_FIELDS.forEach((k) => { if (it[k] != null) o[k] = it[k]; });
+        if (i < S.shown && it.content) o.content = it.content;
+        return o;
+      });
+      sessionStorage.setItem(FEED_CACHE_KEY, JSON.stringify({
+        at: Date.now(),
+        total: S.total,
+        qMeta: ($('#qMeta') || {}).textContent || '',
+        items,
+      }));
+    } catch { /* 隐私模式 / 配额满：跳过，不影响页面 */ }
+  }
+
+  /** 用缓存把要闻流「原样」画回来（含滚动位置）；没有缓存或不在要闻流则跳过。 */
+  let feedPainted = false;
+  function paintFeedFromCache() {
+    if (S.view !== 'feed') return false;
+    if (uiState && uiState.day) return false;      // 归档某天由 restoreFeedUI 重开
+    let snap = null;
+    try { snap = JSON.parse(sessionStorage.getItem(FEED_CACHE_KEY) || 'null'); } catch { snap = null; }
+    if (!snap || !Array.isArray(snap.items) || !snap.items.length) return false;
+    const box = $('#feed');
+    if (!box) return false;
+
+    S.base = snap.items;
+    S.items = snap.items;
+    S.total = snap.total || snap.items.length;
+    // 筛选与「已显示条数」一并恢复到刷新前：否则会先画 40 条、再改成 120 条（又一次重绘）
+    if (uiState) {
+      const f = uiState.filter;
+      if (f && (f === 'all' || snap.items.some((i) => (i.channel || '其他') === f))) S.filter = f;
+      S.shown = Math.max(PAGE, Number(uiState.shown) || PAGE);
+    }
+    renderFilters();
+    renderFeed();
+    const qm = $('#qMeta');
+    if (qm && snap.qMeta) qm.textContent = snap.qMeta;
+    // 列表已经在 DOM 里、高度是真的 —— 滚动位置可以同步定位，首帧就是离开时的位置
+    if (uiState && Number.isFinite(uiState.y)) {
+      if (alignState) alignState.userMoved = true;
+      window.scrollTo({ top: uiState.y, behavior: 'auto' });
+    }
+    feedPainted = true;
+    return true;
+  }
+
+  /**
+   * 新快照到达后与已渲染的列表对齐：
+   *   · 完全一致 → 一个节点都不碰（刷新后最常见）；
+   *   · 顶部多了新条目 → 只插入新节点，旧的卡片原样保留，滚动位置按插入高度补偿；
+   *   · 对不上（条目被删改 / 换了筛选）→ 返回 false，由 runSearch('') 整块重建兜底。
+   */
+  function patchFeed() {
+    const box = $('#feed');
+    if (!box || S.q) return false;
+    const visible = applyFilter();
+    const list = visible.slice(0, S.shown);
+    const nodes = [...box.querySelectorAll('.item')];
+    if (!nodes.length || !list.length) return false;
+
+    // 新条目只会从顶部进来：先定位旧列表在目标列表里的起点
+    const firstId = nodes[0].dataset.id;
+    let off = -1;
+    for (let o = 0; o < list.length; o++) {
+      if (itemKey(list[o]) === firstId) { off = o; break; }
+    }
+    if (off < 0) return false;
+    for (let i = 0; i < nodes.length && off + i < list.length; i++) {
+      if (nodes[i].dataset.id !== itemKey(list[off + i])) return false;
+    }
+    if (nodes.length + off < list.length) return false;   // 旧列表比目标短：交给整块重建
+
+    S.visible = visible;
+    const meta = $('#qMeta');
+    if (meta) {
+      meta.textContent = `最新快照 ${(S.base || []).length} 条` +
+        (S.total ? ` · 库内共 ${S.total} 条（输入关键词可检索全库）` : '');
+    }
+    $('#moreBtn').hidden = S.shown >= visible.length;
+
+    const drop = nodes.length + off - list.length;        // 被新条目挤出下限的旧节点
+    if (!off && !drop) return true;
+
+    const h0 = box.offsetHeight;
+    const y0 = window.scrollY;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < off; i++) frag.appendChild(itemNode(list[i]));
+    if (off) box.insertBefore(frag, box.firstChild);
+    for (let i = nodes.length - drop; i < nodes.length; i++) nodes[i].remove();
+    // 顶部插入会把下面整体下推：把阅读位置补回来，视口里的内容保持不动
+    const added = box.offsetHeight - h0;
+    if (y0 > 0 && added > 0) window.scrollTo({ top: y0 + added, behavior: 'auto' });
+    saveFeedCache();
+    return true;
   }
 
   // ---------- 站内阅读器 ----------
@@ -1237,6 +1370,7 @@
       $('#q').value = '';
       $('#qClear').hidden = true;
       S.shown = PAGE;
+      openedDay = { day, kind };   // 2.4.12：刷新后仍停在这一天
       renderFilters();
       renderFeed();
       const info = dayIndex.get(day);
@@ -1245,7 +1379,6 @@
         kind === 'hist'
           ? `历史：${day} · ${d.items.length} 条${reason || ' · 仅标题/来源/时间，正文请点原文'}`
           : `归档：${day} · ${d.items.length} 条${reason}`;
-      openedDay = { day, kind };   // 2.4.12：刷新后仍停在这一天
     } catch (e) {
       box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
     }
@@ -1841,7 +1974,7 @@
         renderFeed();
       }
     }
-    if (Number.isFinite(uiState.y)) {
+    if (Number.isFinite(uiState.y) && !feedPainted) {
       const apply = () => {
         if (alignState) alignState.userMoved = true;  // 别让 ResizeObserver 把视口拽回区块顶部
         window.scrollTo({ top: uiState.y, behavior: 'auto' });
@@ -1950,6 +2083,9 @@
 
     // 行情加载完再刷一次页脚：健康摘要里的「行情」时点来自 quotes.json 各卡片的源时间，
     // 而 renderQuotes 与下面的 latest.json 是两个并发链，先到先得的顺序不固定。
+    // 2.7.2：要闻流不依赖假日表，放在这里先画 —— 列表与滚动位置在首帧就到位，
+    //   后面 await 出来的时间差不会再变成「骨架 → 列表弹出 → 跳回原位」。
+    paintFeedFromCache();
     // 2.4.1：先加载假日表（本地小文件），首屏就能正确区分“已收盘/休市”。
     await ensureCalendar();
     // 2.7.1：刷新恢复分两步，都在取新数据之前完成——
@@ -1966,7 +2102,9 @@
       S.total = d.total || (d.items || []).length;
       // 走一遍空搜索分支：首次加载就把「母集」说明写进 #qMeta
       // （空搜索 = 最新快照 200 条，带关键词 = 全库 17092 条），同时渲染筛选条与列表
-      runSearch('');
+      // 2.7.2：刷新时列表已经在首帧画好了 —— 新快照和它一致就一个节点都不动，
+      //   只在顶部多出条目时补插；结构对不上（换了筛选 / 条目被删改）才整块重建。
+      if (!patchFeed()) runSearch('');
       // ⚠ 不在这里预取 search.json：改为用户 focus / 输入搜索框时再拉（见 boot 里的搜索框绑定）
       // 页脚先放快照信息（兜底），随后由 renderFoot() 换成完整的采集概况
       $('#ftMeta').textContent = `库内 ${d.total} 条 · 快照生成于 ${new Date(d.generatedAt).toLocaleString('zh-CN', { hour12: false })}`;

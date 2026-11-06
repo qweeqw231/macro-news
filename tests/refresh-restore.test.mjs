@@ -23,10 +23,10 @@ const bootBody = (() => {
 })();
 
 test('行情网格：快照缓存与整体重建共用 buildQuotes', () => {
-  assert.ok(APP.includes('function buildQuotes(quotes, statusOf)'), '缺少 buildQuotes');
+  assert.ok(APP.includes('function buildQuotes(quotes, statusOf, openMap)'), '缺少 buildQuotes');
   // 两条渲染路径都必须走 buildQuotes：结构失效时的整体重建 + 刷新时的快照回填
   assert.ok(APP.includes('box.replaceChildren(buildQuotes(quotes, statusOf))'), '整体重建没走 buildQuotes');
-  assert.ok(APP.includes('box.replaceChildren(buildQuotes(snap.quotes, statusOf))'), '快照回填没走 buildQuotes');
+  assert.ok(APP.includes('box.replaceChildren(buildQuotes(snap.quotes, statusOf, snap.groups))'), '快照回填没走 buildQuotes');
 });
 
 test('行情快照：renderQuotes 存、paintQuotesFromCache 取', () => {
@@ -58,4 +58,37 @@ test('K 线弹窗头部：刷新时用快照里的名称/现价撑住首帧', ()
   assert.ok(/price: \(\$\('#kmPrice'\) \|\| \{\}\)\.textContent/.test(APP), 'saveUI 没存弹窗现价');
   assert.ok(/saved && saved\.name \? saved\.name : key/.test(APP), 'openKline 没用快照名称兜底');
   assert.ok(/saved && saved\.price \? saved\.price/.test(APP), 'openKline 没用快照现价兜底');
+});
+
+// 2.7.2：要闻流也要「刷新不重绘」——首帧用快照画列表 + 定滚动，新数据只补插顶部。
+test('要闻流：renderFeed 存快照、paintFeedFromCache 首帧回填', () => {
+  assert.match(APP, /const FEED_CACHE_KEY = 'macroNewsFeed\.v1'/);
+  assert.ok(/list\.forEach\(\(it\) => box\.appendChild\(itemNode\(it\)\)\);[\s\S]{0,200}saveFeedCache\(\)/.test(APP),
+    'renderFeed 没有存快照');
+  const paint = APP.slice(APP.indexOf('function paintFeedFromCache()'), APP.indexOf('function patchFeed()'));
+  assert.ok(paint.length > 0, '缺少 paintFeedFromCache');
+  assert.match(paint, /renderFilters\(\)[\s\S]{0,400}renderFeed\(\)/, '回填要先把筛选/列表画出来');
+  assert.match(paint, /window\.scrollTo\(\{ top: uiState\.y/, '回填时要同步定位滚动位置');
+  // 搜索结果与归档某天不进缓存，否则刷新会回到错误的内容
+  assert.match(APP, /if \(S\.q \|\| openedDay \|\| !S\.items/, '缓存没排除搜索结果/归档天');
+});
+
+test('要闻流：对齐一致时一个节点都不动，只在顶部补插', () => {
+  const patch = APP.slice(APP.indexOf('function patchFeed()'), APP.indexOf('// ---------- 站内阅读器 ----------'));
+  assert.ok(patch.length > 0, '缺少 patchFeed');
+  assert.match(patch, /if \(!off && !drop\) return true;/, '一致时必须直接返回，不碰 DOM');
+  assert.match(patch, /box\.insertBefore\(frag, box\.firstChild\)/, '新增条目只插到顶部');
+  assert.doesNotMatch(patch, /box\.innerHTML\s*=|box\.replaceChildren\(/, '增量路径不得整块重建');
+  // 条目下标改成点击时按 id 反查：补插后旧节点的闭包下标会错位
+  assert.match(APP, /a\.onclick = \(\) => openReader\(idxOfItem\(it\)\)/);
+});
+
+test('boot 顺序：要闻流回填早于假日表与新数据', () => {
+  const feedAt = bootBody.indexOf('paintFeedFromCache()');
+  const calAt = bootBody.indexOf('await ensureCalendar()');
+  const latestAt = bootBody.indexOf("await jget('latest.json')");
+  assert.ok(feedAt > 0, 'boot 没有调用 paintFeedFromCache');
+  assert.ok(feedAt < calAt, '要闻流回填必须在 await 之前（否则首帧已画过骨架）');
+  assert.ok(feedAt < latestAt, '要闻流回填必须在取 latest.json 之前');
+  assert.match(bootBody, /if \(!patchFeed\(\)\) runSearch\(''\)/, '新数据到达时应先尝试增量对齐');
 });
