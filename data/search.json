@@ -1,10 +1,74 @@
 {
-  "generatedAt": "2026-11-06T23:37:38.412Z",
+  "generatedAt": "2026-11-06T23:52:47.274Z",
   "windowDays": 62,
   "from": "2026-09-06",
   "days": 57,
   "total": 23017,
   "items": [
+    {
+      "id": "ivat11",
+      "ts": 1794009000,
+      "time": "2026-11-07T07:50:00.000+08:00",
+      "source": "东方财富",
+      "title": "百亿元级母基金密集设立",
+      "url": "http://finance.eastmoney.com/news/1354,202611073925241255.html"
+    },
+    {
+      "id": "1ova7t0",
+      "ts": 1794008750,
+      "time": "2026-11-07T07:45:50.000+08:00",
+      "source": "华尔街见闻",
+      "title": "加拿大将给予至多20万临时居民永久居民身份",
+      "url": "https://wallstreetcn.com/livenews/3196267"
+    },
+    {
+      "id": "cl1g3n",
+      "ts": 1794008660,
+      "time": "2026-11-06T23:44:20.000Z",
+      "source": "中新网",
+      "title": "中国证监会同意葵花籽油、氢氧化锂期货和期权注册",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-07/10727741.shtml"
+    },
+    {
+      "id": "pndi84",
+      "ts": 1794008640,
+      "time": "2026-11-07T07:44:00.000+08:00",
+      "source": "东方财富",
+      "title": "工业气体公司聚力布局电子特气赛道",
+      "url": "http://finance.eastmoney.com/news/1354,202611073925240583.html"
+    },
+    {
+      "id": "137qgsy",
+      "ts": 1794008460,
+      "time": "2026-11-07T07:41:00.000+08:00",
+      "source": "东方财富",
+      "title": "芜湖以制造根基托举低空经济",
+      "url": "http://finance.eastmoney.com/news/1355,202611073925241947.html"
+    },
+    {
+      "id": "13bew44",
+      "ts": 1794008400,
+      "time": "2026-11-07T07:40:00.000+08:00",
+      "source": "东方财富",
+      "title": "公募基金投顾业务迎“T类份额”新规",
+      "url": "http://fund.eastmoney.com/news/11246,202611073925242240.html"
+    },
+    {
+      "id": "eu6ncz",
+      "ts": 1794008387,
+      "time": "2026-11-07T07:39:47.000+08:00",
+      "source": "新浪财经",
+      "title": "墨西哥批准六项光伏项目 将新增近650MW装机",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-07/doc-inixwhsh4917145.shtml"
+    },
+    {
+      "id": "ucnpmj",
+      "ts": 1794008080,
+      "time": "2026-11-07T07:34:40.000+08:00",
+      "source": "东方财富",
+      "title": "国常会：完善资本市场稳市机制 增强股市内在稳定性",
+      "url": "http://finance.eastmoney.com/news/1344,202611073925300073.html"
+    },
     {
       "id": "6zbyt6",
       "ts": 1794007980,
@@ -62,11 +126,11 @@
       "url": "http://stock.eastmoney.com/news/11215,202611073925249152.html"
     },
     {
-      "id": "57lf4j",
+      "id": "vby26s",
       "ts": 1794006116,
       "time": "2026-11-07T07:01:56.000+08:00",
       "source": "华尔街见闻",
-      "title": "道明证券：预计美国高评级债券市场将在2027年迎来创纪录的2.4万亿美元供应，AI相关的开支增加、并购、越来越多的赎回都将支持这样的预期。",
+      "title": "道明证券：预计2027年美国高评级债券发行将达创纪录的2.4万亿美元",
       "url": "https://wallstreetcn.com/livenews/3196263"
     },
     {
@@ -1766,14 +1830,6 @@
       "url": "https://wallstreetcn.com/livenews/3196130"
     },
     {
-      "id": "1ur1zfl",
-      "ts": 1793983080,
-      "time": "2026-11-07T00:38:00.000+08:00",
-      "source": "东方财富",
-      "title": "华福证券：“向下扎根”谋差异化发展",
-      "url": "http://finance.eastmoney.com/news/1350,202611073925242914.html"
-    },
-    {
       "id": "buo57y",
       "ts": 1793983080,
       "time": "2026-11-07T00:38:00.000+08:00",
@@ -1782,12 +1838,12 @@
       "url": "http://forex.eastmoney.com/news/11142,202611073925242551.html"
     },
     {
-      "id": "137qgsy",
+      "id": "1ur1zfl",
       "ts": 1793983080,
       "time": "2026-11-07T00:38:00.000+08:00",
       "source": "东方财富",
-      "title": "芜湖以制造根基托举低空经济",
-      "url": "http://finance.eastmoney.com/news/1355,202611073925241947.html"
+      "title": "华福证券：“向下扎根”谋差异化发展",
+      "url": "http://finance.eastmoney.com/news/1350,202611073925242914.html"
     },
     {
       "id": "1kf4ywf",
@@ -6340,62 +6396,6 @@
       "source": "中新网",
       "title": "今年供暖季中国最高用电负荷预计15.2亿千瓦左右",
       "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727378.shtml"
-    },
-    {
-      "id": "1270wtq",
-      "ts": 1793958212,
-      "time": "2026-11-06T17:43:32.000+08:00",
-      "source": "新浪财经",
-      "title": "俄罗斯扣押日本烟草在俄工厂",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuyxa5582856.shtml"
-    },
-    {
-      "id": "1wrea9b",
-      "ts": 1793958208,
-      "time": "2026-11-06T17:43:28.000+08:00",
-      "source": "华尔街见闻",
-      "title": "欧洲央行首席经济学家连恩：能源通胀将影响薪资谈判以及整个经济中的价格制定。",
-      "url": "https://wallstreetcn.com/livenews/3195848"
-    },
-    {
-      "id": "65almv",
-      "ts": 1793958160,
-      "time": "2026-11-06T17:42:40.000+08:00",
-      "source": "新浪财经",
-      "title": "业绩亏损，000541最新回应",
-      "url": "https://finance.sina.com.cn/stock/zqgd/2026-11-06/doc-inixuyww5363426.shtml"
-    },
-    {
-      "id": "1pocwss",
-      "ts": 1793958146,
-      "time": "2026-11-06T17:42:26.000+08:00",
-      "source": "新浪财经",
-      "title": "百亿票房神话之后，博纳影业困在发薪日",
-      "url": "https://finance.sina.com.cn/stock/s/2026-11-06/doc-inixuywy8817448.shtml"
-    },
-    {
-      "id": "19gpvmm",
-      "ts": 1793958099,
-      "time": "2026-11-06T17:41:39.000+08:00",
-      "source": "华尔街见闻",
-      "title": "美联储威廉姆斯：必须及时将通胀降至2%。",
-      "url": "https://wallstreetcn.com/livenews/3195847"
-    },
-    {
-      "id": "uv0eo",
-      "ts": 1793957879,
-      "time": "2026-11-06T17:37:59.000+08:00",
-      "source": "华尔街见闻",
-      "title": "美联储威廉姆斯：美国正面临需求和供给的异常冲击。",
-      "url": "https://wallstreetcn.com/livenews/3195846"
-    },
-    {
-      "id": "149qebh",
-      "ts": 1793957857,
-      "time": "2026-11-06T17:37:37.000+08:00",
-      "source": "东方财富",
-      "title": "国家发改委：抓紧出台配套政策 支持“六网协同”新场景培育打造",
-      "url": "http://finance.eastmoney.com/news/1352,202611063924986759.html"
     },
     {
       "id": "1fwkp49",
