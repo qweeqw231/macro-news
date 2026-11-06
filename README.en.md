@@ -78,7 +78,8 @@ Cloudflare Worker ──> │ after 17:00: collect-macro-if-due.mjs (idempotent)
 - **Trigger**: Cloudflare Worker Cron → GitHub `workflow_dispatch` (the in-repo `schedule` is only redundancy).
 - **Action**: `node src/collect.mjs --no-kline`
 - **Quotes**: Eastmoney `ulist.np` fetches all **53** instruments in one batch (20 indices + 32 ETFs + Nasdaq 100);
-  portfolio quotes are filled in by `fetchPortfolioQuotesFast`: `xau/xag/brent` refresh every round,
+  portfolio quotes are filled in by `fetchPortfolioQuotesFast`: `xau/xag/brent` refresh every round
+  (since 2.7.0 the front end also calls Tencent `hf_*` directly, so their cards can show "live"),
   `sge_au9999` fetches Eastmoney `118.AU9999` every round while trading (day 09:00-15:30, night 20:00-02:30),
   then adopts the official SGE daily quote once after the 15:30 close (2.6.0);
   `usdcny/cgb_1y` refresh only at publication times (09:15 / 17:00) and only when the stored value is not from today.
@@ -363,7 +364,7 @@ Each record carries `price / prevClose / changePct / asOf / priceSource / note`.
 | Instrument | Refresh |
 |---|---|
 | 20 indices + 32 ETFs + `ndx` | Every 15 minutes (Eastmoney batch; Nasdaq 100 is same-source with the K-line `100.NDX100`) |
-| `xau` / `xag` / `brent` | Every 15 minutes (Tencent `hf_*`) |
+| `xau` / `xag` / `brent` | Server every 15 minutes; the front end also calls Tencent `hf_XAU` / `hf_XAG` / `hf_OIL` on every load (2.7.0) |
 | `sge_au9999` | Every round while trading (day 09:00-15:30 / night 20:00-02:30) from Eastmoney `118.AU9999`; after 15:30 the official SGE daily quote overrides (2.6.0) |
 | `usdcny` | After 09:15 and only when the stored value is not today (China Foreign Exchange Trade System) |
 | `cgb_1y` | After 17:00 and only when the stored value is not today (ChinaBond curve) |

@@ -204,6 +204,17 @@
     ndx: 'usNDX',
   });
 
+  // 腾讯外盘 hf_*（伦敦金 / 伦敦银 / 布伦特原油）。
+  //
+  // 2026-11-06：这三个此前只读 quotes.json（15 分钟采集），前端实时批里没有它们，
+  //   卡片因此一律被标成「本地快照」——数据其实一直在更新，只是状态说不通。
+  // 现在浏览器直连腾讯 hf_*（同一主机、同样 `Access-Control-Allow-Origin: *`），
+  //   源时间就是腾讯的行情时间，可正常判「实时」。
+  // ⚠ 不能塞进 TX_CODE：那里按 `v_sh000001="a~b~c..."` 的 ~ 格式解析，
+  //   hf_* 是逗号分隔的 14 字段（见 fetchQuotesHF），口径也不同
+  //   （hf_SI 是 COMEX 白银、不是伦敦银）。
+  const TX_HF = { xau: 'hf_XAU', xag: 'hf_XAG', brent: 'hf_OIL' };
+
   const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
   const num = (v) => (v === undefined || v === null || v === '-' || v === '' ? null : Number(v));
@@ -345,22 +356,70 @@
     return out;
   }
 
+  /**
+   * 腾讯 hf_* 时间（[12] 日期 'YYYY-MM-DD' + [6] 'HH:mm:ss'，北京时间）→ ISO。
+   * 缺日期/缺时间时返回 null，宁可标「延迟（无源时间）」也不编一个时间。
+   */
+  function hfIso(date, hm) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date || ''))) return null;
+    const t = /^\d{2}:\d{2}:\d{2}$/.test(hm) ? hm : (/^\d{2}:\d{2}$/.test(hm) ? hm + ':00' : '00:00:00');
+    return date + 'T' + t + '+08:00';
+  }
+
+  // ---- 行情：腾讯外盘 hf_*（伦敦金 / 伦敦银 / 布伦特原油）----
+  async function fetchQuotesHF() {
+    const pairs = META.filter((m) => TX_HF[m.key]).map((m) => [TX_HF[m.key], m]);
+    if (!pairs.length) throw new Error('腾讯无外盘标的');
+    const byCode = new Map(pairs.map((p) => [p[0], p[1]]));
+    const text = await req('https://qt.gtimg.cn/q=' + pairs.map((p) => p[0]).join(','), QUOTE_TX_BUDGET_MS, true);
+    const out = [];
+    for (const line of String(text).split(';')) {
+      const m = line.match(/v_([^=]+)="([^"]*)"/);
+      if (!m) continue;
+      const meta = byCode.get(m[1]);
+      if (!meta) continue;
+      const a = m[2].split(',');
+      if (a.length < 13) continue;
+      // 字段（实测）：0 现价 / 1 涨跌幅% / 4 最高 / 5 最低 / 6 时间 / 7 昨收 / 8 开盘 / 12 日期
+      // ⚠ 别按规格书的 [2]=开盘：[2] 其实是买一价，开盘是 [8]（见 src/portfolio.mjs 注释）
+      out.push({
+        key: meta.key, name: meta.name, market: meta.market,
+        price: num(a[0]), changePct: num(a[1]),
+        high: num(a[4]), low: num(a[5]),
+        prevClose: num(a[7]), open: num(a[8]),
+        updatedAt: hfIso(a[12], a[6]),
+        source: 'tencent',
+      });
+    }
+    if (!out.length) throw new Error('腾讯外盘返回空数据');
+    return out;
+  }
+
   async function fetchQuotes() {
     const API = window.MacroQuoteStatus;
+    // 外盘 hf_* 与指数批次并行：东财批次成功时 runQuoteBudget 会直接返回、不再跑腾讯，
+    // 所以外盘必须单独发一次（同一个主机，多一个请求）。
+    const hfP = fetchQuotesHF().catch(() => []);
+    let base = [];
     if (API && API.runQuoteBudget) {
-      return API.runQuoteBudget({ em: fetchQuotesEM, tx: fetchQuotesTX });
+      try { base = await API.runQuoteBudget({ em: fetchQuotesEM, tx: fetchQuotesTX }); } catch (e) { base = []; }
+    } else {
+      const t0 = Date.now();
+      try {
+        const em = await withTimeout(fetchQuotesEM(), QUOTE_EM_BUDGET_MS, '东财报价');
+        if (em && em.length) base = em;
+      } catch (e) { /* 东财失败 → 腾讯 */ }
+      if (!base.length) {
+        const remain = Math.max(0, QUOTE_TOTAL_BUDGET_MS - (Date.now() - t0));
+        const txBudget = Math.min(QUOTE_TX_BUDGET_MS, remain || QUOTE_TX_BUDGET_MS);
+        try {
+          const tx = await withTimeout(fetchQuotesTX(), txBudget, '腾讯报价');
+          if (tx && tx.length) base = tx;
+        } catch (e) { /* 腾讯也失败 → 本地快照 */ }
+      }
     }
-    const t0 = Date.now();
-    try {
-      const em = await withTimeout(fetchQuotesEM(), QUOTE_EM_BUDGET_MS, '东财报价');
-      if (em && em.length) return em;
-    } catch (e) { /* 东财失败 → 腾讯 */ }
-    const remain = Math.max(0, QUOTE_TOTAL_BUDGET_MS - (Date.now() - t0));
-    const txBudget = Math.min(QUOTE_TX_BUDGET_MS, remain || QUOTE_TX_BUDGET_MS);
-    try {
-      const tx = await withTimeout(fetchQuotesTX(), txBudget, '腾讯报价');
-      if (tx && tx.length) return tx;
-    } catch (e) { /* 腾讯也失败 → 本地快照 */ }
+    const all = [...(base || []), ...(await hfP)];
+    if (all.length) return all;
     throw new Error('东财/腾讯报价均失败（预算 ' + QUOTE_TOTAL_BUDGET_MS + 'ms）');
   }
 

@@ -79,7 +79,7 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 - **触发**：Cloudflare Worker Cron → GitHub `workflow_dispatch`（仓库内 `schedule` 只作冗余）。
 - **动作**：`node src/collect.mjs --no-kline`
 - **行情**：东财 `ulist.np` 批量一次拿完 **53 个**（20 指数 + 32 ETF + 纳指100）；
-  组合行情由 `fetchPortfolioQuotesFast` 补充：`xau/xag/brent` 每轮刷新，
+  组合行情由 `fetchPortfolioQuotesFast` 补充：`xau/xag/brent` 每轮刷新（2.7.0 起前端另直连腾讯 `hf_*`，卡片可标「实时」），
   `sge_au9999` 盘中（日盘 09:00-15:30 / 夜盘 20:00-次日 02:30）每轮取东财 `118.AU9999`，
   15:30 收盘后再取一次上金所官方日行情覆盖（2.6.0）；
   `usdcny/cgb_1y` 只在发布时刻（09:15 / 17:00）且存量不是今天时刷新。
@@ -366,7 +366,7 @@ GitHub Actions 原来的 UTC 切日与新口径一致，本机不再按北京零
 | 标的 | 刷新 |
 |---|---|
 | 20 指数 + 32 ETF + `ndx` | 每 15 分钟（东财批量，纳指100 与 K 线同源 `100.NDX100`） |
-| `xau` / `xag` / `brent` | 每 15 分钟（腾讯 `hf_*`） |
+| `xau` / `xag` / `brent` | 服务端每 15 分钟；前端每次加载直连腾讯 `hf_XAU` / `hf_XAG` / `hf_OIL`（2.7.0） |
 | `sge_au9999` | 盘中（日盘 09:00-15:30 / 夜盘 20:00-02:30）每轮取东财 `118.AU9999`；15:30 后换用上金所官方日行情覆盖（2.6.0） |
 | `usdcny` | 09:15 后、存量不是今天才取（中国货币网） |
 | `cgb_1y` | 17:00 后、存量不是今天才取（中债曲线） |
