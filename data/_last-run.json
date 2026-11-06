@@ -1,67 +1,70 @@
 {
   "runner": "cloud",
-  "startedAt": "2026-11-06T02:37:41.221Z",
-  "durationMs": 20901,
+  "startedAt": "2026-11-06T02:52:43.874Z",
+  "durationMs": 31577,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 4021
+      "ms": 4127
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
-      "ok": true,
-      "count": 50,
-      "ms": 895
+      "ok": false,
+      "count": 0,
+      "ms": 10485,
+      "error": "fetch failed",
+      "causeCode": "UND_ERR_CONNECT_TIMEOUT",
+      "causeMessage": "Connect Timeout Error (attempted addresses: 39.108.95.46:443, timeout: 10000ms)"
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1285
+      "ms": 1409
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 923
+      "ms": 1069
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 5398
+      "ms": 1741
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 783
+      "ms": 909
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1473
+      "ms": 1638
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 17484
+      "ms": 27656
     }
   ],
   "quotes": 56,
-  "added": 26,
+  "added": 14,
   "localSync": {
     "result": "ff-only",
     "reason": "",
