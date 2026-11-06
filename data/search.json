@@ -1,10 +1,162 @@
 {
-  "generatedAt": "2026-11-06T00:22:48.192Z",
+  "generatedAt": "2026-11-06T00:37:44.810Z",
   "windowDays": 62,
   "from": "2026-09-06",
   "days": 57,
-  "total": 22264,
+  "total": 22284,
   "items": [
+    {
+      "id": "e772ml",
+      "ts": 1793925348,
+      "time": "2026-11-06T08:35:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "韩国交易所启动SIDECAR机制，暂停KOSPI程序化卖盘。",
+      "url": "https://wallstreetcn.com/livenews/3195442"
+    },
+    {
+      "id": "pi9p3v",
+      "ts": 1793925318,
+      "time": "2026-11-06T08:35:18.000+08:00",
+      "source": "华尔街见闻",
+      "title": "受俄罗斯接管资产影响，日本烟草股价势将跌停。",
+      "url": "https://wallstreetcn.com/livenews/3195441"
+    },
+    {
+      "id": "187ayti",
+      "ts": 1793925304,
+      "time": "2026-11-06T08:35:04.000+08:00",
+      "source": "新浪财经",
+      "title": "美国德州候任州长：将暂停数据中心相关工作，绝不任由马斯克旗下企业损害公众利益",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixucte8861297.shtml"
+    },
+    {
+      "id": "rirg71",
+      "ts": 1793925153,
+      "time": "2026-11-06T08:32:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日本首相高市早苗：已注意到人工智能（AI）及芯片股出现大幅下跌，目前尚难断定此轮跌势是暂时的还是会持续下去。",
+      "url": "https://wallstreetcn.com/livenews/3195440"
+    },
+    {
+      "id": "qlzjph",
+      "ts": 1793925063,
+      "time": "2026-11-06T08:31:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "MSCI亚太指数下跌3%至247.75点。",
+      "url": "https://wallstreetcn.com/livenews/3195439"
+    },
+    {
+      "id": "18kfmg8",
+      "ts": 1793924993,
+      "time": "2026-11-06T08:29:53.000+08:00",
+      "source": "华尔街见闻",
+      "title": "软银集团股价跌幅扩大至16%，创2024年8月来最大单日跌幅。",
+      "url": "https://wallstreetcn.com/livenews/3195438"
+    },
+    {
+      "id": "1rwmebd",
+      "ts": 1793924949,
+      "time": "2026-11-06T08:29:09.000+08:00",
+      "source": "东方财富",
+      "title": "“医保参保人数降了8300万”？官方回应",
+      "url": "http://finance.eastmoney.com/news/1350,202611063924192891.html"
+    },
+    {
+      "id": "iws2n",
+      "ts": 1793924923,
+      "time": "2026-11-06T08:28:43.000+08:00",
+      "source": "华尔街见闻",
+      "title": "软银集团股价跌幅扩大至16%，创2024年8月来最大单日跌幅。",
+      "url": "https://wallstreetcn.com/livenews/3195437"
+    },
+    {
+      "id": "832uh0",
+      "ts": 1793924874,
+      "time": "2026-11-06T00:27:54.000Z",
+      "source": "中新网",
+      "title": "新雪季提前开启 多地雪场人工造雪抢占“首滑”流量",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727013.shtml"
+    },
+    {
+      "id": "cavltd",
+      "ts": 1793924872,
+      "time": "2026-11-06T08:27:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "纳斯达克100指数期货日内涨幅扩大至0.6%。",
+      "url": "https://wallstreetcn.com/livenews/3195436"
+    },
+    {
+      "id": "5w3kcd",
+      "ts": 1793924863,
+      "time": "2026-11-06T08:27:43.000+08:00",
+      "source": "新浪财经",
+      "title": "日本日经225指数跌破关键的60,000大关 AI股跌跌不休",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxma5136347.shtml"
+    },
+    {
+      "id": "6pfrza",
+      "ts": 1793924780,
+      "time": "2026-11-06T00:26:20.000Z",
+      "source": "中新网",
+      "title": "年内熊猫债发行超2500亿元 再创历史新高",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727011.shtml"
+    },
+    {
+      "id": "1czazst",
+      "ts": 1793924755,
+      "time": "2026-11-06T08:25:55.000+08:00",
+      "source": "华尔街见闻",
+      "title": "软银集团股价跌幅扩大至14%。",
+      "url": "https://wallstreetcn.com/livenews/3195435"
+    },
+    {
+      "id": "14jgi1q",
+      "ts": 1793924749,
+      "time": "2026-11-06T08:25:49.000+08:00",
+      "source": "新浪财经",
+      "title": "日本名义工资创近30年来最大升幅 料支持央行12月加息",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxmh8983616.shtml"
+    },
+    {
+      "id": "1756bom",
+      "ts": 1793924740,
+      "time": "2026-11-06T08:25:40.000+08:00",
+      "source": "新浪财经",
+      "title": "韩国财长承诺采取措施缓解股市波动",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxma5134612.shtml"
+    },
+    {
+      "id": "1wjwqns",
+      "ts": 1793924709,
+      "time": "2026-11-06T08:25:09.000+08:00",
+      "source": "华尔街见闻",
+      "title": "韩国首尔综指在熔断机制解除后恢复交易。",
+      "url": "https://wallstreetcn.com/livenews/3195434"
+    },
+    {
+      "id": "1gmge1g",
+      "ts": 1793924671,
+      "time": "2026-11-06T08:24:31.000+08:00",
+      "source": "新浪财经",
+      "title": "中资国际控股授出合共5000万份购股权",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxmh8982587.shtml"
+    },
+    {
+      "id": "15cxlw8",
+      "ts": 1793924612,
+      "time": "2026-11-06T08:23:32.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日经225指数跌超6%",
+      "url": "https://wallstreetcn.com/livenews/3195433"
+    },
+    {
+      "id": "1dkq0w2",
+      "ts": 1793924591,
+      "time": "2026-11-06T08:23:11.000+08:00",
+      "source": "新浪财经",
+      "title": "远信储能：发售价已厘定为每股H股9.78港元",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-06/doc-inixtxmh8981614.shtml"
+    },
     {
       "id": "z2kuir",
       "ts": 1793924560,
@@ -350,6 +502,14 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxky8344870.shtml"
     },
     {
+      "id": "1dv3g3",
+      "ts": 1793923264,
+      "time": "2026-11-06T08:01:04.000+08:00",
+      "source": "东方财富",
+      "title": "11月6日早间新闻精选",
+      "url": "http://finance.eastmoney.com/news/1354,202611063924191136.html"
+    },
+    {
       "id": "1ynke5e",
       "ts": 1793923248,
       "time": "2026-11-06T08:00:48.000+08:00",
@@ -388,6 +548,14 @@
       "source": "新浪财经",
       "title": "美国国防部长海格塞斯可能下周面临弹劾表决",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixtxmk5617124.shtml"
+    },
+    {
+      "id": "199of95",
+      "ts": 1793922990,
+      "time": "2026-11-05T23:56:30.000Z",
+      "source": "中新网",
+      "title": "美股芯片股遭大规模抛售 纳指重挫逾5.5%",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10726992.shtml"
     },
     {
       "id": "10dfxw",
@@ -6724,14 +6892,6 @@
       "source": "华尔街见闻",
       "title": "广州二手房成交站稳8000套关口：贴息政策刺激刚需入市",
       "url": "https://wallstreetcn.com/livenews/3194982"
-    },
-    {
-      "id": "4hszbn",
-      "ts": 1793872705,
-      "time": "2026-11-05T17:58:25.000+08:00",
-      "source": "新浪财经",
-      "title": "商务部：对原产于美国的进口正丙醇继续征收反补贴税",
-      "url": "https://finance.sina.com.cn/china/2026-11-05/doc-inixsrrs5584256.shtml"
     },
     {
       "id": "1m78yeq",
