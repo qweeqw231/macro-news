@@ -36,6 +36,31 @@
   （以 `Z` 结尾的是 UTC，要 +8 小时；以 `+08:00` 结尾的原样用）；
   ② 同一篇文章在库里可能有「回填占位行」与「采集行」两行，取时间与链接要用**有 summary 的那一行**。
 
+## [2.5.2] - 2026-11-06
+
+> 补丁位：修复归档页早报正文完全不展示（`ReferenceError: beijingDay is not defined`）。
+
+### 修正
+
+- **早报加载必然抛错**：2.4.18 把 `assets/app.js` 里的 `beijingDay` 改名为 `newsDay` 时，
+  漏改了 `getBriefing()` 内的一处调用（`day === beijingDay()`）。`getBriefing` 在
+  `loadBriefing` 的 `try` 内被同步调用，ReferenceError 直接被 `catch` 捕获，于是**每一张
+  有早报的归档卡片**展开后都显示「早报载入失败：beijingDay is not defined」，
+  早报条目、overview、观察项一条都渲染不出来（页脚与日期卡片本身不受影响，因为
+  它们走的是已改名的 `newsDay`）。历史日与当天同样受影响，不是数据缺失。
+- **影响范围**：2.4.18（2026-11-05 15:19）之后的所有部署；11-06 的早报数据本身完整
+  （`data/briefings/2026-11-06.json` 存在，10 条）。
+- **实现**：该处改回 `day === newsDay()`（与 `getDay()` 的「今天」判断同源，
+  `newsDay` 是同一闭包内已声明的函数）。未改动其它逻辑，未回写任何数据。
+- **缓存**：前端资源串 `20261105e → 20261105f`，避免老访客继续用缓存里的坏 `app.js`。
+
+### 测试
+
+- 新增 `tests/frontend-briefing-scope.test.mjs`（3 项）：`assets/*.js` 不得再出现
+  `beijingDay`；`app.js` 里所有 `day === X()` 的 `X` 必须在同文件有声明；
+  `getBriefing` 的「今天」判断必须是 `newsDay()`。
+  这类「改了声明、漏了调用」的改名错误 node 侧单测无法覆盖，只能靠前端静态断言兜住。
+
 ## [2.5.1] - 2026-11-05
 
 > 补丁位：修复 PBOC 采集在 GitHub Actions 上间歇 `fetch failed`（云端 586 轮中 77 次失败）。

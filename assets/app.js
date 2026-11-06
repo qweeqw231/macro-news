@@ -983,7 +983,7 @@
   function getBriefing(day) {
     if (briefCache.has(day)) return Promise.resolve(briefCache.get(day));
     if (!briefInflight.has(day)) {
-      const today = day === beijingDay();
+      const today = day === newsDay();
       const p = jget(`briefings/${day}.json`, today ? 'no-store' : 'default')
         .then((b) => { briefCache.set(day, b); briefInflight.delete(day); return b; })
         .catch((e) => { briefInflight.delete(day); throw e; });
