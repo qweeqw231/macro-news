@@ -8,7 +8,7 @@
 |---|---|
 | 站点 | **https://qweeqw231.github.io/macro-news/** |
 | 形态 | 纯静态站（GitHub Pages）+ 定时采集写 JSON，**不需要服务器 / 数据库** |
-| 数据规模 | **59 个行情标的**（20 指数 + 32 场内 ETF + 7 组合）、5 个宏观指标、8 个新闻源 |
+| 数据规模 | **61 个行情标的**（22 指数 + 32 场内 ETF + 7 组合）、5 个宏观指标、8 个新闻源 |
 | 前端 | 原生 JS + Canvas 手绘 K 线，零依赖 |
 
 **读法**：第 1 节是全局地图；第 2~3 节是**规格（事实）**；第 4 节是数据契约；第 5~7 节是使用/部署/排障；**设计原因集中在第 8 节**，不和操作步骤混在一起。历史与被弃用的方案放最后。
@@ -22,7 +22,7 @@
 | 页签 | 内容 |
 |---|---|
 | 要闻流 | 搜索 + 频道筛选 + 最新快讯（默认视图） |
-| 行情 | 59 个标的的行情卡，支持按名称 / 代码 / 英文缩写搜索；点卡片打开 K 线抽屉 |
+| 行情 | 61 个标的的行情卡，支持按名称 / 代码 / 英文缩写搜索；点卡片打开 K 线抽屉 |
 | 归档 | 按天列出条目数，点某天看当天全部 |
 | 来源 | 8 个新闻源的状态 / 条数 / 耗时 / 错误 |
 
@@ -62,7 +62,7 @@
 ```
                       ┌──────────────── 链路 ① 每 15 分钟 ───────────────┐
 Cloudflare Worker ──> │ collect.yml → collect.mjs                        │
-（外部 cron）        │   新闻 + 53 个标的行情 + 6 个组合行情             │──> commit/push
+（外部 cron）        │   新闻 + 55 个标的行情 + 6 个组合行情             │──> commit/push
                       └──────────────────────────────────────────────────┘
                       ┌──────────────── 链路 ② K 线 ─────────────────────┐
                       │ kline-full.yml   每天 12:23 全量日/周/月K          │
@@ -78,7 +78,7 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 
 - **触发**：Cloudflare Worker Cron → GitHub `workflow_dispatch`（仓库内 `schedule` 只作冗余）。
 - **动作**：`node src/collect.mjs --no-kline`
-- **行情**：东财 `ulist.np` 批量一次拿完 **53 个**（20 指数 + 32 ETF + 纳指100）；
+- **行情**：东财 `ulist.np` 批量一次拿完 **55 个**（22 指数 + 32 ETF + 纳指100）；
   组合行情由 `fetchPortfolioQuotesFast` 补充：`xau/xag/brent` 每轮刷新（2.7.0 起前端另直连腾讯 `hf_*`，卡片可标「实时」），
   `sge_au9999` 盘中（日盘 09:00-15:30 / 夜盘 20:00-次日 02:30）每轮取东财 `118.AU9999`，
   15:30 收盘后再取一次上金所官方日行情覆盖（2.6.0）；
@@ -106,7 +106,7 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
   历史错日可用 `node scripts/backfill-pbc-days.mjs --root <仓库根>` 幂等回填。
 - **推送**：`scripts/push-data.sh`（fetch + rebase 重试，只有 `data/` 变化才提交）。
 
-**指数名录（20 个）**
+**指数名录（22 个）**
 
 | 分组 | key | 名称 | 代码 | 东财 secid | 腾讯 |
 |---|---|---|---|---|---|
@@ -130,6 +130,8 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 | 欧洲 | `cac40` | 法国CAC40 | CAC40 | `100.FCHI` | — |
 | 英国 | `ukx` | 英国富时100 | FTSE | `100.FTSE` | — |
 | 韩国 | `kospi` | 韩国KOSPI | KOSPI | `100.KS11` | — |
+| 印度 | `sensex` | 印度SENSEX | SENSEX | `100.SENSEX` | — |
+| 越南 | `vnindex` | 越南VN指数 | VNINDEX | `100.VNINDEX` | — |
 
 `上证50` 的 `000016` 是**上交所指数代码**；东财 `QuoteID=1.000016`、腾讯 `sh000016`，
 两源返回的名称均为「上证50」（2026-11-02 核对，见 CHANGELOG）。
@@ -137,8 +139,8 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 ### 2.2 链路 ②：K 线（每天全量 + 每小时最后一根）
 
 - **全量**（`kline-full.yml`，UTC 04:23 = 北京 12:23）：
-  - `scripts/update-kline-full.mjs`：26 个标的（20 指数 + 6 组合）的全量日 K（`_full.json`）
-  - `node src/collect.mjs --kline-only`：27 个标的 × 日/周/月（`<key>.json` / `_1w` / `_1M`）
+  - `scripts/update-kline-full.mjs`：28 个标的（22 指数 + 6 组合）的全量日 K（`_full.json`）
+  - `node src/collect.mjs --kline-only`：29 个标的 × 日/周/月（`<key>.json` / `_1w` / `_1M`）
 - **分钟 + 最后一根**（`kline-minute.yml`，每小时 :17）：
   - `scripts/update-kline-minute.mjs`：8 个标的 × 5 个分钟周期（`min/`）
   - `scripts/update-kline-last.mjs`：只 upsert **当前处于交易时段**品种的最后一根日 K
@@ -365,7 +367,7 @@ GitHub Actions 原来的 UTC 切日与新口径一致，本机不再按北京零
 
 | 标的 | 刷新 |
 |---|---|
-| 20 指数 + 32 ETF + `ndx` | 每 15 分钟（东财批量，纳指100 与 K 线同源 `100.NDX100`） |
+| 22 指数 + 32 ETF + `ndx` | 每 15 分钟（东财批量，纳指100 与 K 线同源 `100.NDX100`） |
 | `xau` / `xag` / `brent` | 服务端每 15 分钟；前端每次加载直连腾讯 `hf_XAU` / `hf_XAG` / `hf_OIL`（2.7.0） |
 | `sge_au9999` | 盘中（日盘 09:00-15:30 / 夜盘 20:00-02:30）每轮取东财 `118.AU9999`；15:30 后换用上金所官方日行情覆盖（2.6.0） |
 | `usdcny` | 09:15 后、存量不是今天才取（中国货币网） |
@@ -377,12 +379,15 @@ GitHub Actions 原来的 UTC 切日与新口径一致，本机不再按北京零
 报价链路总预算 **2 秒**（东财 1.2s → 腾讯 0.8s），超时立即回落，不再空转十几秒。
 卡片、`#quoteTime`、页脚共用同一套文案（`assets/quote-status.js`，纯逻辑、Node 测试共用）。
 
-交易时段用 IANA 时区（`Intl`）换算，不写死 +08:00：CN/ETF/HK/JP/KR/US/DE/FR/UK 各有时段与午休，
+交易时段用 IANA 时区（`Intl`）换算，不写死 +08:00：CN/ETF/HK/JP/KR/IN/VN/US/DE/FR/UK 各有时段与午休，
 美/欧 DST 已覆盖测试。假日表 `assets/market-calendar.json`（2.4.4 补齐）：
-JPX / NYSE / 上交所 / 港交所 / Xetra / Euronext Paris / LSE，2026 全年 + 2027（CN/FR 的 2027
+JPX / NYSE / 上交所 / 港交所 / Xetra / Euronext Paris / LSE / BSE / HOSE，2026 全年 + 2027（CN/FR/IN/VN 的 2027
 官方表尚未发布，留空并写入 `gaps`）。德/法在页面上仍归 `EU` 分组，但每张卡片用
 `calendarMarket`（DAX→DE、CAC40→FR）单独判假日，避免「Xetra 休市、巴黎开市」被合并。
 KRX 官方页面为 JS 动态渲染、未能取得可核验的完整表，`markets.KR` 保持空表并写入 `gaps`。
+印度（BSE，`IN`，09:15-15:30 IST）与越南（HOSE，`VN`，09:00-11:30 / 13:00-14:45 ICT）的 2026 休市表
+分别按 NSE Capital Market 段通函与 HOSE 官方通知录入（含印度 01-15 临时休市、越南新年 01-01~01-02）；
+两国的 2027 日历尚未公布，`coverageByMarket` 只到 2026-12-31。
 缺表或超出 `coverageByMarket` 时只按交易时段显示 `已收盘`，**绝不猜休市**。
 维护：每年 12 月更新一次（下一年的官方日历通常已发布），更新
 `coverage` / `coverageByMarket` / `halfDays` / `markets` / `sources` / `verifiedAt` / `updatedAt`；
@@ -429,9 +434,9 @@ K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三�
 
 | 文件 | 内容 | 谁写 |
 |---|---|---|
-| `data/quotes.json` | 59 个标的快照（20 指数 + 32 ETF + 7 组合） | 链路 ① |
-| `data/snapshots/YYYY-MM-DD_am.json` | 上午盘时点价（59 项；新增标的前的历史文件 57/58 项） | 链路 ③ |
-| `data/snapshots/YYYY-MM-DD_pm.json` | 收盘时点价（59 项；新增标前的历史文件 57/58 项） | 链路 ③ |
+| `data/quotes.json` | 61 个标的快照（22 指数 + 32 ETF + 7 组合） | 链路 ① |
+| `data/snapshots/YYYY-MM-DD_am.json` | 上午盘时点价（61 项；新增标的前的历史文件 57/58/59 项） | 链路 ③ |
+| `data/snapshots/YYYY-MM-DD_pm.json` | 收盘时点价（61 项；新增标前的历史文件 57/58/59 项） | 链路 ③ |
 | `data/archive/YYYY-MM-DD.json` | 按天归档新闻，**含正文** | 链路 ① |
 | `data/history/YYYY-MM-DD.json` | 近一年历史切片（**以标题/来源/时间/链接为主，少量带摘要，无正文**，单日 ≤400 条） | `scripts/export-history.mjs` |
 | `data/history/index.json` | 历史切片索引（含 `hasBriefing` / `briefLine` / `source`） | 同上 |
@@ -439,8 +444,8 @@ K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三�
 | `data/latest.json` | 最近 200 条（首屏） | 链路 ① |
 | `data/search.json` | 最近 62 个新闻日检索索引（**标题/来源/时间/链接，无摘要**，约 6 MB） | 链路 ① |
 | `data/index.json` | 按天归档索引（含 `hasBriefing` / `briefLine` / `source`） | 链路 ① |
-| `data/kline/<key>.json` / `_1w` / `_1M` | 27 个标的 × 日/周/月 | 链路 ② |
-| `data/kline/<key>_full.json` | 26 个标的（20 指数 + 6 组合）的全量日 K（紧凑数组 `[t,o,c,h,l,v]`） | 链路 ② |
+| `data/kline/<key>.json` / `_1w` / `_1M` | 29 个标的 × 日/周/月 | 链路 ② |
+| `data/kline/<key>_full.json` | 28 个标的（22 指数 + 6 组合）的全量日 K（紧凑数组 `[t,o,c,h,l,v]`） | 链路 ② |
 | `data/kline/min/<key>_<period>.json` | 8 个标的 × 5 个分钟周期（含伦敦金） | 链路 ② |
 | `data/macro/daily.json` | 5 个宏观指标日频序列 | 链路 ④ |
 | `data/_last-run.json` | 各链路运行状态（字段并存，读改写） | 所有链路 |
@@ -550,7 +555,7 @@ node --test "tests/*.test.mjs"
 `workers.dev` 在本机**仅开代理时可访问**（域名被 DNS 污染），所以它只用于开发验证与备用采样。
 2.4.0 起 `/quote` 的回退顺序为：东财三镜像（`push2` / `1.push2` / `push2delay`）→ 腾讯 `qt.gtimg.cn`
 → Yahoo chart；每条 `quotes[]` 带 `source: eastmoney|tencent|yahoo` 与 `updatedAt`（源时间）。
-`/kline` 只覆盖 20 个指数（`INDICES`），组合标的（xau/xag/brent 等）返回 400，前端不经此路径取 K 线。
+`/kline` 只覆盖 22 个指数（`INDICES`），组合标的（xau/xag/brent 等）返回 400，前端不经此路径取 K 线。
 
 GitHub 自带 `schedule` 实测只兑现约 3%，所以触发搬到仓库外：
 
@@ -786,7 +791,7 @@ node scripts/ops-stats.mjs --no-network    # 只看本机台账
 
 | 类别 | 源 | 取什么 | 备源 |
 |---|---|---|---|
-| 行情 | 东财 `ulist.np` | 20 指数 + 32 ETF 最新价（1 个请求） | 腾讯 `qt.gtimg.cn` |
+| 行情 | 东财 `ulist.np` | 22 指数 + 32 ETF 最新价（1 个请求） | 腾讯 `qt.gtimg.cn` |
 | K 线 | 东财 `push2his` | 日/周/月 + 分钟 | 腾讯 `ifzq.gtimg.cn`；新浪（仅 CN 10 指数） |
 | 组合 | 腾讯 `hf_XAU` / `hf_XAG` / `hf_OIL` / `usNDX` | 伦敦金/银、布伦特、纳指100 | 东财 `100.NDX100` |
 | 组合 | 上金所官网 | 上海金 Au99.99 | 估算回退（note=estimated） |
@@ -819,7 +824,7 @@ macro-news/
 ├── src/
 │   ├── collect.mjs    新闻 + 行情主程序（--no-kline / --kline-only）
 │   ├── brief-meta.mjs 早报索引元信息（hasBriefing / briefLine）
-│   ├── sources.mjs    新闻源 + 20 指数适配器 + fetchKline
+│   ├── sources.mjs    新闻源 + 22 指数适配器 + fetchKline
 │   ├── quotes.mjs     批量行情（东财 → 腾讯）
 │   ├── kline.mjs      日 K / 5 分钟 K（东财 → 腾讯）
 │   ├── em.mjs         镜像 / 限速 / 退避 / 熔断 / 缓存
@@ -837,7 +842,7 @@ macro-news/
 - **GitHub schedule 时代**：曾用 `*/5` 声明 5 分钟，实测 3~6 小时一次；已由 Worker 外部触发取代。
 - **Cloudflare Worker 行情代理**：早期想用它绕 CORS 给读者供数，实测 `workers.dev` 被 DNS 污染、
   国内不可达；且东财接口本身带 CORS ⇒ **不再作为读者入口**。2.4.0 重新启用为**定时采样备份**
-  （东财三镜像 → 腾讯 → Yahoo，输出 `source`），前端与采集器均不依赖它；`/kline` 仅覆盖 20 个指数。
+  （东财三镜像 → 腾讯 → Yahoo，输出 `source`），前端与采集器均不依赖它；`/kline` 仅覆盖 22 个指数。
 - **串行 K 线 fallback**：已被三源并发赛马取代。
 - **16:30 组合行情链路**：已被并入 15 分钟链路；宏观改到云端 **17:00 后**（2026-10-31）。
 - **minimax 定时任务**：曾承担 12:05 / 16:30 快照、16:30 宏观、4 小时同步；

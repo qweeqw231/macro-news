@@ -126,6 +126,7 @@
   // ETF 是场内 ETF 的独立分组（32 只，market='ETF'）
   const MARKET_LABEL = {
     CN: 'A股', HK: '港股', US: '美股', JP: '日本', EU: '欧洲', UK: '英国', KR: '韩国',
+    IN: '印度', VN: '越南',
     CMDTY: '大宗商品', SGE: '上海金', FX: '外汇', ETF: '场内ETF',
   };
 
@@ -145,6 +146,8 @@
     sh_comp: '上证 沪指',
     sse50: '上证50 上证 蓝筹 sse50 sse 50',
     a500: '中证A500 A500 中证 a500 宽基',
+    sensex: '印度 孟买 印度指数 bse sensex 孟买30',
+    vnindex: '越南 胡志明 hose vn vnindex',
   };
   // 行情卡片要显示「能搜索到的代码」：A股指数 000001、ETF 563360、恒指 HSI…
   const CODE_MAP = {
@@ -153,6 +156,7 @@
     hsi: 'HSI', hs_tech: 'HSTECH',
     dji: 'DJI', ixic: 'IXIC', spx: 'SPX', n225: 'N225',
     dax: 'DAX', cac40: 'CAC40', ukx: 'FTSE',
+    sensex: 'SENSEX', vnindex: 'VNINDEX',
     ndx: 'NDX', xau: 'XAU', xag: 'XAG', brent: 'BRENT',
     sge_au9999: 'AU9999', usdcny: 'USDCNY', cgb_1y: 'CGB1Y',
   };
@@ -215,6 +219,10 @@
       HK: [9.5, 12, 13, 16],
       JP: [8.5, 11.3, 12.5, 15],
       KR: [8.5, 11.3, 12.5, 15.3],
+      // 印度 BSE：09:15-15:30 IST ⇒ 北京 11:45-18:00
+      IN: [11.75, 18],
+      // 越南 HOSE：09:00-11:30 / 13:00-14:45 ICT ⇒ 北京 10:00-12:30 / 14:00-15:45
+      VN: [10, 12.5, 14, 15.75],
       SG: [9, 12, 13, 17],
       EU: [15, 23.5],                                   // 夏令时约 15:00-23:30
       UK: [14.5, 23],

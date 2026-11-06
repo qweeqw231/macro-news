@@ -11,7 +11,9 @@
     "HK": { "from": "2026-01-01", "to": "2027-12-31" },
     "DE": { "from": "2026-01-01", "to": "2027-12-31" },
     "FR": { "from": "2026-01-01", "to": "2026-12-31" },
-    "UK": { "from": "2026-01-01", "to": "2027-12-31" }
+    "UK": { "from": "2026-01-01", "to": "2027-12-31" },
+    "IN": { "from": "2026-01-01", "to": "2026-12-31" },
+    "VN": { "from": "2026-01-01", "to": "2026-12-31" }
   },
   "sources": {
     "JP": "https://www.jpx.co.jp/english/corporate/about-jpx/calendar/",
@@ -20,7 +22,9 @@
     "HK": "https://www.hkex.com.hk/-/media/HKEX-Market/Services/Circulars-and-Notices/Participant-and-Members-Circulars/SEHK/2025/ce_SEHK_CT_075_2025.pdf（2026）；https://www.hkex.com.hk/-/media/HKEX-Market/Services/Circulars-and-Notices/Participant-and-Members-Circulars/SEHK/2026/cc_SEHK_CT_077_2026.pdf（2027）",
     "DE": "https://live.deutsche-boerse.com/en/handeln/trading-calendar",
     "FR": "https://www.euronext.com/en/trading/trading-hours-holidays",
-    "UK": "https://www.londonstockexchange.com/en/resources/markets-products/business-days（LSE 确认遵循英格兰及威尔士银行假日）；2026 上半年日期以 https://www.gov.uk/bank-holidays 核对"
+    "UK": "https://www.londonstockexchange.com/en/resources/markets-products/business-days（LSE 确认遵循英格兰及威尔士银行假日）；2026 上半年日期以 https://www.gov.uk/bank-holidays 核对",
+    "IN": "NSE Capital Market 段 2026 交易日历通函 NSE/CMTR/71775；2026-01-15 临时休市为 NSE 同日通函（Maharashtra 市政选举，BSE 同步）；与 Zerodha 交易日历交叉核对（2026-11-06）",
+    "VN": "HOSE《Notice of trading holiday schedule for 2026》(2025-12-09) 与《Updated New Year 2026 Trading Holiday》(2025-12-25)"
   },
   "markets": {
     "JP": [
@@ -83,7 +87,19 @@
       "2027-01-01", "2027-03-26", "2027-03-29", "2027-05-03", "2027-05-31",
       "2027-08-30", "2027-12-27", "2027-12-28"
     ],
-    "KR": []
+    "KR": [],
+    "IN": [
+      "2026-01-15", "2026-01-26", "2026-03-03", "2026-03-26", "2026-03-31",
+      "2026-04-03", "2026-04-14", "2026-05-01", "2026-05-28", "2026-06-26",
+      "2026-09-14", "2026-10-02", "2026-10-20", "2026-11-10", "2026-11-24",
+      "2026-12-25"
+    ],
+    "VN": [
+      "2026-01-01", "2026-01-02",
+      "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20",
+      "2026-04-27", "2026-04-30", "2026-05-01",
+      "2026-08-31", "2026-09-01", "2026-09-02"
+    ]
   },
   "halfDays": {
     "HK": [
@@ -116,6 +132,8 @@
     "KR": "KRX 官方 Market Closing(Holiday) 页面为 JS 动态渲染，本次未能取得完整、可核验的休市表（仅见零散临时休市通告），故不编造，整表留空：KR 一律按交易时段显示「已收盘」。",
     "DE": "2026/2027 全天休市日均已按德意志交易所官方交易日历核对（含 12-24/12-31 结算日无交易）；Xetra 无「半日市」，12-30 缩短交易未查到 2026 官方公告，未纳入。",
     "FR": "2026 全天休市日已按 Euronext 官方假期表核对；2026-12-24/31 为 Half Trading Day，14:00 CET 收市时点依据 2025 年末附录（2026 年末附录尚未发布）。2027 官方表（含半日市）尚未发布 ⇒ 2027 不标注休市/半日市，按常规时段判断。",
-    "UK": "2026/2027 均已按 LSE 官方 Business days 页核对（LSE 明确遵循英格兰及威尔士银行假日）；2026 上半年日期另以 gov.uk 银行假日表复核。"
+    "UK": "2026/2027 均已按 LSE 官方 Business days 页核对（LSE 明确遵循英格兰及威尔士银行假日）；2026 上半年日期另以 gov.uk 银行假日表复核。",
+    "IN": "2026 已按 NSE Capital Market 段官方通函核对，含 01-15 临时休市（Maharashtra 市政选举）。NSE 货币衍生品通函另列的 02-19 / 03-19 / 04-01 / 08-26 是**结算假日**，股票段照常交易，未纳入。2027 日历通常于 2026 年 12 月发布，尚未公布 ⇒ 2027 不标注「休市」，按交易时段显示「已收盘」。",
+    "VN": "2026 已按 HOSE 官方通知核对（含 2025-12-25 更新：新年 01-01 至 01-02；08-31 至 09-02 国庆）。2027 尚未公布 ⇒ 2027 不标注「休市」，按交易时段判断。"
   }
 }

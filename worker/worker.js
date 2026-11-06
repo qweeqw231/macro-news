@@ -37,6 +37,8 @@ const INDICES = {
   cac40: { secid: '100.FCHI', market: 'EU' },
   ukx: { secid: '100.FTSE', market: 'UK' },
   kospi: { secid: '100.KS11', market: 'KR' },
+  sensex: { secid: '100.SENSEX', market: 'IN' },
+  vnindex: { secid: '100.VNINDEX', market: 'VN' },
 };
 
 const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '5m': 5, '30m': 30, '60m': 60 };

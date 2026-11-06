@@ -102,6 +102,10 @@
     HK:    { tz: 'Asia/Hong_Kong',   windows: [[570, 720], [780, 960]] },  // 09:30-12:00 / 13:00-16:00
     JP:    { tz: 'Asia/Tokyo',       windows: [[540, 690], [750, 930]] },  // 09:00-11:30 / 12:30-15:30
     KR:    { tz: 'Asia/Seoul',       windows: [[540, 930]] },              // 09:00-15:30
+    // 印度 BSE：09:15-15:30 IST（孟买）
+    IN:    { tz: 'Asia/Kolkata',     windows: [[555, 930]] },              // 09:15-15:30
+    // 越南 HOSE：09:00-11:30 / 13:00-14:45 ICT（胡志明市；14:30-14:45 为收盘集合竞价）
+    VN:    { tz: 'Asia/Ho_Chi_Minh', windows: [[540, 690], [780, 885]] },  // 09:00-11:30 / 13:00-14:45
     US:    { tz: 'America/New_York', windows: [[570, 960]] },              // 09:30-16:00
     EU:    { tz: 'Europe/Berlin',    windows: [[540, 1050]] },             // 09:00-17:30（德/法）
     DE:    { tz: 'Europe/Berlin',    windows: [[540, 1050]] },             // Xetra 09:00-17:30 CET

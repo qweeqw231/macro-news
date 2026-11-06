@@ -518,6 +518,14 @@ export const INDICES = [
   { key: 'cac40',     name: '法国CAC40',  market: 'EU', secid: '100.FCHI',  sina: null, tx: null },
   { key: 'ukx',       name: '英国富时100', market: 'UK', secid: '100.FTSE',  sina: null, tx: null },
   { key: 'kospi',     name: '韩国KOSPI',  market: 'KR', secid: '100.KS11',  sina: null, tx: null },
+  // 印度 / 越南（2026-11-06 实测：东财实时、分时、日 K 全量均可用）
+  //   · 印度：东财「全球指数」全量 63 个里**只有 SENSEX（孟买30）**，没有 NIFTY 50
+  //     （NIFTY / NIFTY50 / NSEI / CNXNIFTY 等 secid 实测全为空；新浪 int_nifty、
+  //      腾讯 usSENSEX 亦无）⇒ 印度这一格只能上 SENSEX。
+  //   · 越南：100.VNINDEX = 越南胡志明指数（HOSE）。
+  //   两者新浪 / 腾讯都没有代码，sina / tx 一律 null，只能走东财（与 n225/dax/ukx 同）。
+  { key: 'sensex',    name: '印度SENSEX', market: 'IN', secid: '100.SENSEX',  sina: null, tx: null },
+  { key: 'vnindex',   name: '越南VN指数', market: 'VN', secid: '100.VNINDEX', sina: null, tx: null },
 ];
 
 // ── 组合标的的 K 线（纳指100 / 伦敦金 / 上海金 / 人民币中间价）──

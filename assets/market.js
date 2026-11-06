@@ -55,6 +55,9 @@
     { key: 'cac40',   secid: '100.FCHI', market: 'EU', calendarMarket: 'FR', name: '法国CAC40' },
     { key: 'ukx',     secid: '100.FTSE', market: 'UK', name: '英国富时100' },
     { key: 'kospi',   secid: '100.KS11', market: 'KR', name: '韩国KOSPI' },
+    // 印度 / 越南：东财全球指数（实时 / 分时 / 日K 均可用）；新浪、腾讯都没有这两个代码
+    { key: 'sensex',  secid: '100.SENSEX',  market: 'IN', name: '印度SENSEX' },
+    { key: 'vnindex', secid: '100.VNINDEX', market: 'VN', name: '越南VN指数' },
     // ---- 场内 ETF（32 只）----
     // 清单真值在 src/etf.mjs（按主题取「成交额 + 规模」最优的代表）；
     // 这里只放前端需要的 secid / name / 腾讯代码。
