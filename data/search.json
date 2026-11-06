@@ -1,10 +1,74 @@
 {
-  "generatedAt": "2026-11-06T21:22:44.995Z",
+  "generatedAt": "2026-11-06T21:37:45.218Z",
   "windowDays": 62,
   "from": "2026-09-06",
   "days": 57,
   "total": 23017,
   "items": [
+    {
+      "id": "w767fe",
+      "ts": 1794001021,
+      "time": "2026-11-07T05:37:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周五（11月6日），美股AI软件先驱指数涨0.29%，报115.31点，本周累计下跌8.06%。",
+      "url": "https://wallstreetcn.com/livenews/3196242"
+    },
+    {
+      "id": "17x8a7t",
+      "ts": 1794001008,
+      "time": "2026-11-07T05:36:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周五（11月6日），美股人工智能（AI）赢家指数涨3.46%，报317.72点，本周累计下跌11.95%。",
+      "url": "https://wallstreetcn.com/livenews/3196241"
+    },
+    {
+      "id": "1416qu7",
+      "ts": 1794000995,
+      "time": "2026-11-07T05:36:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周五（11月6日），信息科技指数涨2.85%，报333.37点，本周累计下跌11.63%。",
+      "url": "https://wallstreetcn.com/livenews/3196240"
+    },
+    {
+      "id": "1odkrmg",
+      "ts": 1794000777,
+      "time": "2026-11-07T05:32:57.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美股芯片巨头指数｜标普500半导体及其设备指数收涨3.57%，报9264.71点，本周累计下跌11.20%。",
+      "url": "https://wallstreetcn.com/livenews/3196239"
+    },
+    {
+      "id": "laumhc",
+      "ts": 1794000707,
+      "time": "2026-11-07T05:31:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周五（11月6日），美股存储芯片与硬件供应链指数涨3.14%，报127.98点，本周累计下跌21.34%，期内几乎整体处于下跌状态，11月2-4日平缓地持续走低、5日盘初加速下跌、后续持续低位震荡。",
+      "url": "https://wallstreetcn.com/livenews/3196238"
+    },
+    {
+      "id": "9v638a",
+      "ts": 1794000508,
+      "time": "2026-11-07T05:28:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美股七巨头收盘播报｜周五（11月6日），美国科技股七巨头（Magnificent 7）指数涨0.55%，报217.77点，本周累计下跌1.36%，11月4日高开、5日低开形成冲高回落行情。",
+      "url": "https://wallstreetcn.com/livenews/3196237"
+    },
+    {
+      "id": "1evhdra",
+      "ts": 1794000244,
+      "time": "2026-11-07T05:24:04.000+08:00",
+      "source": "华尔街见闻",
+      "title": "谷歌斥资5.48亿美元买入高通股份",
+      "url": "https://wallstreetcn.com/livenews/3196236"
+    },
+    {
+      "id": "1boa4x3",
+      "ts": 1794000226,
+      "time": "2026-11-07T05:23:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "据知情人士透露，卡塔尔能源公司瞄准NextDecade第6条生产线供应，推进美国液化天然气（LNG）布局。",
+      "url": "https://wallstreetcn.com/livenews/3196235"
+    },
     {
       "id": "1xcv0k4",
       "ts": 1794000047,
@@ -28,6 +92,14 @@
       "source": "华尔街见闻",
       "title": "美联储：美国上周银行存款19.798万亿美元，之前一周19.772万亿美元。",
       "url": "https://wallstreetcn.com/livenews/3196232"
+    },
+    {
+      "id": "m53tft",
+      "ts": 1793999760,
+      "time": "2026-11-07T05:16:00.000+08:00",
+      "source": "新浪财经",
+      "title": "11月7日收盘：三大指数涨跌不一 芯片股反弹 AI监管担忧仍存",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-07/doc-inixwakk5001971.shtml"
     },
     {
       "id": "1pow0ga",
@@ -6332,78 +6404,6 @@
       "source": "新浪财经",
       "title": "银湖资本、沙特公共投资基金拟向Unity软件发出收购邀约",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuura8881698.shtml"
-    },
-    {
-      "id": "1kvc7ce",
-      "ts": 1793954678,
-      "time": "2026-11-06T16:44:38.000+08:00",
-      "source": "华尔街见闻",
-      "title": "天津市将于11月15日正式供热",
-      "url": "https://wallstreetcn.com/livenews/3195801"
-    },
-    {
-      "id": "s6av8w",
-      "ts": 1793954641,
-      "time": "2026-11-06T16:44:01.000+08:00",
-      "source": "华尔街见闻",
-      "title": "“购在中国·2026精品消费月”启动",
-      "url": "https://wallstreetcn.com/livenews/3195800"
-    },
-    {
-      "id": "t0vylw",
-      "ts": 1793954608,
-      "time": "2026-11-06T16:43:28.000+08:00",
-      "source": "华尔街见闻",
-      "title": "新宙邦：2026年11月5日收到深圳坪山区法院一审刑事判决书，曾任公司半导体事业部总经理的被告人康威构成侵犯商业秘密罪，被判处有期徒刑一年二个月、缓刑二年，并处罚金16万元。",
-      "url": "https://wallstreetcn.com/livenews/3195799"
-    },
-    {
-      "id": "18lxpf1",
-      "ts": 1793954607,
-      "time": "2026-11-06T16:43:27.000+08:00",
-      "source": "新浪财经",
-      "title": "廉价AI能否化解数据中心建设遇阻的困局？",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuuqy5441559.shtml"
-    },
-    {
-      "id": "1eqczhb",
-      "ts": 1793954592,
-      "time": "2026-11-06T16:43:12.000+08:00",
-      "source": "华尔街见闻",
-      "title": "新希望：10月销售商品猪128.69万头，收入14.81亿元",
-      "url": "https://wallstreetcn.com/livenews/3195798"
-    },
-    {
-      "id": "ejjn0x",
-      "ts": 1793954585,
-      "time": "2026-11-06T16:43:05.000+08:00",
-      "source": "华尔街见闻",
-      "title": "景嘉微：控股股东、实控人之一喻丽丽11月5日通过询价转让减持2090万股，占总股本4.00%；",
-      "url": "https://wallstreetcn.com/livenews/3195797"
-    },
-    {
-      "id": "nfd5a9",
-      "ts": 1793954541,
-      "time": "2026-11-06T16:42:21.000+08:00",
-      "source": "华尔街见闻",
-      "title": "新希望：10月销售商品猪128.69万头，收入14.81亿元",
-      "url": "https://wallstreetcn.com/livenews/3195796"
-    },
-    {
-      "id": "14tztcq",
-      "ts": 1793954446,
-      "time": "2026-11-06T16:40:46.000+08:00",
-      "source": "东方财富",
-      "title": "前瞻：食品价格走低、能源价格上行，10月CPI同比涨幅或保持平稳",
-      "url": "http://finance.eastmoney.com/news/1352,202611063924877062.html"
-    },
-    {
-      "id": "zcqmgt",
-      "ts": 1793954395,
-      "time": "2026-11-06T16:39:55.000+08:00",
-      "source": "新浪财经",
-      "title": "Brookfield据悉考虑出售耐克标签供应商Trimco",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuuqw8790814.shtml"
     },
     {
       "id": "1g941fq",
