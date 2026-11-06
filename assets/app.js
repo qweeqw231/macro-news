@@ -130,6 +130,17 @@
     CMDTY: '大宗商品', SGE: '上海金', FX: '外汇', ETF: '场内ETF',
   };
 
+  // 行情分组顺序（2.8.1 按实际关注顺序重排）：
+  //   A股 → 场内ETF → 港股 → 美股 → 欧洲 → 英国 → 大宗商品 → 上海金 → 外汇
+  //   → 日本 → 韩国 → 印度 → 越南
+  // 不在此表里的市场排到最后：原先用 ORDER.indexOf 直接相减，未收录的市场得到 -1，
+  // 会被静默顶到最前面（2.8.0 的印度 / 越南就是这样跑到 CN 上面的）。
+  const MARKET_ORDER = ['CN', 'ETF', 'HK', 'US', 'EU', 'UK', 'CMDTY', 'SGE', 'FX', 'JP', 'KR', 'IN', 'VN'];
+  const marketRank = (mk) => {
+    const i = MARKET_ORDER.indexOf(mk);
+    return i < 0 ? MARKET_ORDER.length : i;
+  };
+
   // 行情搜索：59 个标的靠肉眼滚太慢。按中文名 / key（含 ETF 代码）/ 英文缩写筛选，
   // 别名只补「名字里不含、但大家会搜」的少数词（黄金 / 原油 / 汇率 / 纳指…），不做拼音。
   // 分组名（港股 / 美股 / 大宗商品…）也进匹配，输入即筛整组。
@@ -254,8 +265,7 @@
       if (!groups.has(q.market)) groups.set(q.market, []);
       groups.get(q.market).push(q);
     });
-    const ORDER = ['CN', 'ETF', 'HK', 'US', 'JP', 'EU', 'UK', 'KR', 'CMDTY', 'SGE', 'FX'];
-    const mks = [...groups.keys()].sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b));
+    const mks = [...groups.keys()].sort((a, b) => marketRank(a) - marketRank(b));
     const groupEls = [...box.querySelectorAll('.mkt')];
     if (groupEls.length !== mks.length) return false;
 
@@ -330,10 +340,8 @@
       groups.get(q.market).push(q);
     });
 
-    // A 股置顶；场内 ETF 紧随其后
-    const ORDER = ['CN', 'ETF', 'HK', 'US', 'JP', 'EU', 'UK', 'KR', 'CMDTY', 'SGE', 'FX'];
     [...groups.keys()]
-      .sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b))
+      .sort((a, b) => marketRank(a) - marketRank(b))
       .forEach((mk) => {
         const list = groups.get(mk);
         // openMap：刷新时假日表还没加载完（首帧同步回填），直接用快照里的开盘状态，
