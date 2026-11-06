@@ -1,10 +1,58 @@
 {
-  "generatedAt": "2026-11-06T20:22:39.680Z",
+  "generatedAt": "2026-11-06T20:37:43.698Z",
   "windowDays": 62,
   "from": "2026-09-06",
   "days": 57,
   "total": 23017,
   "items": [
+    {
+      "id": "1p4216z",
+      "ts": 1793997302,
+      "time": "2026-11-07T04:35:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国商品期货交易委员会（CFTC）：截至11月3日当周，日元净多头头寸为102,321手。",
+      "url": "https://wallstreetcn.com/livenews/3196215"
+    },
+    {
+      "id": "w83gqh",
+      "ts": 1793997218,
+      "time": "2026-11-07T04:33:38.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国商品期货交易委员会（CFTC）：截至11月3日当周，投机者将CBOT美国10年期国债期货净空头头寸减少19,179手，至962,359手。",
+      "url": "https://wallstreetcn.com/livenews/3196214"
+    },
+    {
+      "id": "tclkmb",
+      "ts": 1793997205,
+      "time": "2026-11-07T04:33:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国商品期货交易委员会（CFTC）：截至11月3日当周，COMEX黄金投机者净多头头寸减少3,107手，至104,297手。",
+      "url": "https://wallstreetcn.com/livenews/3196213"
+    },
+    {
+      "id": "2ejajl",
+      "ts": 1793997178,
+      "time": "2026-11-07T04:32:58.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国商品期货交易委员会（CFTC）：截至11月3日当周，CFTC股票基金经理将CME标普500指数净多头头寸增加55手，至917,568手。",
+      "url": "https://wallstreetcn.com/livenews/3196212"
+    },
+    {
+      "id": "1n24nsb",
+      "ts": 1793997168,
+      "time": "2026-11-07T04:32:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国商品期货交易委员会（CFTC）：截至11月3日当周，原油投机者将WTI净多头头寸减少17,846手，至86,469手。",
+      "url": "https://wallstreetcn.com/livenews/3196211"
+    },
+    {
+      "id": "1idvsds",
+      "ts": 1793996914,
+      "time": "2026-11-07T04:28:34.000+08:00",
+      "source": "华尔街见闻",
+      "title": "本周芝加哥大豆期货跌超3.2%",
+      "url": "https://wallstreetcn.com/livenews/3196210"
+    },
     {
       "id": "1foi8t",
       "ts": 1793996540,
@@ -846,11 +894,11 @@
       "url": "https://wallstreetcn.com/livenews/3196135"
     },
     {
-      "id": "1avkp15",
+      "id": "p42slr",
       "ts": 1793983562,
       "time": "2026-11-07T00:46:02.000+08:00",
       "source": "华尔街见闻",
-      "title": "日本央行行长植田和男：非常规政策有一些积极效果。",
+      "title": "日本央行行长：若未来遭遇严重冲击，可能不得不动用QE工具",
       "url": "https://wallstreetcn.com/livenews/3196134"
     },
     {
@@ -6356,54 +6404,6 @@
       "source": "东方财富",
       "title": "12万元的车才配成网约车？全国人大：违法设准入门槛已废止",
       "url": "http://finance.eastmoney.com/news/1346,202611063924878535.html"
-    },
-    {
-      "id": "izkl25",
-      "ts": 1793953670,
-      "time": "2026-11-06T16:27:50.000+08:00",
-      "source": "华尔街见闻",
-      "title": "国泰海通完成第三批互换便利业务首批股票买入",
-      "url": "https://wallstreetcn.com/livenews/3195784"
-    },
-    {
-      "id": "h99sbz",
-      "ts": 1793953573,
-      "time": "2026-11-06T16:26:13.000+08:00",
-      "source": "华尔街见闻",
-      "title": "市场监管总局发布关于公开征求《户外广告合规指引（征求意见稿）》意见的公告",
-      "url": "https://wallstreetcn.com/livenews/3195783"
-    },
-    {
-      "id": "12aezht",
-      "ts": 1793953479,
-      "time": "2026-11-06T16:24:39.000+08:00",
-      "source": "华尔街见闻",
-      "title": "创新高！港交所前三季度赚超154亿港元，陈翊庭发声",
-      "url": "https://wallstreetcn.com/livenews/3195782"
-    },
-    {
-      "id": "1hnqw90",
-      "ts": 1793953470,
-      "time": "2026-11-06T08:24:30.000Z",
-      "source": "中新网",
-      "title": "“买产品”→“买方案” 进博会连接中国市场与世界机遇",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727354.shtml"
-    },
-    {
-      "id": "104gkdn",
-      "ts": 1793953389,
-      "time": "2026-11-06T08:23:09.000Z",
-      "source": "中新网",
-      "title": "进博会助力秘鲁特色农产品跨越山海",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727351.shtml"
-    },
-    {
-      "id": "169lw7u",
-      "ts": 1793953272,
-      "time": "2026-11-06T16:21:12.000+08:00",
-      "source": "华尔街见闻",
-      "title": "锐方基金5亿元自购旗下基金产品，刷新私募单笔纪录",
-      "url": "https://wallstreetcn.com/livenews/3195781"
     },
     {
       "id": "1g941fq",
