@@ -648,19 +648,26 @@
       // 2.9.0：当日 bar 不一定是收盘价。
       //   · 该市场还在盘中（open/lunch/pre）→ 这根 bar 只是盘中值；
       //   · 来自「本地全量」（服务端每天 12:18 生成）且日期是今天 → 一定是午盘值
-      //     （11-06 恒指 24,533.33 vs 收盘 24,481.86）。
-      // 两种情况都不许标「实时」，统一改成「盘中值·未定稿」。
+      //     （11-06 恒指 24,533.33 vs 收盘 24,481.86）；
+      //   · 2.9.2：本地普通日 K 若 generatedAt 仍早于当日收盘 → 也还是盘中值。
+      // 三种情况都不许标「实时」，统一改成「盘中值·未定稿」。
       var partial = false;
       var cfg = opts.market && MARKET_SESSIONS[opts.market];
       var mktToday = cfg ? tzParts(Number(now), cfg.tz).date : today;
+      var phase = (opts.market && opts.calendar)
+        ? sessionAt(opts.market, Number(now), opts.calendar)
+        : null;
+      var isFullLocal = fromLocal && /全量/.test(String(opts.src || ''));
       if (bt.date === mktToday) {
-        var phase = (opts.market && opts.calendar)
-          ? sessionAt(opts.market, Number(now), opts.calendar)
-          : null;
         if (phase && (phase.phase === 'open' || phase.phase === 'lunch' || phase.phase === 'pre')) {
           partial = true;
         }
-        if (fromLocal && /全量/.test(String(opts.src || ''))) partial = true;
+        if (isFullLocal) partial = true;
+        if (!partial && phase && phase.phase === 'post' && fromLocal) {
+          var dataAt = Date.parse(opts.dataAt || '');
+          var closeMs = dayCloseMs(opts.market, mktToday, opts.calendar);
+          if (Number.isFinite(dataAt) && closeMs != null && dataAt < closeMs) partial = true;
+        }
       }
       if (partial) {
         return {
@@ -668,6 +675,24 @@
           full: src + ' · ' + clockText + ' · 盘中值·未定稿',
           short: src + ' ' + clockText + ' · 盘中值',
           partial: true,
+        };
+      }
+      // 2.9.2：当日 bar 存在、但该市场今天休市（假日/周末）→ 不视为收盘
+      if (bt.date === mktToday && phase && (phase.phase === 'holiday' || phase.phase === 'weekend')) {
+        return {
+          state: 'delayed',
+          full: src + ' · ' + clockText + ' · 休市日无当日 bar',
+          short: src + ' ' + clockText + ' · 休市日无当日 bar',
+          invalid: true,
+        };
+      }
+      // 2.9.2：该市场当日已收盘（含半日市、跨时区市场的本地日期）→ 收盘（日线）
+      if (bt.date === mktToday && phase && phase.phase === 'post') {
+        return {
+          state: 'closed',
+          full: src + ' · ' + clockText + ' · 收盘（日线）',
+          short: src + ' ' + clockText + ' · 收盘（日线）',
+          closed: true,
         };
       }
       return {

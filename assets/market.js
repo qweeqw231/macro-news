@@ -896,7 +896,16 @@
     const j = await fetchLocalFile(`data/kline/${key}.json`);
     const daily = j.bars;
     if (!Array.isArray(daily) || !daily.length) throw new Error('本地日K为空');
-    if (period === '1d') return daily;
+    // 2.9.2：把文件生成时刻带给 K 线头部，用来判断「收盘后但仍是盘中写入」。
+    // 数组上挂一个非枚举属性，不改变 bars 的遍历/长度语义。
+    if (period === '1d') {
+      try {
+        Object.defineProperty(daily, '__generatedAt', {
+          value: j.generatedAt || '', enumerable: false, configurable: true,
+        });
+      } catch (e) { /* 冻结数组时忽略 */ }
+      return daily;
+    }
     if (period === '1y') return aggregateYear(daily);
     if (period === '1w') return aggregateDaily(daily, 'week');
     if (period === '1M') return aggregateDaily(daily, 'month');

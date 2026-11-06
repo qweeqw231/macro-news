@@ -1808,9 +1808,12 @@
       src, bars, period, now: Date.now(),
       market: q ? (q.calendarMarket || q.market) : '',
       calendar: MARKET_CAL,
+      // 本地日K 的生成时刻：用于判断「收盘后但文件仍是收盘前生成的」
+      dataAt: bars && bars.__generatedAt,
     });
     box.className = 'km-meta ' +
-      (m.state === 'realtime' ? 'state-ok' : m.state === 'local' ? 'state-local' : 'state-warn');
+      (m.state === 'realtime' ? 'state-ok'
+        : (m.state === 'local' || m.state === 'closed') ? 'state-local' : 'state-warn');
     box.innerHTML =
       `<span class="km-meta-full">${esc(m.full)}</span>` +
       `<span class="km-meta-short">${esc(m.short)}</span>`;
