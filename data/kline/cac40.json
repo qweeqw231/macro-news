@@ -3,11 +3,7 @@
   "name": "法国CAC40",
   "market": "EU",
   "period": "1d",
-<<<<<<< Updated upstream
   "generatedAt": "2026-11-06T11:49:17.333Z",
-=======
-  "generatedAt": "2026-11-06T11:48:53.585Z",
->>>>>>> Stashed changes
   "source": "东方财富",
   "bars": [
     {
@@ -8029,11 +8025,7 @@
     {
       "t": "2026-11-06",
       "o": 8105.06,
-<<<<<<< Updated upstream
       "c": 8056.28,
-=======
-      "c": 8055.62,
->>>>>>> Stashed changes
       "h": 8139.69,
       "l": 8053.55,
       "v": 0
