@@ -309,18 +309,22 @@ and are uncertain, so we do not re-sort them just for tidiness. Measured now: `2
 
 This is the **root of the snapshot definition**, and it also explains why 12:05 cannot read the current day's daily K for Japan/Korea.
 
-| Market | Final at | am 12:05 reads | pm 16:02 reads |
+| Market | Final at | am 12:05 reads | pm 16:12 reads |
 |---|---|---|---|
 | CN / ETF | D 15:00 | 5-minute 11:30 bar | D |
 | HK | D 16:00 | 5-minute 12:00 bar | D |
 | JP | D 14:00 | **D−1** | D |
 | KR | D 14:30 | **D−1** | D |
+| VN | D 15:45 | **D−1** | D |
+| IN | D 18:00 | **D−1** | **— (not used)** |
 | EU / UK | D+1 00:30 | **D−1** | **D−1** |
 | US | D+1 05:00 | **D−1** | **D−1** |
 
 - At 12:05, Japan/Korea (UTC+9) are already in the afternoon session, so the current day's daily K is an **unfinished half bar**;
-- At 16:02, DAX/FTSE have just opened, so the current day cannot be used either;
+- At 16:12, DAX/FTSE have just opened, and India's BSE closes at 18:00, so neither can use the current day;
+- India is **not part of the pm snapshot** (its close is later than 16:12); in `am` it uses **D−1**, the same rule as Europe/US with no separate branch.
 - Europe/US use the later winter-time close (conservative); collection times are far from the boundary, so DST does not affect them.
+- pm `readyAt` is **16:12** (not 16:02): the downstream close review requires `capturedAt >= 16:10`, and HK has a 16:00–16:10 closing auction.
 
 ### 3.2 How point-in-time snapshots pick prices
 

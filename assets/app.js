@@ -423,7 +423,31 @@
       }
       quotes = localQuotes.map((q) => ({ ...q, __fromLocal: true }));
     } else {
-      quotes = live;
+      // 2.9.1：收盘定稿优先于直连的滞后源时间。
+      // 印度收盘后东财 f124 仍停在 17:45（价格其实已是收盘价），
+      // 若直接用 live，卡片会一直标「盘中值」。本机 quotes.json 里的 dailyK
+      // 定稿 asOf 更晚时用它覆盖价格与状态。
+      const localMap = new Map((localQuotes || []).map((q) => [q.key, q]));
+      quotes = live.map((q) => {
+        const loc = localMap.get(q.key);
+        if (loc && loc.priceSource === 'dailyK') {
+          const lt = Date.parse(loc.updatedAt || '');
+          const rt = Date.parse(q.updatedAt || '');
+          if (Number.isFinite(lt) && (!Number.isFinite(rt) || lt > rt)) {
+            return {
+              ...q,
+              price: loc.price,
+              asOf: loc.asOf,
+              updatedAt: loc.updatedAt,
+              priceSource: 'dailyK',
+              closeDate: loc.closeDate,
+              note: loc.note || 'close-daily',
+              __fromLocal: false,
+            };
+          }
+        }
+        return q;
+      });
       if (localQuotes) {
         const seen = new Set(quotes.map((q) => q.key));
         const extra = localQuotes
@@ -448,6 +472,7 @@
         fromLocal: !!q.__fromLocal,
         market: q.calendarMarket || q.market,
         calendar: MARKET_CAL,
+        priceSource: q.priceSource,
       });
     };
 

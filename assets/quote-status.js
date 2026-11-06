@@ -445,7 +445,8 @@
       var stamp = clock(opts.sourceTime, now, true);
       var lbl = c.state === 'holiday' ? '休市'
         : (c.phase === 'lunch' ? '午间休市'
-          : (c.halfDay ? '已收盘（半日市）' : '已收盘'));
+          : (c.halfDay ? '已收盘（半日市）'
+            : (opts.priceSource === 'dailyK' ? '收盘（日线）' : '已收盘')));
       var rel0 = relativeAge(opts.sourceTime, now, {});
       return {
         state: c.state,

@@ -117,10 +117,8 @@ const SNAPSHOT_CAPTURE_HM = { am: '12:05', pm: '16:12' };
 const BAR_CLOSED_AT = {
   CN: '15:00', ETF: '15:00', HK: '16:00',
   JP: '14:00', KR: '14:30',
-  // 印度 BSE 15:30 IST = 北京 18:00；漏了这一行时 pm（16:12）会把当天盘中 bar
-  // 当成收盘价（11-06 实测：80,157.57 vs 官方 81,028.02）。
-  IN: '18:00',
-  // 越南 HOSE 14:45 ICT = 北京 15:45
+  // 越南 HOSE 14:45 ICT = 北京 15:45。印度不在此表：pm 不取印度，
+  // am 用默认 15:00 已能保证「12:05 时当天未收完 ⇒ 取 T-1」。
   VN: '15:45',
   EU: '00:30+1', UK: '00:30+1', US: '05:00+1',
 };
@@ -261,12 +259,21 @@ function closeLabel(market, date) {
 }
 
 /**
+ * 某个 session 的采集目标清单。
+ * 2.9.1：印度不进 pm（BSE 18:00 才收盘，晚于 pm 16:12；下游收盘复盘也不用它）。
+ * am 仍包含印度，取值走 T−1，与欧美同一套 lastClosedBarDate 判定。
+ */
+export function snapshotTargets(session) {
+  return buildTargets().filter((t) => !(session === 'pm' && t.market === 'IN'));
+}
+
+/**
  * 生成一份快照。
  * @param {string} date    交易日 YYYY-MM-DD
  * @param {'am'|'pm'} session
  */
 async function buildSnapshot(date, session) {
-  const targets = buildTargets();
+  const targets = snapshotTargets(session);
   const secidTargets = targets.filter((t) => t.secid);
   const now = beijingNow();
   const isToday = date === now.date;

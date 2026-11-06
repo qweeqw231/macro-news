@@ -15,8 +15,11 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SOURCES, fetchQuotes, getQuoteError } from './sources.mjs';
+import { INDICES, SOURCES, fetchQuotes, getQuoteError } from './sources.mjs';
+import { ETFS } from './etf.mjs';
+import { fetchDailyK } from './kline.mjs';
 import { fetchPortfolioQuotesFast } from './portfolio.mjs';
+import { finalizeClosedQuotes } from './quote-finalize.mjs';
 import { readBriefingMeta } from './brief-meta.mjs';
 import { dedupeItems } from './news-dedupe.mjs';
 import { decideBars } from './kline-guard.mjs';
@@ -247,8 +250,8 @@ async function main() {
   // ---- 组合行情：并入同一轮 15 分钟采集 ----
   // xau/xag/brent 24 小时交易、每轮都刷新；sge/usdcny/cgb 一天只发布一次，
   // 只在「过了发布时刻且存量不是今天」时重取（未到期的 key 保留 quotes.json 存量）。
+  const prevDoc = await readJSON(path.join(DATA, 'quotes.json'), { quotes: [] });
   try {
-    const prevDoc = await readJSON(path.join(DATA, 'quotes.json'), { quotes: [] });
     const fast = await fetchPortfolioQuotesFast(prevDoc.quotes || []);
     if (fast.quotes.length) {
       quotes = [...quotes, ...fast.quotes];
@@ -259,6 +262,25 @@ async function main() {
     }
   } catch (err) {
     console.log(`  ⚠️ 组合行情 ${err.message}`);
+  }
+
+  // ---- 收盘定稿：源时间滞后的指数改用日 K 收盘价 ----
+  // 2.9.1：印度 18:00 收盘后东财 f124 仍停在 17:45，价格却已是收盘价；
+  // 不按市场写分支，凡「已收盘 + 源时间早于收盘」都用日 K 当日收盘覆盖。
+  try {
+    const meta = new Map([...INDICES, ...ETFS].map((x) => [x.key, x]));
+    const fin = await finalizeClosedQuotes(quotes, {
+      now: startedAt.getTime(),
+      prevQuotes: prevDoc.quotes || [],
+      meta,
+      fetchDailyK,
+    });
+    quotes = fin.quotes;
+    for (const c of fin.changes) {
+      console.log(`  ↳ 收盘定稿 ${c.key}：${c.from} → ${c.to}（日线 ${c.price}）`);
+    }
+  } catch (err) {
+    console.log(`  ⚠️ 收盘定稿 ${err.message}`);
   }
 
   // ---- 写入：按天归档 ----
