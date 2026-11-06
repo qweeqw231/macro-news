@@ -1,67 +1,67 @@
 {
   "runner": "cloud",
-  "startedAt": "2026-11-06T13:07:45.088Z",
-  "durationMs": 26676,
+  "startedAt": "2026-11-06T13:22:42.415Z",
+  "durationMs": 56672,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 4750
+      "ms": 5404
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1160
+      "ms": 1372
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1816
+      "ms": 2102
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 896
+      "ms": 1362
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 2202
+      "ms": 2744
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 901
+      "ms": 1408
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1460
+      "ms": 1937
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 22762
+      "ms": 51603
     }
   ],
   "quotes": 59,
-  "added": 17,
+  "added": 16,
   "localSync": {
     "result": "skipped:stash-pop-conflict",
     "reason": "stash 恢复冲突",
