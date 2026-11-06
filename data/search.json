@@ -1,10 +1,98 @@
 {
-  "generatedAt": "2026-11-06T16:07:42.161Z",
+  "generatedAt": "2026-11-06T16:22:48.515Z",
   "windowDays": 62,
   "from": "2026-09-06",
   "days": 57,
   "total": 23017,
   "items": [
+    {
+      "id": "8da4k3",
+      "ts": 1793982006,
+      "time": "2026-11-07T00:20:06.000+08:00",
+      "source": "新浪财经",
+      "title": "伊朗战争结束的希望升温 欧洲天然气势创一年多最大周跌幅",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-07/doc-inixvmnq8676075.shtml"
+    },
+    {
+      "id": "vg6bh7",
+      "ts": 1793981944,
+      "time": "2026-11-07T00:19:04.000+08:00",
+      "source": "新浪财经",
+      "title": "台积电据报拟进军先进存储芯片制造 应英伟达要求布局3D DRAM",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-07/doc-inixvmns5323701.shtml"
+    },
+    {
+      "id": "17rku9x",
+      "ts": 1793981729,
+      "time": "2026-11-07T00:15:29.000+08:00",
+      "source": "华尔街见闻",
+      "title": "马斯克称特斯拉无政府订单，SpaceX政府订单质优价低且占比将持续走低",
+      "url": "https://wallstreetcn.com/livenews/3196121"
+    },
+    {
+      "id": "biha8d",
+      "ts": 1793981689,
+      "time": "2026-11-07T00:14:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧洲央行行长候选人仅剩下Knot和De Cos.。",
+      "url": "https://wallstreetcn.com/livenews/3196120"
+    },
+    {
+      "id": "j12hdm",
+      "ts": 1793981643,
+      "time": "2026-11-07T00:14:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Carlyle Secured Lending的CEO Alex Chi：Carlyle对计算基础设施的风险敞口是很小的。",
+      "url": "https://wallstreetcn.com/livenews/3196119"
+    },
+    {
+      "id": "r5ishd",
+      "ts": 1793981525,
+      "time": "2026-11-07T00:12:05.000+08:00",
+      "source": "新浪财经",
+      "title": "“整个行业格局已然改变”：博彩业CEO看待中期选举后涌现的新机遇",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-07/doc-inixvmnw5564894.shtml"
+    },
+    {
+      "id": "19xa2hv",
+      "ts": 1793981461,
+      "time": "2026-11-07T00:11:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "哥伦比亚矿业部长：与委内瑞拉共用的输油管道修复工作将于年底前启动，运营将于2027年年中开始。",
+      "url": "https://wallstreetcn.com/livenews/3196118"
+    },
+    {
+      "id": "xbekt3",
+      "ts": 1793981443,
+      "time": "2026-11-07T00:10:43.000+08:00",
+      "source": "华尔街见闻",
+      "title": "晨星（Morningstar）高级股票分析师瓦西奥莱克（Dan Wasiolek）：我们认为，与传统的谷歌搜索相比，人工智能代理将更有可能在有利的经济效益下，向爱彼迎可靠且节省成本的聚合、预订、支付及服务属性靠拢，。",
+      "url": "https://wallstreetcn.com/livenews/3196117"
+    },
+    {
+      "id": "ew4yuu",
+      "ts": 1793981417,
+      "time": "2026-11-07T00:10:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "逆行业整体谨慎情绪，爱彼迎因乐观前景展望而股价上涨",
+      "url": "https://wallstreetcn.com/livenews/3196116"
+    },
+    {
+      "id": "1m94bwi",
+      "ts": 1793981288,
+      "time": "2026-11-07T00:08:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "巴西总统卢拉：巴西的财政责任感强于许多国家。",
+      "url": "https://wallstreetcn.com/livenews/3196115"
+    },
+    {
+      "id": "vt8eo5",
+      "ts": 1793981278,
+      "time": "2026-11-07T00:07:58.000+08:00",
+      "source": "华尔街见闻",
+      "title": "法国财政部长Lescure：法国根据国际能源署（IEA）的计划释放360万桶柴油。",
+      "url": "https://wallstreetcn.com/livenews/3196114"
+    },
     {
       "id": "1udbd2w",
       "ts": 1793981218,
@@ -6316,94 +6404,6 @@
       "source": "东方财富",
       "title": "九载同行，进博会为区域带来什么？又如何续写新故事？",
       "url": "http://finance.eastmoney.com/news/1354,202611063924792030.html"
-    },
-    {
-      "id": "1rks4xg",
-      "ts": 1793949108,
-      "time": "2026-11-06T15:11:48.000+08:00",
-      "source": "新浪财经",
-      "title": "光大期货1106热点追踪：中期选举落地挤出地缘溢价，聚烯烃重挫",
-      "url": "https://finance.sina.com.cn/money/future/roll/2026-11-06/doc-inixuqhs8271164.shtml"
-    },
-    {
-      "id": "8odk71",
-      "ts": 1793949040,
-      "time": "2026-11-06T07:10:40.000Z",
-      "source": "中新网",
-      "title": "商务部：对原产于欧盟、日本的进口乙叉降冰片烯发起反倾销立案调查",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-06/10727274.shtml"
-    },
-    {
-      "id": "1p76gf",
-      "ts": 1793949040,
-      "time": "2026-11-06T07:10:40.000Z",
-      "source": "中新网",
-      "title": "商务部公布对原产于欧盟、日本的进口乙叉降冰片烯发起反倾销立案调查",
-      "url": "https://www.chinanews.com.cn/${mypath}/2026/11-06/10727274.shtml"
-    },
-    {
-      "id": "1wogbyd",
-      "ts": 1793948993,
-      "time": "2026-11-06T15:09:53.000+08:00",
-      "source": "东方财富",
-      "title": "商务部：自2026年11月6日起对原产于欧盟的进口对位芳纶长丝进行反倾销立案调查",
-      "url": "http://finance.eastmoney.com/news/1355,202611063924789832.html"
-    },
-    {
-      "id": "meq8qf",
-      "ts": 1793948986,
-      "time": "2026-11-06T15:09:46.000+08:00",
-      "source": "华尔街见闻",
-      "title": "商务部：对原产于欧盟的进口对位芳纶长丝发起反倾销立案调查",
-      "url": "https://wallstreetcn.com/livenews/3195705"
-    },
-    {
-      "id": "1d825f4",
-      "ts": 1793948953,
-      "time": "2026-11-06T15:09:13.000+08:00",
-      "source": "东方财富",
-      "title": "商务部：对原产于欧盟的进口对位芳纶长丝发起反倾销立案调查",
-      "url": "http://finance.eastmoney.com/news/1355,202611063924796366.html"
-    },
-    {
-      "id": "nzfod2",
-      "ts": 1793948925,
-      "time": "2026-11-06T15:08:45.000+08:00",
-      "source": "新浪财经",
-      "title": "今日原油：连续第二日上涨，但本周仍录得两位数跌幅",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-06/doc-inixuqhu5044369.shtml"
-    },
-    {
-      "id": "1b5cfto",
-      "ts": 1793948912,
-      "time": "2026-11-06T15:08:32.000+08:00",
-      "source": "东方财富",
-      "title": "银河证券完成第一批A股买入操作 互换便利增量资金入市提速",
-      "url": "http://finance.eastmoney.com/news/1350,202611063924782774.html"
-    },
-    {
-      "id": "1ugwn9e",
-      "ts": 1793948874,
-      "time": "2026-11-06T15:07:54.000+08:00",
-      "source": "华尔街见闻",
-      "title": "国防部：国际社会应高度警惕日本重启“战争机器”",
-      "url": "https://wallstreetcn.com/livenews/3195704"
-    },
-    {
-      "id": "i1jx5n",
-      "ts": 1793948821,
-      "time": "2026-11-06T15:07:01.000+08:00",
-      "source": "新浪财经",
-      "title": "退市不免责！一批龙宇股份（603003）股民索赔再获得法院立案，前期已有获赔到位",
-      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixuqia5502115.shtml"
-    },
-    {
-      "id": "1vhw43k",
-      "ts": 1793948820,
-      "time": "2026-11-06T15:07:00.000+08:00",
-      "source": "新浪财经",
-      "title": "农尚环境（300536）投资者索赔案将开庭，前期已有胜诉",
-      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-06/doc-inixuqhs8267949.shtml"
     },
     {
       "id": "1g941fq",
