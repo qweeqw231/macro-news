@@ -318,6 +318,37 @@
     return null;
   }
 
+  /**
+   * 某日「日线那根 bar」的收盘时刻（UTC 毫秒）。
+   * 与 lastCloseBefore 的区别：只取**当日日盘**的最后一个收盘，
+   *   · 港股 12:00 午休不算收盘（日线要等 16:00）；
+   *   · 上海金夜盘 26:30 不算当日日线收盘（日线要等 15:30）。
+   * 跨日窗口（end > 1440）一律排除。
+   */
+  function dayCloseMs(market, dateStr, calendar) {
+    var cfg = MARKET_SESSIONS[market];
+    if (!cfg) return null;
+    var ends = sessionWindows(market, dateStr, calendar)
+      .map(function (w) { return w[1]; })
+      .filter(function (m) { return m <= 1440; });
+    if (!ends.length) return null;
+    return zonedToUtc(dateStr, Math.max.apply(null, ends), cfg.tz);
+  }
+
+  /** 最近一个「日线已收盘」的交易日（按市场本地日期） */
+  function lastClosedDailyDate(market, now, calendar) {
+    var cfg = MARKET_SESSIONS[market];
+    if (!cfg) return null;
+    var p = tzParts(now, cfg.tz);
+    for (var i = 0; i <= 14; i++) {
+      var d = shiftDate(p.date, -i);
+      if (!isTradingDay(market, d, calendar)) continue;
+      var ms = dayCloseMs(market, d, calendar);
+      if (ms != null && ms <= Number(now)) return d;
+    }
+    return null;
+  }
+
   function classifySession(sourceTime, now, market, calendar) {
     var age = ageMs(sourceTime, now);
     var info = sessionAt(market, now, calendar);
@@ -448,6 +479,27 @@
         label: '延迟',
         ageMs: null,
       };
+    }
+    // 2.9.0：收盘后但源时间还停在该市场收盘之前 ⇒ 这是盘中值，不是收盘价。
+    //   11-06 事故：本机 15:52 的 quotes.json 里港股是 15:53（收市竞价前），
+    //   卡片只写「延迟」，下游与人都看不出它不能当收盘价。
+    if (c.phase === 'post' && c.lastClose) {
+      var srcMs = Date.parse(opts.sourceTime || '');
+      if (Number.isFinite(srcMs) && srcMs < c.lastClose.ms) {
+        var sp = bjParts(srcMs);
+        var srcDate = sp.y + '-' + sp.m + '-' + sp.d;
+        if (srcDate === c.lastClose.date) {
+          return {
+            state: 'delayed',
+            card: (tm ? tm + ' · ' : '') + '盘中值·未定稿',
+            summary: '更新于 ' + tm + ' · ' + age + ' · 盘中值·未定稿（早于收盘 ' + c.lastClose.hm + '）',
+            footer: '行情 盘中值·未定稿',
+            label: '盘中值·未定稿',
+            ageMs: c.ageMs,
+            partial: true,
+          };
+        }
+      }
     }
     return {
       state: c.state,
@@ -592,6 +644,31 @@
       var rel = relativeAge(sourceTime, now, { daily: true, date: bt.date });
       var dateText = isYear ? bt.year : bt.date.slice(5);
       var clockText = isYear ? dateText : dateText;
+      // 2.9.0：当日 bar 不一定是收盘价。
+      //   · 该市场还在盘中（open/lunch/pre）→ 这根 bar 只是盘中值；
+      //   · 来自「本地全量」（服务端每天 12:18 生成）且日期是今天 → 一定是午盘值
+      //     （11-06 恒指 24,533.33 vs 收盘 24,481.86）。
+      // 两种情况都不许标「实时」，统一改成「盘中值·未定稿」。
+      var partial = false;
+      var cfg = opts.market && MARKET_SESSIONS[opts.market];
+      var mktToday = cfg ? tzParts(Number(now), cfg.tz).date : today;
+      if (bt.date === mktToday) {
+        var phase = (opts.market && opts.calendar)
+          ? sessionAt(opts.market, Number(now), opts.calendar)
+          : null;
+        if (phase && (phase.phase === 'open' || phase.phase === 'lunch' || phase.phase === 'pre')) {
+          partial = true;
+        }
+        if (fromLocal && /全量/.test(String(opts.src || ''))) partial = true;
+      }
+      if (partial) {
+        return {
+          state: 'delayed',
+          full: src + ' · ' + clockText + ' · 盘中值·未定稿',
+          short: src + ' ' + clockText + ' · 盘中值',
+          partial: true,
+        };
+      }
       return {
         state: state,
         full: src + ' · ' + clockText + ' · ' + rel + ' · ' + STATE_LABEL[state],
@@ -665,6 +742,8 @@
     classifySession: classifySession,
     sessionAt: sessionAt,
     lastCloseBefore: lastCloseBefore,
+    dayCloseMs: dayCloseMs,
+    lastClosedDailyDate: lastClosedDailyDate,
     halfDayFor: halfDayFor,
     sessionWindows: sessionWindows,
     closeMinutesFor: closeMinutesFor,

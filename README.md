@@ -313,18 +313,22 @@ GitHub Actions 原来的 UTC 切日与新口径一致，本机不再按北京零
 
 这是**快照口径的根**，也解释了为什么 12:05 不能取日/韩当天的日 K。
 
-| 市场 | 收完时间 | am 12:05 取 | pm 16:02 取 |
+| 市场 | 收完时间 | am 12:05 取 | pm 16:12 取 |
 |---|---|---|---|
 | CN / ETF | D 15:00 | 5 分钟 11:30 bar | D |
 | HK | D 16:00 | 5 分钟 12:00 bar | D |
 | JP | D 14:00 | **D−1** | D |
 | KR | D 14:30 | **D−1** | D |
+| VN | D 15:45 | **D−1** | D |
+| IN | D 18:00 | **D−1** | **D−1** |
 | EU / UK | D+1 00:30 | **D−1** | **D−1** |
 | US | D+1 05:00 | **D−1** | **D−1** |
 
 - 12:05 时，日/韩（UTC+9）已进入下午盘，当天日 K 是**没收盘的半截 bar**；
-- 16:02 时，DAX/富时刚开盘，同样不能取当天；
+- 16:12 时，DAX/富时刚开盘，同样不能取当天；印度 18:00 才收盘，也只能取 D−1；
 - 欧美取冬令时较晚的收盘时刻（保守），采集时点离边界很远，不受夏令时影响。
+- pm 的 `readyAt` 是 **16:12**（不是 16:02）：下游收盘复盘要求 `capturedAt >= 16:10`，
+  港股 16:00-16:10 是收市竞价。
 
 ### 3.2 时点快照怎么取价
 
@@ -603,6 +607,23 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 |---|---|---|---|
 | 本机回退采集 | 每 120 分钟 | `scripts\collect-and-push.ps1` | `scripts\register-task.ps1` |
 | 远端同步 | 每 4 小时 | `scripts\pull-remote.ps1` | `scripts\register-pull-task.ps1` |
+| 收盘前同步（只读） | 工作日 16:18 / 16:33 / 16:48 | `scripts\sync-close.ps1` | `schtasks`（见下） |
+
+收盘前同步是 **2.9.0** 新增的只读任务：只做 `git fetch` + `git merge --ff-only`，
+不采集、不提交、不生成数据。原因是下游收盘复盘 17:00 只读本地文件，
+而 `MacroNews-Pull` 每 4 小时才落一次（:11），17:00 时工作区可能还停在午后，
+拿不到 16:14 生成的 pm。三档 16:18 / 16:33 / 16:48 覆盖「云端刚提交 → 本地可见」的窗口，
+日志与台账在 `.local/logs/sync-close-*.log`、`.local/metrics/close-sync.jsonl`。
+
+注册（工作日三档，PowerShell 单行；`/st` 必须带冒号）：
+
+```powershell
+schtasks /create /tn "MacroNews-Sync-1618" /tr "wscript.exe //nologo C:\Work\Minimax_Work\macro-news\scripts\run-hidden.vbs C:\Work\Minimax_Work\macro-news\scripts\sync-close.ps1" /sc WEEKLY /d MON,TUE,WED,THU,FRI /st 16:18 /f
+schtasks /create /tn "MacroNews-Sync-1633" /tr "wscript.exe //nologo C:\Work\Minimax_Work\macro-news\scripts\run-hidden.vbs C:\Work\Minimax_Work\macro-news\scripts\sync-close.ps1" /sc WEEKLY /d MON,TUE,WED,THU,FRI /st 16:33 /f
+schtasks /create /tn "MacroNews-Sync-1648" /tr "wscript.exe //nologo C:\Work\Minimax_Work\macro-news\scripts\run-hidden.vbs C:\Work\Minimax_Work\macro-news\scripts\sync-close.ps1" /sc WEEKLY /d MON,TUE,WED,THU,FRI /st 16:48 /f
+```
+
+回滚：`schtasks /delete /tn "MacroNews-Sync-1618" /f`（其余两档替换任务名）。
 
 `MacroNews-Collect` 是**先同步、再按陈旧度**驱动的：每轮先 `git fetch origin main`
 比较 `HEAD`/`origin/main`（落后且干净 → ff-only；有已跟踪改动 → stash → ff-only → pop；

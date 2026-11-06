@@ -1769,7 +1769,7 @@
     (period === '1d' || period === '1w' || period === '1M' || period === '1y') ? 20000 : 2000;
 
   /** K线头部标记：来源 / 数据时间 / 相对陈旧度 / 三态；桌面长文、窄屏短文由 CSS 切换 */
-  function renderKlineMeta(bars, src, period) {
+  function renderKlineMeta(bars, src, period, key) {
     const box = $('#kmMeta');
     if (!box) return;
     const QS = window.MacroQuoteStatus;
@@ -1777,7 +1777,13 @@
       box.textContent = src || '';
       return;
     }
-    const m = QS.klineMarker({ src, bars, period, now: Date.now() });
+    // 2.9.0：把市场与假日表传进去，让「当日未收盘的 bar」能标成盘中值
+    const q = (S.quotes || []).find((x) => x.key === key);
+    const m = QS.klineMarker({
+      src, bars, period, now: Date.now(),
+      market: q ? (q.calendarMarket || q.market) : '',
+      calendar: MARKET_CAL,
+    });
     box.className = 'km-meta ' +
       (m.state === 'realtime' ? 'state-ok' : m.state === 'local' ? 'state-local' : 'state-warn');
     box.innerHTML =
@@ -1855,7 +1861,7 @@
       // 来源/时间/根数/状态统一进 #kmMeta；图下只保留口径说明，避免两处口径冲突。
       const caliber = window.MarketData.getKlineNote ? window.MarketData.getKlineNote(key) : '';
       note.textContent = caliber || '';
-      renderKlineMeta(bars, src, period);
+      renderKlineMeta(bars, src, period, key);
       notifyUpgrade();
       return true;
     };

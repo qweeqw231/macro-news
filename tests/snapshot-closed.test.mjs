@@ -22,6 +22,9 @@ test('各市场日 K 的收完时刻（北京时间）', () => {
   assert.equal(bjText(barClosedAt('HK', '2026-10-30')), '2026-10-30 16:00');
   assert.equal(bjText(barClosedAt('JP', '2026-10-30')), '2026-10-30 14:00');
   assert.equal(bjText(barClosedAt('KR', '2026-10-30')), '2026-10-30 14:30');
+  // 2.9.0：印度 15:30 IST = 18:00；越南 14:45 ICT = 15:45
+  assert.equal(bjText(barClosedAt('IN', '2026-10-30')), '2026-10-30 18:00');
+  assert.equal(bjText(barClosedAt('VN', '2026-10-30')), '2026-10-30 15:45');
   // 欧美跨到次日凌晨：夏/冬令时都按更晚的那个收盘时刻算（保守，不会误判为已收）
   assert.equal(bjText(barClosedAt('EU', '2026-10-30')), '2026-10-31 00:30');
   assert.equal(bjText(barClosedAt('UK', '2026-10-30')), '2026-10-31 00:30');
@@ -30,10 +33,10 @@ test('各市场日 K 的收完时刻（北京时间）', () => {
 
 test('pm 16:02 采集：A股/ETF/港股/日韩取当天，欧美取前一天', () => {
   const date = '2026-10-30';
-  for (const m of ['CN', 'ETF', 'HK', 'JP', 'KR']) {
+  for (const m of ['CN', 'ETF', 'HK', 'JP', 'KR', 'VN']) {
     assert.equal(lastClosedBarDate(m, date, 'pm'), date, `${m} 当天已收完`);
   }
-  for (const m of ['EU', 'UK', 'US']) {
+  for (const m of ['EU', 'UK', 'US', 'IN']) {
     assert.equal(lastClosedBarDate(m, date, 'pm'), '2026-10-29', `${m} 当天还没收完`);
   }
 });

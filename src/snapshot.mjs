@@ -47,6 +47,7 @@ import { fetchPortfolioQuotes } from './portfolio.mjs';
 import { fetchDailyK, fetchKline5m } from './kline.mjs';
 import { emPool } from './em.mjs';
 import { newsDay } from './news-day.mjs';
+import { checkPmGate } from './pm-gate.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -93,7 +94,10 @@ function hmAdd(hm, min) {
 //   把盘中日 K 当收盘价写进 asOf=15:00（csi300 4002.41 vs 官方 3985.50，+0.42%）。
 const SESSIONS = {
   am: { label: '上午盘', readyAt: '12:02' },
-  pm: { label: '收盘', readyAt: '16:02' },
+  // ⚠ 16:12 而不是 16:02：下游 dsh 收盘复盘要求 capturedAt >= 16:10
+  //   （港股 16:00-16:10 是收市竞价）。16:03 那轮会在竞价结束前落盘，
+  //   今天 16:14 只是恰好由 16:13 那轮生成才通过。
+  pm: { label: '收盘', readyAt: '16:12' },
 };
 // 目标时点：A股/ETF 上午 11:30、收盘 15:00；港股上午 12:00、收盘 16:00
 const SESSION_TARGET = {
@@ -109,10 +113,15 @@ const NO_SESSION_TARGET = new Set(['US', 'JP', 'EU', 'UK', 'KR']);
 //   · 美/欧当天的 session 还没开（或刚开）→ 当天也没有可用的收盘价。
 //   ⇒ 一律不能用「不晚于 D」的最后一根，必须用「在采集时点已经收完」的最后一根。
 //   表里的 +1 表示「次日」；欧美取冬令时较晚的那个收盘时刻（保守，不会误判为已收）。
-const SNAPSHOT_CAPTURE_HM = { am: '12:05', pm: '16:02' };
+const SNAPSHOT_CAPTURE_HM = { am: '12:05', pm: '16:12' };
 const BAR_CLOSED_AT = {
   CN: '15:00', ETF: '15:00', HK: '16:00',
   JP: '14:00', KR: '14:30',
+  // 印度 BSE 15:30 IST = 北京 18:00；漏了这一行时 pm（16:12）会把当天盘中 bar
+  // 当成收盘价（11-06 实测：80,157.57 vs 官方 81,028.02）。
+  IN: '18:00',
+  // 越南 HOSE 14:45 ICT = 北京 15:45
+  VN: '15:45',
   EU: '00:30+1', UK: '00:30+1', US: '05:00+1',
 };
 
@@ -573,6 +582,17 @@ async function main() {
     } catch (err) {
       console.error(`  ❌ ${job.date} ${job.session}：${err.message}`);
       continue;
+    }
+    if (job.session === 'pm' && job.date === now.date) {
+      // 消费方（dsh 收盘复盘）要求 capturedAt >= 16:10，否则整份 pm 视为不可用。
+      // readyAt 已经卡在 16:12，这里是最后一道自证：任何路径（含 --session/--backfill）
+      // 生成的今天 pm 都必须过门禁，否则宁可不写。
+      const gate = checkPmGate(doc, { today: now.date });
+      if (!gate.ok) {
+        console.error(`  ⛔ ${job.date} pm：未通过收盘门禁（${gate.reasons.join('、')}），不写文件`);
+        skipped++;
+        continue;
+      }
     }
     if (!doc.isTradingDay) {
       console.log(`  ⏭ ${job.date} ${job.session}：非交易日或数据不可得，不写文件`);

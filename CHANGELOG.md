@@ -10,6 +10,80 @@
 **反例**：连续修 bug 不应因“数字用完了”而进位到中版本；2.4.x 可以继续到 2.4.11、2.4.12。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.9.0] - 2026-11-06
+
+> 中版本：修复用户可见的错误数据（日 K 当日 bar 把盘中值当收盘），并新增「收盘前只读同步」能力。
+> 版本判定：按本文件顶部规则，PBOC 错日同类（用户可见错误数据）应进中版本；`2.6.0` 已被上海金实时占用，
+> 故取**下一个中版本 2.9.0**（当前最高 2.8.1）。
+
+### 背景（2026-11-06 事故）
+
+下游 dsh「交易日收盘复盘」17:00 只读本地文件，以 `data/snapshots/<date>_pm.json` 为收盘基准。
+云端 16:14:06 已生成正确的 pm（恒指 24,481.86、上海金 868.57），但本机 HEAD 停在 15:54、
+pm 文件 17:54 才被拉到本地 ⇒ 下游找不到 pm，退回 `quotes.json` 的 15:52 截面
+（港股 15:53 竞价前价、黄金 15:23）。兜底的 kline 也不安全：`hsi_full.json` 24,533.33 是 12:18 午盘值，
+`hsi.json` 24,477.43 是 15:48 盘中值。
+
+### 新增
+
+- **收盘前只读同步**（`scripts/sync-close.ps1`）：只做 `git fetch` + `git merge --ff-only`，
+  不采集、不提交、不生成数据；只把远端已提交的 pm 提前落到本地。
+  - 工作日 **16:18 / 16:33 / 16:48** 三档（Windows `MacroNews-Sync-1618/1633/1648`）。
+  - 日志 `.local/logs/sync-close-*.log`，台账 `.local/metrics/close-sync.jsonl`
+    （`result / behind / ahead / headBefore / headAfter / pmExists / pmCapturedAt / pmGate`）。
+  - 本地有独有提交或工作区不干净 → 安全跳过，绝不 stash、绝不产生合并提交。
+- **pm 门禁自证**（`src/pm-gate.mjs` + `scripts/check-pm-gate.mjs`）：
+  `capturedAt >= 16:10`、`date = 当日`、`isTradingDay = true`、关键 key 的 `asOf` 是当日。
+  CLI 可重复运行：`node scripts/check-pm-gate.mjs --date 2026-11-06`（不通过退出码 1）。
+
+### 修正
+
+- **收盘定稿窗口**（`scripts/update-kline-last.mjs`）：
+  判据从「当前是否在交易时段」改成「今天这根收盘 bar 写过没有」——
+  收盘后若文件 `generatedAt` 仍早于当日日线收盘，就补一次；写成功后 `generatedAt >= 收盘时刻`，天然幂等。
+  - 不设 `close+45min` 上限：`kline-minute.yml` 每小时 :17 跑，日/韩/欧/英/上海金的 :17 恰好落在收盘后
+    **47 分钟**，加上限会让这 5 个市场永远定不了稿。改为「收盘 +2 分钟之后、只要没写过就补」。
+  - 午休 / 盘前 / 周末 / 假日不补写（最近一次日线收盘是昨天，不属于「今天」）。
+- **全量文件剔除未收盘当天 bar**（`scripts/update-kline-full.mjs`）：
+  全量每天 12:18 生成，此时 A股/港股/日韩/上海金/印度/越南都未收盘；按各市场「最近一次日线收盘」
+  裁掉当天 bar，存量里的当天 bar 也先裁再 `decideBars`（否则会被当成缺失历史合并回来）。
+- **pm 生成时刻**（`src/snapshot.mjs`）：`pm.readyAt 16:02 → 16:12`，
+  并在写盘前用 `checkPmGate` 再验一次（`--session pm --date 今天` 与 `--backfill` 路径都拦）。
+- **印度/越南的日 K 收完时刻**：`BAR_CLOSED_AT` 补 `IN: 18:00`、`VN: 15:45`。
+  漏掉时 pm（16:12）会把印度当天的盘中 bar 当收盘价——
+  11-06 实测 pm 里 `sensex = 80,157.57`（`asOf` 标了当天），官方收盘是 **81,028.02**。
+  该 pm 已按「历史快照不回填」保留原样，只修生成规则。
+- **前端「盘中值·未定稿」**：
+  - K 线头部：当日 bar 且（该市场仍在盘中 / 来自 `_full` 全量兜底）→ 不写「实时」，
+    改「盘中值·未定稿」（`assets/quote-status.js#klineMarker`，`app.js` 传入 market + 假日表）。
+  - 行情卡片：已收盘但源时间早于该市场收盘 → 卡片从「延迟」改为「盘中值·未定稿」。
+- **台账说真话**（`scripts/collect-and-push.ps1`）：
+  新增 `collected / quotesGeneratedAt / pmSnapshotExists / pmCapturedAt`；
+  跳过采集时 `skipReason = news-fresh`（此前 `_last-run.json` 有变化就会记成
+  `result=ok, filesWritten=1, skipReason=""`，事后看不出没采）。
+
+### 回填（2026-11-06 当日 bar）
+
+- `<key>.json` 收盘定稿 17 个：`sh_comp 3649.18`、`sz_comp 11175.78`、`chinext 2465.23`、
+  `star50 1253.2`、`bse50 888.48`、`csi300 4054.28`、`sse50 2787.41`、`a500 4914.08`、
+  `csi500 6597.35`、`csi1000 6505.35`、`hsi 24481.86`、`hs_tech 4078.23`、`n225 57434.77`、
+  `kospi 5059.69`、`sensex 81028.02`、`vnindex 1726.72`、`sge_au9999 868.57`。
+  其中受下游门禁约束的 `hsi / hs_tech / csi300 / sge_au9999` 与 pm 快照**逐项相等**（差 0）；
+  `dax / cac40 / ukx` 只是盘中更新（欧洲当时仍在交易），不属于定稿。
+- `<key>_full.json` 剔除未收盘的 11-06 bar 共 19 个（hsi 24,533.33、hs_tech 4,081.75、
+  sge 867.6、sensex 79,934.35、vnindex 1,732.02 等），文件改以 11-05 收尾；
+  次日 12:18 全量会以已收盘的 11-06 重新入列。
+
+### 未改动
+
+- `worker/`、采集频率、pm 的字段结构（`quotes.<key>.price / capturedAt / date / isTradingDay`）均不变。
+- 历史时点快照不回填、不重写（含 11-06 pm 里印度的盘中值）。
+- 15 秒行情轮询与 `patchQuotes` 原地更新不变。
+
+### 缓存
+
+- 前端资源串 `20261106g → 20261106h`。
+
 ## [2.8.1] - 2026-11-06
 
 > 补丁位：行情分组顺序按实际关注顺序重排；顺带修掉「未收录市场被顶到最前」的排序缺陷。

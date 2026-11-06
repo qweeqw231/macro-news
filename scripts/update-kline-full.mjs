@@ -27,6 +27,7 @@ import { fileURLToPath } from 'node:url';
 import { INDICES, PORTFOLIO_KLINE, fetchKline, getKlineSource } from '../src/sources.mjs';
 import { decideBars } from '../src/kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
+import { dropUnclosedBars, CAL } from '../src/kline-finalize.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -88,7 +89,16 @@ for (const idx of list) {
     if (!bars || bars.length < MIN_BARS) {
       throw new Error(`只取到 ${bars ? bars.length : 0} 根，不足 ${MIN_BARS} 根，不当全量写`);
     }
-    const incoming = bars.map((b) => [b.t, b.o, b.c, b.h, b.l, b.v]);
+    // 2.9.0：全量文件每天 12:18 生成，此时 A股/港股/日韩/上海金都还没收盘。
+    // 当天那根 bar 只是午盘值（11-06 恒指 24,533.33 vs 收盘 24,481.86），
+    // 一旦被前端当「本地全量」兜底显示，就会被误读成收盘价。
+    // 这里按各市场「最近一次已收盘交易日」裁掉未收盘的当天 bar；
+    // 次日生成时它自然变成已收盘，重新入列。
+    const trimmed = dropUnclosedBars(bars, idx.market, Date.now(), CAL);
+    if (trimmed.dropped.length) {
+      console.log(`  ✂ ${idx.key.padEnd(9)} 剔除未收盘 bar：${trimmed.dropped.join('、')}`);
+    }
+    const incoming = trimmed.bars.map((b) => [b.t, b.o, b.c, b.h, b.l, b.v]);
     const lock = await acquireKlineLock(idx.key);
     if (!lock.ok) {
       locked++;
@@ -101,7 +111,9 @@ for (const idx of list) {
       if (existsSync(file)) {
         try {
           const old = JSON.parse(await readFile(file, 'utf8'));
-          const d = decideBars(old.bars, incoming);
+          // 存量里的当天 bar 也要先裁掉：否则 decideBars 会把它当「缺失的历史」合并回来
+          const oldTrimmed = dropUnclosedBars(old.bars, idx.market, Date.now(), CAL).bars;
+          const d = decideBars(oldTrimmed, incoming);
           if (d.action === 'reject') {
             rejected++;
             console.log(`  ⛔ ${idx.key.padEnd(9)} rejected: shorter（新 ${incoming.length} 根 < 现有 ${(old.bars || []).length} 根），保留现有文件`);

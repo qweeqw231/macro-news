@@ -119,7 +119,9 @@ test('写 K 线的脚本都接入共享守卫', () => {
   assert.match(read('src/collect.mjs'), /import \{ decideBars \} from '\.\/kline-guard\.mjs'/);
   assert.match(read('src/collect.mjs'), /const decision = decideBars\(prev && prev\.bars, incoming\)/);
   assert.match(read('scripts/update-kline-minute.mjs'), /decideBars\(oldDoc\.bars, incoming\)/);
-  assert.match(read('scripts/update-kline-full.mjs'), /decideBars\(old\.bars, incoming\)/);
+  assert.match(read('scripts/update-kline-full.mjs'), /decideBars\(oldTrimmed, incoming\)/);
+  // 2.9.0：存量先裁掉未收盘的当天 bar，否则 decideBars 会把它当缺失历史合并回来
+  assert.match(read('scripts/update-kline-full.mjs'), /dropUnclosedBars\(old\.bars/);
   assert.match(read('scripts/backfill-cgb1y.mjs'), /decideBars\(old\.bars, bars\)/);
 });
 

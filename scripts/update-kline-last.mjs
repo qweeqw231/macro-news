@@ -19,64 +19,60 @@ import {
 } from '../src/sources.mjs';
 import { upsertBars } from '../src/kline-guard.mjs';
 import { withKlineLock, lockSkipText } from '../src/kline-lock.mjs';
+import { writePlan, barDate, CAL } from '../src/kline-finalize.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const KLINE_DIR = path.join(ROOT, 'data', 'kline');
 const DRY_RUN = process.argv.includes('--dry-run');
 
-const pad = (n) => String(n).padStart(2, '0');
-const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-
-/** 北京时间的 星期 / 小时 */
-function beijingNow() {
-  const t = new Date(Date.now() + 8 * 3600 * 1000);
-  return { wd: t.getUTCDay(), h: t.getUTCHours() + t.getUTCMinutes() / 60 };
-}
-
-function inRange(h, a, b) {
-  return b <= 24 ? (h >= a && h < b) : (h >= a || h < b - 24);
-}
-
-// 北京时间交易时段；b>24 表示跨零点
-const SESSIONS = {
-  CN: [9.5, 15], ETF: [9.5, 15], HK: [9.5, 16],
-  JP: [8, 14], KR: [8, 14.5], EU: [16, 24.5], UK: [16, 24.5],
-  US: [21.5, 29],
-  SGE: [9, 15.5, 20, 26.5],
-};
-// 周六凌晨仍在跑「周五夜盘」的品种与收盘时刻（北京时间小时）
-const SAT_TAIL = { SGE: 2.5, US: 5, EU: 0.5, UK: 0.5 };
-
-function activeNow(market, now) {
-  const win = SESSIONS[market];
-  if (!win) return false;
-  if (now.wd === 0) return false;
-  if (now.wd === 6) {
-    const tail = SAT_TAIL[market];
-    if (!tail || now.h >= tail) return false;
-  }
-  return win.length === 4
-    ? inRange(now.h, win[0], win[1]) || inRange(now.h, win[2], win[3])
-    : inRange(now.h, win[0], win[1]);
-}
-
 async function main() {
-  const now = beijingNow();
+  const nowMs = Date.now();
   const keys = [...INDICES, ...PORTFOLIO_KLINE].map((x) => x.key);
-  let updated = 0, skipped = 0, failed = 0, locked = 0;
+  let updated = 0, finalized = 0, skipped = 0, failed = 0, locked = 0;
 
   for (const key of keys) {
     if (!klineAvailable(key)) { skipped++; continue; }
     const meta = klineTarget(key);
-    if (!activeNow(meta?.market, now)) { skipped++; continue; }
+    const market = meta?.market;
+    if (!market) { skipped++; continue; }
 
     const file = path.join(KLINE_DIR, `${key}.json`);
     if (!existsSync(file)) { skipped++; continue; }
 
+    // 判据：不是「现在是否在交易时段」，而是「今天这根收盘 bar 写过没有」。
+    //   · 盘中 → 照旧每轮 upsert（含上海金夜盘这类“未来蜡烛”）；
+    //   · 收盘后 → 若文件 generatedAt 还早于收盘时刻，补一次定稿；
+    //   · 已定稿 → 跳过，幂等。
+    let state = {};
+    try {
+      const doc = JSON.parse(await readFile(file, 'utf8'));
+      const bars = Array.isArray(doc.bars) ? doc.bars : [];
+      state = {
+        generatedAt: doc.generatedAt,
+        lastBar: bars.length ? barDate(bars[bars.length - 1]) : '',
+      };
+    } catch {
+      skipped++;
+      continue;
+    }
+    const plan = writePlan(market, nowMs, state, CAL);
+    if (plan.action === 'skip') { skipped++; continue; }
+
     try {
       // 只取最近 5 根：够覆盖「今天 + 上一交易日」，不会把全量历史拖下来
       const latest = await fetchKline(key, '1d', 5);
+      if (!latest || !latest.length) { skipped++; continue; }
+      // 定稿轮必须真的拿到「收盘日」那一根：源侧还没吐出今天的话，等下一轮，
+      // 绝不能把昨天那根重新写一遍就算完。
+      if (plan.action === 'finalize' && barDate(latest[latest.length - 1]) !== plan.close.date) {
+        console.log(
+          `  ⏳ ${key}：待定稿 ${plan.close.date}，但源侧最后一根是 ` +
+            `${barDate(latest[latest.length - 1]) || '空'}，等下一轮`
+        );
+        skipped++;
+        continue;
+      }
       const res = await withKlineLock(key, async () => {
         const old = JSON.parse(await readFile(file, 'utf8'));
         // 2.4.12 补丁位：按时间键 upsert，并保留非零成交量。
@@ -107,8 +103,12 @@ async function main() {
       }
       if (!res.value.changed) { skipped++; continue; }
       updated++;
+      if (plan.action === 'finalize') finalized++;
       const last = res.value.last;
-      console.log(`  ${key}：最后一根 ${last.t} 收 ${last.c}${DRY_RUN ? '（dry-run 不写盘）' : ''}`);
+      console.log(
+        `  ${key}：${plan.action === 'finalize' ? '收盘定稿' : '盘中更新'} ` +
+          `${last.t} 收 ${last.c}${DRY_RUN ? '（dry-run 不写盘）' : ''}`
+      );
     } catch (err) {
       failed++;
       console.log(`  ❌ ${key}：${String(err.message).slice(0, 100)}`);
@@ -117,7 +117,10 @@ async function main() {
     await new Promise((r) => setTimeout(r, 400));
   }
 
-  console.log(`[kline-last] 更新 ${updated} 个 · 跳过 ${skipped} 个 · 锁占用 ${locked} 个 · 失败 ${failed} 个`);
+  console.log(
+    `[kline-last] 更新 ${updated} 个（收盘定稿 ${finalized}）· 跳过 ${skipped} 个 · ` +
+      `锁占用 ${locked} 个 · 失败 ${failed} 个`
+  );
 }
 
 main().catch((err) => {

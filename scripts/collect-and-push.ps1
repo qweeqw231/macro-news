@@ -69,6 +69,11 @@ $runStats = [ordered]@{
     skipReason = ''
     syncResult = ''
     durationMs = 0
+    # 2.9.0：跳过采集 = result 仍 ok，但 collected 必须是 false，不能再混成「成功采集」
+    collected = $false
+    quotesGeneratedAt = ''
+    pmSnapshotExists = $false
+    pmCapturedAt = ''
 }
 
 function Write-RunLedger {
@@ -76,6 +81,21 @@ function Write-RunLedger {
     try {
         $runStats.at = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
         $runStats.durationMs = [int]((Get-Date) - $runStart).TotalMilliseconds
+        # 账本要能自证「本轮行情是什么时点、今天的 pm 在不在本地」
+        try {
+            $qPath = Join-Path $root 'data\quotes.json'
+            if (Test-Path $qPath) {
+                $qDoc = ConvertFrom-Json (Get-Content $qPath -Raw -Encoding UTF8)
+                if ($qDoc.generatedAt) { $runStats.quotesGeneratedAt = [string]$qDoc.generatedAt }
+            }
+            $todayStr = Get-Date -Format 'yyyy-MM-dd'
+            $pmPath = Join-Path $root ("data\snapshots\{0}_pm.json" -f $todayStr)
+            if (Test-Path $pmPath) {
+                $runStats.pmSnapshotExists = $true
+                $pmDoc = ConvertFrom-Json (Get-Content $pmPath -Raw -Encoding UTF8)
+                if ($pmDoc.capturedAt) { $runStats.pmCapturedAt = [string]$pmDoc.capturedAt }
+            }
+        } catch { }
         try {
             $h = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
             if ($h) { $runStats.headAfter = $h }
@@ -385,6 +405,11 @@ if ($null -ne $newsAgeMin -and $newsAgeMin -lt 0) {
 } else {
     Say "最新条目 $newsAgeMin 分钟前（阈值 $NewsStaleMinutes），本机接管采集"
 }
+
+# 2.9.0：把「是否真的采集」写进账本。以前跳过采集时，只要 _last-run.json 有变化
+# 就会记成 result=ok + filesWritten=1 + skipReason=""，事后完全看不出没采。
+$runStats.collected = $needCollect
+if (-not $needCollect) { $runStats.skipReason = 'news-fresh' }
 
 if ($needCollect) {
     # ⚠ 一律带 --no-kline：日/周/月 K 由第 2 步按「陈旧度」单独刷。
