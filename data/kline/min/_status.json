@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-07T07:50:27.594Z",
+  "generatedAt": "2026-11-07T08:20:27.761Z",
   "ok": 3,
   "failed": 0,
   "failures": [],
@@ -20,13 +20,13 @@
     "sge_au9999/30m: shorter（新 260 根 < 现有 299 根）",
     "xag/30m: shorter（新 280 根 < 现有 327 根）",
     "xau/30m: shorter（新 280 根 < 现有 327 根）",
-    "n225/15m: shorter（新 484 根 < 现有 528 根）",
-    "dax/15m: shorter（新 473 根 < 现有 541 根）",
-    "cac40/15m: shorter（新 473 根 < 现有 541 根）",
-    "ukx/15m: shorter（新 473 根 < 现有 541 根）",
-    "kospi/15m: shorter（新 494 根 < 现有 546 根）",
-    "sge_au9999/15m: shorter（新 520 根 < 现有 598 根）",
-    "xag/15m: shorter（新 555 根 < 现有 648 根）",
-    "xau/15m: shorter（新 555 根 < 现有 648 根）"
+    "n225/1m: shorter（新 330 根 < 现有 660 根）",
+    "dax/1m: shorter（新 510 根 < 现有 1020 根）",
+    "cac40/1m: shorter（新 510 根 < 现有 1020 根）",
+    "ukx/1m: shorter（新 510 根 < 现有 1020 根）",
+    "kospi/1m: shorter（新 390 根 < 现有 780 根）",
+    "sge_au9999/1m: shorter（新 390 根 < 现有 1560 根）",
+    "xag/1m: shorter（新 1395 根 < 现有 2620 根）",
+    "xau/1m: shorter（新 1395 根 < 现有 2621 根）"
   ]
 }
