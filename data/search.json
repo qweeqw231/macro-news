@@ -1,10 +1,106 @@
 {
-  "generatedAt": "2026-11-07T13:22:42.741Z",
+  "generatedAt": "2026-11-07T13:37:44.222Z",
   "windowDays": 62,
   "from": "2026-09-07",
   "days": 58,
-  "total": 23439,
+  "total": 23458,
   "items": [
+    {
+      "id": "1xjmf19",
+      "ts": 1794058308,
+      "time": "2026-11-07T21:31:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国金证券：核心蓝筹股的估值水平已经处于历史偏低水平",
+      "url": "https://wallstreetcn.com/livenews/3196430"
+    },
+    {
+      "id": "1oc7u3m",
+      "ts": 1794058200,
+      "time": "2026-11-07T21:30:00.000+08:00",
+      "source": "新浪财经",
+      "title": "国金证券牟一凌：核心蓝筹股的估值水平已经处于历史偏低水平",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-07/doc-inixxqmw4763809.shtml"
+    },
+    {
+      "id": "uknens",
+      "ts": 1794058169,
+      "time": "2026-11-07T21:29:29.000+08:00",
+      "source": "东方财富",
+      "title": "毕马威发布《2026年中国首席执行官展望》：人工智能驱动战略与组织重塑",
+      "url": "http://finance.eastmoney.com/news/1346,202611073925545215.html"
+    },
+    {
+      "id": "1000jly",
+      "ts": 1794058165,
+      "time": "2026-11-07T21:29:25.000+08:00",
+      "source": "东方财富",
+      "title": "2025年我国海洋工程建筑业实现增加值2110亿元",
+      "url": "http://finance.eastmoney.com/news/1355,202611073925545356.html"
+    },
+    {
+      "id": "6ej5tj",
+      "ts": 1794058121,
+      "time": "2026-11-07T21:28:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国将成立工作组限制伊朗使用陆路通道和里海。",
+      "url": "https://wallstreetcn.com/livenews/3196429"
+    },
+    {
+      "id": "1662jbv",
+      "ts": 1794057982,
+      "time": "2026-11-07T13:26:22.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）华商侨企接入进博“引力场”：从商品贸易到生态共生",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-07/10728124.shtml"
+    },
+    {
+      "id": "oj8it",
+      "ts": 1794057920,
+      "time": "2026-11-07T13:25:20.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）广西借进博会平台邀全球客商加大投资力度",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-07/10728135.shtml"
+    },
+    {
+      "id": "1ugsvho",
+      "ts": 1794057906,
+      "time": "2026-11-07T21:25:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达CEO女儿取消原定访韩计划。",
+      "url": "https://wallstreetcn.com/livenews/3196428"
+    },
+    {
+      "id": "12gvrlv",
+      "ts": 1794057886,
+      "time": "2026-11-07T13:24:46.000Z",
+      "source": "中新网",
+      "title": "专访越南驻华大使范清平：越中纺织产业优势互补",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-07/10728119.shtml"
+    },
+    {
+      "id": "1rexwuh",
+      "ts": 1794057834,
+      "time": "2026-11-07T13:23:54.000Z",
+      "source": "中新网",
+      "title": "“敢闯”更“敢创” 世界浙商重塑新时代“四千”精神",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-07/10728117.shtml"
+    },
+    {
+      "id": "1rtwee8",
+      "ts": 1794057782,
+      "time": "2026-11-07T13:23:02.000Z",
+      "source": "中新网",
+      "title": "浙江常山胡柚立冬开摘 从业者：今年果实整体品质预计更好",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-07/10728110.shtml"
+    },
+    {
+      "id": "1l506zz",
+      "ts": 1794057720,
+      "time": "2026-11-07T13:22:00.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）进博会上展开“大豆对话” 44年情谊见证中美农贸韧性",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-07/10728120.shtml"
+    },
     {
       "id": "f4e5j1",
       "ts": 1794057708,
@@ -12,6 +108,46 @@
       "source": "华尔街见闻",
       "title": "伯克希尔哈撒韦：截至9月30日，股权投资公允价值总额的65%集中于Alphabet、美国运通、苹果、美国银行及可口可乐。",
       "url": "https://wallstreetcn.com/livenews/3196427"
+    },
+    {
+      "id": "1ldabva",
+      "ts": 1794057684,
+      "time": "2026-11-07T13:21:24.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）业界共话：AI带来全球化新机遇",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-07/10728123.shtml"
+    },
+    {
+      "id": "i7keqy",
+      "ts": 1794057656,
+      "time": "2026-11-07T13:20:56.000Z",
+      "source": "中新网",
+      "title": "专访英国经济学家罗思义：与中国合作才是欧洲合理的选择",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-07/10728163.shtml"
+    },
+    {
+      "id": "ggp0xj",
+      "ts": 1794057517,
+      "time": "2026-11-07T21:18:37.000+08:00",
+      "source": "东方财富",
+      "title": "进博会推动更多“俄罗斯制造”融入中国百姓日常",
+      "url": "http://finance.eastmoney.com/news/1350,202611073925544185.html"
+    },
+    {
+      "id": "1n0ped3",
+      "ts": 1794057517,
+      "time": "2026-11-07T21:18:37.000+08:00",
+      "source": "东方财富",
+      "title": "2026中原农谷种业大会在河南启幕 聚焦国际育种合作",
+      "url": "http://finance.eastmoney.com/news/1355,202611073925544084.html"
+    },
+    {
+      "id": "yc3j3g",
+      "ts": 1794057372,
+      "time": "2026-11-07T21:16:12.000+08:00",
+      "source": "东方财富",
+      "title": "《上海开放发展报告》：发挥长三角一体化产业优势，开展链式差异化招商",
+      "url": "http://finance.eastmoney.com/news/1355,202611073925544310.html"
     },
     {
       "id": "arq8g8",
@@ -46,6 +182,14 @@
       "url": "https://wallstreetcn.com/livenews/3196426"
     },
     {
+      "id": "4t0aqr",
+      "ts": 1794056823,
+      "time": "2026-11-07T21:07:03.000+08:00",
+      "source": "东方财富",
+      "title": "晶晶逛进博③丨“零关税”带来新机遇，全球南方好物亮相进博会",
+      "url": "http://finance.eastmoney.com/news/1350,202611073925544291.html"
+    },
+    {
       "id": "1naj3d8",
       "ts": 1794056803,
       "time": "2026-11-07T13:06:43.000Z",
@@ -60,6 +204,14 @@
       "source": "中新网",
       "title": "进博会推动更多“俄罗斯制造”融入中国百姓日常",
       "url": "https://www.chinanews.com.cn/cj/2026/11-07/10728153.shtml"
+    },
+    {
+      "id": "q1sm3e",
+      "ts": 1794056615,
+      "time": "2026-11-07T21:03:35.000+08:00",
+      "source": "新浪财经",
+      "title": "2499元“推不倒”智能指环遭质疑，品牌店铺已下架产品",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-07/doc-inixxqmu7979214.shtml"
     },
     {
       "id": "9p47cl",
