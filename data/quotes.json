@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T23:07:37.518Z",
+  "generatedAt": "2026-11-07T00:07:48.175Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -237,13 +237,13 @@
       "key": "dax",
       "name": "德国DAX30",
       "market": "EU",
-      "price": 25794.12,
+      "price": 25820.36,
       "open": 25919.48,
       "high": 26061.64,
       "low": 25617.54,
       "prevClose": 26325.01,
       "volume": 0,
-      "changePct": -2.02,
+      "changePct": -1.92,
       "updatedAt": "2026-11-07T00:30:00+08:00",
       "source": "eastmoney"
     },
@@ -904,14 +904,14 @@
       "key": "vnindex",
       "name": "越南胡志明",
       "market": "VN",
-      "price": 1726.72,
+      "price": 1725.36,
       "open": 1740.73,
       "high": 1740.73,
       "low": 1704.74,
       "prevClose": 1740.73,
       "volume": 984184816,
-      "changePct": -0.8,
-      "updatedAt": "2026-11-06T15:45:05+08:00",
+      "changePct": -0.88,
+      "updatedAt": "2026-11-06T15:59:59+08:00",
       "source": "eastmoney"
     }
   ]
