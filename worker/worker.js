@@ -45,6 +45,9 @@ const INDICES = {
 
 const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '5m': 5, '30m': 30, '60m': 60 };
 const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
+// 东财 K 线周期码：101 日 / 102 周 / 103 月，分钟直接给 1/5/15/30/60
+const EM_KLT = { '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60, '1d': 101, '1w': 102, '1M': 103 };
+const KLINE_HOSTS = ['https://push2his.eastmoney.com', 'https://1.push2his.eastmoney.com'];
 const QUOTE_HOSTS = [
   'https://push2.eastmoney.com',
   'https://1.push2.eastmoney.com',
@@ -252,6 +255,30 @@ async function handleQuote(url) {
   return json({ updatedAt: new Date().toISOString(), quotes });
 }
 
+/** 东财 K 线：新浪/腾讯都没有代码的标的走这条（251.SOX、n225、dax…） */
+async function eastmoneyKline(key, period, limit, secid) {
+  const klt = EM_KLT[period];
+  if (!klt) return json({ error: `东财不支持周期 ${period}` }, 400);
+  const qs = `secid=${secid}&klt=${klt}&fqt=1&lmt=${limit}&end=20500101` +
+    '&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58';
+  for (const h of KLINE_HOSTS) {
+    try {
+      const j = JSON.parse(await upstream(`${h}/api/qt/stock/kline/get?${qs}`, 'https://quote.eastmoney.com/'));
+      const arr = (j && j.data && j.data.klines) || [];
+      if (!arr.length) continue;
+      // 东财顺序：日期,开盘,收盘,最高,最低,成交量,成交额,振幅
+      return json({
+        key, period,
+        bars: arr.map((r) => {
+          const a = String(r).split(',');
+          return { t: a[0], o: +a[1], c: +a[2], h: +a[3], l: +a[4], v: +a[5] };
+        }),
+      });
+    } catch { /* 换镜像 */ }
+  }
+  return json({ error: '上游返回空数据' }, 502);
+}
+
 // ---------- K线 ----------
 async function handleKline(url) {
   const key = url.searchParams.get('key');
@@ -290,7 +317,8 @@ async function handleKline(url) {
       });
     }
 
-    return json({ error: `${key} 暂无可用 K 线数据源` }, 404);
+    // 3) 东财兜底：新浪/腾讯都没有代码的标的（SOX 的 251. 段只在这里有 K 线）
+    return await eastmoneyKline(key, period, limit, meta.secid);
   } catch (e) {
     return json({ error: e.message || '上游请求失败' }, 502);
   }

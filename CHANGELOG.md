@@ -42,6 +42,15 @@
   半日市与假日表全部复用 `market-calendar.json` 的 `US` 口径，与 `dji/ixic/spx` **完全一致**，没有独立分支。
 - 缓存串 `20261106j → 20261107a`。
 
+### 修正
+
+- **Worker `/kline` 补东财兜底**：原 `handleKline` 只有新浪、腾讯两条分支，`sina`/`tx` 都为 null 的标的
+  一律 404（不只是 sox：`n225 / dax / ukx / kospi / sensex` 部署后同样返回
+  `暂无可用 K 线数据源`）。仅加映射不够，SOX 的 `251.` 段在 Worker 里根本没有取数路径。
+  现在新浪/腾讯都不适用时走东财 `push2his` 镜像（`klt` 101/102/103 + 1/5/15/30/60 分钟），
+  既有 CN/港/美路径一行未改；这条兜底对其他 EM-only 指数同样生效（行为从 404 变为可用）。
+  部署后实测 `?key=sox&period=1d` 返回 89 根（`2026-07-06` → `2026-11-06`）。
+
 ### 数据源结论（2026-11-07 实测）
 
 | 源 | 实时价 | 日/周/月 K | 分钟 K |
@@ -71,7 +80,9 @@
   前端 META / `CODE_MAP` / 搜索别名、Worker 一致性、am/pm 同口径、日 89 根自 `2026-07-06`、
   周 18 / 月 5 / 全量 89、5 个分钟周期、短历史白名单、`quotes.json` 62 项。
 - 3 个既有测试的卡片总数断言 `61 → 62`（`index-a500` / `index-sse50` / `index-sensex-vnindex`）。
-- 全套 **333 项**通过；`verify-instrument.mjs --key sox --skip-snapshot` **14 项全通过**
+- `tests/worker-indices.test.mjs` 加 1 项：锁定 `/kline` 的新浪 → 腾讯 → 东财回退顺序，
+  以及 `EM_KLT` 的日/周/月周期码（101/102/103）；漏掉会让 sox 的 1w/1M 返回 400。
+- 全套 **334 项**通过；`verify-instrument.mjs --key sox --skip-snapshot` **14 项全通过**
   （当日 pm 快照需等 16:12 的采集，历史不回填）。
 
 ## [2.9.2] - 2026-11-06

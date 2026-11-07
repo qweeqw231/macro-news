@@ -113,3 +113,18 @@ test('/quote 源码锁定回退顺序：东财 → 腾讯 → Yahoo', () => {
   assert.ok(WORKER.includes("source: 'tencent'"));
   assert.ok(WORKER.includes("source: 'yahoo'"));
 });
+
+test('/kline 在新浪/腾讯都没有代码时走东财兜底（SOX 的 251. 段只此一路）', () => {
+  const iSina = WORKER.indexOf('if (meta.sina)');
+  const iTx = WORKER.indexOf('if (meta.tx)');
+  const iEm = WORKER.indexOf('// 3) 东财兜底');
+  assert.ok(iSina >= 0 && iTx > iSina && iEm > iTx, 'K 线回退顺序不对');
+  assert.ok(WORKER.includes('async function eastmoneyKline('), 'worker 缺东财 K 线实现');
+  // 周期码必须覆盖接口文档承诺的日/周/月，否则 sox 的 1w/1M 会 400
+  const m2 = WORKER.match(/const EM_KLT = \{([^}]*)\}/);
+  assert.ok(m2, 'worker 缺 EM_KLT 周期码');
+  const klt = vm.runInNewContext('({' + m2[1] + '})');
+  assert.equal(klt['1d'], 101);
+  assert.equal(klt['1w'], 102);
+  assert.equal(klt['1M'], 103);
+});
