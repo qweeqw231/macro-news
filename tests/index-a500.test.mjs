@@ -55,9 +55,9 @@ test('K 线：日/周/月/全量都存在，全量 5300+ 根', () => {
   assert.ok(String(full.bars[full.bars.length - 1][0]) >= '2026-11-02');
 });
 
-test('quotes：a500 有价，总数 61', () => {
+test('quotes：a500 有价，总数 62', () => {
   const doc = json('data/quotes.json');
-  assert.equal(doc.quotes.length, 61);
+  assert.equal(doc.quotes.length, 62);
   const q = doc.quotes.find((x) => x.key === 'a500');
   assert.ok(q, 'quotes 缺少 a500');
   assert.equal(q.name, '中证A500');

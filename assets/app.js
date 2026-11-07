@@ -141,7 +141,7 @@
     return i < 0 ? MARKET_ORDER.length : i;
   };
 
-  // 行情搜索：59 个标的靠肉眼滚太慢。按中文名 / key（含 ETF 代码）/ 英文缩写筛选，
+  // 行情搜索：62 个标的靠肉眼滚太慢。按中文名 / key（含 ETF 代码）/ 英文缩写筛选，
   // 别名只补「名字里不含、但大家会搜」的少数词（黄金 / 原油 / 汇率 / 纳指…），不做拼音。
   // 分组名（港股 / 美股 / 大宗商品…）也进匹配，输入即筛整组。
   const MKT_ALIAS = {
@@ -159,13 +159,14 @@
     a500: '中证A500 A500 中证 a500 宽基',
     sensex: '印度 孟买 印度指数 bse sensex 孟买30',
     vnindex: '越南 胡志明 hose vn vnindex',
+    sox: '费城 半导体 芯片 费半 phlx semiconductor sox',
   };
   // 行情卡片要显示「能搜索到的代码」：A股指数 000001、ETF 563360、恒指 HSI…
   const CODE_MAP = {
     sh_comp: '000001', sz_comp: '399001', chinext: '399006', star50: '000688',
     bse50: '899050', csi300: '000300', sse50: '000016', a500: '000510', csi500: '000905', csi1000: '000852',
     hsi: 'HSI', hs_tech: 'HSTECH',
-    dji: 'DJI', ixic: 'IXIC', spx: 'SPX', n225: 'N225',
+    dji: 'DJI', ixic: 'IXIC', spx: 'SPX', sox: 'SOX', n225: 'N225',
     dax: 'DAX', cac40: 'CAC40', ukx: 'FTSE',
     sensex: 'SENSEX', vnindex: 'VNINDEX',
     ndx: 'NDX', xau: 'XAU', xag: 'XAG', brent: 'BRENT',

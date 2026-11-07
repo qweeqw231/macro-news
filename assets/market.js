@@ -49,6 +49,9 @@
     { key: 'dji',     secid: '100.DJIA', market: 'US', name: '道琼斯' },
     { key: 'ixic',    secid: '100.NDX',  market: 'US', name: '纳斯达克' },
     { key: 'spx',     secid: '100.SPX',  market: 'US', name: '标普500' },
+    // 费城半导体：东财 **251.** 段（另一套海外指数转播市场），不是 100.；
+    //   日K 只有 89 根、起点 2026-07-06（东财转播起点），前端会在注记里如实说明。
+    { key: 'sox',     secid: '251.SOX',  market: 'US', name: '费城半导体指数' },
     { key: 'n225',    secid: '100.N225', market: 'JP', name: '日经225' },
     { key: 'dax',     secid: '100.GDAXI', market: 'EU', calendarMarket: 'DE', name: '德国DAX' },
     // 法国CAC40：secid 由东财搜索接口反查（input=法国CAC40 → Code=FCHI, MktNum=100）

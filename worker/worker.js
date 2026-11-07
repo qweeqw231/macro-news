@@ -32,6 +32,8 @@ const INDICES = {
   dji: { secid: '100.DJIA', tx: 'usDJI', us: true, market: 'US' },
   ixic: { secid: '100.NDX', tx: 'usIXIC', us: true, market: 'US' },
   spx: { secid: '100.SPX', tx: 'usINX', us: true, market: 'US' },
+  // 费城半导体：东财 251. 段（另一套海外指数转播市场），腾讯无代码 ⇒ 只能走东财
+  sox: { secid: '251.SOX', market: 'US' },
   n225: { secid: '100.N225', market: 'JP' },
   dax: { secid: '100.GDAXI', market: 'EU' },
   cac40: { secid: '100.FCHI', market: 'EU' },

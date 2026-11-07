@@ -91,9 +91,9 @@ test('当日 am 快照保持新增标的前的 57 项（时点快照不重写，
   assert.equal(snap.capturedAt, '2026-11-02T12:14:00+08:00');
 });
 
-test('quotes.json：卡片含上证50，且总数 61', () => {
+test('quotes.json：卡片含上证50，且总数 62', () => {
   const doc = json('data/quotes.json');
-  assert.equal(doc.quotes.length, 61);
+  assert.equal(doc.quotes.length, 62);
   const q = doc.quotes.find((x) => x.key === 'sse50');
   assert.ok(q, 'quotes.json 缺少 sse50');
   assert.equal(q.name, '上证50');

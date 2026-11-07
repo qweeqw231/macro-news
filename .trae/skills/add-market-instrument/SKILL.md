@@ -54,13 +54,19 @@ node src/collect.mjs --kline-only <key>
 node scripts/update-kline-full.mjs --only <key> --force
 ```
 
+⚠ 如果**源侧本身只有短历史**（新开转播的指数、新上市标的），`MIN_BARS = 1050` 会把它判成
+「不足，不当全量写」而拒写 `_full.json`。此时把 key 加进 `SHORT_HISTORY_KEYS`
+（门槛降到 30），并在 README/CHANGELOG 写明起点与根数。
+先例：`sox`（东财 `251.SOX`）2026-07-06 才开始转播，日 K 只有 89 根。**不要拿 ETF 补历史。**
+
 验收：
 - `data/kline/<key>.json`、`_1w.json`、`_1M.json`、`_full.json` 的 `name` 与标的名称一致；
 - 根数合理：全量至少覆盖该标的上市/发布以来的历史；月 K 至少 200 根（新指数除外）；
 - 年 K 由月 K 聚合：前端 `aggregateYear()` 读 `_1M`，不需要单独生成年 K 文件；
 - 均线按数据根数动态置灰：沿用 `MA_LIST` / `YEAR_MA`，不要为新标的写死按钮状态；
 - 分钟 K：A股/港股/美股有客户端源，通常不预生成；欧日韩/商品等客户端无源的才进
-  `scripts/update-kline-minute.mjs` 的 `TARGET_KEYS`。
+  `scripts/update-kline-minute.mjs` 的 `TARGET_KEYS`。**例外**：美股里腾讯没代码的（如 `sox`）
+  同样要进 `TARGET_KEYS`——「美股」不等于「有客户端源」，按标的实测，不按市场想当然。
 
 ### 4. 时点快照（硬规则）
 
@@ -145,7 +151,7 @@ npx wrangler deploy --keep-vars --message "add <key>"
 | 历史快照缺口 | 新增标的前的快照没有该 key | **定案：不回填**；只保证新增日之后 |
 | Windows 大小写 | `1m`（分钟）与 `1M`（月K）同名 | 分钟文件必须放 `data/kline/min/` |
 | Worker 映射漂移 | 代理对 cac40/hs_tech 静默降级 | 跑 `tests/worker-indices.test.mjs`，逐项 compare |
-| 总数漏改 | README 仍写旧数字（当前真值：20 指数 / 59 标的） | 按 `INDICES.length` + ETF + 组合重新算 |
+| 总数漏改 | README 仍写旧数字（当前真值：23 指数 / 62 标的） | 按 `INDICES.length` + ETF + 组合重新算 |
 | 整目录提交 | 把 `.local/`、日志、缓存带进 git | 只 `git add` 白名单文件；不要 `git add -A` |
 
 ## 演练脚本

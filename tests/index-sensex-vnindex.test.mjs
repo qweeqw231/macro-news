@@ -133,9 +133,9 @@ test('K 线：日/周/月/全量文件齐全，名称与根数合理', () => {
   assert.ok(String(vFull.bars[0][0]) <= '2010-09-21', `VNINDEX 全量起点过晚：${vFull.bars[0][0]}`);
 });
 
-test('quotes.json：两个标的都有价，卡片总数 61', () => {
+test('quotes.json：两个标的都有价，卡片总数 62', () => {
   const doc = json('data/quotes.json');
-  assert.equal(doc.quotes.length, 61);
+  assert.equal(doc.quotes.length, 62);
   for (const [key, market] of [['sensex', 'IN'], ['vnindex', 'VN']]) {
     const q = doc.quotes.find((x) => x.key === key);
     assert.ok(q, `quotes.json 缺少 ${key}`);

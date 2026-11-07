@@ -53,8 +53,16 @@ const LIMIT = 20000;
 // （北证50 全量 1089 根、科创50 1652 根 —— 都在门槛之上）
 const MIN_BARS = 1050;
 
+// 源侧本身就只有短历史的标的：它们的「全量」确实很短，MIN_BARS 不适用。
+//   sox（费城半导体）：东财 251.SOX **2026-07-06 才开始转播**，日K 只有 89 根，
+//     再往前取不到（实测指定 end=20250101 返回 0 行，不是分页/lmt 的问题）。
+//     **不用 SOXX / SMH 等 ETF 补历史** —— 那是基金不是指数，口径不同会串。
+//     ⇒ 白名单放行，前端会在注记里如实写明起点，不让 3 个月看起来像全量。
+const SHORT_HISTORY_KEYS = new Set(['sox']);
+const SHORT_HISTORY_MIN_BARS = 30;
+
 const today = new Date().toISOString().slice(0, 10);
-// 目标 = 20 个指数 + 4 个组合标的（纳指100 / 伦敦金 / 上海金 / 人民币中间价）
+// 目标 = 23 个指数 + 6 个组合标的（纳指100 / 伦敦金 / 上海金 / 伦敦银 / 布伦特 / 人民币中间价）
 const ALL_TARGETS = [...INDICES, ...PORTFOLIO_KLINE];
 const list = ONLY ? ALL_TARGETS.filter((i) => i.key === ONLY) : ALL_TARGETS;
 
@@ -86,8 +94,9 @@ for (const idx of list) {
     //   东财的对应 secid 可能短得多，顺序链会把它盖掉。
     const bars = await fetchKline(idx.key, '1d', LIMIT, { longest: true });
     // 太短的说明只拿到某个备源（腾讯 clamp 到 1000），当全量写进去反而误导
-    if (!bars || bars.length < MIN_BARS) {
-      throw new Error(`只取到 ${bars ? bars.length : 0} 根，不足 ${MIN_BARS} 根，不当全量写`);
+    const minBars = SHORT_HISTORY_KEYS.has(idx.key) ? SHORT_HISTORY_MIN_BARS : MIN_BARS;
+    if (!bars || bars.length < minBars) {
+      throw new Error(`只取到 ${bars ? bars.length : 0} 根，不足 ${minBars} 根，不当全量写`);
     }
     // 2.9.0：全量文件每天 12:18 生成，此时 A股/港股/日韩/上海金都还没收盘。
     // 当天那根 bar 只是午盘值（11-06 恒指 24,533.33 vs 收盘 24,481.86），

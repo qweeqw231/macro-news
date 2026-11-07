@@ -8,7 +8,7 @@ Automated collection and archive of global macro news: **rates · FX · policy �
 |---|---|
 | Site | **https://qweeqw231.github.io/macro-news/** |
 | Form | Pure static site (GitHub Pages) + scheduled collection writing JSON; **no server / database needed** |
-| Data scale | **59 quote instruments** (20 indices + 32 on-exchange ETFs + 7 portfolio), 5 macro indicators, 8 news sources |
+| Data scale | **62 quote instruments** (23 indices + 32 on-exchange ETFs + 7 portfolio), 5 macro indicators, 8 news sources |
 | Frontend | Vanilla JS + hand-drawn Canvas K-lines, zero dependencies |
 
 **Reading guide**: §1 is the global map; §2–3 are **specifications (facts)**; §4 is the data contract; §5–7 cover usage / deployment / troubleshooting; **design rationale is concentrated in §8** and kept apart from operational steps. History and abandoned approaches are at the end.
@@ -22,7 +22,7 @@ The site has four tabs (top on desktop/tablet, bottom on phones):
 | Tab | Content |
 |---|---|
 | Headlines | Search + channel filters + latest news (default view) |
-| Markets | Quote cards for 59 instruments, searchable by name / code / English abbreviation; click a card to open the K-line drawer |
+| Markets | Quote cards for 62 instruments, searchable by name / code / English abbreviation; click a card to open the K-line drawer |
 | Archive | Lists item counts by day; click a day to see everything for that day |
 | Sources | Status / item count / elapsed time / errors for the 8 news sources |
 
@@ -77,7 +77,7 @@ Cloudflare Worker ──> │ after 17:00: collect-macro-if-due.mjs (idempotent)
 
 - **Trigger**: Cloudflare Worker Cron → GitHub `workflow_dispatch` (the in-repo `schedule` is only redundancy).
 - **Action**: `node src/collect.mjs --no-kline`
-- **Quotes**: Eastmoney `ulist.np` fetches all **53** instruments in one batch (20 indices + 32 ETFs + Nasdaq 100);
+- **Quotes**: Eastmoney `ulist.np` fetches all **56** instruments in one batch (23 indices + 32 ETFs + Nasdaq 100);
   portfolio quotes are filled in by `fetchPortfolioQuotesFast`: `xau/xag/brent` refresh every round
   (since 2.7.0 the front end also calls Tencent `hf_*` directly, so their cards can show "live"),
   `sge_au9999` fetches Eastmoney `118.AU9999` every round while trading (day 09:00-15:30, night 20:00-02:30),
@@ -105,7 +105,7 @@ Cloudflare Worker ──> │ after 17:00: collect-macro-if-due.mjs (idempotent)
   idempotently with `node scripts/backfill-pbc-days.mjs --root <repo root>`.
 - **Push**: `scripts/push-data.sh` (fetch + rebase retry; commits only when `data/` changed).
 
-**Index list (20)**
+**Index list (23)**
 
 | Group | key | Name | Code | Eastmoney secid | Tencent |
 |---|---|---|---|---|---|
@@ -124,22 +124,33 @@ Cloudflare Worker ──> │ after 17:00: collect-macro-if-due.mjs (idempotent)
 | US | `dji` | Dow Jones | DJI | `100.DJIA` | `usDJI` |
 | US | `ixic` | Nasdaq | IXIC | `100.NDX` | `usIXIC` |
 | US | `spx` | S&P 500 | SPX | `100.SPX` | `usINX` |
+| US | `sox` | PHLX Semiconductor | SOX | `251.SOX` | — |
 | Japan | `n225` | Nikkei 225 | N225 | `100.N225` | — |
 | Europe | `dax` | DAX | DAX | `100.GDAXI` | — |
 | Europe | `cac40` | CAC 40 | CAC40 | `100.FCHI` | — |
 | UK | `ukx` | FTSE 100 | FTSE | `100.FTSE` | — |
 | Korea | `kospi` | KOSPI | KOSPI | `100.KS11` | — |
+| India | `sensex` | India SENSEX | SENSEX | `100.SENSEX` | — |
+| Vietnam | `vnindex` | Vietnam VN-Index | VNINDEX | `100.VNINDEX` | — |
 
 `SSE 50`'s `000016` is the **SSE index code**; Eastmoney `QuoteID=1.000016` and Tencent `sh000016`
 both return the name "上证50" (verified 2026-11-02; see CHANGELOG).
 
+> ⚠ **The PHLX Semiconductor (`sox`) history is short — that is a fact about the upstream source, not truncation on our side.**
+> Eastmoney `251.SOX` only started relaying on **2026-07-06**, so there are only **~89 daily bars**
+> (18 weekly, 5 monthly) and nothing earlier (passing `end=20250101` returns 0 rows).
+> **No SOXX / SMH ETF history was spliced in** — those are funds, not indices, and mixing them would merge two different series.
+> Daily/weekly/monthly come from a single source (Eastmoney): Sina `gb_sox` has a live quote but **no daily K**,
+> and Tencent has no code for it. Minute K-lines are pre-generated server-side (`data/kline/min/sox_*.json`)
+> with the same conventions as `dji/ixic/spx`.
+
 ### 2.2 Pipeline ②: K-lines (full daily run + last bar hourly)
 
 - **Full run** (`kline-full.yml`, UTC 04:23 = 12:23 Beijing):
-  - `scripts/update-kline-full.mjs`: full daily K for 26 instruments (20 indices + 6 portfolio) (`_full.json`)
-  - `node src/collect.mjs --kline-only`: 27 instruments × daily/weekly/monthly (`<key>.json` / `_1w` / `_1M`)
+  - `scripts/update-kline-full.mjs`: full daily K for 29 instruments (23 indices + 6 portfolio) (`_full.json`)
+  - `node src/collect.mjs --kline-only`: 30 instruments × daily/weekly/monthly (`<key>.json` / `_1w` / `_1M`)
 - **Minutes + last bar** (`kline-minute.yml`, hourly at :17):
-  - `scripts/update-kline-minute.mjs`: 8 instruments × 5 minute periods (`min/`)
+  - `scripts/update-kline-minute.mjs`: 9 instruments × 5 minute periods (`min/`)
   - `scripts/update-kline-last.mjs`: upserts only the last daily K of instruments **currently in session**
   - **Short-sequence guard (2.4.10)**: every script writing `data/kline/` goes through `src/kline-guard.mjs`.
     New result starts later and is shorter → reject and record (`rejected: shorter`); same length but newer last bar / longer → accept;
@@ -367,7 +378,7 @@ Each record carries `price / prevClose / changePct / asOf / priceSource / note`.
 
 | Instrument | Refresh |
 |---|---|
-| 20 indices + 32 ETFs + `ndx` | Every 15 minutes (Eastmoney batch; Nasdaq 100 is same-source with the K-line `100.NDX100`) |
+| 23 indices + 32 ETFs + `ndx` | Every 15 minutes (Eastmoney batch; Nasdaq 100 is same-source with the K-line `100.NDX100`) |
 | `xau` / `xag` / `brent` | Server every 15 minutes; the front end also calls Tencent `hf_XAU` / `hf_XAG` / `hf_OIL` on every load (2.7.0) |
 | `sge_au9999` | Every round while trading (day 09:00-15:30 / night 20:00-02:30) from Eastmoney `118.AU9999`; after 15:30 the official SGE daily quote overrides (2.6.0) |
 | `usdcny` | After 09:15 and only when the stored value is not today (China Foreign Exchange Trade System) |
@@ -430,9 +441,9 @@ What must hold is that it **updates with collection**:
 
 | File | Content | Written by |
 |---|---|---|
-| `data/quotes.json` | Snapshots for 59 instruments (20 indices + 32 ETFs + 7 portfolio) | Pipeline ① |
-| `data/snapshots/YYYY-MM-DD_am.json` | Morning point-in-time prices (59 items; historical files before new instruments have 57/58) | Pipeline ③ |
-| `data/snapshots/YYYY-MM-DD_pm.json` | Closing point-in-time prices (59 items; historical files before new instruments have 57/58) | Pipeline ③ |
+| `data/quotes.json` | Snapshots for 62 instruments (23 indices + 32 ETFs + 7 portfolio) | Pipeline ① |
+| `data/snapshots/YYYY-MM-DD_am.json` | Morning point-in-time prices (62 items; historical files before new instruments have 57/58/59/61) | Pipeline ③ |
+| `data/snapshots/YYYY-MM-DD_pm.json` | Closing point-in-time prices (61 items; historical files before new instruments have 57/58/59/60) | Pipeline ③ |
 | `data/archive/YYYY-MM-DD.json` | News archived by day, **with full text** | Pipeline ① |
 | `data/history/YYYY-MM-DD.json` | Trailing-year history slices (**mostly title/source/time/link, a few with summary, no body**, ≤400 items/day) | `scripts/export-history.mjs` |
 | `data/history/index.json` | History slice index (with `hasBriefing` / `briefLine` / `source`) | Same as above |
@@ -440,9 +451,9 @@ What must hold is that it **updates with collection**:
 | `data/latest.json` | Latest 200 items (first screen) | Pipeline ① |
 | `data/search.json` | Search index for the latest 62 news days (**title/source/time/link, no summary**, about 6 MB) | Pipeline ① |
 | `data/index.json` | By-day archive index (with `hasBriefing` / `briefLine` / `source`) | Pipeline ① |
-| `data/kline/<key>.json` / `_1w` / `_1M` | 27 instruments × daily/weekly/monthly | Pipeline ② |
-| `data/kline/<key>_full.json` | Full daily K for 26 instruments (20 indices + 6 portfolio) (compact arrays `[t,o,c,h,l,v]`) | Pipeline ② |
-| `data/kline/min/<key>_<period>.json` | 8 instruments × 5 minute periods (including London gold) | Pipeline ② |
+| `data/kline/<key>.json` / `_1w` / `_1M` | 30 instruments × daily/weekly/monthly | Pipeline ② |
+| `data/kline/<key>_full.json` | Full daily K for 29 instruments (23 indices + 6 portfolio) (compact arrays `[t,o,c,h,l,v]`) | Pipeline ② |
+| `data/kline/min/<key>_<period>.json` | 9 instruments × 5 minute periods (including London gold and PHLX Semiconductor) | Pipeline ② |
 | `data/macro/daily.json` | Daily series for 5 macro indicators | Pipeline ④ |
 | `data/_last-run.json` | Run status per pipeline (fields coexist, read-modify-write) | All pipelines |
 | `data/_briefing-status.json` | Briefing generation status (last 14 days, read by the footer) | `scripts/briefing/*` |
@@ -551,7 +562,7 @@ and the collector do not call `workers.dev`; readers connect directly to Eastmon
 `workers.dev` is **reachable on this machine only when a proxy is enabled** (the domain is DNS-poisoned), so it is used only for development verification and backup sampling.
 From 2.4.0 the `/quote` fallback order is: Eastmoney three mirrors (`push2` / `1.push2` / `push2delay`) → Tencent `qt.gtimg.cn`
 → Yahoo chart; each `quotes[]` entry carries `source: eastmoney|tencent|yahoo` and `updatedAt` (source time).
-`/kline` covers only the 20 indices (`INDICES`); portfolio instruments (xau/xag/brent, etc.) return 400, and the frontend never uses this path for K-lines.
+`/kline` covers only the 23 indices (`INDICES`); portfolio instruments (xau/xag/brent, etc.) return 400, and the frontend never uses this path for K-lines.
 
 GitHub's built-in `schedule` only fires about 3% of the time in practice, so triggers moved outside the repository:
 
@@ -759,6 +770,24 @@ Similarity is lineage, not copying. **mcf's `--mcf-*` tokens and this site's gen
 - Touch targets ≥ 40px (phone buttons 40 / 34px, bottom nav in 4 equal parts + safe area).
 - Canvas colors only recognize constants in `kline.js`; CSS cannot override them (charts do not read CSS variables).
 
+### 8.2 Two things we deliberately do not do (decision 2026-11-07)
+
+**① Nasdaq futures (NQ) — not added for now.** Fetching is not the obstacle (Eastmoney `103.NQ00Y` returns live quotes,
+daily/weekly/monthly and minute K-lines; Sina `hf_NQ` also works), but CME trades **23 hours a day**, which collides with
+this site's "close-of-day finalisation" model: `MARKET_SESSIONS.US` is 09:30–16:00, daily K is finalised at 16:00 ET,
+and the pm snapshot samples at 16:12. NQ's "daily" bar actually covers 07:00 Beijing → 06:00 next day, so attaching it as-is
+would make the pm snapshot record an **intraday price as the close** (the same class of bug hit India on 11-06) and would
+finalise the daily bar on the wrong date. `ndx` (Nasdaq 100) already covers the same underlying. If it is ever added,
+a new `FUT` session type (its own session window and its own finalisation time) is required — `US` must not be reused.
+
+**② No expansion to individual stocks.** The quote side has ample headroom: `ulist` returned 600 instruments in one call,
+74 ms, 600/600 priced (URL only 5.5 KB). The bottlenecks are elsewhere: ① **K-line request volume** — 300 constituents
+would push hourly K-line requests from 70 to 370, far beyond the ban threshold documented in `src/em.mjs`
+(105–147 requests per round already triggers socket-level rejection of the push2 host family);
+② **repository size** — about 677 KB of K-line per instrument, i.e. roughly 200 MB of new blobs per day for 300 stocks,
+and the GitHub 5 GB soft limit would be full in about six months. A few dozen names is neither enough to be a "stock quotes"
+feature nor cheap enough to justify the same scheduling cost, so we skip it.
+
 ---
 
 ## 9. Known limitations / TODO
@@ -787,7 +816,7 @@ Similarity is lineage, not copying. **mcf's `--mcf-*` tokens and this site's gen
 
 | Category | Source | What it provides | Fallback |
 |---|---|---|---|
-| Quotes | Eastmoney `ulist.np` | Latest prices for 20 indices + 32 ETFs (1 request) | Tencent `qt.gtimg.cn` |
+| Quotes | Eastmoney `ulist.np` | Latest prices for 23 indices + 32 ETFs (1 request) | Tencent `qt.gtimg.cn` |
 | K-lines | Eastmoney `push2his` | Daily/weekly/monthly + minute | Tencent `ifzq.gtimg.cn`; Sina (CN 10 indices only) |
 | Portfolio | Tencent `hf_XAU` / `hf_XAG` / `hf_OIL` / `usNDX` | London gold/silver, Brent, Nasdaq 100 | Eastmoney `100.NDX100` |
 | Portfolio | SGE official site | Shanghai gold Au99.99 | estimated fallback (note=estimated) |
@@ -820,7 +849,7 @@ macro-news/
 ├── src/
 │   ├── collect.mjs    news + quote main program (--no-kline / --kline-only)
 │   ├── brief-meta.mjs briefing index metadata (hasBriefing / briefLine)
-│   ├── sources.mjs    news sources + 20 index adapters + fetchKline
+│   ├── sources.mjs    news sources + 23 index adapters + fetchKline
 │   ├── quotes.mjs     batch quotes (Eastmoney → Tencent)
 │   ├── kline.mjs      daily K / 5-minute K (Eastmoney → Tencent)
 │   ├── em.mjs         mirrors / rate limit / backoff / circuit breaker / cache
@@ -838,7 +867,7 @@ macro-news/
 - **GitHub schedule era**: once declared `*/5` for 5 minutes, but measured only once every 3~6 hours; replaced by the Worker external trigger.
 - **Cloudflare Worker quote proxy**: early on it was meant to bypass CORS and serve readers, but `workers.dev` was measured to be DNS-poisoned
   and unreachable from mainland China; Eastmoney endpoints already send CORS anyway ⇒ **no longer a reader-facing entry point**. Re-enabled in 2.4.0 as a **scheduled sampling backup**
-  (Eastmoney three mirrors → Tencent → Yahoo, output `source`); neither the frontend nor the collector depends on it; `/kline` covers only 20 indices.
+  (Eastmoney three mirrors → Tencent → Yahoo, output `source`); neither the frontend nor the collector depends on it; `/kline` covers only 23 indices.
 - **Serial K-line fallback**: replaced by the three-source concurrent race.
 - **16:30 portfolio quote pipeline**: merged into the 15-minute pipeline; macro moved to the cloud **after 17:00** (2026-10-31).
 - **minimax scheduled tasks**: once handled 12:05 / 16:30 snapshots, 16:30 macro, and 4-hour sync;

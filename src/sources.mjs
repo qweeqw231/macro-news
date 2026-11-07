@@ -510,6 +510,15 @@ export const INDICES = [
   { key: 'dji',       name: '道琼斯',     market: 'US', secid: '100.DJIA',  sina: null,    tx: 'usDJI' },
   { key: 'ixic',      name: '纳斯达克',   market: 'US', secid: '100.NDX',   sina: null,    tx: 'usIXIC' },
   { key: 'spx',       name: '标普500',    market: 'US', secid: '100.SPX',   sina: null,    tx: 'usINX' },
+  // 费城半导体指数（2026-11-07 实测）：
+  //   · 东财 secid **251.SOX**（注意不是 100. 段，它是另一套海外指数转播市场）——
+  //     实时价 / 日 K / 分钟 K 全部可用，f124 = 北京 05:00 = 16:00 ET，与 US 收盘对齐；
+  //   · **腾讯无代码**（usSOX 为空），sina 置 null；
+  //   · 新浪 `gb_sox` 有实时价，但**没有日 K**（US_MinKService.getDailyK?symbol=sox 返回 null）
+  //     ⇒ 日/周/月只能靠东财；
+  //   · **日 K 只有 89 根、起点 2026-07-06**（东财转播起点，再往前取不到）。
+  //     不用 SOXX / SMH 等 ETF 补历史 —— 那是基金不是指数，口径不同会串。
+  { key: 'sox',       name: '费城半导体指数', market: 'US', secid: '251.SOX', sina: null, tx: null },
   // 其他（腾讯无对应代码 → 只能走东财）
   { key: 'n225',      name: '日经225',    market: 'JP', secid: '100.N225',  sina: null, tx: null },
   { key: 'dax',       name: '德国DAX',    market: 'EU', secid: '100.GDAXI', sina: null, tx: null },
@@ -589,7 +598,7 @@ export const PORTFOLIO_KLINE = [
   },
 ];
 
-/** 按 key 找 K 线取数目标：先 20 个指数，再组合标的。 */
+/** 按 key 找 K 线取数目标：先 23 个指数，再组合标的。 */
 export function klineTarget(key) {
   return INDICES.find((i) => i.key === key) || PORTFOLIO_KLINE.find((i) => i.key === key) || null;
 }
@@ -599,7 +608,7 @@ let quoteError = '';
 export function getQuoteError() { return quoteError; }
 
 /**
- * 采集全部行情：20 个指数 + 32 只场内 ETF + 纳指100。
+ * 采集全部行情：23 个指数 + 32 只场内 ETF + 纳指100。
  *
  * ⚠ 纳指100（ndx）虽属组合标的，但它是**只在美股时段交易的股指**：
  *   组合采集每天 16:30（美股开盘前）才跑一次 ⇒ 卡片会停在上一交易日，
@@ -655,7 +664,7 @@ const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '1m': 1, '5m': 5, '15m':
 const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
 export function klineAvailable(key) {
-  // 东财按 secid 能取到全部 20 个指数（含恒生科技 / 日经 / DAX / 富时 / KOSPI）；
+  // 东财按 secid 能取到全部 23 个指数（含恒生科技 / 日经 / DAX / 富时 / KOSPI / 费城半导体）；
   // 组合标的中 xau **没有**东财 secid（东财无现货伦敦金），走新浪外盘；
   // sge_au9999 有东财 secid 也有上金所官网。
   const t = klineTarget(key);
