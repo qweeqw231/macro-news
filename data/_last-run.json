@@ -6,65 +6,64 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-07T16:39:12.039Z",
-  "durationMs": 23259,
+  "startedAt": "2026-11-07T16:52:46.337Z",
+  "durationMs": 60459,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 8494
+      "ms": 6428
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1036
+      "ms": 1321
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1248
+      "ms": 3540
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 3038
+      "ms": 687
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1698
+      "ms": 4871
     },
     {
       "id": "fed",
       "label": "美联储",
-      "ok": false,
-      "count": 0,
-      "ms": 1893,
-      "error": "RSS 全部入口失败：/feeds/press_all.xml → HTTP 404"
+      "ok": true,
+      "count": 20,
+      "ms": 798
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1612
+      "ms": 1183
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 20154
+      "ms": 55913
     }
   ],
   "quotes": 59,
