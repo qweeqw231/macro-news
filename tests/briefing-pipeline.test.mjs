@@ -18,6 +18,7 @@ import {
   publishRun,
   snapshotSha,
   validateFinal,
+  verifyIndexBriefing,
 } from '../scripts/briefing/pipeline.mjs';
 
 const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'brief-pipe-'));
@@ -407,4 +408,117 @@ test('draft 来源不被读取端误判成 ai', () => {
   assert.equal(normalizeBriefingSource({ source: 'rule' }), 'rule');
   assert.equal(normalizeBriefingSource({ source: 'ai' }), 'ai');
   assert.equal(normalizeBriefingSource({}), 'ai');
+});
+
+// ---------------------------------------------------------------------------
+// 2.4.19：发布自检 —— 索引没打上标记就不算发布成功（2026-11-06 事故的回归）
+// ---------------------------------------------------------------------------
+
+test('verifyIndexBriefing：缺天/未标记/缺 briefLine/缺 source 全部不通过；索引不存在则放行', () => {
+  const d = fresh('verify-index');
+  fs.mkdirSync(d.data, { recursive: true });
+  const write = (doc) =>
+    fs.writeFileSync(path.join(d.data, 'index.json'), JSON.stringify(doc, null, 2));
+
+  write({ days: [{ day: '2026-11-01', count: 3, hasBriefing: false }] });
+  let r = verifyIndexBriefing({ dataDir: d.data, date: DATE });
+  assert.equal(r.ok, false);
+  assert.equal(r.code, 'day-missing');
+  assert.match(r.reason, /git fetch origin main/);
+
+  write({ days: [{ day: DATE, count: 3, hasBriefing: false }] });
+  r = verifyIndexBriefing({ dataDir: d.data, date: DATE });
+  assert.equal(r.ok, false);
+  assert.equal(r.code, 'not-marked');
+
+  write({ days: [{ day: DATE, count: 3, hasBriefing: true }] });
+  r = verifyIndexBriefing({ dataDir: d.data, date: DATE });
+  assert.equal(r.ok, false);
+  assert.equal(r.code, 'no-line');
+
+  write({ days: [{ day: DATE, count: 3, hasBriefing: true, briefLine: '主线' }] });
+  r = verifyIndexBriefing({ dataDir: d.data, date: DATE });
+  assert.equal(r.ok, false);
+  assert.equal(r.code, 'no-source');
+
+  write({ days: [{ day: DATE, count: 3, hasBriefing: true, briefLine: '主线', source: 'ai' }] });
+  r = verifyIndexBriefing({ dataDir: d.data, date: DATE, expectLine: '主线' });
+  assert.equal(r.ok, true);
+  assert.equal(r.code, 'index-ok');
+
+  r = verifyIndexBriefing({ dataDir: d.data, date: DATE, expectLine: '别的' });
+  assert.equal(r.ok, false);
+  assert.equal(r.code, 'line-mismatch');
+
+  fs.rmSync(path.join(d.data, 'index.json'));
+  r = verifyIndexBriefing({ dataDir: d.data, date: DATE });
+  assert.equal(r.ok, true, '索引不存在 ⇒ 无从核对，不拦发布');
+  assert.equal(r.code, 'no-index');
+
+  r = verifyIndexBriefing({ dataDir: null, date: DATE });
+  assert.equal(r.ok, true);
+  assert.equal(r.code, 'skipped');
+});
+
+test('发布自检：本地 checkout 落后、索引里没有当天 ⇒ 判失败而不是静默成功', () => {
+  const d = fresh('index-self-check');
+  const input = writeInput(d.runs);
+  writeCheckpoint(d.runs, 'final', input, finalDoc(input));
+  fs.mkdirSync(d.data, { recursive: true });
+  // 复现 2026-11-06：本地 data/index.json 还是昨天的版本，没有当天这一行
+  fs.writeFileSync(path.join(d.data, 'index.json'), JSON.stringify({
+    generatedAt: '', total: 3, days: [{ day: '2026-11-01', count: 3, hasBriefing: false }],
+  }, null, 2));
+
+  const r = publishRun({
+    date: DATE, runsDir: d.runs, siteOut: d.site, localOut: d.local,
+    status: d.status, dataDir: d.data, noLock: true, now: T1,
+  });
+  assert.equal(r.ok, false);
+  assert.equal(r.code, 'index-not-patched');
+  assert.equal(r.indexCheck, 'day-missing');
+  assert.match(r.reason, /索引自检未通过/);
+  assert.match(r.reason, /git fetch origin main/);
+
+  const st = JSON.parse(fs.readFileSync(d.status, 'utf8'));
+  assert.equal(st.days[DATE].status, 'failed');
+  assert.equal(st.days[DATE].source, '');
+
+  // 不能靠 publish 偷偷给不存在的天补一行：索引里仍然没有当天
+  const ix = JSON.parse(fs.readFileSync(path.join(d.data, 'index.json'), 'utf8'));
+  assert.equal(ix.days.find((x) => x.day === DATE), undefined);
+});
+
+test('发布自检：索引同步后重跑 ⇒ 标记补上、判成功', () => {
+  const d = fresh('index-self-check-retry');
+  const input = writeInput(d.runs);
+  writeCheckpoint(d.runs, 'final', input, finalDoc(input));
+  fs.mkdirSync(d.data, { recursive: true });
+  fs.writeFileSync(path.join(d.data, 'index.json'), JSON.stringify({
+    generatedAt: '', total: 3, days: [{ day: '2026-11-01', count: 3, hasBriefing: false }],
+  }, null, 2));
+
+  const first = publishRun({
+    date: DATE, runsDir: d.runs, siteOut: d.site, localOut: d.local,
+    status: d.status, dataDir: d.data, noLock: true, now: T1,
+  });
+  assert.equal(first.ok, false);
+
+  // 模拟「先同步本地」：索引里出现了当天这一行
+  fs.writeFileSync(path.join(d.data, 'index.json'), JSON.stringify({
+    generatedAt: '', total: 10, days: [{ day: DATE, count: 10, hasBriefing: false }],
+  }, null, 2));
+
+  const second = publishRun({
+    date: DATE, runsDir: d.runs, siteOut: d.site, localOut: d.local,
+    status: d.status, dataDir: d.data, noLock: true, now: T1 + 1000,
+  });
+  assert.equal(second.ok, true);
+  const ix = JSON.parse(fs.readFileSync(path.join(d.data, 'index.json'), 'utf8'));
+  assert.equal(ix.days[0].hasBriefing, true);
+  assert.equal(ix.days[0].source, 'ai');
+  assert.ok(ix.days[0].briefLine.length > 0);
+  const st = JSON.parse(fs.readFileSync(d.status, 'utf8'));
+  assert.equal(st.days[DATE].status, 'done');
+  assert.equal(st.days[DATE].source, 'ai');
 });

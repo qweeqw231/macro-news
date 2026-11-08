@@ -54,7 +54,11 @@ function main() {
       noLock: NO_LOCK,
     });
     if (!QUIET) {
-      const tag = r.degraded ? '降级事实清单' : r.skipped ? '跳过（已有 AI 早报）' : '完成';
+      // 2.4.19：失败要直说「失败」，不能因为 r.reason 有值就打成「完成」
+      const tag = !r.ok ? '失败'
+        : r.degraded ? '降级事实清单'
+        : r.skipped ? '跳过（已有 AI 早报）'
+        : '完成';
       console.error(`[briefing] publish ${DATE}：${tag} · ${r.reason || r.code}`);
     }
 

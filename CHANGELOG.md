@@ -680,6 +680,34 @@ pm 文件 17:54 才被拉到本地 ⇒ 下游找不到 pm，退回 `quotes.json`
 - 本底账用于长期趋势与自证用量，**不能指认外部 clone 来源**。
 - 无前端改动，资源串保持 `20261105d`。
 
+## [2.4.19] - 2026-11-08
+
+> 早报发布增加自检：索引没打上标记就不算发布成功，不再静默成功。
+
+### 修正
+
+- **`scripts/briefing/pipeline.mjs` 新增发布自检 `verifyIndexBriefing()`**：
+  打索引标记之后立刻核对当天那一条 —— `hasBriefing=true` + 有 `briefLine` + 有 `source`，
+  且 `briefLine` 与已发布产物逐字一致；不满足就判**发布失败**（状态 `failed`、退出码 1、
+  **不 push 不入库**），并明确提示「先 `git fetch origin main && git merge --ff-only origin main` 再发布」。
+  - 起因（2026-11-06 实测事故）：`patchIndexDoc()` **只改已存在的那天**（不新增日期），
+    本地 checkout 落后一天时索引里没有当天的行 ⇒ 补丁**静默 no-op** ⇒
+    publish 照样报「完成 · published」、退出码 0，但**站点索引当天不显示早报**（只有仓库里的
+    不变式测试能发现）。
+  - 语义边界：**索引文件不存在 ⇒ 无从核对，放行**（不制造假失败）；
+    **索引存在但当天没打上标记 ⇒ 硬失败**。
+  - 四条发布路径全部接入：正常发布 / 站点已有 AI 早报 / 本地已有 AI 产物 / draft 降级。
+- `scripts/briefing/publish.mjs` 的日志标签修正：`!r.ok` 时打 **「失败」**，
+  此前一律按 `degraded/skipped` 二选一，导致失败也会显示成「完成」。
+
+### 新增
+
+- `tests/briefing-pipeline.test.mjs` 补 3 条回归：
+  ① `verifyIndexBriefing()` 的缺天 / 未标记 / 缺 briefLine / 缺 source / 内容不一致 / 索引缺失 各分支；
+  ② 复现 2026-11-06：索引里没有当天 ⇒ publish 判失败（`index-not-patched` / `day-missing`）、
+  状态 `failed`、且**不会**偷偷给不存在的天补一行；
+  ③ 同步本地后重跑 ⇒ 标记补上、判成功、状态回到 `done/ai`。
+
 ## [2.4.18] - 2026-11-05
 
 > 早报入库的 rebase 冲突合并语义此前写反，会静默抹掉当天早报标记。本次修正并补真实 git 端到端测试。

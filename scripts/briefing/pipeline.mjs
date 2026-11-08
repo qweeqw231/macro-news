@@ -350,6 +350,61 @@ export function patchIndexFiles({ dataDir, date, briefLine, source }) {
   return patched;
 }
 
+/**
+ * 2.4.19：发布自检 —— 索引里当天那一条必须真的带上早报标记。
+ *
+ * 为什么需要（2026-11-06 实测事故）：
+ *   `patchIndexFiles()` → `patchIndexDoc()` **只改已存在的那天**（不新增日期）。
+ *   本地 checkout 落后一天时，索引里根本没有当天的行 ⇒ 补丁**静默 no-op**：
+ *   publish 照样报「完成 · published」、退出码 0，但站点索引当天不显示早报
+ *   （hasBriefing=false、无 briefLine），只有仓库里的不变式测试能发现。
+ *
+ * 语义：**索引不存在 → 无从核对，不拦**（测试沙箱/极端场景）；
+ *       **索引存在但当天没打上标记 → 判发布失败**，并明确提示先同步本地。
+ *
+ * @param {{dataDir?:string, date:string, expectLine?:string}} o
+ * @returns {{ok:boolean, code:string, reason:string, entry?:object}}
+ */
+export function verifyIndexBriefing({ dataDir, date, expectLine = '' }) {
+  if (!dataDir) return { ok: true, code: 'skipped', reason: '未指定 data 目录，跳过索引自检' };
+  const file = path.join(dataDir, 'index.json');
+  if (!fs.existsSync(file)) return { ok: true, code: 'no-index', reason: 'data/index.json 不存在，跳过索引自检' };
+  const r = readJson(file);
+  if (!r.ok) return { ok: false, code: 'bad-index', reason: `data/index.json 无法解析：${r.error}` };
+  const entry = (Array.isArray(r.value.days) ? r.value.days : [])
+    .find((x) => x && (x.day === date || x.d === date));
+  if (!entry) {
+    return {
+      ok: false,
+      code: 'day-missing',
+      reason: `data/index.json 里没有 ${date} 这一行 —— 本地 checkout 落后于采集器？`
+        + '请先 git fetch origin main && git merge --ff-only origin main 再发布',
+    };
+  }
+  if (!entry.hasBriefing) {
+    return {
+      ok: false,
+      code: 'not-marked',
+      reason: `data/index.json 里 ${date} 的 hasBriefing 仍是 false，早报标记没打上`,
+    };
+  }
+  if (!trim(entry.briefLine)) {
+    return { ok: false, code: 'no-line', reason: `data/index.json 里 ${date} 缺少 briefLine` };
+  }
+  if (!trim(entry.source)) {
+    return { ok: false, code: 'no-source', reason: `data/index.json 里 ${date} 缺少 source` };
+  }
+  const want = trim(expectLine);
+  if (want && trim(entry.briefLine) !== want) {
+    return {
+      ok: false,
+      code: 'line-mismatch',
+      reason: `data/index.json 里 ${date} 的 briefLine 与已发布产物不一致`,
+    };
+  }
+  return { ok: true, code: 'index-ok', reason: '', entry };
+}
+
 function readExisting(file) {
   const chk = checkBriefing(file);
   if (!chk.complete) return null;
@@ -442,6 +497,33 @@ export function publishRun({
       generator: 'publish',
     }, { now });
   };
+  // 2.4.19：发布自检失败（索引没打上标记）也算失败 —— 不能「产物写好了就算成功」
+  const markFailed = (reason) => {
+    if (!status) return;
+    updateStatus(status, date, {
+      status: 'failed',
+      stage: 'publish',
+      startedAt: t.iso,
+      endedAt: beijingNow().iso,
+      exitCode: 1,
+      items: 0,
+      source: '',
+      reason,
+      durationMs: Date.now() - started,
+      generator: 'publish',
+    }, { now });
+  };
+  /** 补索引 + 立刻核对；核对不过就判失败（不吞掉） */
+  const patchAndVerify = (briefLine, source) => {
+    patchIndexFiles({ dataDir, date, briefLine, source });
+    return verifyIndexBriefing({ dataDir, date, expectLine: briefLine });
+  };
+  const indexFail = (v) => ({
+    ok: false,
+    code: 'index-not-patched',
+    indexCheck: v.code,
+    reason: `索引自检未通过（${v.code}）：${v.reason}`,
+  });
   const prev = status ? (fs.existsSync(status) ? readJson(status).value : null) : null;
   const attempt = Number(prev && prev.days && prev.days[date] && prev.days[date].attempt) || 0;
 
@@ -450,7 +532,11 @@ export function publishRun({
     if (existingSite && existingSite.source === 'ai') {
       const reason = '已存在 AI 早报，未覆盖';
       // 文件已经在，索引也该立刻反映（不新增日期，只改已存在的那天）
-      patchIndexFiles({ dataDir, date, briefLine: briefLineOf(existingSite.doc), source: 'ai' });
+      const v = patchAndVerify(briefLineOf(existingSite.doc), 'ai');
+      if (!v.ok) {
+        markFailed(indexFail(v).reason);
+        return { ...indexFail(v), source: 'ai', items: existingSite.items, preserved: true };
+      }
       markDone({ source: 'ai', items: existingSite.items, generator: 'existing', reason, attempt });
       return { ok: true, code: 'existing-ai', skipped: true, source: 'ai', items: existingSite.items, reason };
     }
@@ -459,9 +545,11 @@ export function publishRun({
     const existingLocal = localFile ? readExisting(localFile) : null;
     if (existingLocal && existingLocal.source === 'ai') {
       atomicWriteText(siteFile, existingLocal.raw);
-      patchIndexFiles({
-        dataDir, date, briefLine: briefLineOf(existingLocal.doc), source: 'ai',
-      });
+      const v = patchAndVerify(briefLineOf(existingLocal.doc), 'ai');
+      if (!v.ok) {
+        markFailed(indexFail(v).reason);
+        return { ...indexFail(v), source: 'ai', items: existingLocal.items, preserved: true };
+      }
       const reason = '本地已有完整 AI 早报，仅发布到站点';
       markDone({ source: 'ai', items: existingLocal.items, generator: 'publish', reason, attempt });
       return { ok: true, code: 'existing-local-ai', source: 'ai', items: existingLocal.items, reason };
@@ -500,7 +588,11 @@ export function publishRun({
       if (draftOnFail) {
         const draft = buildDraftFallback({ input, date, now, reason });
         writeBriefingFiles({ doc: draft, localOut, siteOut });
-        patchIndexFiles({ dataDir, date, briefLine: briefLineOf(draft), source: 'draft' });
+        const v = patchAndVerify(briefLineOf(draft), 'draft');
+        if (!v.ok) {
+          markFailed(indexFail(v).reason);
+          return { ...indexFail(v), degraded: true, source: 'draft', items: draft.items.length, errors: verdict.errors };
+        }
         markDone({
           source: 'draft', items: draft.items.length, generator: 'draft-v1',
           reason, attempt, exitCode: 1,
@@ -523,7 +615,12 @@ export function publishRun({
 
     const doc = normalizeFinalForPublish({ doc: finalR.value, input, date, now });
     writeBriefingFiles({ doc, localOut, siteOut });
-    patchIndexFiles({ dataDir, date, briefLine: briefLineOf(doc), source: 'ai' });
+    const v = patchAndVerify(briefLineOf(doc), 'ai');
+    if (!v.ok) {
+      // 产物已写盘但索引没打上标记 ⇒ 不算发布成功（不回滚文件，明确提示先同步本地）
+      markFailed(indexFail(v).reason);
+      return { ...indexFail(v), source: 'ai', items: doc.items.length };
+    }
     markDone({ source: 'ai', items: doc.items.length, generator: 'llm-v1', reason: '', attempt });
     return {
       ok: true, code: 'published', source: 'ai', items: doc.items.length, endedAt: doc.endedAt,

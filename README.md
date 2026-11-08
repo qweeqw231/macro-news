@@ -270,6 +270,15 @@ publish --date（脚本，确定性）
      绝不做整文件取一侧。
    - 冲突文件不在白名单（`data/index.json`、`data/history/index.json`、
      `data/_briefing-status.json`）时仍然中止，绝不 force push。
+5. **发布自检（2.4.19）**：打索引标记之后**立刻核对**当天那一条 ——
+   `hasBriefing=true` + 有 `briefLine` + 有 `source`，且 `briefLine` 与已发布产物一致。
+   不满足就**判发布失败**（退出码 1、状态 `failed`、不 push、不入库），并提示
+   「先 `git fetch origin main && git merge --ff-only origin main` 再发布」。
+   - 起因：`patchIndexDoc()` **只改已存在的那天**，本地 checkout 落后一天时补丁会**静默 no-op**，
+     2026-11-06 因此出现「publish 报成功、退出码 0，但站点索引当天不显示早报」。
+   - 语义：**索引文件不存在 ⇒ 无从核对，放行**（不制造假失败）；
+     **索引存在但当天没打上标记 ⇒ 硬失败**。
+   - 四条发布路径（正常发布 / 已有 AI 早报 / 本地已有 AI 产物 / draft 降级）全部走这道自检。
 
 兜底：本机 `collect-and-push.ps1` 每 120 分钟只放行**今天/昨天已存在**的单个早报文件。
 不变式：`hasBriefing=true` ⇔ 文件存在且已被 git 跟踪（`tests/briefing-index-invariant.test.mjs` 锁定）。
