@@ -1,10 +1,154 @@
 {
-  "generatedAt": "2026-11-09T12:07:50.510Z",
+  "generatedAt": "2026-11-09T12:22:48.488Z",
   "windowDays": 62,
   "from": "2026-09-09",
   "days": 60,
   "total": 24834,
   "items": [
+    {
+      "id": "5kbjdl",
+      "ts": 1794226677,
+      "time": "2026-11-09T20:17:57.000+08:00",
+      "source": "华尔街见闻",
+      "title": "摩根大通依旧看好美股 认为投资者悲观情绪或已接近顶峰",
+      "url": "https://wallstreetcn.com/livenews/3196942"
+    },
+    {
+      "id": "1c46ejl",
+      "ts": 1794226640,
+      "time": "2026-11-09T12:17:20.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）参展各方进博会签约忙 一批批合作成果加速落地",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729044.shtml"
+    },
+    {
+      "id": "5kqggo",
+      "ts": 1794226550,
+      "time": "2026-11-09T20:15:50.000+08:00",
+      "source": "东方财富",
+      "title": "（第九届进博会）在进博读懂中国“新引擎”：以智造力量谋创新未来",
+      "url": "http://finance.eastmoney.com/news/1355,202611093926463023.html"
+    },
+    {
+      "id": "20e3iv",
+      "ts": 1794226550,
+      "time": "2026-11-09T20:15:50.000+08:00",
+      "source": "东方财富",
+      "title": "9月末四川普惠小微贷款余额突破1.6万亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611093926462559.html"
+    },
+    {
+      "id": "b1fy8f",
+      "ts": 1794226538,
+      "time": "2026-11-09T20:15:38.000+08:00",
+      "source": "新浪财经",
+      "title": "分析师称黄仁勋“大到不能倒”，人工智能市场正面临风险",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycwiu6492737.shtml"
+    },
+    {
+      "id": "1dqenso",
+      "ts": 1794226529,
+      "time": "2026-11-09T12:15:29.000Z",
+      "source": "中新网",
+      "title": "研究显示中东资本在华进入战略直投与多元工具并行新阶段",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729043.shtml"
+    },
+    {
+      "id": "12jb18d",
+      "ts": 1794226484,
+      "time": "2026-11-09T20:14:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "冯德莱恩说欧盟将参加俄美乌阿布扎比会谈",
+      "url": "https://wallstreetcn.com/livenews/3196941"
+    },
+    {
+      "id": "1javce6",
+      "ts": 1794226441,
+      "time": "2026-11-09T12:14:01.000Z",
+      "source": "中新网",
+      "title": "中外专家齐聚长三角一体化示范区 共谋全球环境绿色转型",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729045.shtml"
+    },
+    {
+      "id": "19vsr0a",
+      "ts": 1794226399,
+      "time": "2026-11-09T12:13:19.000Z",
+      "source": "中新网",
+      "title": "中意时尚产业对话在成都举行 探索设计交流与市场合作新路径",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729041.shtml"
+    },
+    {
+      "id": "1f2g4bq",
+      "ts": 1794226395,
+      "time": "2026-11-09T12:13:15.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）在进博读懂中国“新引擎”：以智造力量谋创新未来",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729038.shtml"
+    },
+    {
+      "id": "5dpb9e",
+      "ts": 1794226371,
+      "time": "2026-11-09T12:12:51.000Z",
+      "source": "中新网",
+      "title": "沪港企业家圆桌会暨海联会走进普陀活动举行",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729049.shtml"
+    },
+    {
+      "id": "avgzqm",
+      "ts": 1794226369,
+      "time": "2026-11-09T12:12:49.000Z",
+      "source": "中新网",
+      "title": "9月末四川普惠小微贷款余额突破1.6万亿元",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729052.shtml"
+    },
+    {
+      "id": "ptg11j",
+      "ts": 1794226263,
+      "time": "2026-11-09T12:11:03.000Z",
+      "source": "中新网",
+      "title": "从“中草药”到“中医器具” 我国中医药领域国际标准化建设提速",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729051.shtml"
+    },
+    {
+      "id": "wu4jpg",
+      "ts": 1794226128,
+      "time": "2026-11-09T20:08:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "华虹宏力：控股子公司拟公开挂牌转让华宏置业100%股权及债权，首次挂牌价2.29亿元",
+      "url": "https://wallstreetcn.com/livenews/3196940"
+    },
+    {
+      "id": "hak60o",
+      "ts": 1794226103,
+      "time": "2026-11-09T20:08:23.000+08:00",
+      "source": "东方财富",
+      "title": "全球“大块头”集中亮相进博会，外资巨头押注中国智能制造",
+      "url": "http://finance.eastmoney.com/news/1354,202611093926461173.html"
+    },
+    {
+      "id": "x17njw",
+      "ts": 1794226092,
+      "time": "2026-11-09T20:08:12.000+08:00",
+      "source": "东方财富",
+      "title": "一财社论：稳民生就是稳增长",
+      "url": "http://fund.eastmoney.com/news/11383,202611093926462136.html"
+    },
+    {
+      "id": "13dj61n",
+      "ts": 1794226064,
+      "time": "2026-11-09T20:07:44.000+08:00",
+      "source": "东方财富",
+      "title": "直击进博会｜毕马威：新一轮国资国企改革提速 战略性新兴产业与未来产业成布局重点",
+      "url": "http://finance.eastmoney.com/news/1355,202611093926455235.html"
+    },
+    {
+      "id": "xglskl",
+      "ts": 1794225988,
+      "time": "2026-11-09T20:06:28.000+08:00",
+      "source": "东方财富",
+      "title": "（第九届进博会）精准匹配资源 江苏特色产业带赴沪“链”全球",
+      "url": "http://finance.eastmoney.com/news/1355,202611093926455557.html"
+    },
     {
       "id": "1if5igg",
       "ts": 1794225955,
@@ -12,6 +156,14 @@
       "source": "新浪财经",
       "title": "纳斯达克顶住英伟达事件冲击，黄仁勋深陷绯闻调查",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycwix3295364.shtml"
+    },
+    {
+      "id": "jki3tg",
+      "ts": 1794225791,
+      "time": "2026-11-09T12:03:11.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）诺和诺德携7777份患者心愿亮相 创下吉尼斯世界纪录",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729029.shtml"
     },
     {
       "id": "15v6tla",
@@ -52,6 +204,14 @@
       "source": "中新网",
       "title": "青海民和：林麝养殖托起乡村“香产业”",
       "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729019.shtml"
+    },
+    {
+      "id": "kk20st",
+      "ts": 1794225480,
+      "time": "2026-11-09T19:58:00.000+08:00",
+      "source": "东方财富",
+      "title": "进博手记：美国参展商的进博“新故事”",
+      "url": "http://finance.eastmoney.com/news/1354,202611093926454810.html"
     },
     {
       "id": "1vafuxt",
@@ -110,6 +270,14 @@
       "url": "https://www.chinanews.com.cn/cj/2026/11-09/10729016.shtml"
     },
     {
+      "id": "1kjk90o",
+      "ts": 1794225103,
+      "time": "2026-11-09T19:51:43.000+08:00",
+      "source": "东方财富",
+      "title": "存储猛涨、汽车止跌、黄金回落，读懂10月物价关键信号",
+      "url": "http://finance.eastmoney.com/news/1378,202611093926456432.html"
+    },
+    {
       "id": "7f0p6v",
       "ts": 1794225080,
       "time": "2026-11-09T19:51:20.000+08:00",
@@ -140,6 +308,14 @@
       "source": "华尔街见闻",
       "title": "上纬新材：近期股价累计涨幅超100%，消费级具身智能机器人实现营业收入占公司总营业收入比例较低",
       "url": "https://wallstreetcn.com/livenews/3196934"
+    },
+    {
+      "id": "1ok71ig",
+      "ts": 1794224863,
+      "time": "2026-11-09T19:47:43.000+08:00",
+      "source": "东方财富",
+      "title": "蔡昉谈补消费短板：既要稳需求也要改善收入分配",
+      "url": "http://finance.eastmoney.com/news/1378,202611093926458878.html"
     },
     {
       "id": "cxnhki",
@@ -220,6 +396,14 @@
       "source": "华尔街见闻",
       "title": "苹果iPad和MacBook上的AI功能获得中国批准。",
       "url": "https://wallstreetcn.com/livenews/3196926"
+    },
+    {
+      "id": "1m9v1k2",
+      "ts": 1794224100,
+      "time": "2026-11-09T19:35:00.000+08:00",
+      "source": "东方财富",
+      "title": "商务部回应！",
+      "url": "http://finance.eastmoney.com/news/1346,202611093926459089.html"
     },
     {
       "id": "bj21n6",
@@ -460,6 +644,14 @@
       "source": "华尔街见闻",
       "title": "光华科技：拟以2.25亿元通过增资及受让股权方式投资凯诺中星，完成后持股21.46%",
       "url": "https://wallstreetcn.com/livenews/3196904"
+    },
+    {
+      "id": "1t7ct74",
+      "ts": 1794221799,
+      "time": "2026-11-09T18:56:39.000+08:00",
+      "source": "东方财富",
+      "title": "上海交易团大型零售采购商联盟签下72个采购意向｜聚焦进博会",
+      "url": "http://finance.eastmoney.com/news/1354,202611093926433221.html"
     },
     {
       "id": "vnym",
@@ -1022,6 +1214,14 @@
       "url": "https://wallstreetcn.com/livenews/3196863"
     },
     {
+      "id": "j5yxgy",
+      "ts": 1794218400,
+      "time": "2026-11-09T18:00:00.000+08:00",
+      "source": "东方财富",
+      "title": "直通部委｜前10月各类住宅火灾造成1093人死亡 10月份CPI同比继续上涨",
+      "url": "http://finance.eastmoney.com/news/1352,202611093926457127.html"
+    },
+    {
       "id": "1qc7uvn",
       "ts": 1794218384,
       "time": "2026-11-09T17:59:44.000+08:00",
@@ -1204,6 +1404,14 @@
       "source": "新浪财经",
       "title": "“奶茶第一股”四川子公司出资3800万美元，泰国即饮项目迎来关键进展！",
       "url": "https://finance.sina.com.cn/stock/s/2026-11-09/doc-iniycrzw6523675.shtml"
+    },
+    {
+      "id": "1nt1qj8",
+      "ts": 1794217336,
+      "time": "2026-11-09T17:42:16.000+08:00",
+      "source": "东方财富",
+      "title": "巴布亚新几内亚政府关闭“台北驻巴新经济办事处”，外交部：愿扩大从巴新进口液化天然气",
+      "url": "http://finance.eastmoney.com/news/1356,202611093926458187.html"
     },
     {
       "id": "1fo7omf",
@@ -2150,11 +2358,11 @@
       "url": "http://biz.eastmoney.com/news/1670,202611093926272196.html"
     },
     {
-      "id": "1xqmrw",
+      "id": "fdbfxj",
       "ts": 1794211717,
       "time": "2026-11-09T16:08:37.000+08:00",
       "source": "华尔街见闻",
-      "title": "英伟达计划对韩国初创企业进行新投资，包括韩国人工智能初创公司Point2 Technology",
+      "title": "英伟达计划对韩国初创企业进行新投资",
       "url": "https://wallstreetcn.com/livenews/3196791"
     },
     {
@@ -6182,22 +6390,6 @@
       "url": "https://www.chinanews.com.cn/cj/2026/11-09/10728616.shtml"
     },
     {
-      "id": "4t2urk",
-      "ts": 1794187813,
-      "time": "2026-11-09T09:30:13.000+08:00",
-      "source": "华尔街见闻",
-      "title": "中国10月PPI同比 5.7%，前值 5%。",
-      "url": "https://wallstreetcn.com/livenews/3196575"
-    },
-    {
-      "id": "1x4s10h",
-      "ts": 1794187810,
-      "time": "2026-11-09T09:30:10.000+08:00",
-      "source": "华尔街见闻",
-      "title": "中国10月CPI同比 0.7%，前值 0.9%。",
-      "url": "https://wallstreetcn.com/livenews/3196574"
-    },
-    {
       "id": "nqxj7y",
       "ts": 1794187802,
       "time": "2026-11-09T01:30:02.000Z",
@@ -6212,198 +6404,6 @@
       "source": "国家统计局",
       "title": "2026年10月份工业生产者出厂价格同比上涨5.7% 环比上涨0.7%",
       "url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965794.html"
-    },
-    {
-      "id": "zagdzz",
-      "ts": 1794187743,
-      "time": "2026-11-09T09:29:03.000+08:00",
-      "source": "华尔街见闻",
-      "title": "国债期货开盘，30年期主力合约跌0.10%，10年期主力合约跌0.03%，5年期主力合约与昨日持平，2年期主力合约跌0.00%。",
-      "url": "https://wallstreetcn.com/livenews/3196573"
-    },
-    {
-      "id": "1d0eius",
-      "ts": 1794187686,
-      "time": "2026-11-09T09:28:06.000+08:00",
-      "source": "东方财富",
-      "title": "国常会：完善资本市场稳市机制，增强股市内在稳定性；国泰海通：拟向实控人国际集团出售海通恒信控股权 | 券商基金早参",
-      "url": "http://simujigou.eastmoney.com/news/11065,202611093925795756.html"
-    },
-    {
-      "id": "1xfe02b",
-      "ts": 1794187620,
-      "time": "2026-11-09T09:27:00.000+08:00",
-      "source": "新浪财经",
-      "title": "特朗普一句“可能没必要”，市场先信了三分，金价涨逾1%收复4100关口",
-      "url": "https://finance.sina.com.cn/money/nmetal/hjzx/2026-11-09/doc-iniyazee6574115.shtml"
-    },
-    {
-      "id": "4ts5q6",
-      "ts": 1794187583,
-      "time": "2026-11-09T09:26:23.000+08:00",
-      "source": "新浪财经",
-      "title": "中信建投期货：11月9日能化早报",
-      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-09/doc-iniyazee6572198.shtml"
-    },
-    {
-      "id": "107p9xa",
-      "ts": 1794187544,
-      "time": "2026-11-09T09:25:44.000+08:00",
-      "source": "华尔街见闻",
-      "title": "三大指数集体高开，沪指高开0.27%，深成指高开0.87%，创业板指高开1.19%。",
-      "url": "https://wallstreetcn.com/livenews/3196572"
-    },
-    {
-      "id": "1f5tk1i",
-      "ts": 1794187534,
-      "time": "2026-11-09T09:25:34.000+08:00",
-      "source": "华尔街见闻",
-      "title": "上证指数开盘报3659.02点，涨0.27%。",
-      "url": "https://wallstreetcn.com/livenews/3196571"
-    },
-    {
-      "id": "nqf7i9",
-      "ts": 1794187423,
-      "time": "2026-11-09T09:23:43.000+08:00",
-      "source": "华尔街见闻",
-      "title": "台湾证交所加权股价指数上涨4.1%至41,321.80点。",
-      "url": "https://wallstreetcn.com/livenews/3196570"
-    },
-    {
-      "id": "b3zswd",
-      "ts": 1794187317,
-      "time": "2026-11-09T09:21:57.000+08:00",
-      "source": "华尔街见闻",
-      "title": "香港恒生指数开盘涨0.59%，恒生科技指数涨1.02%。",
-      "url": "https://wallstreetcn.com/livenews/3196569"
-    },
-    {
-      "id": "m4c2je",
-      "ts": 1794187315,
-      "time": "2026-11-09T09:21:55.000+08:00",
-      "source": "华尔街见闻",
-      "title": "恒指高开0.59%，报24625.71点；",
-      "url": "https://wallstreetcn.com/livenews/3196568"
-    },
-    {
-      "id": "eumw13",
-      "ts": 1794187293,
-      "time": "2026-11-09T09:21:33.000+08:00",
-      "source": "华尔街见闻",
-      "title": "中国央行公开市场今日开展1820亿元人民币隔夜逆回购操作，利率为1.25%。",
-      "url": "https://wallstreetcn.com/livenews/3196567"
-    },
-    {
-      "id": "1mjqlwt",
-      "ts": 1794187233,
-      "time": "2026-11-09T09:20:33.000+08:00",
-      "source": "新浪财经",
-      "title": "快讯：恒指高开0.59% 恒科指涨1.02% 科网股普涨 远信储能首日高开逾114%",
-      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-09/doc-iniyazeh3345056.shtml"
-    },
-    {
-      "id": "qihz86",
-      "ts": 1794187227,
-      "time": "2026-11-09T09:20:27.000+08:00",
-      "source": "华尔街见闻",
-      "title": "提醒：北京时间09:30将公布中国10月CPI和PPI。",
-      "url": "https://wallstreetcn.com/livenews/3196566"
-    },
-    {
-      "id": "6u7xj3",
-      "ts": 1794187074,
-      "time": "2026-11-09T09:17:54.000+08:00",
-      "source": "东方财富",
-      "title": "上市公司走进如东洋口港 零碳临港产业释放投资机遇",
-      "url": "http://finance.eastmoney.com/news/1354,202611093925781453.html"
-    },
-    {
-      "id": "1di6bmq",
-      "ts": 1794186963,
-      "time": "2026-11-09T09:16:03.000+08:00",
-      "source": "东方财富",
-      "title": "政策落地两周年！123家科创板公司运用回购增持再贷款 八成资金用于股票回购",
-      "url": "http://finance.eastmoney.com/news/1354,202611093925782463.html"
-    },
-    {
-      "id": "15e312p",
-      "ts": 1794186954,
-      "time": "2026-11-09T09:15:54.000+08:00",
-      "source": "华尔街见闻",
-      "title": "人民币兑美元中间价报6.7188，下调20点；",
-      "url": "https://wallstreetcn.com/livenews/3196565"
-    },
-    {
-      "id": "i94gl",
-      "ts": 1794186923,
-      "time": "2026-11-09T09:15:23.000+08:00",
-      "source": "新浪财经",
-      "title": "新湖有色（锌）专题：国际铅锌周会议纪要",
-      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-09/doc-iniyazcy6359721.shtml"
-    },
-    {
-      "id": "1ffxs62",
-      "ts": 1794186900,
-      "time": "2026-11-09T09:15:00.000+08:00",
-      "source": "新浪财经",
-      "title": "黄仁勋风波引发美国科技圈分歧：有人力挺 有人警告",
-      "url": "https://finance.sina.com.cn/world/2026-11-09/doc-iniyauwk3471488.shtml"
-    },
-    {
-      "id": "1u1byc3",
-      "ts": 1794186432,
-      "time": "2026-11-09T09:07:12.000+08:00",
-      "source": "新浪财经",
-      "title": "凤凰航运遭证监会立案 投资者或可索赔",
-      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-09/doc-iniyauwk3473672.shtml"
-    },
-    {
-      "id": "b4pxa9",
-      "ts": 1794186420,
-      "time": "2026-11-09T09:07:00.000+08:00",
-      "source": "华尔街见闻",
-      "title": "日本东证指数涨幅扩大至3%。",
-      "url": "https://wallstreetcn.com/livenews/3196564"
-    },
-    {
-      "id": "mh9qq6",
-      "ts": 1794186409,
-      "time": "2026-11-09T09:06:49.000+08:00",
-      "source": "华尔街见闻",
-      "title": "台湾证交所加权股价指数上涨3%至40,903.48点。",
-      "url": "https://wallstreetcn.com/livenews/3196563"
-    },
-    {
-      "id": "1s3jeb0",
-      "ts": 1794186258,
-      "time": "2026-11-09T09:04:18.000+08:00",
-      "source": "东方财富",
-      "title": "报告：预计2026年我国能源投资总额达9400亿美元",
-      "url": "http://finance.eastmoney.com/news/1352,202611093925780017.html"
-    },
-    {
-      "id": "18v3428",
-      "ts": 1794186159,
-      "time": "2026-11-09T09:02:39.000+08:00",
-      "source": "新浪财经",
-      "title": "江西铜业股份：公司董事长提议回购公司A股股份",
-      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-09/doc-iniyauwa6473498.shtml"
-    },
-    {
-      "id": "1f31lt5",
-      "ts": 1794186140,
-      "time": "2026-11-09T09:02:20.000+08:00",
-      "source": "华尔街见闻",
-      "title": "MSCI亚太指数上涨1.3%至248.72点。",
-      "url": "https://wallstreetcn.com/livenews/3196562"
-    },
-    {
-      "id": "1xwut58",
-      "ts": 1794186126,
-      "time": "2026-11-09T09:02:06.000+08:00",
-      "source": "新浪财经",
-      "title": "先健科技拟折让约3.61%发行9.26亿股认购股份 净筹约14.7亿港元",
-      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-09/doc-iniyauwe3121208.shtml"
     },
     {
       "id": "77vz0r",
