@@ -1,10 +1,154 @@
 {
-  "generatedAt": "2026-11-09T21:37:49.697Z",
+  "generatedAt": "2026-11-09T21:52:51.711Z",
   "windowDays": 62,
   "from": "2026-09-09",
   "days": 60,
   "total": 24834,
   "items": [
+    {
+      "id": "1ff9u5z",
+      "ts": 1794261169,
+      "time": "2026-11-10T05:52:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "SpaceX计划在美国得州投资240亿美元建设数据中心和天然气发电厂",
+      "url": "https://wallstreetcn.com/livenews/3197190"
+    },
+    {
+      "id": "1iretdq",
+      "ts": 1794261121,
+      "time": "2026-11-10T05:52:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "明晟公司MSCI新兴市场股票指数涨1.5%，发展中国家外汇指数大致持平。",
+      "url": "https://wallstreetcn.com/livenews/3197189"
+    },
+    {
+      "id": "1i9xt8e",
+      "ts": 1794261012,
+      "time": "2026-11-10T05:50:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国最大水务企业推出新一轮债务融资以自救",
+      "url": "https://wallstreetcn.com/livenews/3197188"
+    },
+    {
+      "id": "17bhui9",
+      "ts": 1794260910,
+      "time": "2026-11-10T05:48:30.000+08:00",
+      "source": "华尔街见闻",
+      "title": "哥伦比亚正与国际货币基金组织（IMF）就约150亿美元的备用安排进行谈判。",
+      "url": "https://wallstreetcn.com/livenews/3197187"
+    },
+    {
+      "id": "4mr2oy",
+      "ts": 1794260875,
+      "time": "2026-11-10T05:47:55.000+08:00",
+      "source": "华尔街见闻",
+      "title": "OpenAI：控制室配合失准监测系统运行，在决定介入以停止或暂停任务后35秒内停止模型输出。",
+      "url": "https://wallstreetcn.com/livenews/3197186"
+    },
+    {
+      "id": "7kdwgk",
+      "ts": 1794260812,
+      "time": "2026-11-10T05:46:52.000+08:00",
+      "source": "新浪财经",
+      "title": "原油：布伦特跌至8月份以来最低 伊朗战争外交斡旋显现进展",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyetpn2931577.shtml"
+    },
+    {
+      "id": "1yfvpz4",
+      "ts": 1794260775,
+      "time": "2026-11-10T05:46:15.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国总统特朗普：目前看来没必要对伊朗采取军事行动。",
+      "url": "https://wallstreetcn.com/livenews/3197185"
+    },
+    {
+      "id": "1ipvtns",
+      "ts": 1794260760,
+      "time": "2026-11-10T05:46:00.000+08:00",
+      "source": "新浪财经",
+      "title": "11月10日美股成交额前20：英伟达跌超4% 黄仁勋承认出轨 遭美国国会传唤 退出两场活动",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyetpp2941532.shtml"
+    },
+    {
+      "id": "4n13ba",
+      "ts": 1794260601,
+      "time": "2026-11-10T05:43:21.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国总统特朗普突访白宫新闻发布室。",
+      "url": "https://wallstreetcn.com/livenews/3197184"
+    },
+    {
+      "id": "6ll81x",
+      "ts": 1794260564,
+      "time": "2026-11-10T05:42:44.000+08:00",
+      "source": "东方财富",
+      "title": "农药产业破局重在联合创新",
+      "url": "http://finance.eastmoney.com/news/1355,202611103926647177.html"
+    },
+    {
+      "id": "1tiyxb1",
+      "ts": 1794260564,
+      "time": "2026-11-10T05:42:44.000+08:00",
+      "source": "东方财富",
+      "title": "进博会照见中国开放无限可能",
+      "url": "http://finance.eastmoney.com/news/1352,202611103926647053.html"
+    },
+    {
+      "id": "1hjivhy",
+      "ts": 1794260564,
+      "time": "2026-11-10T05:42:44.000+08:00",
+      "source": "东方财富",
+      "title": "中国银行 九年进博同行 助力金融高水平对外开放",
+      "url": "http://bank.eastmoney.com/news/1174,202611103926646678.html"
+    },
+    {
+      "id": "og1dg6",
+      "ts": 1794260563,
+      "time": "2026-11-10T05:42:43.000+08:00",
+      "source": "东方财富",
+      "title": "产业创新如何提出科学问题",
+      "url": "http://finance.eastmoney.com/news/1350,202611103926647521.html"
+    },
+    {
+      "id": "vy8wbw",
+      "ts": 1794260563,
+      "time": "2026-11-10T05:42:43.000+08:00",
+      "source": "东方财富",
+      "title": "厚植高质量发展绿色底色",
+      "url": "http://finance.eastmoney.com/news/1350,202611103926647370.html"
+    },
+    {
+      "id": "8w92p7",
+      "ts": 1794259996,
+      "time": "2026-11-10T05:33:16.000+08:00",
+      "source": "东方财富",
+      "title": "协同合作共护共兴全球海洋",
+      "url": "http://finance.eastmoney.com/news/1350,202611103926646185.html"
+    },
+    {
+      "id": "16kl8gj",
+      "ts": 1794259996,
+      "time": "2026-11-10T05:33:16.000+08:00",
+      "source": "东方财富",
+      "title": "10月份CPI、PPI同比分别上涨0.7%、5.7%—— 物价总水平保持平稳运行",
+      "url": "http://fund.eastmoney.com/news/11383,202611103926645451.html"
+    },
+    {
+      "id": "5v6ma2",
+      "ts": 1794259995,
+      "time": "2026-11-10T05:33:15.000+08:00",
+      "source": "东方财富",
+      "title": "示范基地创建“入围”只是起点",
+      "url": "http://finance.eastmoney.com/news/1355,202611103926645678.html"
+    },
+    {
+      "id": "two4hm",
+      "ts": 1794259995,
+      "time": "2026-11-10T05:33:15.000+08:00",
+      "source": "东方财富",
+      "title": "武汉打造创新策源强引擎 去年高新技术企业达一点七万家",
+      "url": "http://finance.eastmoney.com/news/1355,202611103926645334.html"
+    },
     {
       "id": "1brj1ku",
       "ts": 1794259995,
@@ -22,12 +166,60 @@
       "url": "http://finance.eastmoney.com/news/1354,202611103926644621.html"
     },
     {
+      "id": "11mbxae",
+      "ts": 1794259994,
+      "time": "2026-11-10T05:33:14.000+08:00",
+      "source": "东方财富",
+      "title": "厘清土地出让配套权责",
+      "url": "http://money.eastmoney.com/news/11261,202611103926645946.html"
+    },
+    {
+      "id": "iqx075",
+      "ts": 1794259994,
+      "time": "2026-11-10T05:33:14.000+08:00",
+      "source": "东方财富",
+      "title": "向全球南方敞开机遇之门",
+      "url": "http://finance.eastmoney.com/news/1352,202611103926645885.html"
+    },
+    {
+      "id": "s8dolb",
+      "ts": 1794259994,
+      "time": "2026-11-10T05:33:14.000+08:00",
+      "source": "东方财富",
+      "title": "6天盛会释放365天效应",
+      "url": "http://finance.eastmoney.com/news/1350,202611103926645068.html"
+    },
+    {
       "id": "tce7ks",
       "ts": 1794259994,
       "time": "2026-11-10T05:33:14.000+08:00",
       "source": "东方财富",
       "title": "人工智能+交通运输场景加速落地",
       "url": "http://finance.eastmoney.com/news/1354,202611103926644468.html"
+    },
+    {
+      "id": "1u9u6mr",
+      "ts": 1794259993,
+      "time": "2026-11-10T05:33:13.000+08:00",
+      "source": "东方财富",
+      "title": "实施“温暖工程”确保供热质量上台阶",
+      "url": "http://finance.eastmoney.com/news/1355,202611103926645268.html"
+    },
+    {
+      "id": "71i0te",
+      "ts": 1794259992,
+      "time": "2026-11-10T05:33:12.000+08:00",
+      "source": "东方财富",
+      "title": "浙川协作从送出去到引进来",
+      "url": "http://finance.eastmoney.com/news/1350,202611103926645189.html"
+    },
+    {
+      "id": "987svo",
+      "ts": 1794259991,
+      "time": "2026-11-10T05:33:11.000+08:00",
+      "source": "东方财富",
+      "title": "智能家居产业调研",
+      "url": "http://finance.eastmoney.com/news/1354,202611103926644890.html"
     },
     {
       "id": "1yru9lb",
@@ -6196,198 +6388,6 @@
       "source": "华尔街见闻",
       "title": "环旭电子：2026年10月合并营业收入66.44亿元，同比增长18.87%，环比减少11.25%；",
       "url": "https://wallstreetcn.com/livenews/3196762"
-    },
-    {
-      "id": "o07p96",
-      "ts": 1794209662,
-      "time": "2026-11-09T07:34:22.000Z",
-      "source": "中新网",
-      "title": "保护地球免疫力，菲仕兰生物多样性亲子探索营在黄河口圆满收官",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10728763.shtml"
-    },
-    {
-      "id": "zds79i",
-      "ts": 1794209608,
-      "time": "2026-11-09T15:33:28.000+08:00",
-      "source": "东方财富",
-      "title": "从一片林到一条链 广东重塑超2800万亩经济林的价值",
-      "url": "http://finance.eastmoney.com/news/1355,202611093926237047.html"
-    },
-    {
-      "id": "1x9wsgu",
-      "ts": 1794209520,
-      "time": "2026-11-09T15:32:00.000+08:00",
-      "source": "东方财富",
-      "title": "两艘国产大型邮轮同靠吴淞口 港口能级再跃升",
-      "url": "http://finance.eastmoney.com/news/1355,202611093926235010.html"
-    },
-    {
-      "id": "7kxusd",
-      "ts": 1794209519,
-      "time": "2026-11-09T15:31:59.000+08:00",
-      "source": "新浪财经",
-      "title": "以韩国为跳板 英伟达瞄准光州RoboTaxi实证项目",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmty6558830.shtml"
-    },
-    {
-      "id": "xrvgh7",
-      "ts": 1794209500,
-      "time": "2026-11-09T15:31:40.000+08:00",
-      "source": "新浪财经",
-      "title": "英伟达B300报价涨到2300万，AI算力租赁迎来新机会？",
-      "url": "https://finance.sina.com.cn/blockchain/qklhz/2026-11-09/doc-iniycmtu6306459.shtml"
-    },
-    {
-      "id": "1n0tznn",
-      "ts": 1794209452,
-      "time": "2026-11-09T15:30:52.000+08:00",
-      "source": "华尔街见闻",
-      "title": "中方尚未批准约60万枚英伟达先进芯片进口，外交部：建议询问主管部门",
-      "url": "https://wallstreetcn.com/livenews/3196759"
-    },
-    {
-      "id": "53t45t",
-      "ts": 1794209381,
-      "time": "2026-11-09T15:29:41.000+08:00",
-      "source": "华尔街见闻",
-      "title": "中方尚未批准约60万枚英伟达先进芯片进口，外交部：建议询问主管部门",
-      "url": "https://wallstreetcn.com/livenews/3196757"
-    },
-    {
-      "id": "1cfqi7x",
-      "ts": 1794209287,
-      "time": "2026-11-09T15:28:07.000+08:00",
-      "source": "华尔街见闻",
-      "title": "千问办公2.0发布，首个支持多人与Agent协作的TeamAgent来了",
-      "url": "https://wallstreetcn.com/livenews/3196756"
-    },
-    {
-      "id": "h01ixj",
-      "ts": 1794209262,
-      "time": "2026-11-09T15:27:42.000+08:00",
-      "source": "东方财富",
-      "title": "近2亿美元，进博会虹口交易分团两轮集中签约落地",
-      "url": "http://finance.eastmoney.com/news/1354,202611093926230352.html"
-    },
-    {
-      "id": "f65zhe",
-      "ts": 1794209239,
-      "time": "2026-11-09T15:27:19.000+08:00",
-      "source": "华尔街见闻",
-      "title": "外交部：中国率先批准《关于成立世界人工智能合作组织的协定》体现真诚意愿和坚定承诺",
-      "url": "https://wallstreetcn.com/livenews/3196755"
-    },
-    {
-      "id": "1u3llg7",
-      "ts": 1794209177,
-      "time": "2026-11-09T15:26:17.000+08:00",
-      "source": "东方财富",
-      "title": "1至9月四川金融“五篇大文章”领域贷款余额突破5万亿元",
-      "url": "http://forex.eastmoney.com/news/1131,202611093926228882.html"
-    },
-    {
-      "id": "1r1rw2m",
-      "ts": 1794209177,
-      "time": "2026-11-09T15:26:17.000+08:00",
-      "source": "东方财富",
-      "title": "（第九届进博会）上海启动新一轮智慧口岸建设",
-      "url": "http://finance.eastmoney.com/news/1350,202611093926228550.html"
-    },
-    {
-      "id": "11djfkq",
-      "ts": 1794209123,
-      "time": "2026-11-09T15:25:23.000+08:00",
-      "source": "华尔街见闻",
-      "title": "受黄仁勋被调查影响，英伟达在Tradegate价格较上周五美股收盘下跌6%。",
-      "url": "https://wallstreetcn.com/livenews/3196754"
-    },
-    {
-      "id": "ikhdv9",
-      "ts": 1794209076,
-      "time": "2026-11-09T15:24:36.000+08:00",
-      "source": "新浪财经",
-      "title": "意大利裕信银行第三季度净利润增长24%超预期，上调全年盈利指引",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmtw2950649.shtml"
-    },
-    {
-      "id": "1s98vh9",
-      "ts": 1794208965,
-      "time": "2026-11-09T15:22:45.000+08:00",
-      "source": "新浪财经",
-      "title": "特朗普政府要求中国协助结束与伊朗冲突？外交部：相关方应该坚持和平选择",
-      "url": "https://finance.sina.com.cn/jjxw/2026-11-09/doc-iniycmty6551064.shtml"
-    },
-    {
-      "id": "1bd80kl",
-      "ts": 1794208943,
-      "time": "2026-11-09T15:22:23.000+08:00",
-      "source": "华尔街见闻",
-      "title": "美官员称与黄仁勋婚外情女子为中国情报机构工作，外交部：纯属捕风捉影",
-      "url": "https://wallstreetcn.com/livenews/3196753"
-    },
-    {
-      "id": "1svjp8r",
-      "ts": 1794208931,
-      "time": "2026-11-09T15:22:11.000+08:00",
-      "source": "华尔街见闻",
-      "title": "特朗普称将与中俄元首在APEC讨论美伊冲突及无核化问题，外交部回应",
-      "url": "https://wallstreetcn.com/livenews/3196752"
-    },
-    {
-      "id": "1c7emz0",
-      "ts": 1794208921,
-      "time": "2026-11-09T15:22:01.000+08:00",
-      "source": "华尔街见闻",
-      "title": "特朗普政府要求中国协助结束与伊朗冲突？外交部：相关方应该坚持和平选择",
-      "url": "https://wallstreetcn.com/livenews/3196751"
-    },
-    {
-      "id": "1ej8le4",
-      "ts": 1794208915,
-      "time": "2026-11-09T15:21:55.000+08:00",
-      "source": "新浪财经",
-      "title": "澳大利亚Stockland因居民反对放弃悉尼数据中心计划，AI基础设施建设阻力加大",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmty6549835.shtml"
-    },
-    {
-      "id": "bgxo90",
-      "ts": 1794208906,
-      "time": "2026-11-09T15:21:46.000+08:00",
-      "source": "华尔街见闻",
-      "title": "美官员称与黄仁勋婚外情女子为中国情报机构工作，外交部：纯属捕风捉影",
-      "url": "https://wallstreetcn.com/livenews/3196750"
-    },
-    {
-      "id": "zdzua1",
-      "ts": 1794208882,
-      "time": "2026-11-09T15:21:22.000+08:00",
-      "source": "东方财富",
-      "title": "交通运输部：上周监测港口完成货物吞吐量25718.5万吨，环比下降5.69%",
-      "url": "http://finance.eastmoney.com/news/1350,202611093926236150.html"
-    },
-    {
-      "id": "szy1nu",
-      "ts": 1794208865,
-      "time": "2026-11-09T07:21:05.000Z",
-      "source": "中新网",
-      "title": "四川：聚力资本市场与实体经济双向互动",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10728802.shtml"
-    },
-    {
-      "id": "1vdrxkf",
-      "ts": 1794208848,
-      "time": "2026-11-09T15:20:48.000+08:00",
-      "source": "华尔街见闻",
-      "title": "特朗普称将与中俄元首在APEC讨论美伊冲突及无核化问题，外交部回应",
-      "url": "https://wallstreetcn.com/livenews/3196749"
-    },
-    {
-      "id": "193wkw9",
-      "ts": 1794208815,
-      "time": "2026-11-09T15:20:15.000+08:00",
-      "source": "新浪财经",
-      "title": "软银公司上调全年业绩预期，上半年营收和营业利润均创历史新高，AI业务收入增长36.7%",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmua3324394.shtml"
     },
     {
       "id": "nqxj7y",

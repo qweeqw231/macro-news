@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T21:37:49.697Z",
+  "generatedAt": "2026-11-09T21:52:51.711Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -196,7 +196,7 @@
       "high": 25354.3,
       "low": 24762.57,
       "prevClose": 24579.42,
-      "volume": 7975309056,
+      "volume": 8017435648,
       "changePct": 2.74,
       "updatedAt": "2026-11-10T05:00:00+08:00",
       "source": "eastmoney"
@@ -270,7 +270,7 @@
       "high": 10785.24,
       "low": 10654.32,
       "prevClose": 10673.94,
-      "volume": 579904544,
+      "volume": 668996528,
       "changePct": 1.02,
       "updatedAt": "2026-11-10T00:35:30+08:00",
       "source": "eastmoney"
@@ -810,7 +810,7 @@
       "high": 28025.77,
       "low": 27227.53,
       "prevClose": 26989.99,
-      "volume": 1803358256,
+      "volume": 1809061680,
       "changePct": 3.4,
       "updatedAt": "2026-11-10T05:00:00+08:00",
       "source": "eastmoney"
@@ -819,39 +819,39 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 4137.41,
+      "price": 4140.9,
       "open": 4066.57,
       "high": 4148.33,
       "low": 4054.25,
       "prevClose": 4070.75,
-      "changePct": 1.64,
-      "updatedAt": "2026-11-10T05:37:00+08:00",
+      "changePct": 1.72,
+      "updatedAt": "2026-11-10T05:52:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 53.33,
+      "price": 53.44,
       "open": 51.71,
       "high": 53.51,
       "low": 51.38,
       "prevClose": 51.92,
-      "changePct": 2.72,
-      "updatedAt": "2026-11-10T05:37:00+08:00",
+      "changePct": 2.93,
+      "updatedAt": "2026-11-10T05:53:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 92.26,
+      "price": 91.99,
       "open": 98.2,
       "high": 98.43,
       "low": 90.56,
       "prevClose": 98.32,
-      "changePct": -6.16,
-      "updatedAt": "2026-11-10T05:37:51+08:00",
+      "changePct": -6.44,
+      "updatedAt": "2026-11-10T05:52:52+08:00",
       "note": ""
     },
     {
