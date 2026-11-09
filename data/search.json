@@ -1,10 +1,194 @@
 {
-  "generatedAt": "2026-11-09T07:07:50.542Z",
+  "generatedAt": "2026-11-09T07:22:46.825Z",
   "windowDays": 62,
   "from": "2026-09-09",
   "days": 60,
-  "total": 24498,
+  "total": 24529,
   "items": [
+    {
+      "id": "1bd80kl",
+      "ts": 1794208943,
+      "time": "2026-11-09T15:22:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美官员称与黄仁勋婚外情女子为中国情报机构工作，外交部：纯属捕风捉影",
+      "url": "https://wallstreetcn.com/livenews/3196753"
+    },
+    {
+      "id": "1svjp8r",
+      "ts": 1794208931,
+      "time": "2026-11-09T15:22:11.000+08:00",
+      "source": "华尔街见闻",
+      "title": "特朗普称将与中俄元首在APEC讨论美伊冲突及无核化问题，外交部回应",
+      "url": "https://wallstreetcn.com/livenews/3196752"
+    },
+    {
+      "id": "1c7emz0",
+      "ts": 1794208921,
+      "time": "2026-11-09T15:22:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "特朗普政府要求中国协助结束与伊朗冲突？外交部：相关方应该坚持和平选择",
+      "url": "https://wallstreetcn.com/livenews/3196751"
+    },
+    {
+      "id": "1ej8le4",
+      "ts": 1794208915,
+      "time": "2026-11-09T15:21:55.000+08:00",
+      "source": "新浪财经",
+      "title": "澳大利亚Stockland因居民反对放弃悉尼数据中心计划，AI基础设施建设阻力加大",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmty6549835.shtml"
+    },
+    {
+      "id": "1u4f0cf",
+      "ts": 1794208906,
+      "time": "2026-11-09T15:21:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "【美官员称与黄仁勋婚外情女子为中国情报机构工作，外交部：纯属捕风捉影】11月9日，外交部发言人郭嘉昆主持例行记者会。",
+      "url": "https://wallstreetcn.com/livenews/3196750"
+    },
+    {
+      "id": "1vdrxkf",
+      "ts": 1794208848,
+      "time": "2026-11-09T15:20:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "特朗普称将与中俄元首在APEC讨论美伊冲突及无核化问题，外交部回应",
+      "url": "https://wallstreetcn.com/livenews/3196749"
+    },
+    {
+      "id": "193wkw9",
+      "ts": 1794208815,
+      "time": "2026-11-09T15:20:15.000+08:00",
+      "source": "新浪财经",
+      "title": "软银公司上调全年业绩预期，上半年营收和营业利润均创历史新高，AI业务收入增长36.7%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmua3324394.shtml"
+    },
+    {
+      "id": "tny338",
+      "ts": 1794208787,
+      "time": "2026-11-09T15:19:47.000+08:00",
+      "source": "新浪财经",
+      "title": "SK海力士拟扩充美国团队，深化与核心客户合作",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmty6548058.shtml"
+    },
+    {
+      "id": "qz3j4r",
+      "ts": 1794208652,
+      "time": "2026-11-09T15:17:32.000+08:00",
+      "source": "华尔街见闻",
+      "title": "胡塞武装称沙特主导的联军空袭也门工厂及学校",
+      "url": "https://wallstreetcn.com/livenews/3196747"
+    },
+    {
+      "id": "55jh6d",
+      "ts": 1794208625,
+      "time": "2026-11-09T15:17:05.000+08:00",
+      "source": "东方财富",
+      "title": "交通运输部：上周国家铁路运输货物8375.5万吨，环比增长0.31%",
+      "url": "http://finance.eastmoney.com/news/1350,202611093926224263.html"
+    },
+    {
+      "id": "1fcg3im",
+      "ts": 1794208543,
+      "time": "2026-11-09T15:15:43.000+08:00",
+      "source": "新浪财经",
+      "title": "Stifel恢复覆盖星巴克并给予买入评级，目标价115美元，看好盈利持续复苏",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmty6544412.shtml"
+    },
+    {
+      "id": "1g1vjl0",
+      "ts": 1794208503,
+      "time": "2026-11-09T15:15:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国债期货收盘，30年期主力合约跌0.14%，10年期主力合约跌0.06%，5年期主力合约跌0.04%，2年期主力合约跌0.01%。",
+      "url": "https://wallstreetcn.com/livenews/3196745"
+    },
+    {
+      "id": "1ccyo77",
+      "ts": 1794208484,
+      "time": "2026-11-09T15:14:44.000+08:00",
+      "source": "新浪财经",
+      "title": "英国石油公司与壳牌还应该自持加油站吗？",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmua3319468.shtml"
+    },
+    {
+      "id": "1b4xuxf",
+      "ts": 1794208443,
+      "time": "2026-11-09T15:14:03.000+08:00",
+      "source": "东方财富",
+      "title": "抹平“时差”！中国患者抢先用上了全球创新药",
+      "url": "http://finance.eastmoney.com/news/1350,202611093926222719.html"
+    },
+    {
+      "id": "ecn9bg",
+      "ts": 1794208418,
+      "time": "2026-11-09T15:13:38.000+08:00",
+      "source": "新浪财经",
+      "title": "SpaceX拟在得州建设240亿美元超级计算设施",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmty6542636.shtml"
+    },
+    {
+      "id": "py7uol",
+      "ts": 1794208265,
+      "time": "2026-11-09T15:11:05.000+08:00",
+      "source": "新浪财经",
+      "title": "存储三巨头联手推进机器人充电标准化 老旧晶圆厂无人化提速",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmty6540516.shtml"
+    },
+    {
+      "id": "17y2wox",
+      "ts": 1794208249,
+      "time": "2026-11-09T07:10:49.000Z",
+      "source": "中新网",
+      "title": "A股收评：超2200只个股飘红，沪指收涨，深指、创业板指收跌",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10728832.shtml"
+    },
+    {
+      "id": "67jm5j",
+      "ts": 1794208241,
+      "time": "2026-11-09T15:10:41.000+08:00",
+      "source": "东方财富",
+      "title": "今年1—10月海南离岛免税购物金额276.6亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611093926216579.html"
+    },
+    {
+      "id": "vqp6sy",
+      "ts": 1794208231,
+      "time": "2026-11-09T15:10:31.000+08:00",
+      "source": "新浪财经",
+      "title": "今日比特币：跌至7.4万美元附近，现货ETF上周遭12.8亿美元资金撤出",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmtu6293493.shtml"
+    },
+    {
+      "id": "190krif",
+      "ts": 1794208139,
+      "time": "2026-11-09T07:08:59.000Z",
+      "source": "中新网",
+      "title": "（第九届进博会）上海启动新一轮智慧口岸建设",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10728805.shtml"
+    },
+    {
+      "id": "al410g",
+      "ts": 1794208073,
+      "time": "2026-11-09T07:07:53.000Z",
+      "source": "中新网",
+      "title": "1至9月四川金融“五篇大文章”领域贷款余额突破5万亿元",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10728798.shtml"
+    },
+    {
+      "id": "1oqnr43",
+      "ts": 1794208047,
+      "time": "2026-11-09T15:07:27.000+08:00",
+      "source": "东方财富",
+      "title": "中美关税延期两个月：178项产品豁免落地，出口链迎来缓冲窗口",
+      "url": "http://finance.eastmoney.com/news/1346,202611093926220738.html"
+    },
+    {
+      "id": "1wrp0vk",
+      "ts": 1794207991,
+      "time": "2026-11-09T15:06:31.000+08:00",
+      "source": "东方财富",
+      "title": "今年1—10月海南离岛免税购物金额276.6亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611093926222658.html"
+    },
     {
       "id": "du3qdu",
       "ts": 1794207988,
@@ -36,6 +220,14 @@
       "source": "华尔街见闻",
       "title": "斯洛伐克外交部长布拉纳尔将访华",
       "url": "https://wallstreetcn.com/livenews/3196738"
+    },
+    {
+      "id": "z8k44n",
+      "ts": 1794207896,
+      "time": "2026-11-09T15:04:56.000+08:00",
+      "source": "新浪财经",
+      "title": "天际股份突遭证监会立案，同步更正三年财报",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-09/doc-iniycmty6537466.shtml"
     },
     {
       "id": "mfzipv",
@@ -70,12 +262,28 @@
       "url": "https://wallstreetcn.com/livenews/3196736"
     },
     {
+      "id": "bgu1ja",
+      "ts": 1794207840,
+      "time": "2026-11-09T15:04:00.000+08:00",
+      "source": "东方财富",
+      "title": "上海：强化脑机接口医疗器械全链条服务与监管",
+      "url": "http://finance.eastmoney.com/news/1350,202611093926221539.html"
+    },
+    {
       "id": "176i99u",
       "ts": 1794207825,
       "time": "2026-11-09T15:03:45.000+08:00",
       "source": "新浪财经",
       "title": "欧盟就边境系统项目纠纷起诉IBM及其合作方",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmua3310028.shtml"
+    },
+    {
+      "id": "v02jl",
+      "ts": 1794207780,
+      "time": "2026-11-09T15:03:00.000+08:00",
+      "source": "东方财富",
+      "title": "上海：积极探索开展医疗器械注册证转让试点",
+      "url": "http://finance.eastmoney.com/news/1355,202611093926217518.html"
     },
     {
       "id": "ncdbgw",
@@ -124,6 +332,14 @@
       "source": "华尔街见闻",
       "title": "上证指数收报3660.79点，涨0.32%。",
       "url": "https://wallstreetcn.com/livenews/3196734"
+    },
+    {
+      "id": "1u5ir9z",
+      "ts": 1794207661,
+      "time": "2026-11-09T15:01:01.000+08:00",
+      "source": "东方财富",
+      "title": "扩内需如何长短结合？CF40报告：澄清7个认知困境",
+      "url": "http://fund.eastmoney.com/news/11383,202611093926218266.html"
     },
     {
       "id": "zfgcaa",
@@ -198,6 +414,22 @@
       "url": "https://wallstreetcn.com/livenews/3196728"
     },
     {
+      "id": "js1odt",
+      "ts": 1794207413,
+      "time": "2026-11-09T14:56:53.000+08:00",
+      "source": "东方财富",
+      "title": "（第九届进博会）进博会递“共赢之梯”：助力不同发展阶段国家接入中国大市场",
+      "url": "http://finance.eastmoney.com/news/1350,202611093926220921.html"
+    },
+    {
+      "id": "42993z",
+      "ts": 1794207413,
+      "time": "2026-11-09T14:56:53.000+08:00",
+      "source": "东方财富",
+      "title": "今年前10个月海南离岛免税购物金额同比增长12.5%",
+      "url": "http://finance.eastmoney.com/news/1350,202611093926220856.html"
+    },
+    {
       "id": "1pkhye3",
       "ts": 1794207358,
       "time": "2026-11-09T14:55:58.000+08:00",
@@ -212,6 +444,14 @@
       "source": "东方财富",
       "title": "上海：全面加强药物研究机构监管 建立健全研究机构分级分类监管机制",
       "url": "http://finance.eastmoney.com/news/1350,202611093926212949.html"
+    },
+    {
+      "id": "1cdrdm8",
+      "ts": 1794207300,
+      "time": "2026-11-09T14:55:00.000+08:00",
+      "source": "东方财富",
+      "title": "上海：加强重点领域和重点品种的靶向监管 深入推进在产疫苗生产企业派驻检查",
+      "url": "http://finance.eastmoney.com/news/1355,202611093926220074.html"
     },
     {
       "id": "1y7k0qv",
@@ -244,6 +484,14 @@
       "source": "东方财富",
       "title": "上海：到2030年药品监管实现“夯基拓能、提质增效、整体跃升”",
       "url": "http://finance.eastmoney.com/news/1350,202611093926212585.html"
+    },
+    {
+      "id": "vokb51",
+      "ts": 1794207179,
+      "time": "2026-11-09T14:52:59.000+08:00",
+      "source": "东方财富",
+      "title": "山东出台行动计划加快造纸产业高质量发展",
+      "url": "http://finance.eastmoney.com/news/1355,202611093926220397.html"
     },
     {
       "id": "12jn0fv",
