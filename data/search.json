@@ -1,10 +1,58 @@
 {
-  "generatedAt": "2026-11-09T18:08:41.462Z",
+  "generatedAt": "2026-11-09T18:23:37.280Z",
   "windowDays": 62,
   "from": "2026-09-09",
   "days": 60,
   "total": 24834,
   "items": [
+    {
+      "id": "7epfn1",
+      "ts": 1794248478,
+      "time": "2026-11-10T02:21:18.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美联储Barkin：如果每次美联储政策会议都能纳入整整两个月的经济数据，那将是一个优势。",
+      "url": "https://wallstreetcn.com/livenews/3197102"
+    },
+    {
+      "id": "auxtyc",
+      "ts": 1794248150,
+      "time": "2026-11-10T02:15:50.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周一（11月9日），美联储隔夜逆回购协议（RRP）使用规模为2.52亿美元（交易对手3家），上个交易日报1.5亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3197101"
+    },
+    {
+      "id": "4efzil",
+      "ts": 1794247860,
+      "time": "2026-11-10T02:11:00.000+08:00",
+      "source": "新浪财经",
+      "title": "欧洲债市：德债转跌 全球股市上涨而油价下跌",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyepfr3030432.shtml"
+    },
+    {
+      "id": "k1w9zp",
+      "ts": 1794247828,
+      "time": "2026-11-10T02:10:28.000+08:00",
+      "source": "新浪财经",
+      "title": "里士满联储行长暗示加息方向明确 但步伐需要谨慎",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyepfs9678497.shtml"
+    },
+    {
+      "id": "fqyenb",
+      "ts": 1794247808,
+      "time": "2026-11-10T02:10:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "意大利内阁在降低能源账单方面支持天然气价格上限方案。",
+      "url": "https://wallstreetcn.com/livenews/3197100"
+    },
+    {
+      "id": "i9dlf1",
+      "ts": 1794247785,
+      "time": "2026-11-10T02:09:45.000+08:00",
+      "source": "新浪财经",
+      "title": "欧洲股市上涨 银行和科技股表现强劲",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyepfr3030119.shtml"
+    },
     {
       "id": "1rl1z3o",
       "ts": 1794247678,
@@ -14,11 +62,11 @@
       "url": "https://wallstreetcn.com/livenews/3197099"
     },
     {
-      "id": "1id6h7v",
+      "id": "62cfaj",
       "ts": 1794247644,
       "time": "2026-11-10T02:07:24.000+08:00",
       "source": "华尔街见闻",
-      "title": "Merck的Efinopegdutide 2B阶段临床试验实现主要终点。",
+      "title": "Merck公布efinopegdutide治疗伴2–3期纤维化的代谢功能障碍相关脂肪性肝炎（MASH）成人2b期试验积极结果。",
       "url": "https://wallstreetcn.com/livenews/3197098"
     },
     {
@@ -236,6 +284,46 @@
       "source": "华尔街见闻",
       "title": "美国里士满联储主席Barkin（2027年FOMC票委）：FOMC货币政策的方向是“明确的”，但最好“谨慎”调整政策。",
       "url": "https://wallstreetcn.com/livenews/3197073"
+    },
+    {
+      "id": "m5oudg",
+      "ts": 1794243840,
+      "time": "2026-11-10T01:04:00.000+08:00",
+      "source": "东方财富",
+      "title": "整治网上金融“黑灰产”乱象必要且重要",
+      "url": "http://finance.eastmoney.com/news/1350,202611103926620110.html"
+    },
+    {
+      "id": "14wfc25",
+      "ts": 1794243840,
+      "time": "2026-11-10T01:04:00.000+08:00",
+      "source": "东方财富",
+      "title": "10月份物价运行继续回暖",
+      "url": "http://finance.eastmoney.com/news/1346,202611103926619996.html"
+    },
+    {
+      "id": "1p6s9sp",
+      "ts": 1794243840,
+      "time": "2026-11-10T01:04:00.000+08:00",
+      "source": "东方财富",
+      "title": "中证协“摸底”104家券商股权结构 形成以国有资本为主导、各类资本有序参与格局",
+      "url": "http://finance.eastmoney.com/news/1354,202611103926619854.html"
+    },
+    {
+      "id": "13awrly",
+      "ts": 1794243840,
+      "time": "2026-11-10T01:04:00.000+08:00",
+      "source": "东方财富",
+      "title": "中上协多措并举建设上市公司治理促进中心 推动独董履职提质增效",
+      "url": "http://finance.eastmoney.com/news/1349,202611103926619745.html"
+    },
+    {
+      "id": "19sm6pc",
+      "ts": 1794243840,
+      "time": "2026-11-10T01:04:00.000+08:00",
+      "source": "东方财富",
+      "title": "供给端鼓励创新 需求端降低门槛 通讯器材市场扩容求进阶",
+      "url": "http://finance.eastmoney.com/news/1354,202611103926619437.html"
     },
     {
       "id": "1qlmws7",
@@ -6300,94 +6388,6 @@
       "source": "华尔街见闻",
       "title": "沙特阿拉伯称利雅得市的危险已经过去。",
       "url": "https://wallstreetcn.com/livenews/3196711"
-    },
-    {
-      "id": "cy5yex",
-      "ts": 1794205159,
-      "time": "2026-11-09T14:19:19.000+08:00",
-      "source": "华尔街见闻",
-      "title": "玛莎拉蒂将与尊界合作 推动本地化生产",
-      "url": "https://wallstreetcn.com/livenews/3196710"
-    },
-    {
-      "id": "y29tkr",
-      "ts": 1794205043,
-      "time": "2026-11-09T14:17:23.000+08:00",
-      "source": "新浪财经",
-      "title": "欧盟起诉IBM及其合作伙伴 边境管理系统项目陷入困境",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmua3278710.shtml"
-    },
-    {
-      "id": "iax6gf",
-      "ts": 1794205007,
-      "time": "2026-11-09T14:16:47.000+08:00",
-      "source": "华尔街见闻",
-      "title": "沙特阿拉伯针对利雅得地区发布危险警告。",
-      "url": "https://wallstreetcn.com/livenews/3196708"
-    },
-    {
-      "id": "111argp",
-      "ts": 1794204900,
-      "time": "2026-11-09T14:15:00.000+08:00",
-      "source": "东方财富",
-      "title": "透视进博：从平台到生态——三大变化折射进博会开放新内涵",
-      "url": "http://stock.eastmoney.com/news/1416,202611093926190530.html"
-    },
-    {
-      "id": "1m5kcrw",
-      "ts": 1794204898,
-      "time": "2026-11-09T14:14:58.000+08:00",
-      "source": "新浪财经",
-      "title": "菲律宾第三季度GDP仅增长2.1%，创2022年以来最低增速",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmtw2909051.shtml"
-    },
-    {
-      "id": "d216g0",
-      "ts": 1794204609,
-      "time": "2026-11-09T14:10:09.000+08:00",
-      "source": "新浪财经",
-      "title": "荷兰初创企业Onodrim完成3亿美元融资 称要“唤醒欧洲国防工业沉睡的巨人”",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmtw2906094.shtml"
-    },
-    {
-      "id": "1kjn4z7",
-      "ts": 1794204491,
-      "time": "2026-11-09T14:08:11.000+08:00",
-      "source": "华尔街见闻",
-      "title": "法国农业信贷银行提议将意大利分支机构与BPM银行合并",
-      "url": "https://wallstreetcn.com/livenews/3196704"
-    },
-    {
-      "id": "1sowbmj",
-      "ts": 1794204302,
-      "time": "2026-11-09T14:05:02.000+08:00",
-      "source": "华尔街见闻",
-      "title": "纽元兑美元在新西兰选举后的涨幅扩大至1%。",
-      "url": "https://wallstreetcn.com/livenews/3196701"
-    },
-    {
-      "id": "vr9oqi",
-      "ts": 1794204265,
-      "time": "2026-11-09T14:04:25.000+08:00",
-      "source": "新浪财经",
-      "title": "AI退潮反噬大宗！“焊料之王”锡遭血洗 背后究竟冤不冤？",
-      "url": "https://finance.sina.com.cn/roll/2026-11-09/doc-iniycmtw2903626.shtml"
-    },
-    {
-      "id": "15tyl5c",
-      "ts": 1794204220,
-      "time": "2026-11-09T14:03:40.000+08:00",
-      "source": "东方财富",
-      "title": "20多万元/只 实验猴身价不到1年翻倍！养殖企业：不预订 有需要明年初再来谈",
-      "url": "http://finance.eastmoney.com/news/1354,202611093926173635.html"
-    },
-    {
-      "id": "lg52cg",
-      "ts": 1794204096,
-      "time": "2026-11-09T14:01:36.000+08:00",
-      "source": "华尔街见闻",
-      "title": "裕信银行第三季度营收69.0亿欧元，预估64.7亿欧元。",
-      "url": "https://wallstreetcn.com/livenews/3196699"
     },
     {
       "id": "nqxj7y",
