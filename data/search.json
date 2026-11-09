@@ -1,10 +1,82 @@
 {
-  "generatedAt": "2026-11-09T00:37:46.837Z",
+  "generatedAt": "2026-11-09T00:52:48.559Z",
   "windowDays": 62,
   "from": "2026-09-09",
   "days": 60,
-  "total": 24081,
+  "total": 24094,
   "items": [
+    {
+      "id": "1w0neuq",
+      "ts": 1794185380,
+      "time": "2026-11-09T08:49:40.000+08:00",
+      "source": "新浪财经",
+      "title": "日本称夏季三天干预提振了日元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniyauwa6464889.shtml"
+    },
+    {
+      "id": "1mievs4",
+      "ts": 1794185305,
+      "time": "2026-11-09T08:48:25.000+08:00",
+      "source": "东方财富",
+      "title": "两市融资余额减少235.09亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611093925768276.html"
+    },
+    {
+      "id": "178ldhr",
+      "ts": 1794185208,
+      "time": "2026-11-09T08:46:48.000+08:00",
+      "source": "东方财富",
+      "title": "高管话进博会|毕马威蔡伟：AI正在成为连接全球技术创新与中国实体经济转型的重要纽带",
+      "url": "http://finance.eastmoney.com/news/1346,202611093925768987.html"
+    },
+    {
+      "id": "1g49rv5",
+      "ts": 1794185147,
+      "time": "2026-11-09T08:45:47.000+08:00",
+      "source": "新浪财经",
+      "title": "国微控股完成透过换股方式认购无锡亚科鸿禹电子股权",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-09/doc-iniyauwa6462820.shtml"
+    },
+    {
+      "id": "13703yb",
+      "ts": 1794185104,
+      "time": "2026-11-09T08:45:04.000+08:00",
+      "source": "新浪财经",
+      "title": "中国诚通发展集团附属订立融资租赁安排",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-09/doc-iniyauwe3110652.shtml"
+    },
+    {
+      "id": "12kbi3c",
+      "ts": 1794185084,
+      "time": "2026-11-09T08:44:44.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普前幕僚网上激烈互撕、互发法律威胁，中期选举失利后矛盾爆发",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniyauwh6672250.shtml"
+    },
+    {
+      "id": "1c1v73e",
+      "ts": 1794185066,
+      "time": "2026-11-09T08:44:26.000+08:00",
+      "source": "新浪财经",
+      "title": "曌生命拟按“1供3”基准进行供股 净筹约2300万港元",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-09/doc-iniyauwa6462249.shtml"
+    },
+    {
+      "id": "1okt72e",
+      "ts": 1794184885,
+      "time": "2026-11-09T08:41:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "黄仁勋承认婚外情并致歉，英伟达董事会启动一项调查",
+      "url": "https://wallstreetcn.com/livenews/3196556"
+    },
+    {
+      "id": "1qlt5q6",
+      "ts": 1794184848,
+      "time": "2026-11-09T00:40:48.000Z",
+      "source": "中新网",
+      "title": "金观平：依法依规治理低价无序竞争",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-09/10728608.shtml"
+    },
     {
       "id": "mlegt5",
       "ts": 1794184637,
@@ -12,6 +84,14 @@
       "source": "新浪财经",
       "title": "捷利交易宝公布中期业绩 纯利约为2312万港元同比下降35.2%",
       "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-09/doc-iniyauwh6668445.shtml"
+    },
+    {
+      "id": "1i3c98g",
+      "ts": 1794184610,
+      "time": "2026-11-09T08:36:50.000+08:00",
+      "source": "东方财富",
+      "title": "常态化稳市机制持续完善",
+      "url": "http://stock.eastmoney.com/news/11215,202611093925767596.html"
     },
     {
       "id": "1j0qgm2",
@@ -140,6 +220,14 @@
       "source": "华尔街见闻",
       "title": "美国众议院民主党领袖明确支持弹劾赫格塞思",
       "url": "https://wallstreetcn.com/livenews/3196553"
+    },
+    {
+      "id": "1kitqka",
+      "ts": 1794183978,
+      "time": "2026-11-09T08:26:18.000+08:00",
+      "source": "东方财富",
+      "title": "早报|RTX 50系列显卡价格连涨后急跌 英伟达超7600万元货物离奇失踪",
+      "url": "http://finance.eastmoney.com/news/1354,202611093925763298.html"
     },
     {
       "id": "1o2iy5b",
@@ -292,6 +380,22 @@
       "source": "东方财富",
       "title": "11月9日早间新闻精选",
       "url": "http://finance.eastmoney.com/news/1354,202611093925759512.html"
+    },
+    {
+      "id": "19wmyo6",
+      "ts": 1794182940,
+      "time": "2026-11-09T08:09:00.000+08:00",
+      "source": "东方财富",
+      "title": "总台曝光后，江西赣州成立调查组！",
+      "url": "http://finance.eastmoney.com/news/1350,202611093925767992.html"
+    },
+    {
+      "id": "rqidpw",
+      "ts": 1794182940,
+      "time": "2026-11-09T08:09:00.000+08:00",
+      "source": "东方财富",
+      "title": "南财投资日历（11月9日）",
+      "url": "http://finance.eastmoney.com/news/1352,202611093925766629.html"
     },
     {
       "id": "1xmwz88",
