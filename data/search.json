@@ -1,10 +1,74 @@
 {
-  "generatedAt": "2026-11-09T19:07:48.543Z",
+  "generatedAt": "2026-11-09T19:22:50.255Z",
   "windowDays": 62,
   "from": "2026-09-09",
   "days": 60,
   "total": 24834,
   "items": [
+    {
+      "id": "hqwq2v",
+      "ts": 1794251979,
+      "time": "2026-11-10T03:19:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "爱尔兰财政部长：欧盟27个成员国中有26个同意有必要对烟草制品实行最低税收。",
+      "url": "https://wallstreetcn.com/livenews/3197122"
+    },
+    {
+      "id": "1i8wmuo",
+      "ts": 1794251974,
+      "time": "2026-11-10T03:19:34.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧盟经济事务委员东布罗夫斯基斯：将继续支持欧盟轮值主席国爱尔兰就烟草税达成协议。",
+      "url": "https://wallstreetcn.com/livenews/3197121"
+    },
+    {
+      "id": "19yi0vw",
+      "ts": 1794251955,
+      "time": "2026-11-10T03:19:15.000+08:00",
+      "source": "华尔街见闻",
+      "title": "冰岛预测显示：人口老龄化速度慢于欧盟",
+      "url": "https://wallstreetcn.com/livenews/3197120"
+    },
+    {
+      "id": "1gdbmyl",
+      "ts": 1794251613,
+      "time": "2026-11-10T03:13:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国银行：预计美国2027年高评级债券销售规模将缩水至1.9万亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3197119"
+    },
+    {
+      "id": "w3pxhv",
+      "ts": 1794251451,
+      "time": "2026-11-10T03:10:51.000+08:00",
+      "source": "华尔街见闻",
+      "title": "在岸人民币兑美元北京时间03:00收报6.6724，较上一交易日夜盘收盘涨39点。",
+      "url": "https://wallstreetcn.com/livenews/3197118"
+    },
+    {
+      "id": "8n5jce",
+      "ts": 1794251427,
+      "time": "2026-11-10T03:10:27.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国劳工统计局（BLS）披露CPI通胀数据时，将不会提供12个月CPI（同比）与核心CPI数据。",
+      "url": "https://wallstreetcn.com/livenews/3197117"
+    },
+    {
+      "id": "m2qo1t",
+      "ts": 1794251358,
+      "time": "2026-11-10T03:09:18.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国农业部预测，2027/28年度美国玉米种植面积为9550万英亩，产量为160.25亿蒲式耳。",
+      "url": "https://wallstreetcn.com/livenews/3197116"
+    },
+    {
+      "id": "15uqw9m",
+      "ts": 1794251328,
+      "time": "2026-11-10T03:08:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国众议院提出弹劾国防部长赫格塞思的条款。",
+      "url": "https://wallstreetcn.com/livenews/3197115"
+    },
     {
       "id": "x2a3ck",
       "ts": 1794251152,
@@ -28,6 +92,14 @@
       "source": "华尔街见闻",
       "title": "Anthropic在IPO前发布新版Fable、Mythos模型",
       "url": "https://wallstreetcn.com/livenews/3197114"
+    },
+    {
+      "id": "ljbhme",
+      "ts": 1794250862,
+      "time": "2026-11-10T03:01:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "在岸人民币兑美元（CNY）北京时间03:00收报6.6724元，较上周五夜盘收盘涨39点。",
+      "url": "https://wallstreetcn.com/livenews/3197111"
     },
     {
       "id": "sjh4bp",
@@ -78,12 +150,28 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyepfs9687624.shtml"
     },
     {
+      "id": "1ihjoxy",
+      "ts": 1794250466,
+      "time": "2026-11-10T02:54:26.000+08:00",
+      "source": "东方财富",
+      "title": "多方发力稳投资 年末冲刺进行时",
+      "url": "http://finance.eastmoney.com/news/1352,202611103926625964.html"
+    },
+    {
       "id": "ni37b4",
       "ts": 1794250404,
       "time": "2026-11-10T02:53:24.000+08:00",
       "source": "东方财富",
       "title": "进博会“生意经”之变：“小切口”里有大市场",
       "url": "http://finance.eastmoney.com/news/1354,202611103926624522.html"
+    },
+    {
+      "id": "5rucvx",
+      "ts": 1794250401,
+      "time": "2026-11-10T02:53:21.000+08:00",
+      "source": "东方财富",
+      "title": "10月CPI同比继续上涨 PPI同比涨幅创新高",
+      "url": "http://fund.eastmoney.com/news/11383,202611103926626251.html"
     },
     {
       "id": "1afbn0",
@@ -6300,94 +6388,6 @@
       "source": "东方财富",
       "title": "氢能发展“下一程”如何破题？京津冀氢能高质量发展专题会给出答案",
       "url": "http://finance.eastmoney.com/news/1354,202611093926204598.html"
-    },
-    {
-      "id": "19izay8",
-      "ts": 1794206610,
-      "time": "2026-11-09T14:43:30.000+08:00",
-      "source": "新浪财经",
-      "title": "花旗预计日本股市年底前反弹：近期暴跌已过度计入经济衰退风险",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmtu6277088.shtml"
-    },
-    {
-      "id": "10ih9ya",
-      "ts": 1794206607,
-      "time": "2026-11-09T14:43:27.000+08:00",
-      "source": "东方财富",
-      "title": "10月CPI同比回落至0.7%，PPI同比创年内新高",
-      "url": "http://finance.eastmoney.com/news/1352,202611093926209712.html"
-    },
-    {
-      "id": "iadkzr",
-      "ts": 1794206598,
-      "time": "2026-11-09T14:43:18.000+08:00",
-      "source": "新浪财经",
-      "title": "特朗普《60分钟》专访要点：经济表现亮眼、无意升级对伊打击、不在乎自己的净资产、移民问题做得过火了",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmua3294367.shtml"
-    },
-    {
-      "id": "1rhrajz",
-      "ts": 1794206465,
-      "time": "2026-11-09T14:41:05.000+08:00",
-      "source": "东方财富",
-      "title": "C50风向指数调查：10月新增信贷或同比少增，社融有望同比多增",
-      "url": "http://forex.eastmoney.com/news/1131,202611093926208829.html"
-    },
-    {
-      "id": "1f6ikgm",
-      "ts": 1794206401,
-      "time": "2026-11-09T14:40:01.000+08:00",
-      "source": "新浪财经",
-      "title": "商船三井第二财季营收增长24.5%，但营业利润基本持平，维持全年业绩指引",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmtw2923141.shtml"
-    },
-    {
-      "id": "ifa8di",
-      "ts": 1794206297,
-      "time": "2026-11-09T14:38:17.000+08:00",
-      "source": "华尔街见闻",
-      "title": "报道：AI担忧加剧市场波动之际 Alphabet考虑发行港元和新加坡元债券",
-      "url": "https://wallstreetcn.com/livenews/3196721"
-    },
-    {
-      "id": "1kr78kx",
-      "ts": 1794206288,
-      "time": "2026-11-09T14:38:08.000+08:00",
-      "source": "东方财富",
-      "title": "农村彩礼不高于6万元、人情礼金设500元上限 河南一地为彩礼划出硬“杠杠” 一个村一年可节省60余万元",
-      "url": "http://finance.eastmoney.com/news/11158,202611093926199487.html"
-    },
-    {
-      "id": "1vupxy3",
-      "ts": 1794206245,
-      "time": "2026-11-09T14:37:25.000+08:00",
-      "source": "新浪财经",
-      "title": "国际金价反弹突破4120美元，市场等待美国通胀数据指引美联储加息前景",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-09/doc-iniycmtu6273254.shtml"
-    },
-    {
-      "id": "7mm6d8",
-      "ts": 1794206168,
-      "time": "2026-11-09T14:36:08.000+08:00",
-      "source": "新浪财经",
-      "title": "三季报扭亏刚满月，凤凰航运遭证监会立案调查",
-      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-09/doc-iniycmtw2935104.shtml"
-    },
-    {
-      "id": "8496hf",
-      "ts": 1794206166,
-      "time": "2026-11-09T14:36:06.000+08:00",
-      "source": "新浪财经",
-      "title": "处罚告知书落地，ST英飞拓投资者索赔连获胜诉判决",
-      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-09/doc-iniycmtw2936311.shtml"
-    },
-    {
-      "id": "xr7r9h",
-      "ts": 1794206164,
-      "time": "2026-11-09T14:36:04.000+08:00",
-      "source": "新浪财经",
-      "title": "*ST英飞索赔时效剩五个月 此前部分股民二审胜诉",
-      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-09/doc-iniycmtu6273115.shtml"
     },
     {
       "id": "nqxj7y",
