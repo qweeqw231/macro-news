@@ -108,12 +108,15 @@ test('休市表：印度含 01-15 临时休市，越南含春节与国庆，均�
   assert.equal(vnHoliday.holiday, true);
 });
 
-test('K 线：日/周/月/全量文件齐全，名称与根数合理', () => {
+test('K 线：日/周/月/全量文件齐全，起点正确，根数只钉下限（随交易日增长）', () => {
+  // 2.11.1：不再断言精确根数与「末根 = 某一天」（两者都会随采集漂移），
+  // 改为钉「起点 / 下限 / 末根不早于基准日」。
   const d = json('data/kline/sensex.json');
   assert.equal(d.name, '印度SENSEX');
   assert.equal(d.period, '1d');
-  assert.equal(d.bars.length, 1000);
-  assert.equal(d.bars[d.bars.length - 1].t, '2026-11-06');
+  assert.ok(d.bars.length >= 1000, `SENSEX 日 K 根数不足：${d.bars.length}`);
+  const lastSensex = d.bars[d.bars.length - 1].t;
+  assert.ok(lastSensex >= '2026-11-06', `SENSEX 日 K 末根过旧：${lastSensex}`);
 
   const m = json('data/kline/sensex_1M.json');
   assert.equal(m.name, '印度SENSEX');
@@ -126,7 +129,9 @@ test('K 线：日/周/月/全量文件齐全，名称与根数合理', () => {
 
   const v = json('data/kline/vnindex.json');
   assert.equal(v.name, '越南VN指数');
-  assert.equal(v.bars.length, 1000);
+  assert.ok(v.bars.length >= 1000, `VNINDEX 日 K 根数不足：${v.bars.length}`);
+  const lastVn = v.bars[v.bars.length - 1].t;
+  assert.ok(lastVn >= '2026-11-06', `VNINDEX 日 K 末根过旧：${lastVn}`);
   const vFull = json('data/kline/vnindex_full.json');
   assert.equal(vFull.name, '越南VN指数');
   assert.ok(vFull.bars.length >= 3900, 'VNINDEX 全量根数不足');

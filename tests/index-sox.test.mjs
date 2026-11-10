@@ -6,7 +6,8 @@
 //   · 东财 secid 是 **251.SOX**，不是 100. 段 —— 251 是另一套海外指数转播市场；
 //   · 腾讯 usSOX 为空、新浪 gb_sox 有实时价但**没有日 K**
 //     （US_MinKService.getDailyK?symbol=sox 返回 null）⇒ 日/周/月只有一个源；
-//   · 日 K 只有 89 根、**起点 2026-07-06**（东财转播起点，指定 end=20250101 返回 0 行）；
+//   · 日 K **起点 2026-07-06**（东财转播起点，指定 end=20250101 返回 0 行）；
+//     根数随交易日增长，断言只钉起点与下限，不钉精确根数（否则每天漂移）；
 //     不拿 SOXX / SMH 等 ETF 补历史（基金 ≠ 指数）；
 //   · 分钟 K 由服务端预生成，快照 am/pm 与 dji/ixic/spx **完全同口径**。
 
@@ -65,27 +66,30 @@ test('快照：am / pm 都包含 sox，且与 dji/ixic/spx 同口径（不单独
   assert.ok(!/key\s*===\s*'sox'/.test(src), 'snapshot.mjs 不应为 sox 写单独分支');
 });
 
-test('K 线：日 89 根自 2026-07-06，周 18 / 月 5；全量同为 89 根（不伪造历史）', () => {
+test('K 线：日 K 起点固定 2026-07-06，周 / 月 / 全量只钉下限（根数随交易日增长）', () => {
   const d = json('data/kline/sox.json');
   assert.equal(d.name, '费城半导体指数');
   assert.equal(d.market, 'US');
   assert.equal(d.period, '1d');
-  assert.equal(d.bars.length, 89, '日 K 应为 89 根（东财转播起点决定的源侧上限）');
+  // 2.11.1：不再断言精确根数（每天会 +1），只钉源侧起点与下限。
+  assert.ok(d.bars.length >= 89, `日 K 根数不足：${d.bars.length}`);
   assert.equal(d.bars[0].t, '2026-07-06', '日 K 起点应为 2026-07-06');
+  const lastDaily = d.bars[d.bars.length - 1].t;
+  assert.ok(lastDaily >= '2026-11-06', `日 K 末根过旧：${lastDaily}`);
 
   const w = json('data/kline/sox_1w.json');
   assert.equal(w.period, '1w');
-  assert.equal(w.bars.length, 18);
+  assert.ok(w.bars.length >= 18, `周 K 根数不足：${w.bars.length}`);
 
   const m = json('data/kline/sox_1M.json');
   assert.equal(m.period, '1M');
-  assert.equal(m.bars.length, 5);
+  assert.ok(m.bars.length >= 5, `月 K 根数不足：${m.bars.length}`);
 
-  // 全量文件：根数与日 K 一致（源侧没有更长的历史），起点也不能被 ETF 补早
+  // 全量文件：起点不能被 ETF 补早；末根与日 K 一致（源侧只有这一条线）
   const full = json('data/kline/sox_full.json');
-  assert.equal(full.bars.length, 89);
+  assert.ok(full.bars.length >= 89, `全量根数不足：${full.bars.length}`);
   assert.equal(full.bars[0][0], '2026-07-06');
-  assert.equal(full.bars[full.bars.length - 1][0], d.bars[d.bars.length - 1].t);
+  assert.equal(full.bars[full.bars.length - 1][0], lastDaily, '全量末根应与日 K 末根一致');
 });
 
 test('分钟 K：5 个周期都由服务端预生成（含 1m，且与月 K 文件名物理隔离）', () => {
