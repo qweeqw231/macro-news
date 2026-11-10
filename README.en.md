@@ -88,8 +88,12 @@ Cloudflare Worker ──> │ after 17:00: collect-macro-if-due.mjs (idempotent)
   `A-shares/China > domestic finance > FX/commodities/US equities > global`, and within the same channel the longer body wins.
   When writing the archive, the merge runs again over "new this round + existing items", so duplicate cross-channel entries in old data heal on the next collection. The archive is written by day; `latest.json` holds the latest 200 items (first screen),
   and `search.json` holds the search index for the latest 62 days (title/source/time/link only, no summary/full text).
-  **Per-day archive cap 800 (2.4.21)**: the four official sources keep at most 40 items first (China News Service and other `kind:official` entries are not counted), then the macro channels (domestic finance/global/FX/commodities/US equities) keep another 120, and the rest are filled in `ts` descending order;
+  Archive keys are **news days** (Beijing 08:00 → next 08:00, i.e. the UTC date) — not calendar days; the archive page says so explicitly,
+  and briefings and snapshots share the same key. See [docs/day-boundary.md](docs/day-boundary.md) for every object's day boundary
+  (including what the 09:00 briefing actually covers, the search window, why K-lines are unrelated, and where the 320 legacy items came from).
+  **Per-day archive cap 1800 (2.12.0; 1600 since 2.11.0; 800 since 2.4.21; 1800 is a temporary value, to be finalized after 5–7 trading days of measurement)**: the four official sources keep at most 40 items first (China News Service and other `kind:official` entries are not counted), then the macro channels (domestic finance/global/FX/commodities/US equities) keep another 120, and the rest are filled in `ts` descending order (ordinary bucket: 1640);
   official sources with `windowed:false` only take the latest 7 days, so old items are not pulled back.
+  **Capping is never silent (2.12.0)**: whenever a round evicts items, `_last-run.json` records `news.capped: true` and `news.evicted`, the collector logs `⚠ cap hit`, and the footer health lamp shows "archive capped · N evicted".
 - **Titles (2.4.6)**: a flash item without its own title takes the **first complete sentence** of the body and stores it whole in `title`, no longer hard-truncating at 40 characters;
   when a short version is needed it breaks only at punctuation boundaries (`。！？；` → `，、`) and appends `…`; if no punctuation is found it returns the full text.
   The frontend `.item-title` uses `-webkit-line-clamp: 2` for multi-line ellipsis and does no character truncation.
