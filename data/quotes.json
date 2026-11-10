@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T21:07:54.209Z",
+  "generatedAt": "2026-11-10T21:22:53.454Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -178,8 +178,8 @@
       "high": 52316.89,
       "low": 51977.08,
       "prevClose": 52389.75,
-      "volume": 698193488,
-      "changePct": -0.3013,
+      "volume": 700275232,
+      "changePct": -0.3,
       "updatedAt": "2026-11-11T05:00:00+08:00",
       "source": "eastmoney",
       "asOf": "2026-11-11T05:00:00+08:00",
@@ -196,7 +196,7 @@
       "high": 25286.83,
       "low": 24816.1,
       "prevClose": 25253.14,
-      "volume": 6927680000,
+      "volume": 7027627776,
       "changePct": -0.74,
       "updatedAt": "2026-11-11T05:00:00+08:00",
       "source": "eastmoney"
@@ -211,7 +211,7 @@
       "low": 7470.43,
       "prevClose": 7549.94,
       "volume": 2386492736,
-      "changePct": -0.3842,
+      "changePct": -0.38,
       "updatedAt": "2026-11-11T05:00:00+08:00",
       "source": "eastmoney",
       "asOf": "2026-11-11T05:00:00+08:00",
@@ -810,7 +810,7 @@
       "high": 27990.34,
       "low": 27421.18,
       "prevClose": 27907.63,
-      "volume": 1473477120,
+      "volume": 1483378048,
       "changePct": -0.6,
       "updatedAt": "2026-11-11T05:00:00+08:00",
       "source": "eastmoney"
@@ -819,13 +819,13 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 4030.83,
+      "price": 4031.47,
       "open": 4138.05,
       "high": 4146.43,
       "low": 4013.53,
       "prevClose": 4140.94,
-      "changePct": -2.66,
-      "updatedAt": "2026-11-11T05:07:00+08:00",
+      "changePct": -2.64,
+      "updatedAt": "2026-11-11T05:22:00+08:00",
       "note": ""
     },
     {
@@ -838,20 +838,20 @@
       "low": 51.1,
       "prevClose": 53.41,
       "changePct": -3.58,
-      "updatedAt": "2026-11-11T05:07:00+08:00",
+      "updatedAt": "2026-11-11T05:22:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 92,
+      "price": 92.14,
       "open": 92.45,
       "high": 92.84,
       "low": 89.16,
       "prevClose": 92.57,
-      "changePct": -0.62,
-      "updatedAt": "2026-11-11T05:08:05+08:00",
+      "changePct": -0.47,
+      "updatedAt": "2026-11-11T05:22:47+08:00",
       "note": ""
     },
     {
