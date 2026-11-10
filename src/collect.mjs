@@ -26,7 +26,7 @@ import { decideBars } from './kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
 import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
-import { selectDayItems, OFFICIAL_RECENT_DAYS, isRecent } from './quota.mjs';
+import { selectDayItems, OFFICIAL_RECENT_DAYS, isRecent, DAY_TOTAL } from './quota.mjs';
 import { describeSourceError } from './source-error.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -292,6 +292,10 @@ async function main() {
   }
 
   let addedTotal = 0;
+  // 2.11.0：每轮记录「候选 / 保留 / 淘汰」，让满载后的真实需求可测量。
+  // 背景：满载时 selectDayItems 会静默挤掉最早的条目，日志里只有「+N」，删除完全不可见；
+  // 没有这三个数就无法回答「一天到底需要多少条」。
+  const dayStats = [];
   for (const [day, items] of byDay) {
     const file = path.join(ARCHIVE, `${day}.json`);
     const existing = await readJSON(file, { day, items: [] });
@@ -299,11 +303,20 @@ async function main() {
     // 2.4.5：不仅去重本轮新条目，也把**已归档**的同文重复合并掉。
     // 华尔街见闻同一篇快讯会以两个 id（A股/全球）返回，旧版本已把两条都写进归档；
     // 每次重建本日文件时重新跑一遍 dedupe，历史当日数据即可自愈。
-    const mergedItems = selectDayItems(
-      dedupeItems([...items, ...existing.items])
-    );
+    const candidates = dedupeItems([...items, ...existing.items]);
+    const mergedItems = selectDayItems(candidates);
     const newOnes = mergedItems.filter((i) => !existingIds.has(i.id)).length;
     const removed = existing.items.length + newOnes - mergedItems.length;
+    // candidates 已经去过重，所以 candidates - mergedItems 就是配额淘汰量（与合并重复分开记）
+    dayStats.push({
+      day,
+      incoming: items.length,          // 本轮窗口内新抓到的条目
+      candidates: candidates.length,   // 与已归档合并去重后的候选总量
+      kept: mergedItems.length,        // 实际写入文件的条数
+      evicted: Math.max(0, candidates.length - mergedItems.length),
+      deduped: Math.max(0, items.length + existing.items.length - candidates.length),
+      added: newOnes,
+    });
     if (newOnes || mergedItems.length !== existing.items.length) {
       existing.items = mergedItems;
       await writeJSON(file, existing);
@@ -426,6 +439,16 @@ async function main() {
     })),
     quotes: quotes.length,
     added: addedTotal,
+    // 2.11.0：本轮的容量画像（只增字段，不动上面的 ok/label/count/ms/error）。
+    // cap 写进文件，这样脚本以后不必依赖当时的常量值也能判断「这天有没有触顶」。
+    news: {
+      cap: DAY_TOTAL,
+      candidates: dayStats.reduce((n, d) => n + d.candidates, 0),
+      kept: dayStats.reduce((n, d) => n + d.kept, 0),
+      evicted: dayStats.reduce((n, d) => n + d.evicted, 0),
+      deduped: dayStats.reduce((n, d) => n + d.deduped, 0),
+      days: dayStats,
+    },
   };
   const qErr = getQuoteError();
   if (qErr) logObj.quoteError = qErr;

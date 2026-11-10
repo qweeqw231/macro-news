@@ -15,6 +15,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { pbcTimeFromUrl } from '../src/pbc-time.mjs';
 import { compactSearchItem, searchCutoff, SEARCH_WINDOW_DAYS } from '../src/search-window.mjs';
+import { DAY_TOTAL } from '../src/quota.mjs';
 
 export const PBC_SOURCE = '中国人民银行';
 const DAY_RE = /^\d{4}-\d{2}-\d{2}\.json$/;
@@ -124,7 +125,7 @@ export async function backfillPbcDays({ root, asOf = new Date(), dryRun = false 
     after: docs.get(day).items.length,
     delta: docs.get(day).items.length - (before.get(day) || 0),
   }));
-  const overflow = [...docs].filter(([, doc]) => doc.items.length > 800)
+  const overflow = [...docs].filter(([, doc]) => doc.items.length > DAY_TOTAL)
     .map(([day, doc]) => ({ day, count: doc.items.length }));
 
   if (dryRun) {
@@ -236,7 +237,7 @@ if (isDirectRun) {
       console.log(`${row.day}  ${row.before} → ${row.after}  (${row.delta >= 0 ? '+' : ''}${row.delta})`);
     }
     if (r.overflow.length) {
-      console.log('⚠ 超过 800 的日（回填脚本不裁剪）：' + r.overflow.map((x) => `${x.day}=${x.count}`).join('，'));
+      console.log(`⚠ 超过当日上限 ${DAY_TOTAL} 的日（回填脚本不裁剪）：` + r.overflow.map((x) => `${x.day}=${x.count}`).join('，'));
     }
   } catch (err) {
     console.error(`回填失败：${err.message}`);
