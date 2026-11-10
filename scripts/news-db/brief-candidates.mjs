@@ -12,7 +12,7 @@
 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { newsToday } from '../../src/news-day.mjs';
+import { newsToday, newsDayWindow } from '../../src/news-day.mjs';
 import { openDb, DEFAULT_DB, normalizePublishedAt } from './db.mjs';
 
 export const KEYWORDS = [
@@ -41,16 +41,17 @@ export const beijingToday = (now = Date.now()) => newsToday(now);
  * @param {object} o
  * @param {import('node:sqlite').DatabaseSync} [o.db] 已打开的库（不传则按 dbFile 打开/关闭）
  * @param {string} [o.dbFile]
- * @param {string} o.from
- * @param {string} [o.to]
+ * @param {string} o.from 新闻日（含）
+ * @param {string} [o.to] 新闻日（含到该日 09:00）
  * @param {number} [o.limit]
+ * @param {number} [o.now] 出报时刻，默认 Date.now()；回填历史日期时传该日 09:00
  */
-export function buildCandidates({ db = null, dbFile = DEFAULT_DB, from, to = beijingToday(), limit = 120 } = {}) {
+export function buildCandidates({ db = null, dbFile = DEFAULT_DB, from, to = beijingToday(), limit = 120, now = Date.now() } = {}) {
   const own = !db;
   const h = db || openDb(path.resolve(dbFile));
   try {
-    const fromTs = Math.floor(Date.parse(from + 'T00:00:00+08:00') / 1000);
-    const toTs = Math.floor(Date.parse(to + 'T23:59:59+08:00') / 1000);
+    // 2.13.0：窗口改成新闻日口径 [from 08:00, to 09:00)，不再用北京自然日的 00:00–24:00。
+    const { fromTs, toTs } = newsDayWindow(from, to, now);
     const rows = h.prepare(`
       SELECT published_at, published_ts, source, channel, title,
              substr(summary, 1, 400) AS summary, url, content_status, hash, kind
@@ -93,7 +94,7 @@ export function buildCandidates({ db = null, dbFile = DEFAULT_DB, from, to = bei
         published_ts: r.published_ts,
       }));
 
-    return { from, to, candidates: rows.length, selected: items.length, items };
+    return { from, to, fromTs, toTs, candidates: rows.length, selected: items.length, items };
   } finally {
     if (own) {
       try { h.close(); } catch { /* ignore */ }

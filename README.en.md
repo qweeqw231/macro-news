@@ -211,6 +211,11 @@ SSE+SZSE / FRED are fallback only (measured unreachable from Actions). 1Y govern
 | publish | `node scripts/briefing/publish.mjs --date <today> --push`: validate schema / item count / source traceability / `inputSha`, then atomically write the site and local copy, update the index and status; `--push` commits only the 4 briefing-related paths (see "Publish means ingest" below) |
 | Output | `.local/briefings/YYYY-MM-DD.json` + `.md` (local) + `data/briefings/YYYY-MM-DD.json` (site) |
 
+**Candidate window (2.13.0)**: news-day based — the briefing for `D` takes `[D-1 08:00, D 09:00]`,
+i.e. "the news day that just finished plus the hour elapsed today"; both ends are derived from `newsDayStart`,
+and `window.fromAt/toAt` is persisted with `input.json` and the published briefing. The old implementation used two Beijing
+calendar days (`T00:00:00+08:00` ~ `T23:59:59+08:00`) and pulled in 08:00–24:00 of news day `D-2` as well.
+
 **News database** `.local/news.db` (SQLite + FTS5, Chinese bigram tokenization): about 530k rows;
 the last 60 days have full text/summary, while the 5-year history is mostly title + link (China News Service backfill of about 500k).
 **Already wired into the static site**: 2.2.0 shipped the trailing-year history slices, 2.4.10 filled 09-20~10-04; currently
@@ -280,7 +285,10 @@ Invariant: `hasBriefing=true` ⇔ the file exists and is tracked by git (locked 
 
 Archive-page briefing (2.4.3): collapsed, it shows only `briefLine` from the index; only when expanded does it fetch the day's
 `data/briefings/<date>.json` (historical `default`, today `no-store`), render
-`overview + items + watch`, and replace the summary with `当日早报 · N 条 · HH:MM 生成` (daily briefing · N items · generated HH:MM) to avoid repeating the same sentence.
+`overview + items + watch`, and replace the summary with `当日早报 · N 条 · HH:MM 生成 · 覆盖 <D-1> 08:00 – <D> 09:00`
+(daily briefing · N items · generated HH:MM · covers <D-1> 08:00 – <D> 09:00) to avoid repeating the same sentence.
+**Since 2.13.0** briefings carry `window.fromAt/toAt`; the coverage span is shown in that meta line and in the first line of the
+expanded body. Older briefings have no such fields and are shown unchanged — nothing is backfilled or guessed.
 No first-screen prefetch (measured 0 `briefings` requests); one briefing is 10 KB, and expanding online takes about 40 seconds at Pages bandwidth, which is normal.
 
 ### 2.7 Pipeline ⑦: trailing-year history slices (offline export)

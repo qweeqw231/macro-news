@@ -1275,10 +1275,25 @@
     if (isNaN(d.getTime())) return '';
     return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
   };
+  // 2.13.0：早报覆盖区间。早报 JSON 的 window.fromAt/toAt 是北京墙钟字面量（…+08:00），
+  // 直接按字面量切片，避免浏览器本地时区把 08:00 显示成别的时间。历史早报没有 window 时间戳，
+  // 不凭空补，保持原样——只有 2.13.0 之后生成的早报才会显示这段说明。
+  function briefRange(b) {
+    const w = (b && b.window) || {};
+    const pick = (iso) => {
+      const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(String(iso || ''));
+      return m ? `${m[2]}-${m[3]} ${m[4]}:${m[5]}` : '';
+    };
+    const a = pick(w.fromAt);
+    const z = pick(w.toAt);
+    return a && z ? `${a} – ${z}` : '';
+  }
   function briefMetaText(b) {
     const n = Array.isArray(b && b.items) ? b.items.length : 0;
     const hm = briefHm(b && (b.endedAt || b.generatedAt));
-    return `当日早报${n ? ' · ' + n + ' 条' : ''}${hm ? ' · ' + hm + ' 生成' : ''}`;
+    const range = briefRange(b);
+    return `当日早报${n ? ' · ' + n + ' 条' : ''}${hm ? ' · ' + hm + ' 生成' : ''}` +
+      `${range ? ' · 覆盖 ' + range : ''}`;
   }
   function renderBriefItems(body, items) {
     const list = el('ol', 'brief-items');
@@ -1328,6 +1343,9 @@
       const items = Array.isArray(b.items) ? b.items.filter(Boolean) : [];
       const watch = Array.isArray(b.watch) ? b.watch.filter(Boolean) : [];
       body.innerHTML = '';
+      // 2.13.0：展开后第一行给出覆盖区间（与 summary 同一口径），避免读者把早报当成「自然日整天」。
+      const range = briefRange(b);
+      if (range) body.appendChild(el('div', 'brief-item-meta', `早报覆盖 ${range}`));
       if (b.overview) body.appendChild(el('p', 'brief-overview', b.overview));
       if (items.length) renderBriefItems(body, items);
       if (watch.length) {

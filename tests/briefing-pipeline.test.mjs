@@ -146,7 +146,9 @@ const sha = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).
 test('输入快照复用：重跑不读 archive / 不碰 DB，文件字节不变', () => {
   const d = fresh('prepare');
   fs.mkdirSync(d.archive, { recursive: true });
-  const ts = Math.floor(Date.parse('2026-11-02T09:00:00+08:00') / 1000);
+  // 2.13.0：窗口改成新闻日口径 [11-01 08:00, 11-02 09:00]，夹具时间要落在窗口内
+  // （原先写 09:00 整，在「到 09:00 为止」的新窗口里会刚好被排除）。
+  const ts = Math.floor(Date.parse('2026-11-02T08:40:00+08:00') / 1000);
   fs.writeFileSync(path.join(d.archive, '2026-11-02.json'), JSON.stringify({
     date: DATE,
     items: ITEMS.map((it, i) => ({

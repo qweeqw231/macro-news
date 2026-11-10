@@ -9,7 +9,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { newsDay } from '../../src/news-day.mjs';
+import { newsDay, newsDayWindow } from '../../src/news-day.mjs';
 
 export const STATUS_VERSION = 1;
 export const DEADLINE_HM = '09:00';     // 预期完成时刻
@@ -37,6 +37,19 @@ export function beijingNow(now = Date.now()) {
 export function addDays(day, n) {
   const t = Date.parse(`${day}T00:00:00Z`) + n * DAY_MS;
   return new Date(t).toISOString().slice(0, 10);
+}
+
+/**
+ * 2.13.0：早报候选窗口 = 新闻日口径。
+ * - 起点：新闻日 D-1 的起点（北京 D-1 08:00）
+ * - 终点：新闻日 D 的 09:00（出报时刻），与 now 取小
+ * 旧实现用北京自然日 T00:00:00+08:00 / T23:59:59+08:00 取「两天」，
+ * 会把新闻日 D-2 的 08:00–24:00 也算进 D 日早报，与归档卡片的日期语义错位。
+ */
+export function briefWindow(date, now = Date.now()) {
+  const from = addDays(date, -1);
+  const { fromTs, toTs } = newsDayWindow(from, date, now);
+  return { from, to: date, fromAt: isoFromTs(fromTs), toAt: isoFromTs(toTs), fromTs, toTs };
 }
 
 const hmToMin = (hm) => {
@@ -303,7 +316,7 @@ export function buildBriefing({ date, candidates, now = Date.now(), limit = 10 }
     endedAt: iso,
     source: 'rule',
     generator: 'rule-v1',
-    window: { from: addDays(date, -1), to: date },
+    window: briefWindow(date, now),
     overview,
     items,
     watch: [],

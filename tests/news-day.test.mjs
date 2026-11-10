@@ -7,7 +7,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { newsDay, newsToday } from '../src/news-day.mjs';
+import { newsDay, newsToday, newsDayStart, newsDayWindow } from '../src/news-day.mjs';
+import { briefWindow } from '../scripts/briefing/core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
@@ -71,4 +72,35 @@ test('所有新闻日调用点都走统一入口', () => {
   assert.match(read('assets/app.js'), /MacroNewsDay\.newsDay/);
   assert.match(read('index.html'), /assets\/news-day\.js\?v=/);
   assert.doesNotMatch(read('src/collect.mjs'), /getFullYear\(\).*getMonth\(\).*getDate\(/s);
+});
+
+test('2.13.0 新闻日起点：北京 D 08:00 == UTC D 00:00', () => {
+  assert.equal(newsDayStart('2026-11-10'), Date.parse('2026-11-10T00:00:00Z'));
+  assert.equal(newsDayStart('2026-11-10'), Date.parse('2026-11-10T08:00:00+08:00'));
+});
+
+test('2.13.0 早报窗口：D-1 08:00 → D 09:00（新闻日口径）', () => {
+  const w = briefWindow('2026-11-10', Date.parse('2026-11-10T09:00:00+08:00'));
+  assert.equal(w.from, '2026-11-09');
+  assert.equal(w.to, '2026-11-10');
+  assert.equal(w.fromAt, '2026-11-09T08:00:00+08:00');
+  assert.equal(w.toAt, '2026-11-10T09:00:00+08:00');
+  // 新闻日 D-2 的尾部（北京 11-09 07:59）必须在窗口外——旧的自然日窗口会把它算进来
+  assert.ok(Date.parse('2026-11-09T07:59:59+08:00') / 1000 < w.fromTs);
+  // 当日已过去的一小时要包含，09:00 之后不要
+  assert.ok(Date.parse('2026-11-10T08:59:00+08:00') / 1000 <= w.toTs);
+  assert.ok(Date.parse('2026-11-10T09:00:01+08:00') / 1000 > w.toTs);
+  // live 运行时以 now 为上界（09:00 之前跑不会纳入未来条目）
+  const early = briefWindow('2026-11-10', Date.parse('2026-11-10T08:30:00+08:00'));
+  assert.equal(early.toAt, '2026-11-10T08:30:00+08:00');
+});
+
+test('2.13.0 候选取数不再使用北京自然日硬边界', () => {
+  const src = read('scripts/news-db/brief-candidates.mjs');
+  assert.doesNotMatch(src, /T00:00:00\+08:00|T23:59:59\+08:00/);
+  assert.match(src, /newsDayWindow\(from, to, now\)/);
+  // 窗口两端必须是新闻日起点
+  const w = newsDayWindow('2026-11-09', '2026-11-10', Date.parse('2026-11-10T09:05:00+08:00'));
+  assert.equal(w.fromTs, Date.parse('2026-11-09T08:00:00+08:00') / 1000);
+  assert.equal(w.toTs, Date.parse('2026-11-10T09:00:00+08:00') / 1000);
 });

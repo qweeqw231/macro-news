@@ -212,6 +212,11 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 | publish | `node scripts/briefing/publish.mjs --date <今天> --push`：校验 schema / 条数 / 来源可追溯 / `inputSha`，通过才原子写站点与本地，并更新索引、状态；`--push` 只提交早报相关 4 个路径（见下文「发布即入库」） |
 | 产物 | `.local/briefings/YYYY-MM-DD.json` + `.md`（本地）+ `data/briefings/YYYY-MM-DD.json`（站点） |
 
+**候选窗口（2.13.0）**：新闻日口径 —— `D` 的早报取 `[D-1 08:00, D 09:00]`，
+即「刚走完的完整新闻日 + 当日已过去的一小时」，两端都由 `newsDayStart` 算出，
+`window.fromAt/toAt` 随 `input.json` 与早报一起落盘。旧实现按北京自然日取两天
+（`T00:00:00+08:00` ~ `T23:59:59+08:00`），会把新闻日 `D-2` 的 08:00–24:00 一并算进来。
+
 **新闻库** `.local/news.db`（SQLite + FTS5，中文 bigram 分词）：约 53 万条；
 近 60 天有全文/摘要，5 年历史以标题+链接为主（中新网回填约 50 万条）。
 **已接入静态站**：2.2.0 上线近一年历史切片，2.4.10 补齐 09-20~10-04；当前
@@ -290,7 +295,9 @@ publish --date（脚本，确定性）
 
 归档页早报（2.4.3）：折叠只显示索引里的 `briefLine`；展开时**才**拉取当天
 `data/briefings/<date>.json`（历史 `default`、当日 `no-store`），渲染
-`overview + items + watch`，并把 summary 换成 `当日早报 · N 条 · HH:MM 生成` 以避免同句重复。
+`overview + items + watch`，并把 summary 换成 `当日早报 · N 条 · HH:MM 生成 · 覆盖 <D-1> 08:00 – <D> 09:00`
+以避免同句重复。**2.13.0 起**早报带 `window.fromAt/toAt`，覆盖区间写进说明行与展开区第一行；
+历史早报没有这两个字段，不回填、不猜，显示保持原样。
 首屏不预取（实测 0 个 `briefings` 请求）；单份 10 KB，Pages 带宽下线上展开约 40 秒属正常。
 
 ### 2.7 链路 ⑦：近一年历史切片（离线导出）

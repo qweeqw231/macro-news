@@ -33,7 +33,12 @@
     return new Date(t).toISOString().slice(0, 10);
   }
 
-  var api = { DAY_MS: DAY_MS, newsDay: newsDay, newsToday: newsToday, addDays: addDays };
+  // 2.13.0：新闻日 D 的起点（epoch ms）。北京 D 08:00 == UTC D 00:00。
+  function newsDayStart(day) {
+    return Date.parse(String(day) + 'T00:00:00Z');
+  }
+
+  var api = { DAY_MS: DAY_MS, newsDay: newsDay, newsToday: newsToday, addDays: addDays, newsDayStart: newsDayStart };
   global.MacroNewsDay = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -8,7 +8,7 @@
 | 名字 | 定义 | 代码 |
 |---|---|---|
 | **新闻日** | 北京时间 **08:00** 到**次日 08:00** 为一天；等价于该时刻的 **UTC 日期** | `src/news-day.mjs` 的 `newsDay(t)`：`new Date(t).toISOString().slice(0,10)` |
-| **自然日** | 北京时间 00:00–24:00 | 只出现在早报候选的时间**过滤**里（见第 2 条），以及业务上的口语表述 |
+| **自然日** | 北京时间 00:00–24:00 | 早报候选 2.13.0 起不再使用（旧口径见第 2 条）；现在只剩业务上的口语表述 |
 
 `newsDay` 之所以能把「08:00 起算」写成「UTC 日期」：北京 08:00 = UTC 00:00，
 所以北京 08:00 之后的时刻，其 UTC 日期恰好等于北京当天日期；08:00 之前的时刻，
@@ -27,33 +27,37 @@ UTC 日期还是前一天 —— 一次 `toISOString` 就完成了切日。
 
 **所以 `2026-11-10.json` 装的是北京 11-10 08:00 ~ 11-11 08:00 的条目。**
 
-## 2. 早报的键：新闻日（`newsDay(now)`），内容窗口却是自然日
+## 2. 早报的键与内容窗口：都是新闻日（2.13.0 起）
 
-- 键：[scripts/briefing/core.mjs](../scripts/briefing/core.mjs) 第 29 行
+- 键：[scripts/briefing/core.mjs](../scripts/briefing/core.mjs) 的
   ```js
   date: newsDay(now),          // beijingNow() → NOW.date
   ```
-  `prepare.mjs` 第 44 行 `const DATE = arg('date', NOW.date);`，
+  `prepare.mjs` 的 `const DATE = arg('date', NOW.date);`，
   `ensure.mjs` 的 `TODAY = arg('today', NOW.date)` —— 两者默认都取这个键。
-- 候选窗口：[scripts/briefing/pipeline.mjs](../scripts/briefing/pipeline.mjs) 第 147 行
+- 候选窗口：[scripts/briefing/pipeline.mjs](../scripts/briefing/pipeline.mjs) 的 `prepareSnapshot`
   ```js
-  const window = { from: addDays(date, -1), to: date };
+  const window = briefWindow(date, now);      // 2.13.0
   ```
-- 窗口**如何被解释**：[scripts/news-db/brief-candidates.mjs](../scripts/news-db/brief-candidates.mjs) 第 52–53 行
+- 窗口**如何被解释**：[scripts/briefing/core.mjs](../scripts/briefing/core.mjs) 的 `briefWindow`
+  → [src/news-day.mjs](../src/news-day.mjs) 的 `newsDayWindow`：
   ```js
-  const fromTs = Date.parse(from + 'T00:00:00+08:00') / 1000;
-  const toTs   = Date.parse(to   + 'T23:59:59+08:00') / 1000;
+  const fromTs = newsDayStart(D-1);                    // 北京 D-1 08:00
+  const toTs   = Math.min(now, newsDayStart(D) + 1h);  // 北京 D 09:00，与 now 取小
   ```
-  —— 用的是**北京自然日**零点与 23:59:59，不是新闻日边界。
+  —— 两端都由新闻日起点算出，**没有 `T00:00:00+08:00` / `T23:59:59+08:00` 这类自然日硬边界**。
 
 **09:00 运行时到底覆盖什么**（以 D 日 09:00 为例）：
 
-- 名义窗口 = `[D-1 00:00, D 23:59:59]`（北京自然日）；
-- 但候选只存在于「已经采集到的条目」，而 09:00 时 D 日只采到 08:00–09:00 这一小时；
-- 于是实际内容 = **D-1 全天（自然日）+ D 日 08:00–09:00**。
+- 窗口 = `[D-1 08:00, D 09:00]`，即 **刚走完的完整新闻日（D-1 08:00 ~ D 08:00）+ 当日已过去的一小时**；
+- 回填历史日期时 `now` 会大于 `D 09:00`，上界被截到 `D 09:00`，结果确定可复现。
 
-换成新闻日语言：**≈ 前一个新闻日（D-1 08:00 ~ D 08:00）的全部 + D 日头一个小时**。
-不是「只有前一个新闻日」，也不是「当天头一个小时」。这是代码事实，两句话都只说对一半。
+**2.13.0 之前**（旧口径，已废弃）：`pipeline.mjs` 传 `{from: addDays(date,-1), to: date}`，
+`brief-candidates.mjs` 用 `Date.parse(from + 'T00:00:00+08:00')` / `'T23:59:59+08:00'` 解释成
+**北京自然日两天**。09:00 运行时实际内容 = D-1 自然日全天 + D 08:00–09:00，
+其中 D-1 的 00:00–07:59 属于**新闻日 D-2**，与「早报讲上一个新闻日」的语义错位。
+实测（D = 2026-11-10，`.local/news.db`）：旧窗口去重后 1,029 条候选，新窗口 866 条，
+旧窗口多出的 163 条**全部**属于新闻日 D-2。
 
 ## 3. 早报与归档卡片的绑定：同一把键，但语义错开一天
 
@@ -71,11 +75,12 @@ UTC 日期还是前一天 —— 一次 `toISOString` 就完成了切日。
 
 | 键 D | 归档 `D.json` | 早报 `D.json` |
 |---|---|---|
-| 内容区间 | D 08:00 ~ D+1 08:00 | ≈ D-1 08:00 ~ D 09:00 |
+| 内容区间 | D 08:00 ~ D+1 08:00 | D-1 08:00 ~ D 09:00（2.13.0 起精确成立） |
 
 即早报实际上在讲**上一个新闻日**的事，却挂在**当前新闻日**的卡片上（错开约一天）。
 这是既有设计（早报 09:00 出稿，为的是当天早上能看到昨晚的隔夜新闻），
-**2.12.0 只把这一点显式标在站点与文档上，没有改行为**。
+**2.12.0 只把这一点显式标在站点与文档上；2.13.0 起窗口也按同一把键取数**（见第 2 条），
+所以「卡片 D 的早报 = D-1 08:00 ~ D 09:00」现在是精确成立的区间。
 
 ## 4. `search.json` 的窗口：新闻日
 
@@ -138,7 +143,7 @@ UTC 日期还是前一天 —— 一次 `toISOString` 就完成了切日。
 |---|---|---|
 | `data/archive/<D>.json` | 新闻日 | D 08:00 ~ D+1 08:00 |
 | `data/index.json` `days[].day` | 新闻日 | 同上，与归档文件一一对应 |
-| `data/briefings/<D>.json` | 新闻日（生成时刻） | 内容 ≈ D-1 08:00 ~ D 09:00 |
+| `data/briefings/<D>.json` | 新闻日（生成时刻） | 2.13.0 起 = D-1 08:00 ~ D 09:00 |
 | 归档卡片上的早报 | 同上 | 与归档同键，但内容错开约一天 |
 | `data/search.json` | 新闻日 | 最近 62 个新闻日（实际 60 天有文件） |
 | `data/snapshots/<D>_am|pm.json` | 新闻日 | 北京上午/下午采集，按新闻日命名 |

@@ -11,11 +11,11 @@ import crypto from 'node:crypto';
 import path from 'node:path';
 import {
   acquireLock,
-  addDays,
   atomicWriteJSON,
   atomicWriteText,
   beijingNow,
   briefingMarkdown,
+  briefWindow,
   checkBriefing,
   normalizeBriefingSource,
   updateStatus,
@@ -144,8 +144,9 @@ export function prepareSnapshot({
   if (!noImport && archiveDir && fs.existsSync(archiveDir)) {
     importArchive({ dbFile, archiveDir, quiet: true });
   }
-  const window = { from: addDays(date, -1), to: date };
-  const cand = buildCandidates({ dbFile, from: window.from, to: window.to, limit });
+  // 2.13.0：新闻日口径的候选窗口（D-1 08:00 → D 09:00），不再是北京自然日两天。
+  const window = briefWindow(date, now);
+  const cand = buildCandidates({ dbFile, from: window.from, to: window.to, limit, now });
   if (!cand.items.length) throw emptyInputError(date);
 
   const items = cand.items;
