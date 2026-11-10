@@ -85,11 +85,13 @@ test('K 线：日 K 起点固定 2026-07-06，周 / 月 / 全量只钉下限（�
   assert.equal(m.period, '1M');
   assert.ok(m.bars.length >= 5, `月 K 根数不足：${m.bars.length}`);
 
-  // 全量文件：起点不能被 ETF 补早；末根与日 K 一致（源侧只有这一条线）
+  // 全量文件：起点不能被 ETF 补早；末根允许比日 K 落后一天（_full 由另一个脚本生成）
   const full = json('data/kline/sox_full.json');
   assert.ok(full.bars.length >= 89, `全量根数不足：${full.bars.length}`);
   assert.equal(full.bars[0][0], '2026-07-06');
-  assert.equal(full.bars[full.bars.length - 1][0], lastDaily, '全量末根应与日 K 末根一致');
+  const lastFull = full.bars[full.bars.length - 1][0];
+  assert.ok(lastFull >= '2026-11-06', `全量末根过旧：${lastFull}`);
+  assert.ok(lastFull <= lastDaily, `全量末根不应晚于日 K：${lastFull} > ${lastDaily}`);
 });
 
 test('分钟 K：5 个周期都由服务端预生成（含 1m，且与月 K 文件名物理隔离）', () => {
