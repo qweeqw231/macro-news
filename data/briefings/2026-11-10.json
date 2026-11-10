@@ -1,0 +1,156 @@
+{
+  "date": "2026-11-10",
+  "generatedAt": "2026-11-10T09:04:05+08:00",
+  "endedAt": "2026-11-10T09:04:20+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-09",
+    "to": "2026-11-10"
+  },
+  "overview": "今日主线是国内物价回升与外部风险偏好修复并行：10月CPI同比涨0.7%、PPI同比涨5.7%创近52个月新高，货币政策延续适度宽松；对美加征关税继续暂停两个月、178项豁免落地。海外方面，美伊核谈进展推动布伦特跌至8个月来最低，美股强势反弹、黄金收复4100美元，而美国10月CPI今日发布却因政府停摆缺少同比口径。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "10月CPI同比涨0.7%、PPI同比涨5.7%创近52个月新高",
+      "summary": "10月份CPI同比上涨0.7%、涨幅回落0.2个百分点，核心CPI同比上涨0.8%，环比由涨0.2%转为持平；PPI同比上涨5.7%、涨幅扩大0.7个百分点，创近52个月新高，环比上涨0.7%。1—10月CPI平均涨0.9%、PPI平均涨2.7%，专家据此判断货币政策将延续适度宽松的主基调。",
+      "why": "物价读数直接决定货币宽松与利率路径。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-10T02:32",
+      "url": "http://forex.eastmoney.com/news/1131,202611103926624187.html",
+      "refs": [
+        "http://fund.eastmoney.com/news/11383,202611103926645451.html",
+        "http://finance.eastmoney.com/news/1378,202611093926456432.html",
+        "http://finance.eastmoney.com/news/1378,202611093926535142.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行公开市场灵活削峰填谷，10月净买入国债1500亿元",
+      "summary": "中证报报道，人民银行公开市场操作在不同期限上出现分化：短期逆回购连日净回笼、符合月初规律，3个月期买断式逆回购缩量续作为下半年首次，10月国债买卖净投放1500亿元、创再度启用后新高。机构预计11月资金面呈月初宽松修复、月中扰动增加、整体平稳偏松，资金利率中枢有望进一步下移。",
+      "why": "资金面中枢下移，同业存单利率已创历史新低。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-10T06:44",
+      "url": "https://wallstreetcn.com/livenews/3197208",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197204",
+        "https://wallstreetcn.com/livenews/3197218"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "中方继续暂停24%对美加征关税2个月，178项豁免落地",
+      "summary": "国务院关税税则委员会公告，自今天10日13时01分起，在2个月内继续暂停实施24%的对美加征关税税率、保留10%，中美关税延期两个月，178项产品豁免落地；USTR此前将178项301关税豁免延至2027年1月9日。商务部同时公告，继续暂停对韩华海洋株式会社5家美国相关子公司采取反制措施2个月。",
+      "why": "贸易端最大不确定性缓解，出口链迎来缓冲窗口。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-10T07:26",
+      "url": "http://bond.eastmoney.com/news/1332,202611103926676358.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1354,202611093926512085.html",
+        "http://finance.eastmoney.com/news/1354,202611093926536949.html",
+        "http://finance.eastmoney.com/news/1346,202611093926459089.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "稳市从应急干预转向制度性安排，纳入金融治理框架",
+      "summary": "11月6日国常会指出完善资本市场稳市机制、增强股市内在稳定性；此前11月2日央行、金融监管总局、证监会连开两场座谈会并出台稳市政策。综合政策脉络与机构研判，稳市正从临时性、应急式干预转向可预期、可持续的制度性安排，并被纳入金融治理框架，成为长期制度供给。",
+      "why": "政策框架升级，决定A股中期底部的性质。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-10T07:00",
+      "url": "http://forex.eastmoney.com/news/1131,202611103926667452.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197206",
+        "https://wallstreetcn.com/livenews/3196517"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "美国10月CPI今日发布却缺同比口径",
+      "summary": "美国劳工统计局将于周二发布10月CPI，但因2025年政府停摆导致未能采集2025年10月部分价格数据、且无法事后追溯补采，本次报告将缺少12个月同比变化这一关键口径，9月同比为3.7%。债市已在对冲：资金买入19649手周二到期的10年期107.00看跌期权，押注CPI发布日债市抛售。",
+      "why": "今晚最大数据变量少了最关键的一个口径。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-10T03:10",
+      "url": "https://wallstreetcn.com/livenews/3197117",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197203",
+        "http://forex.eastmoney.com/news/1131,202611093925743059.html",
+        "https://wallstreetcn.com/livenews/3197180"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "美国2026财年联邦预算赤字达2.0万亿美元",
+      "summary": "美国财政部11月9日数据显示，截至9月30日的2026财年联邦预算赤字总额达2.0万亿美元，较上一财年增加2170亿美元、增幅12%，相当于GDP的6.2%，高于2025财年的5.8%；收入增长3%、支出增长6%。同日财政部拍卖580亿美元三年期国债，得标利率4.627%，为2006年以来最高。",
+      "why": "赤字占GDP 6.2%，长端利率的供给压力不减。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-10T03:50",
+      "url": "https://wallstreetcn.com/livenews/3197133",
+      "refs": [
+        "https://finance.sina.com.cn/jjxw/2026-11-10/doc-iniyetpn2908284.shtml",
+        "https://wallstreetcn.com/livenews/3197096"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "日本央行会议纪要显示部分委员主张加快加息",
+      "summary": "日本央行10月会议纪要显示，鉴于基础通胀率已达到该行2%的目标，部分决策者主张加快加息步伐，其中一位委员表示此前加息的影响尚未完全显现；同一份意见摘要中，还有委员称日银应在条件允许时决定加息，而不应过于谨慎。",
+      "why": "基础通胀已达2%目标，全球加息链条再添一环。",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-10T08:27",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyfech2757391.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197229",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyexvm2854198.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "布伦特原油跌至8月份以来最低，美伊核谈现进展",
+      "summary": "市场对通过外交努力结束中东战争的乐观情绪升温，布伦特原油下跌5.9%、结算价在每桶92美元上方，为8月份以来最低；盘中一度跌得更深，布伦特日内跌幅达7.5%报90.94美元、WTI跌6.0%报85.32美元。报道称美伊在核问题方面取得进展。",
+      "why": "原油风险溢价快速回落，通胀交易逻辑反转。",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-10T05:46",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyetpn2931577.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197128",
+        "https://finance.sina.com.cn/money/future/fmnews/2026-11-10/doc-iniyexvh6059355.shtml",
+        "https://wallstreetcn.com/livenews/3196911"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "美股强势反弹，纳指100涨3.4%、黄金收复4100美元",
+      "summary": "隔夜美股在油价下跌与逢低买盘推动下强势反弹：纳斯达克100指数收涨3.40%报27907.63点，纳指涨2.74%，标普500涨2.35%报7549.94点，道指涨2.15%报52389.75点，半导体指数涨超6.8%。黄金同步收复4100美元，现货黄金涨1.61%报4136.20美元；ICE美元指数跌0.61%至101.642。",
+      "why": "油价下跌与逢低买盘共同驱动风险资产反弹。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-10T05:00",
+      "url": "https://wallstreetcn.com/livenews/3197160",
+      "refs": [
+        "https://finance.sina.com.cn/wm/2026-11-10/doc-iniyexvk2845737.shtml",
+        "https://wallstreetcn.com/livenews/3197200",
+        "https://wallstreetcn.com/livenews/3197144"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "A股10月回购超330亿元，机构称底部构筑相对充分",
+      "summary": "中证报统计，截至11月8日，10月以来A股上市公司回购金额超330亿元，其中宁德时代回购超50亿元；11月以来已有26家公司公告取得股票回购增持贷款承诺函。分析人士认为A股估值与情绪已接近历次底部阈值、底部构筑或已相对充分，但仍处反复磨底阶段，需观察政策、美债收益率与成交量等信号。",
+      "why": "回购与再贷款是观察政策落地力度的硬指标。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-10T06:54",
+      "url": "https://wallstreetcn.com/livenews/3197210",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197213",
+        "http://stock.eastmoney.com/news/11134,202611103926899831.html"
+      ]
+    }
+  ],
+  "watch": [
+    "今晚美国10月CPI的环比读数（因停摆缺同比口径），以及10年期美债收益率能否守在4.87%附近",
+    "今日待公布的中国10月进出口与贸易帐，关税延期两个月后出口链订单与运价的反应",
+    "布伦特原油能否守住90美元关口、8月以来低点是否失守，以及美伊核谈进展的进一步确认",
+    "A股回购增持与两融、成交量的配合：11月以来26家公司取得回购增持贷款承诺函后的实际执行"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
