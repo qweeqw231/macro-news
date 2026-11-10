@@ -1,10 +1,122 @@
 {
-  "generatedAt": "2026-11-10T11:37:48.749Z",
+  "generatedAt": "2026-11-10T11:47:44.472Z",
   "windowDays": 62,
   "from": "2026-09-10",
   "days": 60,
   "total": 25632,
   "items": [
+    {
+      "id": "hvixug",
+      "ts": 1794311252,
+      "time": "2026-11-10T19:47:32.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Anthropic：模型可能出现非预期、与目标不一致的行为。",
+      "url": "https://wallstreetcn.com/livenews/3197677"
+    },
+    {
+      "id": "1wo0cvw",
+      "ts": 1794311154,
+      "time": "2026-11-10T19:45:54.000+08:00",
+      "source": "新浪财经",
+      "title": "英飞凌上调AI业务销售目标，数据中心需求旺盛驱动业绩",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyhfqw9166492.shtml"
+    },
+    {
+      "id": "14qtzzb",
+      "ts": 1794311064,
+      "time": "2026-11-10T19:44:24.000+08:00",
+      "source": "新浪财经",
+      "title": "Anthropic宣布IPO路演：发行价区间预计为每股70–78美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyhfqs5810248.shtml"
+    },
+    {
+      "id": "kleli4",
+      "ts": 1794311045,
+      "time": "2026-11-10T19:44:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Anthropic截至10月31日的年化营收约为810亿美元，较9月30日增加100亿美元；",
+      "url": "https://wallstreetcn.com/livenews/3197676"
+    },
+    {
+      "id": "1139ueh",
+      "ts": 1794311040,
+      "time": "2026-11-10T19:44:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "茅台：新年度不扩产、i茅台将告别抢购",
+      "url": "https://wallstreetcn.com/livenews/3197675"
+    },
+    {
+      "id": "mv0f5f",
+      "ts": 1794311004,
+      "time": "2026-11-10T19:43:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Anthropic：预计因限制性股票单位结算而产生38亿美元的税务义务。",
+      "url": "https://wallstreetcn.com/livenews/3197674"
+    },
+    {
+      "id": "1djontr",
+      "ts": 1794310860,
+      "time": "2026-11-10T19:41:00.000+08:00",
+      "source": "东方财富",
+      "title": "上海市委书记陈吉宁会见美国花旗集团董事会主席兼首席执行官范洁恩",
+      "url": "http://finance.eastmoney.com/news/1354,202611103927477384.html"
+    },
+    {
+      "id": "gamfoh",
+      "ts": 1794310697,
+      "time": "2026-11-10T19:38:17.000+08:00",
+      "source": "新浪财经",
+      "title": "控制权或变更！600370，超78%股份将被拍卖",
+      "url": "https://finance.sina.com.cn/stock/zqgd/2026-11-10/doc-iniyhfqw9163720.shtml"
+    },
+    {
+      "id": "1cydhl9",
+      "ts": 1794310690,
+      "time": "2026-11-10T19:38:10.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Anthropic截至10月31日的年化营收约为810亿美元，较9月30日增加100亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3197673"
+    },
+    {
+      "id": "1kxbsl6",
+      "ts": 1794310685,
+      "time": "2026-11-10T19:38:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "陈吉宁会见美国花旗集团董事会主席兼首席执行官范洁恩",
+      "url": "https://wallstreetcn.com/livenews/3197672"
+    },
+    {
+      "id": "1nkxjsp",
+      "ts": 1794310601,
+      "time": "2026-11-10T19:36:41.000+08:00",
+      "source": "东方财富",
+      "title": "刘起涛，被开除党籍！",
+      "url": "http://finance.eastmoney.com/news/1354,202611103927475792.html"
+    },
+    {
+      "id": "1eoj1t0",
+      "ts": 1794310550,
+      "time": "2026-11-10T11:35:50.000Z",
+      "source": "中新网",
+      "title": "海南自贸港“向绿而行” 加速释放绿色低碳新动能",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-10/10729687.shtml"
+    },
+    {
+      "id": "r3am12",
+      "ts": 1794310548,
+      "time": "2026-11-10T11:35:48.000Z",
+      "source": "中新网",
+      "title": "打造山岳实景试验场 泰山将免费开放机器人训练测试场景",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-10/10729685.shtml"
+    },
+    {
+      "id": "1ig7beo",
+      "ts": 1794310542,
+      "time": "2026-11-10T11:35:42.000Z",
+      "source": "中新网",
+      "title": "铁路客运电子发票服务下月起再优化 报销入账更省心",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-10/10729683.shtml"
+    },
     {
       "id": "1cq79f9",
       "ts": 1794310479,
@@ -12,6 +124,14 @@
       "source": "华尔街见闻",
       "title": "Anthropic将IPO发行规模定为8.25亿股，预计IPO发行价区间为每股70至78美元，AMD、博通、英伟达等将向Anthropic投资260亿美元。",
       "url": "https://wallstreetcn.com/livenews/3197671"
+    },
+    {
+      "id": "1vaye0f",
+      "ts": 1794310357,
+      "time": "2026-11-10T19:32:37.000+08:00",
+      "source": "东方财富",
+      "title": "陈吉宁会见美国花旗集团董事会主席兼首席执行官范洁恩",
+      "url": "http://finance.eastmoney.com/news/1354,202611103927475271.html"
     },
     {
       "id": "18nwitx",
@@ -6284,126 +6404,6 @@
       "source": "华尔街见闻",
       "title": "越南股指VN指数上涨1.1%。",
       "url": "https://wallstreetcn.com/livenews/3197313"
-    },
-    {
-      "id": "5c6bvm",
-      "ts": 1794276855,
-      "time": "2026-11-10T02:14:15.000Z",
-      "source": "中新网",
-      "title": "11月10日人民币对美元中间价报6.7167 上调21个基点",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-10/10729234.shtml"
-    },
-    {
-      "id": "att7bw",
-      "ts": 1794276793,
-      "time": "2026-11-10T10:13:13.000+08:00",
-      "source": "东方财富",
-      "title": "12月1日起铁路部门优化客运电子发票服务",
-      "url": "http://finance.eastmoney.com/news/1350,202611103927140814.html"
-    },
-    {
-      "id": "uef9vk",
-      "ts": 1794276735,
-      "time": "2026-11-10T02:12:15.000Z",
-      "source": "中新网",
-      "title": "四面八方话进博｜“进博会是双向奔赴的平台”",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-10/10729243.shtml"
-    },
-    {
-      "id": "me1yns",
-      "ts": 1794276687,
-      "time": "2026-11-10T10:11:27.000+08:00",
-      "source": "东方财富",
-      "title": "河南一号商圈，变了",
-      "url": "http://biz.eastmoney.com/news/1670,202611103927165919.html"
-    },
-    {
-      "id": "12mfcvm",
-      "ts": 1794276671,
-      "time": "2026-11-10T02:11:11.000Z",
-      "source": "中新网",
-      "title": "11月10日央行开展1900亿元隔夜逆回购操作",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-10/10729227.shtml"
-    },
-    {
-      "id": "1yni2ox",
-      "ts": 1794276598,
-      "time": "2026-11-10T10:09:58.000+08:00",
-      "source": "华尔街见闻",
-      "title": "伊朗说美取消制裁和停止战争是谈判前提",
-      "url": "https://wallstreetcn.com/livenews/3197312"
-    },
-    {
-      "id": "172lehu",
-      "ts": 1794276533,
-      "time": "2026-11-10T02:08:53.000Z",
-      "source": "中新网",
-      "title": "让进博会“展品变商品”再快一步 智慧口岸将这样升级",
-      "url": "https://www.chinanews.com.cn/cj/2026/11-10/10729241.shtml"
-    },
-    {
-      "id": "1gaevzv",
-      "ts": 1794276517,
-      "time": "2026-11-10T10:08:37.000+08:00",
-      "source": "新浪财经",
-      "title": "航空股早盘延续近期反弹 南方航空及东方航空均涨逾6%",
-      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-10/doc-iniyfech2844149.shtml"
-    },
-    {
-      "id": "1s3yiy6",
-      "ts": 1794276480,
-      "time": "2026-11-10T10:08:00.000+08:00",
-      "source": "东方财富",
-      "title": "中央宣传部、中央社会工作部、教育部、财政部、住建部、商务部、文旅部、国家文物局，联合印发",
-      "url": "http://finance.eastmoney.com/news/1355,202611103927144150.html"
-    },
-    {
-      "id": "w0z9wd",
-      "ts": 1794276447,
-      "time": "2026-11-10T10:07:27.000+08:00",
-      "source": "华尔街见闻",
-      "title": "印尼基准股指日内涨幅扩大至1%。",
-      "url": "https://wallstreetcn.com/livenews/3197311"
-    },
-    {
-      "id": "1jwo2zs",
-      "ts": 1794276348,
-      "time": "2026-11-10T10:05:48.000+08:00",
-      "source": "新浪财经",
-      "title": "优必选早盘涨超5% 与天翼电信终端共推仿生人形机器人大规模市场应用",
-      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-10/doc-iniyfece6065353.shtml"
-    },
-    {
-      "id": "220qkt",
-      "ts": 1794276248,
-      "time": "2026-11-10T10:04:08.000+08:00",
-      "source": "新浪财经",
-      "title": "方达控股复牌涨近50% 泰格医药参与方达控股私有化并剥离海外实验室业务",
-      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-10/doc-iniyfece6063716.shtml"
-    },
-    {
-      "id": "11sjm49",
-      "ts": 1794276147,
-      "time": "2026-11-10T10:02:27.000+08:00",
-      "source": "东方财富",
-      "title": "新华财媒｜PPI创近52个月新高 A股掀起回购潮",
-      "url": "http://forex.eastmoney.com/news/1131,202611103927137156.html"
-    },
-    {
-      "id": "obuax6",
-      "ts": 1794276049,
-      "time": "2026-11-10T10:00:49.000+08:00",
-      "source": "华尔街见闻",
-      "title": "受贿数额特别巨大，广东省深圳市政协原党组书记、主席戴北方被提起公诉。",
-      "url": "https://wallstreetcn.com/livenews/3197306"
-    },
-    {
-      "id": "1xftm5j",
-      "ts": 1794276031,
-      "time": "2026-11-10T10:00:31.000+08:00",
-      "source": "华尔街见闻",
-      "title": "整点回顾：沪指早间高开震荡，创业板指涨幅回落，AI漫剧、机器人、算力硬件、半导体芯片等方向领涨，油气、航运、白酒、银行等板块下挫，个股涨多跌少，沪深京三市约4200股飘红，开盘半小时成交5179亿，较上日此时缩量超100亿。",
-      "url": "https://wallstreetcn.com/livenews/3197305"
     },
     {
       "id": "1cimpml",
