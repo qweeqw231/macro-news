@@ -6,66 +6,67 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-10T07:22:46.723Z",
-  "durationMs": 33061,
+  "startedAt": "2026-11-10T07:37:51.220Z",
+  "durationMs": 34431,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 4545
+      "ms": 4546
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1182
+      "ms": 1503
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 2210
+      "ms": 2738
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 615
+      "ms": 1114
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 5117
+      "ms": 2973
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1579
+      "ms": 1239
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 2306
+      "ms": 1730
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 29196
+      "ms": 23197
     }
   ],
-  "quotes": 60,
-  "added": 32
+  "quotes": 50,
+  "added": 25,
+  "quoteError": "9/56 失败：东财批量失败：HTTP 502"
 }
