@@ -12,6 +12,10 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { INDICES } from '../src/sources.mjs';
+import { snapshotTargets } from '../src/snapshot.mjs';
+
+// 2.12.1：行情条数不写死，直接与代码里的目标清单对齐（加标的/加 ETF 会自己长大）。
+const TARGET_COUNT = snapshotTargets('am').length;
 
 const require = createRequire(import.meta.url);
 const QS = require('../assets/quote-status.js');
@@ -79,14 +83,16 @@ test('交易时段：印度 09:15-15:30 IST；越南 09:00-11:30 / 13:00-14:45 I
 });
 
 test('休市表：印度含 01-15 临时休市，越南含春节与国庆，均只覆盖 2026', () => {
-  assert.equal(CAL.markets.IN.length, 16);
+  // 2.12.1：休市日**条数**不钉死——补 2027 覆盖、加临时休市都会让条数长大。
+  // 真正要守的是「关键日子有 / 结算假日不许混进来 / 全部落在声明覆盖期内」。
+  assert.ok(CAL.markets.IN.length >= 16, `印度休市日疑似被删：${CAL.markets.IN.length}`);
   assert.ok(CAL.markets.IN.includes('2026-01-15'), '印度缺 01-15 市政选举临时休市');
   assert.ok(CAL.markets.IN.includes('2026-11-10'), '印度缺排灯节 Balipratipada');
   // 货币衍生品通函里的结算假日（02-19 / 03-19 / 04-01 / 08-26）股票段照常交易，不能混进来
   for (const d of ['2026-02-19', '2026-03-19', '2026-04-01', '2026-08-26']) {
     assert.ok(!CAL.markets.IN.includes(d), `${d} 是结算假日，不应进股票段休市表`);
   }
-  assert.equal(CAL.markets.VN.length, 13);
+  assert.ok(CAL.markets.VN.length >= 13, `越南休市日疑似被删：${CAL.markets.VN.length}`);
   for (const d of ['2026-01-02', '2026-02-16', '2026-02-20', '2026-08-31', '2026-09-02']) {
     assert.ok(CAL.markets.VN.includes(d), `越南缺休市日 ${d}`);
   }
@@ -138,9 +144,9 @@ test('K 线：日/周/月/全量文件齐全，起点正确，根数只钉下限
   assert.ok(String(vFull.bars[0][0]) <= '2010-09-21', `VNINDEX 全量起点过晚：${vFull.bars[0][0]}`);
 });
 
-test('quotes.json：两个标的都有价，卡片总数 62', () => {
+test('quotes.json：两个标的都有价，条数与代码里的标的数量自洽', () => {
   const doc = json('data/quotes.json');
-  assert.equal(doc.quotes.length, 62);
+  assert.equal(doc.quotes.length, TARGET_COUNT);
   for (const [key, market] of [['sensex', 'IN'], ['vnindex', 'VN']]) {
     const q = doc.quotes.find((x) => x.key === key);
     assert.ok(q, `quotes.json 缺少 ${key}`);

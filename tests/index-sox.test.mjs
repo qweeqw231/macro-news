@@ -19,6 +19,9 @@ import { fileURLToPath } from 'node:url';
 import { INDICES } from '../src/sources.mjs';
 import { snapshotTargets } from '../src/snapshot.mjs';
 
+// 2.12.1：行情条数不写死，直接与代码里的目标清单对齐（加标的/加 ETF 会自己长大）。
+const TARGET_COUNT = snapshotTargets('am').length;
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
 const json = (rel) => JSON.parse(read(rel));
@@ -118,15 +121,13 @@ test('脚本：短历史白名单与分钟预生成目标都包含 sox', () => {
   assert.ok(/TARGET_KEYS = \[[\s\S]*?'sox'/.test(minute), 'update-kline-minute.mjs 的 TARGET_KEYS 缺少 sox');
 });
 
-test('quotes.json：sox 有价，卡片总数 62（23 指数 + 32 ETF + 7 组合）', () => {
+test('quotes.json：sox 有价，条数与代码里的标的数量自洽', () => {
   const doc = json('data/quotes.json');
-  assert.equal(doc.quotes.length, 62);
   const q = doc.quotes.find((x) => x.key === 'sox');
   assert.ok(q, 'quotes.json 缺少 sox');
   assert.equal(q.market, 'US');
   assert.ok(q.price > 0, 'sox 价格无效');
   assert.ok(q.price > 1000, `半导体指数价格量级异常：${q.price}`);
-  // 总数自洽：23 指数 + 32 ETF + 7 组合
-  assert.equal(INDICES.length, 23);
-  assert.equal(doc.quotes.length, INDICES.length + 32 + 7);
+  // 总数自洽：与快照目标清单一致（INDICES + ETFS + 组合）
+  assert.equal(doc.quotes.length, TARGET_COUNT);
 });

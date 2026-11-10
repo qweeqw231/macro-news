@@ -532,6 +532,9 @@ node scripts/briefing/ensure.mjs --backfill-from 2026-10-30 --backfill-to 2026-1
 
 # Offline regression tests (no network, no disk writes): slices / briefing criteria / locks / catch-up, filename case, time zones, collection allowlist
 node --test "tests/*.test.mjs"
+
+# Assertion rules: never hard-code item counts or last-bar dates against the real data/
+# → docs/test-conventions.md
 ```
 
 Tabs are real `href="#view-xxx"` links: bookmarkable, shareable, and they still navigate without JS.

@@ -14,6 +14,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { INDICES } from '../src/sources.mjs';
+import { snapshotTargets } from '../src/snapshot.mjs';
+
+// 2.12.1：行情条数不写死，直接与代码里的目标清单对齐（加标的/加 ETF 会自己长大）。
+const TARGET_COUNT = snapshotTargets('am').length;
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
@@ -46,7 +50,7 @@ test('前端与 Worker：卡片 / K 线 / 搜索 / 代理都认识 sse50', () =>
     'worker.js 缺少 sse50');
 });
 
-test('K 线：全量文件 5543+ 根，从 2004 年起，最后到 2026-11-02', () => {
+test('K 线：全量文件 1000+ 根，从 2004 年起，末根不早于 2026-11-02', () => {
   const full = json('data/kline/sse50_full.json');
   assert.equal(full.name, '上证50');
   assert.ok(Array.isArray(full.bars) && full.bars.length > 1000, '全量 K 线根数不足');
@@ -91,9 +95,9 @@ test('当日 am 快照保持新增标的前的 57 项（时点快照不重写，
   assert.equal(snap.capturedAt, '2026-11-02T12:14:00+08:00');
 });
 
-test('quotes.json：卡片含上证50，且总数 62', () => {
+test('quotes.json：卡片含上证50，条数与代码里的标的数量自洽', () => {
   const doc = json('data/quotes.json');
-  assert.equal(doc.quotes.length, 62);
+  assert.equal(doc.quotes.length, TARGET_COUNT);
   const q = doc.quotes.find((x) => x.key === 'sse50');
   assert.ok(q, 'quotes.json 缺少 sse50');
   assert.equal(q.name, '上证50');

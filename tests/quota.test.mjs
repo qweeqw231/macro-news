@@ -117,7 +117,7 @@ test('2.12.0：触顶必须置标记（capState）', () => {
   const many = Array.from({ length: 1802 }, (_, i) => item(`x${i}`, 2000 + i, { channel: 'A股' }));
   const kept = selectDayItems(many);
   const st = capState([{ day: 'x', candidates: many.length, kept: kept.length, evicted: many.length - kept.length }]);
-  assert.equal(kept.length, 1800);
+  assert.equal(kept.length, DAY_TOTAL);
   assert.equal(st.capped, true);
   assert.equal(st.evicted, 2);
 });

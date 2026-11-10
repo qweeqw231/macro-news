@@ -548,6 +548,9 @@ node scripts/briefing/ensure.mjs --backfill-from 2026-10-30 --backfill-to 2026-1
 
 # 离线回归测试（不联网、不写盘）：切片/早报判据/锁/补跑、文件名大小写、时区、采集白名单
 node --test "tests/*.test.mjs"
+
+# 断言规范：对真实 data/ 不写死条数与末根日期（加标的/加源前先看）
+# → docs/test-conventions.md
 ```
 
 页签是 `href="#view-xxx"` 真链接：可收藏、可分享、没 JS 也能跳转。

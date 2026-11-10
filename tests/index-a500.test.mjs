@@ -8,6 +8,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { INDICES } from '../src/sources.mjs';
+import { snapshotTargets } from '../src/snapshot.mjs';
+
+// 2.12.1：行情条数不写死。快照目标清单 = INDICES + ETFS + 7 个组合（组合在 snapshot.mjs 的
+// buildTargets 里），也就是行情该覆盖的全部标的——加标的/加 ETF 时这里会自己跟着长大。
+const TARGET_COUNT = snapshotTargets('am').length;
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
@@ -55,9 +60,9 @@ test('K 线：日/周/月/全量都存在，全量 5300+ 根', () => {
   assert.ok(String(full.bars[full.bars.length - 1][0]) >= '2026-11-02');
 });
 
-test('quotes：a500 有价，总数 62', () => {
+test('quotes：a500 有价，总数与代码里的标的数量自洽', () => {
   const doc = json('data/quotes.json');
-  assert.equal(doc.quotes.length, 62);
+  assert.equal(doc.quotes.length, TARGET_COUNT);
   const q = doc.quotes.find((x) => x.key === 'a500');
   assert.ok(q, 'quotes 缺少 a500');
   assert.equal(q.name, '中证A500');
