@@ -1,10 +1,186 @@
 {
-  "generatedAt": "2026-11-10T15:51:01.003Z",
+  "generatedAt": "2026-11-10T16:07:54.215Z",
   "windowDays": 62,
   "from": "2026-09-10",
   "days": 60,
-  "total": 34767,
+  "total": 34790,
   "items": [
+    {
+      "id": "4oolc0",
+      "ts": 1794326856,
+      "time": "2026-11-11T00:07:36.000+08:00",
+      "source": "新浪财经",
+      "title": "高盛分析师：预测Anthropic到2030年营收将达6850亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyhsen5658092.shtml"
+    },
+    {
+      "id": "lvao4d",
+      "ts": 1794326816,
+      "time": "2026-11-11T00:06:56.000+08:00",
+      "source": "新浪财经",
+      "title": "达拉斯联储行长支持至少再加息两次 称利率调整步伐可能需加快",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyhses8999028.shtml"
+    },
+    {
+      "id": "yxfmio",
+      "ts": 1794326744,
+      "time": "2026-11-11T00:05:44.000+08:00",
+      "source": "新浪财经",
+      "title": "美联储洛根呼吁再加息两次以压制通胀",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyhses8998648.shtml"
+    },
+    {
+      "id": "okzqn2",
+      "ts": 1794326676,
+      "time": "2026-11-11T00:04:36.000+08:00",
+      "source": "新浪财经",
+      "title": "Rivian CEO称全新R2 SUV与自动驾驶将让2027成为“拐点之年”",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyhser2350115.shtml"
+    },
+    {
+      "id": "13yclxm",
+      "ts": 1794326599,
+      "time": "2026-11-11T00:03:19.000+08:00",
+      "source": "华尔街见闻",
+      "title": "苹果公司：在Apple TV推出新语言功能。",
+      "url": "https://wallstreetcn.com/livenews/3197811"
+    },
+    {
+      "id": "4xsis5",
+      "ts": 1794326501,
+      "time": "2026-11-11T00:01:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国纽约联储：三季度总体家庭债务增长3340亿美元，至19.1万亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3197810"
+    },
+    {
+      "id": "1nncrpa",
+      "ts": 1794326451,
+      "time": "2026-11-11T00:00:51.000+08:00",
+      "source": "华尔街见闻",
+      "title": "波音公司10月份交付737飞机33架，订单165架。",
+      "url": "https://wallstreetcn.com/livenews/3197809"
+    },
+    {
+      "id": "1wdrvg2",
+      "ts": 1794326425,
+      "time": "2026-11-11T00:00:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "谷歌公司在全球范围内发布Gemini 4 Carbon。",
+      "url": "https://wallstreetcn.com/livenews/3197808"
+    },
+    {
+      "id": "72vd5w",
+      "ts": 1794326403,
+      "time": "2026-11-11T00:00:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "安世半导体（Nexperia）CEO：公司目前无法跟上强劲的市场需求。",
+      "url": "https://wallstreetcn.com/livenews/3197807"
+    },
+    {
+      "id": "f0e4fl",
+      "ts": 1794326355,
+      "time": "2026-11-10T23:59:15.000+08:00",
+      "source": "东方财富",
+      "title": "从展台到长期合作，这是他们的跨国生意经｜聚焦进博会",
+      "url": "http://finance.eastmoney.com/news/1355,202611103927699715.html"
+    },
+    {
+      "id": "f27saj",
+      "ts": 1794326335,
+      "time": "2026-11-10T23:58:55.000+08:00",
+      "source": "华尔街见闻",
+      "title": "交易员充分消化英国央行到明年3月再加息两次、每次25个基点的预期。",
+      "url": "https://wallstreetcn.com/livenews/3197806"
+    },
+    {
+      "id": "ccbhs9",
+      "ts": 1794326255,
+      "time": "2026-11-10T23:57:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "德意志银行预计，美联储将在2027年1月再加息25个基点，而此前预测的加息时点为2026年12月和2027年3月。",
+      "url": "https://wallstreetcn.com/livenews/3197805"
+    },
+    {
+      "id": "vg2725",
+      "ts": 1794325946,
+      "time": "2026-11-10T23:52:26.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美联储Logan谈及加息立场之后，美国10年期国债收益率持稳于日高4.9917%附近，当前涨幅超过10个基点。",
+      "url": "https://wallstreetcn.com/livenews/3197804"
+    },
+    {
+      "id": "15k1uj9",
+      "ts": 1794325827,
+      "time": "2026-11-10T23:50:27.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国达拉斯联储主席Logan：可能需要在这个动机更加迅猛地加息。",
+      "url": "https://wallstreetcn.com/livenews/3197803"
+    },
+    {
+      "id": "yequai",
+      "ts": 1794325783,
+      "time": "2026-11-10T23:49:43.000+08:00",
+      "source": "新浪财经",
+      "title": "CoreWeave财报令债务驱动的AI基建扩张接受审视",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyhmwq5783971.shtml"
+    },
+    {
+      "id": "1mnyzjn",
+      "ts": 1794325744,
+      "time": "2026-11-10T23:49:04.000+08:00",
+      "source": "新浪财经",
+      "title": "布里奇波因特集团看好房地产 “价值重估” 带来的投资机遇",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyhmwt2476788.shtml"
+    },
+    {
+      "id": "pom88e",
+      "ts": 1794325570,
+      "time": "2026-11-10T23:46:10.000+08:00",
+      "source": "新浪财经",
+      "title": "亚马逊Ring发布用于住宅与商业场所巡逻的飞行无人机与机器人",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyhmws2559175.shtml"
+    },
+    {
+      "id": "1bxpeh5",
+      "ts": 1794325563,
+      "time": "2026-11-10T23:46:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达盘中跌幅扩大至5%，半导体指数重新跌超0.3%。",
+      "url": "https://wallstreetcn.com/livenews/3197802"
+    },
+    {
+      "id": "f3zsxx",
+      "ts": 1794325508,
+      "time": "2026-11-10T23:45:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "埃及外长：埃及军队已在沙特驻扎数月以支持其防御",
+      "url": "https://wallstreetcn.com/livenews/3197801"
+    },
+    {
+      "id": "1s518jh",
+      "ts": 1794325285,
+      "time": "2026-11-10T23:41:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "AI训练初创公司Mercor按200亿美元估值实施新一轮融资。",
+      "url": "https://wallstreetcn.com/livenews/3197800"
+    },
+    {
+      "id": "1g7soit",
+      "ts": 1794325237,
+      "time": "2026-11-10T23:40:37.000+08:00",
+      "source": "华尔街见闻",
+      "title": "法国外长称美伊局势升级风险“并未完全排除”",
+      "url": "https://wallstreetcn.com/livenews/3197799"
+    },
+    {
+      "id": "ry6nh1",
+      "ts": 1794325225,
+      "time": "2026-11-10T23:40:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧元/美元日内跌幅达0.5%，报1.1166。",
+      "url": "https://wallstreetcn.com/livenews/3197798"
+    },
     {
       "id": "17ymqd6",
       "ts": 1794325061,
@@ -174,11 +350,11 @@
       "url": "https://wallstreetcn.com/livenews/3197789"
     },
     {
-      "id": "1qjx4ac",
+      "id": "wwacbx",
       "ts": 1794322903,
       "time": "2026-11-10T23:01:43.000+08:00",
       "source": "华尔街见闻",
-      "title": "低硫燃油夜盘收跌2.46%，合成橡胶跌2.32%，燃油跌2.13%，LPG跌0.7%，PTA跌0.44%，铁矿石跌0.29%。",
+      "title": "内盘期货夜市涨跌各异，低硫燃油夜盘收跌2.46%，合成橡胶跌2.32%，燃油跌2.13%，LPG跌0.7%，PTA跌0.44%，铁矿石跌0.29%。",
       "url": "https://wallstreetcn.com/livenews/3197788"
     },
     {
@@ -972,6 +1148,14 @@
       "source": "新浪财经",
       "title": "美国10月份CPI较上月上升0.4% 高于预期",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyhfqu2646073.shtml"
+    },
+    {
+      "id": "yilhw7",
+      "ts": 1794318240,
+      "time": "2026-11-10T21:44:00.000+08:00",
+      "source": "东方财富",
+      "title": "新华社国家高端智库发布《共建“一带一路”推动建设开放型世界经济》智库报告",
+      "url": "http://finance.eastmoney.com/news/1350,202611103927676771.html"
     },
     {
       "id": "1rqkm79",
@@ -3014,20 +3198,20 @@
       "url": "https://wallstreetcn.com/livenews/3197635"
     },
     {
-      "id": "1q1ly25",
-      "ts": 1794306583,
-      "time": "2026-11-10T18:29:43.000+08:00",
-      "source": "华尔街见闻",
-      "title": "新一轮俄美乌三方会谈在阿布扎比开始举行",
-      "url": "https://wallstreetcn.com/livenews/3197633"
-    },
-    {
       "id": "1xg6o9d",
       "ts": 1794306583,
       "time": "2026-11-10T18:29:43.000+08:00",
       "source": "华尔街见闻",
       "title": "华利集团：拟以不超过5亿美元投资O-Net Technologies Group Limited，取得不超过25%股权",
       "url": "https://wallstreetcn.com/livenews/3197634"
+    },
+    {
+      "id": "1q1ly25",
+      "ts": 1794306583,
+      "time": "2026-11-10T18:29:43.000+08:00",
+      "source": "华尔街见闻",
+      "title": "新一轮俄美乌三方会谈在阿布扎比开始举行",
+      "url": "https://wallstreetcn.com/livenews/3197633"
     },
     {
       "id": "1d3hahp",
