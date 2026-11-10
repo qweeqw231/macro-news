@@ -87,6 +87,15 @@
         <span class="hist-hint" id="histHint" role="status"></span>
       </form>
     </section>
+    <!-- 2.12.0：归档口径说明。归档键是「新闻日」（北京 08:00 起算），不是自然日；
+         卡片上的「N 条」必须按这个区间理解，否则会误读成 00:00–24:00 的量。 -->
+    <div class="arch-hd">
+      <h2>归档 <span class="arch-tag">新闻日</span></h2>
+      <p class="arch-note">
+        按<strong>新闻日</strong>分组：<code>11-10</code> 这一天 = <strong>北京时间 11-10 08:00 ~ 11-11 08:00</strong>，
+        不是自然日的 00:00–24:00。卡片上的「N 条」是该新闻日的归档总量；早报与归档共用同一把日期键。
+      </p>
+    </div>
     <div class="days" id="days"></div>
   </section>
 

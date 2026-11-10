@@ -809,7 +809,7 @@
   // 完整正文存在按天的归档文件里（content 最多 4000 字）。
   // 所以打开一条没有正文的条目时，按日期去 data/archive/YYYY-MM-DD.json 取全文。
   //
-  // 归档页打开某天也用同一个缓存：一天上限 1600 条（2.11.0 起；此前 800）/ 约 2MB，切走再点不用重下。
+  // 归档页打开某天也用同一个缓存：一天上限 1800 条（2.12.0 起；2.11.0 起 1600；此前 800）/ ~2MB，切走再点不用重下。
   // 最多留 3 天（防内存膨胀）；今天的文件还在增长，5 分钟后失效重取。
   const DAY_CACHE_MAX = 3;
   const DAY_FRESH_MS = 5 * 60 * 1000;
@@ -993,7 +993,8 @@
     searchTimer = setTimeout(() => runSearch(v), 220);
   }
 
-  // 检索索引 `data/search.json` 只有最近 62 天（2.11.0 起单日上限 1600，索引会到 ~24MB / gzip ~5.4MB），
+  // 检索索引 `data/search.json` 只有最近 62 天（2.11.1 实测 62 个新闻日、60 天有文件：
+  // 10.7MB / gzip 2.35MB；2.12.0 上限 1800 后会略增），
   // 从 GitHub Pages 拉一次要**几十秒**（本机实测带宽 5~30 KB/s）。
   // ⇒ **用户碰搜索框（focus）或开始输入时才预取**：首屏、归档、行情都不跟它抢带宽。
   //   还没下完时 qMeta 会显示「检索索引载入中…」。
@@ -1198,11 +1199,19 @@
 
   function dayCard(d) {
     const open = (e) => { e.preventDefault(); openDay(d.day, d.kind); };
+    // 2.12.0：归档按**新闻日**分文件（北京 08:00 ~ 次日 08:00，等价 UTC 日期）。
+    // 卡片必须默认可见地标出来，否则「11-10 · 1,233 条」会被误读成自然日 00:00–24:00 的量。
+    const dayHint = (day) => `${day} 新闻日 · 北京时间 ${day} 08:00 ~ 次日 08:00`;
+    const withTag = (day) => {
+      const dd = el('div', 'day-d', day);
+      dd.appendChild(el('span', 'day-nd', '新闻日'));
+      return dd;
+    };
     if (!d.hasBriefing) {
       const a = el('a', 'day');
       a.href = '#';
-      if (d.reason) a.title = d.reason;
-      a.appendChild(el('div', 'day-d', d.day));
+      a.title = d.reason ? `${dayHint(d.day)}；${d.reason}` : dayHint(d.day);
+      a.appendChild(withTag(d.day));
       a.appendChild(el('div', 'day-n', d.count + ' 条'));
       a.onclick = open;
       return a;
@@ -1213,8 +1222,8 @@
     box.dataset.day = d.day;
     const a = el('a', 'day-open');
     a.href = '#';
-    if (d.reason) a.title = d.reason;
-    a.appendChild(el('div', 'day-d', d.day));
+    a.title = d.reason ? `${dayHint(d.day)}；${d.reason}` : dayHint(d.day);
+    a.appendChild(withTag(d.day));
     a.appendChild(el('div', 'day-n', d.count + ' 条'));
     if (d.source === 'rule') a.appendChild(el('span', 'day-tag', '自动摘要'));
     else if (d.source === 'draft') a.appendChild(el('span', 'day-tag', '事实清单'));
@@ -1575,12 +1584,21 @@
         level = 'warn';
         state = `${srcs.length - srcBad.length}/${srcs.length} 源正常`;
       }
+      // 2.12.0：归档触顶（本轮发生了配额淘汰）。这是「数据被丢」而不是「源故障」，
+      // 优先级低于停摆/失败，但必须比"一切正常"更显眼——上次丢早盘条目就是因为只看 +N。
+      const newsMeta = last.news || {};
+      const capped = newsMeta.capped === true;
+      if (capped && level !== 'bad') {
+        level = 'warn';
+        state = `归档触顶 · 淘汰 ${Number(newsMeta.evicted) || 0} 条`;
+      }
 
       const bits = [];
       if (last.runner === 'cloud') bits.push('云端');
       else if (last.runner === 'local') bits.push('本机');
       if (runMin != null) bits.push('采集 ' + agoText(runMin));
       if (srcs.length) bits.push(`源 ${srcs.length - srcBad.length}/${srcs.length}`);
+      if (capped) bits.push(`归档上限 ${newsMeta.cap || '?'}`);
       if (newsMin != null) bits.push('最新新闻 ' + agoText(newsMin));
       // 与 #quoteTime 共用同一段三态文案，避免一处实时一处快照
       bits.push(S.quoteStatusText || '行情 未记录');

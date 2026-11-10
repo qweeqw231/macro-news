@@ -26,7 +26,7 @@ import { decideBars } from './kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
 import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
-import { selectDayItems, OFFICIAL_RECENT_DAYS, isRecent, DAY_TOTAL } from './quota.mjs';
+import { selectDayItems, OFFICIAL_RECENT_DAYS, isRecent, DAY_TOTAL, capState } from './quota.mjs';
 import { describeSourceError } from './source-error.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -308,12 +308,13 @@ async function main() {
     const newOnes = mergedItems.filter((i) => !existingIds.has(i.id)).length;
     const removed = existing.items.length + newOnes - mergedItems.length;
     // candidates 已经去过重，所以 candidates - mergedItems 就是配额淘汰量（与合并重复分开记）
+    const evicted = Math.max(0, candidates.length - mergedItems.length);
     dayStats.push({
       day,
       incoming: items.length,          // 本轮窗口内新抓到的条目
       candidates: candidates.length,   // 与已归档合并去重后的候选总量
       kept: mergedItems.length,        // 实际写入文件的条数
-      evicted: Math.max(0, candidates.length - mergedItems.length),
+      evicted,
       deduped: Math.max(0, items.length + existing.items.length - candidates.length),
       added: newOnes,
     });
@@ -323,6 +324,13 @@ async function main() {
       addedTotal += newOnes;
       console.log(
         `  → ${day}.json  +${newOnes}${removed > 0 ? ` · 合并重复 -${removed}` : ''}（累计 ${existing.items.length}）`
+      );
+    }
+    // 2.12.0：触顶不可静默。淘汰发生在 selectDayItems 内部，日志里原本看不到；
+    // 这里逐日显式打出「候选 > 上限、丢掉多少条」，并汇总进 _last-run.json 的 news.capped。
+    if (evicted > 0) {
+      console.warn(
+        `  ⚠ ${day}.json 触顶：候选 ${candidates.length} > 上限 ${DAY_TOTAL}，本轮淘汰 ${evicted} 条（最早的先丢）`
       );
     }
   }
@@ -417,6 +425,7 @@ async function main() {
   }
 
   const okCount = perSource.filter((s) => s.ok).length;
+  const cap = capState(dayStats);
   // 读改写：保留 portfolio-collect.mjs（每日 16:30 任务）写入的字段
   // （at / ok / fail / macroOk / macroFail / portfolioQuotes ...）。
   // 若整份覆盖，组合行情那套运行日志会在下一次本任务运行（每 5 分钟）里被清空。
@@ -441,11 +450,14 @@ async function main() {
     added: addedTotal,
     // 2.11.0：本轮的容量画像（只增字段，不动上面的 ok/label/count/ms/error）。
     // cap 写进文件，这样脚本以后不必依赖当时的常量值也能判断「这天有没有触顶」。
+    // 2.12.0：新增 capped —— 触顶的显式标记，页脚健康灯与脚本都只认这一个布尔，
+    // 不用再从 evicted > 0 去猜（「有淘汰但没标记」正是上次静默丢数据的成因）。
     news: {
-      cap: DAY_TOTAL,
+      cap: cap.cap,
+      capped: cap.capped,
       candidates: dayStats.reduce((n, d) => n + d.candidates, 0),
       kept: dayStats.reduce((n, d) => n + d.kept, 0),
-      evicted: dayStats.reduce((n, d) => n + d.evicted, 0),
+      evicted: cap.evicted,
       deduped: dayStats.reduce((n, d) => n + d.deduped, 0),
       days: dayStats,
     },
@@ -458,6 +470,11 @@ async function main() {
   console.log(
     `[collect] 完成 · 源 ${okCount}/${SOURCES.length} 成功 · 新增 ${addedTotal} 条 · 库内共 ${allCount} 条 · ${Date.now() - startedAt.getTime()}ms`
   );
+  if (cap.capped) {
+    console.warn(
+      `[collect] ⚠ 触顶：本轮淘汰 ${cap.evicted} 条（上限 ${cap.cap}）——已写入 _last-run.json 的 news.capped`
+    );
+  }
   if (okCount === 0) process.exitCode = 1;
 }
 
