@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T00:22:49.074Z",
+  "generatedAt": "2026-11-10T00:37:52.185Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -223,14 +223,14 @@
       "key": "n225",
       "name": "日经225",
       "market": "JP",
-      "price": 60436.95,
+      "price": 60391.58,
       "open": 59372.28,
       "high": 60619.45,
       "low": 59268.43,
       "prevClose": 58775.5,
       "volume": 0,
-      "changePct": 2.83,
-      "updatedAt": "2026-11-10T08:23:06+08:00",
+      "changePct": 2.75,
+      "updatedAt": "2026-11-10T08:38:27+08:00",
       "source": "eastmoney"
     },
     {
@@ -279,14 +279,14 @@
       "key": "kospi",
       "name": "韩国KOSPI",
       "market": "KR",
-      "price": 5277.98,
+      "price": 5273.98,
       "open": 5247.22,
       "high": 5300.92,
       "low": 5247.22,
       "prevClose": 5018.85,
-      "volume": 44608,
-      "changePct": 5.16,
-      "updatedAt": "2026-11-10T08:23:00+08:00",
+      "volume": 60467,
+      "changePct": 5.08,
+      "updatedAt": "2026-11-10T08:38:50+08:00",
       "source": "eastmoney"
     },
     {
