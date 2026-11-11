@@ -1,0 +1,167 @@
+{
+  "date": "2026-11-11",
+  "generatedAt": "2026-11-11T18:43:13+08:00",
+  "endedAt": "2026-11-11T18:43:31+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-10",
+    "to": "2026-11-11",
+    "fromAt": "2026-11-10T08:00:00+08:00",
+    "toAt": "2026-11-11T09:00:00+08:00",
+    "fromTs": 1794268800,
+    "toTs": 1794358800
+  },
+  "overview": "今日主线是美国通胀超预期触发全球加息重定价：10月美国CPI环比涨0.4%、核心涨0.3%双双超预期且无同比口径，沃勒喊出12月可能加50基点，美债遭2025年4月以来最严重抛售、2年期一度飙21个基点，欧英日加央行同步偏鹰，黄金重挫近3%、布伦特一度跌破90美元。国内方面，前10个月进出口44.81万亿元增20%，央行千亿互换便利落地。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "前10个月进出口44.81万亿元增20%，10月出口同比增35.2%",
+      "summary": "海关总署11月10日发布数据，今年前10个月我国货物贸易进出口总值44.81万亿元、同比增长20%，出口机电产品增长25.2%、进口机电产品增长35%。按美元计，10月单月出口同比增35.2%、进口增41.6%，AI硬件热潮为主引擎；国家发展改革委表示将进一步完善重要民生商品价格调控机制。",
+      "why": "外贸是四季度增长与汇率预期的底座。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-10T11:16",
+      "url": "http://finance.eastmoney.com/news/1346,202611103927177163.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197979",
+        "http://forex.eastmoney.com/news/1131,202611113927829821.html",
+        "http://forex.eastmoney.com/news/1131,202611103927415594.html",
+        "https://wallstreetcn.com/livenews/3197386"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行千亿互换便利落地，回购增持再贷款利率降至1%",
+      "summary": "央行投放千亿互换便利、股票回购增持再贷款利率降至1%，政策端两大利器直指市场筹码结构；外部风险未消，机构建议先防守再进攻。11月10日央行公开市场开展1900亿元人民币隔夜逆回购操作，利率1.25%；后续将主要围绕证券、基金、保险公司互换便利与回购增持再贷款两项工具发力。",
+      "why": "两项工具直接改变市场筹码与融资成本。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-10T12:04",
+      "url": "http://forex.eastmoney.com/news/1131,202611103927193557.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197270",
+        "http://forex.eastmoney.com/news/1131,202611103927137156.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "财政部首次在加拿大发行40亿元人民币绿色主权债，认购13.5倍",
+      "summary": "11月9日，财政部代表中央政府在加拿大成功发行40亿元人民币绿色主权债券，其中3年期20亿元、发行利率1.4%，5年期20亿元、发行利率1.5%。国际投资者认购踊跃，总认购金额540.4亿元，为发行金额的13.5倍。这是财政部首次在加拿大发行人民币绿色主权债券，也是落实第二次中加经济财金战略对话的重要举措。",
+      "why": "离岸人民币融资规模扩大，验证主权债国际需求。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-10T23:24",
+      "url": "https://wallstreetcn.com/livenews/3197794",
+      "refs": [
+        "http://finance.eastmoney.com/news/1346,202611103927215885.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "美国10月CPI环比涨0.4%、核心涨0.3%，双双超预期",
+      "summary": "美国劳工统计局周二公布，10月CPI环比增长0.4%，高于预期的0.3%、前值为0.6%；核心CPI环比增长0.3%，高于预期的0.2%、与前值持平。由于去年10月政府停摆期间数据采集中断，本次未公布同比变化。中金认为通胀粘性未退，仍支持美联储继续加息。",
+      "why": "超预期通胀是本轮加息重定价的导火索。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-10T21:40",
+      "url": "https://wallstreetcn.com/livenews/3197736",
+      "refs": [
+        "https://finance.sina.com.cn/stock/stockzmt/2026-11-11/doc-iniyiiae5380231.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyhmwu9109684.shtml",
+        "https://finance.sina.com.cn/roll/2026-11-11/doc-iniyiiah2140080.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "沃勒喊12月或加息50基点，Logan称至少还需再加两次",
+      "summary": "美联储理事沃勒称经济强劲、就业稳定、通胀过高，尤其担忧通胀的广泛性，若10月核心CPI超过0.3%应考虑加息50个基点，即使通胀改善也支持加息25个基点，并需收回此前三次预防性降息。达拉斯联储主席洛根称至少还需加息两次、步伐可能加快；理事鲍曼警告若AI押注落空股市或现大幅回调。",
+      "why": "官员表态把50基点从尾部风险推到台面。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-10T17:00",
+      "url": "https://wallstreetcn.com/livenews/3197580",
+      "refs": [
+        "https://finance.sina.com.cn/money/forex/whqqscgd/2026-11-11/doc-iniyhwnp2251126.shtml",
+        "https://finance.sina.com.cn/money/forex/whqqscgd/2026-11-11/doc-iniyiauk2239353.shtml",
+        "https://wallstreetcn.com/livenews/3197982",
+        "https://finance.sina.com.cn/money/forex/whqqscgd/2026-11-11/doc-iniyiiai2040476.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "美债遭2025年4月以来最严重抛售，10年期拍卖得标5.020%",
+      "summary": "通胀超预期叠加美联储鹰派言论，美债遭2025年4月以来最严重抛售潮之一：2年期收益率一度飙升21个基点至4.77%，将创对等关税以来最大单日升幅，10年期涨约8.4个基点至4.946%，曲线熊平、短端领跌。同日财政部拍卖420亿美元10年期国债，得标利率5.020%、投标倍数2.46，认购需求不及预期，票面利率创20年来最高。",
+      "why": "供给压力叠加加息重定价，长端利率上行未见顶。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-11T02:22",
+      "url": "https://wallstreetcn.com/livenews/3197867",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyhmwt2440108.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyiauk2215280.shtml",
+        "https://wallstreetcn.com/livenews/3197861",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyhwnn2335649.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "欧央行12月加息看来相当明显，日央行纪要多委员主张加息",
+      "summary": "欧洲央行管委纳格尔称下个月有充分理由加息，12月加息看来相当明显；首席经济学家Lane称若数据不变12月加息是审慎之举。日本央行10月会议纪要显示许多委员认为近期有必要加息；英国央行副行长隆巴代利不排除连续两次加息；加拿大央行10月纪要重申继续加息可能性。",
+      "why": "主要央行集体转鹰，全球无风险利率同步上行。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-10T22:55",
+      "url": "https://wallstreetcn.com/livenews/3197781",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197549",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyhmwt2471725.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-10/doc-iniyfece6015147.shtml",
+        "https://finance.sina.com.cn/roll/2026-11-11/doc-iniyiauh5457107.shtml",
+        "https://wallstreetcn.com/livenews/3197870"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "布伦特一度跌破90美元，金价重挫近3%逼近4000关口",
+      "summary": "市场对伊朗战争降温的预期叠加油价技术性抛售，布伦特原油一度跌破每桶90美元；美国通胀超预期与加息押注升温则打压贵金属，周二纽约尾盘现货黄金重挫2.60%报4032.05美元/盎司，盘中最低触及4013.70美元，现货白银跌3.53%报51.5350美元，COMEX铜跌1.10%。",
+      "why": "油跌利空通胀预期、金跌反映加息压顶，两头都在重定价。",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-11T06:12",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyiaun8786952.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3197942",
+        "https://finance.sina.com.cn/money/nmetal/hjzx/2026-11-11/doc-iniyiiae5367383.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyiiai2019061.shtml",
+        "https://wallstreetcn.com/livenews/3197871"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "产业资本掀起回购增持潮，创业板指涨1.46%",
+      "summary": "新华社旗下权威财经媒体11月10日聚焦我国物价与上市公司增持回购：央行政策利率换锚平稳运行，全新流动性调控框架助力稳定资金预期；离境退税配套服务持续优化，便利化举措激活入境消费增量；产业资本掀起回购增持热潮。11月10日收盘，上证综指涨0.08%报3663.72点，创业板指涨1.46%。",
+      "why": "回购与政策利率换锚是稳市工具落地的验证。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-10T10:02",
+      "url": "http://forex.eastmoney.com/news/1131,202611103927137156.html",
+      "refs": [
+        "http://stock.eastmoney.com/news/11219,202611113927981237.html",
+        "https://wallstreetcn.com/livenews/3197386"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美股三大指数收跌，英伟达两日市值蒸发近3万亿元",
+      "summary": "受10月CPI超预期与美联储鹰派表态冲击，美股11月10日集体收跌：道指跌0.30%报52231.89点，标普500跌0.38%报7520.93点，纳指跌0.74%报25065.87点；英伟达继续大跌，两日市值蒸发近3万亿元。纳斯达克金龙中国指数收跌1.21%报5696.50点，世纪互联跌8.4%。",
+      "why": "科技股与中概同步走弱，是加息重定价第一现场。",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-11T08:45",
+      "url": "https://finance.sina.com.cn/roll/2026-11-11/doc-iniyiiai2063653.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyiauk2219547.shtml",
+        "https://finance.sina.com.cn/money/bond/2026-11-11/doc-iniyiauh5468794.shtml",
+        "https://wallstreetcn.com/livenews/3197917"
+      ]
+    }
+  ],
+  "watch": [
+    "美联储12月9日会议定价：CME FedWatch对加息25基点概率已达98%，花旗对25基点押注获利了结，50基点门槛是否被突破",
+    "美债：10年期能否守住4.95%、2年期4.77%，以及420亿美元10年期国债后续续发需求",
+    "大宗：布伦特能否重回90美元上方、现货黄金能否守住4000美元；美伊核谈与俄美乌三方会谈进展",
+    "国内：10月信贷与社融数据、发改委民生商品价格调控机制落地，以及央行公开市场净投放节奏"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
