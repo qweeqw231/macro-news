@@ -1660,7 +1660,15 @@
       // 就不该在页脚说"未生成"（补跑一次就该看得见）。
       const artDay = (dayList || []).find((d) => d && d.day === today);
       const hasArtifact = !!(artDay && artDay.hasBriefing);
-      const BRIEF_AT = 9 * 60;   // 早报运行时刻 09:00（北京），与 cron `0 9 * * *` 对齐
+      // 早报运行时刻 09:00（北京），与 cron `0 9 * * *` 对齐
+      const BRIEF_AT = 9 * 60;
+      // 2.13.2：整点触发 ≠ 整点落盘。cron 在 09:00 派发，从排队、跑管道到写
+      //   `_briefing-status.json` 通常几十秒到几分钟，期间"无记录 + 无产物"是
+      //   正常的中间态。若这里直接判缺失，每天 09:00–09:03 都会闪一次告警色
+      //   （2.13.1 上线后已被观察到）。所以给 10 分钟宽限：这段时间仍算中性，
+      //   过了宽限还什么都没有，才是真的没生成。
+      const BRIEF_GRACE_MIN = 10;
+      const BRIEF_LATE_AT = BRIEF_AT + BRIEF_GRACE_MIN;
       let bTxt = '';
       let bLvl = '';
       if (rec && rec.status === 'done') {
@@ -1699,8 +1707,13 @@
         // 09:00 前：今日早报还没到生成时刻，属于正常等待，不是缺失
         bTxt = '早报 今日 09:00 后生成';
         bLvl = 'mute';
+      } else if (nowMin < BRIEF_LATE_AT) {
+        // 09:00–09:10：cron 已派发但状态/产物可能还没落盘，属生成中的中间态，
+        // 用中性灰；不写"未生成"这种判断性措辞，避免每天准点闪一次告警色
+        bTxt = '早报 生成中';
+        bLvl = 'mute';
       } else {
-        // 09:00 后既无状态记录、也没有产物：今天这期确实没生成
+        // 过了宽限仍既无状态记录、也没有产物：今天这期确实没生成
         bTxt = '早报 今日未生成';
         bLvl = 'warn';
       }

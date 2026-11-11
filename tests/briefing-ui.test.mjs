@@ -51,6 +51,17 @@ test('页脚早报：09:00 前为中性提示，09:00 后才是「今日未生�
     '09:00 后无早报应明确提示未生成');
 });
 
+// 2.13.2：09:00 整点触发到状态落盘有几十秒~几分钟延迟，那段时间
+// "无记录 + 无产物"是正常中间态。若直接判缺失，每天 09:00–09:03 会闪一次告警色。
+// 这里锁定"宽限常量 + 宽限内的中性分支"，防止阈值散落或被改回硬编码。
+test('页脚早报：09:00–09:10 为宽限期，仍用中性灰', () => {
+  assert.match(APP, /const BRIEF_GRACE_MIN = 10;/, '缺少宽限常量');
+  assert.match(APP, /const BRIEF_LATE_AT = BRIEF_AT \+ BRIEF_GRACE_MIN;/,
+    '宽限阈值应单一来源（由 BRIEF_AT 派生），不得另行硬编码');
+  assert.match(APP, /else if \(nowMin < BRIEF_LATE_AT\) \{[\s\S]{0,200}bTxt = '早报 生成中';\s*bLvl = 'mute';/,
+    '09:00–09:10 应给中性「生成中」');
+});
+
 test('页脚早报：有产物（index.json hasBriefing）即视为已生成', () => {
   assert.match(APP, /const hasArtifact = !!\(artDay && artDay\.hasBriefing\);/,
     '缺少归档索引的产物证据');
