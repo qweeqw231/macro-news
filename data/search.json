@@ -1,10 +1,114 @@
 {
-  "generatedAt": "2026-11-11T14:37:41.699Z",
+  "generatedAt": "2026-11-11T14:52:50.388Z",
   "windowDays": 62,
   "from": "2026-09-11",
   "days": 60,
-  "total": 36259,
+  "total": 36274,
   "items": [
+    {
+      "id": "1r8w4o9",
+      "ts": 1794408716,
+      "time": "2026-11-11T22:51:56.000+08:00",
+      "source": "华尔街见闻",
+      "title": "伊朗称决心建立波斯湾沿岸8国联盟",
+      "url": "https://wallstreetcn.com/livenews/3198505"
+    },
+    {
+      "id": "1x1mdtc",
+      "ts": 1794408595,
+      "time": "2026-11-11T22:49:55.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达称数据中心“应当是社区的资产” 应以社区认可的方式推进",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniykvcw8934688.shtml"
+    },
+    {
+      "id": "15g3gbv",
+      "ts": 1794408565,
+      "time": "2026-11-11T22:49:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：去年美国超大规模云计算企业至少占企业清洁能源采购量的75%",
+      "url": "https://wallstreetcn.com/livenews/3198504"
+    },
+    {
+      "id": "c1c2o3",
+      "ts": 1794408520,
+      "time": "2026-11-11T22:48:40.000+08:00",
+      "source": "新浪财经",
+      "title": "白宫警告众议院民主党人 部分调查行动可能构成犯罪",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniykvcv2158152.shtml"
+    },
+    {
+      "id": "1b5wqbp",
+      "ts": 1794408500,
+      "time": "2026-11-11T22:48:20.000+08:00",
+      "source": "新浪财经",
+      "title": "伦敦证券交易所集团拟给首席执行官加薪数百万英镑",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniykvcv2158028.shtml"
+    },
+    {
+      "id": "sfwsn2",
+      "ts": 1794408484,
+      "time": "2026-11-11T22:48:04.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：数据中心“应当是社区的资产”，应以社区认可的方式推进",
+      "url": "https://wallstreetcn.com/livenews/3198503"
+    },
+    {
+      "id": "1kz2a1y",
+      "ts": 1794408483,
+      "time": "2026-11-11T22:48:03.000+08:00",
+      "source": "新浪财经",
+      "title": "高盛预测：美联储继12月加息后，3 月将再度加息",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniykvcr1602132.shtml"
+    },
+    {
+      "id": "1qaj28b",
+      "ts": 1794408411,
+      "time": "2026-11-11T22:46:51.000+08:00",
+      "source": "华尔街见闻",
+      "title": "礼来制药Taltz+Zepbound在36周临床试验中实现主要终点。",
+      "url": "https://wallstreetcn.com/livenews/3198502"
+    },
+    {
+      "id": "2y0xaq",
+      "ts": 1794408400,
+      "time": "2026-11-11T22:46:40.000+08:00",
+      "source": "新浪财经",
+      "title": "重罚！昔日“大妖股”违规细节曝光",
+      "url": "https://finance.sina.com.cn/stock/s/2026-11-11/doc-iniykvcv2158362.shtml"
+    },
+    {
+      "id": "1y379xe",
+      "ts": 1794408347,
+      "time": "2026-11-11T22:45:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "墨西哥股市创盘中历史新高。",
+      "url": "https://wallstreetcn.com/livenews/3198501"
+    },
+    {
+      "id": "adc9kj",
+      "ts": 1794408112,
+      "time": "2026-11-11T22:41:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "意大利约6300所公立学校收到炸弹威胁邮件",
+      "url": "https://wallstreetcn.com/livenews/3198500"
+    },
+    {
+      "id": "141of59",
+      "ts": 1794407949,
+      "time": "2026-11-11T22:39:09.000+08:00",
+      "source": "新浪财经",
+      "title": "日本批准亚马逊日本公司整改方案 不再设置价格强制条款 将优化商品检索",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniykqvx2284840.shtml"
+    },
+    {
+      "id": "1170hqm",
+      "ts": 1794407896,
+      "time": "2026-11-11T22:38:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "加密货币交易所Coinbase：针对代理交易（Agentic trading）推出Agent控制功能。",
+      "url": "https://wallstreetcn.com/livenews/3198499"
+    },
     {
       "id": "1wcc1oz",
       "ts": 1794407763,
@@ -38,6 +142,14 @@
       "url": "https://wallstreetcn.com/livenews/3198494"
     },
     {
+      "id": "ik5ufm",
+      "ts": 1794407528,
+      "time": "2026-11-11T22:32:08.000+08:00",
+      "source": "东方财富",
+      "title": "上海总部+如东基地！这场恳谈会，为如东商贸服务业蓄势",
+      "url": "http://finance.eastmoney.com/news/1355,202611113928749724.html"
+    },
+    {
       "id": "7eytu2",
       "ts": 1794407506,
       "time": "2026-11-11T22:31:46.000+08:00",
@@ -46,11 +158,11 @@
       "url": "https://wallstreetcn.com/livenews/3198493"
     },
     {
-      "id": "llg029",
+      "id": "f49evt",
       "ts": 1794407482,
       "time": "2026-11-11T22:31:22.000+08:00",
       "source": "华尔街见闻",
-      "title": "美股开盘：纳斯达克100指数涨超1.8%，半导体指数涨4.7%",
+      "title": "美股开盘：纳斯达克100指数涨超1.8%，CoreWeave业绩报告重塑投资者对AI的信心",
       "url": "https://wallstreetcn.com/livenews/3198492"
     },
     {
@@ -68,6 +180,14 @@
       "source": "华尔街见闻",
       "title": "纳斯达克金龙中国指数盘初跌约1%。",
       "url": "https://wallstreetcn.com/livenews/3198491"
+    },
+    {
+      "id": "ao86v4",
+      "ts": 1794407460,
+      "time": "2026-11-11T22:31:00.000+08:00",
+      "source": "东方财富",
+      "title": "新华解码丨“十五五”时期，会计改革发展这样推进",
+      "url": "http://finance.eastmoney.com/news/1350,202611113928753859.html"
     },
     {
       "id": "119t8y4",
