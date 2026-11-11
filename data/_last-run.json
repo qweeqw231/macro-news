@@ -6,85 +6,84 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-11T15:07:41.584Z",
-  "durationMs": 17960,
+  "startedAt": "2026-11-11T15:19:09.122Z",
+  "durationMs": 41942,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 6375
+      "ms": 4471
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1263
+      "ms": 1221
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1685
+      "ms": 1706
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 1303
+      "ms": 2668
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 3538
+      "ms": 3321
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 846
+      "ms": 1681
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1198
+      "ms": 2217
     },
     {
       "id": "stats",
       "label": "国家统计局",
-      "ok": false,
-      "count": 0,
-      "ms": 13987,
-      "error": "RSS 全部入口失败：/sj/zxfb/rss.xml → fetch failed"
+      "ok": true,
+      "count": 25,
+      "ms": 27638
     }
   ],
-  "quotes": 60,
-  "added": 18,
+  "quotes": 51,
+  "added": 6,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7835,
-    "kept": 7835,
+    "candidates": 7840,
+    "kept": 7840,
     "evicted": 0,
-    "deduped": 308,
+    "deduped": 321,
     "days": [
       {
         "day": "2026-11-11",
-        "incoming": 288,
-        "candidates": 1137,
-        "kept": 1137,
+        "incoming": 287,
+        "candidates": 1142,
+        "kept": 1142,
         "evicted": 0,
-        "deduped": 271,
-        "added": 18
+        "deduped": 282,
+        "added": 6
       },
       {
         "day": "2026-11-10",
@@ -97,11 +96,11 @@
       },
       {
         "day": "2026-11-09",
-        "incoming": 1,
+        "incoming": 3,
         "candidates": 1457,
         "kept": 1457,
         "evicted": 0,
-        "deduped": 1,
+        "deduped": 3,
         "added": 0
       },
       {
@@ -132,5 +131,6 @@
         "added": 0
       }
     ]
-  }
+  },
+  "quoteError": "9/56 失败：东财批量失败：HTTP 502"
 }
