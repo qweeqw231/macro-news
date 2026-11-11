@@ -662,12 +662,13 @@ see §2.6. It only reads the news database and writes `.local/briefings/`, **nev
 | Field | Description |
 |---|---|
 | `at` / `durationMs` | End time (UTC ISO) / round duration |
+| `day` | **Beijing day** (`Asia/Shanghai`, same key as the GitHub stats); older lines without it are converted from `at` on read |
 | `host` / `mode` | Machine name / `collect` or `sync-only` |
 | `result` / `skipReason` | `ok` / `skipped` / `failed`, plus the skip or failure reason |
 | `headBefore` / `headAfter` | HEAD short hash before sync / at the end |
 | `behind` / `ahead` | Distance from `origin/main` during sync |
 | `filesWritten` / `commitCreated` | Data files written this round / whether a commit was created |
-| `syncResult` | `up-to-date` / `ff-only` / `merge` / `stash-restored` / `skipped:*` |
+| `syncResult` | `up-to-date` / `ff-only` / `merge` / `skipped:*` (dirty worktree = `skipped:dirty-worktree`) |
 
 `-SyncOnly` records `mode: "sync-only"`; it only runs a sync self-check and does not count as a collection round.
 

@@ -57,6 +57,7 @@ $runMode = 'collect'
 if ($SyncOnly) { $runMode = 'sync-only' }
 $runStats = [ordered]@{
     at = ''
+    day = ''
     host = $env:COMPUTERNAME
     mode = $runMode
     result = 'failed'
@@ -80,6 +81,11 @@ function Write-RunLedger {
     $prevCode = $LASTEXITCODE
     try {
         $runStats.at = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+        # 2.13.5：台账日键必须与 GH 统计的「北京日」同口径。
+        #   本机在 UTC 单数小时 :54 跑（01:54Z = 北京 09:54，23:54Z = 次日北京 07:54），
+        #   若用 at 的 UTC 日期当键，每个「台账日」实际覆盖北京 08:54 → 次日 07:54，逐日对齐会错开一档。
+        #   这里显式记北京日；Asia/Shanghai 恒为 UTC+8（无夏令时），直接加 8 小时即可。
+        $runStats.day = (Get-Date).ToUniversalTime().AddHours(8).ToString('yyyy-MM-dd')
         $runStats.durationMs = [int]((Get-Date) - $runStart).TotalMilliseconds
         # 账本要能自证「本轮行情是什么时点、今天的 pm 在不在本地」
         try {

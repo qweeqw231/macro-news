@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  dayKey, aggregateRuns, aggregateLedger, buildTable, fetchDayRuns, fetchWindow,
+  dayKey, ledgerDay, aggregateRuns, aggregateLedger, buildTable, fetchDayRuns, fetchWindow,
 } from '../scripts/ops-stats.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -23,6 +23,14 @@ test('dayKey：上海时区分日，UTC 16:00 跨日', () => {
   assert.equal(dayKey('2026-11-04T15:59:59Z'), '2026-11-04');
   assert.equal(dayKey('2026-11-04T16:00:00Z'), '2026-11-05');
   assert.equal(dayKey('bad'), '');
+});
+
+test('ledgerDay：显式 day 优先；旧行按 at 换算北京日（UTC 23:54 → 次日）', () => {
+  assert.equal(ledgerDay({ at: '2026-11-10T23:54:28Z', day: '2026-11-11' }), '2026-11-11', '有 day 时以 day 为准');
+  assert.equal(ledgerDay({ at: '2026-11-10T23:54:28Z' }), '2026-11-11', '无 day 时 UTC 23:54 归北京次日');
+  assert.equal(ledgerDay({ at: '2026-11-11T01:54:29Z' }), '2026-11-11', '无 day 时 UTC 01:54 仍是北京当日');
+  assert.equal(ledgerDay({ at: '2026-11-11T01:54:29Z', day: 'bogus' }), '2026-11-11', 'day 非法时回退 at');
+  assert.equal(ledgerDay({}), '');
 });
 
 test('aggregateRuns：按日 + 按 workflow；Pages 单列；同一 push 的多个运行只算一次', () => {

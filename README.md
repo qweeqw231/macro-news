@@ -693,12 +693,13 @@ schtasks /create /tn "MacroNews-Sync-1648" /tr "wscript.exe //nologo C:\Work\Min
 | 字段 | 说明 |
 |---|---|
 | `at` / `durationMs` | 结束时刻（UTC ISO）/ 本轮耗时 |
+| `day` | **北京日**（`Asia/Shanghai`，与 GH 统计同口径）；旧行没有该字段时，读取侧按 `at` 换算北京日回退 |
 | `host` / `mode` | 机器名 / `collect` 或 `sync-only` |
 | `result` / `skipReason` | `ok` / `skipped` / `failed`，以及跳过或失败原因 |
 | `headBefore` / `headAfter` | 同步前 / 结束时的 HEAD 短哈希 |
 | `behind` / `ahead` | 同步时与 `origin/main` 的差距 |
 | `filesWritten` / `commitCreated` | 本轮写入的数据文件数 / 是否创建提交 |
-| `syncResult` | `up-to-date` / `ff-only` / `merge` / `stash-restored` / `skipped:*` |
+| `syncResult` | `up-to-date` / `ff-only` / `merge` / `skipped:*`（脏工作区为 `skipped:dirty-worktree`） |
 
 `-SyncOnly` 记 `mode: "sync-only"`，只做同步自检，不计入采集轮次。
 

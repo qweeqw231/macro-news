@@ -57,13 +57,20 @@ export function aggregateRuns(runs, { tz = TZ } = {}) {
   return days;
 }
 
-/** 本机台账聚合：按新闻日（at 的 UTC 日期）；sync-only 不计入采集轮次 */
-export function aggregateLedger(entries) {
+/** 本机台账行的日键：优先用写入侧显式记录的北京日 `day`；
+ *  旧行（< 2.13.5）没有 `day`，按 `at`（UTC）换算成北京日回退——历史行不回填。 */
+export function ledgerDay(e, tz = TZ) {
+  if (e && typeof e.day === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.day)) return e.day;
+  return dayKey(e && e.at, tz);
+}
+
+/** 本机台账聚合：按北京日（GH 三列也按北京日，两列才逐日对齐）；sync-only 不计入采集轮次 */
+export function aggregateLedger(entries, { tz = TZ } = {}) {
   const days = {};
   const totals = { runs: 0, ok: 0, skipped: 0, failed: 0, syncOnly: 0, skipReasons: {} };
   for (const e of entries || []) {
     if (!e || typeof e !== 'object') continue;
-    const day = String(e.at || '').slice(0, 10);
+    const day = ledgerDay(e, tz);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) continue;
     const d = days[day] || (days[day] = {
       day, runs: 0, ok: 0, skipped: 0, failed: 0, syncOnly: 0, skipReasons: {},
@@ -101,7 +108,7 @@ export function buildTable(runs, ledgerEntries, { days = 14, now = Date.now(), t
   const local = aggregateLedger((ledgerEntries || []).filter((e) => {
     const t = new Date(e.at).getTime();
     return Number.isFinite(t) && t >= from;
-  }));
+  }), { tz });
 
   const daySet = new Set([...Object.keys(gh), ...Object.keys(local.days)]);
   // 补齐窗口内的空白天，便于看趋势（最多 days 天）
