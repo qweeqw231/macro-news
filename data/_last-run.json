@@ -6,92 +6,92 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-11T20:57:21.176Z",
-  "durationMs": 20049,
+  "startedAt": "2026-11-11T21:07:44.683Z",
+  "durationMs": 25473,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 3899
+      "ms": 4459
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1054
+      "ms": 1197
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1269
+      "ms": 1449
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 731
+      "ms": 1412
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1680
+      "ms": 1717
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 648
+      "ms": 1048
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1691
+      "ms": 1573
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 16289
+      "ms": 20530
     }
   ],
   "quotes": 59,
-  "added": 22,
+  "added": 7,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7988,
-    "kept": 7988,
+    "candidates": 7995,
+    "kept": 7995,
     "evicted": 0,
-    "deduped": 261,
+    "deduped": 275,
     "days": [
       {
         "day": "2026-11-11",
         "incoming": 263,
-        "candidates": 1290,
-        "kept": 1290,
+        "candidates": 1297,
+        "kept": 1297,
         "evicted": 0,
-        "deduped": 241,
-        "added": 22
+        "deduped": 256,
+        "added": 7
       },
       {
         "day": "2026-11-10",
-        "incoming": 8,
+        "incoming": 7,
         "candidates": 1624,
         "kept": 1624,
         "evicted": 0,
-        "deduped": 8,
+        "deduped": 7,
         "added": 0
       },
       {
