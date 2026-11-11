@@ -13,6 +13,61 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.13.6] - 2026-11-11
+
+> **补丁位，理由（规则 ③）**：给已存在的本机采集加一道**只读告警**——连续多轮因脏工作区让路时记一笔并打日志。
+> 没有新页面/新数据源/新交互（规则 ① 不成立）；不改 `data/`、不涉及站点数据（规则 ② 不成立），
+> 属于规则明列的「守卫」。
+
+### 语义纠正（重要）
+
+上一轮讨论里「本机跳过 N 轮 → 新闻停更」的说法**是错的**，本次一律按正确语义实现与写文案：
+
+- 站点主链路是**云端 Worker 每 15 分钟**触发的采集（日均约 193 次 dispatch）；
+- 本机 2 小时一轮的脚本只是**兜底**，平时多数轮次本来就会因「云端已是最新」而跳过；
+- 因此本机连续让路的正确语义是「**本机兜底失效 N 轮**」，**不影响站点更新**，文案不再出现「停更」。
+
+### 落点选择：只做本机（否决「页脚亮灯」）
+
+| 方案 | 结论 | 理由 |
+|---|---|---|
+| A. 干净轮把「连续让路数」写进 `data/_last-run.json`，前端页脚展示 | **否决** | 致命缺陷：脏状态若长期不清（最典型是脚本自己在非 `HEAD==origin/main` 时写 `_last-run.json`，或另一会话长时间挂着改动），就永远等不到「干净的那一轮」——而这时恰恰最需要告警 |
+| B. 纯本机：台账字段 + 日志 `⚠` + `.local/metrics/alert.json` + `ops-stats` 报告 | **采用** | 不破坏「脏即不写 `data/`」原则；脏多久都能按时告警；`.local/` 已 gitignore，脏轮写它不会让工作区变脏 |
+| C. 混链（脏轮写临时文件、干净轮补传） | 否决 | 为一条运维告警新造跨端链路，代价远大于收益 |
+
+「用户得主动看」的问题用**已经每天在看的两个地方**缓解：`logs/collect-YYYYMMDD.log` 里的 `⚠`，
+以及 `node scripts/ops-stats.mjs` 输出头部的 `⚠` 行。
+
+### 实现与阈值
+
+| 位置 | 改动 |
+|---|---|
+| `scripts/collect-and-push.ps1` | 新增 `$script:DirtyAlertStreak = 3`（2 小时一轮 ⇒ 约 6 小时）；`Get-DirtyStreak` 读台账尾部数连续段；`Write-RunLedger` 先算再写，行内新增 `dirtyStreak` 字段；达到阈值时 `Say` 一行 `⚠`；每次运行写 `.local/metrics/alert.json`（`active` / `streak` / `threshold`） |
+| `scripts/ops-stats.mjs` | 新增导出 `dirtyWorktreeStreak()` 与 `DIRTY_ALERT_STREAK`；报告在跳过原因后追加 `⚠ 本机兜底已连续让路 N 轮…`；快照 `local.dirtyStreak` / `local.dirtyAlertThreshold` |
+| 计数规则 | **只数真正的 `dirty-worktree`**：`news-fresh`、`up-to-date`、成功采集等任何非脏轮都会中断计数（视为兜底在工作）；`sync-only` 是人工验证轮，跳过而不中断 |
+| 读旧行 | 旧行没有 `dirtyStreak` 字段不影响判定：连续段直接按 `skipReason` 数，历史台账不回填 |
+
+### 验证（构造场景）
+
+1. 台账备份后追加 2 条 `collect + dirty-worktree` 行 → `ops-stats` 显示 `dirty-worktree=2`，**无告警**（未达阈值）；
+2. 制造真实脏工作区跑一轮真采集（脚本自己就是脏文件之一）：
+
+```
+[2026-11-11 20:55:46] sync: head=e746601e behind=2 ahead=0 dirty=yes result=skipped:dirty-worktree head_after=e746601e stash=none
+[2026-11-11 20:55:46] sync: 工作区有 3 个受版本控制的文件未提交改动，脚本主动让路——本轮不 stash、不合并、不 pop、不写任何工作区文件；下一轮重试。
+[2026-11-11 20:55:46] ⚠ 本机兜底已连续让路 3 轮（脏工作区，约 6 小时）：站点更新不受影响（云端 Worker 每 15 分钟采集），但本机兜底目前是失效的，请人工处理工作区未提交改动。
+```
+
+台账行：`…"skipReason":"dirty-worktree","dirtyStreak":3,"syncResult":"skipped:dirty-worktree"…`
+`alert.json`：`{"kind":"dirty-worktree","active":true,"streak":3,"threshold":3,…}`
+
+3. 追加 1 条正常轮（`result=ok`）后：`ops-stats` 不再输出 `⚠`，`alert.json` 变
+   `{"active":false,"streak":0,…}`，下一行台账 `dirtyStreak=0` —— **清零生效**。
+
+验证用的合成行与 `-SyncOnly` 行随后从台账移除（恢复备份），台账只留真实调度轮；`alert.json` 保留为未激活状态文件。
+
+全套 **351 项通过 / 0 失败**（新增 8 条 `dirtyWorktreeStreak` 断言）。
+
 ## [2.13.5] - 2026-11-11
 
 > **补丁位，理由（规则 ③）**：修正本机台账的**统计口径**——日键由「UTC 日期」改为「北京日」。

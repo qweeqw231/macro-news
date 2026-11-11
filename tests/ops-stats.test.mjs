@@ -8,6 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   dayKey, ledgerDay, aggregateRuns, aggregateLedger, buildTable, fetchDayRuns, fetchWindow,
+  dirtyWorktreeStreak, DIRTY_ALERT_STREAK,
 } from '../scripts/ops-stats.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -18,6 +19,23 @@ const run = (created, name, { event = 'schedule', sha = 'abc' } = {}) => ({
 });
 const ledger = (at, result, { mode = 'collect', skipReason = '' } = {}) =>
   ({ at, mode, result, skipReason, host: 'pc', headBefore: 'a', headAfter: 'b' });
+
+test('dirtyWorktreeStreak：只数连续 dirty-worktree；news-fresh 中断、sync-only 跳过', () => {
+  const dirty = { mode: 'collect', skipReason: 'dirty-worktree' };
+  const ok = { mode: 'collect', skipReason: '', result: 'ok' };
+  const fresh = { mode: 'collect', skipReason: 'news-fresh' };
+  const syncOnly = { mode: 'sync-only', skipReason: 'dirty-worktree' };
+
+  assert.equal(DIRTY_ALERT_STREAK, 3, '阈值 3 轮 ≈ 6 小时');
+  assert.equal(dirtyWorktreeStreak([]), 0);
+  assert.equal(dirtyWorktreeStreak([ok]), 0);
+  assert.equal(dirtyWorktreeStreak([dirty, dirty]), 2, '2 轮未达阈值');
+  assert.equal(dirtyWorktreeStreak([dirty, dirty, dirty]), 3, '3 轮达阈值');
+  assert.equal(dirtyWorktreeStreak([dirty, dirty, ok, dirty, dirty, dirty]), 3, '只看尾部连续段');
+  assert.equal(dirtyWorktreeStreak([dirty, dirty, fresh, dirty]), 1, 'news-fresh 视为兜底在工作，中断计数');
+  assert.equal(dirtyWorktreeStreak([dirty, dirty, syncOnly]), 2, 'sync-only 是人工验证轮，不计入也不中断');
+  assert.equal(dirtyWorktreeStreak([null, dirty, dirty]), 2, '坏行不参与计数');
+});
 
 test('dayKey：上海时区分日，UTC 16:00 跨日', () => {
   assert.equal(dayKey('2026-11-04T15:59:59Z'), '2026-11-04');

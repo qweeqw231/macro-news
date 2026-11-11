@@ -57,6 +57,24 @@ export function aggregateRuns(runs, { tz = TZ } = {}) {
   return days;
 }
 
+/** 连续 dirty-worktree 让路的告警阈值（2 小时一轮 ⇒ 3 轮 ≈ 6 小时） */
+export const DIRTY_ALERT_STREAK = 3;
+
+/** 台账尾部「连续 dirty-worktree 让路」的轮数。
+ *  只数真正的 dirty-worktree 跳过——news-fresh 等正常跳过会中断计数（视为兜底在工作）。
+ *  sync-only 是人工验证轮，不计入兜底轮次。 */
+export function dirtyWorktreeStreak(entries) {
+  let n = 0;
+  for (let i = (entries || []).length - 1; i >= 0; i--) {
+    const e = entries[i];
+    if (!e || typeof e !== 'object') continue;
+    if (e.mode === 'sync-only') continue;
+    if (e.skipReason === 'dirty-worktree') n++;
+    else break;
+  }
+  return n;
+}
+
 /** 本机台账行的日键：优先用写入侧显式记录的北京日 `day`；
  *  旧行（< 2.13.5）没有 `day`，按 `at`（UTC）换算成北京日回退——历史行不回填。 */
 export function ledgerDay(e, tz = TZ) {
@@ -256,6 +274,7 @@ async function main() {
   const now = Date.now();
 
   const ledgerEntries = readLedger(ledgerFile);
+  const dirtyStreak = dirtyWorktreeStreak(ledgerEntries);
   let fetched = { runs: [], totalCount: 0, missing: 0, truncated: false, error: '' };
   if (noNetwork) {
     fetched.error = '--no-network';
@@ -285,6 +304,8 @@ async function main() {
     local: {
       ledger: path.relative(ROOT, ledgerFile).replace(/\\/g, '/'),
       entries: ledgerEntries.length,
+      dirtyStreak,
+      dirtyAlertThreshold: DIRTY_ALERT_STREAK,
       totals: table.localTotals,
     },
     rows: table.rows,
@@ -305,6 +326,11 @@ async function main() {
   if (Object.keys(table.localTotals.skipReasons).length) {
     console.log('本机跳过原因：' + Object.entries(table.localTotals.skipReasons)
       .map(([k, v]) => `${k}=${v}`).join('，'));
+  }
+  if (dirtyStreak >= DIRTY_ALERT_STREAK) {
+    console.log(`⚠ 本机兜底已连续让路 ${dirtyStreak} 轮（因脏工作区，约 ${dirtyStreak * 2} 小时）`
+      + '：站点更新不受影响（云端 Worker 每 15 分钟采集），但本机兜底目前是失效的，'
+      + '需人工处理工作区未提交改动。');
   }
   if (fetched.error) {
     console.log(`⚠ GitHub 数据不可用：${fetched.error}（本机台账仍已统计）`);

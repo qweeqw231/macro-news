@@ -699,6 +699,7 @@ schtasks /create /tn "MacroNews-Sync-1648" /tr "wscript.exe //nologo C:\Work\Min
 | `headBefore` / `headAfter` | 同步前 / 结束时的 HEAD 短哈希 |
 | `behind` / `ahead` | 同步时与 `origin/main` 的差距 |
 | `filesWritten` / `commitCreated` | 本轮写入的数据文件数 / 是否创建提交 |
+| `dirtyStreak` | 连续因脏工作区让路的轮数（0 = 本轮不是脏跳过）；≥3 时脚本在日志打 `⚠` 并更新 `.local/metrics/alert.json`，语义是「本机兜底失效 N 轮」，站点仍由云端 Worker 每 15 分钟更新 |
 | `syncResult` | `up-to-date` / `ff-only` / `merge` / `skipped:*`（脏工作区为 `skipped:dirty-worktree`） |
 
 `-SyncOnly` 记 `mode: "sync-only"`，只做同步自检，不计入采集轮次。

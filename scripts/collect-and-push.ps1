@@ -68,6 +68,7 @@ $runStats = [ordered]@{
     filesWritten = 0
     commitCreated = $false
     skipReason = ''
+    dirtyStreak = 0
     syncResult = ''
     durationMs = 0
     # 2.9.0：跳过采集 = result 仍 ok，但 collected 必须是 false，不能再混成「成功采集」
@@ -75,6 +76,51 @@ $runStats = [ordered]@{
     quotesGeneratedAt = ''
     pmSnapshotExists = $false
     pmCapturedAt = ''
+}
+
+# 2.13.6：连续「脏工作区让路」告警。
+#   语义：**本机兜底失效 N 轮**，不是「新闻停更」——站点由云端 Worker 每 15 分钟采集，
+#   本机 2 小时一轮只是兜底，平时多数轮次本来就会因「云端已是最新」而跳过。
+#   落点只在本机（.local/ 台账 + 每日日志）：脏时脚本刻意不写任何 data/ 文件（含 _last-run.json），
+#   所以不能靠前端页脚亮灯——那样在工作区长期不干净时永远等不到「干净的那一轮」。
+#   阈值 3 轮 ≈ 6 小时；中途任何一轮不是 dirty（成功采集 / 正常同步 / news-fresh / 其它跳过）即清零。
+$script:DirtyAlertStreak = 3
+
+function Get-DirtyStreak {
+    # 读台账尾部，数「连续 dirty-worktree 让路」；sync-only 是人工验证轮，不计入兜底轮次
+    try {
+        if (-not (Test-Path $ledgerFile)) { return 0 }
+        $tail = @(Get-Content $ledgerFile -Tail 40 -Encoding UTF8)
+        $n = 0
+        for ($i = $tail.Count - 1; $i -ge 0; $i--) {
+            $e = $null
+            try { $e = $tail[$i] | ConvertFrom-Json } catch { break }
+            if ($null -eq $e) { break }
+            if ($e.mode -eq 'sync-only') { continue }
+            if ($e.skipReason -eq 'dirty-worktree') { $n++ } else { break }
+        }
+        return $n
+    } catch { return 0 }
+}
+
+function Write-DirtyAlert($active, $streak) {
+    # 状态文件与台账同目录（.local/，已 gitignore）：脏轮写它不会让工作区变脏
+    try {
+        if (-not (Test-Path $metricsDir)) {
+            New-Item -ItemType Directory -Path $metricsDir -Force | Out-Null
+        }
+        $doc = [ordered]@{
+            updatedAt = $runStats.at
+            kind = 'dirty-worktree'
+            active = [bool]$active
+            streak = [int]$streak
+            threshold = $script:DirtyAlertStreak
+            lastRunAt = $runStats.at
+            note = '本机兜底连续让路；站点由云端 Worker 每 15 分钟采集，不代表新闻停更'
+        }
+        $enc = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText((Join-Path $metricsDir 'alert.json'), (($doc | ConvertTo-Json -Compress) + "`n"), $enc)
+    } catch { }
 }
 
 function Write-RunLedger {
@@ -109,9 +155,21 @@ function Write-RunLedger {
         if (-not (Test-Path $metricsDir)) {
             New-Item -ItemType Directory -Path $metricsDir -Force | Out-Null
         }
+        # 2.13.6：先按「已有台账尾部」算连续让路轮数，再决定本行值与该不该亮灯
+        $prevDirty = Get-DirtyStreak
+        if ($runStats.skipReason -eq 'dirty-worktree' -and $runStats.mode -ne 'sync-only') {
+            $runStats.dirtyStreak = $prevDirty + 1
+        } else {
+            $runStats.dirtyStreak = 0
+        }
+        if ($runStats.dirtyStreak -ge $script:DirtyAlertStreak) {
+            Say ("⚠ 本机兜底已连续让路 {0} 轮（脏工作区，约 {1} 小时）：站点更新不受影响（云端 Worker 每 15 分钟采集），但本机兜底目前是失效的，请人工处理工作区未提交改动。" -f `
+                $runStats.dirtyStreak, ($runStats.dirtyStreak * 2))
+        }
         $line = ($runStats | ConvertTo-Json -Compress)
         $enc = New-Object System.Text.UTF8Encoding($false)
         [System.IO.File]::AppendAllText($ledgerFile, $line + "`n", $enc)
+        Write-DirtyAlert ($runStats.dirtyStreak -ge $script:DirtyAlertStreak) $runStats.dirtyStreak
     } catch {
         try { Say "ledger: 写入失败（$($_.Exception.Message)）—— 不影响本轮结果" } catch { }
     } finally {

@@ -668,6 +668,7 @@ see §2.6. It only reads the news database and writes `.local/briefings/`, **nev
 | `headBefore` / `headAfter` | HEAD short hash before sync / at the end |
 | `behind` / `ahead` | Distance from `origin/main` during sync |
 | `filesWritten` / `commitCreated` | Data files written this round / whether a commit was created |
+| `dirtyStreak` | Consecutive rounds deferred because of a dirty worktree (0 = this round was not a dirty skip); at ≥3 the script logs `⚠` and updates `.local/metrics/alert.json` — meaning "local fallback failed N rounds", while the site is still refreshed by the cloud Worker every 15 minutes |
 | `syncResult` | `up-to-date` / `ff-only` / `merge` / `skipped:*` (dirty worktree = `skipped:dirty-worktree`) |
 
 `-SyncOnly` records `mode: "sync-only"`; it only runs a sync self-check and does not count as a collection round.
