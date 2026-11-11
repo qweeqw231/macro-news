@@ -20,12 +20,17 @@ test('同步在陈旧度判定 / 采集之前', () => {
   assert.ok(SCRIPT.indexOf('src\\collect.mjs --no-kline') > fetchAt, '同步必须在采集之前');
 });
 
-test('落后时只做 ff-only，脏工作区先 stash 再 pop', () => {
+test('落后时只做 ff-only；脏工作区整轮跳过，不 stash / 不 pop', () => {
   assert.match(SCRIPT, /git merge --ff-only origin\/main/);
-  assert.match(SCRIPT, /git stash push -m \$msg -- \$paths/);
-  assert.match(SCRIPT, /git stash pop/);
-  assert.match(SCRIPT, /skipped:stash-pop-conflict/);
-  assert.match(SCRIPT, /\$stashState = 'kept'/);
+  // 2.13.4：脏检测只看受版本控制的文件
+  assert.match(SCRIPT, /git status --porcelain --untracked-files=no/);
+  assert.match(SCRIPT, /skipReason = 'dirty-worktree'/);
+  assert.match(SCRIPT, /skipped:dirty-worktree/);
+  // 2.13.4：脏工作区上绝不再 stash/pop（2026-11-11 19:54 事故根因）
+  assert.doesNotMatch(SCRIPT, /git stash push/);
+  assert.doesNotMatch(SCRIPT, /git stash pop/);
+  assert.doesNotMatch(SCRIPT, /skipped:stash-pop-conflict/);
+  assert.doesNotMatch(SCRIPT, /\$stashState/);
   assert.match(SCRIPT, /skipped:unmerged/);
 });
 
@@ -51,7 +56,7 @@ test('每轮记录 HEAD / behind / ahead / 同步结果', () => {
   assert.match(SCRIPT, /git rev-parse --short HEAD/);
   assert.match(SCRIPT, /git rev-list --count HEAD\.\.origin\/main/);
   assert.match(SCRIPT, /git rev-list --count origin\/main\.\.HEAD/);
-  assert.match(SCRIPT, /sync: head=\{0\} behind=\{1\} ahead=\{2\} dirty=\{3\} result=\{4\} head_after=\{5\} stash=\{6\}/);
+  assert.match(SCRIPT, /sync: head=\{0\} behind=\{1\} ahead=\{2\} dirty=\{3\} result=\{4\} head_after=\{5\} stash=none/);
   assert.match(SCRIPT, /dirty=\$dirty/);
 });
 

@@ -220,10 +220,16 @@ if ($unmerged.Count -gt 0) {
     exit 0
 }
 
-$dirtyPaths = @()
-$dirtyPaths += @(& git diff --name-only 2>$null)
-$dirtyPaths += @(& git diff --cached --name-only 2>$null)
-$dirtyPaths = @($dirtyPaths | Where-Object { $_ } | Sort-Object -Unique)
+# 2.13.3：脏工作区只用来**让路**，不再 stash/pop。
+#   2026-11-11 19:54 事故：脚本在脏工作区上 stash → ff-only 拉远端 → pop，
+#   而远端那几个提交改的正是本地正在编辑的同一批文件 ⇒ pop 直接冲突。
+#   现在：只要**受版本控制的文件**有未提交改动，本轮整轮跳过（不 stash、不 merge、不 pop）。
+#   未跟踪文件（`??`）不计入脏：git 拉取不会覆盖它们，`git stash`（不带 -u）也不会碰，
+#   把它们算脏会让 `.trae-html-share-packages/` 这类工具目录把本机采集永久卡死。
+$statusOut = @(& git status --porcelain --untracked-files=no 2>$null)
+$dirtyPaths = @($statusOut | ForEach-Object {
+    if ($_ -match '^..\s+(.+)$') { $matches[1] }
+} | Where-Object { $_ } | Sort-Object -Unique)
 $dirty = if ($dirtyPaths.Count -gt 0) { 'yes' } else { 'no' }
 
 $oldSsh = $env:GIT_SSH_COMMAND
@@ -255,88 +261,51 @@ $ahead = [int](& git rev-list --count origin/main..HEAD 2>$null)
 $runStats.behind = $behind
 $runStats.ahead = $ahead
 
-function Push-Stash($paths, $msg) {
-    $out = & git stash push -m $msg -- $paths 2>&1 | Out-String
-    if ($LASTEXITCODE -eq 0) { return $true }
-    $first = ($out.Trim() -split "`r?`n" | Select-Object -First 1)
-    Say "sync: stash 失败：$first"
-    return $false
-}
-function Pop-Stash {
-    $out = & git stash pop 2>&1 | Out-String
-    if ($LASTEXITCODE -eq 0) { return $true }
-    $first = ($out.Trim() -split "`r?`n" | Select-Object -First 1)
-    Say "sync: stash pop 冲突（stash 保留，未强解）：$first"
-    return $false
+# 2.13.3：脏工作区 → 整轮让路。
+#   只做只读的 fetch（已在上面完成，仅用于记录 behind），
+#   不 stash、不 merge、不 pop，也不调用 Publish-LocalSync（它会写 data/_last-run.json）。
+if ($dirty -eq 'yes') {
+    $runStats.result = 'skipped'
+    $runStats.skipReason = 'dirty-worktree'
+    $runStats.syncResult = 'skipped:dirty-worktree'
+    Say ("sync: head={0} behind={1} ahead={2} dirty=yes result=skipped:dirty-worktree head_after={0} stash=none" -f `
+        $headBefore, $behind, $ahead)
+    Say ("sync: 工作区有 {0} 个受版本控制的文件未提交改动，脚本主动让路——本轮不 stash、不合并、不 pop、不写任何工作区文件；下一轮重试。" -f $dirtyPaths.Count)
+    foreach ($p in $dirtyPaths) { Say "sync: dirty: $p" }
+    exit 0
 }
 
 $headAfter = $headBefore
-$stashState = 'none'
 $syncResult = ''
-$stashMsg = "macro-news sync $(Get-Date -Format 'yyyyMMdd-HHmmss')"
 
 if ($behind -eq 0) {
     $syncResult = 'up-to-date'
 } elseif ($ahead -eq 0) {
-    $ok = $true
-    if ($dirty -eq 'yes') {
-        $ok = Push-Stash $dirtyPaths $stashMsg
-        if ($ok) { $stashState = 'pending' }
-    }
-    if (-not $ok) {
-        $syncResult = 'skipped:stash-failed'
+    $mergeOut = & git merge --ff-only origin/main 2>&1 | Out-String
+    if ($LASTEXITCODE -ne 0) {
+        $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
+        Say "sync: ff-only 失败：$first"
+        $syncResult = 'skipped:ff-only-failed'
     } else {
-        $mergeOut = & git merge --ff-only origin/main 2>&1 | Out-String
-        if ($LASTEXITCODE -ne 0) {
-            $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
-            Say "sync: ff-only 失败：$first"
-            if ($stashState -eq 'pending') {
-                if (Pop-Stash) { $stashState = 'restored' } else { $stashState = 'kept' }
-            }
-            if ($stashState -eq 'kept') { $syncResult = 'skipped:stash-pop-conflict' }
-            else { $syncResult = 'skipped:ff-only-failed' }
-        } else {
-            $headAfter = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
-            if ($stashState -eq 'pending') {
-                if (Pop-Stash) { $stashState = 'restored' } else { $stashState = 'kept' }
-            }
-            if ($stashState -eq 'kept') { $syncResult = 'skipped:stash-pop-conflict' }
-            else { $syncResult = 'ff-only' }
-        }
+        $headAfter = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
+        $syncResult = 'ff-only'
     }
 } else {
     # 本地有未推提交且远端也前进：普通 merge，冲突则 abort，不覆盖任何本地提交
-    $ok = $true
-    if ($dirty -eq 'yes') {
-        $ok = Push-Stash $dirtyPaths $stashMsg
-        if ($ok) { $stashState = 'pending' }
-    }
-    if (-not $ok) {
-        $syncResult = 'skipped:stash-failed'
+    $mergeOut = & git merge --no-edit origin/main 2>&1 | Out-String
+    if ($LASTEXITCODE -ne 0) {
+        $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
+        Say "sync: merge 冲突，abort（本地提交保留，未 reset）：$first"
+        $null = & git merge --abort 2>&1
+        $syncResult = 'skipped:merge-conflict'
     } else {
-        $mergeOut = & git merge --no-edit origin/main 2>&1 | Out-String
-        if ($LASTEXITCODE -ne 0) {
-            $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
-            Say "sync: merge 冲突，abort（本地提交保留，未 reset）：$first"
-            $null = & git merge --abort 2>&1
-            if ($stashState -eq 'pending') {
-                if (Pop-Stash) { $stashState = 'restored' } else { $stashState = 'kept' }
-            }
-            if ($stashState -eq 'kept') { $syncResult = 'skipped:stash-pop-conflict' }
-            else { $syncResult = 'skipped:merge-conflict' }
-        } else {
-            $headAfter = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
-            if ($stashState -eq 'pending') {
-                if (Pop-Stash) { $stashState = 'restored' } else { $stashState = 'kept' }
-            }
-            if ($stashState -eq 'kept') { $syncResult = 'skipped:stash-pop-conflict' }
-            else { $syncResult = 'merge' }
-        }
+        $headAfter = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
+        $syncResult = 'merge'
     }
 }
 
-Say ("sync: head={0} behind={1} ahead={2} dirty={3} result={4} head_after={5} stash={6}" -f `
-    $headBefore, $behind, $ahead, $dirty, $syncResult, $headAfter, $stashState)
+Say ("sync: head={0} behind={1} ahead={2} dirty={3} result={4} head_after={5} stash=none" -f `
+    $headBefore, $behind, $ahead, $dirty, $syncResult, $headAfter)
 $runStats.syncResult = $syncResult
 
 if ($syncResult -like 'skipped:*') {
@@ -349,10 +318,7 @@ if ($syncResult -like 'skipped:*') {
 
 # 同步成功：把结果写进 localSync（成功轮重置 consecutiveSkips）
 if (-not $SyncOnly) {
-    $lsResult = $syncResult
-    if ($syncResult -eq 'ff-only' -and $stashState -eq 'restored') { $lsResult = 'stash-restored' }
-    if ($syncResult -eq 'merge' -and $stashState -eq 'restored') { $lsResult = 'stash-restored' }
-    $null = Write-LocalSync $lsResult
+    $null = Write-LocalSync $syncResult
 }
 
 # 同步更新了代码/HEAD 时再复核一次守卫（旧代码检查已在启动时做过）

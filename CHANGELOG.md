@@ -13,6 +13,60 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.13.4] - 2026-11-11
+
+> **补丁位，理由（规则 ③）**：只改本机采集脚本在**脏工作区**下的行为——由「stash → 合并 → pop」
+> 改为「整轮跳过、原样让路」。没有新页面/新数据源/新交互（规则 ① 不成立），
+> 不改数据结构、不改 `data/` 任何内容（规则 ② 不成立），属于规则明列的「bug 修复 / 守卫」。
+> 版本号说明：`2.13.3` 已被同日在改的页脚展示修复占用（见其条目），故顺延至 `2.13.4`。
+
+### 背景
+
+2026-11-11 19:54 那轮本机 `MacroNews-Collect` 台账记 `result=skipped`、`skipReason=stash-pop-conflict`：
+脚本在**脏工作区**上先 `git stash push` 本地改动 → `git merge --ff-only origin/main` 拉下远端 6 个采集提交
+→ `git stash pop`。而远端那几个提交改的正是本地正在编辑的同一批文件，pop 必然双向冲突
+（`data/index.json`、`data/latest.json`、`data/quotes.json`、`data/search.json`、`data/kline/min/_status.json`）。
+根因不是「冲突没处理好」，而是**在脏工作区上选了一条注定撞车的路**。
+
+### 改动（`scripts/collect-and-push.ps1`）
+
+| 位置 | 改动 |
+|---|---|
+| 脏检测 | `git diff --name-only` + `git diff --cached --name-only` → `git status --porcelain --untracked-files=no`：只认**受版本控制的文件**；未跟踪路径（如工具目录 `.trae-html-share-packages/`）不算脏，否则会让本机采集永久卡死 |
+| 同步前闸门 | `git fetch` 之后、任何 merge 之前：`dirty=yes` → `result=skipped` / `skipReason=dirty-worktree` / `syncResult=skipped:dirty-worktree`，打印让路说明与脏文件清单，`exit 0` |
+| 移除 | `Push-Stash` / `Pop-Stash` 两个函数、两处 `if ($dirty -eq 'yes') { Push-Stash … }` 分支、`stashState` 状态机、`localSync=stash-restored` 映射 |
+| `tests/collect-sync.test.mjs` | 旧断言「脏工作区先 stash 再 pop」改为新契约：脏检测用 `git status --porcelain --untracked-files=no`、`skipReason='dirty-worktree'`，并新增 4 条 `doesNotMatch` 守卫（`git stash push` / `git stash pop` / `skipped:stash-pop-conflict` / `$stashState` 一律不得再出现）；日志断言同步为 `stash=none` |
+
+**脏时不做**：`git stash`、`git merge`、`git stash pop`、`git reset --hard`、`git checkout -- .`，
+也不调用 `Publish-LocalSync`（它会写 `data/_last-run.json`）——「不改任何工作区文件」是硬约束。
+**脏时仍做**：只读的 `git fetch origin main`，仅用于把 `behind` 记进台账。
+
+### 验证（真实脏工作区：另一会话正在编辑 5 个受版本控制的文件）
+
+```
+[2026-11-11 20:37:20] === 采集开始 ===
+[2026-11-11 20:37:20] guard:ok（启动：src/kline-lock.mjs + update-kline-last/upsertBars）
+[2026-11-11 20:37:28] sync: head=e624d608 behind=0 ahead=0 dirty=yes result=skipped:dirty-worktree head_after=e624d608 stash=none
+[2026-11-11 20:37:28] sync: 工作区有 5 个受版本控制的文件未提交改动，脚本主动让路——本轮不 stash、不合并、不 pop、不写任何工作区文件；下一轮重试。
+[2026-11-11 20:37:28] sync: dirty: assets/app.js
+[2026-11-11 20:37:28] sync: dirty: CHANGELOG.md
+[2026-11-11 20:37:28] sync: dirty: index.html
+[2026-11-11 20:37:28] sync: dirty: scripts/collect-and-push.ps1
+[2026-11-11 20:37:28] sync: dirty: tests/briefing-ui.test.mjs
+```
+
+| 检查项 | 运行前 | 运行后 |
+|---|---|---|
+| `git stash list` 条数 | 3（`20261111-195418` / `20261107-135421` / `pbc-backfill-before-sync`） | **3，完全一致**（未新增、未 pop） |
+| `assets/app.js` SHA256 | `B476EDC2…0B60` | `B476EDC2…0B60` **未变** |
+| `git status --porcelain` | 5 个 ` M` + 1 个 `??` | **完全一致**（未 stash 走任何文件） |
+| `data/` 下改动 | 无 | **无**（未调用 `Publish-LocalSync`） |
+| 台账追加行 | 75 行 | 76 行，`{"result":"skipped","skipReason":"dirty-worktree","syncResult":"skipped:dirty-worktree","filesWritten":0,"commitCreated":false,…}` |
+
+未跟踪目录 `.trae-html-share-packages/` 未出现在脏清单里 ⇒ 未跟踪文件确实不计脏（否则本机采集会被工具目录永久卡死）。
+
+全套 **349 项通过 / 0 失败**（50 个测试文件）。
+
 ## [2.13.3] - 2026-11-11
 
 > **补丁位，理由（规则 ③）**：只改页脚一处展示判定——把「09:00 一到就判未生成」改成
