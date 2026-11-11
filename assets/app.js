@@ -1505,21 +1505,38 @@
       const [last, idx] = await Promise.all([jget('_last-run.json', 'default'), loadIndex()]);
       let total = 0;
       (idx.days || []).forEach((d) => { total += d.count || 0; });
-      runMeta = { last: last || {}, total, days: (idx.days || []).length };
+      runMeta = { last: last || {}, total, days: (idx.days || []).length, dayList: idx.days || [] };
     }
     return runMeta;
   }
 
-  // 早报状态（data/_briefing-status.json，2.2.1 起）：页脚用来显示「早报 09:02 / 补跑中 / 失败 / 未记录」。
+  // 早报状态（data/_briefing-status.json，2.2.1 起）：页脚用来显示「早报 09:02 / 补跑中 / 失败 / 今日未生成」。
   // 单文件、一天写 1~3 次；读不到（还没接入）按空处理，不影响页脚其它信息。
+  //
+  // 2.13.1：**不吃 HTTP 缓存**。这个文件的更新时机就是「早报跑完」，
+  //   而 Pages 给 data/ 的默认缓存是 max-age=600 —— 用 'default' 时，
+  //   09:00 打开过页面、09:10 刷新的人会拿到补跑前的旧副本，页脚一直停在「今日未生成」，
+  //   看起来像补跑没生效。文件只有 3 KB、一天变 1~3 次，直接 no-store 最省事。
+  //   页面内仍保留 60s 记忆：一次启动里 renderFoot 会被调用两次，没必要打两枪。
+  const BRIEF_STATUS_TTL = 60 * 1000;
   let briefStatus = null;
+  let briefStatusAt = 0;
   let briefPromise = null;
   function loadBriefStatus() {
-    if (briefStatus) return Promise.resolve(briefStatus);
+    if (briefStatus && Date.now() - briefStatusAt < BRIEF_STATUS_TTL) return Promise.resolve(briefStatus);
     if (!briefPromise) {
-      briefPromise = jget('_briefing-status.json', 'default')
-        .then((d) => { briefStatus = d || { days: {} }; return briefStatus; })
-        .catch(() => { briefStatus = { days: {} }; briefPromise = null; return briefStatus; });
+      briefPromise = jget('_briefing-status.json')
+        .then((d) => {
+          briefStatus = d || { days: {} };
+          briefStatusAt = Date.now();
+          briefPromise = null;
+          return briefStatus;
+        })
+        .catch(() => {
+          // 读不到就按「没有状态记录」处理，但不缓存失败结果，下次调用还会重试
+          briefPromise = null;
+          return { days: {} };
+        });
     }
     return briefPromise;
   }
@@ -1582,7 +1599,7 @@
     const box = $('#ftMeta');
     try {
       // 早报状态与采集概况并行取：前者是单独的小文件，失败不影响整行
-      const [{ last, total, days }, brief] = await Promise.all([loadRunMeta(), loadBriefStatus()]);
+      const [{ last, total, days, dayList }, brief] = await Promise.all([loadRunMeta(), loadBriefStatus()]);
       // 字段形状要按实际产物校验：`macroOk` 是数组，而 `macroFail` 在无失败时写的是 `{}`，
       // 直接 forEach 会抛「is not a function」，把整行页脚变成错误信息。
       const srcs = Array.isArray(last.sources) ? last.sources : [];
@@ -1628,10 +1645,22 @@
       box.appendChild(document.createTextNode(' · ' + bits.join(' · ')));
 
       // 早报状态：独立 token，不改变上面的总灯（避免早报问题把行情/新闻的正常状态染红）
+      //
+      // 2.13.1：按「时间 × 状态」分层判定。D 日 09:00 之前本来就没有 D 日早报
+      //   （cron 是 `0 9 * * *`，见 README §2.6；D 的早报在 D 09:00 才生成），
+      //   所以那段时间必须是**中性提示**，不能写成"未记录/未生成"这种缺失语气，也不着色。
+      //   判定用的 `today` 是新闻日（北京 08:00 起算），与早报的日期键同一把尺子：
+      //   08:00 之前仍属于 D-1 的窗口，那时 D-1 的早报早已生成，走 done 分支。
       const bj = new Date(Date.now() + 8 * 3600 * 1000);
       const today = newsDay();
       const nowMin = bj.getUTCHours() * 60 + bj.getUTCMinutes();
       const rec = (brief.days || {})[today];
+      // 产物证据：归档索引里当天 hasBriefing。状态文件与 index.json 由同一次 publish 提交，
+      // 但读取缓存/推送顺序可能让两者短暂不一致 —— 只要有一处证明早报存在，
+      // 就不该在页脚说"未生成"（补跑一次就该看得见）。
+      const artDay = (dayList || []).find((d) => d && d.day === today);
+      const hasArtifact = !!(artDay && artDay.hasBriefing);
+      const BRIEF_AT = 9 * 60;   // 早报运行时刻 09:00（北京），与 cron `0 9 * * *` 对齐
       let bTxt = '';
       let bLvl = '';
       if (rec && rec.status === 'done') {
@@ -1662,9 +1691,17 @@
       } else if (rec && (rec.status === 'failed' || rec.status === 'timeout')) {
         bTxt = '早报 失败';
         bLvl = 'bad';
-      } else if (nowMin >= 9 * 60 + 30) {
-        // 09:30 后既没有状态记录、也没有 done：说明当天早报没生成（或 ensure 没跑）
-        bTxt = '早报 未记录';
+      } else if (hasArtifact) {
+        // 有产物但没有 done 记录（状态文件写失败/未推送/被旧缓存读到）：按"已生成"展示
+        bTxt = '早报 已生成';
+        bLvl = 'ok';
+      } else if (nowMin < BRIEF_AT) {
+        // 09:00 前：今日早报还没到生成时刻，属于正常等待，不是缺失
+        bTxt = '早报 今日 09:00 后生成';
+        bLvl = 'mute';
+      } else {
+        // 09:00 后既无状态记录、也没有产物：今天这期确实没生成
+        bTxt = '早报 今日未生成';
         bLvl = 'warn';
       }
       if (bTxt) {

@@ -365,11 +365,13 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
   font-size: 0.8125rem; color: var(--ink-mute);
 }
 .ft p { margin: 0.3rem 0; }
-/* 页脚链路健康灯：绿=正常 / 暖棕=注意 / 红=异常（沿用全站涨跌色与强调色，不新增色号） */
+/* 页脚链路健康灯：绿=正常 / 暖棕=注意 / 红=异常（沿用全站涨跌色与强调色，不新增色号）
+   2.13.1：mute=中性提示（"还没到生成时刻"这类不是异常的状态），不上色 */
 .ft-state { font-weight: 600; }
 .ft-state.ok { color: var(--down); }
 .ft-state.warn { color: var(--warm); }
 .ft-state.bad { color: var(--up); }
+.ft-state.mute { color: var(--ink-mute); }
 
 /* ============================================================
    响应式

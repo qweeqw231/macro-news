@@ -252,7 +252,13 @@ publish --date (script, deterministic)
   To backfill history manually, explicitly pass `--backfill-from/--backfill-to` (off by default, not part of scheduling).
 - Status is written to `data/_briefing-status.json` (single file, kept 14 days, not high-frequency): the footer shows
   `早报 09:02` (green, AI) / `早报 事实清单 09:35` (brown, draft) / `早报 自动` (brown, rule) /
-  `早报 待写作` / `早报 待发布` / `早报 补跑中` / `早报 失败` / `早报 未记录` (Briefing 09:02 / Briefing fact list 09:35 / Briefing auto / Briefing awaiting writing / Briefing awaiting publish / Briefing catch-up running / Briefing failed / Briefing not recorded).
+  `早报 待写作` / `早报 待发布` / `早报 补跑中` / `早报 失败` (Briefing 09:02 / Briefing fact list 09:35 / Briefing auto / Briefing awaiting writing / Briefing awaiting publish / Briefing catch-up running / Briefing failed).
+- **Footer briefing text is layered by time (2.13.1)**: a briefing for day `D` is produced at 09:00 on `D`, so between
+  08:00 and 09:00 (inside the news-day window, run time not reached) the footer shows the neutral
+  `早报 今日 09:00 后生成` (grey, not a warning colour); only after 09:00 with neither a status record nor an artifact
+  does it show `早报 今日未生成` (brown). When a briefing already exists (status `done` or `index.json` `hasBriefing`)
+  only the completion info is shown — no "missing" wording. The status file is fetched with **no HTTP cache**
+  (`no-store`, 60-second in-page memo), so a manual catch-up shows up on the next refresh.
 - Re-entry locks `.local/briefing.lock` (ensure, pid + start time, expires after 20 minutes) and
   `.local/runs/<date>/run.lock` (shared by prepare/publish); hard timeout per day is 15 minutes,
   after which it exits with code 124 and records the reason.
