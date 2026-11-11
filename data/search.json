@@ -1,10 +1,106 @@
 {
-  "generatedAt": "2026-11-11T02:52:51.252Z",
+  "generatedAt": "2026-11-11T03:07:51.754Z",
   "windowDays": 62,
   "from": "2026-09-11",
   "days": 60,
-  "total": 35309,
+  "total": 35331,
   "items": [
+    {
+      "id": "1nir2k2",
+      "ts": 1794366391,
+      "time": "2026-11-11T11:06:31.000+08:00",
+      "source": "东方财富",
+      "title": "上海推进开源平台建设打造“最懂开发者的城市”",
+      "url": "http://finance.eastmoney.com/news/1355,202611113928245554.html"
+    },
+    {
+      "id": "1ers2kx",
+      "ts": 1794366245,
+      "time": "2026-11-11T11:04:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国参议院金融委员会委员、共和党参议员Kevin Cramer呼吁英伟达首席执行官黄仁勋辞职。",
+      "url": "https://wallstreetcn.com/livenews/3198086"
+    },
+    {
+      "id": "qr0bf6",
+      "ts": 1794366151,
+      "time": "2026-11-11T11:02:31.000+08:00",
+      "source": "华尔街见闻",
+      "title": "韩国对债券交易商串通行为处以创纪录的12亿美元罚款",
+      "url": "https://wallstreetcn.com/livenews/3198085"
+    },
+    {
+      "id": "1031nlp",
+      "ts": 1794366144,
+      "time": "2026-11-11T03:02:24.000Z",
+      "source": "中新网",
+      "title": "规则“做减法”，“双11”消费更透明",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-11/10729988.shtml"
+    },
+    {
+      "id": "15kus3y",
+      "ts": 1794366069,
+      "time": "2026-11-11T11:01:09.000+08:00",
+      "source": "华尔街见闻",
+      "title": "整点回顾：沪指早间小幅调整，创业板指冲高回落，光伏设备板块走低，迈为股份跌超15%，机器人概念股再度拉升，瑞迪智驱触及20cm涨停，个股跌多涨少，沪深京三市约3100股飘绿，开盘一个半小时成交8124亿，较上日此时缩量超600亿。",
+      "url": "https://wallstreetcn.com/livenews/3198084"
+    },
+    {
+      "id": "17jcpf8",
+      "ts": 1794366060,
+      "time": "2026-11-11T11:01:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "隔夜SHIBOR报1.3320%，上涨0.87个基点。",
+      "url": "https://wallstreetcn.com/livenews/3198083"
+    },
+    {
+      "id": "x115gp",
+      "ts": 1794365975,
+      "time": "2026-11-11T10:59:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "AI漫剧概念探底回升，果麦文化涨超10%，文投控股、凯撒文化此前涨停，上海电影涨超5%创新高，大晟文化、百纳千成等跟涨。",
+      "url": "https://wallstreetcn.com/livenews/3198082"
+    },
+    {
+      "id": "c7bhow",
+      "ts": 1794365914,
+      "time": "2026-11-11T10:58:34.000+08:00",
+      "source": "新浪财经",
+      "title": "对冲基金警告股票离散度交易有破裂风险 投资者应为市场急转做准备",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyipka5373837.shtml"
+    },
+    {
+      "id": "d6r2x",
+      "ts": 1794365776,
+      "time": "2026-11-11T10:56:16.000+08:00",
+      "source": "新浪财经",
+      "title": "高盛预美联储12月再次加息，明年3月第三次加息",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyipkf2004840.shtml"
+    },
+    {
+      "id": "2i212k",
+      "ts": 1794365638,
+      "time": "2026-11-11T10:53:58.000+08:00",
+      "source": "华尔街见闻",
+      "title": "摩根士丹利：AI杠杆融资料持续低迷 新交易门槛升高",
+      "url": "https://wallstreetcn.com/livenews/3198080"
+    },
+    {
+      "id": "rlhac9",
+      "ts": 1794365530,
+      "time": "2026-11-11T02:52:10.000Z",
+      "source": "中新网",
+      "title": "国际随笔丨九届进博的“变”与“不变”",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-11/10729979.shtml"
+    },
+    {
+      "id": "1y8r63x",
+      "ts": 1794365465,
+      "time": "2026-11-11T10:51:05.000+08:00",
+      "source": "东方财富",
+      "title": "商务部：继续推进与非洲建交国商签共同发展经济伙伴关系协定",
+      "url": "http://finance.eastmoney.com/news/1346,202611113928239613.html"
+    },
     {
       "id": "1j4i5e1",
       "ts": 1794365455,
@@ -12,6 +108,14 @@
       "source": "新浪财经",
       "title": "摩根士丹利示警：AI杠杆融资料持续低迷 新交易门槛升高",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyipkf2001883.shtml"
+    },
+    {
+      "id": "1rgprck",
+      "ts": 1794365397,
+      "time": "2026-11-11T10:49:57.000+08:00",
+      "source": "东方财富",
+      "title": "中国银行上海市分行发布《中国银行在沪支持上海全球资产管理中心建设行动方案（2026年版）》",
+      "url": "http://stock.eastmoney.com/news/11219,202611113928241269.html"
     },
     {
       "id": "dp4ztu",
@@ -36,6 +140,22 @@
       "source": "华尔街见闻",
       "title": "国务院台办：欢迎并支持更多台湾业者参与大陆微短剧创作",
       "url": "https://wallstreetcn.com/livenews/3198077"
+    },
+    {
+      "id": "18p8yc0",
+      "ts": 1794365151,
+      "time": "2026-11-11T10:45:51.000+08:00",
+      "source": "东方财富",
+      "title": "国家发改委：深入实施共建“一带一路”科技创新行动计划",
+      "url": "http://finance.eastmoney.com/news/1352,202611113928242141.html"
+    },
+    {
+      "id": "k1tj0b",
+      "ts": 1794365040,
+      "time": "2026-11-11T10:44:00.000+08:00",
+      "source": "东方财富",
+      "title": "国家发展改革委答证券时报记者提问：深入实施共建“一带一路”科技创新行动计划",
+      "url": "http://finance.eastmoney.com/news/1352,202611113928243425.html"
     },
     {
       "id": "10wk8fp",
@@ -118,6 +238,14 @@
       "url": "http://finance.eastmoney.com/news/1355,202611113928237580.html"
     },
     {
+      "id": "uy7kou",
+      "ts": 1794364578,
+      "time": "2026-11-11T10:36:18.000+08:00",
+      "source": "新浪财经",
+      "title": "积存金“让利”加码，黄金理财持续缩量：银行黄金生意为何一热一冷",
+      "url": "https://finance.sina.com.cn/wm/2026-11-11/doc-iniyipkf1997795.shtml"
+    },
+    {
       "id": "6uf2g3",
       "ts": 1794364465,
       "time": "2026-11-11T02:34:25.000Z",
@@ -132,6 +260,14 @@
       "source": "东方财富",
       "title": "中集郑贤玲：燃料电池车败退不等于氢能逻辑失效，氢能并非锂电替代品",
       "url": "http://finance.eastmoney.com/news/1350,202611113928234729.html"
+    },
+    {
+      "id": "tzni6p",
+      "ts": 1794364459,
+      "time": "2026-11-11T10:34:19.000+08:00",
+      "source": "东方财富",
+      "title": "国家发改委：共建“一带一路”资金融通日益多元",
+      "url": "http://finance.eastmoney.com/news/1352,202611113928242047.html"
     },
     {
       "id": "6l6gko",
@@ -238,6 +374,22 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyipkh8634495.shtml"
     },
     {
+      "id": "tb1g2k",
+      "ts": 1794363701,
+      "time": "2026-11-11T10:21:41.000+08:00",
+      "source": "东方财富",
+      "title": "国家发改委：共建“一带一路”拓展新兴领域合作 推进“小而美”项目建设",
+      "url": "http://finance.eastmoney.com/news/1352,202611113928242263.html"
+    },
+    {
+      "id": "oi5siu",
+      "ts": 1794363693,
+      "time": "2026-11-11T10:21:33.000+08:00",
+      "source": "东方财富",
+      "title": "上海优化道路停车收费，15分钟短时停车限次免费",
+      "url": "http://finance.eastmoney.com/news/1350,202611113928242373.html"
+    },
+    {
       "id": "15hm796",
       "ts": 1794363685,
       "time": "2026-11-11T10:21:25.000+08:00",
@@ -270,6 +422,22 @@
       "url": "https://wallstreetcn.com/livenews/3198061"
     },
     {
+      "id": "15x3lb9",
+      "ts": 1794363401,
+      "time": "2026-11-11T10:16:41.000+08:00",
+      "source": "东方财富",
+      "title": "辽宁今年前10个月新能源外送电量同比增长150.22%",
+      "url": "http://finance.eastmoney.com/news/1355,202611113928242984.html"
+    },
+    {
+      "id": "1e7rq7k",
+      "ts": 1794363380,
+      "time": "2026-11-11T10:16:20.000+08:00",
+      "source": "东方财富",
+      "title": "上海市道路停车收费政策发布",
+      "url": "http://finance.eastmoney.com/news/1350,202611113928241633.html"
+    },
+    {
       "id": "pdl6f5",
       "ts": 1794363380,
       "time": "2026-11-11T10:16:20.000+08:00",
@@ -284,6 +452,14 @@
       "source": "东方财富",
       "title": "余承东预热华为新品发布会，全新子品牌“OSTA星芒”首秀定档",
       "url": "http://finance.eastmoney.com/news/1350,202611113928228827.html"
+    },
+    {
+      "id": "1tch31z",
+      "ts": 1794363319,
+      "time": "2026-11-11T10:15:19.000+08:00",
+      "source": "东方财富",
+      "title": "15分钟内限次免费停 时隔21年上海全面调整道路停车收费政策",
+      "url": "http://finance.eastmoney.com/news/1350,202611113928242472.html"
     },
     {
       "id": "fr6o1g",
