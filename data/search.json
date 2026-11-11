@@ -1,10 +1,178 @@
 {
-  "generatedAt": "2026-11-11T19:37:52.037Z",
+  "generatedAt": "2026-11-11T20:57:21.176Z",
   "windowDays": 62,
   "from": "2026-09-11",
   "days": 60,
-  "total": 36422,
+  "total": 36444,
   "items": [
+    {
+      "id": "aepi8z",
+      "ts": 1794430427,
+      "time": "2026-11-12T04:53:47.000+08:00",
+      "source": "新浪财经",
+      "title": "美国两位重量级议员称国会准备向英伟达黄仁勋发传票",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymfts8756853.shtml"
+    },
+    {
+      "id": "1z4dyh",
+      "ts": 1794430396,
+      "time": "2026-11-12T04:53:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "泽连斯基称已抵达都柏林，将与美方代表会晤",
+      "url": "https://wallstreetcn.com/livenews/3198617"
+    },
+    {
+      "id": "17l438m",
+      "ts": 1794430314,
+      "time": "2026-11-12T04:51:54.000+08:00",
+      "source": "新浪财经",
+      "title": "泽连斯基称俄乌和谈迎来新机会 美国等地政治局势变化创造契机",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymfts8756616.shtml"
+    },
+    {
+      "id": "n6fb2c",
+      "ts": 1794430295,
+      "time": "2026-11-12T04:51:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧元创去年5月以来新低，瑞郎跌超0.9%",
+      "url": "https://wallstreetcn.com/livenews/3198616"
+    },
+    {
+      "id": "1wn3nxq",
+      "ts": 1794430081,
+      "time": "2026-11-12T04:48:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "土耳其上调消费者与企业贷款增速上限",
+      "url": "https://wallstreetcn.com/livenews/3198614"
+    },
+    {
+      "id": "1rpj4sx",
+      "ts": 1794429593,
+      "time": "2026-11-12T04:39:53.000+08:00",
+      "source": "新浪财经",
+      "title": "纽约汇市：美元指数升至2025年5月以来高点 火热通胀推升加息预期",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymftt4083556.shtml"
+    },
+    {
+      "id": "ayj984",
+      "ts": 1794429378,
+      "time": "2026-11-12T04:36:18.000+08:00",
+      "source": "东方财富",
+      "title": "不断提升服务实体经济质效 ——从“十五五”专项规划看以金融服务发展大局",
+      "url": "http://forex.eastmoney.com/news/1131,202611123928815454.html"
+    },
+    {
+      "id": "1imnyhd",
+      "ts": 1794429377,
+      "time": "2026-11-12T04:36:17.000+08:00",
+      "source": "东方财富",
+      "title": "重访费孝通访问过的“白铁之乡”",
+      "url": "http://finance.eastmoney.com/news/1355,202611123928816662.html"
+    },
+    {
+      "id": "c80hhf",
+      "ts": 1794429370,
+      "time": "2026-11-12T04:36:10.000+08:00",
+      "source": "东方财富",
+      "title": "严肃查处财务造假行为 积极推进数智化转型财政部印发《会计改革与发展 “十五五”规划》",
+      "url": "http://finance.eastmoney.com/news/1352,202611123928817164.html"
+    },
+    {
+      "id": "17k4gs5",
+      "ts": 1794429368,
+      "time": "2026-11-12T04:36:08.000+08:00",
+      "source": "东方财富",
+      "title": "央行：坚持实施好适度宽松货币政策",
+      "url": "http://finance.eastmoney.com/news/1352,202611123928816747.html"
+    },
+    {
+      "id": "nmt40n",
+      "ts": 1794429367,
+      "time": "2026-11-12T04:36:07.000+08:00",
+      "source": "东方财富",
+      "title": "数字经济等领域合作成共建“一带一路”新亮点",
+      "url": "http://finance.eastmoney.com/news/1352,202611123928817066.html"
+    },
+    {
+      "id": "6vodl4",
+      "ts": 1794429366,
+      "time": "2026-11-12T04:36:06.000+08:00",
+      "source": "东方财富",
+      "title": "证监会拟细化先行赔付政策 更好保护投资者权益",
+      "url": "http://stock.eastmoney.com/news/11134,202611123928816115.html"
+    },
+    {
+      "id": "19zibtc",
+      "ts": 1794429264,
+      "time": "2026-11-12T04:34:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "微软：将按自己的方式向数据中心供电。",
+      "url": "https://wallstreetcn.com/livenews/3198612"
+    },
+    {
+      "id": "gyclob",
+      "ts": 1794429223,
+      "time": "2026-11-12T04:33:43.000+08:00",
+      "source": "华尔街见闻",
+      "title": "iHeart表示不打算出售podcast部门。",
+      "url": "https://wallstreetcn.com/livenews/3198611"
+    },
+    {
+      "id": "1ry982j",
+      "ts": 1794429196,
+      "time": "2026-11-12T04:33:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周三（11月11日）纽约尾盘，美元兑日元涨0.69%，报159.85日元，日内交投区间为158.67-159.94日元，逼近9月2日顶部160.39日元、7月23日顶部163.99日元。",
+      "url": "https://wallstreetcn.com/livenews/3198610"
+    },
+    {
+      "id": "zi7uj6",
+      "ts": 1794429023,
+      "time": "2026-11-12T04:30:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "拉美资产受大宗商品提振及风险偏好回暖推动上",
+      "url": "https://wallstreetcn.com/livenews/3198609"
+    },
+    {
+      "id": "1nzpwd5",
+      "ts": 1794428898,
+      "time": "2026-11-12T04:28:18.000+08:00",
+      "source": "新浪财经",
+      "title": "美国债市：美债期货预示10年期收益率开盘料重回5%上方",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymfts8752965.shtml"
+    },
+    {
+      "id": "m8tg8w",
+      "ts": 1794428744,
+      "time": "2026-11-12T04:25:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周三（11月11日）纽约尾盘，彭博谷物分类指数涨0.38%，报29.9423点，全天呈现出N形走势。",
+      "url": "https://wallstreetcn.com/livenews/3198608"
+    },
+    {
+      "id": "lielp1",
+      "ts": 1794428486,
+      "time": "2026-11-12T04:21:26.000+08:00",
+      "source": "华尔街见闻",
+      "title": "伦敦铝市场遭遇数十年来最严重的供应挤压",
+      "url": "https://wallstreetcn.com/livenews/3198607"
+    },
+    {
+      "id": "vf28rt",
+      "ts": 1794428162,
+      "time": "2026-11-12T04:16:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周三（11月11日）纽约尾盘，ICE美元指数涨0.65%，报102.901点，日内交投区间为102.206-102.962点，北京时间13:32-22:57持续上涨。",
+      "url": "https://wallstreetcn.com/livenews/3198606"
+    },
+    {
+      "id": "5un1vn",
+      "ts": 1794427725,
+      "time": "2026-11-12T04:08:45.000+08:00",
+      "source": "华尔街见闻",
+      "title": "伊朗军方高官称目前波斯湾内没有美军存在",
+      "url": "https://wallstreetcn.com/livenews/3198605"
+    },
     {
       "id": "5hgml8",
       "ts": 1794425464,
@@ -92,6 +260,14 @@
       "source": "华尔街见闻",
       "title": "恒生指数主连夜盘收跌0.70%，报24107点。",
       "url": "https://wallstreetcn.com/livenews/3198595"
+    },
+    {
+      "id": "16s56rv",
+      "ts": 1794423610,
+      "time": "2026-11-12T03:00:10.000+08:00",
+      "source": "新浪财经",
+      "title": "AI算力公司CoreWeave股价飙升 债务担忧缓解",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymftt4078729.shtml"
     },
     {
       "id": "1rwcflm",
@@ -1470,20 +1646,20 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniykqvx2274842.shtml"
     },
     {
-      "id": "15sp89i",
-      "ts": 1794406691,
-      "time": "2026-11-11T22:18:11.000+08:00",
-      "source": "华尔街见闻",
-      "title": "“地狱般的争吵”！以媒爆特朗普与内塔尼亚胡就伊朗问题发生激烈冲突，以总理办公室否认",
-      "url": "https://wallstreetcn.com/livenews/3198480"
-    },
-    {
       "id": "jwqe33",
       "ts": 1794406691,
       "time": "2026-11-11T22:18:11.000+08:00",
       "source": "新浪财经",
       "title": "拟重大资产重组，明起停牌",
       "url": "https://finance.sina.com.cn/jjxw/2026-11-11/doc-iniykqvy9052919.shtml"
+    },
+    {
+      "id": "15sp89i",
+      "ts": 1794406691,
+      "time": "2026-11-11T22:18:11.000+08:00",
+      "source": "华尔街见闻",
+      "title": "“地狱般的争吵”！以媒爆特朗普与内塔尼亚胡就伊朗问题发生激烈冲突，以总理办公室否认",
+      "url": "https://wallstreetcn.com/livenews/3198480"
     },
     {
       "id": "108w3aq",
@@ -1726,20 +1902,20 @@
       "url": "https://finance.sina.com.cn/stock/zqgd/2026-11-11/doc-iniykqvy9036747.shtml"
     },
     {
-      "id": "7vvzdz",
-      "ts": 1794404940,
-      "time": "2026-11-11T21:49:00.000+08:00",
-      "source": "东方财富",
-      "title": "财经聚焦｜从“双11”购物车看消费新意",
-      "url": "http://finance.eastmoney.com/news/1354,202611113928719184.html"
-    },
-    {
       "id": "j4ck6v",
       "ts": 1794404940,
       "time": "2026-11-11T21:49:00.000+08:00",
       "source": "新浪财经",
       "title": "明晚24时国内油价大概率下调，为8月下旬以来首次",
       "url": "https://finance.sina.com.cn/jjxw/2026-11-11/doc-iniykqvy9036632.shtml"
+    },
+    {
+      "id": "7vvzdz",
+      "ts": 1794404940,
+      "time": "2026-11-11T21:49:00.000+08:00",
+      "source": "东方财富",
+      "title": "财经聚焦｜从“双11”购物车看消费新意",
+      "url": "http://finance.eastmoney.com/news/1354,202611113928719184.html"
     },
     {
       "id": "1jlfkpn",
