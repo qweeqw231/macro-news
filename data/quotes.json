@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T07:11:56.707Z",
+  "generatedAt": "2026-11-11T07:22:51.018Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -12,7 +12,7 @@
       "prevClose": 3663.72,
       "volume": 433120083,
       "changePct": 0.46,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:39+08:00",
       "source": "eastmoney"
     },
     {
@@ -26,7 +26,7 @@
       "prevClose": 11241.54,
       "volume": 569401113,
       "changePct": 1.32,
-      "updatedAt": "2026-11-11T15:12:12+08:00",
+      "updatedAt": "2026-11-11T15:23:12+08:00",
       "source": "eastmoney"
     },
     {
@@ -40,7 +40,7 @@
       "prevClose": 2494.4,
       "volume": 189419613,
       "changePct": 3.11,
-      "updatedAt": "2026-11-11T15:11:39+08:00",
+      "updatedAt": "2026-11-11T15:22:39+08:00",
       "source": "eastmoney"
     },
     {
@@ -54,7 +54,7 @@
       "prevClose": 1265.02,
       "volume": 7969763,
       "changePct": 2.8,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:39+08:00",
       "source": "eastmoney"
     },
     {
@@ -68,7 +68,7 @@
       "prevClose": 902.51,
       "volume": 6373383,
       "changePct": 2.3,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:36+08:00",
       "source": "eastmoney"
     },
     {
@@ -82,7 +82,7 @@
       "prevClose": 4059.11,
       "volume": 161199262,
       "changePct": 0.41,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:39+08:00",
       "source": "eastmoney"
     },
     {
@@ -96,7 +96,7 @@
       "prevClose": 2772.96,
       "volume": 36416024,
       "changePct": -0.27,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:39+08:00",
       "source": "eastmoney"
     },
     {
@@ -110,7 +110,7 @@
       "prevClose": 4921.53,
       "volume": 211946652,
       "changePct": 0.61,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:39+08:00",
       "source": "eastmoney"
     },
     {
@@ -124,7 +124,7 @@
       "prevClose": 6645.89,
       "volume": 120159168,
       "changePct": 1.01,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:39+08:00",
       "source": "eastmoney"
     },
     {
@@ -138,35 +138,35 @@
       "prevClose": 6579.36,
       "volume": 203775231,
       "changePct": 1.37,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:39+08:00",
       "source": "eastmoney"
     },
     {
       "key": "hsi",
       "name": "恒生指数",
       "market": "HK",
-      "price": 24334.66,
+      "price": 24324.68,
       "open": 24354.19,
       "high": 24430.69,
       "low": 24291.09,
       "prevClose": 24557.04,
-      "volume": 7888808192,
-      "changePct": -0.91,
-      "updatedAt": "2026-11-11T15:12:20+08:00",
+      "volume": 8231667200,
+      "changePct": -0.95,
+      "updatedAt": "2026-11-11T15:23:38+08:00",
       "source": "eastmoney"
     },
     {
       "key": "hs_tech",
       "name": "恒生科技指数",
       "market": "HK",
-      "price": 4021.27,
+      "price": 4022.01,
       "open": 4045.3,
       "high": 4057.47,
-      "low": 4019.25,
+      "low": 4017.11,
       "prevClose": 4084.45,
-      "volume": 791783920,
-      "changePct": -1.55,
-      "updatedAt": "2026-11-11T15:12:20+08:00",
+      "volume": 821342192,
+      "changePct": -1.53,
+      "updatedAt": "2026-11-11T15:23:38+08:00",
       "source": "eastmoney"
     },
     {
@@ -298,7 +298,7 @@
       "prevClose": 1.115,
       "volume": 62925051,
       "changePct": 0.63,
-      "updatedAt": "2026-11-11T15:12:03+08:00",
+      "updatedAt": "2026-11-11T15:23:21+08:00",
       "source": "eastmoney"
     },
     {
@@ -314,7 +314,7 @@
       "prevClose": 1.394,
       "volume": 2976786,
       "changePct": 3.44,
-      "updatedAt": "2026-11-11T15:12:00+08:00",
+      "updatedAt": "2026-11-11T15:23:00+08:00",
       "source": "eastmoney"
     },
     {
@@ -330,7 +330,7 @@
       "prevClose": 1.375,
       "volume": 13353943,
       "changePct": 1.09,
-      "updatedAt": "2026-11-11T15:12:15+08:00",
+      "updatedAt": "2026-11-11T15:23:15+08:00",
       "source": "eastmoney"
     },
     {
@@ -346,7 +346,7 @@
       "prevClose": 0.853,
       "volume": 34437946,
       "changePct": 4.1,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:30+08:00",
       "source": "eastmoney"
     },
     {
@@ -362,7 +362,7 @@
       "prevClose": 0.518,
       "volume": 50958743,
       "changePct": 2.32,
-      "updatedAt": "2026-11-11T15:12:15+08:00",
+      "updatedAt": "2026-11-11T15:23:30+08:00",
       "source": "eastmoney"
     },
     {
@@ -378,7 +378,7 @@
       "prevClose": 0.698,
       "volume": 6570661,
       "changePct": 5.16,
-      "updatedAt": "2026-11-11T15:12:00+08:00",
+      "updatedAt": "2026-11-11T15:22:30+08:00",
       "source": "eastmoney"
     },
     {
@@ -394,7 +394,7 @@
       "prevClose": 1.047,
       "volume": 2339460,
       "changePct": 2.2,
-      "updatedAt": "2026-11-11T15:12:15+08:00",
+      "updatedAt": "2026-11-11T15:23:00+08:00",
       "source": "eastmoney"
     },
     {
@@ -410,7 +410,7 @@
       "prevClose": 1.009,
       "volume": 21550065,
       "changePct": -1.49,
-      "updatedAt": "2026-11-11T15:12:16+08:00",
+      "updatedAt": "2026-11-11T15:23:37+08:00",
       "source": "eastmoney"
     },
     {
@@ -426,7 +426,7 @@
       "prevClose": 0.545,
       "volume": 24691664,
       "changePct": -1.65,
-      "updatedAt": "2026-11-11T15:12:00+08:00",
+      "updatedAt": "2026-11-11T15:23:30+08:00",
       "source": "eastmoney"
     },
     {
@@ -442,7 +442,7 @@
       "prevClose": 1.543,
       "volume": 1679785,
       "changePct": 0.19,
-      "updatedAt": "2026-11-11T15:11:51+08:00",
+      "updatedAt": "2026-11-11T15:23:21+08:00",
       "source": "eastmoney"
     },
     {
@@ -458,7 +458,7 @@
       "prevClose": 1.273,
       "volume": 59099912,
       "changePct": -1.34,
-      "updatedAt": "2026-11-11T15:12:11+08:00",
+      "updatedAt": "2026-11-11T15:23:29+08:00",
       "source": "eastmoney"
     },
     {
@@ -474,7 +474,7 @@
       "prevClose": 0.348,
       "volume": 9922544,
       "changePct": -1.15,
-      "updatedAt": "2026-11-11T15:12:13+08:00",
+      "updatedAt": "2026-11-11T15:23:34+08:00",
       "source": "eastmoney"
     },
     {
@@ -490,7 +490,7 @@
       "prevClose": 0.831,
       "volume": 5931226,
       "changePct": -0.96,
-      "updatedAt": "2026-11-11T15:12:15+08:00",
+      "updatedAt": "2026-11-11T15:23:30+08:00",
       "source": "eastmoney"
     },
     {
@@ -506,7 +506,7 @@
       "prevClose": 0.446,
       "volume": 12227764,
       "changePct": -2.91,
-      "updatedAt": "2026-11-11T15:12:18+08:00",
+      "updatedAt": "2026-11-11T15:23:36+08:00",
       "source": "eastmoney"
     },
     {
@@ -522,7 +522,7 @@
       "prevClose": 0.558,
       "volume": 1417485,
       "changePct": -1.61,
-      "updatedAt": "2026-11-11T15:12:15+08:00",
+      "updatedAt": "2026-11-11T15:23:15+08:00",
       "source": "eastmoney"
     },
     {
@@ -538,7 +538,7 @@
       "prevClose": 1.005,
       "volume": 12319215,
       "changePct": -0.8,
-      "updatedAt": "2026-11-11T15:11:52+08:00",
+      "updatedAt": "2026-11-11T15:23:22+08:00",
       "source": "eastmoney"
     },
     {
@@ -554,7 +554,7 @@
       "prevClose": 0.889,
       "volume": 20878663,
       "changePct": -0.79,
-      "updatedAt": "2026-11-11T15:12:15+08:00",
+      "updatedAt": "2026-11-11T15:23:09+08:00",
       "source": "eastmoney"
     },
     {
@@ -570,7 +570,7 @@
       "prevClose": 1.184,
       "volume": 3400014,
       "changePct": 0.34,
-      "updatedAt": "2026-11-11T15:12:06+08:00",
+      "updatedAt": "2026-11-11T15:23:36+08:00",
       "source": "eastmoney"
     },
     {
@@ -586,7 +586,7 @@
       "prevClose": 1.458,
       "volume": 3413059,
       "changePct": -0.21,
-      "updatedAt": "2026-11-11T15:11:59+08:00",
+      "updatedAt": "2026-11-11T15:23:29+08:00",
       "source": "eastmoney"
     },
     {
@@ -602,7 +602,7 @@
       "prevClose": 1.478,
       "volume": 1051282,
       "changePct": 0.61,
-      "updatedAt": "2026-11-11T15:12:03+08:00",
+      "updatedAt": "2026-11-11T15:23:33+08:00",
       "source": "eastmoney"
     },
     {
@@ -618,7 +618,7 @@
       "prevClose": 1.03,
       "volume": 2131520,
       "changePct": -0.1,
-      "updatedAt": "2026-11-11T15:12:03+08:00",
+      "updatedAt": "2026-11-11T15:23:33+08:00",
       "source": "eastmoney"
     },
     {
@@ -634,7 +634,7 @@
       "prevClose": 1.346,
       "volume": 772854,
       "changePct": 0.59,
-      "updatedAt": "2026-11-11T15:11:59+08:00",
+      "updatedAt": "2026-11-11T15:23:29+08:00",
       "source": "eastmoney"
     },
     {
@@ -650,7 +650,7 @@
       "prevClose": 0.775,
       "volume": 3193390,
       "changePct": -0.65,
-      "updatedAt": "2026-11-11T15:12:15+08:00",
+      "updatedAt": "2026-11-11T15:22:45+08:00",
       "source": "eastmoney"
     },
     {
@@ -666,7 +666,7 @@
       "prevClose": 0.74,
       "volume": 5982822,
       "changePct": -1.35,
-      "updatedAt": "2026-11-11T15:12:02+08:00",
+      "updatedAt": "2026-11-11T15:23:32+08:00",
       "source": "eastmoney"
     },
     {
@@ -682,7 +682,7 @@
       "prevClose": 1.04,
       "volume": 1454677,
       "changePct": -0.77,
-      "updatedAt": "2026-11-11T15:12:00+08:00",
+      "updatedAt": "2026-11-11T15:23:30+08:00",
       "source": "eastmoney"
     },
     {
@@ -698,7 +698,7 @@
       "prevClose": 0.542,
       "volume": 2221955,
       "changePct": -1.11,
-      "updatedAt": "2026-11-11T15:11:00+08:00",
+      "updatedAt": "2026-11-11T15:22:45+08:00",
       "source": "eastmoney"
     },
     {
@@ -714,7 +714,7 @@
       "prevClose": 1.143,
       "volume": 888277,
       "changePct": 0.17,
-      "updatedAt": "2026-11-11T15:11:58+08:00",
+      "updatedAt": "2026-11-11T15:23:28+08:00",
       "source": "eastmoney"
     },
     {
@@ -730,7 +730,7 @@
       "prevClose": 1.074,
       "volume": 7333617,
       "changePct": 1.4,
-      "updatedAt": "2026-11-11T15:11:30+08:00",
+      "updatedAt": "2026-11-11T15:23:30+08:00",
       "source": "eastmoney"
     },
     {
@@ -746,7 +746,7 @@
       "prevClose": 1.237,
       "volume": 13485928,
       "changePct": -0.57,
-      "updatedAt": "2026-11-11T15:12:16+08:00",
+      "updatedAt": "2026-11-11T15:23:25+08:00",
       "source": "eastmoney"
     },
     {
@@ -762,7 +762,7 @@
       "prevClose": 1.14,
       "volume": 2210094,
       "changePct": -0.53,
-      "updatedAt": "2026-11-11T15:12:15+08:00",
+      "updatedAt": "2026-11-11T15:23:30+08:00",
       "source": "eastmoney"
     },
     {
@@ -778,7 +778,7 @@
       "prevClose": 8.398,
       "volume": 3482229,
       "changePct": -1.3,
-      "updatedAt": "2026-11-11T15:12:14+08:00",
+      "updatedAt": "2026-11-11T15:23:38+08:00",
       "source": "eastmoney"
     },
     {
@@ -794,7 +794,7 @@
       "prevClose": 100.001,
       "volume": 1183839,
       "changePct": 0,
-      "updatedAt": "2026-11-11T15:12:00+08:00",
+      "updatedAt": "2026-11-11T15:23:30+08:00",
       "source": "eastmoney"
     },
     {
@@ -815,52 +815,52 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 4062.96,
+      "price": 4062.67,
       "open": 4035.41,
       "high": 4065.92,
       "low": 4026.55,
       "prevClose": 4032.73,
-      "changePct": 0.75,
-      "updatedAt": "2026-11-11T15:12:00+08:00",
+      "changePct": 0.74,
+      "updatedAt": "2026-11-11T15:23:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 53.05,
+      "price": 53.11,
       "open": 51.49,
-      "high": 53.09,
+      "high": 53.14,
       "low": 51.42,
       "prevClose": 51.52,
-      "changePct": 2.97,
-      "updatedAt": "2026-11-11T15:11:00+08:00",
+      "changePct": 3.09,
+      "updatedAt": "2026-11-11T15:23:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 92.09,
+      "price": 91.88,
       "open": 92,
       "high": 92.69,
       "low": 91.81,
       "prevClose": 91.49,
-      "changePct": 0.66,
-      "updatedAt": "2026-11-11T15:11:56+08:00",
+      "changePct": 0.43,
+      "updatedAt": "2026-11-11T15:23:09+08:00",
       "note": ""
     },
     {
       "key": "sge_au9999",
       "name": "上海金Au99.99",
       "market": "SGE",
-      "price": 872.65,
+      "price": 872.9,
       "open": 876,
       "high": 878.6,
       "low": 862.05,
       "prevClose": 883.42,
-      "changePct": -1.22,
-      "updatedAt": "2026-11-11T15:12:16+08:00"
+      "changePct": -1.19,
+      "updatedAt": "2026-11-11T15:23:35+08:00"
     },
     {
       "key": "usdcny",
@@ -886,28 +886,28 @@
       "key": "sensex",
       "name": "印度孟买SENSEX",
       "market": "IN",
-      "price": 82110.94,
+      "price": 82020.15,
       "open": 82078.43,
       "high": 82515.22,
       "low": 81997.92,
       "prevClose": 81106.65,
       "volume": 0,
-      "changePct": 1.24,
-      "updatedAt": "2026-11-11T14:57:15+08:00",
+      "changePct": 1.13,
+      "updatedAt": "2026-11-11T15:08:37+08:00",
       "source": "eastmoney"
     },
     {
       "key": "vnindex",
       "name": "越南胡志明",
       "market": "VN",
-      "price": 1739.46,
+      "price": 1740.17,
       "open": 1743.07,
       "high": 1751.57,
       "low": 1734.25,
       "prevClose": 1743.07,
-      "volume": 520413088,
-      "changePct": -0.21,
-      "updatedAt": "2026-11-11T15:12:20+08:00",
+      "volume": 561052272,
+      "changePct": -0.17,
+      "updatedAt": "2026-11-11T15:23:35+08:00",
       "source": "eastmoney"
     },
     {
