@@ -1,10 +1,15 @@
 {
-  "generatedAt": "2026-11-10T23:52:52.173Z",
-  "total": 35139,
+  "generatedAt": "2026-11-11T00:07:43.373Z",
+  "total": 35166,
   "days": [
     {
+      "day": "2026-11-11",
+      "count": 12,
+      "hasBriefing": false
+    },
+    {
       "day": "2026-11-10",
-      "count": 1605,
+      "count": 1620,
       "hasBriefing": true,
       "briefLine": "今日主线是国内物价回升与外部风险偏好修复并行：10月CPI同比涨0.7%、PPI同比涨5.7%创近52个月新高，货币政策延续适度宽松；对美加征关税继续暂停两个月",
       "source": "ai"
