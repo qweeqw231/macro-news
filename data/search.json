@@ -1,16 +1,104 @@
 {
-  "generatedAt": "2026-11-12T12:07:47.207Z",
+  "generatedAt": "2026-11-12T12:22:52.127Z",
   "windowDays": 62,
   "from": "2026-09-12",
   "days": 60,
-  "total": 37498,
+  "total": 37519,
   "items": [
     {
-      "id": "m7x7sa",
+      "id": "1reqi7k",
+      "ts": 1794486096,
+      "time": "2026-11-12T20:21:36.000+08:00",
+      "source": "新浪财经",
+      "title": "美国特使抵达莫斯科与普京会谈之际，乌克兰警告“星盾”再度出现通信中断",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniyntux1686021.shtml"
+    },
+    {
+      "id": "v90q7v",
+      "ts": 1794486083,
+      "time": "2026-11-12T20:21:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Nebius：预计2026年将有100亿美元的承诺客户预付款。",
+      "url": "https://wallstreetcn.com/livenews/3199127"
+    },
+    {
+      "id": "1g8sjo2",
+      "ts": 1794486008,
+      "time": "2026-11-12T20:20:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "江丰电子：向香港联交所递交发行境外上市股份（H股）并在主板挂牌上市的申请。",
+      "url": "https://wallstreetcn.com/livenews/3199126"
+    },
+    {
+      "id": "1wnybh4",
+      "ts": 1794485990,
+      "time": "2026-11-12T20:19:50.000+08:00",
+      "source": "华尔街见闻",
+      "title": "东莞控股：公司于2026年11月12日与控股股东下属单位东莞路桥签署《股权转让意向协议》，拟收购东莞路桥持有的新照公司部分股权，以取得控制权并纳入合并报表。",
+      "url": "https://wallstreetcn.com/livenews/3199125"
+    },
+    {
+      "id": "11psiiz",
+      "ts": 1794485968,
+      "time": "2026-11-12T20:19:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "弘讯科技：拟与苏民投资管理无锡有限公司等共同设立上海松江苏民弘讯创业投资合伙企业（有限合伙），基金认缴总规模6000万元，公司作为有限合伙人拟以自有资金认缴2400万元、占40%，投资范围包括智能制造、集成电路、工业自动化、新能源、人工智能等产业领域。",
+      "url": "https://wallstreetcn.com/livenews/3199124"
+    },
+    {
+      "id": "2sqg1u",
+      "ts": 1794485948,
+      "time": "2026-11-12T20:19:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "辽宁成大：董事长徐飚提议回购公司股份，回购金额不低于5000万元、不高于1亿元，价格上限不高于董事会审议通过回购决议前30个交易日均价的150%，回购股份用于员工持股计划或股权激励，期限为自董事会审议通过方案之日起12个月内。",
+      "url": "https://wallstreetcn.com/livenews/3199123"
+    },
+    {
+      "id": "8yy5sd",
+      "ts": 1794485793,
+      "time": "2026-11-12T20:16:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "德国联邦宪法法院驳回针对欧洲央行购债计划的诉讼",
+      "url": "https://wallstreetcn.com/livenews/3199122"
+    },
+    {
+      "id": "15t71jr",
+      "ts": 1794485565,
+      "time": "2026-11-12T20:12:45.000+08:00",
+      "source": "华尔街见闻",
+      "title": "唐永博任中国联通总经理",
+      "url": "https://wallstreetcn.com/livenews/3199121"
+    },
+    {
+      "id": "15htst4",
+      "ts": 1794485559,
+      "time": "2026-11-12T20:12:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Nebius第三季度营收9.808亿美元，预期为9.185亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3199120"
+    },
+    {
+      "id": "wa4ahv",
+      "ts": 1794485437,
+      "time": "2026-11-12T20:10:37.000+08:00",
+      "source": "华尔街见闻",
+      "title": "普京会见美总统特使",
+      "url": "https://wallstreetcn.com/livenews/3199118"
+    },
+    {
+      "id": "1y8bai6",
+      "ts": 1794485422,
+      "time": "2026-11-12T20:10:22.000+08:00",
+      "source": "新浪财经",
+      "title": "乌克兰国防科技初创企业UFORCE估值达60亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniyntut1114630.shtml"
+    },
+    {
+      "id": "o4wvxx",
       "ts": 1794485147,
       "time": "2026-11-12T20:05:47.000+08:00",
       "source": "华尔街见闻",
-      "title": "特朗普威胁因移民车队问题将对墨西哥的关税加倍，称墨西哥必须立即阻止移民车队。",
+      "title": "特朗普称若移民问题不改善将把对墨西哥关税提高一倍",
       "url": "https://wallstreetcn.com/livenews/3199117"
     },
     {
@@ -30,11 +118,11 @@
       "url": "https://wallstreetcn.com/livenews/3199115"
     },
     {
-      "id": "masvd9",
+      "id": "94omrk",
       "ts": 1794484995,
       "time": "2026-11-12T20:03:15.000+08:00",
       "source": "华尔街见闻",
-      "title": "京东完成对Ceconomy的自愿公开收购要约。",
+      "title": "京东完成对CECONOMY的收购要约",
       "url": "https://wallstreetcn.com/livenews/3199114"
     },
     {
@@ -100,6 +188,14 @@
       "source": "东方财富",
       "title": "中国经济圆桌会｜中国一拖：推动国产农机“颜值”和“功力”双双提升",
       "url": "http://stock.eastmoney.com/news/11219,202611123929795537.html"
+    },
+    {
+      "id": "ih73rq",
+      "ts": 1794484333,
+      "time": "2026-11-12T19:52:13.000+08:00",
+      "source": "东方财富",
+      "title": "前三季度四川省社会物流总额达80380.9亿元 同比增长5.3%",
+      "url": "http://finance.eastmoney.com/news/1355,202611123929809014.html"
     },
     {
       "id": "127dmzh",
@@ -198,6 +294,14 @@
       "url": "https://www.chinanews.com.cn/cj/2026/11-12/10731065.shtml"
     },
     {
+      "id": "1amn5xi",
+      "ts": 1794483629,
+      "time": "2026-11-12T19:40:29.000+08:00",
+      "source": "东方财富",
+      "title": "财政部修订政府部门财务报告编制相关指南，新增“长期股权投资明细表”",
+      "url": "http://finance.eastmoney.com/news/1352,202611123929803525.html"
+    },
+    {
       "id": "9sg7co",
       "ts": 1794483615,
       "time": "2026-11-12T11:40:15.000Z",
@@ -230,12 +334,28 @@
       "url": "https://finance.sina.com.cn/china/2026-11-12/doc-iniyntut1105943.shtml"
     },
     {
+      "id": "nbqnsy",
+      "ts": 1794483465,
+      "time": "2026-11-12T19:37:45.000+08:00",
+      "source": "东方财富",
+      "title": "如何规范技能人才评价？首部技能人才评价行政法规征求意见",
+      "url": "http://finance.eastmoney.com/news/1350,202611123929803270.html"
+    },
+    {
       "id": "zhx860",
       "ts": 1794483308,
       "time": "2026-11-12T19:35:08.000+08:00",
       "source": "华尔街见闻",
       "title": "宁德时代：在深交所购回29.09万股A股，涉资约6996万元",
       "url": "https://wallstreetcn.com/livenews/3199105"
+    },
+    {
+      "id": "uwif3c",
+      "ts": 1794483177,
+      "time": "2026-11-12T19:32:57.000+08:00",
+      "source": "东方财富",
+      "title": "全国支持小微企业融资协调工作机制培训会在南宁举办",
+      "url": "http://finance.eastmoney.com/news/1350,202611123929809925.html"
     },
     {
       "id": "gw8j5k",
@@ -270,6 +390,14 @@
       "url": "https://www.chinanews.com.cn/cj/2026/11-12/10731059.shtml"
     },
     {
+      "id": "1brik9x",
+      "ts": 1794482820,
+      "time": "2026-11-12T19:27:00.000+08:00",
+      "source": "东方财富",
+      "title": "多项约束进一步放宽 创新药进院迎政策利好",
+      "url": "http://finance.eastmoney.com/news/1355,202611123929808671.html"
+    },
+    {
       "id": "1tc4g8",
       "ts": 1794482772,
       "time": "2026-11-12T19:26:12.000+08:00",
@@ -284,6 +412,22 @@
       "source": "新浪财经",
       "title": "中期选举惨败，“MAGA”核心人物：赖科技巨头和AI数据中心",
       "url": "https://finance.sina.com.cn/world/2026-11-12/doc-iniyntux1658945.shtml"
+    },
+    {
+      "id": "m44dph",
+      "ts": 1794482700,
+      "time": "2026-11-12T19:25:00.000+08:00",
+      "source": "东方财富",
+      "title": "11月12日24时起油价将下调",
+      "url": "http://futures.eastmoney.com/news/11233,202611123929808985.html"
+    },
+    {
+      "id": "1vpybpm",
+      "ts": 1794482676,
+      "time": "2026-11-12T19:24:36.000+08:00",
+      "source": "东方财富",
+      "title": "国内油价年内第六次下调：加满一箱油省24.5元，机构预计下一轮还会降",
+      "url": "http://finance.eastmoney.com/news/1356,202611123929809689.html"
     },
     {
       "id": "1lq71ny",
@@ -324,6 +468,14 @@
       "source": "东方财富",
       "title": "向深远海挺进 我国海上风电年发电量超千亿千瓦时",
       "url": "http://stock.eastmoney.com/news/11219,202611123929770276.html"
+    },
+    {
+      "id": "115shcf",
+      "ts": 1794482297,
+      "time": "2026-11-12T19:18:17.000+08:00",
+      "source": "东方财富",
+      "title": "多地竞相布局智能机器人产业新赛道",
+      "url": "http://finance.eastmoney.com/news/1355,202611123929804132.html"
     },
     {
       "id": "1857y5b",
@@ -452,6 +604,14 @@
       "source": "东方财富",
       "title": "郑州如何打造“培育钻石之都” ？",
       "url": "http://finance.eastmoney.com/news/1354,202611123929761328.html"
+    },
+    {
+      "id": "153b8xv",
+      "ts": 1794481440,
+      "time": "2026-11-12T19:04:00.000+08:00",
+      "source": "东方财富",
+      "title": "新疆生产建设兵团新型能源体系建设成果发布会成功举行",
+      "url": "http://finance.eastmoney.com/news/1355,202611123929809183.html"
     },
     {
       "id": "191u1sp",
@@ -892,6 +1052,14 @@
       "source": "东方财富",
       "title": "工业和信息化部：国家产融合作平台助企融资超1.8万亿元",
       "url": "http://finance.eastmoney.com/news/1350,202611123929739846.html"
+    },
+    {
+      "id": "yt22f8",
+      "ts": 1794479460,
+      "time": "2026-11-12T18:31:00.000+08:00",
+      "source": "东方财富",
+      "title": "皇岗口岸开通“满月” “流量经济”加速变现",
+      "url": "http://finance.eastmoney.com/news/1373,202611123929804741.html"
     },
     {
       "id": "1rg0h0c",
