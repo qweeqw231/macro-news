@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-12T21:20:46.944Z",
+  "generatedAt": "2026-11-12T21:50:27.483Z",
   "ok": 0,
   "failed": 0,
   "failures": [],
@@ -19,8 +19,8 @@
     "ukx/30m: shorter-overlap-mismatch（新 238 根 < 现有 271 根）",
     "kospi/30m: shorter-overlap-mismatch（新 247 根 < 现有 273 根）",
     "sge_au9999/30m: shorter-too-partial（新 234 根 < 现有 299 根）",
-    "xag/30m: shorter-too-partial（新 280 根 < 现有 548 根）",
-    "xau/30m: shorter-too-partial（新 280 根 < 现有 548 根）",
+    "xag/30m: shorter-too-partial（新 281 根 < 现有 548 根）",
+    "xau/30m: shorter-too-partial（新 281 根 < 现有 548 根）",
     "sox/30m: shorter-overlap-mismatch（新 248 根 < 现有 261 根）",
     "n225/60m: shorter-overlap-mismatch（新 132 根 < 现有 144 根）",
     "dax/60m: shorter-too-partial（新 126 根 < 现有 187 根）",
