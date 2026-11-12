@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-12T18:20:14.849Z",
+  "generatedAt": "2026-11-12T18:50:19.345Z",
   "ok": 0,
   "failed": 0,
   "failures": [],
@@ -19,9 +19,9 @@
     "ukx/30m: shorter-overlap-mismatch（新 254 根 < 现有 271 根）",
     "kospi/30m: shorter-overlap-mismatch（新 247 根 < 现有 273 根）",
     "sge_au9999/30m: shorter-too-partial（新 234 根 < 现有 299 根）",
-    "xag/30m: shorter-too-partial（新 274 根 < 现有 548 根）",
-    "xau/30m: shorter-too-partial（新 274 根 < 现有 548 根）",
-    "sox/30m: shorter-overlap-mismatch（新 243 根 < 现有 261 根）",
+    "xag/30m: shorter-too-partial（新 275 根 < 现有 548 根）",
+    "xau/30m: shorter-too-partial（新 275 根 < 现有 548 根）",
+    "sox/30m: shorter-overlap-mismatch（新 244 根 < 现有 261 根）",
     "n225/60m: shorter-overlap-mismatch（新 132 根 < 现有 144 根）",
     "dax/60m: shorter-too-partial（新 134 根 < 现有 187 根）",
     "cac40/60m: shorter-too-partial（新 134 根 < 现有 187 根）",
@@ -30,6 +30,6 @@
     "sge_au9999/60m: shorter-overlap-mismatch（新 118 根 < 现有 143 根）",
     "xag/60m: shorter-too-partial（新 140 根 < 现有 280 根）",
     "xau/60m: shorter-overlap-mismatch（新 140 根 < 现有 166 根）",
-    "sox/60m: shorter-overlap-mismatch（新 130 根 < 现有 140 根）"
+    "sox/60m: shorter-overlap-mismatch（新 131 根 < 现有 140 根）"
   ]
 }
