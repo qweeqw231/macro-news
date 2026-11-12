@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-12T07:22:43.541Z",
+  "generatedAt": "2026-11-12T07:37:45.996Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -12,7 +12,7 @@
       "prevClose": 3680.64,
       "volume": 496533033,
       "changePct": -0.67,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.555Z",
       "source": "tencent"
     },
     {
@@ -26,7 +26,7 @@
       "prevClose": 11389.74,
       "volume": 632899416,
       "changePct": -1.68,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -40,7 +40,7 @@
       "prevClose": 2572.07,
       "volume": 196927278,
       "changePct": -2.44,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -54,7 +54,7 @@
       "prevClose": 1300.38,
       "volume": 11312711,
       "changePct": 0.73,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -68,7 +68,7 @@
       "prevClose": 923.31,
       "volume": 6815354,
       "changePct": -1.65,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -82,7 +82,7 @@
       "prevClose": 4075.71,
       "volume": 175464628,
       "changePct": -0.78,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -96,7 +96,7 @@
       "prevClose": 2765.54,
       "volume": 40669663,
       "changePct": 0.24,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -110,7 +110,7 @@
       "prevClose": 4951.48,
       "volume": 246410245,
       "changePct": -1.04,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -124,7 +124,7 @@
       "prevClose": 6713.18,
       "volume": 147824301,
       "changePct": -1.62,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -138,35 +138,35 @@
       "prevClose": 6669.55,
       "volume": 230493280,
       "changePct": -1.97,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
       "key": "hsi",
       "name": "恒生指数",
       "market": "HK",
-      "price": 24006.35,
+      "price": 24019.69,
       "open": 24121.4,
       "high": 24132.2,
       "low": 23988.44,
       "prevClose": 24315.92,
-      "volume": 16478960.0447,
-      "changePct": -1.27,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "volume": 17082690.5202,
+      "changePct": -1.22,
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
       "key": "hs_tech",
       "name": "恒生科技",
       "market": "HK",
-      "price": 3932.8,
+      "price": 3935.53,
       "open": 3995,
       "high": 3998.36,
       "low": 3928.09,
       "prevClose": 4027.06,
-      "volume": 4995170.4811,
-      "changePct": -2.34,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "volume": 5223292.3634,
+      "changePct": -2.27,
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -298,7 +298,7 @@
       "prevClose": 1.122,
       "volume": 60893131,
       "changePct": -1.07,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -314,7 +314,7 @@
       "prevClose": 1.442,
       "volume": 2875596,
       "changePct": -0.97,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -330,7 +330,7 @@
       "prevClose": 1.39,
       "volume": 17664646,
       "changePct": -5.04,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -346,7 +346,7 @@
       "prevClose": 0.888,
       "volume": 47468385,
       "changePct": 0.68,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -362,7 +362,7 @@
       "prevClose": 0.53,
       "volume": 79522812,
       "changePct": 0.57,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -378,7 +378,7 @@
       "prevClose": 0.734,
       "volume": 7015997,
       "changePct": -2.45,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -394,7 +394,7 @@
       "prevClose": 1.07,
       "volume": 2059804,
       "changePct": -2.15,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -410,7 +410,7 @@
       "prevClose": 0.994,
       "volume": 24194009,
       "changePct": -3.32,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -426,7 +426,7 @@
       "prevClose": 0.536,
       "volume": 33685279,
       "changePct": -3.17,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -442,7 +442,7 @@
       "prevClose": 1.546,
       "volume": 2875917,
       "changePct": -1.03,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -458,7 +458,7 @@
       "prevClose": 1.256,
       "volume": 62814690,
       "changePct": -0.32,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -474,7 +474,7 @@
       "prevClose": 0.344,
       "volume": 9092760,
       "changePct": -0.58,
-      "updatedAt": "2026-11-12T07:23:19.244Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -490,7 +490,7 @@
       "prevClose": 0.823,
       "volume": 7348686,
       "changePct": 0,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -506,7 +506,7 @@
       "prevClose": 0.433,
       "volume": 11559166,
       "changePct": 0.23,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -522,7 +522,7 @@
       "prevClose": 0.549,
       "volume": 1365842,
       "changePct": -1.09,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -538,7 +538,7 @@
       "prevClose": 0.997,
       "volume": 10248668,
       "changePct": -1.1,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -554,7 +554,7 @@
       "prevClose": 0.882,
       "volume": 18625265,
       "changePct": 0.34,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -570,7 +570,7 @@
       "prevClose": 1.188,
       "volume": 4448271,
       "changePct": -1.43,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -586,7 +586,7 @@
       "prevClose": 1.455,
       "volume": 3582001,
       "changePct": -3.02,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -602,7 +602,7 @@
       "prevClose": 1.487,
       "volume": 1373718,
       "changePct": -1.75,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -618,7 +618,7 @@
       "prevClose": 1.029,
       "volume": 2904477,
       "changePct": -0.68,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -634,7 +634,7 @@
       "prevClose": 1.354,
       "volume": 460498,
       "changePct": -2.44,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -650,7 +650,7 @@
       "prevClose": 0.77,
       "volume": 3767402,
       "changePct": -2.21,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -666,7 +666,7 @@
       "prevClose": 0.73,
       "volume": 3984285,
       "changePct": -1.37,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -682,7 +682,7 @@
       "prevClose": 1.032,
       "volume": 1943549,
       "changePct": -0.39,
-      "updatedAt": "2026-11-12T07:23:19.245Z",
+      "updatedAt": "2026-11-12T07:38:08.556Z",
       "source": "tencent"
     },
     {
@@ -698,7 +698,7 @@
       "prevClose": 0.536,
       "volume": 2117491,
       "changePct": 0,
-      "updatedAt": "2026-11-12T07:23:19.427Z",
+      "updatedAt": "2026-11-12T07:38:08.766Z",
       "source": "tencent"
     },
     {
@@ -714,7 +714,7 @@
       "prevClose": 1.145,
       "volume": 1255695,
       "changePct": -1.05,
-      "updatedAt": "2026-11-12T07:23:19.427Z",
+      "updatedAt": "2026-11-12T07:38:08.766Z",
       "source": "tencent"
     },
     {
@@ -730,7 +730,7 @@
       "prevClose": 1.089,
       "volume": 6439910,
       "changePct": -4.87,
-      "updatedAt": "2026-11-12T07:23:19.427Z",
+      "updatedAt": "2026-11-12T07:38:08.766Z",
       "source": "tencent"
     },
     {
@@ -746,7 +746,7 @@
       "prevClose": 1.23,
       "volume": 4530014,
       "changePct": -0.08,
-      "updatedAt": "2026-11-12T07:23:19.427Z",
+      "updatedAt": "2026-11-12T07:38:08.766Z",
       "source": "tencent"
     },
     {
@@ -762,7 +762,7 @@
       "prevClose": 1.134,
       "volume": 1976993,
       "changePct": -1.15,
-      "updatedAt": "2026-11-12T07:23:19.427Z",
+      "updatedAt": "2026-11-12T07:38:08.766Z",
       "source": "tencent"
     },
     {
@@ -778,7 +778,7 @@
       "prevClose": 8.289,
       "volume": 4800817,
       "changePct": -2.46,
-      "updatedAt": "2026-11-12T07:23:19.427Z",
+      "updatedAt": "2026-11-12T07:38:08.766Z",
       "source": "tencent"
     },
     {
@@ -794,7 +794,7 @@
       "prevClose": 99.998,
       "volume": 985316,
       "changePct": 0,
-      "updatedAt": "2026-11-12T07:23:19.427Z",
+      "updatedAt": "2026-11-12T07:38:08.766Z",
       "source": "tencent"
     },
     {
@@ -815,39 +815,39 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 3961.93,
+      "price": 3957.9,
       "open": 3990.89,
       "high": 4000.31,
-      "low": 3959.07,
+      "low": 3954.95,
       "prevClose": 3987.69,
-      "changePct": -0.65,
-      "updatedAt": "2026-11-12T15:22:00+08:00",
+      "changePct": -0.75,
+      "updatedAt": "2026-11-12T15:38:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 51.16,
+      "price": 51.23,
       "open": 51.62,
       "high": 51.93,
       "low": 51.07,
       "prevClose": 51.65,
-      "changePct": -0.95,
-      "updatedAt": "2026-11-12T15:23:00+08:00",
+      "changePct": -0.81,
+      "updatedAt": "2026-11-12T15:38:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 93.34,
+      "price": 93.28,
       "open": 92.22,
-      "high": 93.31,
+      "high": 93.38,
       "low": 91.19,
       "prevClose": 92.76,
-      "changePct": 0.62,
-      "updatedAt": "2026-11-12T15:23:03+08:00",
+      "changePct": 0.56,
+      "updatedAt": "2026-11-12T15:37:03+08:00",
       "note": ""
     },
     {

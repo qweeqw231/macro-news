@@ -1,10 +1,194 @@
 {
-  "generatedAt": "2026-11-12T07:22:43.541Z",
+  "generatedAt": "2026-11-12T07:37:45.996Z",
   "windowDays": 62,
   "from": "2026-09-12",
   "days": 60,
-  "total": 37122,
+  "total": 37154,
   "items": [
+    {
+      "id": "vzn7ad",
+      "ts": 1794468960,
+      "time": "2026-11-12T15:36:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国开行发行1年期债券，规模150亿元，发行利率1.3300%，预期1.3500%，投标倍数2.45倍，边际倍数4.39倍。",
+      "url": "https://wallstreetcn.com/livenews/3198961"
+    },
+    {
+      "id": "ao2tgf",
+      "ts": 1794468790,
+      "time": "2026-11-12T15:33:10.000+08:00",
+      "source": "华尔街见闻",
+      "title": "鸿海：存储芯片及零部件短缺问题仍将持续到2027年。",
+      "url": "https://wallstreetcn.com/livenews/3198960"
+    },
+    {
+      "id": "or8zfs",
+      "ts": 1794468772,
+      "time": "2026-11-12T15:32:52.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达寻觅黄仁勋接班人并非易事 猎头视野里有哪些人选？",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniynifc1746706.shtml"
+    },
+    {
+      "id": "1dgv8cp",
+      "ts": 1794468750,
+      "time": "2026-11-12T07:32:30.000Z",
+      "source": "中新网",
+      "title": "商务部：中美正就降税、贸易、投资等问题保持密切沟通",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-12/10730819.shtml"
+    },
+    {
+      "id": "yc3n7z",
+      "ts": 1794468739,
+      "time": "2026-11-12T15:32:19.000+08:00",
+      "source": "华尔街见闻",
+      "title": "商务部：第十届进博会的筹备工作已经启动",
+      "url": "https://wallstreetcn.com/livenews/3198958"
+    },
+    {
+      "id": "1bqsa14",
+      "ts": 1794468721,
+      "time": "2026-11-12T15:32:01.000+08:00",
+      "source": "东方财富",
+      "title": "全国首个！上海破产企业电子营业执照应用系统上线",
+      "url": "http://finance.eastmoney.com/news/1350,202611123929456281.html"
+    },
+    {
+      "id": "9flow9",
+      "ts": 1794468543,
+      "time": "2026-11-12T15:29:03.000+08:00",
+      "source": "新浪财经",
+      "title": "普利制药（300630）投资者索赔案再提交法院立案",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-12/doc-iniynife8520779.shtml"
+    },
+    {
+      "id": "1hz9xzr",
+      "ts": 1794468542,
+      "time": "2026-11-12T15:29:02.000+08:00",
+      "source": "新浪财经",
+      "title": "捷荣技术（002855）收到处罚告知书，股民索赔已提交法院立案",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-12/doc-iniyniex1174863.shtml"
+    },
+    {
+      "id": "21m66p",
+      "ts": 1794468540,
+      "time": "2026-11-12T15:29:00.000+08:00",
+      "source": "新浪财经",
+      "title": "退市不免责！海越能源（600387）投资者索赔前期已有胜诉获赔",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-12/doc-iniynife8520106.shtml"
+    },
+    {
+      "id": "1542j2k",
+      "ts": 1794468539,
+      "time": "2026-11-12T15:28:59.000+08:00",
+      "source": "新浪财经",
+      "title": "江苏吴中（600200）投资者索赔案持续推进",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-12/doc-iniyniex1174026.shtml"
+    },
+    {
+      "id": "1o1tve2",
+      "ts": 1794468482,
+      "time": "2026-11-12T15:28:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "鸿海董事长刘扬伟：存储芯片及零部件短缺问题仍将持续到2027年。",
+      "url": "https://wallstreetcn.com/livenews/3198956"
+    },
+    {
+      "id": "179k0n6",
+      "ts": 1794468475,
+      "time": "2026-11-12T15:27:55.000+08:00",
+      "source": "新浪财经",
+      "title": "“英伟达间谍”事件是否会影响中美关系？外交部：美方应当停止编造所谓的间谍叙事",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-12/doc-iniynife8519068.shtml"
+    },
+    {
+      "id": "1lbv4c",
+      "ts": 1794468469,
+      "time": "2026-11-12T15:27:49.000+08:00",
+      "source": "新浪财经",
+      "title": "外交部：美方应当停止编造所谓的间谍叙事、为实施科技封锁寻找借口",
+      "url": "https://finance.sina.com.cn/china/2026-11-12/doc-iniynifc1742139.shtml"
+    },
+    {
+      "id": "175f0qw",
+      "ts": 1794468464,
+      "time": "2026-11-12T15:27:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "外交部：坚决反对美方划设各种名目的歧视性清单，无理打压中国机构",
+      "url": "https://wallstreetcn.com/livenews/3198955"
+    },
+    {
+      "id": "1wwdxbj",
+      "ts": 1794468435,
+      "time": "2026-11-12T15:27:15.000+08:00",
+      "source": "华尔街见闻",
+      "title": "外交部：坚决反对美方划设各种名目的歧视性清单，无理打压中国机构",
+      "url": "https://wallstreetcn.com/livenews/3198954"
+    },
+    {
+      "id": "1qeetl8",
+      "ts": 1794468403,
+      "time": "2026-11-12T15:26:43.000+08:00",
+      "source": "华尔街见闻",
+      "title": "外交部：美方应当停止编造所谓的间谍叙事、为实施科技封锁寻找借口",
+      "url": "https://wallstreetcn.com/livenews/3198953"
+    },
+    {
+      "id": "77jh44",
+      "ts": 1794468383,
+      "time": "2026-11-12T15:26:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "外交部：中方就中俄美元首会晤同有关方保持着沟通",
+      "url": "https://wallstreetcn.com/livenews/3198952"
+    },
+    {
+      "id": "yddcye",
+      "ts": 1794468339,
+      "time": "2026-11-12T15:25:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "外交部：美方应当停止编造所谓的间谍叙事、为实施科技封锁寻找借口",
+      "url": "https://wallstreetcn.com/livenews/3198951"
+    },
+    {
+      "id": "1r5o09p",
+      "ts": 1794468318,
+      "time": "2026-11-12T15:25:18.000+08:00",
+      "source": "新浪财经",
+      "title": "外交部：中方就中俄美元首会晤同有关方保持着沟通",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-12/doc-iniynife8519379.shtml"
+    },
+    {
+      "id": "gs5ev8",
+      "ts": 1794468310,
+      "time": "2026-11-12T15:25:10.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国首相伯纳姆：仍坚定致力于实现2050年净零排放目标。",
+      "url": "https://wallstreetcn.com/livenews/3198950"
+    },
+    {
+      "id": "b9gago",
+      "ts": 1794468301,
+      "time": "2026-11-12T07:25:01.000Z",
+      "source": "中新网",
+      "title": "A股收评：超4600只个股飘绿，三大股指集体收跌",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-12/10730816.shtml"
+    },
+    {
+      "id": "947huc",
+      "ts": 1794468262,
+      "time": "2026-11-12T15:24:22.000+08:00",
+      "source": "新浪财经",
+      "title": "分析师：金价回落、成本抬升叠加生产扰动，黄金矿企二季度表现依旧亮眼",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniynife8514708.shtml"
+    },
+    {
+      "id": "1aq7mft",
+      "ts": 1794468168,
+      "time": "2026-11-12T15:22:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "伊朗称霍尔木兹海峡夜间发生爆炸，两艘油轮遭袭。",
+      "url": "https://wallstreetcn.com/livenews/3198949"
+    },
     {
       "id": "11jtgau",
       "ts": 1794468061,
@@ -12,6 +196,14 @@
       "source": "华尔街见闻",
       "title": "井深5770米，我国海上超深层天然气勘探取得突破",
       "url": "https://wallstreetcn.com/livenews/3198948"
+    },
+    {
+      "id": "aukbno",
+      "ts": 1794468003,
+      "time": "2026-11-12T15:20:03.000+08:00",
+      "source": "新浪财经",
+      "title": "黄仁勋罢免传闻冲击部分英伟达生态企业 AMD、博通迎利好",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniynifc1734541.shtml"
     },
     {
       "id": "9p36r",
@@ -62,12 +254,36 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniyniex1156506.shtml"
     },
     {
+      "id": "1gqg7qi",
+      "ts": 1794467640,
+      "time": "2026-11-12T15:14:00.000+08:00",
+      "source": "东方财富",
+      "title": "2026国际湾区经济论坛在广州举行 全球湾区经济合作十大倡议发布",
+      "url": "http://finance.eastmoney.com/news/1352,202611123929451936.html"
+    },
+    {
+      "id": "18x0dfb",
+      "ts": 1794467560,
+      "time": "2026-11-12T15:12:40.000+08:00",
+      "source": "东方财富",
+      "title": "油价下调通知（今晚24时）",
+      "url": "http://finance.eastmoney.com/news/1356,202611123929454053.html"
+    },
+    {
       "id": "12jfv2s",
       "ts": 1794467543,
       "time": "2026-11-12T15:12:23.000+08:00",
       "source": "华尔街见闻",
       "title": "现货白银日内跌幅达1.0%，报51.1美元/盎司。",
       "url": "https://wallstreetcn.com/livenews/3198943"
+    },
+    {
+      "id": "r8pt3s",
+      "ts": 1794467530,
+      "time": "2026-11-12T15:12:10.000+08:00",
+      "source": "东方财富",
+      "title": "再走长征路｜立足山林禀赋 黎平推动特色农业走向精深加工",
+      "url": "http://finance.eastmoney.com/news/1355,202611123929451743.html"
     },
     {
       "id": "c3ztnj",
@@ -84,6 +300,14 @@
       "source": "华尔街见闻",
       "title": "10月国内手机市场数据出炉，荣耀位居安卓品牌首位",
       "url": "https://wallstreetcn.com/livenews/3198942"
+    },
+    {
+      "id": "1vh4zs6",
+      "ts": 1794467511,
+      "time": "2026-11-12T15:11:51.000+08:00",
+      "source": "东方财富",
+      "title": "商务部：中美正就降税、贸易、投资等问题保持密切沟通",
+      "url": "http://finance.eastmoney.com/news/1352,202611123929450247.html"
     },
     {
       "id": "1ek76jd",
@@ -198,6 +422,14 @@
       "url": "http://finance.eastmoney.com/news/1350,202611123929443446.html"
     },
     {
+      "id": "9xwsc6",
+      "ts": 1794467185,
+      "time": "2026-11-12T15:06:25.000+08:00",
+      "source": "新浪财经",
+      "title": "今晚，调油价",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-12/doc-iniynife8522167.shtml"
+    },
+    {
       "id": "1imcver",
       "ts": 1794467173,
       "time": "2026-11-12T15:06:13.000+08:00",
@@ -310,6 +542,14 @@
       "url": "https://wallstreetcn.com/livenews/3198930"
     },
     {
+      "id": "16com5j",
+      "ts": 1794466920,
+      "time": "2026-11-12T15:02:00.000+08:00",
+      "source": "东方财富",
+      "title": "今日24时起，国内汽、柴油价格每吨分别下调645元、625元",
+      "url": "http://finance.eastmoney.com/news/1356,202611123929449870.html"
+    },
+    {
       "id": "3deers",
       "ts": 1794466912,
       "time": "2026-11-12T07:01:52.000Z",
@@ -332,6 +572,14 @@
       "source": "华尔街见闻",
       "title": "上证指数收报3655.83点，跌0.67%。",
       "url": "https://wallstreetcn.com/livenews/3198929"
+    },
+    {
+      "id": "1u9wkfp",
+      "ts": 1794466853,
+      "time": "2026-11-12T15:00:53.000+08:00",
+      "source": "东方财富",
+      "title": "今晚，油价下调",
+      "url": "http://finance.eastmoney.com/news/1356,202611123929451456.html"
     },
     {
       "id": "103hc3u",
@@ -492,6 +740,14 @@
       "source": "新浪财经",
       "title": "今晚调油价！国内汽、柴油价格每吨分别下调645元、625元",
       "url": "https://finance.sina.com.cn/jjxw/2026-11-12/doc-iniynifc1718649.shtml"
+    },
+    {
+      "id": "3z92wv",
+      "ts": 1794466663,
+      "time": "2026-11-12T14:57:43.000+08:00",
+      "source": "东方财富",
+      "title": "汽车后市场24条，河南为何“往前做”？",
+      "url": "http://auto.eastmoney.com/news/11262,202611123929450468.html"
     },
     {
       "id": "1h8rt4b",
