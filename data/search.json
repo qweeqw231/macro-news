@@ -1,10 +1,306 @@
 {
-  "generatedAt": "2026-11-12T06:52:50.546Z",
+  "generatedAt": "2026-11-12T07:07:51.350Z",
   "windowDays": 62,
   "from": "2026-09-12",
   "days": 60,
-  "total": 37053,
+  "total": 37093,
   "items": [
+    {
+      "id": "1capy6j",
+      "ts": 1794467248,
+      "time": "2026-11-12T15:07:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "商务部回应欧盟有关国家禁用中国企业设备",
+      "url": "https://wallstreetcn.com/livenews/3198937"
+    },
+    {
+      "id": "19hq9ky",
+      "ts": 1794467244,
+      "time": "2026-11-12T15:07:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "【商务部回应欧盟有关国家禁用中国企业设备】针对欧盟有关国家禁用中国企业设备的问题，商务部新闻发言人何亚东在12日举行的例行新闻发布会上说，我们注意到有关报道，已向相关国家政府表达严重关切。",
+      "url": "https://wallstreetcn.com/livenews/3198936"
+    },
+    {
+      "id": "1relr4i",
+      "ts": 1794467145,
+      "time": "2026-11-12T15:05:45.000+08:00",
+      "source": "华尔街见闻",
+      "title": "【礼来口服减重药奥氟格列隆钙片获批上市】近日，国家药品监督管理局批准EliLilly Nederland B.V.申报的1类创新药奥氟格列隆钙片（商品名称：穆优达）上市，该药适用于在控制饮食和增加运动基础上，用于初始体重指数（BMI）符合以下要求的成人的长期体重管理：≥30 kg/m2（肥胖），或≥27 kg/m2至<30 kg/m2（超重）并伴有至少一种体重相关合并症（例如高血压、血脂异常、高血糖、阻塞性睡眠呼吸暂停综合征、心血管疾病等）。该药品上市为患者提供了新的治疗选择。",
+      "url": "https://wallstreetcn.com/livenews/3198935"
+    },
+    {
+      "id": "hkzef",
+      "ts": 1794467122,
+      "time": "2026-11-12T15:05:22.000+08:00",
+      "source": "新浪财经",
+      "title": "SpaceX正研发AI芯片机架 降低对英伟达配套零部件依赖",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniyniff3805474.shtml"
+    },
+    {
+      "id": "foipnz",
+      "ts": 1794467099,
+      "time": "2026-11-12T15:04:59.000+08:00",
+      "source": "华尔街见闻",
+      "title": "金融科技发展奖评审领导小组会议召开",
+      "url": "https://wallstreetcn.com/livenews/3198933"
+    },
+    {
+      "id": "20wqom",
+      "ts": 1794467036,
+      "time": "2026-11-12T15:03:56.000+08:00",
+      "source": "新浪财经",
+      "title": "收评|国内期货主力合约涨跌互现 苹果涨超4%",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-12/doc-iniyniex1143237.shtml"
+    },
+    {
+      "id": "14bct7m",
+      "ts": 1794467019,
+      "time": "2026-11-12T15:03:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家药监局批准奥氟格列隆钙片上市",
+      "url": "https://wallstreetcn.com/livenews/3198932"
+    },
+    {
+      "id": "lmcvfz",
+      "ts": 1794466996,
+      "time": "2026-11-12T15:03:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "韩国外长赵显将访华",
+      "url": "https://wallstreetcn.com/livenews/3198931"
+    },
+    {
+      "id": "knnb46",
+      "ts": 1794466994,
+      "time": "2026-11-12T15:03:14.000+08:00",
+      "source": "新浪财经",
+      "title": "龙大美食（002726）被证监会立案，投资者索赔分析",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-12/doc-iniynife8493380.shtml"
+    },
+    {
+      "id": "ycgjgc",
+      "ts": 1794466993,
+      "time": "2026-11-12T15:03:13.000+08:00",
+      "source": "新浪财经",
+      "title": "捷荣技术（002855）收到处罚告知书，股民索赔分析",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-12/doc-iniynife8493812.shtml"
+    },
+    {
+      "id": "u071oq",
+      "ts": 1794466991,
+      "time": "2026-11-12T15:03:11.000+08:00",
+      "source": "新浪财经",
+      "title": "喜临门（603008）实控人个人债务集中清理，股民索赔分析",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-12/doc-iniynife8494200.shtml"
+    },
+    {
+      "id": "gm8fge",
+      "ts": 1794466980,
+      "time": "2026-11-12T15:03:00.000+08:00",
+      "source": "新浪财经",
+      "title": "深红州密西西比选出百年来第一位黑人参议员",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniynife8492619.shtml"
+    },
+    {
+      "id": "ln7z5h",
+      "ts": 1794466921,
+      "time": "2026-11-12T15:02:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "【A股收盘：创业板指冲高回落跌2.44%，全市场下跌个股超4600只】市场全天冲高回落，创业板指午后跌超2%。",
+      "url": "https://wallstreetcn.com/livenews/3198930"
+    },
+    {
+      "id": "7ywti4",
+      "ts": 1794466861,
+      "time": "2026-11-12T15:01:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "上证指数收报3655.83点，跌0.67%。",
+      "url": "https://wallstreetcn.com/livenews/3198929"
+    },
+    {
+      "id": "103hc3u",
+      "ts": 1794466847,
+      "time": "2026-11-12T15:00:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "商品期货收盘，苹果主力合约涨超4%，苯乙烯、乙二醇涨超3%，鸡蛋、BR橡胶涨近3%。",
+      "url": "https://wallstreetcn.com/livenews/3198927"
+    },
+    {
+      "id": "19d97d0",
+      "ts": 1794466840,
+      "time": "2026-11-12T15:00:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家发改委：自11月12日24时起，国内汽、柴油（标准品）价格每吨分别下调645元、625元。",
+      "url": "https://wallstreetcn.com/livenews/3198925"
+    },
+    {
+      "id": "dujbru",
+      "ts": 1794466840,
+      "time": "2026-11-12T15:00:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "11月12日收评：创业板指冲高回落跌2.44%，全市场下跌个股超4600只",
+      "url": "https://wallstreetcn.com/livenews/3198926"
+    },
+    {
+      "id": "w7wooy",
+      "ts": 1794466817,
+      "time": "2026-11-12T15:00:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家发改委：自11月12日24时起，国内汽、柴油（标准品）价格每吨分别下调645元、625元。",
+      "url": "https://wallstreetcn.com/livenews/3198923"
+    },
+    {
+      "id": "1p6mv95",
+      "ts": 1794466804,
+      "time": "2026-11-12T15:00:04.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国9月整体商品和服务贸易帐 -51.34亿英镑，预期 -21亿英镑，前值 -9.2亿英镑。",
+      "url": "https://wallstreetcn.com/livenews/3198922"
+    },
+    {
+      "id": "42lwqc",
+      "ts": 1794466804,
+      "time": "2026-11-12T15:00:04.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国9月商品贸易帐 -222.91亿英镑，预期 -192亿英镑，前值 -180.07亿英镑。",
+      "url": "https://wallstreetcn.com/livenews/3198921"
+    },
+    {
+      "id": "1l7hcpi",
+      "ts": 1794466803,
+      "time": "2026-11-12T15:00:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国9月工业产出环比 0.3%，预期 -0.4%，前值 0.8%。",
+      "url": "https://wallstreetcn.com/livenews/3198920"
+    },
+    {
+      "id": "1jx7pkb",
+      "ts": 1794466803,
+      "time": "2026-11-12T15:00:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国9月制造业产出同比 4.4%，预期 3.8%，前值 3%。",
+      "url": "https://wallstreetcn.com/livenews/3198919"
+    },
+    {
+      "id": "1h1xvr2",
+      "ts": 1794466803,
+      "time": "2026-11-12T15:00:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国9月制造业产出环比 0.7%，预期 -0.5%，前值 1.2%。",
+      "url": "https://wallstreetcn.com/livenews/3198918"
+    },
+    {
+      "id": "nxguxk",
+      "ts": 1794466803,
+      "time": "2026-11-12T15:00:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国9月工业产出同比 3.1%，预期 2.8%，前值 1.6%。",
+      "url": "https://wallstreetcn.com/livenews/3198917"
+    },
+    {
+      "id": "1cctbmq",
+      "ts": 1794466802,
+      "time": "2026-11-12T15:00:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国三季度商业投资总额同比初值 3.04%，前值 5.2%。",
+      "url": "https://wallstreetcn.com/livenews/3198916"
+    },
+    {
+      "id": "858k87",
+      "ts": 1794466801,
+      "time": "2026-11-12T15:00:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国9月建筑业产出环比 0.8%，预期 -0.1%，前值 -0.2%。",
+      "url": "https://wallstreetcn.com/livenews/3198915"
+    },
+    {
+      "id": "1y4rhrk",
+      "ts": 1794466801,
+      "time": "2026-11-12T15:00:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国三季度私人家庭消费支出季环比初值 0.6%，预期 0.4%，前值 0.3%。",
+      "url": "https://wallstreetcn.com/livenews/3198914"
+    },
+    {
+      "id": "ckcata",
+      "ts": 1794466801,
+      "time": "2026-11-12T15:00:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国三季度GDP季环比初值 0.7%，预期 0.7%，前值 0.5%。",
+      "url": "https://wallstreetcn.com/livenews/3198913"
+    },
+    {
+      "id": "10g802o",
+      "ts": 1794466801,
+      "time": "2026-11-12T15:00:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国三季度GDP同比初值 1.9%，预期 1.9%，前值 1.4%。",
+      "url": "https://wallstreetcn.com/livenews/3198912"
+    },
+    {
+      "id": "yzuqga",
+      "ts": 1794466801,
+      "time": "2026-11-12T15:00:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国三季度商业投资总额季环比初值 0.43%，预期 0.6%，前值 1.8%。",
+      "url": "https://wallstreetcn.com/livenews/3198911"
+    },
+    {
+      "id": "vmcxog",
+      "ts": 1794466801,
+      "time": "2026-11-12T15:00:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国9月建筑业产出同比 -1.5%，预期 -2.2%，前值 -1.8%。",
+      "url": "https://wallstreetcn.com/livenews/3198910"
+    },
+    {
+      "id": "v3baf8",
+      "ts": 1794466801,
+      "time": "2026-11-12T15:00:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国9月GDP环比 0.2%，预期 0%，前值 0.1%。",
+      "url": "https://wallstreetcn.com/livenews/3198909"
+    },
+    {
+      "id": "t5nwwm",
+      "ts": 1794466777,
+      "time": "2026-11-12T14:59:37.000+08:00",
+      "source": "华尔街见闻",
+      "title": "台积电回应“6.9GB员工资料外泄”：将向相关人员提供必要协助",
+      "url": "https://wallstreetcn.com/livenews/3198908"
+    },
+    {
+      "id": "1g17msb",
+      "ts": 1794466740,
+      "time": "2026-11-12T14:59:00.000+08:00",
+      "source": "新浪财经",
+      "title": "今晚调油价！国内汽、柴油价格每吨分别下调645元、625元",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-12/doc-iniynifc1718649.shtml"
+    },
+    {
+      "id": "1h8rt4b",
+      "ts": 1794466652,
+      "time": "2026-11-12T14:57:32.000+08:00",
+      "source": "新浪财经",
+      "title": "今冬美国居民取暖成本平均上涨7%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniyniff3794028.shtml"
+    },
+    {
+      "id": "196s14g",
+      "ts": 1794466538,
+      "time": "2026-11-12T14:55:38.000+08:00",
+      "source": "华尔街见闻",
+      "title": "阿里巴巴港股跌幅扩大至7%。",
+      "url": "https://wallstreetcn.com/livenews/3198907"
+    },
+    {
+      "id": "w5cfs2",
+      "ts": 1794466453,
+      "time": "2026-11-12T14:54:13.000+08:00",
+      "source": "新浪财经",
+      "title": "Anthropic：AI有望10年内攻克癌症等疑难病症",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniyniex1127662.shtml"
+    },
     {
       "id": "nk4dfx",
       "ts": 1794466322,
@@ -12,6 +308,14 @@
       "source": "华尔街见闻",
       "title": "韩国监管机构称有关KOSDAQ市场额外措施的传言不实",
       "url": "https://wallstreetcn.com/livenews/3198905"
+    },
+    {
+      "id": "3vcfir",
+      "ts": 1794466321,
+      "time": "2026-11-12T06:52:01.000Z",
+      "source": "中新网",
+      "title": "报告：2025年中国传媒产业总产值同比上升6.79%",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-12/10730798.shtml"
     },
     {
       "id": "18lgm5w",
@@ -1422,6 +1726,14 @@
       "url": "https://wallstreetcn.com/livenews/3198803"
     },
     {
+      "id": "d18nrg",
+      "ts": 1794456580,
+      "time": "2026-11-12T12:09:40.000+08:00",
+      "source": "东方财富",
+      "title": "证监会副主席刘浩凌：中国政府高度重视资本市场平稳健康发展 中国资产的安全、韧性和创新价值将持续凸显",
+      "url": "http://finance.eastmoney.com/news/1345,202611123929347043.html"
+    },
+    {
       "id": "1egqhfl",
       "ts": 1794456549,
       "time": "2026-11-12T12:09:09.000+08:00",
@@ -2404,6 +2716,14 @@
       "source": "东方财富",
       "title": "苏州市委书记范波会见国家电投集团董事长刘明胜一行",
       "url": "http://finance.eastmoney.com/news/1350,202611123929302360.html"
+    },
+    {
+      "id": "1bnwf0i",
+      "ts": 1794449240,
+      "time": "2026-11-12T10:07:20.000+08:00",
+      "source": "中国人民银行",
+      "title": "金融科技发展奖评审领导小组会议召开",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026111210072039722/index.html"
     },
     {
       "id": "qbotfq",
