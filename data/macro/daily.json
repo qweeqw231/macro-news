@@ -1,5 +1,42 @@
 [
   {
+    "date": "2026-11-12",
+    "items": [
+      {
+        "key": "margin",
+        "name": "两融余额",
+        "value": 23022.94,
+        "unit": "亿元",
+        "source": "东方财富（三市两融）",
+        "note": "2026-11-11"
+      },
+      {
+        "key": "social_financing",
+        "name": "社融增量",
+        "value": 35476,
+        "unit": "亿元",
+        "source": "人民银行",
+        "note": "2026-09"
+      },
+      {
+        "key": "cpi",
+        "name": "CPI同比",
+        "value": 0.7,
+        "unit": "%",
+        "source": "国家统计局",
+        "note": "2026年10月份"
+      },
+      {
+        "key": "pmi",
+        "name": "制造业PMI",
+        "value": 49.3,
+        "unit": "",
+        "source": "国家统计局",
+        "note": "2026年10月份"
+      }
+    ]
+  },
+  {
     "date": "2026-11-11",
     "items": [
       {
