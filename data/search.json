@@ -1,10 +1,146 @@
 {
-  "generatedAt": "2026-11-11T23:52:51.290Z",
+  "generatedAt": "2026-11-12T00:07:56.626Z",
   "windowDays": 62,
-  "from": "2026-09-11",
+  "from": "2026-09-12",
   "days": 60,
-  "total": 36597,
+  "total": 36617,
   "items": [
+    {
+      "id": "iornw",
+      "ts": 1794441913,
+      "time": "2026-11-12T08:05:13.000+08:00",
+      "source": "新浪财经",
+      "title": "机构：英国房屋销售前景创2023年以来最悲观水平",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymsim1795777.shtml"
+    },
+    {
+      "id": "n38iq0",
+      "ts": 1794441911,
+      "time": "2026-11-12T08:05:11.000+08:00",
+      "source": "东方财富",
+      "title": "粮食安全底座稳则全局稳",
+      "url": "http://finance.eastmoney.com/news/1352,202611123928827526.html"
+    },
+    {
+      "id": "1gogaao",
+      "ts": 1794441851,
+      "time": "2026-11-12T08:04:11.000+08:00",
+      "source": "东方财富",
+      "title": "水泥价格有望持续修复",
+      "url": "http://finance.eastmoney.com/news/1355,202611123928826710.html"
+    },
+    {
+      "id": "8lkewt",
+      "ts": 1794441741,
+      "time": "2026-11-12T08:02:21.000+08:00",
+      "source": "华尔街见闻",
+      "title": "杭州园林：控股子公司杭微天算与云尖信息、华鲲振宇签署《销售合同》，合计采购3万片NVIDIA RTX PRO5500 BLACKWELL及配件产品，具体以实际交付为准。",
+      "url": "https://wallstreetcn.com/livenews/3198688"
+    },
+    {
+      "id": "qqbbgo",
+      "ts": 1794441701,
+      "time": "2026-11-12T08:01:41.000+08:00",
+      "source": "新浪财经",
+      "title": "MSCI拟将“比特币巨鲸”Strategy从全球指数中剔除",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymsip3883833.shtml"
+    },
+    {
+      "id": "14veuml",
+      "ts": 1794441667,
+      "time": "2026-11-12T08:01:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日经225指数高开0.2%，韩国首尔综指高开0.2%。",
+      "url": "https://wallstreetcn.com/livenews/3198687"
+    },
+    {
+      "id": "wycskz",
+      "ts": 1794441660,
+      "time": "2026-11-12T08:01:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国10月三个月RICS房价指数 -36，预期 -34，前值 -32。",
+      "url": "https://wallstreetcn.com/livenews/3198686"
+    },
+    {
+      "id": "1kinl99",
+      "ts": 1794441609,
+      "time": "2026-11-12T08:00:09.000+08:00",
+      "source": "新浪财经",
+      "title": "AI相关股票盘后下挫 英伟达据报计划罢免黄仁勋",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymsif1222323.shtml"
+    },
+    {
+      "id": "102b5cs",
+      "ts": 1794441600,
+      "time": "2026-11-12T08:00:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国即将发行或正在发行的地方政府债",
+      "url": "https://wallstreetcn.com/livenews/3198685"
+    },
+    {
+      "id": "10iitia",
+      "ts": 1794441600,
+      "time": "2026-11-12T08:00:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国即将发行或正在发行的国债和政策性金融债",
+      "url": "https://wallstreetcn.com/livenews/3198684"
+    },
+    {
+      "id": "1quas64",
+      "ts": 1794441551,
+      "time": "2026-11-12T07:59:11.000+08:00",
+      "source": "东方财富",
+      "title": "乌兰察布给资源型城市上了一课",
+      "url": "http://finance.eastmoney.com/news/1355,202611123928828179.html"
+    },
+    {
+      "id": "vw40y1",
+      "ts": 1794441431,
+      "time": "2026-11-12T07:57:11.000+08:00",
+      "source": "东方财富",
+      "title": "80岁奶奶看短剧上瘾 半夜也看被孙儿“抓”到一顿“批评教育”",
+      "url": "http://finance.eastmoney.com/news/1350,202611123929003890.html"
+    },
+    {
+      "id": "9mxfo0",
+      "ts": 1794441332,
+      "time": "2026-11-12T07:55:32.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达据悉在与外部公司合作物色CEO候选人",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymsin8565699.shtml"
+    },
+    {
+      "id": "4i00ab",
+      "ts": 1794441314,
+      "time": "2026-11-12T07:55:14.000+08:00",
+      "source": "东方财富",
+      "title": "经济日报金观平：贸易顺差与汇率水平不能简单画等号",
+      "url": "http://forex.eastmoney.com/news/11142,202611123928827824.html"
+    },
+    {
+      "id": "1izjodp",
+      "ts": 1794441306,
+      "time": "2026-11-12T07:55:06.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达董事会据悉举行会议讨论黄仁勋的去留问题",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymsip3881094.shtml"
+    },
+    {
+      "id": "mfy5mx",
+      "ts": 1794441302,
+      "time": "2026-11-12T07:55:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "报道：加拿大养老金计划考虑将对冲基金配置翻倍至1600亿美元",
+      "url": "https://wallstreetcn.com/livenews/3198690"
+    },
+    {
+      "id": "1otcvng",
+      "ts": 1794441191,
+      "time": "2026-11-12T07:53:11.000+08:00",
+      "source": "华尔街见闻",
+      "title": "金石资源：控股子公司金鄂博氟化工11月12日起恢复生产，全年产量预计调整为15万吨左右",
+      "url": "https://wallstreetcn.com/livenews/3198682"
+    },
     {
       "id": "ox5xcd",
       "ts": 1794441154,
@@ -302,6 +438,30 @@
       "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-12/doc-iniymmzq8683910.shtml"
     },
     {
+      "id": "1g1w6eb",
+      "ts": 1794439419,
+      "time": "2026-11-12T07:23:39.000+08:00",
+      "source": "新浪财经",
+      "title": "葵花籽油期货及期权今日上市 ！",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-12/doc-iniymsim1790722.shtml"
+    },
+    {
+      "id": "2pvju2",
+      "ts": 1794439419,
+      "time": "2026-11-12T07:23:39.000+08:00",
+      "source": "新浪财经",
+      "title": "新规施行在即，期货公司迎全流程管理“大考”",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-12/doc-iniymsif1221213.shtml"
+    },
+    {
+      "id": "lk9wea",
+      "ts": 1794439419,
+      "time": "2026-11-12T07:23:39.000+08:00",
+      "source": "新浪财经",
+      "title": "昨夜今晨，集体上涨！伦铝现货大幅溢价，创逾30年新高！方案曝光，日本大动作，俄外交部紧急发声！",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-12/doc-iniymsip3880922.shtml"
+    },
+    {
       "id": "1ohhkzc",
       "ts": 1794439406,
       "time": "2026-11-12T07:23:26.000+08:00",
@@ -430,6 +590,14 @@
       "url": "https://wallstreetcn.com/livenews/3198661"
     },
     {
+      "id": "1alzos6",
+      "ts": 1794438160,
+      "time": "2026-11-12T07:02:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "加拿大驻美国大使Mark Wiseman警告称，美国总统特朗普的关税推高成本、威胁对美投资。",
+      "url": "https://wallstreetcn.com/livenews/3198689"
+    },
+    {
       "id": "183deyb",
       "ts": 1794438139,
       "time": "2026-11-12T07:02:19.000+08:00",
@@ -484,6 +652,14 @@
       "source": "东方财富",
       "title": "多省份上调最低工资标准；第39届中国电影金鸡奖获奖名单揭晓｜消费早参",
       "url": "http://finance.eastmoney.com/news/1350,202611123928841816.html"
+    },
+    {
+      "id": "c35cuf",
+      "ts": 1794437837,
+      "time": "2026-11-12T06:57:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国航司JetBlue推出全新头等舱座位，以期重获盈利",
+      "url": "https://wallstreetcn.com/livenews/3198683"
     },
     {
       "id": "169mxb5",
@@ -558,6 +734,14 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymmzr3984710.shtml"
     },
     {
+      "id": "175xj71",
+      "ts": 1794436560,
+      "time": "2026-11-12T06:36:00.000+08:00",
+      "source": "新浪财经",
+      "title": "油价冲高回落，收长下影线后再收长上影线，进入暴跌后修复阶段",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-12/doc-iniymsim1791635.shtml"
+    },
+    {
       "id": "cj6ej5",
       "ts": 1794436548,
       "time": "2026-11-12T06:35:48.000+08:00",
@@ -620,6 +804,14 @@
       "source": "新浪财经",
       "title": "黄仁勋又被爆 与向他汇报的英伟达高管有婚外情 英伟达盘后大跌",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymmzp1881601.shtml"
+    },
+    {
+      "id": "13i365b",
+      "ts": 1794435852,
+      "time": "2026-11-12T06:24:12.000+08:00",
+      "source": "新浪财经",
+      "title": "今日视点：透视出口数据里的“新”成色",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-12/doc-iniymmzq8657179.shtml"
     },
     {
       "id": "juv7z",
@@ -830,12 +1022,12 @@
       "url": "http://auto.eastmoney.com/news/11262,202611123928828770.html"
     },
     {
-      "id": "1quas64",
+      "id": "1omeppi",
       "ts": 1794434291,
       "time": "2026-11-12T05:58:11.000+08:00",
       "source": "东方财富",
-      "title": "乌兰察布给资源型城市上了一课",
-      "url": "http://finance.eastmoney.com/news/1355,202611123928828179.html"
+      "title": "古瓷加速融入当代生活",
+      "url": "http://finance.eastmoney.com/news/1355,202611123928827286.html"
     },
     {
       "id": "n38iq0",
@@ -844,14 +1036,6 @@
       "source": "东方财富",
       "title": "粮食安全底座稳则全局稳",
       "url": "http://finance.eastmoney.com/news/1352,202611123928827526.html"
-    },
-    {
-      "id": "1omeppi",
-      "ts": 1794434291,
-      "time": "2026-11-12T05:58:11.000+08:00",
-      "source": "东方财富",
-      "title": "古瓷加速融入当代生活",
-      "url": "http://finance.eastmoney.com/news/1355,202611123928827286.html"
     },
     {
       "id": "1gogaao",
@@ -292756,30 +292940,6 @@
       "source": "国家统计局",
       "title": "2026年9月上旬流通领域重要生产资料市场价格变动情况",
       "url": "https://www.stats.gov.cn/sj/zxfb/202609/t20260914_1965293.html"
-    },
-    {
-      "id": "2jc5om",
-      "ts": 1789135200,
-      "time": "2026-09-11T14:00:00.000Z",
-      "source": "美联储",
-      "title": "Agencies seek comment on proposed third-party risk management guidance and issue statement on community bank engagement with core service providers",
-      "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260911a.htm"
-    },
-    {
-      "id": "m9fng4",
-      "ts": 1789113110,
-      "time": "2026-09-11T15:51:50.000+08:00",
-      "source": "中国人民银行",
-      "title": "中国人民银行副行长宣昌能会见标普全球总裁玛蒂娜",
-      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026091115515046822/index.html"
-    },
-    {
-      "id": "yfqt1z",
-      "ts": 1789070400,
-      "time": "2026-09-10T20:00:00.000Z",
-      "source": "美联储",
-      "title": "Agencies reduce regulatory burden for community banks, increase eligibility for 18-month exam cycle",
-      "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260910a.htm"
     }
   ]
 }
