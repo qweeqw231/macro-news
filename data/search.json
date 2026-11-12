@@ -1,10 +1,138 @@
 {
-  "generatedAt": "2026-11-12T12:52:41.924Z",
+  "generatedAt": "2026-11-12T13:07:53.183Z",
   "windowDays": 62,
   "from": "2026-09-12",
   "days": 60,
-  "total": 37568,
+  "total": 37584,
   "items": [
+    {
+      "id": "bxbc6f",
+      "ts": 1794488875,
+      "time": "2026-11-12T21:07:55.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Nebius美股盘前跌幅扩大至13%",
+      "url": "https://wallstreetcn.com/livenews/3199150"
+    },
+    {
+      "id": "gvks2k",
+      "ts": 1794488823,
+      "time": "2026-11-12T21:07:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "IBM已收购AuthMind，这是一家专注于身份可观测性与威胁检测的身份安全公司，旨在扩展其HashiCorp Vault平台内的AI代理运行时安全能力。",
+      "url": "https://wallstreetcn.com/livenews/3199149"
+    },
+    {
+      "id": "1d0bvg8",
+      "ts": 1794488750,
+      "time": "2026-11-12T21:05:50.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国官员推进与秘鲁和哥伦比亚的安全合作。",
+      "url": "https://wallstreetcn.com/livenews/3199148"
+    },
+    {
+      "id": "a4lph7",
+      "ts": 1794488645,
+      "time": "2026-11-12T21:04:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "波罗的海干散货指数上涨2.06%，报3020点。",
+      "url": "https://wallstreetcn.com/livenews/3199147"
+    },
+    {
+      "id": "ys1b8z",
+      "ts": 1794488611,
+      "time": "2026-11-12T21:03:31.000+08:00",
+      "source": "华尔街见闻",
+      "title": "AMD将对PsiQuantum进行股权投资。",
+      "url": "https://wallstreetcn.com/livenews/3199146"
+    },
+    {
+      "id": "1mpx13k",
+      "ts": 1794488530,
+      "time": "2026-11-12T21:02:10.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国总统特使威特科夫：希望我们很快就能宣布新一轮关于乌克兰问题的会谈。",
+      "url": "https://wallstreetcn.com/livenews/3199145"
+    },
+    {
+      "id": "ytsujc",
+      "ts": 1794488506,
+      "time": "2026-11-12T21:01:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "抖音电商“双11”收官：超330个产业带成交过亿",
+      "url": "https://wallstreetcn.com/livenews/3199144"
+    },
+    {
+      "id": "8mvesi",
+      "ts": 1794488485,
+      "time": "2026-11-12T21:01:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "罗马尼亚央行将基准利率维持在6.50%不变，预期为6.50%。",
+      "url": "https://wallstreetcn.com/livenews/3199143"
+    },
+    {
+      "id": "c7sw10",
+      "ts": 1794488468,
+      "time": "2026-11-12T21:01:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "夜盘期货开盘，沪银跌近2%，沪金跌超1%；",
+      "url": "https://wallstreetcn.com/livenews/3199141"
+    },
+    {
+      "id": "ab4521",
+      "ts": 1794488380,
+      "time": "2026-11-12T20:59:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "多家银行上调美元定存利率",
+      "url": "https://wallstreetcn.com/livenews/3199140"
+    },
+    {
+      "id": "1ets9ji",
+      "ts": 1794488378,
+      "time": "2026-11-12T20:59:38.000+08:00",
+      "source": "新浪财经",
+      "title": "新云龙头Nebius发财报：预计2026年资本开支增加、业绩指引偏弱",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniyntux1706914.shtml"
+    },
+    {
+      "id": "1rk9pu0",
+      "ts": 1794488351,
+      "time": "2026-11-12T20:59:11.000+08:00",
+      "source": "华尔街见闻",
+      "title": "上海市委深改委会议研究改革试点经验复制推广、知识产权全链条高质量发展等事项",
+      "url": "https://wallstreetcn.com/livenews/3199139"
+    },
+    {
+      "id": "1no59i3",
+      "ts": 1794488208,
+      "time": "2026-11-12T20:56:48.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达CEO黄仁勋或被罢免 苹果硬件负责人是候选人之一",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniyntux1705945.shtml"
+    },
+    {
+      "id": "dd03l9",
+      "ts": 1794488065,
+      "time": "2026-11-12T20:54:25.000+08:00",
+      "source": "新浪财经",
+      "title": "300862，重大资产重组方案出炉！",
+      "url": "https://finance.sina.com.cn/stock/zqgd/2026-11-12/doc-iniyntut1141703.shtml"
+    },
+    {
+      "id": "9ungut",
+      "ts": 1794488025,
+      "time": "2026-11-12T20:53:45.000+08:00",
+      "source": "华尔街见闻",
+      "title": "普京：俄方不能接受外国军队在乌克兰驻扎",
+      "url": "https://wallstreetcn.com/livenews/3199137"
+    },
+    {
+      "id": "1vnpmw9",
+      "ts": 1794487963,
+      "time": "2026-11-12T12:52:43.000Z",
+      "source": "中新网",
+      "title": "“duanju”爆火背后的中国短剧产业跃迁",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-12/10731139.shtml"
+    },
     {
       "id": "13b65hg",
       "ts": 1794487850,
