@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-12T23:07:48.799Z",
+  "generatedAt": "2026-11-12T23:22:54.127Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -819,26 +819,26 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 3877.87,
+      "price": 3876.25,
       "open": 3877.21,
       "high": 3880.32,
-      "low": 3876.77,
+      "low": 3875.49,
       "prevClose": 3877.43,
-      "changePct": 0.01,
-      "updatedAt": "2026-11-13T07:07:00+08:00",
+      "changePct": -0.03,
+      "updatedAt": "2026-11-13T07:22:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 50.02,
+      "price": 49.95,
       "open": 50.04,
       "high": 50.07,
-      "low": 50,
+      "low": 49.95,
       "prevClose": 50.04,
-      "changePct": -0.04,
-      "updatedAt": "2026-11-13T07:06:00+08:00",
+      "changePct": -0.18,
+      "updatedAt": "2026-11-13T07:22:00+08:00",
       "note": ""
     },
     {
