@@ -1,0 +1,168 @@
+{
+  "date": "2026-11-12",
+  "generatedAt": "2026-11-12T13:21:52+08:00",
+  "endedAt": "2026-11-12T13:22:02+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-11",
+    "to": "2026-11-12",
+    "fromAt": "2026-11-11T08:00:00+08:00",
+    "toAt": "2026-11-12T09:00:00+08:00",
+    "fromTs": 1794355200,
+    "toTs": 1794445200
+  },
+  "overview": "今日主线是国内稳市工具再加力、海外加息路径再上修：央行三季度货政报告提出加力实施支持资本市场两项货币政策工具、用好债市非银大额赎回互换便利，前三季度GDP增4.6%；海外高盛与野村把美联储第三次加息推到2027年3月，美债10年期或破5%，美元升至18个月高点、黄金跌破4000美元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行三季度货政报告：加力实施支持资本市场两项货币政策工具",
+      "summary": "人民银行11月11日发布三季度货币政策执行报告：坚持实施好适度宽松的货币政策，加力实施支持资本市场的两项货币政策工具，用好债市非银大额赎回互换便利，维护股票、债券、外汇市场平稳运行；前三季度GDP同比增长4.6%。",
+      "why": "稳市工具进入常态化加力阶段。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-11T20:25",
+      "url": "http://bank.eastmoney.com/news/1174,202611113928626480.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1352,202611113928706092.html",
+        "https://wallstreetcn.com/livenews/3198352",
+        "https://wallstreetcn.com/livenews/3198350",
+        "http://forex.eastmoney.com/news/11142,202611123928805132.html",
+        "http://forex.eastmoney.com/news/1131,202611123928839996.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行专栏：推动贷款利率定价基准改革，存款利率下降创造空间",
+      "summary": "央行三季度报告专栏指出：中国贷款利率已相对较低，截至2026年9月政策利率为1.4%，而贷款利率、房贷利率均已降至3%左右；存款利率下降可为贷款利率下降创造空间，商业银行需保持一定存贷差；比较国债与信用债、贷款利率时需还原税收影响因素。",
+      "why": "利率中枢下行的结构性来源被官方明确。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-11T18:04",
+      "url": "https://wallstreetcn.com/livenews/3198346",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3198360",
+        "https://wallstreetcn.com/livenews/3198351",
+        "http://bank.eastmoney.com/news/1174,202611113928626480.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "前三季度GDP增4.6%、出口增17.6%，机构看中国增长韧性",
+      "summary": "国泰海通宏观首席分析师于博表示，地产筑底、出口强劲、财政蓄势三线共振，看好中国经济增长韧性：今年前三季度GDP同比增长4.6%，其中三季度增长4.5%、较二季度加快0.2个百分点；前10个月出口金额同比增长17.6%，在外部不确定因素增多时体现经济韧性。",
+      "why": "增长动能决定稳市与汇率的定价基础。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-11T22:27",
+      "url": "http://finance.eastmoney.com/news/1378,202611113928746020.html",
+      "refs": [
+        "http://forex.eastmoney.com/news/11142,202611123928805132.html",
+        "http://stock.eastmoney.com/news/11219,202611113927981237.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "王毅同鲁比奥通电话，德国专家警告中期选举后关税风险加大",
+      "summary": "华尔街见闻早餐：王毅同美国国务卿鲁比奥通电话，双方就中美关系及两国元首互动深入交换意见。德国经济专家委员会成员费尔伯迈尔警告，中期选举结果不太可能促使华盛顿软化贸易保护主义立场，反而可能加剧关税政策不确定性，局势最早或在明年初趋紧。",
+      "why": "中美沟通与关税不确定性同时定价。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-12T07:20",
+      "url": "https://wallstreetcn.com/livenews/3198667",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3198531",
+        "https://wallstreetcn.com/livenews/3198472"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "高盛、野村上修美联储路径：12月加25基点，2027年3月第三度",
+      "summary": "高盛表示，10月美国CPI大幅高于预期，仍预计美联储12月第二次加息25个基点，并新增2027年3月第三次加息25个基点；降息预测推迟至年底。野村也预计12月和来年3月各加息一次，渣打称50个基点的情境有所增强。",
+      "why": "加息周期被拉长，重定价整个资产端。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-11T11:11",
+      "url": "https://wallstreetcn.com/livenews/3198087",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyipkf2004840.shtml",
+        "https://finance.sina.com.cn/tob/2026-11-11/doc-iniyixxz1859207.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniykvcr1619072.shtml",
+        "https://wallstreetcn.com/livenews/3198105"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "美债跌势料延续，10年期收益率或升破5%",
+      "summary": "衍生品交易显示美债跌势可能延续，10月通胀高于预期强化了市场对更激进加息的预期；因逢退伍军人节，美债现券市场周三休市，10年期美债期货显示重新开市后收益率可能升破5%。SOFR期权市场亦在加码对冲12月9日FOMC前的50个基点加息溢价。",
+      "why": "现券重开后的定价是全球资产第一道考验。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-11T18:41",
+      "url": "https://wallstreetcn.com/livenews/3198373",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3198523",
+        "https://finance.sina.com.cn/money/forex/whqqscgd/2026-11-11/doc-iniyiiah2195048.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniykqvx2278475.shtml",
+        "https://finance.sina.com.cn/tob/2026-11-11/doc-iniyixxy2014746.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "英国央行副行长称可能需要进一步加息，智库警告利率或需至5%",
+      "summary": "英国央行副行长Lombardelli表示，英国低招聘、低解雇的劳动力市场可能使工资压力更难缓解，警告利率可能需要再次上调；MPC成员Greene称主动收紧货币政策立场是合适的。一家领先智库警告，英国央行可能不得不将利率提高至5%。",
+      "why": "英央行路径决定英镑与全球长端利率。",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-11T12:38",
+      "url": "https://finance.sina.com.cn/roll/2026-11-11/doc-iniyitse8579276.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniyipkf1972075.shtml",
+        "https://wallstreetcn.com/livenews/3198587",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniykzmp1520019.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "美元指数升至2025年5月以来高点，黄金跌破4000美元",
+      "summary": "纽约汇市：通胀数据强化美联储加息押注，彭博美元指数升至2025年5月以来最高，一度上涨0.4%。贵金属同步承压，黄金失守4100美元后跌破4000美元；机构指出高盛等已下调金价目标，但全球央行购金与储备多元化仍提供结构性支撑。",
+      "why": "美元与金价是加息重定价最直接的读数。",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-12T04:39",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymftt4083556.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-11/doc-iniykvcv2168726.shtml",
+        "https://wallstreetcn.com/livenews/3198660",
+        "https://finance.sina.com.cn/money/nmetal/hjzx/2026-11-11/doc-iniyixxw5227332.shtml",
+        "https://wallstreetcn.com/livenews/3198616"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "OPEC月报：沙特10月产量增26%创冲突前最高，OPEC总产2716.4万桶/日",
+      "summary": "OPEC月报：沙特告知该组织其10月原油产量提高26%至每日1056万桶，创战争爆发以来最高；伊拉克产量增至战时新高、接近每日490万桶，远高于商定上限；伊朗产量约每日191万桶、出口已被美国封锁。OPEC 10月总产量2716.4万桶/日，较9月明显回升。",
+      "why": "供给快速回升主导油价与通胀预期。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-11T21:09",
+      "url": "https://wallstreetcn.com/livenews/3198451",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3198447",
+        "https://wallstreetcn.com/livenews/3198450",
+        "https://wallstreetcn.com/livenews/3198604"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "A股创业板指涨3.11%、成交1.68万亿元，算力硬件领涨",
+      "summary": "11月11日A股午后震荡反弹，创业板指涨超3%，沪深两市成交额1.68万亿元、较上一交易日放量1715亿元；算力硬件概念爆发，CPO、PCB领涨。收盘沪指涨0.46%、深成指涨1.32%、创业板指涨3.11%；隔夜美股AI链交易重燃，CoreWeave营收超预期并上调全年指引。",
+      "why": "算力链是中美市场当前唯一共振的主线。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-12T08:31",
+      "url": "http://forex.eastmoney.com/news/1131,202611123929076645.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3198620",
+        "https://wallstreetcn.com/livenews/3198298",
+        "http://forex.eastmoney.com/news/1131,202611123929077282.html"
+      ]
+    }
+  ],
+  "watch": [
+    "美债现券周四重开后的10年期收益率是否升破5%，以及2年期能否站上4.8%",
+    "12月9日FOMC前的50基点对冲定价：SOFR期权持仓与FedWatch概率的边际变化",
+    "国内：10月信贷与社融数据、央行公开市场净投放节奏，以及成品油新一轮调价窗口落地",
+    "算力链热度能否延续：创业板指成交能否维持在1.68万亿元上方，CoreWeave后续指引"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
