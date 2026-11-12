@@ -577,11 +577,17 @@ export const INDICES = [
   //   两者新浪 / 腾讯都没有代码，sina / tx 一律 null，只能走东财（与 n225/dax/ukx 同）。
   { key: 'sensex',    name: '印度SENSEX', market: 'IN', secid: '100.SENSEX',  sina: null, tx: null },
   { key: 'vnindex',   name: '越南VN指数', market: 'VN', secid: '100.VNINDEX', sina: null, tx: null },
+  // 外汇（2.15.0）：这两个的**报价与 K 线都走东财**，所以放进指数批量表。
+  //   · dxy = 100.UDI（ICE 美元指数，2 位小数），日/周/月/分钟 K 实测全可用；
+  //   · usdcny = 133.USDCNH（美元兑离岸人民币，4 位小数）——卡片名是「离岸人民币」，
+  //     与官方中间价（usdcny_mid，中国货币网、只有当日值）是两张卡、两个价格。
+  { key: 'dxy',       name: '美元指数',   market: 'FX', secid: '100.UDI',   sina: null, tx: null, fixedName: true },
+  { key: 'usdcny',    name: '离岸人民币', market: 'FX', secid: '133.USDCNH', sina: null, tx: null, fixedName: true },
 ];
 
-// ── 组合标的的 K 线（纳指100 / 伦敦金 / 上海金 / 人民币中间价）──
+// ── 组合标的的 K 线（纳指100 / 伦敦金 / 伦敦银 / 布伦特 / 上海金 / 人民币交叉盘）──
 //
-// 为什么单独一张表：这 4 个 key 的**实时价**来自各自的专业源（腾讯 / 上金所 / 中国货币网），
+// 为什么单独一张表：这些 key 的**实时价**来自各自的专业源（腾讯 / 上金所 / 新浪外汇），
 // **历史日线**则分散在多个源里。口径差异在 klineNote 里**如实标注**，
 // 前端会把它显示在 K 线注记上，不藏着。
 //
@@ -594,8 +600,10 @@ export const INDICES = [
 //     `/graph/Dailyhq`（2016-12-19 起 2391 根）**都是上金所 Au99.99** ⇒ 同品种 ✓
 //     （上金所的字段序实测为 [日期, 开, 收, 低, 高] —— 用新浪实时 SGE_AU9999 的昨收
 //       865.26 与 Dailyhq 2026-10-29 的「收」列交叉验证确认）
-//   · 人民币中间价：中国货币网只有当天接口，**没有历史**（历史接口全部 404）⇒ 只能用
-//     离岸价 133.USDCNH 作**代理**（CNH 离岸 ≠ 官方中间价，实测差约 0.8%）⇒ klineNote 标注
+//   · 人民币中间价：中国货币网只有当天接口，**没有历史**（历史接口全部 404）⇒ **不提供 K 线**，
+//     前端按 noHistory 如实说明。2.15.0 起**不再**用离岸价 133.USDCNH 作代理 ——
+//     代理会让同一张卡片出现「K 线 6.67 / 报价 6.72」两个价格，正是之前误读的来源。
+//   · 人民币交叉盘：新浪外汇 fx_s*（只有日线，2008-09 / 2014-11 起）。
 export const PORTFOLIO_KLINE = [
   {
     key: 'ndx', name: '纳指100', market: 'US', secid: '100.NDX100', sina: null, tx: 'usNDX',
@@ -634,9 +642,36 @@ export const PORTFOLIO_KLINE = [
     key: 'brent', name: '布伦特原油', market: 'CMDTY', secid: null, sina: null,
     tx: null, sinaGlobal: 'OIL', klineNote: '',
   },
+  // 2.15.0：usdcny 已移到 INDICES（报价与 K 线同走东财 133.USDCNH），这里不再重复登记 ——
+  //   否则 collect 会把同一个标的抓两遍（日志里也会出现两条）。
+  // 人民币交叉盘（2.15.0）：报价与日线都走**新浪外汇** fx_s*。
+  //   实测（2026-11-12）：日线 2008-09 / 2014-11 起，根数 3,710~5,178；只有日线，无分钟级。
+  //   ⚠ 日元/韩元按 **100 单位**报价（与官方中间价「100 日元 / 100 韩元」口径一致），
+  //     K 线 OHLC 同步 ×100（fxUnit），与卡片口径一致。
   {
-    key: 'usdcny', name: '人民币中间价', market: 'FX', secid: '133.USDCNH', sina: null, tx: null,
-    klineNote: '历史为离岸价 CNH，与官方中间价有基差（实测约 0.8%）',
+    key: 'eurcny', name: '欧元/人民币', market: 'FX', secid: null, sina: null, tx: null,
+    sinaFx: 'fx_seurcny', fxUnit: 1,
+    klineNote: '新浪外汇即期 EUR/CNY（2008-09 起）；只有日线，无分钟级数据',
+  },
+  {
+    key: 'gbpcny', name: '英镑/人民币', market: 'FX', secid: null, sina: null, tx: null,
+    sinaFx: 'fx_sgbpcny', fxUnit: 1,
+    klineNote: '新浪外汇即期 GBP/CNY（2014-11 起）；只有日线，无分钟级数据',
+  },
+  {
+    key: 'jpycny', name: '100日元/人民币', market: 'FX', secid: null, sina: null, tx: null,
+    sinaFx: 'fx_sjpycny', fxUnit: 100,
+    klineNote: '新浪外汇即期 JPY/CNY，按 100 日元报价（与官方中间价口径一致）；只有日线',
+  },
+  {
+    key: 'krwcny', name: '100韩元/人民币', market: 'FX', secid: null, sina: null, tx: null,
+    sinaFx: 'fx_skrwcny', fxUnit: 100,
+    klineNote: '新浪外汇即期 KRW/CNY，按 100 韩元报价（与官方中间价口径一致）；只有日线',
+  },
+  {
+    key: 'audcny', name: '澳元/人民币', market: 'FX', secid: null, sina: null, tx: null,
+    sinaFx: 'fx_saudcny', fxUnit: 1,
+    klineNote: '新浪外汇即期 AUD/CNY（2014-11 起）；只有日线，无分钟级数据',
   },
 ];
 
@@ -667,6 +702,7 @@ export async function fetchQuotes() {
   const targets = [
     ...INDICES.map((i) => ({
       key: i.key, name: i.name, market: i.market, secid: i.secid, tx: i.tx,
+      ...(i.fixedName ? { fixedName: true } : {}),
     })),
     ...ETFS.map((e) => ({
       key: e.key, name: e.name, market: 'ETF', secid: e.secid,
@@ -711,7 +747,7 @@ export function klineAvailable(key) {
   // sge_au9999 有东财 secid 也有上金所官网。
   const t = klineTarget(key);
   if (!t) return false;
-  return !!(t.secid || t.sina || t.tx || t.sinaGlobal || t.sge);
+  return !!(t.secid || t.sina || t.tx || t.sinaGlobal || t.sinaFx || t.sge);
 }
 
 export const KLINE_PERIODS = ['1d', '1w', '1M', '1m', '5m', '15m', '30m', '60m'];
@@ -797,6 +833,40 @@ export async function sinaGlobalDaily(symbol) {
 }
 
 /**
+ * 新浪外汇日线（人民币交叉盘 EUR/CNY、GBP/CNY、JPY/CNY…）。
+ *
+ * 接口：https://vip.stock.finance.sina.com.cn/forex/api/jsonp.php/var%20_data=/
+ *        NewForexService.getDayKLine?symbol=fx_seurcny
+ * 实测（2026-11-12）：
+ *   · 带 / 不带 Referer 都返回 200（开头是一段被注释掉的跳转脚本，无副作用）；
+ *   · 字段序是 **date,open,low,high,close**（不是 date,o,h,l,c —— 写错会把影线画反）；
+ *   · 根数：fx_seurcny 4,718（2008-09 起）/ fx_sgbpcny 3,710 / fx_sjpycny 5,178 /
+ *     fx_skrwcny 3,966 / fx_saudcny 3,758（均 2014-11 起）；
+ *   · **只有日线**，周/月由日线聚合（与前端 aggregateDaily 同口径）。
+ * @param {string} symbol 新浪代码（fx_seurcny …）
+ * @param {number} unit   报价单位倍数（日元/韩元 = 100）
+ */
+export async function sinaFxDaily(symbol, unit = 1) {
+  const url = 'https://vip.stock.finance.sina.com.cn/forex/api/jsonp.php/var%20_data=/' +
+    `NewForexService.getDayKLine?symbol=${symbol}`;
+  const txt = await get(url, { headers: { Referer: 'https://finance.sina.com.cn/' } });
+  const m = txt.match(/=\(([\s\S]*)\)/);
+  if (!m) throw new Error('新浪外汇返回格式异常');
+  const body = JSON.parse(m[1]);
+  const rows = String(body).split('|').filter(Boolean);
+  if (!rows.length) throw new Error('新浪外汇返回空数据');
+  return rows.map((r) => {
+    const p = r.split(',');
+    // 100 单位报价（日元/韩元）：OHLC 同步 ×100；toFixed(8) 去掉浮点尾数（如 6.333523339999999）
+    const s = (v) => (unit === 1 ? +v : Number((v * unit).toFixed(8)));
+    return {
+      t: String(p[0]).slice(0, 10),
+      o: s(p[1]), l: s(p[2]), h: s(p[3]), c: s(p[4]), v: 0,
+    };
+  }).filter((b) => b.o > 0 && b.c > 0);
+}
+
+/**
  * 上海黄金交易所日线（Au99.99 等）。
  *
  * 接口：https://www.sge.com.cn/graph/Dailyhq?instid=Au99.99
@@ -840,6 +910,18 @@ function klineProviders(idx, period, limit) {
       // ⚠ 新浪外盘**只有日线**（Weekly/Min 接口都返回 __ERROR）⇒ 分钟周期明确不支持，
       //   绝不能拿日线糊弄成分钟K（前端 2026-10-30 就踩过这个坑：把月K 当 5 分钟画出来）。
       throw new Error(`新浪外盘不支持周期 ${period}`);
+    },
+  });
+
+  const pushSinaFx = () => P.push({
+    name: '新浪外汇',
+    run: async () => {
+      if (!idx.sinaFx) throw new Error('新浪外汇无该标的');
+      const daily = await sinaFxDaily(idx.sinaFx, idx.fxUnit || 1);
+      if (period === '1d') return daily.slice(-limit);
+      if (period === '1w') return aggregateBars(daily, 'week').slice(-limit);
+      if (period === '1M') return aggregateBars(daily, 'month').slice(-limit);
+      throw new Error(`新浪外汇不支持周期 ${period}`);
     },
   });
 
@@ -926,6 +1008,7 @@ function klineProviders(idx, period, limit) {
     if (!(idx.emMinuteOnly && dailyPeriod)) pushEm();
   }
   else if (idx.sge) { pushEm(); pushSge(); }
+  else if (idx.sinaFx) { pushSinaFx(); }
   else { pushEm(); pushSina(); pushTx(); }
   return P;
 }

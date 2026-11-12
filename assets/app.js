@@ -150,7 +150,14 @@
     xag: '白银 银价 silver',
     brent: '原油 油价 布油 oil',
     sge_au9999: '黄金 金价 au9999',
-    usdcny: '汇率 人民币 cny',
+    usdcny: '汇率 人民币 cny 离岸 cnh',
+    usdcny_mid: '汇率 人民币 中间价 cny 央行',
+    dxy: '美元指数 美元 dxy dollar',
+    eurcny: '欧元 汇率 人民币 eur',
+    gbpcny: '英镑 汇率 人民币 gbp',
+    jpycny: '日元 汇率 人民币 jpy 100日元',
+    krwcny: '韩元 汇率 人民币 krw 100韩元',
+    audcny: '澳元 汇率 人民币 aud',
     cgb_1y: '国债 收益率 债券 bond',
     hsi: '恒指 恒生 hang seng',
     hs_tech: '恒科',
@@ -170,7 +177,8 @@
     dax: 'DAX', cac40: 'CAC40', ukx: 'FTSE',
     sensex: 'SENSEX', vnindex: 'VNINDEX',
     ndx: 'NDX', xau: 'XAU', xag: 'XAG', brent: 'BRENT',
-    sge_au9999: 'AU9999', usdcny: 'USDCNY', cgb_1y: 'CGB1Y',
+    sge_au9999: 'AU9999', usdcny: 'USDCNH', usdcny_mid: 'CNY', dxy: 'DXY', cgb_1y: 'CGB1Y',
+    eurcny: 'EURCNY', gbpcny: 'GBPCNY', jpycny: 'JPYCNY', krwcny: 'KRWCNY', audcny: 'AUDCNY',
   };
   const codeOf = (q) => {
     if (q.code) return String(q.code);
@@ -249,6 +257,13 @@
     return inRange(h, win[0], win[1]);
   }
 
+  // 2.15.0：显示精度按标的走（源精度分级），默认 2 位；
+  // 外汇 / 官方中间价 / 1Y 国债为 4 位。涨跌幅**不随**这个改，仍是全站 2 位。
+  const decOf = (key) => {
+    const M = window.MarketData;
+    return M && M.getDecimals ? M.getDecimals(key) : 2;
+  };
+
   function fmtNum(v, d = 2) {
     if (v === null || v === undefined || isNaN(v)) return '—';
     return Number(v).toLocaleString('zh-CN', { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -298,13 +313,13 @@
         if (spans.length < 2) return false;
 
         const up = (q.changePct || 0) >= 0;
-        const pxTxt = fmtNum(q.price);
+        const pxTxt = fmtNum(q.price, decOf(q.key));
         if (px.textContent !== pxTxt) px.textContent = pxTxt;
         px.classList.toggle('up', up);
         px.classList.toggle('down', !up);
 
         const amt = (q.price || 0) - (q.prevClose || 0);
-        const t1 = `${up ? '▲' : '▼'} ${fmtNum(Math.abs(amt))}`;
+        const t1 = `${up ? '▲' : '▼'} ${fmtNum(Math.abs(amt), decOf(q.key))}`;
         const t2 = `  ${Math.abs(q.changePct || 0).toFixed(2)}%`;
         if (spans[0].textContent !== t1) spans[0].textContent = t1;
         if (spans[1].textContent !== t2) spans[1].textContent = t2;
@@ -367,12 +382,12 @@
           nameBox.appendChild(el('span', 'q-name', q.name));
           nameBox.appendChild(el('span', 'q-code', codeOf(q)));
           head.appendChild(nameBox);
-          const px = el('span', `q-px ${up ? 'up' : 'down'}`, fmtNum(q.price));
+          const px = el('span', `q-px ${up ? 'up' : 'down'}`, fmtNum(q.price, decOf(q.key)));
           head.appendChild(px);
           card.appendChild(head);
           const chg = el('div', 'q-chg');
           const amt = (q.price || 0) - (q.prevClose || 0);
-          chg.appendChild(el('span', up ? 'up' : 'down', `${up ? '▲' : '▼'} ${fmtNum(Math.abs(amt))}`));
+          chg.appendChild(el('span', up ? 'up' : 'down', `${up ? '▲' : '▼'} ${fmtNum(Math.abs(amt), decOf(q.key))}`));
           chg.appendChild(el('span', up ? 'up' : 'down', `  ${Math.abs(q.changePct || 0).toFixed(2)}%`));
           card.appendChild(chg);
           const st = statusOf(q);
@@ -1841,11 +1856,35 @@
     const saved = uiState && uiState.kline && uiState.kline.key === key ? uiState.kline : null;
     $('#klineModal').hidden = false;
     $('#kmName').textContent = q ? q.name : (saved && saved.name ? saved.name : key);
-    $('#kmPrice').textContent = q ? fmtNum(q.price) : (saved && saved.price ? saved.price : '');
+    $('#kmPrice').textContent = q ? fmtNum(q.price, decOf(key)) : (saved && saved.price ? saved.price : '');
     $('#kmPrice').className = 'km-price ' + ((q?.changePct || 0) >= 0 ? 'up' : 'down');
 
     const periods = $('#kmPeriods');
     periods.innerHTML = '';
+    // 无历史序列的标的（官方中间价）：K 线**不可得**，不能画空图框、也不能拿别的序列顶替。
+    // 直接把周期条/均线/画布收起，只留口径说明。
+    const noHistory = !!(window.MarketData && window.MarketData.hasNoHistory
+      && window.MarketData.hasNoHistory(key));
+    const canvasBox = $('#kmCanvas');
+    const maBox = $('#kmMA');
+    if (noHistory) {
+      periods.hidden = true;
+      maBox.hidden = true;
+      canvasBox.style.display = 'none';
+      $('#kmMeta').textContent = '';
+      $('#kmNote').textContent = window.MarketData.getKlineNote
+        ? window.MarketData.getKlineNote(key)
+        : '该标的没有历史序列';
+      // 记住当前标的，刷新页面后仍能恢复这张「无历史」说明，而不是回到上一张图
+      klineKey = key;
+      klinePeriod = period;
+      saveUI();
+      return;
+    }
+    periods.hidden = false;
+    maBox.hidden = false;
+    canvasBox.style.display = '';
+
     // 1Y国债收益率是**逐日一条曲线**（中债只有日频），既没有分钟源也没有腾讯代码
     // ⇒ 分钟周期对它必然是空的，直接不渲染这几个页签，别让用户点了只得到一句「加载失败」
     const dailyOnly = key === 'cgb_1y';
@@ -1859,6 +1898,8 @@
 
     if (!kChart) kChart = new window.KlineChart($('#kmCanvas'));
     else kChart.reset();              // ← 清掉上一个标的的图（残留 bug）
+    // 精度按标的走：轴标签 / 十字线 OHLC / 均线图例都读这个值
+    kChart.setDecimals(decOf(key));
     renderMA();
     loadKline(key, period);
     scheduleKlineRefresh();

@@ -21,6 +21,8 @@ class KlineChart {
     this.offset = 0;          // 右侧回看的根数：0 = 显示到最新
     this.dragging = false;
     this.period = '1d';       // 周期：决定横轴刻度格式与年份标记
+    // 2.15.0：价格显示精度（按标的源精度分级，默认 2 位；外汇/中间价/国债为 4 位）
+    this.decimals = 2;
     this._anim = null;        // 缩放动画的 requestAnimationFrame id
     this._zoomTarget = this.barsShown; // 连续缩放时的目标根数（避免动画中反复重算基准）
     // 均线：5/10/20/30/60/120/250，可在弹窗里逐条开关（年K 不画均线）
@@ -58,6 +60,19 @@ class KlineChart {
   setMAEnabled(list) {
     this.maEnabled = new Set((list || []).filter((n) => n >= 2));
     this.render();
+  }
+
+  /** 2.15.0：设置价格显示精度（轴标签 / 均线图例 / 十字线明细共用） */
+  setDecimals(d) {
+    const n = Number(d);
+    this.decimals = Number.isFinite(n) && n >= 0 && n <= 6 ? n : 2;
+    this.render();
+  }
+
+  /** 按当前精度格式化价格（只影响显示，不改数据） */
+  _fmt(v) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n.toFixed(this.decimals) : '--';
   }
 
   /** 2.4.12：导出视窗状态（刷新前存 sessionStorage） */
@@ -449,7 +464,7 @@ class KlineChart {
       ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
       ctx.fillStyle = '#8a8a8a';
       ctx.textAlign = 'left';
-      ctx.fillText(p.toFixed(2), w - pad.r + 5, y);
+      ctx.fillText(this._fmt(p), w - pad.r + 5, y);
     }
 
     // ---- 成交量副图 ----
@@ -506,7 +521,7 @@ class KlineChart {
     const leg = mas.map(({ n, arr, color }) => ['MA' + n, arr[arr.length - 1], color]);
     let lx = pad.l + 4;
     leg.forEach(([name, v, col]) => {
-      const txt = name + ':' + (v == null ? '--' : v.toFixed(2));
+      const txt = name + ':' + (v == null ? '--' : this._fmt(v));
       ctx.fillStyle = col;
       ctx.fillText(txt, lx, pad.t + 6);
       lx += ctx.measureText(txt).width + 10;
@@ -598,7 +613,7 @@ class KlineChart {
       ctx.fillRect(w - pad.r + 2, y - 8, pad.r - 4, 16);
       ctx.fillStyle = '#fff';
       ctx.textAlign = 'left';
-      ctx.fillText(yOfInverse(y, lo, hi, mainH).toFixed(2), w - pad.r + 5, y);
+      ctx.fillText(this._fmt(yOfInverse(y, lo, hi, mainH)), w - pad.r + 5, y);
 
       // 信息浮窗：涨跌按惯例对比「上一根收盘」，不是当天开盘。
       // ⚠ view 是切片，上一根要用全量 bars 的绝对下标取，否则视图左边缘会算错；
@@ -610,9 +625,9 @@ class KlineChart {
       const pct = base ? (chg / base) * 100 : 0;
       const lines = [
         `${b.t}`,
-        `开 ${b.o.toFixed(2)}   高 ${b.h.toFixed(2)}`,
-        `低 ${b.l.toFixed(2)}   收 ${b.c.toFixed(2)}`,
-        `涨跌 ${chg >= 0 ? '+' : ''}${chg.toFixed(2)} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`,
+        `开 ${this._fmt(b.o)}   高 ${this._fmt(b.h)}`,
+        `低 ${this._fmt(b.l)}   收 ${this._fmt(b.c)}`,
+        `涨跌 ${chg >= 0 ? '+' : ''}${this._fmt(chg)} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`,
         `量 ${fmtVol(b.v)}`,
       ];
       ctx.font = '12px system-ui';

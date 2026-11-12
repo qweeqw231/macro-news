@@ -37,7 +37,10 @@ test('INDICES：sox 走东财 251.SOX，落 US 组，紧邻 spx 之后', () => {
   assert.equal(s.sina, null, 'sox 不应挂新浪（gb_sox 只有实时价，没有日 K）');
   assert.equal(s.tx, null, 'sox 不应挂腾讯（usSOX 为空）');
   assert.equal(INDICES[i - 1].key, 'spx', 'sox 应紧跟在 spx 之后');
-  assert.equal(INDICES.length, 23, '指数总数应为 23');
+  // 2.15.0：INDICES 末尾多了 dxy / usdcny 两个外汇标的（报价与 K 线同走东财），
+  // 「指数」仍是 23 个 —— 断言按 market 剔除 FX 后计数，避免以后加外汇又改一次。
+  assert.equal(INDICES.length, 25, 'INDICES 总数应为 25（23 指数 + 2 外汇）');
+  assert.equal(INDICES.filter((x) => x.market !== 'FX').length, 23, '指数总数应为 23');
   // 落在 US 组内：前后邻居都是 US（或本组边界）
   assert.equal(INDICES[i - 1].market, 'US');
 });

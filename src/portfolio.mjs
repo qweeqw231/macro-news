@@ -107,8 +107,20 @@ export function validateQuote(q) {
   if (q.key === 'sge_au9999' && (q.price < 500 || q.price > 1500)) {
     return `上海金超出区间(${q.price})`;
   }
-  if (q.key === 'usdcny' && (q.price < 5.0 || q.price > 9.0)) {
-    return `中间价超出区间(${q.price})`;
+  // 分品种价格区间。2.15.0：usdcny 改为离岸人民币（CNH），官方中间价单独 usdcny_mid；
+  // 交叉盘按各自量级校验（日元/韩元是**100 单位**报价，所以阈值也是 100 单位口径）。
+  const FX_RANGE = {
+    usdcny: [5, 9],        // 离岸 USD/CNH
+    usdcny_mid: [5, 9],    // 官方中间价 USD/CNY
+    eurcny: [5, 12],
+    gbpcny: [7, 15],
+    jpycny: [2, 10],       // 100 日元 ≈ 4.2
+    krwcny: [0.2, 2],      // 100 韩元 ≈ 0.5
+    audcny: [2, 8],
+  };
+  if (FX_RANGE[q.key]) {
+    const [lo, hi] = FX_RANGE[q.key];
+    if (q.price < lo || q.price > hi) return `${q.name || q.key}超出区间(${q.price})`;
   }
   // 伦敦银（美元/盎司）：正常 10~200；布伦特原油（美元/桶）：正常 10~300
   if (q.key === 'xag' && (q.price < 5 || q.price > 300)) {
@@ -362,73 +374,98 @@ function this_parseSgeRow(html) {
 }
 
 // ============================================================================
-// §3.4 人民币中间价（usdcny）—— 中国货币网
+// §3.4 人民币中间价（usdcny_mid）—— 中国货币网
 // ============================================================================
 // 规格书假设该页是 JS 渲染的 HTML。实测页面确实是 JS 渲染，但站方同时提供了
 // 公开 JSON 接口，直接可用，更稳（无需解析 DOM）：
 //   https://www.chinamoney.com.cn/r/cms/www/chinamoney/data/fx/ccpr.json
 // 结构：{ data:{lastDate}, records:[{vrtEName:'USD/CNY', price:'6.7165', bpDouble:-6}] }
 // ⚠ 规格书的备用源 secid=133.USDCNY 实测返回 data:null（该 secid 不存在）。
-//   可用的离岸价 secid 是 133.USDCNH（美元兑离岸人民币），但那是 CNH 不是中间价，
-//   仅作兜底并标注 note，不作为主源。
-async function fetchUsdcny() {
-  // ---- 主源：中国货币网公开 JSON ----
-  let primaryErr = null;
-  try {
-    const j = await get(
-      'https://www.chinamoney.com.cn/r/cms/www/chinamoney/data/fx/ccpr.json',
-      { json: true, headers: { Referer: 'https://www.chinamoney.com.cn/chinese/bkccpr/' }, retries: 1 }
-    );
-    const rec = (j?.records || []).find((r) => r.vrtEName === 'USD/CNY');
-    if (!rec) throw new Error('中国货币网未返回 USD/CNY');
-    const price = num(rec.price);
-    if (price === null) throw new Error(`中国货币网 price 非法(${rec.price})`);
-    // bpDouble 为基点变化（1bp = 0.0001），据此反推昨收
-    const bp = Number(rec.bpDouble);
-    const prevClose = Number.isFinite(bp) ? Number((price - bp / 10000).toFixed(4)) : null;
-    const lastDate = j?.data?.lastDate || '';
-    const dt = String(lastDate).match(/(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})/);
-    return {
-      key: 'usdcny',
-      name: '人民币中间价',
-      market: 'FX',
-      price,
-      prevClose,
-      changePct: prevClose ? Number((((price - prevClose) / prevClose) * 100).toFixed(4)) : null,
-      updatedAt: dt ? `${dt[1]}T${dt[2].padStart(5, '0')}:00+08:00` : isoCN(),
-      note: '',
-    };
-  } catch (err) {
-    primaryErr = err;
-  }
+//   2.15.0 拆卡：这张是**官方中间价**，只有当日 09:15 一个值、没有历史；
+//   **不再**拿离岸价 133.USDCNH 兜底 —— 那会把 CNH 当成中间价显示，正是之前
+//   「6.67 / 6.72 对不上」那类误读的来源。取不到就保留 quotes.json 里的存量。
+async function fetchUsdcnyMid() {
+  const j = await get(
+    'https://www.chinamoney.com.cn/r/cms/www/chinamoney/data/fx/ccpr.json',
+    { json: true, headers: { Referer: 'https://www.chinamoney.com.cn/chinese/bkccpr/' }, retries: 1 }
+  );
+  const rec = (j?.records || []).find((r) => r.vrtEName === 'USD/CNY');
+  if (!rec) throw new Error('中国货币网未返回 USD/CNY');
+  const price = num(rec.price);
+  if (price === null) throw new Error(`中国货币网 price 非法(${rec.price})`);
+  // bpDouble 为基点变化（1bp = 0.0001），据此反推昨收
+  const bp = Number(rec.bpDouble);
+  const prevClose = Number.isFinite(bp) ? Number((price - bp / 10000).toFixed(4)) : null;
+  const lastDate = j?.data?.lastDate || '';
+  const dt = String(lastDate).match(/(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})/);
+  return {
+    key: 'usdcny_mid',
+    name: '人民币中间价',
+    market: 'FX',
+    price,
+    prevClose,
+    changePct: prevClose ? Number((((price - prevClose) / prevClose) * 100).toFixed(4)) : null,
+    updatedAt: dt ? `${dt[1]}T${dt[2].padStart(5, '0')}:00+08:00` : isoCN(),
+    note: '',
+  };
+}
 
-  // ---- 备用源：东方财富 ----
-  // ⚠ 规格书写的 secid=133.USDCNY 实测 data:null（该 secid 不存在）；
-  //   实际可用的是 133.USDCNH（美元兑离岸人民币 CNH）。
-  //   CNH 离岸价 ≠ 在岸中间价（实测 6.6634 vs 中间价 6.7165，差约 0.8%），
-  //   故按规格要求在 note 上标记，只作兜底不作主源。
-  try {
-    const j = await get(
-      'https://push2.eastmoney.com/api/qt/stock/get?secid=133.USDCNH&fields=f43,f44,f45,f46,f60,f169,f170',
-      { json: true, headers: { Referer: 'https://quote.eastmoney.com/' } }
-    );
-    const d = j?.data;
-    if (!d || !d.f43) throw new Error(`东方财富无数据(rc=${j?.rc})`);
-    const price = Number(d.f43) / 10000;
-    const prevClose = Number(d.f60) / 10000;
-    return {
-      key: 'usdcny',
-      name: '人民币中间价',
-      market: 'FX',
-      price,
-      prevClose,
-      changePct: d.f170 !== undefined ? Number(d.f170) : null,
-      updatedAt: isoCN(),
-      note: 'estimated', // 备用源是 CNH 离岸价，非官方中间价
-    };
-  } catch (err) {
-    throw new Error(`主源失败(${primaryErr?.message})；备用源失败(${err.message})`);
-  }
+// ============================================================================
+// §3.4b 人民币交叉盘（EUR / GBP / 100JPY / 100KRW / AUD 对 CNY）—— 新浪外汇
+// ============================================================================
+// 接口：https://hq.sinajs.cn/list=fx_seurcny,fx_sgbpcny,...
+// ⚠ 必须带新浪 Referer：不带时实测 **403 Forbidden**（浏览器直连同样 403）
+//   ⇒ 这类报价只能服务端采集（15 分钟一轮），前端卡片状态如实显示「本地快照」。
+// 字段（实测 2026-11-12）：[0]时间 [1]现价 [5]昨收 [10]涨跌幅% [17]日期
+//   ⚠ 旧记录里写的「[3]昨收 / [5]开盘」是错的：用 [5] 算涨跌幅才与源给的 [10] 对得上
+//     （EUR/CNY：7.3741 / 7.3967 → -0.31%，与 [10] 一致）。
+const FX_CROSS = [
+  { key: 'eurcny', name: '欧元/人民币', code: 'fx_seurcny', unit: 1 },
+  { key: 'gbpcny', name: '英镑/人民币', code: 'fx_sgbpcny', unit: 1 },
+  { key: 'jpycny', name: '100日元/人民币', code: 'fx_sjpycny', unit: 100 },
+  { key: 'krwcny', name: '100韩元/人民币', code: 'fx_skrwcny', unit: 100 },
+  { key: 'audcny', name: '澳元/人民币', code: 'fx_saudcny', unit: 1 },
+];
+
+// 一次请求取回全部交叉盘：5 个 key 共用同一份响应（5 秒内复用，避免重复打新浪）
+let fxRawCache = { at: 0, promise: null };
+function fetchFxRaw() {
+  if (Date.now() - fxRawCache.at < 5000 && fxRawCache.promise) return fxRawCache.promise;
+  const at = Date.now();
+  const promise = get('https://hq.sinajs.cn/list=' + FX_CROSS.map((x) => x.code).join(','), {
+    headers: { Referer: 'https://finance.sina.com.cn/' }, retries: 1,
+  });
+  fxRawCache = { at, promise };
+  promise.catch(() => { if (fxRawCache.promise === promise) fxRawCache = { at: 0, promise: null }; });
+  return promise;
+}
+
+async function fetchFxCross(def) {
+  const text = await fetchFxRaw();
+  const m = new RegExp(`hq_str_${def.code}="([^"]*)"`).exec(text);
+  if (!m) throw new Error(`新浪外汇未返回 ${def.code}`);
+  const f = m[1].split(',');
+  if (f.length < 18) throw new Error(`新浪外汇 ${def.code} 字段不足(${f.length})`);
+  const price = num(f[1]);
+  const prevClose = num(f[5]);
+  if (price === null) throw new Error(`新浪外汇 ${def.code} 价格非法(${f[1]})`);
+  const hm = /^\d{2}:\d{2}:\d{2}$/.test(f[0]) ? f[0] : '00:00:00';
+  const day = /^\d{4}-\d{2}-\d{2}$/.test(f[17]) ? f[17] : ymd(new Date());
+  const scale = (v) => (v === null ? null : Number((v * def.unit).toFixed(6)));
+  return {
+    key: def.key,
+    name: def.name,
+    market: 'FX',
+    price: scale(price),
+    prevClose: scale(prevClose),
+    changePct: num(f[10]),
+    // 新浪外汇的 [2]/[3]/[6] 语义不可靠（不同货币对不一致），宁可不给也不猜
+    open: null,
+    high: null,
+    low: null,
+    updatedAt: `${day}T${hm}+08:00`,
+    note: '',
+  };
 }
 
 // ============================================================================
@@ -505,7 +542,9 @@ export const PORTFOLIO_QUOTES = [
   { key: 'xag', label: '伦敦银', run: fetchXag },
   { key: 'brent', label: '布伦特原油', run: fetchBrent },
   { key: 'sge_au9999', label: '上海金Au99.99', run: fetchSgeAu9999 },
-  { key: 'usdcny', label: '人民币中间价', run: fetchUsdcny },
+  { key: 'usdcny_mid', label: '人民币中间价', run: fetchUsdcnyMid },
+  // 交叉盘：5 个 key 共用一次新浪请求（见 fetchFxRaw）
+  ...FX_CROSS.map((d) => ({ key: d.key, label: d.name, run: () => fetchFxCross(d) })),
   { key: 'cgb_1y', label: '1Y国债收益率', run: fetchCgb1y },
 ];
 
@@ -621,7 +660,7 @@ export async function fetchPortfolioQuotes(prevQuotes = []) {
 // 2.6.0：上海金移出「一天只发一次」名单 —— 它日盘/夜盘连续交易，
 // 15:30 之前一律沿用上一交易日收盘，卡片整天停在旧价（11-06 实测）。
 // 现在：盘中每轮取东财实时；15:30 收盘后再取一次上金所官方收盘价覆盖。
-const DAILY_PUBLISH = { usdcny: '09:15', cgb_1y: '17:00' };
+const DAILY_PUBLISH = { usdcny_mid: '09:15', cgb_1y: '17:00' };
 const SGE_CLOSE_HM = '15:30';
 
 /** 北京时间的 日期 / 时刻 / 星期（0=周日） */
@@ -717,7 +756,7 @@ export async function fetchPortfolioQuotesFast(prevQuotes = []) {
 function estimateSgeAu9999(quotes, prevQuotes) {
   const ref = (prevQuotes || []).find((q) => q.key === 'sge_au9999');
   const xau = quotes.find((q) => q.key === 'xau');
-  const fx = quotes.find((q) => q.key === 'usdcny');
+  const fx = quotes.find((q) => q.key === 'usdcny_mid');
   if (!ref || !(ref.price > 0)) return null;
   if (!xau || xau.changePct === null || xau.changePct === undefined) return null;
 

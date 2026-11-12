@@ -73,7 +73,9 @@ export async function fetchBatchQuotes(targets) {
       }
       quotes.set(meta.key, {
         key: meta.key,
-        name: d.f14 || meta.name,
+        // fixedName：站内定名与源端显示名不同时必须用站内的（例：东财把 133.USDCNH
+        // 叫「美元兑离岸人民币」，而这张卡叫「离岸人民币」，且另有官方中间价卡）
+        name: meta.fixedName ? meta.name : (d.f14 || meta.name),
         market: meta.market,
         ...(meta.theme ? { theme: meta.theme } : {}),
         ...(meta.region ? { region: meta.region } : {}),

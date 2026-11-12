@@ -120,6 +120,9 @@ const BAR_CLOSED_AT = {
   // 越南 HOSE 14:45 ICT = 北京 15:45。印度不在此表：pm 不取印度，
   // am 用默认 15:00 已能保证「12:05 时当天未收完 ⇒ 取 T-1」。
   VN: '15:45',
+  // 外汇（美元指数 / 离岸人民币）：24 小时连续，收盘口径取纽约收市 → 北京次日 05:00。
+  // 这样 16:12 的 pm、12:05 的 am 取到的都是**上一根已收完**的日 K，不会把盘中值当收盘。
+  FX: '05:00+1',
   EU: '00:30+1', UK: '00:30+1', US: '05:00+1',
 };
 
@@ -158,6 +161,8 @@ export function lastClosedBarDate(market, date, session) {
 }
 // 实时价「已冻结在目标价」的容忍窗口（分钟）
 const FREEZE_TOLERANCE_MIN = 5;
+// 24 小时连续交易（没有交易所收盘价）的组合标的：快照里记的是采集时点报价
+const CONTINUOUS_24H = new Set(['xau', 'xag', 'brent', 'eurcny', 'gbpcny', 'jpycny', 'krwcny', 'audcny']);
 
 async function readJSON(file, fallback) {
   if (!existsSync(file)) return fallback;
@@ -191,7 +196,13 @@ function buildTargets() {
     ['xag', '伦敦银', 'CMDTY'],
     ['brent', '布伦特原油', 'CMDTY'],
     ['sge_au9999', '上海金Au99.99', 'SGE'],
-    ['usdcny', '人民币中间价', 'FX'],
+    ['usdcny_mid', '人民币中间价', 'FX'],
+    // 2.15.0 交叉盘：24 小时连续报价，日频值只在当日有效（与 xau 同类）
+    ['eurcny', '欧元/人民币', 'FX'],
+    ['gbpcny', '英镑/人民币', 'FX'],
+    ['jpycny', '100日元/人民币', 'FX'],
+    ['krwcny', '100韩元/人民币', 'FX'],
+    ['audcny', '澳元/人民币', 'FX'],
     ['cgb_1y', '1Y国债收益率', 'CN'],
   ]) {
     list.push({ key, name, market, kind: 'portfolio', secid: null, tx: null, amBar: null });
@@ -366,7 +377,9 @@ async function buildSnapshot(date, session) {
         open: q.open ?? null, high: q.high ?? null, low: q.low ?? null,
         asOf: q.updatedAt,
         priceSource: 'daily',
-        note: t.key === 'xau' ? '24小时连续交易，非收盘价' : '',
+        // 24 小时连续品种：写入的是「采集时点的报价」，不是交易所收盘价，必须如实标注。
+        // 2.15.0 起把 FX 交叉盘也纳入这一口径（此前只有 xau）。
+        note: CONTINUOUS_24H.has(t.key) ? '24小时连续交易，非收盘价' : '',
       };
       priced++;
       continue;

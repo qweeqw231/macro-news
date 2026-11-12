@@ -40,8 +40,14 @@ test('INDICES：sensex / vnindex 走东财 secid，排在韩国之后', () => {
   assert.equal(v.secid, '100.VNINDEX');
   assert.equal(v.sina, null);
   assert.equal(v.tx, null);
-  assert.equal(INDICES[INDICES.length - 1].key, 'vnindex', 'vnindex 应排在末尾');
-  assert.equal(INDICES[INDICES.length - 2].key, 'sensex', 'sensex 应紧邻 vnindex 之前');
+  // 2.15.0：INDICES 末尾又加了 dxy / usdcny 两个外汇标的，
+  // 所以这里不再断言「vnindex 是最后一个」，只锁定 sensex 紧跟 vnindex 之前。
+  assert.equal(INDICES[INDICES.length - 1].market, 'FX');
+  assert.equal(INDICES[INDICES.length - 1].key, 'usdcny');
+  assert.equal(INDICES[INDICES.length - 2].market, 'FX');
+  assert.equal(INDICES[INDICES.length - 2].key, 'dxy');
+  const iV = INDICES.findIndex((x) => x.key === 'vnindex');
+  assert.equal(INDICES[iV - 1].key, 'sensex', 'sensex 应紧邻 vnindex 之前');
 });
 
 test('前端与 Worker：卡片 / 代码 / 搜索 / 分组都认识两个新标的', () => {
