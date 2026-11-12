@@ -8,6 +8,7 @@ import { fetchBatchQuotes } from './quotes.mjs';
 import { emGetJSON, KLINE_HOSTS } from './em.mjs';
 import { titleFromText } from './news-title.mjs';
 import { pbcTimeFromUrl } from './pbc-time.mjs';
+import { describeSourceError } from './source-error.mjs';
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
@@ -15,8 +16,14 @@ const UA =
 
 const TIMEOUT_MS = 15000;
 
-/** 带超时的请求；可选重试（GitHub 美国节点访问国内接口偶发超时） */
-async function get(url, { json = false, headers = {}, timeout = TIMEOUT_MS, retries = 0 } = {}) {
+/**
+ * 带超时的请求；可选重试（GitHub 美国节点访问国内接口偶发超时）。
+ *
+ * `range`（如 `0-393215`）用于限长读取：服务端支持时返回 206 + 被截断的正文，
+ * 由调用方丢弃最后一条不完整的记录；服务端忽略 Range 时退回 200 全文，行为不变。
+ * 返回 status 是为了让调用方区分「真被截断」与「Range 被忽略」，不能靠正文长度猜。
+ */
+async function requestText(url, { json = false, headers = {}, timeout = TIMEOUT_MS, retries = 0, range } = {}) {
   let lastErr;
   for (let attempt = 0; attempt <= retries; attempt++) {
     const ctrl = new AbortController();
@@ -24,10 +31,16 @@ async function get(url, { json = false, headers = {}, timeout = TIMEOUT_MS, retr
     try {
       const res = await fetch(url, {
         signal: ctrl.signal,
-        headers: { 'User-Agent': UA, Accept: json ? 'application/json' : '*/*', ...headers },
+        headers: {
+          'User-Agent': UA,
+          Accept: json ? 'application/json' : '*/*',
+          ...(range ? { Range: `bytes=${range}` } : {}),
+          ...headers,
+        },
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return json ? await res.json() : await res.text();
+      const body = json ? await res.json() : await res.text();
+      return { body, status: res.status };
     } catch (err) {
       lastErr = err;
       if (attempt < retries) await new Promise((r) => setTimeout(r, 800));
@@ -36,6 +49,24 @@ async function get(url, { json = false, headers = {}, timeout = TIMEOUT_MS, retr
     }
   }
   throw lastErr;
+}
+
+async function get(url, opts = {}) {
+  return (await requestText(url, opts)).body;
+}
+
+/**
+ * Range 截断后的正文清理：只保留到最后一条**完整** `<item>` / `<entry>` 为止。
+ *
+ * 为什么必须显式做：`parseFeed` 的 `/<item[\s>][\s\S]*?<\/item>/` 虽然天然匹配不到
+ * 缺 `</item>` 的残条，但那是正则的副作用；一旦将来解析方式变化，半条记录就会被
+ * 当成真条目写进归档（标题/时间都在、正文缺一半）。这里按闭合标签切断，语义明确。
+ */
+function dropTrailingPartialItem(xml) {
+  const closes = [...String(xml).matchAll(/<\/(item|entry)>/gi)];
+  if (!closes.length) return '';
+  const last = closes[closes.length - 1];
+  return xml.slice(0, last.index + last[0].length);
 }
 
 // ---------- 工具 ----------
@@ -437,13 +468,20 @@ async function pbcNews() {
  * 解析成功但**一条标题都取不到**也算这个入口不可用（继续试下一个），
  * 否则会悄悄采到一个 0 条的源还标成「成功」。
  */
-function rssSource({ name, channel, url, urls, limit = 30, tag = '', timeout = 15000, retries = 0, tz = DEFAULT_FEED_TZ }) {
+function rssSource({ name, channel, url, urls, limit = 30, tag = '', timeout = 15000, retries = 0, tz = DEFAULT_FEED_TZ, maxBytes = 0 }) {
   const candidates = urls && urls.length ? urls : [url];
   return async () => {
     const errors = [];
+    let firstErr;
     for (const u of candidates) {
       try {
-        const xml = await get(u, { timeout, retries });
+        const res = await requestText(u, {
+          timeout,
+          retries,
+          ...(maxBytes ? { range: `0-${maxBytes - 1}` } : {}),
+        });
+        // 只有服务端真的返回 206 才可能被截断；200 说明 Range 被忽略，按全文处理
+        const xml = maxBytes && res.status === 206 ? dropTrailingPartialItem(res.body) : res.body;
         const items = parseFeed(xml).filter((i) => i.title);
         if (!items.length) {
           errors.push(`${shortUrl(u)} 无可解析条目`);
@@ -468,10 +506,14 @@ function rssSource({ name, channel, url, urls, limit = 30, tag = '', timeout = 1
           };
         });
       } catch (err) {
-        errors.push(`${shortUrl(u)} → ${String(err.message).slice(0, 60)}`);
+        // 2.13.7：把底层 code 一并写进消息，并保留 `cause`——
+        // 旧实现抛的是无 cause 的裸 Error，导致 2.5.0 的 causeCode 对该源永远为空。
+        const c = describeSourceError(err);
+        errors.push(`${shortUrl(u)} → ${String(err.message).slice(0, 60)}${c.causeCode ? `（${c.causeCode}）` : ''}`);
+        if (!firstErr) firstErr = err;
       }
     }
-    throw new Error(`RSS 全部入口失败：${errors.join('；')}`);
+    throw new Error(`RSS 全部入口失败：${errors.join('；')}`, firstErr ? { cause: firstErr } : undefined);
   };
 }
 
@@ -1003,6 +1045,13 @@ export const SOURCES = [
       tag: '中国宏观',
       timeout: 30000,
       retries: 1,
+      // 2.13.7：该站 RSS 是 500 条 / 4.5 MB 的未压缩全文（每条 description+content 各存一遍，
+      // 约 9KB/条），且忽略 Accept-Encoding: gzip。云端单轮中位 22.7s、p90 48.5s，
+      // 贴着 30s 单次预算 ⇒ 27% 的成功轮落在 24-30s 临界带，另有 14 次拉到一半被断。
+      // 站点支持 Range（实测 206 / bytes 0-524287/4498886），取 384KB ≈ 44 条 > limit 25，
+      // 把传输量砍到 1/12；被截断的尾条由 dropTrailingPartialItem 丢弃。
+      // Range 被忽略时退回 200 全文，行为与改动前完全一致。
+      maxBytes: 393216,
       // pubDate 无时区（`2026-11-04 09:30:00`），必须按北京时间解释：
       // 否则云端 UTC runner 会把 09:30 当成 09:30Z，前端再 +8 显示成 17:30。
       tz: 'Asia/Shanghai',
@@ -1010,4 +1059,4 @@ export const SOURCES = [
   },
 ];
 
-export { stableId, stripTags };
+export { stableId, stripTags, rssSource };

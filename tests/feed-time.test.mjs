@@ -59,8 +59,10 @@ test('历史回填只认「约 +480 分钟」：-720/0/其它一律不动', () =
 });
 
 test('sources 源码锁定：rssSource 用 parseFeedDate，国家统计局显式 tz', () => {
-  assert.match(SOURCES, /function rssSource\(\{ name, channel, url, urls, limit = 30, tag = '', timeout = 15000, retries = 0, tz = DEFAULT_FEED_TZ \}\)/);
+  assert.match(SOURCES, /function rssSource\(\{ name, channel, url, urls, limit = 30, tag = '', timeout = 15000, retries = 0, tz = DEFAULT_FEED_TZ, maxBytes = 0 \}\)/);
   assert.match(SOURCES, /const ms = parseFeedDate\(i\.date, tz\)/);
   assert.ok(!/const d = new Date\(i\.date\)/.test(SOURCES), '不得再用进程时区解析 RSS 日期');
-  assert.match(SOURCES, /name: '国家统计局',[\s\S]{0,400}tz: 'Asia\/Shanghai'/);
+  assert.match(SOURCES, /name: '国家统计局',[\s\S]{0,1200}tz: 'Asia\/Shanghai'/);
+  // 2.13.7：统计局必须限长读取（384KB），否则 4.5MB 全文会贴死 30s 单次预算
+  assert.match(SOURCES, /name: '国家统计局',[\s\S]{0,1200}maxBytes: 393216/);
 });
