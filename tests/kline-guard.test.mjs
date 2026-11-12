@@ -22,6 +22,21 @@ test('短且首根更晚 ⇒ 拒绝，保留现有', () => {
   assert.equal(d.bars, old);
 });
 
+test('2.14.0：取消抓取上限后，源端只回几十根的「真短序列」仍被拒绝', () => {
+  // 模拟 usdcny / xau 的真实形态：文件 1001 根，源端临时只返回最近 30 根
+  const days = (n, start) => Array.from({ length: n }, (_, i) => {
+    const d = new Date(Date.UTC(2026, 0, 1) + (start + i) * 86400000);
+    return d.toISOString().slice(0, 10);
+  });
+  const old = days(1001, 0).map((t) => obj(t));
+  const next = days(30, 971).map((t) => obj(t));
+  assert.equal(next.length < old.length && next[0].t > old[0].t, true);
+  const d = decideBars(old, next);
+  assert.equal(d.action, 'reject');
+  assert.equal(d.reason, 'shorter');
+  assert.equal(d.bars.length, 1001, '现有 1001 根必须完好保留');
+});
+
 test('等长但末根更新 ⇒ 接受', () => {
   const old = ['2026-01-01', '2026-01-02', '2026-01-03'].map((t) => obj(t));
   const next = ['2026-01-01', '2026-01-02', '2026-01-03'].map((t) => obj(t));

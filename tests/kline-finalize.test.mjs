@@ -49,10 +49,43 @@ test('A股 12:18 未收盘；美股按美东日期', () => {
   assert.equal(lastClosedBarDate('US', BJ('2026-11-06T12:18:00')), '2026-11-05');
 });
 
-test('大宗 24h 与中间价的日线口径', () => {
+test('大宗 24h 与外汇 24h 的日线口径（2.14.0：FX 不再拿北京当天当已收盘）', () => {
   assert.equal(lastClosedBarDate('CMDTY', BJ('2026-11-06T12:18:00')), '2026-11-05');
   assert.equal(lastClosedBarDate('CMDTY', BJ('2026-11-06T04:00:00')), '2026-11-04');
-  assert.equal(lastClosedBarDate('FX', BJ('2026-11-06T12:18:00')), '2026-11-06');
+  // FX：24h 连续、按北京自然日切分 ⇒ 当天那根要到次日 00:00 才定稿
+  assert.equal(lastClosedBarDate('FX', BJ('2026-11-06T12:18:00')), '2026-11-05');
+  assert.equal(lastClosedBarDate('FX', BJ('2026-11-06T23:59:00')), '2026-11-05');
+  assert.equal(lastClosedBarDate('FX', BJ('2026-11-07T00:01:00')), '2026-11-06');
+});
+
+test('FX / CMDTY 无时段市场也要能定稿（writePlan 不再直接 skip）', () => {
+  // FX：文件里已有当天（仍在走）那根 ⇒ 每轮 open
+  assert.equal(
+    writePlan('FX', BJ('2026-11-06T12:00:00'), { lastBar: '2026-11-06', generatedAt: '2026-11-06T04:00:00Z' }).action,
+    'open'
+  );
+  // FX：文件停在昨天、且昨天那根是在收盘（11-07 00:00）之前写的 ⇒ 补定稿
+  assert.equal(
+    writePlan('FX', BJ('2026-11-07T03:00:00'), { lastBar: '2026-11-06', generatedAt: '2026-11-06T08:00:00Z' }).action,
+    'finalize'
+  );
+  // FX：收盘后已写过 ⇒ 幂等
+  assert.equal(
+    writePlan('FX', BJ('2026-11-07T03:00:00'), { lastBar: '2026-11-06', generatedAt: '2026-11-06T16:10:00Z' }).action,
+    'skip'
+  );
+  // CMDTY：05:00 前（04:59）最后一根已收完的是前天，文件里已有昨天的 bar ⇒ 它还在走 → open
+  assert.equal(
+    writePlan('CMDTY', BJ('2026-11-06T04:59:00'), { lastBar: '2026-11-05', generatedAt: '2026-11-05T00:00:00Z' }).action,
+    'open'
+  );
+  // 05:00 后昨天那根已收完，文件却停在 11-04 ⇒ 补定稿
+  assert.equal(
+    writePlan('CMDTY', BJ('2026-11-06T05:10:00'), { lastBar: '2026-11-04', generatedAt: '2026-11-05T00:00:00Z' }).action,
+    'finalize'
+  );
+  // 没有规则的市场仍然跳过
+  assert.equal(writePlan('XX', Date.now(), {}).action, 'skip');
 });
 
 test('writePlan：盘中更新 / 收盘补定稿 / 已定稿幂等 / 收盘缓冲', () => {
@@ -81,6 +114,6 @@ test('writePlan：盘中更新 / 收盘补定稿 / 已定稿幂等 / 收盘缓�
     writePlan('HK', BJ('2026-11-06T16:01:00'), { lastBar: '2026-11-06' }).action,
     'skip'
   );
-  // 没有交易时段配置的市场：不归本脚本管
-  assert.equal(writePlan('FX', now, {}).action, 'skip');
+  // 没有交易时段配置、也没有 NO_SESSION_CLOSE 规则的：不归本脚本管
+  assert.equal(writePlan('XX', now, {}).action, 'skip');
 });

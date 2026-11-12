@@ -46,10 +46,55 @@ export function lastCompletedClose(market, nowMs = Date.now(), calendar = CAL) {
 }
 
 /**
+ * 无交易时段配置的市场（FX / CMDTY）：日线收盘口径。
+ *
+ * 这两类市场没有交易所式的开收盘，所以**不能**给它们伪造 MARKET_SESSIONS 配置
+ * （那会让 sessionAt/假日表把 24 小时市场判成「休市」）。这里单独定义：
+ *
+ *   · FX（离岸 CNH / 在岸即期）：24 小时连续。东财 133.USDCNH、新浪 fx_* 的日 K
+ *     都按**北京自然日**切分 ⇒ D 日那根 bar 到 D+1 00:00 才不再变化。
+ *   · CMDTY（伦敦金/银、布伦特原油）：准 24 小时，每日约 06:00-07:00 北京短暂休市。
+ *     沿用仓库既有口径：**北京 05:00 收盘**（见 assets/market.js 的 klineNote：
+ *     「报价源 04:55 冻结，官方 05:00 收盘」）⇒ D 日 bar 到 D+1 05:00 定稿。
+ *
+ * closeHm 的含义：**D 日那根 bar 的收盘时刻在 D+1 的北京时间分钟数**。
+ */
+export const NO_SESSION_CLOSE = {
+  FX: { closeHm: 0, label: '24h 连续 · 北京自然日切分 · D+1 00:00 定稿' },
+  CMDTY: { closeHm: 5 * 60, label: '24h 准连续 · 北京 05:00 收盘 · D+1 05:00 定稿' },
+};
+
+/**
+ * 无时段市场「最近一根已经收完的 bar 日期」。
+ * 与 lastClosedBarDate 的区别：只处理 FX / CMDTY，不查 MARKET_SESSIONS。
+ */
+export function lastClosedNoSessionDate(market, nowMs = Date.now()) {
+  const rule = NO_SESSION_CLOSE[market];
+  if (!rule) return null;
+  const bj = bjNow(nowMs);
+  // 今天的 closeHm 已过 ⇒ 昨天那根已收完；未过 ⇒ 前天那根才是最后一根已收完的
+  return shiftDate(bj.date, bj.minutes >= rule.closeHm ? -1 : -2);
+}
+
+/**
+ * 某根 bar 的收盘时刻（UTC 毫秒）。
+ *   · 有交易时段配置的市场：交给 QS.dayCloseMs；
+ *   · FX / CMDTY：D+1 的 closeHm（北京）换算成 UTC。
+ */
+export function barCloseMs(market, date, calendar = CAL) {
+  if (QS.MARKET_SESSIONS[market]) return QS.dayCloseMs(market, date, calendar);
+  const rule = NO_SESSION_CLOSE[market];
+  if (!rule) return null;
+  const [y, m, d] = String(date).split('-').map(Number);
+  if (!y || !m || !d) return null;
+  return Date.UTC(y, m - 1, d + 1) + rule.closeHm * 60 * 1000 - 8 * 3600 * 1000;
+}
+
+/**
  * 某个市场在 now 时刻「允许写进日 K 的最后一根 bar 日期」。
  *   · 有交易时段配置的市场：最近一次收盘的日期；
  *   · CMDTY（伦敦金/银/布伦特，24h）：05:00 北京收盘，05:00 前连昨天的 bar 都没收完；
- *   · FX（人民币中间价）：09:15 发布，发布后当天的 bar 就是定稿。
+ *   · FX（离岸/在岸即期，24h）：按北京自然日切分，今天那根要到明天 00:00 才定稿。
  * @returns {string|null} null = 无法判定，调用方不要过滤
  */
 export function lastClosedBarDate(market, nowMs = Date.now(), calendar = CAL) {
@@ -59,13 +104,7 @@ export function lastClosedBarDate(market, nowMs = Date.now(), calendar = CAL) {
     //   · 上海金 02:30 是昨夜盘尾巴，日线要等 15:30。
     return QS.lastClosedDailyDate(market, Number(nowMs), calendar);
   }
-  const bj = bjNow(nowMs);
-  if (market === 'FX') return bj.date;
-  if (market === 'CMDTY') {
-    // 一天一根的 24h 品种：05:00 收盘。05:00 前，昨天那根也还没收完。
-    return shiftDate(bj.date, bj.minutes < 5 * 60 ? -2 : -1);
-  }
-  return null;
+  return lastClosedNoSessionDate(market, nowMs);
 }
 
 /** 时间键：对象行取 t，数组行取 [0] */
@@ -86,7 +125,7 @@ export function dropUnclosedBars(bars, market, nowMs = Date.now(), calendar = CA
 
 /**
  * update-kline-last 的写盘计划。
- *   open     ：当前在交易时段 → 照旧每轮 upsert（含夜盘“未来蜡烛”）
+ *   open     ：当前在交易时段（或 24h 品种已有「尚未收盘」的新 bar）→ 照旧每轮 upsert
  *   finalize ：已收盘，且这根收盘 bar 还没在收盘后写过 → 补一次
  *   skip     ：其余
  * @param {string} market
@@ -94,7 +133,33 @@ export function dropUnclosedBars(bars, market, nowMs = Date.now(), calendar = CA
  * @param {{generatedAt?:string, lastBar?:string}} state 现有文件的状态
  */
 export function writePlan(market, nowMs, state = {}, calendar = CAL) {
-  if (!QS.MARKET_SESSIONS[market]) return { action: 'skip', reason: 'no-session' };
+  const noSession = NO_SESSION_CLOSE[market];
+  if (!QS.MARKET_SESSIONS[market] && !noSession) return { action: 'skip', reason: 'no-session' };
+
+  // ---- FX / CMDTY：24h 或准 24h，没有交易所时段表，按上面的 NO_SESSION_CLOSE 定稿 ----
+  if (noSession) {
+    const now = Number(nowMs);
+    const closedDate = lastClosedNoSessionDate(market, now);
+    const lastBar = String(state.lastBar || '');
+    // 文件里已有比「最后一根已收完的 bar」更新的 bar（24h 品种的当天 bar、
+    // 上海金夜盘写出的下一交易日 bar）⇒ 它还在变化，走 open 每轮 upsert。
+    if (lastBar && closedDate && lastBar > closedDate) {
+      return { action: 'open', reason: 'in-progress-bar' };
+    }
+    const closeMs = barCloseMs(market, closedDate, calendar);
+    if (closeMs == null || now - closeMs < 2 * 60 * 1000) {
+      return { action: 'skip', reason: 'close-buffer' };
+    }
+    const writtenAt = Date.parse(state.generatedAt || '');
+    const barDone = lastBar === closedDate
+      && Number.isFinite(writtenAt)
+      && writtenAt >= closeMs;
+    if (barDone) {
+      return { action: 'skip', reason: 'already-finalized', close: { date: closedDate, ms: closeMs } };
+    }
+    return { action: 'finalize', reason: 'post-close-missing', close: { date: closedDate, ms: closeMs } };
+  }
+
   const now = Number(nowMs);
   const info = QS.sessionAt(market, now, calendar);
   if (info.known && info.phase === 'open') return { action: 'open', reason: 'in-session' };

@@ -78,6 +78,9 @@ function stripVolatile(text) {
 
 const stats = { skipped: 0, written: 0 };
 
+/** 2.14.0：不设根数上限时的请求根数（哨兵值，见 KLINE_SPEC 注释） */
+const KLINE_NO_CAP = 20000;
+
 async function writeJSONIfChanged(file, obj) {
   const text = JSON.stringify(obj, null, 2);
   if (existsSync(file)) {
@@ -117,10 +120,17 @@ async function collectKlines(startedAt, onlyKeys) {
   // 23 个指数 + 6 个组合标的（纳指100 / 伦敦金 / 上海金 / 伦敦银 / 布伦特 / 人民币中间价）
   const all = [...INDICES.map((i) => i.key), ...PORTFOLIO_KLINE.map((i) => i.key)];
   const keys = onlyKeys && onlyKeys.length ? all.filter((k) => onlyKeys.includes(k)) : all;
+  // 2.14.0：日/周/月 K 一律按「源侧全量」请求，**不再设 1000 根这类够用就行的上限**。
+  //   20000 是「不设上限」的哨兵值（与前端 klineLimit、update-kline-full 的 LIMIT 一致）：
+  //   实测各源历史全量都在 11,000 根以内（东财 100.UDI 10,471 / 上证 8,752 /
+  //   新浪外盘 XAU 5,183），源侧不会真的返回 20000 根。
+  //   ⚠ 固定 1000 根时，文件被 update-kline-last 加过一根后每轮都会被「短覆盖」守卫
+  //     整体拒绝（usdcny/xau 自 2026-11-04 冻结）。取消上限后，新序列自然覆盖旧序列，
+  //     文件按并集长大，不再需要「按文件深度猜 limit」这种脆弱做法。
   const KLINE_SPEC = [
-    { period: '1d', limit: 1000, suffix: '' },   // 日K 1000 根 ≈ 4 年（日更主体）
-    { period: '1w', limit: 1821, suffix: '_1w' }, // 周K 1821 根 ≈ 35.8 年（周更）
-    { period: '1M', limit: 500, suffix: '_1M' },  // 月K 源侧实际只有 ~431~454 根 = 36 年全量（月更）
+    { period: '1d', limit: KLINE_NO_CAP, suffix: '' },
+    { period: '1w', limit: KLINE_NO_CAP, suffix: '_1w' },
+    { period: '1M', limit: KLINE_NO_CAP, suffix: '_1M' },
   ];
   for (const key of keys) {
     if (!klineAvailable(key)) { klineSkip.push(key); continue; }
@@ -129,6 +139,10 @@ async function collectKlines(startedAt, onlyKeys) {
     for (const spec of KLINE_SPEC) {
       try {
         const file = path.join(DATA, 'kline', `${key}${spec.suffix}.json`);
+        // 2.14.0：不再设「够用就行」的根数上限（原日 K 固定 1000 根）。
+        //   固定 1000 时，文件被 update-kline-last 加过一根（1,001 根）后，
+        //   每轮抓到的 1000 根首根更晚、根数更少 ⇒ 被 decideBars 判 shorter 整体拒绝，
+        //   usdcny / xau 自 2026-11-04 起停更。现在按源侧全量抓取，两文件按并集自然长大。
         const incoming = await fetchKline(key, spec.period, spec.limit);
         const lock = await acquireKlineLock(key);
         if (!lock.ok) {

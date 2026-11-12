@@ -65,10 +65,13 @@ async function main() {
       if (!latest || !latest.length) { skipped++; continue; }
       // 定稿轮必须真的拿到「收盘日」那一根：源侧还没吐出今天的话，等下一轮，
       // 绝不能把昨天那根重新写一遍就算完。
-      if (plan.action === 'finalize' && barDate(latest[latest.length - 1]) !== plan.close.date) {
+      // ⚠ 2.14.0：24h 品种（FX/CMDTY）的源侧最后一根可能**比收盘日更新**
+      //   （当天 bar 还在走，收盘日只是「上一根已定稿的」）⇒ 用 >= 而不是 !==。
+      const srcLast = barDate(latest[latest.length - 1]);
+      if (plan.action === 'finalize' && !(srcLast && srcLast >= plan.close.date)) {
         console.log(
           `  ⏳ ${key}：待定稿 ${plan.close.date}，但源侧最后一根是 ` +
-            `${barDate(latest[latest.length - 1]) || '空'}，等下一轮`
+            `${srcLast || '空'}，等下一轮`
         );
         skipped++;
         continue;
