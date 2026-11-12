@@ -1,9 +1,16 @@
 {
-  "at": "2026-11-01",
-  "from": "2026-10-18",
-  "to": "2026-10-31",
-  "filled": 8,
+  "at": "2026-11-13",
+  "from": "2026-10-30",
+  "to": "2026-11-12",
+  "filled": 1,
   "noData": 0,
-  "skipped": 6,
-  "errors": []
+  "skipped": 13,
+  "errors": [
+    {
+      "date": "2026-11-12",
+      "margin": "ok",
+      "us10y": "美债失败：东财 东方财富 10Y 美债缺失；FRED This operation was aborted",
+      "cgb": "失败（fetch failed）"
+    }
+  ]
 }
