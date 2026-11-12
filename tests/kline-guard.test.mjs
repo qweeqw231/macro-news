@@ -13,12 +13,12 @@ const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const obj = (t, c = 100) => ({ t, o: c, h: c, l: c, c, v: 1 });
 const arr = (t, c = 100) => [t, c, c, c, c, 1];
 
-test('短且首根更晚 ⇒ 拒绝，保留现有', () => {
+test('短且首根更晚、且覆盖不足 ⇒ 拒绝，保留现有（reason 可区分）', () => {
   const old = ['2026-01-01', '2026-01-02', '2026-01-03', '2026-01-04'].map((t) => obj(t));
   const next = ['2026-02-01', '2026-02-02'].map((t) => obj(t));
   const d = decideBars(old, next);
   assert.equal(d.action, 'reject');
-  assert.equal(d.reason, 'shorter');
+  assert.equal(d.reason, 'shorter-too-partial');
   assert.equal(d.bars, old);
 });
 
@@ -33,8 +33,46 @@ test('2.14.0：取消抓取上限后，源端只回几十根的「真短序列�
   assert.equal(next.length < old.length && next[0].t > old[0].t, true);
   const d = decideBars(old, next);
   assert.equal(d.action, 'reject');
-  assert.equal(d.reason, 'shorter');
+  assert.equal(d.reason, 'shorter-too-partial');
   assert.equal(d.bars.length, 1001, '现有 1001 根必须完好保留');
+});
+
+test('2.14.1：仅左端缺失 + 重叠逐根一致 + 右端不落后 ⇒ 并集合并', () => {
+  const days = (n, start) => Array.from({ length: n }, (_, i) => {
+    const d = new Date(Date.UTC(2026, 0, 1) + (start + i) * 86400000);
+    return d.toISOString().slice(0, 10);
+  });
+  const old = days(1047, 0).map((t, i) => obj(t, 100 + i));
+  // 少了最左 4 根，右端比现有更新一根
+  const next = days(1043, 4).map((t, i) => obj(t, 100 + 4 + i));
+  next[next.length - 1] = obj('2029-01-01', 999);
+  const d = decideBars(old, next);
+  assert.equal(d.action, 'merge');
+  assert.equal(d.reason, 'left-edge-merge');
+  assert.equal(d.bars.length, 1048, '旧 1047 根 + 新多出的 1 根');
+  assert.equal(barTime(d.bars[d.bars.length - 1]), '2029-01-01');
+});
+
+test('2.14.1 反例①：重叠区间 OHLC 有差异 ⇒ 拒绝', () => {
+  const old = ['2026-01-01', '2026-01-02', '2026-01-03', '2026-01-04', '2026-01-05'].map((t) => obj(t));
+  const next = ['2026-01-02', '2026-01-03', '2026-01-04', '2026-01-05'].map((t) => obj(t));
+  next[1].c = 123;
+  const d = decideBars(old, next);
+  assert.equal(d.action, 'reject');
+  assert.equal(d.reason, 'shorter-overlap-mismatch');
+});
+
+test('2.14.1 反例②：新序列右端更旧 ⇒ 拒绝', () => {
+  const days = (n, start) => Array.from({ length: n }, (_, i) => {
+    const d = new Date(Date.UTC(2026, 0, 1) + (start + i) * 86400000);
+    return d.toISOString().slice(0, 10);
+  });
+  const old = days(100, 0).map((t) => obj(t));
+  // 覆盖 90%，但只到第 91 根，右端落后 9 根
+  const next = days(90, 2).map((t) => obj(t));
+  const d = decideBars(old, next);
+  assert.equal(d.action, 'reject');
+  assert.equal(d.reason, 'shorter-right-behind');
 });
 
 test('等长但末根更新 ⇒ 接受', () => {

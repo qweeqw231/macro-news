@@ -229,8 +229,8 @@ outer: for (const period of periodList) {
         if (oldDoc) {
           const d = decideBars(oldDoc.bars, incoming);
           if (d.action === 'reject') {
-            rejected.push(`${key}/${period}: shorter（新 ${incoming.length} 根 < 现有 ${(oldDoc.bars || []).length} 根）`);
-            console.log(`  ⛔ ${key.padEnd(9)} ${period.padEnd(3)} rejected: shorter，保留现有文件`);
+            rejected.push(`${key}/${period}: ${d.reason}（新 ${incoming.length} 根 < 现有 ${(oldDoc.bars || []).length} 根）`);
+            console.log(`  ⛔ ${key.padEnd(9)} ${period.padEnd(3)} rejected: ${d.reason}，保留现有文件`);
             await sleep(GAP_MS);
             continue;
           }

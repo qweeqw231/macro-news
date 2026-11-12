@@ -157,7 +157,8 @@ async function collectKlines(startedAt, onlyKeys) {
           const decision = decideBars(prev && prev.bars, incoming);
           if (decision.action === 'reject') {
             console.log(
-              `  ⛔ ${key} ${spec.period} rejected: shorter（新 ${incoming.length} 根 < 现有 ${(prev.bars || []).length} 根），保留现有文件`
+              `  ⛔ ${key} ${spec.period} rejected: ${decision.reason}` +
+                `（新 ${incoming.length} 根 / 现有 ${(prev.bars || []).length} 根），保留现有文件`
             );
             continue;
           }
