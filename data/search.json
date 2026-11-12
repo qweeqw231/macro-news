@@ -1,10 +1,114 @@
 {
-  "generatedAt": "2026-11-12T03:37:51.505Z",
+  "generatedAt": "2026-11-12T03:52:50.408Z",
   "windowDays": 62,
   "from": "2026-09-12",
   "days": 60,
-  "total": 36828,
+  "total": 36846,
   "items": [
+    {
+      "id": "1teqz4v",
+      "ts": 1794455553,
+      "time": "2026-11-12T11:52:33.000+08:00",
+      "source": "新浪财经",
+      "title": "国产GPU股今早走高 天数智芯涨超10%壁仞科技涨超6%",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-12/doc-iniymwri1842086.shtml"
+    },
+    {
+      "id": "1smb7ez",
+      "ts": 1794455499,
+      "time": "2026-11-12T11:51:39.000+08:00",
+      "source": "新浪财经",
+      "title": "泰国和韩国炼厂购买12月装船的美国原油",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymwrc1241182.shtml"
+    },
+    {
+      "id": "p1yd4y",
+      "ts": 1794455409,
+      "time": "2026-11-12T11:50:09.000+08:00",
+      "source": "新浪财经",
+      "title": "加拿大最大退休基金计划将对冲基金投资额提高一倍 至1600亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymwrk8616333.shtml"
+    },
+    {
+      "id": "9b0jqv",
+      "ts": 1794455378,
+      "time": "2026-11-12T11:49:38.000+08:00",
+      "source": "新浪财经",
+      "title": "药明巨诺-B午前涨超3% 拟向优瑞科香港转让肝癌TCR-T项目权益",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-12/doc-iniymwrc1240022.shtml"
+    },
+    {
+      "id": "64a3os",
+      "ts": 1794455372,
+      "time": "2026-11-12T11:49:32.000+08:00",
+      "source": "华尔街见闻",
+      "title": "台湾证交所加权股价指数下跌1%。",
+      "url": "https://wallstreetcn.com/livenews/3198797"
+    },
+    {
+      "id": "9bdd8j",
+      "ts": 1794455339,
+      "time": "2026-11-12T11:48:59.000+08:00",
+      "source": "新浪财经",
+      "title": "数据中心热潮遇社区阻力 澳大利亚数周内至少三个项目受阻",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-12/doc-iniymwrm3900139.shtml"
+    },
+    {
+      "id": "1xwfr4w",
+      "ts": 1794455308,
+      "time": "2026-11-12T11:48:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "腾讯组织变革传闻发酵，相关讨论激增一度“挤爆”脉脉同事圈",
+      "url": "https://wallstreetcn.com/livenews/3198796"
+    },
+    {
+      "id": "4o4s98",
+      "ts": 1794455264,
+      "time": "2026-11-12T03:47:44.000Z",
+      "source": "中新网",
+      "title": "A股午评：近3000只个股飘绿，三大指数集体收涨",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-12/10730728.shtml"
+    },
+    {
+      "id": "1rjypkb",
+      "ts": 1794455040,
+      "time": "2026-11-12T11:44:00.000+08:00",
+      "source": "东方财富",
+      "title": "四川省服务业发展“十五五”规划：到2030年服务业增加值达到5万亿元",
+      "url": "http://finance.eastmoney.com/news/1355,202611123929341018.html"
+    },
+    {
+      "id": "fl3rh4",
+      "ts": 1794454980,
+      "time": "2026-11-12T11:43:00.000+08:00",
+      "source": "东方财富",
+      "title": "尹艳林：明年要把扩大内需摆在更加重要的位置",
+      "url": "http://finance.eastmoney.com/news/1346,202611123929340964.html"
+    },
+    {
+      "id": "762m2m",
+      "ts": 1794454968,
+      "time": "2026-11-12T11:42:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "淡马锡罗锡德：中国资产对全球投资者具有吸引力",
+      "url": "https://wallstreetcn.com/livenews/3198795"
+    },
+    {
+      "id": "1xiasoz",
+      "ts": 1794454910,
+      "time": "2026-11-12T11:41:50.000+08:00",
+      "source": "华尔街见闻",
+      "title": "昆仑芯将于明年推出M300",
+      "url": "https://wallstreetcn.com/livenews/3198794"
+    },
+    {
+      "id": "qvrcdi",
+      "ts": 1794454688,
+      "time": "2026-11-12T11:38:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "百度推出两款文心应用模型",
+      "url": "https://wallstreetcn.com/livenews/3198793"
+    },
     {
       "id": "18l67jp",
       "ts": 1794454260,
@@ -30,6 +134,38 @@
       "url": "https://wallstreetcn.com/livenews/3198788"
     },
     {
+      "id": "2dartq",
+      "ts": 1794454200,
+      "time": "2026-11-12T11:30:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国债期货早盘收盘，30年期主力合约跌0.08%，10年期主力合约涨0.01%，5年期主力合约跌0.02%，2年期主力合约跌0.01%。",
+      "url": "https://wallstreetcn.com/livenews/3198787"
+    },
+    {
+      "id": "170jtnc",
+      "ts": 1794454008,
+      "time": "2026-11-12T11:26:48.000+08:00",
+      "source": "东方财富",
+      "title": "刘海星：共同夯实中美建设性战略稳定关系基础",
+      "url": "http://finance.eastmoney.com/news/1350,202611123929335229.html"
+    },
+    {
+      "id": "1ldo2e",
+      "ts": 1794453944,
+      "time": "2026-11-12T11:25:44.000+08:00",
+      "source": "东方财富",
+      "title": "中国计划未来五年严厉打击财务造假，怎么做？",
+      "url": "http://finance.eastmoney.com/news/1352,202611123929338889.html"
+    },
+    {
+      "id": "i3b82l",
+      "ts": 1794453930,
+      "time": "2026-11-12T11:25:30.000+08:00",
+      "source": "东方财富",
+      "title": "福建：建设10个人工智能科研创新平台 立项10个人工智能方向技术创新重点攻关及产业化项目",
+      "url": "http://finance.eastmoney.com/news/1360,202611123929338443.html"
+    },
+    {
       "id": "1kcufhq",
       "ts": 1794453818,
       "time": "2026-11-12T11:23:38.000+08:00",
@@ -52,6 +188,14 @@
       "source": "东方财富",
       "title": "福建：开展国家数据产业集聚区建设试点 建设省数据产业集聚区和省数据要素产业园",
       "url": "http://finance.eastmoney.com/news/1355,202611123929334029.html"
+    },
+    {
+      "id": "b660fs",
+      "ts": 1794453613,
+      "time": "2026-11-12T11:20:13.000+08:00",
+      "source": "东方财富",
+      "title": "福建：加快推动人工智能全方位赋能科学技术、产业发展、消费提质等重点行业领域",
+      "url": "http://finance.eastmoney.com/news/1360,202611123929338989.html"
     },
     {
       "id": "5kohjc",
