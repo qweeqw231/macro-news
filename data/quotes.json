@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T00:22:54.406Z",
+  "generatedAt": "2026-11-13T00:37:53.876Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -223,14 +223,14 @@
       "key": "n225",
       "name": "日经225",
       "market": "JP",
-      "price": 61677.06,
+      "price": 61679.34,
       "open": 61223.41,
       "high": 61759.63,
       "low": 61201.88,
       "prevClose": 60819.36,
       "volume": 0,
       "changePct": 1.41,
-      "updatedAt": "2026-11-13T08:22:28+08:00",
+      "updatedAt": "2026-11-13T08:37:29+08:00",
       "source": "eastmoney"
     },
     {
@@ -279,14 +279,14 @@
       "key": "kospi",
       "name": "韩国KOSPI",
       "market": "KR",
-      "price": 5480.49,
+      "price": 5448.69,
       "open": 5452.41,
       "high": 5504.44,
-      "low": 5452.41,
+      "low": 5438.9,
       "prevClose": 5342.73,
-      "volume": 38361,
-      "changePct": 2.58,
-      "updatedAt": "2026-11-13T08:23:00+08:00",
+      "volume": 54552,
+      "changePct": 1.98,
+      "updatedAt": "2026-11-13T08:38:00+08:00",
       "source": "eastmoney"
     },
     {
@@ -819,26 +819,26 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 3885.51,
+      "price": 3883.78,
       "open": 3877.21,
       "high": 3889.41,
       "low": 3874.93,
       "prevClose": 3877.43,
-      "changePct": 0.21,
-      "updatedAt": "2026-11-13T08:22:00+08:00",
+      "changePct": 0.16,
+      "updatedAt": "2026-11-13T08:37:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 50.12,
+      "price": 50.08,
       "open": 50.04,
       "high": 50.24,
       "low": 49.92,
       "prevClose": 50.04,
-      "changePct": 0.16,
-      "updatedAt": "2026-11-13T08:22:00+08:00",
+      "changePct": 0.08,
+      "updatedAt": "2026-11-13T08:36:00+08:00",
       "note": ""
     },
     {
