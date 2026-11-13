@@ -1,6 +1,6 @@
 {
   "v": 1,
-  "updatedAt": "2026-11-13T09:11:17+08:00",
+  "updatedAt": "2026-11-13T09:11:27+08:00",
   "days": {
     "2026-10-31": {
       "date": "2026-10-31",
@@ -261,9 +261,12 @@
       "durationMs": 13,
       "generator": "llm-v1",
       "attempt": 1,
-      "pushed": null,
+      "pushed": true,
       "pushError": "",
-      "pushAt": ""
+      "pushAt": "2026-11-13T09:11:27+08:00",
+      "pushErrorKind": "",
+      "statusCommit": null,
+      "statusError": ""
     }
   }
 }
