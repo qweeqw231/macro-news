@@ -1,10 +1,114 @@
 {
-  "generatedAt": "2026-11-13T21:22:57.554Z",
+  "generatedAt": "2026-11-13T21:38:01.024Z",
   "windowDays": 62,
   "from": "2026-09-13",
   "days": 61,
-  "total": 39306,
+  "total": 39319,
   "items": [
+    {
+      "id": "1wbwje1",
+      "ts": 1794605854,
+      "time": "2026-11-14T05:37:34.000+08:00",
+      "source": "华尔街见闻",
+      "title": "元旦出境机票预订量同比增约10%",
+      "url": "https://wallstreetcn.com/livenews/3200029"
+    },
+    {
+      "id": "1by03pm",
+      "ts": 1794605832,
+      "time": "2026-11-14T05:37:12.000+08:00",
+      "source": "新浪财经",
+      "title": "纽约汇市：美元指数迈向四连涨 触及18个月高位",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyryfp3168806.shtml"
+    },
+    {
+      "id": "m0337t",
+      "ts": 1794605748,
+      "time": "2026-11-14T05:35:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "13F报告显示：Sachem Head Capital Management三季度大幅增持希捷科技、Riot Platforms及Gildan Activewear。",
+      "url": "https://wallstreetcn.com/livenews/3200028"
+    },
+    {
+      "id": "c5nqjj",
+      "ts": 1794605696,
+      "time": "2026-11-14T05:34:56.000+08:00",
+      "source": "新浪财经",
+      "title": "美国债市：国债收盘涨跌不一 收益率曲线陡化",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyryfm0801230.shtml"
+    },
+    {
+      "id": "kgl2br",
+      "ts": 1794605504,
+      "time": "2026-11-14T05:31:44.000+08:00",
+      "source": "新浪财经",
+      "title": "摩根大通预计AI投资热潮将推动2027年美国高评级债券发行量创历史新高",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyryfn7575553.shtml"
+    },
+    {
+      "id": "oc6hgq",
+      "ts": 1794605485,
+      "time": "2026-11-14T05:31:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "标普500指数的11个板块中，信息技术/科技板块收跌1.7%，可选消费板块跌0.45%，电信板块涨0.26%，能源板块涨0.96%。",
+      "url": "https://wallstreetcn.com/livenews/3200027"
+    },
+    {
+      "id": "4a1nwd",
+      "ts": 1794605394,
+      "time": "2026-11-14T05:29:54.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达第三季获嘉实基金增持 稳居头号重仓股之位",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyryfn7574570.shtml"
+    },
+    {
+      "id": "15d7va1",
+      "ts": 1794605336,
+      "time": "2026-11-14T05:28:56.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周五（11月13日），半导体ETF收跌2.99%，领跌美股行业ETF，科技行业ETF跌2.01%，全球科技股指数ETF、网络股指数ETF至多跌1.67%，能源业ETF涨0.98%。",
+      "url": "https://wallstreetcn.com/livenews/3200026"
+    },
+    {
+      "id": "2p54yx",
+      "ts": 1794605233,
+      "time": "2026-11-14T05:27:13.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美联储：美国上周银行存款增加565亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3200025"
+    },
+    {
+      "id": "1m7rac5",
+      "ts": 1794605174,
+      "time": "2026-11-14T05:26:14.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普政府据悉将再度延长《琼斯法》航运豁免 以降低燃料成本",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyryfp3165772.shtml"
+    },
+    {
+      "id": "fvsh5l",
+      "ts": 1794605146,
+      "time": "2026-11-14T05:25:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国总统特朗普的AI工作组周四开会，讨论网络威胁，但并没有研究英伟达事件。",
+      "url": "https://wallstreetcn.com/livenews/3200024"
+    },
+    {
+      "id": "1coxfss",
+      "ts": 1794605090,
+      "time": "2026-11-14T05:24:50.000+08:00",
+      "source": "新浪财经",
+      "title": "凯文·哈塞特否认离职传闻，称将继续担任特朗普经济顾问",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyryfn7572908.shtml"
+    },
+    {
+      "id": "j8kcy0",
+      "ts": 1794605006,
+      "time": "2026-11-14T05:23:26.000+08:00",
+      "source": "新浪财经",
+      "title": "达菲证实：因出现“通信故障”，美国联邦航空管理局已发布全美地面停飞令",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyrtxp0927230.shtml"
+    },
     {
       "id": "yv8lvl",
       "ts": 1794604723,
