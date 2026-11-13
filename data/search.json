@@ -1,10 +1,82 @@
 {
-  "generatedAt": "2026-11-13T12:52:57.524Z",
+  "generatedAt": "2026-11-13T13:07:48.937Z",
   "windowDays": 62,
   "from": "2026-09-13",
   "days": 61,
-  "total": 38924,
+  "total": 38936,
   "items": [
+    {
+      "id": "9493lb",
+      "ts": 1794575111,
+      "time": "2026-11-13T21:05:11.000+08:00",
+      "source": "华尔街见闻",
+      "title": "江波龙：据第三方公开信息，宇树机器狗等产品已采用公司嵌入式存储",
+      "url": "https://wallstreetcn.com/livenews/3199822"
+    },
+    {
+      "id": "kz8lpd",
+      "ts": 1794574969,
+      "time": "2026-11-13T21:02:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "波罗的海干散货指数跌1.32%，至2980点。",
+      "url": "https://wallstreetcn.com/livenews/3199820"
+    },
+    {
+      "id": "d9n0kd",
+      "ts": 1794574916,
+      "time": "2026-11-13T21:01:56.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国财长贝森特：收到死亡威胁，但我无所畏惧。",
+      "url": "https://wallstreetcn.com/livenews/3199819"
+    },
+    {
+      "id": "1tm726w",
+      "ts": 1794574910,
+      "time": "2026-11-13T13:01:50.000Z",
+      "source": "中新网",
+      "title": "到2030年中国新型储能装机规模计划达3亿千瓦",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-13/10731719.shtml"
+    },
+    {
+      "id": "bt0vr8",
+      "ts": 1794574833,
+      "time": "2026-11-13T21:00:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "夜盘期货开盘，原油涨逾2%，燃油、焦煤、PVC、甲醇、丙烯、沥青、纯苯、沪锡、聚丙烯、塑料、低硫燃油涨逾1%；",
+      "url": "https://wallstreetcn.com/livenews/3199817"
+    },
+    {
+      "id": "1czbq8f",
+      "ts": 1794574780,
+      "time": "2026-11-13T20:59:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "“投资中国”比利时、荷兰、卢森堡企业圆桌会在布鲁塞尔举行",
+      "url": "https://wallstreetcn.com/livenews/3199816"
+    },
+    {
+      "id": "eeznsj",
+      "ts": 1794574734,
+      "time": "2026-11-13T12:58:54.000Z",
+      "source": "中新网",
+      "title": "10月末中国社会融资规模存量和M2余额同比增长均超7%",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-13/10731725.shtml"
+    },
+    {
+      "id": "tldrka",
+      "ts": 1794574700,
+      "time": "2026-11-13T20:58:20.000+08:00",
+      "source": "东方财富",
+      "title": "“投资中国”比利时、荷兰、卢森堡企业圆桌会在布鲁塞尔举行",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930908785.html"
+    },
+    {
+      "id": "1mfrnph",
+      "ts": 1794574668,
+      "time": "2026-11-13T20:57:48.000+08:00",
+      "source": "新浪财经",
+      "title": "国际能源署：俄罗斯原油产量反弹，石油市场重回供应过剩",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyrazw7929786.shtml"
+    },
     {
       "id": "1l8oa69",
       "ts": 1794574379,
@@ -38,6 +110,22 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyrazw7926622.shtml"
     },
     {
+      "id": "p8k9hl",
+      "ts": 1794574301,
+      "time": "2026-11-13T20:51:41.000+08:00",
+      "source": "东方财富",
+      "title": "新型储能迈入市场化新阶段，“十五五”方案划定3亿千瓦发展目标",
+      "url": "http://finance.eastmoney.com/news/1355,202611133930920626.html"
+    },
+    {
+      "id": "19hf5mo",
+      "ts": 1794574254,
+      "time": "2026-11-13T12:50:54.000Z",
+      "source": "中新网",
+      "title": "事关建筑垃圾循环利用 市场监管总局发布国家标准",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-13/10731711.shtml"
+    },
+    {
       "id": "13i7yt",
       "ts": 1794574125,
       "time": "2026-11-13T20:48:45.000+08:00",
@@ -52,6 +140,14 @@
       "source": "华尔街见闻",
       "title": "香港将2026年经济增长预测上调至4.8%",
       "url": "https://wallstreetcn.com/livenews/3199812"
+    },
+    {
+      "id": "pi3cgz",
+      "ts": 1794573954,
+      "time": "2026-11-13T20:45:54.000+08:00",
+      "source": "东方财富",
+      "title": "湖北出台“科技金融12条”，200亿瞄准硬科技",
+      "url": "http://finance.eastmoney.com/news/1352,202611133930921029.html"
     },
     {
       "id": "1ahfl3r",
