@@ -1,15 +1,13 @@
 {
-  "generatedAt": "2026-11-13T02:27:51.420Z",
+  "generatedAt": "2026-11-13T02:48:26.070Z",
   "ok": 0,
   "failed": 1,
   "failures": [
-    "sge_au9999/5m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；上金所官网失败(上金所不支持周期 5m)"
+    "ukx/5m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)"
   ],
   "rejected": [
     "n225/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1010 根）",
     "dax/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1003 根）",
-    "cac40/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1003 根）",
-    "ukx/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1003 根）",
-    "kospi/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1010 根）"
+    "cac40/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1003 根）"
   ]
 }
