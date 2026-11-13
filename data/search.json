@@ -1,10 +1,138 @@
 {
-  "generatedAt": "2026-11-13T02:07:57.365Z",
+  "generatedAt": "2026-11-13T02:22:46.711Z",
   "windowDays": 62,
   "from": "2026-09-13",
   "days": 61,
-  "total": 38236,
+  "total": 38259,
   "items": [
+    {
+      "id": "1hia0oo",
+      "ts": 1794536389,
+      "time": "2026-11-13T10:19:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "猪肉股异动拉升，金新农直线涨停，巨星农牧、邦基科技、华统股份、天邦食品、神农集团等跟涨。",
+      "url": "https://wallstreetcn.com/livenews/3199509"
+    },
+    {
+      "id": "1lbqlaj",
+      "ts": 1794536320,
+      "time": "2026-11-13T10:18:40.000+08:00",
+      "source": "东方财富",
+      "title": "第六届国际新材料产业大会在蚌埠开幕",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930562693.html"
+    },
+    {
+      "id": "lwp5de",
+      "ts": 1794536232,
+      "time": "2026-11-13T10:17:12.000+08:00",
+      "source": "新浪财经",
+      "title": "两位接手英伟达的硅谷老将，会如何定位英伟达？",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniypzqm3736970.shtml"
+    },
+    {
+      "id": "3c3of0",
+      "ts": 1794536122,
+      "time": "2026-11-13T10:15:22.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国石油集团召开碳达峰碳中和、新兴产业领导小组会议",
+      "url": "https://wallstreetcn.com/livenews/3199507"
+    },
+    {
+      "id": "1l8t2vm",
+      "ts": 1794536097,
+      "time": "2026-11-13T10:14:57.000+08:00",
+      "source": "华尔街见闻",
+      "title": "全国粮食产业高质量发展现场推进会在山东青岛召开",
+      "url": "https://wallstreetcn.com/livenews/3199506"
+    },
+    {
+      "id": "1jb1whv",
+      "ts": 1794536090,
+      "time": "2026-11-13T10:14:50.000+08:00",
+      "source": "华尔街见闻",
+      "title": "芯片制造商Sigmastar据悉计划在香港上市，融资3亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3199505"
+    },
+    {
+      "id": "1mdzj7m",
+      "ts": 1794536078,
+      "time": "2026-11-13T10:14:38.000+08:00",
+      "source": "华尔街见闻",
+      "title": "芯片制造商Sigmastar据悉计划在香港上市，融资3亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3199504"
+    },
+    {
+      "id": "je7i1w",
+      "ts": 1794536062,
+      "time": "2026-11-13T10:14:22.000+08:00",
+      "source": "东方财富",
+      "title": "国务院安委会办公室对11个市级政府开展安全生产约谈",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930562875.html"
+    },
+    {
+      "id": "qk0h1g",
+      "ts": 1794535980,
+      "time": "2026-11-13T10:13:00.000+08:00",
+      "source": "东方财富",
+      "title": "全国粮食产业高质量发展现场推进会在山东青岛召开",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930561583.html"
+    },
+    {
+      "id": "z6pcir",
+      "ts": 1794535832,
+      "time": "2026-11-13T10:10:32.000+08:00",
+      "source": "东方财富",
+      "title": "商务部：进博会历“九”弥新 亮点纷呈",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930562530.html"
+    },
+    {
+      "id": "1shmmei",
+      "ts": 1794535832,
+      "time": "2026-11-13T10:10:32.000+08:00",
+      "source": "东方财富",
+      "title": "自然资源部：建好管好自然资源资产“一本账”",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930562490.html"
+    },
+    {
+      "id": "tr6hn2",
+      "ts": 1794535827,
+      "time": "2026-11-13T10:10:27.000+08:00",
+      "source": "新浪财经",
+      "title": "黄仁勋离任后 英伟达那些投资怎么办？",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniypzqk8086447.shtml"
+    },
+    {
+      "id": "16p7mr2",
+      "ts": 1794535819,
+      "time": "2026-11-13T10:10:19.000+08:00",
+      "source": "新浪财经",
+      "title": "日本财务大臣警告将对汇率采取适当行动 隔夜日元一度跌破160关口",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniypzqi1310309.shtml"
+    },
+    {
+      "id": "iijnvz",
+      "ts": 1794535747,
+      "time": "2026-11-13T10:09:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "央行：引导机构负责任放贷 严格落实明示综合融资成本等规定",
+      "url": "https://wallstreetcn.com/livenews/3199503"
+    },
+    {
+      "id": "e0v8g7",
+      "ts": 1794535722,
+      "time": "2026-11-13T10:08:42.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日本熊本县发生4.0级地震",
+      "url": "https://wallstreetcn.com/livenews/3199502"
+    },
+    {
+      "id": "96v5ak",
+      "ts": 1794535700,
+      "time": "2026-11-13T10:08:20.000+08:00",
+      "source": "华尔街见闻",
+      "title": "央行：探索加强央行征信系统与社会化征信机构的多方位合作",
+      "url": "https://wallstreetcn.com/livenews/3199501"
+    },
     {
       "id": "1b2k0zu",
       "ts": 1794535671,
@@ -12,6 +140,30 @@
       "source": "华尔街见闻",
       "title": "央行：严格落实征信机构持牌经营要求 严厉打击无证经营非法征信活动",
       "url": "https://wallstreetcn.com/livenews/3199500"
+    },
+    {
+      "id": "1lka1ca",
+      "ts": 1794535671,
+      "time": "2026-11-13T10:07:51.000+08:00",
+      "source": "东方财富",
+      "title": "央行：严格落实征信机构持牌经营要求 严厉打击无证经营非法征信活动",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930556941.html"
+    },
+    {
+      "id": "2kcbrg",
+      "ts": 1794535620,
+      "time": "2026-11-13T10:07:00.000+08:00",
+      "source": "东方财富",
+      "title": "央行：严格落实征信机构持牌经营要求 严厉打击无证经营非法征信活动",
+      "url": "http://forex.eastmoney.com/news/1131,202611133930562045.html"
+    },
+    {
+      "id": "1s0asud",
+      "ts": 1794535612,
+      "time": "2026-11-13T10:06:52.000+08:00",
+      "source": "东方财富",
+      "title": "央行：探索加强央行征信系统与社会化征信机构的多方位合作",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930554923.html"
     },
     {
       "id": "z8vzcm",
@@ -22,12 +174,36 @@
       "url": "https://wallstreetcn.com/livenews/3199499"
     },
     {
+      "id": "1jjytcw",
+      "ts": 1794535449,
+      "time": "2026-11-13T02:04:09.000Z",
+      "source": "中新网",
+      "title": "蜀道新长征，中国铁塔打通巴蜀深山的“信息动脉”",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-13/10731315.shtml"
+    },
+    {
       "id": "1fkxiqg",
       "ts": 1794535448,
       "time": "2026-11-13T10:04:08.000+08:00",
       "source": "新浪财经",
       "title": "黄仁勋“下课” AI热潮失去一位核心推手",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniypzqc1064152.shtml"
+    },
+    {
+      "id": "1khbi4c",
+      "ts": 1794535443,
+      "time": "2026-11-13T02:04:03.000Z",
+      "source": "中新网",
+      "title": "A股开盘：超2700只个股飘红，三大指数集体高开",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-13/10731319.shtml"
+    },
+    {
+      "id": "1kh3slp",
+      "ts": 1794535440,
+      "time": "2026-11-13T10:04:00.000+08:00",
+      "source": "东方财富",
+      "title": "创新药临床使用再迎利好，业内：破除制度性障碍将惠及更多患者",
+      "url": "http://finance.eastmoney.com/news/1355,202611133930562165.html"
     },
     {
       "id": "1inidte",
@@ -52,6 +228,14 @@
       "source": "华尔街见闻",
       "title": "整点回顾：沪指早间横盘震荡，创业板指探底回升，算力硬件、医药医疗、光伏、房地产等板块跌幅居前，AI漫剧、半导体芯片、风电设备、军工等板块走强，个股跌多涨少，沪深京三市约3000股飘绿，开盘半小时成交5578亿，较上日此时缩量超500亿。",
       "url": "https://wallstreetcn.com/livenews/3199492"
+    },
+    {
+      "id": "1ouhf06",
+      "ts": 1794535260,
+      "time": "2026-11-13T10:01:00.000+08:00",
+      "source": "东方财富",
+      "title": "共探产业合作新空间 大湾区上市公司代表走进无锡",
+      "url": "http://stock.eastmoney.com/news/11134,202611133930559253.html"
     },
     {
       "id": "18hi10s",
