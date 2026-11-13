@@ -1,10 +1,290 @@
 {
-  "generatedAt": "2026-11-13T08:52:54.299Z",
+  "generatedAt": "2026-11-13T09:07:46.940Z",
   "windowDays": 62,
   "from": "2026-09-13",
   "days": 61,
-  "total": 38614,
+  "total": 38652,
   "items": [
+    {
+      "id": "17jaeis",
+      "ts": 1794560846,
+      "time": "2026-11-13T17:07:26.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国央行：初步统计，2026年10月末社会融资规模存量为469.16万亿元，同比增长7.2%。",
+      "url": "https://wallstreetcn.com/livenews/3199692"
+    },
+    {
+      "id": "iux616",
+      "ts": 1794560846,
+      "time": "2026-11-13T17:07:26.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达创下2012年以来最长周度连跌，市值蒸发1.6万亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyqsnc3631768.shtml"
+    },
+    {
+      "id": "14rk7i0",
+      "ts": 1794560830,
+      "time": "2026-11-13T17:07:10.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家药监局部署优化化学原料药管理及细胞与基因治疗药品审评审批等工作",
+      "url": "https://wallstreetcn.com/livenews/3199691"
+    },
+    {
+      "id": "o9odws",
+      "ts": 1794560807,
+      "time": "2026-11-13T17:06:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "IEA月报：预计2026年炼油厂加工量下降220万桶/日，2027年增加250万桶/日。",
+      "url": "https://wallstreetcn.com/livenews/3199690"
+    },
+    {
+      "id": "1h970z8",
+      "ts": 1794560776,
+      "time": "2026-11-13T17:06:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "IEA月报：因伊朗相关制约下调2027年供应预测。",
+      "url": "https://wallstreetcn.com/livenews/3199689"
+    },
+    {
+      "id": "u1vn6x",
+      "ts": 1794560688,
+      "time": "2026-11-13T17:04:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "IEA月报：受海湾石油出口推动，全球石油市场转向过剩。",
+      "url": "https://wallstreetcn.com/livenews/3199688"
+    },
+    {
+      "id": "1egaxtb",
+      "ts": 1794560685,
+      "time": "2026-11-13T17:04:45.000+08:00",
+      "source": "新浪财经",
+      "title": "报道：日本政府正在密切关注黄仁勋相关动向",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyqsmv0968860.shtml"
+    },
+    {
+      "id": "9welv7",
+      "ts": 1794560587,
+      "time": "2026-11-13T17:03:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国央行：前十个月人民币存款增加21.97万亿元",
+      "url": "https://wallstreetcn.com/livenews/3199687"
+    },
+    {
+      "id": "qj69b2",
+      "ts": 1794560580,
+      "time": "2026-11-13T17:03:00.000+08:00",
+      "source": "东方财富",
+      "title": "央行：前十个月住户存款增加8.47万亿元 非银行业金融机构存款增加5.99万亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930739817.html"
+    },
+    {
+      "id": "1cev87m",
+      "ts": 1794560519,
+      "time": "2026-11-13T17:01:59.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国央行：11月16日将开展2000亿元买断式逆回购操作 期限为6个月",
+      "url": "https://wallstreetcn.com/livenews/3199686"
+    },
+    {
+      "id": "1gs0mrq",
+      "ts": 1794560513,
+      "time": "2026-11-13T17:01:53.000+08:00",
+      "source": "东方财富",
+      "title": "央行：前十个月人民币贷款增加11.42万亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930739651.html"
+    },
+    {
+      "id": "jw70pw",
+      "ts": 1794560511,
+      "time": "2026-11-13T17:01:51.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国三季度经常帐初值 2761亿美元，前值 1937亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3199685"
+    },
+    {
+      "id": "fdycs3",
+      "ts": 1794560507,
+      "time": "2026-11-13T17:01:47.000+08:00",
+      "source": "东方财富",
+      "title": "央行：10月末广义货币(M2)余额359.06万亿元 同比增长7.1%",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930739092.html"
+    },
+    {
+      "id": "ztv28m",
+      "ts": 1794560504,
+      "time": "2026-11-13T17:01:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "【中国1至10月新增人民币贷款 114200亿人民币，前值 115200亿人民币】中国10月M2货币供应同比 7.1%，前值 7.2%。",
+      "url": "https://wallstreetcn.com/livenews/3199684"
+    },
+    {
+      "id": "n21mzu",
+      "ts": 1794560471,
+      "time": "2026-11-13T17:01:11.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国1至10月社会融资规模增量 286100亿人民币，前值 274600亿人民币。",
+      "url": "https://wallstreetcn.com/livenews/3199683"
+    },
+    {
+      "id": "1x4dt69",
+      "ts": 1794560467,
+      "time": "2026-11-13T17:01:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "意大利9月贸易帐 20.83亿欧元，前值 17.73亿欧元。",
+      "url": "https://wallstreetcn.com/livenews/3199682"
+    },
+    {
+      "id": "wz7i7j",
+      "ts": 1794560467,
+      "time": "2026-11-13T17:01:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "意大利9月对欧盟贸易帐 -7.84亿欧元，前值 -3.27亿欧元。",
+      "url": "https://wallstreetcn.com/livenews/3199681"
+    },
+    {
+      "id": "1ybks6c",
+      "ts": 1794560460,
+      "time": "2026-11-13T17:01:00.000+08:00",
+      "source": "东方财富",
+      "title": "国家药监局部署优化化学原料药管理及细胞与基因治疗药品审评审批等工作",
+      "url": "http://finance.eastmoney.com/news/1355,202611133930740493.html"
+    },
+    {
+      "id": "yur1gl",
+      "ts": 1794560447,
+      "time": "2026-11-13T17:00:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国1至10月新增人民币贷款 114200亿人民币，前值 115200亿人民币。",
+      "url": "https://wallstreetcn.com/livenews/3199680"
+    },
+    {
+      "id": "mbkcb9",
+      "ts": 1794560446,
+      "time": "2026-11-13T17:00:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国10月M1货币供应同比 4.4%，前值 3.2%。",
+      "url": "https://wallstreetcn.com/livenews/3199678"
+    },
+    {
+      "id": "npa97t",
+      "ts": 1794560446,
+      "time": "2026-11-13T17:00:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国10月M0货币供应同比 10.7%，前值 10.6%。",
+      "url": "https://wallstreetcn.com/livenews/3199679"
+    },
+    {
+      "id": "161148v",
+      "ts": 1794560446,
+      "time": "2026-11-13T17:00:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国1至10月社会融资规模增量 286100亿人民币，前值 274600亿人民币。",
+      "url": "https://wallstreetcn.com/livenews/3199677"
+    },
+    {
+      "id": "y368zo",
+      "ts": 1794560446,
+      "time": "2026-11-13T17:00:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国10月M2货币供应同比 7.1%，前值 7.2%。",
+      "url": "https://wallstreetcn.com/livenews/3199676"
+    },
+    {
+      "id": "1k2skq9",
+      "ts": 1794560372,
+      "time": "2026-11-13T16:59:32.000+08:00",
+      "source": "新浪财经",
+      "title": "日化护肤三季报|华熙生物业绩双降持续承压 锦波生物高增长神话褪色、丸美生物利润降超四成",
+      "url": "https://finance.sina.com.cn/stock/s/2026-11-13/doc-iniyqsmz1236616.shtml"
+    },
+    {
+      "id": "1e8uzgd",
+      "ts": 1794560371,
+      "time": "2026-11-13T16:59:31.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美团陈一方：2026洗浴行业线上化率超20%，美团将和商家一起承接多元消费需求",
+      "url": "https://wallstreetcn.com/livenews/3199675"
+    },
+    {
+      "id": "16wmumf",
+      "ts": 1794560331,
+      "time": "2026-11-13T16:58:51.000+08:00",
+      "source": "新浪财经",
+      "title": "瞒报债务吃警示函后再陷诉讼泥潭，*ST瑞茂逼近退市",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-13/doc-iniyqsna8012608.shtml"
+    },
+    {
+      "id": "7m9dvs",
+      "ts": 1794560329,
+      "time": "2026-11-13T16:58:49.000+08:00",
+      "source": "新浪财经",
+      "title": "二次立案叠加账户冻结，晶华微索赔登记通道开启",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-13/doc-iniyqsna8013039.shtml"
+    },
+    {
+      "id": "gfsg2z",
+      "ts": 1794560327,
+      "time": "2026-11-13T16:58:47.000+08:00",
+      "source": "新浪财经",
+      "title": "巨亏之下再遭立案，天山股份三名高管领警示函",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-13/doc-iniyqsna8013579.shtml"
+    },
+    {
+      "id": "177aq47",
+      "ts": 1794560326,
+      "time": "2026-11-13T16:58:46.000+08:00",
+      "source": "新浪财经",
+      "title": "业绩高歌猛进突遭立案，万辰集团信披问题待解",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-13/doc-iniyqsmz1238094.shtml"
+    },
+    {
+      "id": "s1rt0f",
+      "ts": 1794560231,
+      "time": "2026-11-13T16:57:11.000+08:00",
+      "source": "华尔街见闻",
+      "title": "泡泡玛特11月13日以4990万港元回购股份。",
+      "url": "https://wallstreetcn.com/livenews/3199674"
+    },
+    {
+      "id": "vjnx2j",
+      "ts": 1794560129,
+      "time": "2026-11-13T16:55:29.000+08:00",
+      "source": "新浪财经",
+      "title": "天山股份涉信披违法违规，律师提示索赔仍可加入",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-13/doc-iniyqsnc3623526.shtml"
+    },
+    {
+      "id": "96ilg6",
+      "ts": 1794560128,
+      "time": "2026-11-13T16:55:28.000+08:00",
+      "source": "新浪财经",
+      "title": "科力远索赔持续征集，已有数百位投资者报名",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-13/doc-iniyqsmv0962685.shtml"
+    },
+    {
+      "id": "os2sxj",
+      "ts": 1794560126,
+      "time": "2026-11-13T16:55:26.000+08:00",
+      "source": "新浪财经",
+      "title": "ST文峰仍处立案调查，索赔仍在征集中",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-13/doc-iniyqsmz1234234.shtml"
+    },
+    {
+      "id": "1o8loh",
+      "ts": 1794559975,
+      "time": "2026-11-13T08:52:55.000Z",
+      "source": "中新网",
+      "title": "数说APEC 一场双向奔赴的投资",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-13/10731565.shtml"
+    },
+    {
+      "id": "34pjqm",
+      "ts": 1794559816,
+      "time": "2026-11-13T16:50:16.000+08:00",
+      "source": "东方财富",
+      "title": "再走长征路｜红色热土孕育绿色产业 黎平茶香飘出振兴新路",
+      "url": "http://finance.eastmoney.com/news/1355,202611133930728634.html"
+    },
     {
       "id": "4xbp09",
       "ts": 1794559792,
@@ -84,6 +364,14 @@
       "source": "东方财富",
       "title": "AI更好用、商品更多元、规则更简单……今年“双11”发生这些新变化",
       "url": "http://finance.eastmoney.com/news/1354,202611133930726331.html"
+    },
+    {
+      "id": "1c7gabw",
+      "ts": 1794559179,
+      "time": "2026-11-13T16:39:39.000+08:00",
+      "source": "新浪财经",
+      "title": "帽子摘了，688053的索赔还在征集",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-13/doc-iniyqsmv0962148.shtml"
     },
     {
       "id": "15z8wiv",
@@ -518,6 +806,14 @@
       "url": "https://wallstreetcn.com/livenews/3199653"
     },
     {
+      "id": "1sj6ueg",
+      "ts": 1794555813,
+      "time": "2026-11-13T15:43:33.000+08:00",
+      "source": "东方财富",
+      "title": "全球变局下如何把握中国机遇？上交所国际投资者大会热议经济韧性与AI投资",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930738823.html"
+    },
+    {
       "id": "miubyx",
       "ts": 1794555808,
       "time": "2026-11-13T15:43:28.000+08:00",
@@ -852,6 +1148,14 @@
       "source": "东方财富",
       "title": "两部门印发《“十五五”新型储能实施方案》",
       "url": "http://finance.eastmoney.com/news/1355,202611133930666271.html"
+    },
+    {
+      "id": "119cxom",
+      "ts": 1794553650,
+      "time": "2026-11-13T15:07:30.000+08:00",
+      "source": "中国人民银行",
+      "title": "2026年10月金融统计数据报告",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026111315073060062/index.html"
     },
     {
       "id": "1hy23ws",
