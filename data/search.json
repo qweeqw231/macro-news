@@ -1,10 +1,170 @@
 {
-  "generatedAt": "2026-11-13T13:52:54.418Z",
+  "generatedAt": "2026-11-13T14:07:55.275Z",
   "windowDays": 62,
   "from": "2026-09-13",
   "days": 61,
-  "total": 39021,
+  "total": 39046,
   "items": [
+    {
+      "id": "5x1b5s",
+      "ts": 1794578843,
+      "time": "2026-11-13T22:07:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "法国农业信贷银行“坚定地”批准与意大利银行Banco BPM磋商持股事宜。",
+      "url": "https://wallstreetcn.com/livenews/3199854"
+    },
+    {
+      "id": "2lgsw9",
+      "ts": 1794578745,
+      "time": "2026-11-13T22:05:45.000+08:00",
+      "source": "华尔街见闻",
+      "title": "据美国纽约联储数据，上个交易日（11月12日）担保隔夜融资利率（SOFR）报3.90%，之前一天报3.89%。",
+      "url": "https://wallstreetcn.com/livenews/3199853"
+    },
+    {
+      "id": "1tc3ek3",
+      "ts": 1794578735,
+      "time": "2026-11-13T22:05:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "朱忠明会见可口可乐公司首席执行官，希望公司助力上海国际消费中心城市建设",
+      "url": "https://wallstreetcn.com/livenews/3199852"
+    },
+    {
+      "id": "1rnpruf",
+      "ts": 1794578685,
+      "time": "2026-11-13T22:04:45.000+08:00",
+      "source": "华尔街见闻",
+      "title": "波兰华沙肖邦国际机场一架客机因无人机干扰中止降落",
+      "url": "https://wallstreetcn.com/livenews/3199850"
+    },
+    {
+      "id": "kjiwpz",
+      "ts": 1794578657,
+      "time": "2026-11-13T22:04:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "天齐锂业1000吨/年高能锂电材料电池级金属锂项目竣工",
+      "url": "https://wallstreetcn.com/livenews/3199849"
+    },
+    {
+      "id": "1ubyt1c",
+      "ts": 1794578624,
+      "time": "2026-11-13T22:03:44.000+08:00",
+      "source": "东方财富",
+      "title": "【环球财经】“投资中国”比利时、荷兰、卢森堡企业圆桌会在布鲁塞尔举行",
+      "url": "http://finance.eastmoney.com/news/1352,202611133930984130.html"
+    },
+    {
+      "id": "qj5ams",
+      "ts": 1794578509,
+      "time": "2026-11-13T22:01:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "王毅同韩国外长赵显会谈",
+      "url": "https://wallstreetcn.com/livenews/3199848"
+    },
+    {
+      "id": "pm2a8m",
+      "ts": 1794578500,
+      "time": "2026-11-13T22:01:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "苹果公司：Apple Homeview今天上线。",
+      "url": "https://wallstreetcn.com/livenews/3199847"
+    },
+    {
+      "id": "12quvgq",
+      "ts": 1794578469,
+      "time": "2026-11-13T22:01:09.000+08:00",
+      "source": "华尔街见闻",
+      "title": "网易云音乐与索尼音乐签署多年期许可协议。",
+      "url": "https://wallstreetcn.com/livenews/3199846"
+    },
+    {
+      "id": "hbizrc",
+      "ts": 1794578461,
+      "time": "2026-11-13T22:01:01.000+08:00",
+      "source": "新浪财经",
+      "title": "美军称击落伊朗伊斯兰革命卫队向巴林发射的两架攻击无人机",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyrazx3558388.shtml"
+    },
+    {
+      "id": "14aov7s",
+      "ts": 1794578411,
+      "time": "2026-11-13T22:00:11.000+08:00",
+      "source": "新浪财经",
+      "title": "贝森特称美国国债拍卖表现强劲 美元买盘旺盛",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyrazx3558054.shtml"
+    },
+    {
+      "id": "kl5mts",
+      "ts": 1794578339,
+      "time": "2026-11-13T21:58:59.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国海军：“迈克尔·墨菲”号驱逐舰从中东返回。",
+      "url": "https://wallstreetcn.com/livenews/3199845"
+    },
+    {
+      "id": "xts6ds",
+      "ts": 1794578314,
+      "time": "2026-11-13T21:58:34.000+08:00",
+      "source": "新浪财经",
+      "title": "苹果、Alphabet、优步都平稳度过创始人交接，英伟达的考验会更艰难",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyrazw7962205.shtml"
+    },
+    {
+      "id": "17tvepd",
+      "ts": 1794578267,
+      "time": "2026-11-13T21:57:47.000+08:00",
+      "source": "新浪财经",
+      "title": "报道：以色列情报局长访美 内塔尼亚胡敦促特朗普重启对伊朗战事",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyrazr0896790.shtml"
+    },
+    {
+      "id": "7iha6j",
+      "ts": 1794578163,
+      "time": "2026-11-13T21:56:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国中央司令部在X平台发文称，美军击落了伊朗伊斯兰革命卫队向巴林发射的两架攻击无人机。",
+      "url": "https://wallstreetcn.com/livenews/3199844"
+    },
+    {
+      "id": "pzbjvc",
+      "ts": 1794578121,
+      "time": "2026-11-13T13:55:21.000Z",
+      "source": "中新网",
+      "title": "海南首票“两头在外”保税航空煤油适用国际标准检验业务落地",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-13/10731838.shtml"
+    },
+    {
+      "id": "1ii290k",
+      "ts": 1794578093,
+      "time": "2026-11-13T13:54:53.000Z",
+      "source": "中新网",
+      "title": "引来全国新材料创新资源 广东茂名首届新材料创新创业大赛落幕",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-13/10731834.shtml"
+    },
+    {
+      "id": "5482zj",
+      "ts": 1794578087,
+      "time": "2026-11-13T21:54:47.000+08:00",
+      "source": "东方财富",
+      "title": "浙江：到2030年全域旅游综合收入达1.5万亿元",
+      "url": "http://finance.eastmoney.com/news/1355,202611133930978283.html"
+    },
+    {
+      "id": "qy0cfv",
+      "ts": 1794578086,
+      "time": "2026-11-13T21:54:46.000+08:00",
+      "source": "东方财富",
+      "title": "湖南推进海峡两岸产业合作区建设",
+      "url": "http://finance.eastmoney.com/news/1355,202611133930978184.html"
+    },
+    {
+      "id": "1v4e3rs",
+      "ts": 1794578086,
+      "time": "2026-11-13T21:54:46.000+08:00",
+      "source": "东方财富",
+      "title": "“十五五”时期 浙江旅游业如何激发消费活力？",
+      "url": "http://finance.eastmoney.com/news/1355,202611133930976973.html"
+    },
     {
       "id": "zuds99",
       "ts": 1794577971,
@@ -12,6 +172,14 @@
       "source": "华尔街见闻",
       "title": "周五美股盘前你需要了解的全球要闻",
       "url": "https://wallstreetcn.com/livenews/3199842"
+    },
+    {
+      "id": "mrxupl",
+      "ts": 1794577853,
+      "time": "2026-11-13T21:50:53.000+08:00",
+      "source": "东方财富",
+      "title": "市场流动性偏松 6个月期买断式逆回购缩量续作",
+      "url": "http://finance.eastmoney.com/news/1352,202611133930977678.html"
     },
     {
       "id": "ttohwi",
@@ -52,6 +220,14 @@
       "source": "东方财富",
       "title": "科创浪潮奔涌 浙江何以“链”动全球创新？",
       "url": "http://finance.eastmoney.com/news/1354,202611133930968146.html"
+    },
+    {
+      "id": "pq4irg",
+      "ts": 1794577440,
+      "time": "2026-11-13T21:44:00.000+08:00",
+      "source": "东方财富",
+      "title": "中国经济看“新”丨新赛道催生新岗位，就业潜力加快释放",
+      "url": "http://finance.eastmoney.com/news/1352,202611133930984492.html"
     },
     {
       "id": "10e2wzp",
@@ -294,6 +470,14 @@
       "url": "https://www.chinanews.com.cn/cj/2026/11-13/10731754.shtml"
     },
     {
+      "id": "17qt0q3",
+      "ts": 1794576879,
+      "time": "2026-11-13T21:34:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "应用材料分析师电话会议要点总结",
+      "url": "https://wallstreetcn.com/livenews/3199851"
+    },
+    {
       "id": "1dakfq9",
       "ts": 1794576758,
       "time": "2026-11-13T13:32:38.000Z",
@@ -428,6 +612,14 @@
       "source": "东方财富",
       "title": "10月金融数据出炉 哪些信号值得关注？",
       "url": "http://bond.eastmoney.com/news/1326,202611133930963330.html"
+    },
+    {
+      "id": "c9b8fn",
+      "ts": 1794576160,
+      "time": "2026-11-13T21:22:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "思科分析师电话会议要点总结",
+      "url": "https://wallstreetcn.com/livenews/3199843"
     },
     {
       "id": "n6ke7y",
@@ -1100,6 +1292,14 @@
       "source": "东方财富",
       "title": "“十五五”我国将提升粮食产业发展质量效益",
       "url": "http://finance.eastmoney.com/news/1355,202611133930968547.html"
+    },
+    {
+      "id": "xlz287",
+      "ts": 1794571919,
+      "time": "2026-11-13T20:11:59.000+08:00",
+      "source": "东方财富",
+      "title": "前10月东莞对APEC其他经济体进出口近万亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930971634.html"
     },
     {
       "id": "15iv7kq",
