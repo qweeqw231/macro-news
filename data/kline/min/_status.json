@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-13T22:22:42.373Z",
-  "ok": 12,
+  "generatedAt": "2026-11-13T22:52:40.207Z",
+  "ok": 11,
   "failed": 0,
   "failures": [],
   "rejected": [
@@ -31,8 +31,8 @@
     "ukx/30m: shorter-overlap-mismatch（新 238 根 < 现有 271 根）",
     "kospi/30m: shorter-overlap-mismatch（新 247 根 < 现有 273 根）",
     "sge_au9999/30m: shorter-too-partial（新 260 根 < 现有 410 根）",
-    "xag/30m: shorter-too-partial（新 281 根 < 现有 548 根）",
-    "xau/30m: shorter-too-partial（新 281 根 < 现有 548 根）",
+    "xag/30m: shorter-too-partial（新 282 根 < 现有 548 根）",
+    "xau/30m: shorter-too-partial（新 282 根 < 现有 548 根）",
     "sox/30m: shorter-too-partial（新 261 根 < 现有 327 根）",
     "eurcny/30m: shorter-overlap-mismatch（新 981 根 < 现有 983 根）",
     "gbpcny/30m: shorter-overlap-mismatch（新 965 根 < 现有 978 根）",
@@ -45,8 +45,9 @@
     "ukx/15m: shorter-overlap-mismatch（新 476 根 < 现有 541 根）",
     "kospi/15m: shorter-too-partial（新 494 根 < 现有 676 根）",
     "sge_au9999/15m: shorter-too-partial（新 520 根 < 现有 820 根）",
-    "xag/15m: shorter-too-partial（新 557 根 < 现有 1090 根）",
-    "xau/15m: shorter-too-partial（新 557 根 < 现有 1090 根）",
+    "xag/15m: shorter-too-partial（新 558 根 < 现有 1090 根）",
+    "xau/15m: shorter-too-partial（新 558 根 < 现有 1090 根）",
+    "sox/15m: shorter-too-partial（新 521 根 < 现有 654 根）",
     "eurcny/15m: shorter-overlap-mismatch（新 589 根 < 现有 591 根）"
   ]
 }
