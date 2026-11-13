@@ -55,6 +55,21 @@ export function checkPmGate(doc, opts = {}) {
 }
 
 /**
+ * pm 门禁要校验的「关键 key」清单。
+ * 固定的 4 个是对齐下游 dsh 的硬门禁；此外把快照里**实际出现的全部 A 股指数**
+ * 一并纳入 —— 新增标的（如 2.16.0 的 a100）只要进了快照就自动被校验，
+ * 不需要再改任何硬编码清单；旧快照里没有的 key 也不会被凭空要求（历史文件照常通过）。
+ */
+export function pmGateKeys(doc) {
+  const fixed = ['csi300', 'hsi', 'hs_tech', 'sge_au9999'];
+  const quotes = (doc && doc.quotes) || {};
+  const cnIndex = Object.keys(quotes).filter(
+    (k) => quotes[k] && quotes[k].kind === 'index' && quotes[k].market === 'CN'
+  );
+  return [...new Set([...fixed, ...cnIndex])];
+}
+
+/**
  * 校验「关键 key 都是当日的」——对应 dsh 的 check_macro_news.py 质量门。
  * 只查有明确「当日」语义的市场；portfolio（xau/ndx…）按各自口径放行。
  * @param {object} doc

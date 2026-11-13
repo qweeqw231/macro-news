@@ -11,7 +11,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { checkPmGate, checkPmKeys } from '../src/pm-gate.mjs';
+import { checkPmGate, checkPmKeys, pmGateKeys } from '../src/pm-gate.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (name, dflt) => {
@@ -36,7 +36,8 @@ try {
 }
 
 const gate = checkPmGate(doc, { today: date });
-const keys = checkPmKeys(doc, ['csi300', 'hsi', 'hs_tech', 'sge_au9999']);
+// 关键 key 不再写死：固定 4 个 + 快照内实际出现的全部 A 股指数（新增标的自动覆盖）
+const keys = checkPmKeys(doc, pmGateKeys(doc));
 const out = {
   ok: gate.ok && keys.length === 0,
   file,

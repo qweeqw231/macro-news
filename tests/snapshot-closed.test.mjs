@@ -11,6 +11,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { barClosedAt, lastClosedBarDate, snapshotTargets } from '../src/snapshot.mjs';
+import { INDICES } from '../src/sources.mjs';
 
 const BJ_MS = 8 * 3600 * 1000;
 /** epoch → 北京时间 'YYYY-MM-DD HH:MM' */
@@ -52,6 +53,29 @@ test('pm 目标清单不含印度；am 仍包含', () => {
   assert.equal(pm.some((t) => t.market === 'IN'), false);
   const am = snapshotTargets('am');
   assert.equal(am.some((t) => t.market === 'IN'), true);
+});
+
+test('新增标的自动进入 am/pm 快照集合（靠 INDICES 派生，不靠硬编码清单）', () => {
+  const am = snapshotTargets('am');
+  const pm = snapshotTargets('pm');
+  const amKeys = new Set(am.map((t) => t.key));
+  const pmKeys = new Set(pm.map((t) => t.key));
+  for (const i of INDICES) {
+    assert.ok(amKeys.has(i.key), `${i.key} 缺失于 am 目标集合`);
+    // pm 只排除印度（BSE 18:00 才收盘），其它指数一个都不能少
+    if (i.market === 'IN') assert.equal(pmKeys.has(i.key), false, `${i.key} 不应进 pm`);
+    else assert.ok(pmKeys.has(i.key), `${i.key} 缺失于 pm 目标集合`);
+  }
+  // a100 的取价字段必须齐全，否则进了集合也取不到价
+  const a100 = pm.find((t) => t.key === 'a100');
+  assert.ok(a100, 'pm 目标集合缺少 a100');
+  assert.equal(a100.market, 'CN');
+  assert.equal(a100.kind, 'index');
+  assert.equal(a100.secid, '1.000903');
+  assert.equal(a100.tx, 'sh000903');
+  // am 与 pm 的唯一差异只能是「pm 排除印度」
+  const onlyAm = am.filter((t) => !pmKeys.has(t.key)).map((t) => t.market);
+  assert.deepEqual([...new Set(onlyAm)], ['IN']);
 });
 
 test('am 12:05 采集：所有市场都只能取前一交易日（当天日 K 一律没收盘）', () => {

@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { checkPmGate, checkPmKeys } from '../src/pm-gate.mjs';
+import { checkPmGate, checkPmKeys, pmGateKeys } from '../src/pm-gate.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const real = JSON.parse(
@@ -48,4 +48,23 @@ test('关键 key 必须是当日 asOf', () => {
   const out = checkPmKeys(bad, ['hsi']);
   assert.equal(out.length, 1);
   assert.ok(out[0].startsWith('hsi:asOf-2026-11-05'));
+});
+
+test('关键 key 清单自动覆盖快照内的全部 A 股指数（新增标的无需改清单）', () => {
+  const doc = {
+    quotes: {
+      csi300: { kind: 'index', market: 'CN', asOf: '2026-11-13T15:00:00+08:00' },
+      a100: { kind: 'index', market: 'CN', asOf: '2026-11-13T15:00:00+08:00' },
+      hsi: { kind: 'index', market: 'HK', asOf: '2026-11-13T16:00:00+08:00' },
+      xau: { kind: 'portfolio', market: 'CMDTY', asOf: '2026-11-13T16:12:00+08:00' },
+    },
+  };
+  const keys = pmGateKeys(doc);
+  assert.ok(keys.includes('a100'), 'a100 必须被纳入 pm 门禁');
+  assert.ok(keys.includes('csi300'));
+  assert.ok(keys.includes('hsi'));
+  assert.ok(!keys.includes('xau'), 'portfolio 不走「当日」语义');
+  // 旧快照里没有 a100 时不能凭空要求它（历史文件照常通过）
+  assert.ok(!pmGateKeys(real).includes('a100'));
+  assert.deepEqual(checkPmKeys(doc, keys).filter((x) => x.startsWith('a100')), []);
 });
