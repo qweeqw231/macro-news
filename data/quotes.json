@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T00:07:43.224Z",
+  "generatedAt": "2026-11-13T00:22:54.406Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -223,14 +223,14 @@
       "key": "n225",
       "name": "日经225",
       "market": "JP",
-      "price": 61587.59,
+      "price": 61677.06,
       "open": 61223.41,
-      "high": 61622.11,
+      "high": 61759.63,
       "low": 61201.88,
       "prevClose": 60819.36,
       "volume": 0,
-      "changePct": 1.26,
-      "updatedAt": "2026-11-13T08:07:28+08:00",
+      "changePct": 1.41,
+      "updatedAt": "2026-11-13T08:22:28+08:00",
       "source": "eastmoney"
     },
     {
@@ -279,14 +279,14 @@
       "key": "kospi",
       "name": "韩国KOSPI",
       "market": "KR",
-      "price": 5484.86,
+      "price": 5480.49,
       "open": 5452.41,
-      "high": 5491.87,
+      "high": 5504.44,
       "low": 5452.41,
       "prevClose": 5342.73,
-      "volume": 17207,
-      "changePct": 2.66,
-      "updatedAt": "2026-11-13T08:07:50+08:00",
+      "volume": 38361,
+      "changePct": 2.58,
+      "updatedAt": "2026-11-13T08:23:00+08:00",
       "source": "eastmoney"
     },
     {
@@ -819,26 +819,26 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 3885.45,
+      "price": 3885.51,
       "open": 3877.21,
-      "high": 3887.83,
+      "high": 3889.41,
       "low": 3874.93,
       "prevClose": 3877.43,
       "changePct": 0.21,
-      "updatedAt": "2026-11-13T08:06:00+08:00",
+      "updatedAt": "2026-11-13T08:22:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 50.19,
+      "price": 50.12,
       "open": 50.04,
-      "high": 50.2,
+      "high": 50.24,
       "low": 49.92,
       "prevClose": 50.04,
-      "changePct": 0.3,
-      "updatedAt": "2026-11-13T08:06:00+08:00",
+      "changePct": 0.16,
+      "updatedAt": "2026-11-13T08:22:00+08:00",
       "note": ""
     },
     {
@@ -909,7 +909,7 @@
       "high": 1750.09,
       "low": 1720.85,
       "prevClose": 1746.9,
-      "volume": 653554240,
+      "volume": 482576000,
       "changePct": -0.7,
       "updatedAt": "2026-11-12T15:59:59+08:00",
       "source": "eastmoney"
