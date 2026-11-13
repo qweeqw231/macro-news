@@ -141,6 +141,17 @@
     return i < 0 ? MARKET_ORDER.length : i;
   };
 
+  // FX 组内的关注优先级（用户 2026-11-13 指定）。未收录的排最后，不抢已定顺序。
+  const FX_ORDER = [
+    'dxy', 'usdcny', 'usdcny_mid',
+    'eurusd', 'gbpusd', 'usdjpy', 'usdkrw', 'audusd', 'usdcad', 'usdchf',
+    'eurcny', 'gbpcny', 'jpycny', 'krwcny', 'audcny',
+  ];
+  const fxRank = (key) => {
+    const i = FX_ORDER.indexOf(key);
+    return i < 0 ? FX_ORDER.length : i;
+  };
+
   // 行情搜索：62 个标的靠肉眼滚太慢。按中文名 / key（含 ETF 代码）/ 英文缩写筛选，
   // 别名只补「名字里不含、但大家会搜」的少数词（黄金 / 原油 / 汇率 / 纳指…），不做拼音。
   // 分组名（港股 / 美股 / 大宗商品…）也进匹配，输入即筛整组。
@@ -165,6 +176,13 @@
     sse50: '上证50 上证 蓝筹 sse50 sse 50',
     a500: '中证A500 A500 中证 a500 宽基',
     a100: '中证A100 A100 中证 a100 宽基',
+    eurusd: '欧元 美元 eurusd euro usd 美元兑欧元',
+    gbpusd: '英镑 美元 gbpusd cable 美元兑英镑',
+    usdjpy: '美元 日元 usdjpy 美元兑日元 日元汇率',
+    usdkrw: '美元 韩元 usdkrw 美元兑韩元 韩元汇率',
+    audusd: '澳元 美元 audusd 美元兑澳元 澳元汇率',
+    usdcad: '美元 加元 usdcad 美元兑加元 加元汇率',
+    usdchf: '美元 瑞郎 usdchf 美元兑瑞郎 瑞郎汇率',
     sensex: '印度 孟买 印度指数 bse sensex 孟买30',
     vnindex: '越南 胡志明 hose vn vnindex',
     sox: '费城 半导体 芯片 费半 phlx semiconductor sox',
@@ -180,6 +198,8 @@
     ndx: 'NDX', xau: 'XAU', xag: 'XAG', brent: 'BRENT',
     sge_au9999: 'AU9999', usdcny: 'USDCNH', usdcny_mid: 'CNY', dxy: 'DXY', cgb_1y: 'CGB1Y',
     eurcny: 'EURCNY', gbpcny: 'GBPCNY', jpycny: 'JPYCNY', krwcny: 'KRWCNY', audcny: 'AUDCNY',
+    eurusd: 'EURUSD', gbpusd: 'GBPUSD', usdjpy: 'USDJPY', usdkrw: 'USDKRW',
+    audusd: 'AUDUSD', usdcad: 'USDCAD', usdchf: 'USDCHF',
   };
   const codeOf = (q) => {
     if (q.code) return String(q.code);
@@ -361,6 +381,9 @@
       .sort((a, b) => marketRank(a) - marketRank(b))
       .forEach((mk) => {
         const list = groups.get(mk);
+        // FX 组内按关注优先级排：美元指数 → 离岸人民币 → 中间价 → 7 个美元对 → 人民币交叉盘。
+        // 其余分组保持服务端返回顺序（INDICES/ETF 的自然顺序）。
+        if (mk === 'FX') list.sort((a, b) => fxRank(a.key) - fxRank(b.key));
         // openMap：刷新时假日表还没加载完（首帧同步回填），直接用快照里的开盘状态，
         // 否则会先按本地时区降级判断、再被 patch 改回来——又是一次文案跳动。
         const open = openMap ? !!openMap[mk] : list.some((q) => isTrading(q.calendarMarket || q.market));

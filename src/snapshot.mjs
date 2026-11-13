@@ -48,6 +48,7 @@ import { fetchDailyK, fetchKline5m } from './kline.mjs';
 import { emPool } from './em.mjs';
 import { newsDay } from './news-day.mjs';
 import { checkPmGate } from './pm-gate.mjs';
+import { FX_BAR_CLOSED_AT } from './fx-calendar.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -105,7 +106,9 @@ const SESSION_TARGET = {
   pm: { CN: '15:00', ETF: '15:00', HK: '16:00' },
 };
 // 没有「上午盘/收盘」固定时刻的市场（美股/日经/欧股…）：取最近一个**已收完**的交易日
-const NO_SESSION_TARGET = new Set(['US', 'JP', 'EU', 'UK', 'KR']);
+// 2.16.0：FX 也是 24 小时连续，没有「上午盘」概念 —— 之前没进这个集合，导致 am 快照
+//   直接把它记成 missing。放进来的口径与 pm 一致：取 06:00 切日后的上一根日 K。
+const NO_SESSION_TARGET = new Set(['US', 'JP', 'EU', 'UK', 'KR', 'FX']);
 
 // ---- 采集规格：日 K 标为「D」的那一根，在北京时间何时才算收完 ----
 // ⚠ 这是快照口径的根。am 在 12:05 采集时：
@@ -120,9 +123,10 @@ const BAR_CLOSED_AT = {
   // 越南 HOSE 14:45 ICT = 北京 15:45。印度不在此表：pm 不取印度，
   // am 用默认 15:00 已能保证「12:05 时当天未收完 ⇒ 取 T-1」。
   VN: '15:45',
-  // 外汇（美元指数 / 离岸人民币）：24 小时连续，收盘口径取纽约收市 → 北京次日 05:00。
+  // 外汇（美元指数 / 离岸人民币 / 人民币交叉盘 / 美元对各主要货币）：24 小时连续。
+  // 收盘口径见 src/fx-calendar.mjs（固定 22:00 UTC = 北京 06:00，实测东财日 K 切日）。
   // 这样 16:12 的 pm、12:05 的 am 取到的都是**上一根已收完**的日 K，不会把盘中值当收盘。
-  FX: '05:00+1',
+  FX: FX_BAR_CLOSED_AT,
   EU: '00:30+1', UK: '00:30+1', US: '05:00+1',
 };
 

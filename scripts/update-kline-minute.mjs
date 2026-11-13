@@ -77,6 +77,14 @@ const ROTATE_PERIODS = ['60m', '15m', '1m'];
 const AUTO_PERIODS = [...ALWAYS_PERIODS, ROTATE_PERIODS[new Date().getUTCHours() % ROTATE_PERIODS.length]];
 
 // 客户端没有别的分钟源 ⇒ 必须由服务端兜底
+// 2.16.0：新增 12 个外汇标的（5 个人民币交叉盘 + 7 个美元对）。
+//   · 交叉盘走**新浪外汇** getMinKLine（与日线/报价同源），不占东财 IP 额度；
+//   · 美元对走**东财 119.***（与报价同日线同源）。
+//   ⚠ 请求预算：存量 9 个标的（全部东财）× 3 周期 = 27 次/轮；
+//     新增后 16 个东财标的 × 3 = 48 次/轮，**超过实测会被限流的 ~35 次/轮**。
+//     ⇒ 分批：美元对只刷 5m + 30m（每轮 14 次，东财合计 41 次），
+//       60m/15m/1m 不预生成（浏览器可直连东财，与 dxy/usdcny 现状一致）。
+//       若 Actions 仍出现限流，把 NO_ROTATE_KEYS 扩大到全部外汇、或把 30m 改成隔轮。
 const TARGET_KEYS = [
   'n225',        // 日经225      100.N225
   'dax',         // 德国DAX30    100.GDAXI
@@ -87,7 +95,18 @@ const TARGET_KEYS = [
   'xag',         // 伦敦银       122.XAG（与报价 hf_XAG 同一条线，实测年均差 <0.7%）
   'xau',         // 伦敦金       122.XAU（现货；日线仍走新浪外盘，分钟只取东财）
   'sox',         // 费城半导体   251.SOX（腾讯无代码；分钟只东财有）
+  // ---- 外汇：人民币交叉盘（新浪 getMinKLine）----
+  'eurcny',      // fx_seurcny
+  'gbpcny',      // fx_sgbpcny
+  'jpycny',      // fx_sjpycny（×100）
+  'krwcny',      // fx_skrwcny（×100）
+  'audcny',      // fx_saudcny
+  // ---- 外汇：美元对各主要货币（东财 119.*）----
+  'eurusd', 'gbpusd', 'usdjpy', 'usdkrw', 'audusd', 'usdcad', 'usdchf',
 ];
+
+// 这些标的只刷「每轮必刷」的两个周期（5m/30m），60m/15m/1m 不预生成 —— 为了压住东财单轮请求数。
+const NO_ROTATE_KEYS = new Set(['eurusd', 'gbpusd', 'usdjpy', 'usdkrw', 'audusd', 'usdcad', 'usdchf']);
 
 // 周期 → 根数上限 + 抓取顺序。
 // ⚠ 顺序按**重要度**：5m 最常用，排最前（被打断时最新鲜的是它）；
@@ -164,6 +183,8 @@ let throttleHit = false;
 
 outer: for (const period of periodList) {
   for (const key of keys) {
+    // 美元对不刷轮换周期（见 TARGET_KEYS 上方的请求预算说明）
+    if ((PERIOD_SPEC[period]?.order ?? 0) >= 3 && NO_ROTATE_KEYS.has(key)) continue;
     const meta = klineTarget(key);
     if (!meta) {
       failures.push(`${key}: 未知标的`);

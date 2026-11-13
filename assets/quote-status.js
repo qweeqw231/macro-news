@@ -122,6 +122,25 @@
   };
   var WD = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
 
+  // 24 小时连续、没有交易所式开收盘的市场单独放一张表。
+  // ⚠ 刻意**不**并进 MARKET_SESSIONS：src/kline-finalize.mjs 用
+  //   `MARKET_SESSIONS[market]` 是否存在来区分「交易所日线」与「24h 市场日线」，
+  //   并进同一张表会让 FX 的日 K 定稿走错分支。
+  //
+  // FX：周一 06:00 开盘 → 周六 06:00 收盘（北京），即固定 22:00 UTC 切日。
+  //   这个 06:00 的口径真源是 src/fx-calendar.mjs（kline-finalize / snapshot 都从那里派生）；
+  //   浏览器端无法 import ESM，所以这里保留一份同值配置，并由
+  //   tests/fx-calendar.test.mjs 交叉校验两处一致（改一处必须改另一处）。
+  //   用途仅限「周末判成休市/已收盘」，不参与日 K 定稿。
+  var CONTINUOUS_SESSIONS = {
+    FX: {
+      tz: 'Asia/Shanghai', windows: [[360, 1800]],
+      tail: 360, openWeekday: 1,
+      note: '24h 连续：周一 06:00 开盘 → 周六 06:00 收盘（= 22:00 UTC 日切）',
+    },
+  };
+  var cfgFor = function (market) { return MARKET_SESSIONS[market] || CONTINUOUS_SESSIONS[market]; };
+
   /** IANA 时区下的本地年月日/时分/星期 */
   function tzParts(ms, tz) {
     var fmt = new Intl.DateTimeFormat('en-US', {
@@ -201,7 +220,7 @@
 
   /** 某日的有效交易窗口（半日市截断到 closeTime） */
   function sessionWindows(market, date, calendar) {
-    var cfg = MARKET_SESSIONS[market];
+    var cfg = cfgFor(market);
     if (!cfg) return [];
     var hd = halfDayFor(market, date, calendar);
     if (!hd) return cfg.windows;
@@ -219,7 +238,7 @@
       var c = parseHm(hd.closeTime);
       if (c != null) return c;
     }
-    var cfg = MARKET_SESSIONS[market];
+    var cfg = cfgFor(market);
     return cfg ? cfg.windows[cfg.windows.length - 1][1] : null;
   }
 
@@ -228,7 +247,7 @@
    * 只取最后一个会把 15:30 的日盘收盘吞掉，所以 lastCloseBefore 用这个列表。
    */
   function closeMinutesAll(market, date, calendar) {
-    var cfg = MARKET_SESSIONS[market];
+    var cfg = cfgFor(market);
     if (!cfg) return [];
     var hd = halfDayFor(market, date, calendar);
     if (hd) {
@@ -249,7 +268,7 @@
    * @returns {{known:boolean, phase:string, local?:object, tz?:string}}
    */
   function sessionAt(market, now, calendar) {
-    var cfg = MARKET_SESSIONS[market];
+    var cfg = cfgFor(market);
     if (!cfg) return { known: false, phase: 'unknown' };
     var p = tzParts(now, cfg.tz);
     var hd = halfDayFor(market, p.date, calendar);
@@ -271,6 +290,12 @@
     }
     var wins = sessionWindows(market, p.date, calendar);
     if (!wins.length) { base.phase = 'post'; return base; }
+    // 周一 06:00 之前仍属周末（FX）：此时「昨天窗口跨日」的判定会把 00:00-06:00
+    // 误算进周日的窗口，必须先按「本周开盘时刻」挡掉。
+    if (cfg.openWeekday != null && p.wd === cfg.openWeekday && p.minutes < wins[0][0]) {
+      base.phase = 'weekend';
+      return base;
+    }
     // 先判「在不在盘中」：跨日品种（上海金）凌晨 00:00-02:30 属于昨天窗口的尾巴，
     // 若先做 p.minutes < wins[0][0] 的盘前判断，会把这段夜盘误判成 pre。
     for (var i = 0; i < wins.length; i++) {
@@ -297,7 +322,7 @@
 
   /** 最近一次已完成的收盘（本地日期 + 收盘分钟 → UTC 毫秒） */
   function lastCloseBefore(market, now, calendar) {
-    var cfg = MARKET_SESSIONS[market];
+    var cfg = cfgFor(market);
     if (!cfg) return null;
     var p = tzParts(now, cfg.tz);
     for (var i = 0; i <= 14; i++) {
@@ -326,7 +351,7 @@
    * 跨日窗口（end > 1440）一律排除。
    */
   function dayCloseMs(market, dateStr, calendar) {
-    var cfg = MARKET_SESSIONS[market];
+    var cfg = cfgFor(market);
     if (!cfg) return null;
     var ends = sessionWindows(market, dateStr, calendar)
       .map(function (w) { return w[1]; })
@@ -652,8 +677,13 @@
       //   · 2.9.2：本地普通日 K 若 generatedAt 仍早于当日收盘 → 也还是盘中值。
       // 三种情况都不许标「实时」，统一改成「盘中值·未定稿」。
       var partial = false;
-      var cfg = opts.market && MARKET_SESSIONS[opts.market];
+      var cfg = opts.market && cfgFor(opts.market);
       var mktToday = cfg ? tzParts(Number(now), cfg.tz).date : today;
+      // 24h 连续市场（FX）在切日时刻之前，「今天这根」还属于昨天那一根 ⇒ 仍算盘中
+      if (cfg && cfg.openWeekday != null) {
+        var fxP = tzParts(Number(now), cfg.tz);
+        if (fxP.minutes < cfg.windows[0][0]) mktToday = shiftDate(fxP.date, -1);
+      }
       var phase = (opts.market && opts.calendar)
         ? sessionAt(opts.market, Number(now), opts.calendar)
         : null;
@@ -764,6 +794,7 @@
     parseBarTime: parseBarTime,
     ageMs: ageMs,
     MARKET_SESSIONS: MARKET_SESSIONS,
+    CONTINUOUS_SESSIONS: CONTINUOUS_SESSIONS,
     classifyState: classifyState,
     classifySession: classifySession,
     sessionAt: sessionAt,

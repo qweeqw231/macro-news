@@ -46,6 +46,15 @@ const INDICES = {
   // 人民币交叉盘（eurcny…）走新浪外汇，Worker 没有这条腿，故不在此表。
   dxy: { secid: '100.UDI', market: 'FX' },
   usdcny: { secid: '133.USDCNH', market: 'FX' },
+  // 2.16.0 美元兑各主要货币：与 src/sources.mjs 的 INDICES 同步（东财 119.*）。
+  // ⚠ 改这张表后必须 `npx wrangler deploy` 才生效（前端不依赖 Worker，但 /kline?key= 会用到）。
+  eurusd: { secid: '119.EURUSD', market: 'FX' },
+  gbpusd: { secid: '119.GBPUSD', market: 'FX' },
+  usdjpy: { secid: '119.USDJPY', market: 'FX' },
+  usdkrw: { secid: '119.USDKRW', market: 'FX' },
+  audusd: { secid: '119.AUDUSD', market: 'FX' },
+  usdcad: { secid: '119.USDCAD', market: 'FX' },
+  usdchf: { secid: '119.USDCHF', market: 'FX' },
 };
 
 const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '5m': 5, '30m': 30, '60m': 60 };

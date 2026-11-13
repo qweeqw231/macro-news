@@ -49,13 +49,14 @@ test('A股 12:18 未收盘；美股按美东日期', () => {
   assert.equal(lastClosedBarDate('US', BJ('2026-11-06T12:18:00')), '2026-11-05');
 });
 
-test('大宗 24h 与外汇 24h 的日线口径（2.14.0：FX 不再拿北京当天当已收盘）', () => {
+test('大宗 24h 与外汇 24h 的日线口径（2.16.0：FX 固定 22:00 UTC = 北京 06:00 切日）', () => {
   assert.equal(lastClosedBarDate('CMDTY', BJ('2026-11-06T12:18:00')), '2026-11-05');
   assert.equal(lastClosedBarDate('CMDTY', BJ('2026-11-06T04:00:00')), '2026-11-04');
-  // FX：24h 连续、按北京自然日切分 ⇒ 当天那根要到次日 00:00 才定稿
+  // FX：实测东财 119/133 的日 K 开盘价 == 当天 06:01 的 1 分钟 K 开盘价
+  //   ⇒ 06:00 之前连昨天那根都还没收完，这与 CMDTY 的 05:00 规则不同。
   assert.equal(lastClosedBarDate('FX', BJ('2026-11-06T12:18:00')), '2026-11-05');
-  assert.equal(lastClosedBarDate('FX', BJ('2026-11-06T23:59:00')), '2026-11-05');
-  assert.equal(lastClosedBarDate('FX', BJ('2026-11-07T00:01:00')), '2026-11-06');
+  assert.equal(lastClosedBarDate('FX', BJ('2026-11-07T05:59:00')), '2026-11-05');
+  assert.equal(lastClosedBarDate('FX', BJ('2026-11-07T06:01:00')), '2026-11-06');
 });
 
 test('FX / CMDTY 无时段市场也要能定稿（writePlan 不再直接 skip）', () => {
@@ -64,14 +65,19 @@ test('FX / CMDTY 无时段市场也要能定稿（writePlan 不再直接 skip）
     writePlan('FX', BJ('2026-11-06T12:00:00'), { lastBar: '2026-11-06', generatedAt: '2026-11-06T04:00:00Z' }).action,
     'open'
   );
-  // FX：文件停在昨天、且昨天那根是在收盘（11-07 00:00）之前写的 ⇒ 补定稿
+  // FX：03:00 仍在 11-06 那个交易日里（06:00 才切日）⇒ 11-06 那根还在走，open（不是定稿）
   assert.equal(
     writePlan('FX', BJ('2026-11-07T03:00:00'), { lastBar: '2026-11-06', generatedAt: '2026-11-06T08:00:00Z' }).action,
+    'open'
+  );
+  // FX：06:05 已切日，文件里 11-06 那根却是收盘前写的 ⇒ 补定稿
+  assert.equal(
+    writePlan('FX', BJ('2026-11-07T06:05:00'), { lastBar: '2026-11-06', generatedAt: '2026-11-06T08:00:00Z' }).action,
     'finalize'
   );
   // FX：收盘后已写过 ⇒ 幂等
   assert.equal(
-    writePlan('FX', BJ('2026-11-07T03:00:00'), { lastBar: '2026-11-06', generatedAt: '2026-11-06T16:10:00Z' }).action,
+    writePlan('FX', BJ('2026-11-07T06:05:00'), { lastBar: '2026-11-06', generatedAt: '2026-11-07T06:02:00Z' }).action,
     'skip'
   );
   // CMDTY：05:00 前（04:59）最后一根已收完的是前天，文件里已有昨天的 bar ⇒ 它还在走 → open

@@ -40,12 +40,17 @@ test('INDICES：sensex / vnindex 走东财 secid，排在韩国之后', () => {
   assert.equal(v.secid, '100.VNINDEX');
   assert.equal(v.sina, null);
   assert.equal(v.tx, null);
-  // 2.15.0：INDICES 末尾又加了 dxy / usdcny 两个外汇标的，
-  // 所以这里不再断言「vnindex 是最后一个」，只锁定 sensex 紧跟 vnindex 之前。
+  // 2.15.0 / 2.16.0：INDICES 末尾是外汇块（美元指数 → 离岸人民币 → 7 个美元对），
+  // 所以这里不再断言「vnindex 是最后一个」，只锁定 sensex 紧跟 vnindex 之前 + 外汇块顺序。
   assert.equal(INDICES[INDICES.length - 1].market, 'FX');
-  assert.equal(INDICES[INDICES.length - 1].key, 'usdcny');
-  assert.equal(INDICES[INDICES.length - 2].market, 'FX');
-  assert.equal(INDICES[INDICES.length - 2].key, 'dxy');
+  assert.equal(INDICES[INDICES.length - 1].key, 'usdchf');
+  assert.equal(INDICES[INDICES.length - 2].key, 'usdcad');
+  const iFx = INDICES.findIndex((x) => x.key === 'dxy');
+  assert.deepEqual(
+    INDICES.slice(iFx).map((x) => x.key),
+    ['dxy', 'usdcny', 'eurusd', 'gbpusd', 'usdjpy', 'usdkrw', 'audusd', 'usdcad', 'usdchf'],
+    '外汇块顺序：美元指数 → 离岸人民币 → 7 个美元对'
+  );
   const iV = INDICES.findIndex((x) => x.key === 'vnindex');
   assert.equal(INDICES[iV - 1].key, 'sensex', 'sensex 应紧邻 vnindex 之前');
 });

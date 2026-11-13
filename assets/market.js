@@ -137,6 +137,23 @@
       klineNote: '离岸价 USD/CNH（东财 133.USDCNH）与官方中间价是两个价格，不能互相替代' },
     { key: 'usdcny_mid', market: 'FX', name: '人民币中间价', decimals: 4, noHistory: true,
       klineNote: '官方中间价：中国货币网每个交易日 09:15 发布一次，只有当日值、没有历史序列（K 线不可得，也不用离岸价顶替）' },
+    // 美元兑各主要货币（2.16.0）：报价与 K 线同源（东财 119.*），4 位小数。
+    //   ⚠ 一律市场惯例方向（EUR/USD、GBP/USD、AUD/USD）；反方向 USD/EUR 等历史只有 2013/2019 起，刻意不接。
+    //   ⚠ 卡片名必须写清「谁兑谁」：美元/日元与「100日元/人民币」单位口径不同，并排时最容易误读。
+    { key: 'eurusd',     secid: '119.EURUSD', klineSecid: '119.EURUSD', market: 'FX', name: '欧元/美元', decimals: 4,
+      klineNote: '东财 119.EURUSD：报价与日/周/月、分钟 K 同源；1 欧元兑美元' },
+    { key: 'gbpusd',     secid: '119.GBPUSD', klineSecid: '119.GBPUSD', market: 'FX', name: '英镑/美元', decimals: 4,
+      klineNote: '东财 119.GBPUSD：报价与日/周/月、分钟 K 同源；1 英镑兑美元' },
+    { key: 'usdjpy',     secid: '119.USDJPY', klineSecid: '119.USDJPY', market: 'FX', name: '美元/日元', decimals: 4,
+      klineNote: '东财 119.USDJPY：报价与日/周/月、分钟 K 同源；1 美元兑日元（与右侧「100日元/人民币」单位不同，不可直接比较）' },
+    { key: 'usdkrw',     secid: '119.USDKRW', klineSecid: '119.USDKRW', market: 'FX', name: '美元/韩元', decimals: 4,
+      klineNote: '东财 119.USDKRW：报价与日/周/月、分钟 K 同源；1 美元兑韩元' },
+    { key: 'audusd',     secid: '119.AUDUSD', klineSecid: '119.AUDUSD', market: 'FX', name: '澳元/美元', decimals: 4,
+      klineNote: '东财 119.AUDUSD：报价与日/周/月、分钟 K 同源；1 澳元兑美元' },
+    { key: 'usdcad',     secid: '119.USDCAD', klineSecid: '119.USDCAD', market: 'FX', name: '美元/加元', decimals: 4,
+      klineNote: '东财 119.USDCAD：报价与日/周/月、分钟 K 同源；1 美元兑加元' },
+    { key: 'usdchf',     secid: '119.USDCHF', klineSecid: '119.USDCHF', market: 'FX', name: '美元/瑞郎', decimals: 4,
+      klineNote: '东财 119.USDCHF：报价与日/周/月、分钟 K 同源；1 美元兑瑞郎' },
     // 美元指数：东财 100.UDI（2 位小数），日/周/月/分钟 K 实测全可用
     { key: 'dxy',        secid: '100.UDI', klineSecid: '100.UDI', market: 'FX', name: '美元指数', decimals: 2,
       klineNote: 'ICE 美元指数（东财 100.UDI），2 位小数；日/周/月与分钟 K 同源' },
@@ -176,14 +193,11 @@
   // 某些标的**全网都没有同口径的分钟源** ⇒ 与其甩一句「加载失败」，
   // 不如说清楚**为什么没有**（用户看到的是事实，不是一个像 bug 的报错）。
   // 2026-11-03：伦敦金已接入东财 122.XAU 分钟（现货、同日收盘差 <0.1%），不再属于「无分钟」。
+  // 2026-11-13 更正：新浪外汇**有**分钟接口（getMinKLine，1/5/15/30/60 全可用，上限 1000 根），
+  //   此前「新浪外汇只有日线」的结论是错的，5 个人民币交叉盘已改为服务端预生成分钟 K。
   const NO_MINUTE_REASON = {
     brent: '布伦特只有新浪外盘的日线；东财 112.B00Y 是「当月连续结算价」，与报价口径在换月时基差可达 6% ⇒ 刻意不混用',
     usdcny_mid: '官方中间价每个交易日只有 09:15 一个值，没有分钟序列，也没有历史',
-    eurcny: '新浪外汇只有日线（2008-09 起），没有分钟级数据',
-    gbpcny: '新浪外汇只有日线（2014-11 起），没有分钟级数据',
-    jpycny: '新浪外汇只有日线（2008-09 起），没有分钟级数据',
-    krwcny: '新浪外汇只有日线（2014-11 起），没有分钟级数据',
-    audcny: '新浪外汇只有日线（2014-11 起），没有分钟级数据',
   };
   const getMinuteUnavailableReason = (key) => NO_MINUTE_REASON[key] || '';
 
@@ -648,22 +662,38 @@
     krwcny: 'fx_skrwcny', audcny: 'fx_saudcny',
   };
 
+  // 新浪外汇分钟（getMinKLine）：1/5/15/30/60 全可用，单次硬上限 1000 根。
+  //   2026-11-13 更正：此前这里断言「新浪外汇只有日线」，实测不成立 —— 分钟接口一直都在。
+  //   字段序：date,open,low,high,close（与日线同序，无成交量）。
+  const SINA_FX_MIN_SCALE = { '1m': 1, '5m': 5, '15m': 15, '30m': 30, '60m': 60 };
+
   async function fetchKlineSinaFx(key, period) {
     const symbol = SINA_FX_CODE[key];
     if (!symbol) throw new Error('新浪外汇无该标的');
-    if (period !== '1d' && period !== '1w' && period !== '1M') {
-      throw new Error('新浪外汇只有日线，无分钟级数据');
-    }
     const unit = (byKey.get(key) || {}).fxUnit || 1;
+    const s = (v) => (unit === 1 ? +v : Number((v * unit).toFixed(8)));
     const cb = '_kline_' + (++sinaCbSeq);
+    const scale = SINA_FX_MIN_SCALE[period];
+    if (scale) {
+      const url =
+        'https://vip.stock.finance.sina.com.cn/forex/api/jsonp.php/var%20' + cb + '=' +
+        `/NewForexService.getMinKLine?symbol=${symbol}&scale=${scale}&datalen=1000`;
+      const rows = await sinaJsonp(url, cb, 15000, 'array');
+      const bars = rows.map((b) => ({
+        t: String(b.d).slice(0, 16), o: s(b.o), l: s(b.l), h: s(b.h), c: s(b.c), v: 0,
+      })).filter((b) => b.o > 0 && b.c > 0);
+      if (!bars.length) throw new Error('新浪外汇分钟返回空');
+      return bars;
+    }
+    if (period !== '1d' && period !== '1w' && period !== '1M') {
+      throw new Error('新浪外汇不支持周期 ' + period);
+    }
     const url =
       'https://vip.stock.finance.sina.com.cn/forex/api/jsonp.php/var%20' + cb + '=' +
       `/NewForexService.getDayKLine?symbol=${symbol}`;
     const raw = await sinaJsonp(url, cb, 15000, 'string');
     const daily = String(raw).split('|').filter(Boolean).map((r) => {
       const p = r.split(',');
-      // 100 单位报价（日元/韩元）：OHLC 同步 ×100；toFixed(8) 去掉浮点尾数
-      const s = (v) => (unit === 1 ? +v : Number((v * unit).toFixed(8)));
       return {
         t: String(p[0]).slice(0, 10),
         o: s(p[1]), l: s(p[2]), h: s(p[3]), c: s(p[4]), v: 0,
@@ -816,7 +846,7 @@
       add('新浪外盘（全量历史·现货）', () => fetchKlineSinaGlobal(key, period));
     }
     if (SINA_FX_CODE[key]) {
-      add('新浪外汇（日线全量）', () => fetchKlineSinaFx(key, period));
+      add('新浪外汇（日线全量 / 分钟 1000 根）', () => fetchKlineSinaFx(key, period));
     }
     add('腾讯兜底', () =>
       TX_PERIOD[period]

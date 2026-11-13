@@ -10,6 +10,7 @@
 // 不另造一套（这是 2.4.1 以来唯一的时段真源）。
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { FX_DAY_CUT_BJ_MINUTES, FX_DAY_CUT_BJ_HM } from './fx-calendar.mjs';
 
 const require = createRequire(import.meta.url);
 const QS = require('../assets/quote-status.js');
@@ -51,8 +52,10 @@ export function lastCompletedClose(market, nowMs = Date.now(), calendar = CAL) {
  * 这两类市场没有交易所式的开收盘，所以**不能**给它们伪造 MARKET_SESSIONS 配置
  * （那会让 sessionAt/假日表把 24 小时市场判成「休市」）。这里单独定义：
  *
- *   · FX（离岸 CNH / 在岸即期）：24 小时连续。东财 133.USDCNH、新浪 fx_* 的日 K
- *     都按**北京自然日**切分 ⇒ D 日那根 bar 到 D+1 00:00 才不再变化。
+ *   · FX（离岸 CNH / 在岸即期 / 美元对各主要货币）：24 小时连续。
+ *     **切日口径的唯一真源是 src/fx-calendar.mjs**：固定 22:00 UTC = 北京 06:00
+ *     （实测东财 119.* / 133.* 日 K 开盘价 == 当天 06:01 的 1 分钟 K 开盘价）。
+ *     这里只做派生，不再单独写死时刻。
  *   · CMDTY（伦敦金/银、布伦特原油）：准 24 小时，每日约 06:00-07:00 北京短暂休市。
  *     沿用仓库既有口径：**北京 05:00 收盘**（见 assets/market.js 的 klineNote：
  *     「报价源 04:55 冻结，官方 05:00 收盘」）⇒ D 日 bar 到 D+1 05:00 定稿。
@@ -60,7 +63,7 @@ export function lastCompletedClose(market, nowMs = Date.now(), calendar = CAL) {
  * closeHm 的含义：**D 日那根 bar 的收盘时刻在 D+1 的北京时间分钟数**。
  */
 export const NO_SESSION_CLOSE = {
-  FX: { closeHm: 0, label: '24h 连续 · 北京自然日切分 · D+1 00:00 定稿' },
+  FX: { closeHm: FX_DAY_CUT_BJ_MINUTES, label: `24h 连续 · 北京 ${FX_DAY_CUT_BJ_HM} 切日 · D+1 ${FX_DAY_CUT_BJ_HM} 定稿` },
   CMDTY: { closeHm: 5 * 60, label: '24h 准连续 · 北京 05:00 收盘 · D+1 05:00 定稿' },
 };
 
@@ -94,7 +97,8 @@ export function barCloseMs(market, date, calendar = CAL) {
  * 某个市场在 now 时刻「允许写进日 K 的最后一根 bar 日期」。
  *   · 有交易时段配置的市场：最近一次收盘的日期；
  *   · CMDTY（伦敦金/银/布伦特，24h）：05:00 北京收盘，05:00 前连昨天的 bar 都没收完；
- *   · FX（离岸/在岸即期，24h）：按北京自然日切分，今天那根要到明天 00:00 才定稿。
+ *   · FX（离岸/在岸即期，24h）：北京 06:00 切日（见 src/fx-calendar.mjs），
+ *     06:00 前今天那根还没收完。
  * @returns {string|null} null = 无法判定，调用方不要过滤
  */
 export function lastClosedBarDate(market, nowMs = Date.now(), calendar = CAL) {
