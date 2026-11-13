@@ -1,10 +1,106 @@
 {
-  "generatedAt": "2026-11-13T15:22:52.646Z",
+  "generatedAt": "2026-11-13T15:37:54.639Z",
   "windowDays": 62,
   "from": "2026-09-13",
   "days": 61,
-  "total": 39112,
+  "total": 39127,
   "items": [
+    {
+      "id": "1uyor4m",
+      "ts": 1794584175,
+      "time": "2026-11-13T23:36:15.000+08:00",
+      "source": "新浪财经",
+      "title": "投资者消化CEO离职冲击，英伟达股价下挫3.6%，整个芯片板块普跌",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyriiv3466622.shtml"
+    },
+    {
+      "id": "hjguuf",
+      "ts": 1794584108,
+      "time": "2026-11-13T23:35:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "华强北爆款上新：AI陪伴玩具销量飙涨150%",
+      "url": "https://wallstreetcn.com/livenews/3199892"
+    },
+    {
+      "id": "1szqbbj",
+      "ts": 1794584029,
+      "time": "2026-11-13T23:33:49.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达丑闻背后，AI板块暗藏上行机遇",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyriiv3465949.shtml"
+    },
+    {
+      "id": "1lwvsxp",
+      "ts": 1794583900,
+      "time": "2026-11-13T23:31:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国能源信息署（EIA）：美国上周EIA天然气库存增加610亿立方英尺，周环比增长1.6%，至3.86万亿立方英尺。",
+      "url": "https://wallstreetcn.com/livenews/3199891"
+    },
+    {
+      "id": "1jwvwwm",
+      "ts": 1794583802,
+      "time": "2026-11-13T23:30:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国11月6日当周EIA天然气库存变动 610亿立方英尺，预期 620亿立方英尺，前值 770亿立方英尺。",
+      "url": "https://wallstreetcn.com/livenews/3199890"
+    },
+    {
+      "id": "6gdm8y",
+      "ts": 1794583693,
+      "time": "2026-11-13T23:28:13.000+08:00",
+      "source": "东方财富",
+      "title": "《“十五五”新型储能实施方案》：到2030年，可承担顶峰保供作用的电网侧独立新型储能规模约1.4亿千瓦",
+      "url": "http://finance.eastmoney.com/news/1355,202611133931045330.html"
+    },
+    {
+      "id": "w0w3d5",
+      "ts": 1794583644,
+      "time": "2026-11-13T23:27:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "13F报告显示，沙特央行三季度建仓做多闪迪、霍尼韦尔等股票。",
+      "url": "https://wallstreetcn.com/livenews/3199889"
+    },
+    {
+      "id": "m43ona",
+      "ts": 1794583530,
+      "time": "2026-11-13T23:25:30.000+08:00",
+      "source": "新浪财经",
+      "title": "芝加哥联储主席古尔斯比称央行在通胀问题上“仍有大量工作要做”",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniyriit1095358.shtml"
+    },
+    {
+      "id": "15sllk0",
+      "ts": 1794583505,
+      "time": "2026-11-13T23:25:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "机构：油价已基本消化战争溢价，即便达成协议，布伦特仍有望维持90美元以上",
+      "url": "https://wallstreetcn.com/livenews/3199888"
+    },
+    {
+      "id": "z4mixf",
+      "ts": 1794583440,
+      "time": "2026-11-13T23:24:00.000+08:00",
+      "source": "东方财富",
+      "title": "前10月新增社融28.61万亿元 10月末M2同比增长7.1%，还有哪些信号值得关注？",
+      "url": "http://bond.eastmoney.com/news/1326,202611133931044365.html"
+    },
+    {
+      "id": "1dmy5j3",
+      "ts": 1794583406,
+      "time": "2026-11-13T23:23:26.000+08:00",
+      "source": "华尔街见闻",
+      "title": "俄罗斯国防部：俄军打击了苏梅地区的变电站。",
+      "url": "https://wallstreetcn.com/livenews/3199887"
+    },
+    {
+      "id": "1gd33sf",
+      "ts": 1794583385,
+      "time": "2026-11-13T23:23:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国达拉斯联储主席：美联储更明确区分两种市场操作",
+      "url": "https://wallstreetcn.com/livenews/3199886"
+    },
     {
       "id": "ma0j4t",
       "ts": 1794583305,
@@ -12,6 +108,14 @@
       "source": "华尔街见闻",
       "title": "美国银行：在此前预计美联储将于12月和2027年3月份加息的基础上，现在预计明年1月份也要加息。",
       "url": "https://wallstreetcn.com/livenews/3199885"
+    },
+    {
+      "id": "7lb5rs",
+      "ts": 1794583260,
+      "time": "2026-11-13T23:21:00.000+08:00",
+      "source": "东方财富",
+      "title": "“潮汐学校”是个好样本 但不是标准答案",
+      "url": "http://finance.eastmoney.com/news/1350,202611133931045625.html"
     },
     {
       "id": "sgdlho",
@@ -28,6 +132,22 @@
       "source": "华尔街见闻",
       "title": "美国参议院民主党成员Warren谴责通用汽车在轿车价格处于历史性高位之际回购200亿美元股票的打算。",
       "url": "https://wallstreetcn.com/livenews/3199884"
+    },
+    {
+      "id": "19g9p4s",
+      "ts": 1794583140,
+      "time": "2026-11-13T23:19:00.000+08:00",
+      "source": "东方财富",
+      "title": "财经聚焦｜资金流向哪里 结构有何变化——透视10月金融数据",
+      "url": "http://forex.eastmoney.com/news/1131,202611133931044610.html"
+    },
+    {
+      "id": "1157t3",
+      "ts": 1794583132,
+      "time": "2026-11-13T23:18:52.000+08:00",
+      "source": "东方财富",
+      "title": "“投资中国”比荷卢企业圆桌会在布鲁塞尔举行",
+      "url": "http://finance.eastmoney.com/news/1352,202611133931044265.html"
     },
     {
       "id": "451ggu",
