@@ -1,0 +1,161 @@
+{
+  "date": "2026-11-13",
+  "generatedAt": "2026-11-13T09:09:59+08:00",
+  "endedAt": "2026-11-13T09:11:17+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-12",
+    "to": "2026-11-13",
+    "fromAt": "2026-11-12T08:00:00+08:00",
+    "toAt": "2026-11-13T09:00:00+08:00",
+    "fromTs": 1794441600,
+    "toTs": 1794531600
+  },
+  "overview": "今日主线是中国政策稳字当头、海外紧缩再升级：央行三季度货政报告未释放降准降息信号、仍以结构性工具发力，财政部拟发行1500亿元注资特别国债，商务部称中美就降税、贸易、投资保持密切沟通。海外方面，戴利与哈马克等美联储官员集体放鹰，美债10年期升破5.11%、黄金跌破3900，英伟达CEO黄仁勋辞职引发AI链重估。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行三季度货政报告：未释放降准降息信号，结构性工具仍是发力重点",
+      "summary": "11月11日央行发布《2026年第三季度中国货币政策执行报告》，对国内外经济形势判断、货币政策部署、金融风险防控等多处表述作出调整。整体上货币政策基调保持延续，报告未释放明确的降准降息信号，结构性工具仍是当前发力重点；同时明确中央资金支持中小机构补资本、丰富稳市工具。",
+      "why": "政策未转向，但发力方式已明确。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-12T20:46",
+      "url": "http://bond.eastmoney.com/news/1326,202611123929901081.html",
+      "refs": [
+        "http://forex.eastmoney.com/news/1131,202611123929811835.html",
+        "http://finance.eastmoney.com/news/1352,202611123929923136.html",
+        "https://wallstreetcn.com/livenews/3199384"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "财政部拟发行1500亿元中央金融机构注资特别国债（二期），7年期",
+      "summary": "财政部拟发行2026年中央金融机构注资特别国债（二期），本期为7年期固定利率附息债，竞争性招标面值总额1500亿元，不进行甲类成员追加投标，票面利率通过竞争性招标确定；同时拟发行2026年记账式贴现（七十四期）国债，期限182天。",
+      "why": "给中小金融机构补资本，是稳市工具链的底层一环。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-12T09:14",
+      "url": "http://stock.eastmoney.com/news/11215,202611123929277598.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199415"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "商务部：中美正就降税、贸易、投资等问题保持密切沟通",
+      "summary": "据新华社，商务部表示中美正就降税、贸易、投资等问题保持密切沟通；国务院表示将强化社保基金安全监管和保值增值、扩大企业年金覆盖面。据央视，外交部称美方应当停止编造所谓的间谍叙事、为实施科技封锁寻找借口。",
+      "why": "中美沟通重新启动，是外贸与汇率预期的变量。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-12T22:00",
+      "url": "https://wallstreetcn.com/livenews/3199183"
+    },
+    {
+      "rank": 4,
+      "title": "新能源汽车增值税出口退税率2027年4月起由13%降至9%",
+      "summary": "财政部、税务总局发布公告，明确自2027年4月1日起，新能源汽车增值税出口退税率由13%下调至9%。这项调整有助于引导企业更多依靠技术、品质和服务拓展海外市场，进一步巩固我国汽车产业的竞争优势。",
+      "why": "退税下调是财政转向提质换量的明确信号。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-13T05:51",
+      "url": "http://finance.eastmoney.com/news/1350,202611133930071046.html"
+    },
+    {
+      "rank": 5,
+      "title": "美联储鹰派阵营升温：戴利称需进一步加息，哈马克主张转向限制性",
+      "summary": "旧金山联储主席戴利表示，为进一步压低通胀，美联储很可能需要进一步加息；克利夫兰联储主席哈马克称通胀正朝着错误的方向发展、真正的价格压力来自人工智能建设，需要转向限制性政策立场。美联储同时宣布取消2027年10月的FOMC会议，全年仅举行7次利率决策会议。",
+      "why": "再加一次的概率被推高，降息时点后移。",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-13T07:31",
+      "url": "https://finance.sina.com.cn/money/forex/forexroll/2026-11-13/doc-iniypvhp3731761.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199164",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniypksr1480770.shtml",
+        "https://wallstreetcn.com/livenews/3199258",
+        "https://wallstreetcn.com/livenews/3199391",
+        "https://wallstreetcn.com/livenews/3199175"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "美债重挫：10年期收益率升破5.11%，30年期拍卖需求不及预期",
+      "summary": "周四（11月12日，假日归来）纽约尾盘，美国10年期国债收益率涨12.09个基点报5.1129%，两年期涨12.68个基点报4.8645%，30年期涨8.64个基点报5.4388%。同日财政部拍卖250亿美元30年期国债，得标利率5.441%、投标倍数2.36，认购需求不及预期。",
+      "why": "长端破5%叠加供给遇冷，是最硬的约束。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-13T04:50",
+      "url": "https://wallstreetcn.com/livenews/3199346",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199282",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniypkss8259783.shtml",
+        "https://finance.sina.com.cn/world/2026-11-12/doc-iniyntut1158976.shtml",
+        "https://wallstreetcn.com/livenews/3199152"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "贝莱德：英国央行或再加息三至四次，基准利率已至4%",
+      "summary": "贝莱德全球投资及组合解决方案主管Alex Brazier表示，英国央行可能按市场定价所反映的那样额外实施三至四次加息；在上周加息25个基点、把基准利率提高至4%后，最快12月再次加息是有可能的。经济增长仍具韧性，能源冲击又推高通胀。",
+      "why": "英央行路径决定英镑与全球长端利率的联动。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-12T18:27",
+      "url": "https://wallstreetcn.com/livenews/3199064",
+      "refs": [
+        "https://finance.sina.com.cn/world/2026-11-12/doc-iniynppa8544889.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-13/doc-iniypksr1483972.shtml",
+        "https://www.chinanews.com.cn/cj/2026/11-13/10731242.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "现货黄金跌破3900美元至3874.59，三日累跌6.4%",
+      "summary": "周四纽约尾盘现货黄金跌2.84%报3874.59美元/盎司，盘中最低触及3852.68美元，最近三个交易日累计下跌6.4%；现货白银跌3.26%报49.9987美元。美元指数涨0.25%报103.166点、创19个月新高；兴业证券认为在新的加息升温信号出现前，金价继续下跌空间或相对有限。",
+      "why": "黄金跌破3900是本轮最深调整，避险属性被重定价。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-13T05:51",
+      "url": "https://wallstreetcn.com/livenews/3199374",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/11-13/10731242.shtml",
+        "https://wallstreetcn.com/livenews/3199226",
+        "https://wallstreetcn.com/livenews/3199339",
+        "https://finance.sina.com.cn/money/nmetal/gjshz/2026-11-12/doc-iniymsim1860393.shtml",
+        "https://finance.sina.com.cn/roll/2026-11-12/doc-iniynaxf1749994.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "特朗普称无需与伊朗达成协议，油价反弹布伦特升至约94美元",
+      "summary": "特朗普称美国不需要与伊朗达成协议后，国际油价短线拉升，布伦特原油报93.28美元/桶、WTI报86.89美元/桶，盘中布伦特一度涨1.3%至约94美元，WTI收涨2.55%报88.74美元；该表态同时推升加息押注，美股期指下挫。",
+      "why": "油价反弹是本轮通胀交易逆转的开关。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-12T21:09",
+      "url": "https://wallstreetcn.com/livenews/3199152",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199324",
+        "https://finance.sina.com.cn/world/2026-11-12/doc-iniyntut1158976.shtml",
+        "https://wallstreetcn.com/livenews/3199321",
+        "https://wallstreetcn.com/livenews/3199405"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "英伟达CEO黄仁勋辞职，盘中跌约14%、市值蒸发5930亿美元",
+      "summary": "英伟达创始人兼CEO黄仁勋辞去CEO、总裁及董事职务，CFO出任临时CEO，公司首次任命董事会主席并启动CEO遴选，并面临美国司法部反垄断调查。股价盘中一度跌13.96%，市值蒸发5930亿美元、跌穿4万亿美元，竞争对手AMD收涨近6%，费城半导体指数跌3.7%。",
+      "why": "AI链的估值锚与融资叙事同时被重估。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-13T07:15",
+      "url": "https://wallstreetcn.com/livenews/3199405",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199187",
+        "https://wallstreetcn.com/livenews/3199228",
+        "https://wallstreetcn.com/livenews/3199434",
+        "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-12/doc-iniyniff3881778.shtml",
+        "https://wallstreetcn.com/livenews/3199419"
+      ]
+    }
+  ],
+  "watch": [
+    "美债：10年期能否站稳5.11%、30年期能否守住5.44%，以及250亿30年期之后的长端续发需求",
+    "美联储：戴利、哈马克的鹰派表态是否扩散，12月9日FOMC的50基点定价如何变化",
+    "黄金：3874美元后能否守住3800整数关口（2025年10月低点3819.56），美元指数能否站稳103.166",
+    "国内：央行公开市场净投放、人民币中间价（11月12日报6.7174、上调17点），以及11月15日外汇存款准备金率升至6%的落地影响"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
