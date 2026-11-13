@@ -1,36 +1,9 @@
 {
-  "generatedAt": "2026-11-13T08:20:18.504Z",
+  "generatedAt": "2026-11-13T08:48:11.168Z",
   "ok": 0,
-  "failed": 3,
+  "failed": 1,
   "failures": [
-    "dax/1m: 只取到 5 根",
-    "cac40/1m: 只取到 5 根",
-    "ukx/1m: 只取到 20 根"
+    "n225/5m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)"
   ],
-  "rejected": [
-    "n225/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1010 根）",
-    "dax/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1003 根）",
-    "cac40/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1003 根）",
-    "ukx/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1003 根）",
-    "kospi/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1010 根）",
-    "sge_au9999/5m: shorter-no-overlap（新 1000 根 < 现有 1022 根）",
-    "xag/5m: shorter-no-overlap（新 1000 根 < 现有 1003 根）",
-    "xau/5m: shorter-no-overlap（新 1000 根 < 现有 1003 根）",
-    "sox/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1004 根）",
-    "n225/30m: shorter-overlap-mismatch（新 253 根 < 现有 264 根）",
-    "dax/30m: shorter-overlap-mismatch（新 239 根 < 现有 271 根）",
-    "cac40/30m: shorter-overlap-mismatch（新 239 根 < 现有 271 根）",
-    "ukx/30m: shorter-overlap-mismatch（新 239 根 < 现有 271 根）",
-    "kospi/30m: shorter-overlap-mismatch（新 260 根 < 现有 273 根）",
-    "sge_au9999/30m: shorter-too-partial（新 247 根 < 现有 410 根）",
-    "xag/30m: shorter-too-partial（新 254 根 < 现有 548 根）",
-    "xau/30m: shorter-too-partial（新 254 根 < 现有 548 根）",
-    "sox/30m: shorter-overlap-mismatch（新 248 根 < 现有 261 根）",
-    "n225/1m: shorter-too-partial（新 330 根 < 现有 660 根）",
-    "kospi/1m: shorter-too-partial（新 390 根 < 现有 780 根）",
-    "sge_au9999/1m: shorter-too-partial（新 780 根 < 现有 1560 根）",
-    "xag/1m: shorter-too-partial（新 561 根 < 现有 2620 根）",
-    "xau/1m: shorter-too-partial（新 561 根 < 现有 2621 根）",
-    "sox/1m: shorter-too-partial（新 390 根 < 现有 780 根）"
-  ]
+  "rejected": []
 }
