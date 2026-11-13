@@ -540,6 +540,9 @@ export const INDICES = [
   { key: 'csi300',    name: '沪深300',    market: 'CN', secid: '1.000300', sina: 'sh000300', tx: 'sh000300' },
   { key: 'sse50',     name: '上证50',     market: 'CN', secid: '1.000016', sina: 'sh000016', tx: 'sh000016' },
   { key: 'a500',      name: '中证A500',   market: 'CN', secid: '1.000510', sina: 'sh000510', tx: 'sh000510' },
+  // 中证A100（原中证100 更名，2026-11-13 双源核对：东财 suggest Code=000903 /
+  //   QuoteID=1.000903 / Classify=Index；腾讯 sh000903 返回「中证A100」）
+  { key: 'a100',      name: '中证A100',   market: 'CN', secid: '1.000903', sina: 'sh000903', tx: 'sh000903' },
   { key: 'csi500',    name: '中证500',    market: 'CN', secid: '1.000905', sina: 'sh000905', tx: 'sh000905' },
   { key: 'csi1000',   name: '中证1000',   market: 'CN', secid: '1.000852', sina: 'sh000852', tx: 'sh000852' },
   // 港股

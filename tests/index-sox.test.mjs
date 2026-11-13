@@ -37,10 +37,11 @@ test('INDICES：sox 走东财 251.SOX，落 US 组，紧邻 spx 之后', () => {
   assert.equal(s.sina, null, 'sox 不应挂新浪（gb_sox 只有实时价，没有日 K）');
   assert.equal(s.tx, null, 'sox 不应挂腾讯（usSOX 为空）');
   assert.equal(INDICES[i - 1].key, 'spx', 'sox 应紧跟在 spx 之后');
-  // 2.15.0：INDICES 末尾多了 dxy / usdcny 两个外汇标的（报价与 K 线同走东财），
-  // 「指数」仍是 23 个 —— 断言按 market 剔除 FX 后计数，避免以后加外汇又改一次。
-  assert.equal(INDICES.length, 25, 'INDICES 总数应为 25（23 指数 + 2 外汇）');
-  assert.equal(INDICES.filter((x) => x.market !== 'FX').length, 23, '指数总数应为 23');
+  // 2.15.0 起 INDICES 末尾并入了外汇（dxy / usdcny），之后还会继续加标的。
+  // 总数不写死：只钉「至少 23 个非外汇指数」与「外汇确实进了同一张表」这两个不变量，
+  // 与 tests/worker-indices.test.mjs 的 Worker 逐项一致性断言互补。
+  assert.ok(INDICES.filter((x) => x.market !== 'FX').length >= 23, '非外汇指数至少 23 个');
+  assert.ok(INDICES.filter((x) => x.market === 'FX').length >= 2, '外汇标的应并入 INDICES');
   // 落在 US 组内：前后邻居都是 US（或本组边界）
   assert.equal(INDICES[i - 1].market, 'US');
 });

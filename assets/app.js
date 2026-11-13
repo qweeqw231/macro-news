@@ -164,6 +164,7 @@
     sh_comp: '上证 沪指',
     sse50: '上证50 上证 蓝筹 sse50 sse 50',
     a500: '中证A500 A500 中证 a500 宽基',
+    a100: '中证A100 A100 中证 a100 宽基',
     sensex: '印度 孟买 印度指数 bse sensex 孟买30',
     vnindex: '越南 胡志明 hose vn vnindex',
     sox: '费城 半导体 芯片 费半 phlx semiconductor sox',
@@ -171,7 +172,7 @@
   // 行情卡片要显示「能搜索到的代码」：A股指数 000001、ETF 563360、恒指 HSI…
   const CODE_MAP = {
     sh_comp: '000001', sz_comp: '399001', chinext: '399006', star50: '000688',
-    bse50: '899050', csi300: '000300', sse50: '000016', a500: '000510', csi500: '000905', csi1000: '000852',
+    bse50: '899050', csi300: '000300', sse50: '000016', a500: '000510', a100: '000903', csi500: '000905', csi1000: '000852',
     hsi: 'HSI', hs_tech: 'HSTECH',
     dji: 'DJI', ixic: 'IXIC', spx: 'SPX', sox: 'SOX', n225: 'N225',
     dax: 'DAX', cac40: 'CAC40', ukx: 'FTSE',

@@ -25,6 +25,7 @@ const INDICES = {
   csi300: { secid: '1.000300', sina: 'sh000300', tx: 'sh000300', market: 'CN' },
   sse50: { secid: '1.000016', sina: 'sh000016', tx: 'sh000016', market: 'CN' },
   a500: { secid: '1.000510', sina: 'sh000510', tx: 'sh000510', market: 'CN' },
+  a100: { secid: '1.000903', sina: 'sh000903', tx: 'sh000903', market: 'CN' },
   csi500: { secid: '1.000905', sina: 'sh000905', tx: 'sh000905', market: 'CN' },
   csi1000: { secid: '1.000852', sina: 'sh000852', tx: 'sh000852', market: 'CN' },
   hsi: { secid: '100.HSI', tx: 'hkHSI', market: 'HK' },
