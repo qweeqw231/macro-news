@@ -169,7 +169,7 @@ test('增量 upsert：只刷新最后几根时保留历史与成交量', () => {
 });
 
 test('写 K 线的脚本都接入共享守卫', () => {
-  assert.match(read('src/collect.mjs'), /import \{ decideBars \} from '\.\/kline-guard\.mjs'/);
+  assert.match(read('src/collect.mjs'), /import \{ decideBars, markCloseOnlyBars \} from '\.\/kline-guard\.mjs'/);
   assert.match(read('src/collect.mjs'), /const decision = decideBars\(prev && prev\.bars, incoming\)/);
   assert.match(read('scripts/update-kline-minute.mjs'), /decideBars\(oldDoc\.bars, incoming\)/);
   assert.match(read('scripts/update-kline-full.mjs'), /decideBars\(oldTrimmed, incoming\)/);
@@ -180,8 +180,8 @@ test('写 K 线的脚本都接入共享守卫', () => {
 
 test('只刷新最后一根的脚本也必须经过守卫（2.4.11 漏网点）', () => {
   const src = read('scripts/update-kline-last.mjs');
-  assert.match(src, /import \{ upsertBars \} from '\.\.\/src\/kline-guard\.mjs'/);
-  assert.match(src, /const bars = upsertBars\(old\.bars, latest\)/);
+  assert.match(src, /import \{ upsertBars, markCloseOnlyBars \} from '\.\.\/src\/kline-guard\.mjs'/);
+  assert.match(src, /markCloseOnlyBars\(upsertBars\(old\.bars, latest\)\)/);
   // 不能再回到「Map 直接覆盖」：上金所官网无 volume，会抹掉东财成交量
   assert.doesNotMatch(src, /new Map\(\(old\.bars/);
 });

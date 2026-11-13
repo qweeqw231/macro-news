@@ -50,7 +50,15 @@ class KlineChart {
   setData(bars, period) {
     cancelAnimationFrame(this._anim);
     clearTimeout(this._animEnd);
-    this.bars = bars || [];
+    // 2.18.0：统一归一化并识别「仅收盘」bar（closeOnly）。
+    //   标记来源两处：数据文件里的 z:1（对象行）/ 第 7 位 1（紧凑数组行），
+    //   以及**旧文件/直连源没有标记**但 o=h=l=0 且收盘有效的 bar —— 后者照样按 closeOnly 画，
+    //   否则老数据一升级前端就被 y 轴拉平（向后兼容，不能因此报错或画出空白）。
+    this.bars = (bars || []).map((b) => {
+      const o = +b.o, c = +b.c, h = +b.h, l = +b.l, v = +b.v || 0;
+      const z = b.z === 1 || b.z === true || (o === 0 && h === 0 && l === 0 && c > 0);
+      return z ? { t: b.t, o, c, h, l, v, z: 1 } : { t: b.t, o, c, h, l, v };
+    });
     if (period) this.period = period;
     this.offset = Math.max(0, Math.min(this.offset, this._maxOffset()));
     this._zoomTarget = this.barsShown;
@@ -444,7 +452,13 @@ class KlineChart {
       color: MA_COLOR[n] || '#888',
     }));
     let lo = Infinity, hi = -Infinity;
-    view.forEach((b) => { if (b.l < lo) lo = b.l; if (b.h > hi) hi = b.h; });
+    view.forEach((b) => {
+      // 2.18.0：closeOnly bar 的 0 不参与 y 域（否则整段历史被压到顶部、看起来是水平线）
+      const h2 = b.z ? b.c : b.h;
+      const l2 = b.z ? b.c : b.l;
+      if (l2 < lo) lo = l2;
+      if (h2 > hi) hi = h2;
+    });
     mas.forEach(({ arr }) => arr.forEach((v) => { if (v != null) { if (v < lo) lo = v; if (v > hi) hi = v; } }));
     const padY = (hi - lo) * 0.06 || 1;
     lo -= padY; hi += padY;
@@ -474,15 +488,28 @@ class KlineChart {
     // ---- K线实体 ----
     const UP = '#d93025', DOWN = '#1a9e5f';
     view.forEach((b, i) => {
+      const x = xOf(i);
+      const bodyW = Math.max(1, Math.min(bw * 0.68, 14));
+      // 2.18.0：仅收盘 bar 画成短横线（点状），不画影线/实体/成交量。
+      //   颜色按「与上一根收盘」比较，和正常 bar 的涨跌口径一致。
+      if (b.z) {
+        const prev = start + i > 0 ? this.bars[start + i - 1] : null;
+        const col = b.c >= (prev ? prev.c : b.c) ? UP : DOWN;
+        const y = Math.round(yOf(b.c)) + 0.5;
+        ctx.strokeStyle = col; ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x - Math.max(1.5, bodyW / 2), y);
+        ctx.lineTo(x + Math.max(1.5, bodyW / 2), y);
+        ctx.stroke();
+        return;
+      }
       const up = b.c >= b.o;
       const col = up ? UP : DOWN;
-      const x = xOf(i);
       const yH = yOf(b.h), yL = yOf(b.l), yO = yOf(b.o), yC = yOf(b.c);
       ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 1;
       // 影线
       ctx.beginPath(); ctx.moveTo(Math.round(x) + 0.5, yH); ctx.lineTo(Math.round(x) + 0.5, yL); ctx.stroke();
       // 实体
-      const bodyW = Math.max(1, Math.min(bw * 0.68, 14));
       const top = Math.min(yO, yC);
       const bh = Math.max(1, Math.abs(yC - yO));
       // A股习惯：阳线空心、阴线实心
@@ -620,16 +647,20 @@ class KlineChart {
       //   第一根没有上一根时才退回开盘价。
       const absIdx = start + this.hover;
       const prevBar = absIdx > 0 ? this.bars[absIdx - 1] : null;
-      const base = prevBar ? prevBar.c : b.o;
+      // 2.18.0：closeOnly 没有开盘价，首根只能用自身收盘做基准（涨跌显示 0），
+      //   否则拿 o=0 去算会得出 +∞% 这种假数。
+      const base = prevBar ? prevBar.c : (b.z ? b.c : b.o);
       const chg = b.c - base;
       const pct = base ? (chg / base) * 100 : 0;
       const lines = [
         `${b.t}`,
-        `开 ${this._fmt(b.o)}   高 ${this._fmt(b.h)}`,
-        `低 ${this._fmt(b.l)}   收 ${this._fmt(b.c)}`,
+        b.z ? '开 —   高 —' : `开 ${this._fmt(b.o)}   高 ${this._fmt(b.h)}`,
+        b.z ? `低 —   收 ${this._fmt(b.c)}` : `低 ${this._fmt(b.l)}   收 ${this._fmt(b.c)}`,
         `涨跌 ${chg >= 0 ? '+' : ''}${this._fmt(chg)} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`,
-        `量 ${fmtVol(b.v)}`,
+        `量 ${b.z ? '—' : fmtVol(b.v)}`,
       ];
+      // 口径必须写在浮窗里：这根 bar 只有收盘，开高低与量在源侧就没有数据
+      if (b.z) lines.push('仅收盘价（开高低/成交量无数据）');
       ctx.font = '12px system-ui';
       const tw = Math.max(...lines.map((l) => ctx.measureText(l).width)) + 18;
       const th = lines.length * 17 + 12;
@@ -642,7 +673,8 @@ class KlineChart {
       ctx.strokeRect(bx + 0.5, by + 0.5, tw, th);
       ctx.textAlign = 'left';
       lines.forEach((l, i) => {
-        ctx.fillStyle = i === 0 ? '#555' : (i === 3 ? (chg >= 0 ? UP : DOWN) : '#333');
+        ctx.fillStyle = i === 0 ? '#555'
+          : (i === 3 ? (chg >= 0 ? UP : DOWN) : (i >= 5 ? '#8a8a8a' : '#333'));
         ctx.fillText(l, bx + 9, by + 16 + i * 17);
       });
     }

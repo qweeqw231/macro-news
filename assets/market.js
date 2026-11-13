@@ -930,9 +930,12 @@
       d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7)); // 该周周一
       return d.toISOString().slice(0, 10);
     };
+    // 2.18.0：与 src/aggregate.mjs 同口径 —— 一组里全是 closeOnly 才带 z
+    const isCloseOnly = (b) => (b.z === 1) || (+b.o === 0 && +b.h === 0 && +b.l === 0 && +b.c > 0);
     const out = [];
     let cur = null;
     let curKey = '';
+    let curZ = false;
     daily.forEach((b) => {
       const k = unit === 'year' ? String(b.t).slice(0, 4)
         : unit === 'month' ? String(b.t).slice(0, 7) : weekKey(b.t);
@@ -942,6 +945,7 @@
           o: b.o, c: b.c, h: b.h, l: b.l, v: b.v,
         };
         curKey = k;
+        curZ = isCloseOnly(b);
         out.push(cur);
       } else {
         cur.c = b.c;
@@ -949,7 +953,10 @@
         if (b.h > cur.h) cur.h = b.h;
         if (b.l < cur.l) cur.l = b.l;
         cur.v += b.v;
+        curZ = curZ && isCloseOnly(b);
       }
+      if (curZ) cur.z = 1;
+      else delete cur.z;
     });
     return out;
   }
@@ -967,9 +974,10 @@
     // ⚠ 超时给到 30s：全量文件 gzip 后约 166KB，按本机实测 7~20 KB/s 要 8~24 秒，
     //   用 15s 会让「正在下载中」被误判成「没有这个文件」。
     const j = await fetchLocalFile(`data/kline/${key}_full.json`, 30000);
+    // 2.18.0：第 7 位是 closeOnly 标记（开高低源侧无数据，只有收盘有效）
     const bars = (j.bars || []).map((b) => (Array.isArray(b)
-      ? { t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5] }
-      : { t: b.t, o: +b.o, c: +b.c, h: +b.h, l: +b.l, v: +b.v }));
+      ? { t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5], ...(b[6] === 1 ? { z: 1 } : {}) }
+      : { t: b.t, o: +b.o, c: +b.c, h: +b.h, l: +b.l, v: +b.v, ...(b.z === 1 ? { z: 1 } : {}) }));
     if (!bars.length) throw new Error('全量文件为空');
     return bars;
   }

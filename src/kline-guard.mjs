@@ -12,6 +12,61 @@
 //   · 其它情况（缺中间段 / 首根更晚但数量够）→ merge（按时间键 union，去重）
 // 兼容对象行 {t,...} 与紧凑数组行 [t,...]。
 
+// ── 2.18.0：仅收盘（closeOnly）bar ──
+//
+// 背景：新浪长历史接口对 2005 年底之前的中证指数只返回 `open/high/low="0.000"`、
+//   `volume="0"`，只有 close 有效（a100 726 根 / 2003-01-02~2005-12-30，
+//   csi300 721 根 / 2002-01-04~2004-12-31，周/月同理）。其他源都补不到该区间（已实测），
+//   所以**不造值**：这类 bar 保留，但必须带标记进库，前端才能按「只有收盘」画，
+//   而不是把 0 当真实最高/最低把 y 轴拉平。
+//
+// 标记格式（两种行都要认）：
+//   · 对象行 {t,o,c,h,l,v} → `z: 1`
+//   · 紧凑数组行 [t,o,c,h,l,v] → 第 7 位 `1`（即 [t,o,c,h,l,v,1]）
+//
+// 判定：o=h=l=0 且 close 有效（> 0）。这是「源侧没有开高低」的唯一判据；
+//   close 也缺失（=0）的 bar 不是 closeOnly，它根本无效，不该被原谅。
+export const CLOSE_ONLY_FLAG = 1;
+
+/** 是否为「仅收盘」bar（已标记或符合 o=h=l=0 的特征都算） */
+export function isCloseOnlyBar(b) {
+  if (Array.isArray(b)) {
+    if (b[6] === CLOSE_ONLY_FLAG || b[6] === true) return true;
+    return +b[1] === 0 && +b[3] === 0 && +b[4] === 0 && +b[2] > 0;
+  }
+  if (!b) return false;
+  if (b.z === CLOSE_ONLY_FLAG || b.z === true) return true;
+  return +b.o === 0 && +b.h === 0 && +b.l === 0 && +b.c > 0;
+}
+
+/** 给一根 bar 补/去标记（返回新对象，不改入参） */
+export function markCloseOnly(b) {
+  const z = isCloseOnlyBar(b);
+  if (Array.isArray(b)) {
+    if (z) return b.length > 6 ? b.slice() : [...b, CLOSE_ONLY_FLAG];
+    if (b.length <= 6) return b;
+    return b.slice(0, 6);
+  }
+  const { z: _drop, ...rest } = b || {};
+  return z ? { ...rest, z: CLOSE_ONLY_FLAG } : rest;
+}
+
+/**
+ * 写库前统一打标：把「o=h=l=0 且只有收盘」的 bar 显式标记。
+ * 写库路径必须调它 —— 不允许这类 bar 静默当正常 bar 进库（防回归）。
+ * @returns {{bars: Array, count: number}} count = 标记/命中的 closeOnly 根数
+ */
+export function markCloseOnlyBars(bars) {
+  const list = Array.isArray(bars) ? bars : [];
+  let count = 0;
+  const out = list.map((b) => {
+    if (!isCloseOnlyBar(b)) return markCloseOnly(b);
+    count++;
+    return markCloseOnly(b);
+  });
+  return { bars: out, count };
+}
+
 /** 时间键：对象行取 t，数组行取 [0] */
 export function barTime(b) {
   if (Array.isArray(b)) return String(b[0]);

@@ -17,7 +17,7 @@ import { fileURLToPath } from 'node:url';
 import {
   INDICES, PORTFOLIO_KLINE, fetchKline, klineAvailable, klineTarget, getKlineSource,
 } from '../src/sources.mjs';
-import { upsertBars } from '../src/kline-guard.mjs';
+import { upsertBars, markCloseOnlyBars } from '../src/kline-guard.mjs';
 import { withKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 import { writePlan, barDate, CAL } from '../src/kline-finalize.mjs';
 
@@ -81,7 +81,8 @@ async function main() {
         // 2.4.12 补丁位：按时间键 upsert，并保留非零成交量。
         //   上金所官网兜底没有 volume（全部 0），以前这里用 Map 直接覆盖，
         //   一次 SGE 源切换就把最近 5 根的东财成交量抹成 0（2026-11-04 14:28 UTC 实测）。
-        const bars = upsertBars(old.bars, latest);
+        // 2.18.0：o=h=l=0 且只有收盘的 bar 必须显式标记（写库路径统一打标）
+        const bars = markCloseOnlyBars(upsertBars(old.bars, latest)).bars;
         const changed = JSON.stringify(bars) !== JSON.stringify(old.bars || []);
         if (!changed) return { changed: false };
 

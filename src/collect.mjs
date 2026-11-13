@@ -22,7 +22,7 @@ import { fetchPortfolioQuotesFast } from './portfolio.mjs';
 import { finalizeClosedQuotes } from './quote-finalize.mjs';
 import { readBriefingMeta } from './brief-meta.mjs';
 import { dedupeItems } from './news-dedupe.mjs';
-import { decideBars } from './kline-guard.mjs';
+import { decideBars, markCloseOnlyBars } from './kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
 import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
@@ -162,7 +162,14 @@ async function collectKlines(startedAt, onlyKeys) {
             );
             continue;
           }
-          const bars = decision.bars;
+          // 2.18.0：o=h=l=0 且只有收盘的 bar 必须显式标记后进库（不许静默当正常 bar）
+          const marked = markCloseOnlyBars(decision.bars);
+          const bars = marked.bars;
+          if (marked.count) {
+            console.log(
+              `  🏷 ${key} ${spec.period}：${marked.count} 根「仅收盘」已标记 closeOnly（开高低源侧无数据）`
+            );
+          }
           await writeJSONIfChanged(file, {
             key,
             name: meta?.name || key,

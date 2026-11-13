@@ -22,6 +22,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchMacroIndicators, fetchCgbCurveOneY } from './portfolio.mjs';
 import { aggregateDaily } from './aggregate.mjs';
+import { markCloseOnlyBars } from './kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -139,6 +140,8 @@ async function main() {
         if (i >= 0) bars[i] = bar;
         else bars.push(bar);
         bars.sort((a, b) => String(a.t).localeCompare(String(b.t)));
+        // 2.18.0：写库统一打 closeOnly 标记（本标的本不该出现，但写库路径不例外）
+        const dayBars = markCloseOnlyBars(bars).bars;
         const klineChanged = await writeJSONIfChanged(klineFile, {
           key: 'cgb_1y',
           name: '1Y国债收益率',
@@ -146,7 +149,7 @@ async function main() {
           period: '1d',
           generatedAt: at,
           source: '中债国债收益率曲线（queryGjqxInfo）',
-          bars,
+          bars: dayBars,
         });
         console.log(
           `  kline/cgb_1y.json：${bars.length} 根（最新 ${bars[bars.length - 1]?.t} = ` +

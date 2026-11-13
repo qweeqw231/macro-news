@@ -25,7 +25,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { INDICES, PORTFOLIO_KLINE, fetchKline, getKlineSource } from '../src/sources.mjs';
-import { decideBars } from '../src/kline-guard.mjs';
+import { decideBars, markCloseOnlyBars } from '../src/kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 import { dropUnclosedBars, CAL } from '../src/kline-finalize.mjs';
 
@@ -136,6 +136,12 @@ for (const idx of list) {
       }
       if (!DRY) {
         await mkdir(OUT_DIR, { recursive: true });
+        // 2.18.0：o=h=l=0 且只有收盘的 bar 必须带 closeOnly 标记（第 7 位 1）进库。
+        //   否则前端会把 0 当成真实最高/最低，y 轴被拉到 0（a100 早期 726 根就是这么被画平的）。
+        const marked = markCloseOnlyBars(outBars);
+        if (marked.count) {
+          console.log(`  🏷 ${idx.key.padEnd(9)} ${marked.count} 根「仅收盘」已标记 closeOnly`);
+        }
         await writeFile(
           file,
           JSON.stringify({
@@ -147,8 +153,8 @@ for (const idx of list) {
             // 取数源与口径都写进文件：全量文件是「离线快照」，必须能自证是哪来的
             source: `服务端预生成的全量日K（limit=${LIMIT}）· 取数源：${getKlineSource() || '未知'}`,
             caliber: idx.klineNote || '',
-            // 紧凑数组行：[t,o,c,h,l,v]
-            bars: outBars,
+            // 紧凑数组行：[t,o,c,h,l,v]（closeOnly 行第 7 位为 1）
+            bars: marked.bars,
           }),
           'utf8'
         );
