@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-13T23:23:08.491Z",
-  "ok": 9,
+  "generatedAt": "2026-11-13T23:52:49.425Z",
+  "ok": 7,
   "failed": 0,
   "failures": [],
   "rejected": [
@@ -50,6 +50,8 @@
     "sox/1m: shorter-too-partial（新 390 根 < 现有 780 根）",
     "eurcny/1m: shorter-no-overlap（新 300 根 < 现有 330 根）",
     "gbpcny/1m: shorter-no-overlap（新 300 根 < 现有 304 根）",
-    "jpycny/1m: shorter-no-overlap（新 300 根 < 现有 304 根）"
+    "jpycny/1m: shorter-no-overlap（新 300 根 < 现有 304 根）",
+    "krwcny/1m: shorter-too-partial（新 304 根 < 现有 608 根）",
+    "audcny/1m: shorter-too-partial（新 421 根 < 现有 725 根）"
   ]
 }
