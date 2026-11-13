@@ -6,84 +6,84 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-13T14:07:55.275Z",
-  "durationMs": 23334,
+  "startedAt": "2026-11-13T14:22:47.780Z",
+  "durationMs": 17699,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 7899
+      "ms": 8110
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 2040
+      "ms": 1280
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 2399
+      "ms": 1433
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 789
+      "ms": 794
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1821
+      "ms": 2182
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1120
+      "ms": 824
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1536
+      "ms": 1398
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 14584
+      "ms": 13441
     }
   ],
   "quotes": 75,
-  "added": 25,
+  "added": 7,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7488,
-    "kept": 7488,
+    "candidates": 7495,
+    "kept": 7495,
     "evicted": 0,
-    "deduped": 301,
+    "deduped": 319,
     "days": [
       {
         "day": "2026-11-13",
         "incoming": 286,
-        "candidates": 962,
-        "kept": 962,
+        "candidates": 969,
+        "kept": 969,
         "evicted": 0,
-        "deduped": 261,
-        "added": 25
+        "deduped": 279,
+        "added": 7
       },
       {
         "day": "2026-11-12",
