@@ -1,10 +1,58 @@
 {
-  "generatedAt": "2026-11-13T17:37:57.628Z",
+  "generatedAt": "2026-11-13T17:52:53.411Z",
   "windowDays": 62,
   "from": "2026-09-13",
   "days": 61,
-  "total": 39207,
+  "total": 39216,
   "items": [
+    {
+      "id": "114jgv5",
+      "ts": 1794592360,
+      "time": "2026-11-14T01:52:40.000+08:00",
+      "source": "新浪财经",
+      "title": "巴克莱据悉下周起在投行业务裁员约200人，此前已宣布裁员5000人",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyrprs7785082.shtml"
+    },
+    {
+      "id": "1gi9eol",
+      "ts": 1794592326,
+      "time": "2026-11-14T01:52:06.000+08:00",
+      "source": "新浪财经",
+      "title": "微软全球服务故障修复取得进展，邮件积压量已接近正常水平",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyrprr1008944.shtml"
+    },
+    {
+      "id": "1t8qfhb",
+      "ts": 1794592284,
+      "time": "2026-11-14T01:51:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "LME期铜收跌189美元，报13399美元/吨。",
+      "url": "https://wallstreetcn.com/livenews/3199951"
+    },
+    {
+      "id": "s600t5",
+      "ts": 1794591922,
+      "time": "2026-11-14T01:45:22.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧盟委员会主席冯德莱恩：计算领域至少需要5000亿欧元投资。",
+      "url": "https://wallstreetcn.com/livenews/3199950"
+    },
+    {
+      "id": "yentc6",
+      "ts": 1794591767,
+      "time": "2026-11-14T01:42:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧洲央行管委兼德国央行行长Nagel：欧洲央行很可能需要再次加息，通胀前景已明显恶化。",
+      "url": "https://wallstreetcn.com/livenews/3199949"
+    },
+    {
+      "id": "irzf54",
+      "ts": 1794591485,
+      "time": "2026-11-14T01:38:05.000+08:00",
+      "source": "新浪财经",
+      "title": "德国央行行长：欧洲央行很可能需要再次加息，通胀前景已明显恶化",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyrprr1005258.shtml"
+    },
     {
       "id": "arvipb",
       "ts": 1794591347,
@@ -26,7 +74,7 @@
       "ts": 1794591241,
       "time": "2026-11-14T01:34:01.000+08:00",
       "source": "新浪财经",
-      "title": "OpenAI撤销独立研究团队 人员并入核心研究与应用部门",
+      "title": "OpenAI撤销独立机器人研究团队 人员并入核心研究与应用部门",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyrprm0710726.shtml"
     },
     {
@@ -294,12 +342,36 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyriiv3491137.shtml"
     },
     {
+      "id": "1z0wfxy",
+      "ts": 1794588240,
+      "time": "2026-11-14T00:44:00.000+08:00",
+      "source": "东方财富",
+      "title": "虚拟电厂规范化建设再进一步",
+      "url": "http://finance.eastmoney.com/news/1355,202611143931071555.html"
+    },
+    {
+      "id": "jz65y6",
+      "ts": 1794588240,
+      "time": "2026-11-14T00:44:00.000+08:00",
+      "source": "东方财富",
+      "title": "国家产融合作平台助企融资突破1.8万亿元 产融合作加速科技创新落地应用",
+      "url": "http://finance.eastmoney.com/news/1352,202611143931071456.html"
+    },
+    {
       "id": "5gy5j6",
       "ts": 1794588186,
       "time": "2026-11-14T00:43:06.000+08:00",
       "source": "新浪财经",
       "title": "OpenAI推出ChatGPT Wallet支付功能，支持AI智能体在用户授权后直接完成购物",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyriit1123136.shtml"
+    },
+    {
+      "id": "a695iu",
+      "ts": 1794588180,
+      "time": "2026-11-14T00:43:00.000+08:00",
+      "source": "东方财富",
+      "title": "前10个月社会融资规模增量为28.61万亿元 宏观政策持续加力 金融总量合理增长",
+      "url": "http://bond.eastmoney.com/news/1326,202611143931072070.html"
     },
     {
       "id": "399kqe",
