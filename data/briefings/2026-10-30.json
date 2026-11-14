@@ -1,0 +1,170 @@
+{
+  "date": "2026-10-30",
+  "generatedAt": "2026-11-15T00:48:50+08:00",
+  "endedAt": "2026-11-15T00:51:59+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-10-29",
+    "to": "2026-10-30",
+    "fromAt": "2026-10-29T08:00:00+08:00",
+    "toAt": "2026-10-30T09:00:00+08:00",
+    "fromTs": 1793232000,
+    "toTs": 1793322000
+  },
+  "overview": "今日主线是海外紧缩预期再起、中国资产走强：欧洲央行维持利率不变却暗示12月仍可能加息，行长拉加德同时宣布提前离任；美国9月PCE同比升3.6%创5个月新高、三季度GDP年化3.4%创一年新高，美联储按兵不动于3.75%-4%；国内方面8000亿元新型政策性金融工具已全部投放完成，人民币中间价升至6.7147，离岸人民币涨破6.66、创2024年4月以来新高。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "8000亿元新型政策性金融工具已全部完成投放",
+      "summary": "2026年8000亿元新型政策性金融工具已全部完成投放。本轮政策性资金投放节奏稳、投向准、机制新，依托财政金融协同优势撬动全社会多元资本；资金精准补齐投资短板，直击实体经济核心堵点，被视为赋能经济高质量发展的战略资本与耐心资本。",
+      "why": "政策性资金落地，决定后续项目开工与投资强度。",
+      "source": "东方财富",
+      "publishedAt": "2026-10-30T03:38",
+      "url": "http://finance.eastmoney.com/news/1350,202610303915105262.html",
+      "refs": [
+        "http://forex.eastmoney.com/news/1131,202610293913542928.html",
+        "http://stock.eastmoney.com/news/11134,202610293913035797.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "人民币中间价升至6.7147创年内新高，离岸涨破6.66为2024年4月以来首次",
+      "summary": "10月29日人民币对美元中间价报6.7147，较前一日上调18个点，再次刷新年内高点；纽约尾盘离岸人民币涨破6.66元，为2024年4月以来首次，在岸人民币夜盘收报6.6612、较前一日涨48点。人民币此轮走强与美联储暂缓加息的时点相关，美元与人民币的十年跷跷板关系明显弱化。",
+      "why": "汇率走强打开货币宽松空间，也压低进口成本。",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-29T21:23",
+      "url": "https://finance.sina.com.cn/roll/2026-10-29/doc-iniwxekr8706014.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/10-29/10722541.shtml",
+        "https://wallstreetcn.com/livenews/3190768",
+        "https://wallstreetcn.com/livenews/3190721",
+        "https://wallstreetcn.com/livenews/3189512"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行三季度贷款投向报告：贷款余额同比增4.8%，科创企业贷款力度稳定",
+      "summary": "央行10月28日发布2026年三季度金融机构贷款投向统计报告：三季度末金融机构人民币各项贷款余额283.44万亿元，同比增长4.8%；前三季度人民币贷款增加11.52万亿元。报告称信贷结构进一步优化，贷款支持科创企业力度保持稳定。",
+      "why": "信贷结构比总量更能看出资金流向何处。",
+      "source": "东方财富",
+      "publishedAt": "2026-10-29T10:04",
+      "url": "http://finance.eastmoney.com/news/1352,202610293913559016.html",
+      "refs": [
+        "http://forex.eastmoney.com/news/1131,202610293913542928.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "中东战事推高油价，国家再次对成品油价格采取调控措施",
+      "summary": "据国家发改委，10月15日国内成品油价格调整以来，中东地缘紧张局势升级、国际市场原油价格大幅上涨，为减缓对国内的冲击，国家再次对成品油价格采取调控措施。29日纽约12月原油期货收跌78美分报102.00美元/桶，布伦特12月合约收跌44美分报114.88美元/桶。",
+      "why": "油价是这轮地缘冲击传导到国内物价的闸口。",
+      "source": "东方财富",
+      "publishedAt": "2026-10-30T08:06",
+      "url": "http://finance.eastmoney.com/news/1354,202610303915361851.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3190737",
+        "https://wallstreetcn.com/livenews/3190709"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "欧洲央行维持利率不变，但讨论过加息、12月再加息仍极有可能",
+      "summary": "欧洲央行周四维持三大关键利率不变，存款便利利率保持在2.5%，符合市场预期；行长拉加德透露本次会议曾讨论加息，并暗示12月再次加息仍极有可能。知情人士称若通胀前景不改善，12月可能再加25个基点。欧洲央行指出能源价格带来通胀上行风险，欧元区9月通胀升至3.8%。",
+      "why": "按兵不动只是暂缓，12月才是真正的考验。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-29T23:09",
+      "url": "https://wallstreetcn.com/livenews/3190633",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3190643",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwxekn5959193.shtml",
+        "https://finance.sina.com.cn/world/2026-10-29/doc-iniwxekt5180143.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-30/doc-iniwxksk5904512.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "拉加德宣布2027年2月提前离任，继任者之争进入白热化",
+      "summary": "欧洲央行行长拉加德宣布将于2027年2月7日离开欧洲央行，较原定任期提前离任，继任程序当日启动，欧洲央行同时迎来多位高层换届。继任竞争目前由来自荷兰和西班牙的候选人领跑，候选阵容仍可能扩大；法国总统马克龙呼吁以有序、平衡的方式完成交接。",
+      "why": "谁接任决定欧洲央行未来的政策取向。",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-29T23:01",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwxekt5207145.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-30/doc-iniwxvhe5710456.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwxekr8755110.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwxekq2735979.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "美国三季度GDP年化增3.4%创一年新高，9月PCE同比升3.6%创5个月新高",
+      "summary": "美国商务部周四公布多份报告：三季度实际GDP年化季环比增长3.4%，创一年来最快并超出市场预期；9月PCE物价指数同比升3.6%，为5月以来最高，核心指数同比加速至3.1%，物价涨幅远高于美联储目标。",
+      "why": "增长超预期又撞上通胀新高，美联储更没有退路。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-29T21:01",
+      "url": "https://wallstreetcn.com/livenews/3190539",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwxekt5168590.shtml",
+        "https://finance.sina.com.cn/money/bond/2026-10-29/doc-iniwwtus5976171.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "美联储维持利率在3.75%-4%不变，沃什拟把年度议息次数减至六次",
+      "summary": "美联储10月会议将联邦基金利率目标区间维持在3.75%至4%不变，符合市场预期。美联储主席沃什计划把每年的利率决策次数从八次逐步减少至六次，投资者担心这将加剧规模达32万亿美元的美国国债市场波动；GDP与PCE数据公布后，10年期美债收益率跌4.76个基点报4.97%，两年期跌6.43个基点报4.6373%。",
+      "why": "决议变少意味着市场更依赖数据而非预期管理。",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-30T06:00",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-10-30/doc-iniwxzqf8389318.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/10-29/10722923.shtml",
+        "https://finance.sina.com.cn/money/bond/2026-10-29/doc-iniwwtus5976171.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-30/doc-iniwxvhe5723740.shtml",
+        "https://wallstreetcn.com/livenews/3190738"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "现货黄金跌至4030美元附近，市场等待美国通胀数据",
+      "summary": "国际金价下跌，现货黄金跌0.89%报4031.59美元/盎司，跌至4030美元附近，市场等待美国通胀数据。美联储维持利率不变但未明确释放下一步政策信号，投资者继续押注年内可能加息，因而普遍观望；金价反弹乏力，传统的实际收益率与美元相关性出现逆转。",
+      "why": "黄金的定价逻辑正从避险转向利率预期。",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-29T14:43",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwwpnx8837309.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3190712",
+        "https://finance.sina.com.cn/money/nmetal/hjzx/2026-10-29/doc-iniwwpnu6033816.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-30/doc-iniwxzqi4842109.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美股收跌：谷歌创纪录暴跌12%，盘后英特尔狂泻20%、亚马逊重挫",
+      "summary": "美股三大指数周四低开低走，纳指跌1.38%、道指跌0.25%、标普500跌0.3%。谷歌财报不及预期后大跌12%、市值蒸发4790亿美元，云服务股普跌，标普医疗板块则创历史新高；盘后英特尔狂泻20%、亚马逊重挫，纳指100指数期货跌幅扩大至2%。",
+      "why": "AI交易逻辑生变，冲击已从个股蔓延到指数。",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-30T07:45",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-10-30/doc-iniwxzqe2443499.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3190830",
+        "https://wallstreetcn.com/livenews/3190742",
+        "https://wallstreetcn.com/livenews/3190875",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwwpnx8856535.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwwpnw2803569.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "日本央行10月30日利率决议与植田和男发布会：东京10月核心通胀2.6%远超2%目标，是否跟进加息",
+    "现货黄金能否守住4000美元整数关口（10月29日一度报4031.59美元/盎司）",
+    "美国10年期国债收益率能否守住4.95%下方（10月29日收4.97%、日内低点4.9472%），两年期4.6373%",
+    "欧洲央行12月加息的定价：交易员削减押注后，2027年底前定价68个基点"
+  ],
+  "model": "MiniMax-M3.1-Flash",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-15T00:51:59+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
