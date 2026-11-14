@@ -98,11 +98,30 @@ test('历史缺口：补写中 / 缺失 / 已补写 三种文案互斥且与今�
 });
 
 test('历史缺口：归档卡片区分「补写」与「缺早报」，并透传索引字段', () => {
-  assert.match(APP, /briefBackfill: !!base\.briefBackfill,/,
+  assert.match(APP, /briefBackfill: !!bm\.briefBackfill,/,
     '索引的 briefBackfill 必须透传到卡片数据');
   assert.match(APP, /if \(d\.briefBackfill\) a\.appendChild\(el\('span', 'day-tag backfill', '补写'\)\);/,
     '补写过的日子应有「补写」标签');
   assert.match(APP, /el\('span', 'day-tag backfill', '缺早报'\)/,
     '该有却没有的日子应有「缺早报」标签');
   assert.ok(CSS.includes('.day-tag.backfill'), '缺少补写标签样式');
+});
+
+// 2.20.0：补写早报「整块隐形」的两条链路。
+// ① 归档条数 < 20 的天会走 history 分支，早报元数据若沿用 history 快照（导出时刻拍的），
+//    publish 之后补写出来的早报就取不到 —— 主索引才是发布时被改的那一份。
+// ② 索引在标签页内被永久记忆，用户停在归档页时看不到之后发布的产物。
+test('归档页：早报元数据以主索引为准，不随 history 分支取旧快照', () => {
+  assert.match(APP, /const bm = a \|\| h;/, '早报元数据应优先取主索引条目');
+  assert.match(APP, /hasBriefing: !!bm\.hasBriefing,/, 'hasBriefing 应来自主索引');
+  assert.match(APP, /briefLine: bm\.briefLine \|\| '',/, 'briefLine 应来自主索引');
+  assert.ok(!APP.includes('hasBriefing: !!base.hasBriefing'), '不得再按分支取 base 的早报字段');
+});
+
+test('归档页：索引 60 秒后重新校验，避免停在旧渲染里看不到新产物', () => {
+  assert.match(APP, /Date\.now\(\) - indexAt < 60 \* 1000/, '缺少索引复用上限');
+  assert.ok(APP.includes("jget('index.json', 'no-cache')"), '索引应走条件请求重新校验');
+  assert.ok(!APP.includes("jget('index.json', 'default')"), '不应再吃 10 分钟的 HTTP 强缓存');
+  assert.match(APP, /if \(S\.archive\) return S\.archive;   \/\/ 重新校验失败：沿用旧索引/,
+    '重新校验失败时应回落旧索引而不是让归档页报错');
 });

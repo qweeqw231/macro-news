@@ -1186,12 +1186,21 @@
   // 归档索引只拉一次：页脚（loadRunMeta）与归档页（renderArchive）共用同一个 Promise。
   // 之前两处各发一次请求，在 Pages 冷缓存下等于多赌一次 0.7~16s 的 TTFB。
   let indexPromise = null;
+  let indexAt = 0;
+  // 2.20.0：索引不再在标签页生命周期内永久记忆。
+  //   实测问题（2026-11-15）：补写早报发布后，用户停在归档页的旧渲染里刷新不到新状态 ——
+  //   S.archive 一旦缓存就再也不取，只有整页重载才会更新。改为 60 秒内复用、过期重新校验。
+  //   走 no-cache（条件请求）而不是绕过缓存：Pages 回 304 时只多一次 RTT，不会重复下 20 KB。
   function loadIndex() {
-    if (S.archive) return Promise.resolve(S.archive);
+    if (S.archive && Date.now() - indexAt < 60 * 1000) return Promise.resolve(S.archive);
     if (!indexPromise) {
-      indexPromise = jget('index.json', 'default')
-        .then((d) => { S.archive = d; return d; })
-        .catch((e) => { indexPromise = null; throw e; });
+      indexPromise = jget('index.json', 'no-cache')
+        .then((d) => { S.archive = d; indexAt = Date.now(); return d; })
+        .catch((e) => {
+          indexPromise = null;
+          if (S.archive) return S.archive;   // 重新校验失败：沿用旧索引，不把归档页弄挂
+          throw e;
+        });
     }
     return indexPromise;
   }
@@ -1491,16 +1500,21 @@
         const dec = decide(a ? a.count || 0 : 0, h ? h.n || 0 : 0);
         if (dec.kind === 'none') continue;
         const base = dec.kind === 'history' ? h : a;
+        // 2.20.0：条数可以取历史切片，但早报元数据一律以主索引 data/index.json 为准。
+        //   history/index.json 里的 hasBriefing/briefLine 是 export-history 导出那一刻的快照
+        //   （见 scripts/export-history.mjs），而 publish/补写只更新主索引。归档条数 < 20 的天
+        //   会走 history 分支，若沿用旧快照，补写出来的早报会整块隐形（卡片既无摘要也无展开）。
+        const bm = a || h;
         map.set(day, {
           day,
           count: dec.count,
           kind: dec.kind === 'history' ? 'hist' : 'live',
           reason: dec.reason,
-          hasBriefing: !!base.hasBriefing,
-          briefLine: base.briefLine || '',
+          hasBriefing: !!bm.hasBriefing,
+          briefLine: bm.briefLine || '',
           // 2.19.0：补写来源（服务端 publish 时写入索引），卡片据此打标签
-          briefBackfill: !!base.briefBackfill,
-          source: base.hasBriefing ? (base.source === 'rule' || base.source === 'draft' ? base.source : 'ai') : '',
+          briefBackfill: !!bm.briefBackfill,
+          source: bm.hasBriefing ? (bm.source === 'rule' || bm.source === 'draft' ? bm.source : 'ai') : '',
         });
       }
       const list = [...map.values()].sort((a, b) => (a.day < b.day ? 1 : -1));
