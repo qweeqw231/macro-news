@@ -75,3 +75,34 @@ test('页脚早报：状态文件不吃 HTTP 缓存（补跑后刷新即可见�
   assert.ok(!APP.includes("jget('_briefing-status.json', 'default')"), '不应再使用 HTTP 缓存');
   assert.ok(CSS.includes('.ft-state.mute'), '缺少中性态（mute）样式');
 });
+
+// 2.19.0：历史缺口与补写。
+// 「昨天该有却没有」以前在页面上没有定义：读者只看到今天没早报，昨天的缺失是隐形的。
+// 这里锁定四件事：制度起点由索引推导、缺口三判据、三种文案、归档卡片标签。
+test('历史缺口：制度起点由索引推导，缺口只认「起点后 + 有新闻 + 无早报」', () => {
+  assert.match(APP, /let briefEraDay = '';/, '缺少制度起点变量');
+  assert.match(APP, /briefEraDay = list\.filter\(\(x\) => x\.hasBriefing\)\.map\(\(x\) => x\.day\)\.sort\(\)\[0\] \|\| '';/,
+    '制度起点应取最早一份早报的日子');
+  assert.match(APP, /d\.day < today && d\.day >= eraDay\s*\n?\s*&& Number\(d\.count\) > 0 && !d\.hasBriefing/,
+    '缺口判据应为「今天之前 + 制度起点之后 + 有新闻 + 无早报」');
+});
+
+test('历史缺口：补写中 / 缺失 / 已补写 三种文案互斥且与今日 token 分开', () => {
+  assert.match(APP, /gTxt = `早报 \$\{gapDay\} 补写中`;/);
+  assert.match(APP, /gTxt = `早报 \$\{gapDay\} 缺失`;/);
+  assert.match(APP, /gTxt = `早报 \$\{doneBackfill\.day\} 已补写 \$\{fmtTime\(doneBackfill\.at\)\}`;/);
+  // 三种文案都挂在独立的 g 变量上，不得写进今日的 bTxt
+  assert.ok(!/bTxt = `早报 \$\{gapDay\}/.test(APP), '历史缺口不能写进今日 token');
+  // 已补写只报 48 小时内，避免永久噪音
+  assert.match(APP, /ageMin > 48 \* 60/, '已补写应限制在 48 小时内展示');
+});
+
+test('历史缺口：归档卡片区分「补写」与「缺早报」，并透传索引字段', () => {
+  assert.match(APP, /briefBackfill: !!base\.briefBackfill,/,
+    '索引的 briefBackfill 必须透传到卡片数据');
+  assert.match(APP, /if \(d\.briefBackfill\) a\.appendChild\(el\('span', 'day-tag backfill', '补写'\)\);/,
+    '补写过的日子应有「补写」标签');
+  assert.match(APP, /el\('span', 'day-tag backfill', '缺早报'\)/,
+    '该有却没有的日子应有「缺早报」标签');
+  assert.ok(CSS.includes('.day-tag.backfill'), '缺少补写标签样式');
+});

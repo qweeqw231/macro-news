@@ -524,3 +524,70 @@ test('发布自检：索引同步后重跑 ⇒ 标记补上、判成功', () => 
   assert.equal(st.days[DATE].status, 'done');
   assert.equal(st.days[DATE].source, 'ai');
 });
+
+// ---------- 2.19.0：历史补写溯源 ----------
+
+function withIndex(d) {
+  fs.mkdirSync(d.data, { recursive: true });
+  fs.writeFileSync(path.join(d.data, 'index.json'), JSON.stringify({
+    generatedAt: '', total: 10, days: [{ day: DATE, count: 10, hasBriefing: false }],
+  }, null, 2));
+}
+
+test('补写溯源：产物自带 backfill 章，索引与状态同步标记 gap', () => {
+  const d = fresh('backfill-gap');
+  const input = writeInput(d.runs);
+  writeCheckpoint(d.runs, 'final', input, finalDoc(input));
+  withIndex(d);
+
+  const r = publishRun({
+    date: DATE, runsDir: d.runs, siteOut: d.site, localOut: d.local,
+    status: d.status, dataDir: d.data, noLock: true, now: T1, backfill: 'gap',
+  });
+  assert.equal(r.ok, true);
+  assert.equal(r.backfill, 'gap');
+
+  const doc = JSON.parse(fs.readFileSync(path.join(d.site, `${DATE}.json`), 'utf8'));
+  assert.equal(doc.source, 'ai', '补写不得改变 source');
+  assert.equal(doc.backfill.kind, 'gap');
+  assert.ok(doc.backfill.at);
+  assert.match(doc.backfill.note, /缺失/);
+
+  const ix = JSON.parse(fs.readFileSync(path.join(d.data, 'index.json'), 'utf8'));
+  assert.equal(ix.days[0].briefBackfill, true);
+
+  const st = JSON.parse(fs.readFileSync(d.status, 'utf8'));
+  assert.equal(st.days[DATE].backfill, true);
+  assert.equal(st.days[DATE].backfillKind, 'gap');
+  assert.ok(st.days[DATE].backfilledAt);
+});
+
+test('补写溯源：制度前补写记 pre-era；未声明补写时不带任何 backfill 字段', () => {
+  const a = fresh('backfill-pre');
+  const ia = writeInput(a.runs);
+  writeCheckpoint(a.runs, 'final', ia, finalDoc(ia));
+  withIndex(a);
+  publishRun({
+    date: DATE, runsDir: a.runs, siteOut: a.site, localOut: a.local,
+    status: a.status, dataDir: a.data, noLock: true, now: T1, backfill: 'pre-era',
+  });
+  const docA = JSON.parse(fs.readFileSync(path.join(a.site, `${DATE}.json`), 'utf8'));
+  assert.equal(docA.backfill.kind, 'pre-era');
+  assert.match(docA.backfill.note, /制度生效前/);
+
+  const b = fresh('backfill-none');
+  const ib = writeInput(b.runs);
+  writeCheckpoint(b.runs, 'final', ib, finalDoc(ib));
+  withIndex(b);
+  // 非法 kind 一律按"非补写"处理，不能把任意字符串写进产物
+  publishRun({
+    date: DATE, runsDir: b.runs, siteOut: b.site, localOut: b.local,
+    status: b.status, dataDir: b.data, noLock: true, now: T1, backfill: 'whatever',
+  });
+  const docB = JSON.parse(fs.readFileSync(path.join(b.site, `${DATE}.json`), 'utf8'));
+  assert.equal(docB.backfill, undefined);
+  const ixB = JSON.parse(fs.readFileSync(path.join(b.data, 'index.json'), 'utf8'));
+  assert.equal(ixB.days[0].briefBackfill, undefined);
+  const stB = JSON.parse(fs.readFileSync(b.status, 'utf8'));
+  assert.equal(stB.days[DATE].backfill, false);
+});

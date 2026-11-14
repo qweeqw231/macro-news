@@ -48,6 +48,11 @@ const DB = path.resolve(ROOT, arg('db', '.local/news.db'));
 const ARCHIVE = path.resolve(ROOT, arg('archive', 'data/archive'));
 const LIMIT = num('candidates', 120);
 const FORCE = flag('force');
+// 2.19.0：补写标记。只接受 gap / pre-era；写进状态记录，publish 阶段据此给产物盖溯源章。
+const BACKFILL_KIND = (() => {
+  const v = arg('backfill-kind', '');
+  return v === 'gap' || v === 'pre-era' ? v : '';
+})();
 const NO_IMPORT = flag('no-import');
 const NO_PROMPT = flag('no-prompt');
 const NO_LOCK = flag('no-lock');
@@ -117,6 +122,9 @@ function main() {
         durationMs: 0,
         generator: 'prepare-v1',
         attempt: (Number(rec.attempt) || 0) + 1,
+        // 2.19.0：补写要能一路传到 publish（LLM 写作由外部 harness 完成，隔了一层进程）。
+        // 只有显式补写时才写这几个字段，普通 prepare 不碰（避免把已有标记抹掉）。
+        ...(BACKFILL_KIND ? { backfill: true, backfillKind: BACKFILL_KIND, backfilledAt: '' } : {}),
       });
     }
 

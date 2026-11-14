@@ -9,16 +9,20 @@ import os from 'node:os';
 import path from 'node:path';
 import {
   acquireLock,
+  archiveSpan,
   atomicWriteJSON,
   atomicWriteText,
   beijingNow,
+  briefEraStart,
   buildBriefing,
   checkBriefing,
   checkStatusInvariants,
   deadlinePassed,
+  guardBackfill,
   normalizeBriefingSource,
   parseBackfillRange,
   planCatchup,
+  scanGaps,
   scanMissed,
   shouldSkipExisting,
   updateStatus,
@@ -239,6 +243,82 @@ test('规则版早报：≤10 条、override 概览不选汇总稿、why / ended
   assert.deepEqual(b.watch, []);
 });
 
+test('状态 trim：刚写入的老日子必须保留（历史补写不被自己删掉）', () => {
+  const f = file('status-trim.json');
+  for (let i = 1; i <= 14; i++) {
+    updateStatus(f, `2026-11-${String(i).padStart(2, '0')}`, { status: 'done' });
+  }
+  // 写一个远早于窗口的日子（补写 09-20）
+  updateStatus(f, '2026-09-20', { status: 'done', backfill: true });
+  const doc = JSON.parse(fs.readFileSync(f, 'utf8'));
+  assert.ok(doc.days['2026-09-20'], '刚写入的补写日被 trim 掉了');
+  assert.equal(doc.days['2026-09-20'].backfill, true);
+  assert.equal(Object.keys(doc.days).length, 14, '总量仍受 keepDays 约束');
+  assert.equal(doc.days['2026-11-01'], undefined, '应淘汰最老的普通日');
+});
+
+test('缺口判据：制度起点之后、今天之前、有新闻、无早报，四者缺一不可', () => {
+  const check = (d) => ({ complete: d === '2026-11-13' });
+  const counts = new Map([
+    ['2026-11-10', 5],
+    ['2026-11-12', 0],       // 有行但 0 条新闻 → 不立缺口
+    ['2026-11-13', 900],     // 已有早报
+    ['2026-11-14', 361],     // 真缺口
+    ['2026-10-30', 681],     // 制度起点之前 → 不算缺口
+  ]);
+  const gaps = scanGaps({ today: '2026-11-15', eraStart: '2026-11-01', counts, check, days: 14 });
+  assert.deepEqual(gaps.map((g) => g.day), ['2026-11-14', '2026-11-10']);
+  assert.equal(gaps[0].news, 361);
+  // 今天永远不进缺口
+  assert.ok(!gaps.some((g) => g.day === '2026-11-15'));
+  // 没有制度起点（先无产物）→ 不臆造缺口
+  assert.deepEqual(scanGaps({ today: '2026-11-15', eraStart: '', counts, check }), []);
+});
+
+test('制度起点与归档跨度：都从真实产物/索引推导，不硬编码', () => {
+  const dir = fs.mkdtempSync(path.join(TMP, 'era-'));
+  assert.equal(briefEraStart(dir), '', '空目录不应给起点');
+  for (const [d, src] of [['2026-11-03', 'ai'], ['2026-11-01', 'ai']]) {
+    atomicWriteJSON(path.join(dir, `${d}.json`), {
+      date: d, source: src, overview: '概览', endedAt: '2026-11-01T09:02:00+08:00',
+      items: [{ title: 't' }],
+    });
+  }
+  // 半成品不算（items 为空）
+  atomicWriteJSON(path.join(dir, '2026-10-20.json'), { date: '2026-10-20', overview: 'x', items: [] });
+  assert.equal(briefEraStart(dir), '2026-11-01');
+
+  const span = archiveSpan({
+    days: [
+      { day: '2026-10-01', count: 0 },
+      { day: '2026-08-17', count: 6 },
+      { day: '2026-11-14', count: 361 },
+    ],
+  });
+  assert.equal(span.first, '2026-08-17');
+  assert.equal(span.last, '2026-11-14');
+  assert.equal(span.counts.has('2026-10-01'), false, '0 条不算有新闻');
+});
+
+test('补写守卫：不碰今天/未来、不早于归档起点、窗口方向正确', () => {
+  const base = { today: '2026-11-15', archiveFirst: '2026-08-17' };
+  assert.equal(guardBackfill({ ...base, from: '2026-11-14', to: '2026-11-14' }).ok, true);
+  assert.equal(guardBackfill({ ...base, from: '2026-11-10', to: '2026-11-14' }).ok, true);
+
+  const today = guardBackfill({ ...base, from: '2026-11-15', to: '2026-11-15' });
+  assert.equal(today.ok, false);
+  assert.equal(today.code, 'includes-today');
+  assert.equal(guardBackfill({ ...base, from: '2026-11-14', to: '2026-11-16' }).code, 'includes-today');
+
+  const early = guardBackfill({ ...base, from: '2026-08-16', to: '2026-08-20' });
+  assert.equal(early.ok, false);
+  assert.equal(early.code, 'before-archive');
+  assert.match(early.reason, /没有任何新闻可切片/);
+
+  assert.equal(guardBackfill({ ...base, from: '2026-11-14', to: '2026-11-10' }).code, 'bad-range');
+  assert.equal(guardBackfill({ ...base, from: 'nov', to: '2026-11-10' }).code, 'bad-date');
+});
+
 test('ensure 子进程参数显式携带全部路径（防止写进仓库默认目录）', () => {
   const s = prepareArgs({
     date: '2026-11-02',
@@ -256,4 +336,16 @@ test('ensure 子进程参数显式携带全部路径（防止写进仓库默认�
   ]) {
     assert.ok(s.includes(want), `缺少参数：${want}`);
   }
+  // 2.19.0：补写标记只接受受控值，且必须一路传到 prepare 子进程
+  const bf = prepareArgs({
+    date: '2026-11-14', runs: 'C:/t/runs', status: 'C:/t/s.json', db: 'C:/t/n.db', archive: 'C:/t/a',
+    backfill: 'gap',
+  }).join(' ');
+  assert.ok(bf.includes('--backfill-kind gap'));
+  assert.ok(bf.includes('--no-import'));
+  const bad = prepareArgs({
+    date: '2026-11-14', runs: 'C:/t/runs', status: 'C:/t/s.json', db: 'C:/t/n.db', archive: 'C:/t/a',
+    backfill: 'whatever',
+  }).join(' ');
+  assert.ok(!bad.includes('--backfill-kind'), '非法 kind 不应传给子进程');
 });

@@ -303,6 +303,8 @@ body { overflow-wrap: break-word; }
   font-family: var(--sans); font-size: 0.68rem; color: var(--warm);
   border: 1px solid var(--rule-strong); border-radius: 3px; background: var(--code-bg);
 }
+/* 2.19.0：补写 / 缺早报 用中性虚线框，与「自动摘要 / 事实清单」这类降级标记区分开 */
+.day-tag.backfill { color: var(--ink-mute); border-style: dashed; }
 .day-brief { border-top: 1px dashed var(--rule); padding: 0.5rem 0.9rem 0.7rem; }
 .day-brief summary {
   cursor: pointer; color: var(--ink-soft); font-size: 0.8rem; line-height: 1.45;

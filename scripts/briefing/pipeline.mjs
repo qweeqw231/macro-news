@@ -323,7 +323,7 @@ export function buildDraftFallback({ input, date, now = Date.now(), reason = '' 
 }
 
 /** 只改已存在的那一天；不新增日期（避免把没有归档的日子塞进索引） */
-export function patchIndexDoc(doc, { date, briefLine, source }) {
+export function patchIndexDoc(doc, { date, briefLine, source, backfill = false }) {
   if (!doc || !Array.isArray(doc.days)) return false;
   const entry = doc.days.find((x) => x && (x.day === date || x.d === date));
   if (!entry) return false;
@@ -332,10 +332,14 @@ export function patchIndexDoc(doc, { date, briefLine, source }) {
   if (line) entry.briefLine = line;
   else delete entry.briefLine;
   entry.source = source;
+  // 2.19.0：补写来源要和"当天自然生成"区分开，归档卡片据此打「补写」标签。
+  // 只在为真时写字段，历史索引不受影响（不批量回填、不猜）。
+  if (backfill) entry.briefBackfill = true;
+  else delete entry.briefBackfill;
   return true;
 }
 
-export function patchIndexFiles({ dataDir, date, briefLine, source }) {
+export function patchIndexFiles({ dataDir, date, briefLine, source, backfill = false }) {
   if (!dataDir) return 0;
   let patched = 0;
   for (const rel of ['index.json', 'history/index.json']) {
@@ -343,7 +347,7 @@ export function patchIndexFiles({ dataDir, date, briefLine, source }) {
     if (!fs.existsSync(file)) continue;
     const r = readJson(file);
     if (!r.ok) continue;
-    if (patchIndexDoc(r.value, { date, briefLine, source })) {
+    if (patchIndexDoc(r.value, { date, briefLine, source, backfill })) {
       atomicWriteJSON(file, r.value);
       patched++;
     }
@@ -452,6 +456,7 @@ export function publishRun({
   draftOnFail = false,
   noLock = false,
   now = Date.now(),
+  backfill = null,
 }) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date || ''))) throw new Error(`日期格式不对：${date}`);
   const dir = runDirOf(runsDir, date);
@@ -464,6 +469,18 @@ export function publishRun({
 
   const started = Date.now();
   const t = beijingNow(now);
+  // 2.19.0：补写溯源。只有显式声明 gap / pre-era 才盖章，普通当日发布不带这个字段。
+  // 章子写进产物本身（briefings/<day>.json），不另建台账：谁生成的、为什么补，跟着文件走。
+  const bfKind = backfill === 'gap' || backfill === 'pre-era' ? backfill : '';
+  const bfStamp = bfKind
+    ? {
+      kind: bfKind,
+      at: t.iso,
+      note: bfKind === 'pre-era'
+        ? '早报制度生效前的日子，按该日新闻切片补写'
+        : '该日应当有早报但缺失，按该日新闻切片补写',
+    }
+    : null;
   const siteFile = path.join(siteOut, `${date}.json`);
   const localFile = localOut ? path.join(localOut, `${date}.json`) : null;
 
@@ -481,6 +498,10 @@ export function publishRun({
       durationMs: Date.now() - started,
       generator: o.generator,
       attempt: o.attempt,
+      // 只有「本次真的写了一份新产物」才记补写；已有的 AI 产物被跳过时不能盖章
+      backfill: o.backfill === true,
+      backfillKind: o.backfill === true ? (o.backfillKind || '') : '',
+      backfilledAt: o.backfill === true ? t.iso : '',
     }, { now });
   };
   const markMissed = (reason) => {
@@ -515,8 +536,8 @@ export function publishRun({
     }, { now });
   };
   /** 补索引 + 立刻核对；核对不过就判失败（不吞掉） */
-  const patchAndVerify = (briefLine, source) => {
-    patchIndexFiles({ dataDir, date, briefLine, source });
+  const patchAndVerify = (briefLine, source, bf = false) => {
+    patchIndexFiles({ dataDir, date, briefLine, source, backfill: bf });
     return verifyIndexBriefing({ dataDir, date, expectLine: briefLine });
   };
   const indexFail = (v) => ({
@@ -588,8 +609,9 @@ export function publishRun({
         .map((e) => `${e.path} ${e.msg}`).join('；');
       if (draftOnFail) {
         const draft = buildDraftFallback({ input, date, now, reason });
+        if (bfStamp) draft.backfill = bfStamp;
         writeBriefingFiles({ doc: draft, localOut, siteOut });
-        const v = patchAndVerify(briefLineOf(draft), 'draft');
+        const v = patchAndVerify(briefLineOf(draft), 'draft', !!bfStamp);
         if (!v.ok) {
           markFailed(indexFail(v).reason);
           return { ...indexFail(v), degraded: true, source: 'draft', items: draft.items.length, errors: verdict.errors };
@@ -597,6 +619,7 @@ export function publishRun({
         markDone({
           source: 'draft', items: draft.items.length, generator: 'draft-v1',
           reason, attempt, exitCode: 1,
+          backfill: !!bfStamp, backfillKind: bfKind,
         });
         return {
           ok: true, code: 'degraded-draft', degraded: true, source: 'draft',
@@ -615,16 +638,21 @@ export function publishRun({
     }
 
     const doc = normalizeFinalForPublish({ doc: finalR.value, input, date, now });
+    if (bfStamp) doc.backfill = bfStamp;
     writeBriefingFiles({ doc, localOut, siteOut });
-    const v = patchAndVerify(briefLineOf(doc), 'ai');
+    const v = patchAndVerify(briefLineOf(doc), 'ai', !!bfStamp);
     if (!v.ok) {
       // 产物已写盘但索引没打上标记 ⇒ 不算发布成功（不回滚文件，明确提示先同步本地）
       markFailed(indexFail(v).reason);
       return { ...indexFail(v), source: 'ai', items: doc.items.length };
     }
-    markDone({ source: 'ai', items: doc.items.length, generator: 'llm-v1', reason: '', attempt });
+    markDone({
+      source: 'ai', items: doc.items.length, generator: 'llm-v1', reason: '', attempt,
+      backfill: !!bfStamp, backfillKind: bfKind,
+    });
     return {
       ok: true, code: 'published', source: 'ai', items: doc.items.length, endedAt: doc.endedAt,
+      backfill: bfKind || '',
     };
   } catch (e) {
     const reason = e && e.message ? e.message : String(e);
@@ -650,11 +678,13 @@ export function publishRun({
 
 /** ensure 拉起 prepare 时的参数（所有路径必须显式传，防止临时目录模拟写进仓库） */
 export function prepareArgs({
-  date, runs, status, db, archive, noImport = true, quiet = true,
+  date, runs, status, db, archive, noImport = true, quiet = true, backfill = '',
 }) {
   const a = ['--date', date, '--runs', runs, '--status', status, '--db', db, '--archive', archive];
   if (noImport) a.push('--no-import');
   if (quiet) a.push('--quiet');
+  // 2.19.0：补写来源一路传到 prepare 的状态记录，publish 再据此盖章
+  if (backfill === 'gap' || backfill === 'pre-era') a.push('--backfill-kind', backfill);
   return a;
 }
 

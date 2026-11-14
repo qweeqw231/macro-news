@@ -1211,6 +1211,9 @@
 
   // 日期跳转用：day → {day, count, kind, hasBriefing}
   let dayIndex = new Map();
+  // 2.19.0：早报制度起点 = 最早一份早报的日子（由索引推导，与服务端 briefEraStart 同口径）。
+  // 用它区分「制度前没有早报属正常」和「制度后该有却没有」。
+  let briefEraDay = '';
 
   function renderHistPanel(hist, list) {
     const panel = $('#histPanel');
@@ -1252,6 +1255,11 @@
       a.title = d.reason ? `${dayHint(d.day)}；${d.reason}` : dayHint(d.day);
       a.appendChild(withTag(d.day));
       a.appendChild(el('div', 'day-n', d.count + ' 条'));
+      // 2.19.0：制度起点之后、有新闻却没有早报 —— 这一天是「该有却没有」，必须显形。
+      // 制度之前（起点为空或早于起点）不标，避免把历史常态说成缺失。
+      if (briefEraDay && d.day >= briefEraDay && d.day < newsDay() && d.count > 0) {
+        a.appendChild(el('span', 'day-tag backfill', '缺早报'));
+      }
       a.onclick = open;
       return a;
     }
@@ -1266,6 +1274,8 @@
     a.appendChild(el('div', 'day-n', d.count + ' 条'));
     if (d.source === 'rule') a.appendChild(el('span', 'day-tag', '自动摘要'));
     else if (d.source === 'draft') a.appendChild(el('span', 'day-tag', '事实清单'));
+    // 2.19.0：补写过的日子带「补写」标签，与当天自然生成区分（来源仍是 ai/rule/draft，不改语义）
+    if (d.briefBackfill) a.appendChild(el('span', 'day-tag backfill', '补写'));
     a.onclick = open;
     box.appendChild(a);
 
@@ -1488,10 +1498,13 @@
           reason: dec.reason,
           hasBriefing: !!base.hasBriefing,
           briefLine: base.briefLine || '',
+          // 2.19.0：补写来源（服务端 publish 时写入索引），卡片据此打标签
+          briefBackfill: !!base.briefBackfill,
           source: base.hasBriefing ? (base.source === 'rule' || base.source === 'draft' ? base.source : 'ai') : '',
         });
       }
       const list = [...map.values()].sort((a, b) => (a.day < b.day ? 1 : -1));
+      briefEraDay = list.filter((x) => x.hasBriefing).map((x) => x.day).sort()[0] || '';
       dayIndex = map;
       renderHistPanel(hist, list);
       box.innerHTML = '';
@@ -1760,6 +1773,56 @@
         box.appendChild(document.createTextNode(' · '));
         const sp = el('span', `ft-state ${bLvl}`, bTxt);
         if (rec && (rec.pushError || rec.reason)) sp.title = rec.pushError || rec.reason;
+        box.appendChild(sp);
+      }
+
+      // 2.19.0：上一条缺口 —— 历史日「该有却没有」的状态，与今天的 token 分开展示。
+      // 判据与后端 scanGaps 同口径：>= 制度起点、< 今天、有新闻、无早报。
+      // 三种态：补写中（棕）/ 缺失（棕）/ 已补写（绿，只报 48 小时内，避免长期噪音）。
+      const dayRec = (d) => (brief.days || {})[d] || {};
+      // 制度起点优先用归档面板算好的；面板还没渲染时用索引现推，避免依赖调用顺序
+      const eraDay = briefEraDay
+        || (dayList || []).filter((d) => d && d.hasBriefing).map((d) => d.day).sort()[0]
+        || '';
+      const gapDay = (dayList || [])
+        .filter((d) => d && d.day && d.day < today && d.day >= eraDay
+          && Number(d.count) > 0 && !d.hasBriefing)
+        .map((d) => d.day)
+        .sort()
+        .pop() || '';
+      // 最近一次补写完成（产物已存在且带补写标记），只有状态窗口内才拿得到时刻
+      let doneBackfill = null;
+      for (const d of dayList || []) {
+        if (!d || !d.briefBackfill || !d.hasBriefing || !d.day || d.day >= today) continue;
+        const r = dayRec(d.day);
+        const at = r.backfilledAt || r.endedAt || '';
+        const ageMin = at ? agoMin(at) : null;
+        if (ageMin == null || ageMin > 48 * 60) continue;
+        if (!doneBackfill || d.day > doneBackfill.day) doneBackfill = { day: d.day, at };
+      }
+      let gTxt = '';
+      let gLvl = '';
+      let gTitle = '';
+      if (gapDay && (!doneBackfill || gapDay >= doneBackfill.day)) {
+        const gr = dayRec(gapDay);
+        if (gr.backfill && (gr.status === 'awaiting' || gr.status === 'running')) {
+          gTxt = `早报 ${gapDay} 补写中`;
+          gLvl = 'warn';
+          gTitle = gr.reason || '输入快照已准备，等待定稿';
+        } else {
+          gTxt = `早报 ${gapDay} 缺失`;
+          gLvl = 'warn';
+          gTitle = `该日有新闻但没有早报；可补写：ensure --backfill-from ${gapDay} --backfill-to ${gapDay}`;
+        }
+      } else if (doneBackfill) {
+        gTxt = `早报 ${doneBackfill.day} 已补写 ${fmtTime(doneBackfill.at)}`;
+        gLvl = 'ok';
+        gTitle = '该日早报为补写产物（按该日新闻切片重新生成）';
+      }
+      if (gTxt) {
+        box.appendChild(document.createTextNode(' · '));
+        const sp = el('span', `ft-state ${gLvl}`, gTxt);
+        if (gTitle) sp.title = gTitle;
         box.appendChild(sp);
       }
 

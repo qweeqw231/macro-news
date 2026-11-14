@@ -6,12 +6,13 @@
 // 用法：
 //   node scripts/briefing/publish.mjs --date 2026-11-02
 //   node scripts/briefing/publish.mjs --date 2026-11-02 --draft-on-fail  # 降级事实清单
+//   node scripts/briefing/publish.mjs --date 2026-11-14 --backfill-kind gap  # 历史补写（盖溯源章）
 //
 // 退出码：0 成功（含已有 AI 早报跳过）/ 1 未发布或降级 / 2 锁被占用
 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { beijingNow, updateStatus } from './core.mjs';
+import { beijingNow, readStatus, updateStatus } from './core.mjs';
 import { publishRun } from './pipeline.mjs';
 import { commitAndPush, commitStatusPush } from './git-push.mjs';
 
@@ -34,6 +35,12 @@ const DATA_DIR = path.resolve(ROOT, arg('data-dir', 'data'));
 const DRAFT_ON_FAIL = flag('draft-on-fail');
 const NO_LOCK = flag('no-lock');
 const QUIET = flag('quiet');
+// 2.19.0：补写溯源。显式传优先；没传就看该日状态记录（prepare 阶段已标 backfill）。
+// 只接受两个受控值，别的一律当"非补写"，避免把任意字符串写进产物。
+const BACKFILL_KIND = (() => {
+  const v = arg('backfill-kind', '');
+  return v === 'gap' || v === 'pre-era' ? v : '';
+})();
 // 2.4.2：发布即入库（只提交早报相关 4 个路径；失败不回滚已发布文件）
 const PUSH = flag('push');
 
@@ -43,6 +50,8 @@ function main() {
     return 1;
   }
   try {
+    const rec = readStatus(STATUS).days[DATE] || {};
+    const backfill = BACKFILL_KIND || (rec.backfill === true ? (rec.backfillKind || 'gap') : '');
     const r = publishRun({
       date: DATE,
       runsDir: RUNS,
@@ -52,6 +61,7 @@ function main() {
       dataDir: DATA_DIR,
       draftOnFail: DRAFT_ON_FAIL,
       noLock: NO_LOCK,
+      backfill,
     });
     if (!QUIET) {
       // 2.4.19：失败要直说「失败」，不能因为 r.reason 有值就打成「完成」

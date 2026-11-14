@@ -253,6 +253,17 @@ publish --date (script, deterministic)
   it only runs `prepare` to persist the input and marks `awaiting`, and **no longer generates a rule-based version**; if a complete AI artifact already exists locally, it only publishes.
   Historical gaps generate no briefing at all and are only marked `missed` in the status file (better missing than fake).
   To backfill history manually, explicitly pass `--backfill-from/--backfill-to` (off by default, not part of scheduling).
+- **Historical gaps and per-day backfill (2.19.0)**: a day counts as an expected gap only when all three hold —
+  `D < today`, `D >= briefing era start` (= earliest complete briefing, derived from `data/briefings/`, currently 2026-11-01),
+  and `D` has news (`count > 0` in `index.json`). Days with no news are recorded as `gap:'no-news'` (a legitimate void);
+  days before the era are not treated as missing and never appear in the footer.
+  Run `node scripts/briefing/ensure.mjs --backfill-from <D> --backfill-to <D>`: it refuses `to >= today`,
+  refuses anything before the archive start, and generates nothing when the day has no news.
+  Backfilled artifacts carry `backfill:{kind:'gap'|'pre-era',at,note}`, and the day entry in `index.json` carries
+  `briefBackfill:true` (the archive card then shows a `补写` tag). The LLM writing step still runs in the external
+  harness — the repo only slices and validates. The footer gets a second token for the most recent historical gap:
+  `早报 <D> 补写中` (brown) / `早报 <D> 缺失` (brown) / `早报 <D> 已补写 HH:MM` (green, shown for 48 hours only),
+  kept separate from today's `早报 09:02`. A day with news but no briefing also gets a `缺早报` tag on its card.
 - Status is written to `data/_briefing-status.json` (single file, kept 14 days, not high-frequency): the footer shows
   `早报 09:02` (green, AI) / `早报 事实清单 09:35` (brown, draft) / `早报 自动` (brown, rule) /
   `早报 待写作` / `早报 待发布` / `早报 补跑中` / `早报 失败` (Briefing 09:02 / Briefing fact list 09:35 / Briefing auto / Briefing awaiting writing / Briefing awaiting publish / Briefing catch-up running / Briefing failed).

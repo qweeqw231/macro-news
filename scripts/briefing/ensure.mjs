@@ -10,6 +10,9 @@
 //   node scripts/briefing/ensure.mjs --dry-run            # 只看计划
 //   node scripts/briefing/ensure.mjs --sync               # 先 pull 再补
 //   node scripts/briefing/ensure.mjs --today 2026-10-30 --now-hm 09:40   # 模拟/测试
+//   node scripts/briefing/ensure.mjs --backfill-from 2026-11-14 --backfill-to 2026-11-14
+//        # 2.19.0 按日补写：只收已过去的日子、不早于归档起点、该日必须有新闻；
+//        # 只做切片与状态，LLM 写作仍由外部 harness 完成（产物带 backfill 溯源章）
 //
 // 退出码：0 全部完整/已准备 / 1 有失败 / 2 锁被占用（视为「在跑」，不重复补）
 
@@ -24,18 +27,22 @@ import {
   STATUS_KEEP_DAYS,
   acquireLock,
   addDays,
+  archiveSpan,
   atomicWriteText,
   beijingNow,
+  briefEraStart,
   checkBriefing,
   checkStatusInvariants,
+  guardBackfill,
   normalizeBriefingSource,
   parseBackfillRange,
   planCatchup,
   readStatus,
+  scanGaps,
   scanMissed,
   updateStatus,
 } from './core.mjs';
-import { prepareArgs } from './pipeline.mjs';
+import { prepareArgs, publishRun, readJson } from './pipeline.mjs';
 import { importArchive } from '../news-db/import-archive.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -71,6 +78,7 @@ const OUT = path.resolve(ROOT, arg('out', '.local/briefings'));
 const SITE_OUT = path.resolve(ROOT, arg('site-out', 'data/briefings'));
 const RUNS = path.resolve(ROOT, arg('runs', '.local/runs'));
 const STATUS = path.resolve(ROOT, arg('status', 'data/_briefing-status.json'));
+const DATA_DIR = path.resolve(ROOT, arg('data-dir', 'data'));
 const LOCK = path.resolve(ROOT, arg('lock', '.local/briefing.lock'));
 const DRY = flag('dry-run');
 const SYNC = flag('sync');
@@ -222,11 +230,39 @@ function main() {
     let plan = [];
     let missed = [];
     if (BACKFILL) {
-      // 手动补齐：只有显式给出窗口才会跑，不参与自动调度
+      // 手动补齐（2.19.0）：只有显式给出窗口才会跑，不参与自动调度。
+      // 边界三条（见 core.guardBackfill / scanGaps）：不碰今天、不碰归档起点之前、
+      // 该日必须有新闻；无新闻的日子只记 no-news，绝不生成任何产物。
+      const span = archiveSpan(readJson(path.join(DATA_DIR, 'index.json')).value);
+      const eraStart = briefEraStart(SITE_OUT);
+      const g = guardBackfill({
+        from: BACKFILL.from, to: BACKFILL.to, today: TODAY, archiveFirst: span.first,
+      });
+      if (!g.ok) {
+        console.error(`[briefing] 拒绝补写（${g.code}）：${g.reason}`);
+        return 1;
+      }
+      log(`[briefing] 补写边界：制度起点 ${eraStart || '（无）'}、归档起点 ${span.first || '（无）'}`);
       for (let d = BACKFILL.from; d <= BACKFILL.to; d = addDays(d, 1)) {
         const c = checkDay(d);
         if (c.complete) continue;
-        plan.push({ date: d, action: c.localComplete ? 'publish' : 'prepare' });
+        const news = Number(span.counts.get(d)) || 0;
+        const kind = eraStart && d >= eraStart ? 'gap' : 'pre-era';
+        if (!news) {
+          // 没有新闻 = 没有可切片的内容。写规则版/draft 都等于编造，只能记一笔"合理空缺"。
+          if (!DRY) {
+            updateStatus(STATUS, d, {
+              status: 'missed', stage: 'backfill', gap: 'no-news',
+              backfill: true, backfillKind: kind,
+              endedAt: NOW.iso, exitCode: 0, candidates: 0, items: 0, source: '',
+              reason: '该日没有新闻条目，无从切片，未补写（不算缺失）',
+              durationMs: 0, generator: 'backfill',
+            });
+          }
+          log(`[briefing] ${d} 无新闻，跳过（记 no-news，不生成）`);
+          continue;
+        }
+        plan.push({ date: d, action: c.localComplete ? 'publish' : 'prepare', backfill: kind, news });
       }
     } else {
       plan = planCatchup({
@@ -237,7 +273,13 @@ function main() {
         graceMin: GRACE_MIN,
         check: checkDay,
       });
-      missed = scanMissed({ today: TODAY, days: SCAN_DAYS, check: checkDay });
+      // 2.19.0：缺口只认「制度起点之后 + 有新闻 + 没写」的日子（见 core.scanGaps）。
+      // 旧实现把无新闻的日子、制度前的日子也标 missed，首页会冒出一堆并不存在的"缺失"。
+      const span = archiveSpan(readJson(path.join(DATA_DIR, 'index.json')).value);
+      const eraStart = briefEraStart(SITE_OUT);
+      missed = scanGaps({
+        today: TODAY, eraStart, counts: span.counts, check: checkDay, days: SCAN_DAYS,
+      }).map((x) => x.day);
       if (!DRY) {
         for (const d of missed) {
           const rec = readStatus(STATUS).days[d] || {};
@@ -245,18 +287,19 @@ function main() {
           updateStatus(STATUS, d, {
             status: 'missed',
             stage: 'missed',
+            gap: 'not-written',
             endedAt: beijingNow().iso,
             exitCode: 0,
             candidates: 0,
             items: 0,
             source: '',
-            reason: '历史日期不自动生成（早报是 AI 判断性内容，宁缺不假）',
+            reason: '历史日期不自动生成（早报是 AI 判断性内容，宁缺不假）；可在页脚按日补写',
             durationMs: 0,
             generator: 'missed',
           });
         }
       }
-      if (missed.length) log(`[briefing] 历史缺口只标记、不补：${missed.join('、')}`);
+      if (missed.length) log(`[briefing] 历史缺口只标记、不自动补：${missed.join('、')}`);
     }
 
     if (!plan.length) {
@@ -267,7 +310,7 @@ function main() {
       }
       return 0;
     }
-    log(`[briefing] 补跑计划：${plan.map((x) => `${x.date}(${x.action})`).join(' → ')}`);
+    log(`[briefing] 补跑计划：${plan.map((x) => `${x.date}(${x.action}${x.backfill ? '/' + x.backfill : ''})`).join(' → ')}`);
     if (DRY) return 0;
 
     if (SYNC) {
@@ -287,9 +330,25 @@ function main() {
       const one0 = Date.now();
       if (job.action === 'publish') {
         try {
-          publish(job.date);
+          if (job.backfill) {
+            // 补写走 publishRun：同样的校验/原子写，另外补索引并核对（ensure 的旧 publish
+            // 只写站点文件、不碰索引，补写历史日会出现「有产物但索引没标记」）
+            const r = publishRun({
+              date: job.date,
+              runsDir: RUNS,
+              siteOut: SITE_OUT,
+              localOut: OUT,
+              status: STATUS,
+              dataDir: DATA_DIR,
+              noLock: true,
+              backfill: job.backfill,
+            });
+            if (!r.ok) throw new Error(r.reason || r.code);
+          } else {
+            publish(job.date);
+          }
           okCount++;
-          log(`[briefing] ${job.date} 发布完成（本地已有产物）`);
+          log(`[briefing] ${job.date} 发布完成（本地已有产物${job.backfill ? ' · ' + job.backfill : ''}）`);
         } catch (e) {
           failCount++;
           updateStatus(STATUS, job.date, {
@@ -311,6 +370,7 @@ function main() {
         archive: ARCHIVE,
         noImport: true,
         quiet: QUIET,
+        backfill: job.backfill || '',
       });
       childArgs.push('--no-lock');
       const r = spawnSync(

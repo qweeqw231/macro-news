@@ -133,6 +133,102 @@ export function scanMissed({ today, days = 7, check }) {
   return out.sort();
 }
 
+/**
+ * 2.14.0：早报制度起点 = 目录里最早一份**完整**早报的日子。
+ *
+ * 为什么需要它：判断「某天该不该有早报」不能凭感觉。制度起点之前没有这个约定，
+ * 把那些日子标成「缺失」等于凭空立规（本仓库 10-28…10-31 有新闻、无早报，
+ * 一次就会冒出几十条红字）。起点从产物推导，不硬编码，换目录也自洽。
+ * @param {string} siteOut data/briefings 目录
+ * @returns {string} 'YYYY-MM-DD'；没有任何完整早报时返回 ''
+ */
+export function briefEraStart(siteOut) {
+  let names = [];
+  try { names = fs.readdirSync(siteOut); } catch { return ''; }
+  const days = names
+    .map((n) => /^(\d{4}-\d{2}-\d{2})\.json$/.exec(n))
+    .filter(Boolean)
+    .map((m) => m[1])
+    .filter((d) => checkBriefing(path.join(siteOut, `${d}.json`)).complete)
+    .sort();
+  return days[0] || '';
+}
+
+/**
+ * 2.14.0：归档跨度与逐日条数（判「这天有没有新闻可写」的唯一依据）。
+ * 只认 count > 0 的日子：无新闻的日子写不出早报，那是合理空缺，不是缺失。
+ * @param {object} indexDoc data/index.json 的文档
+ */
+export function archiveSpan(indexDoc) {
+  const counts = new Map();
+  const list = Array.isArray(indexDoc && indexDoc.days) ? indexDoc.days : [];
+  for (const d of list) {
+    const day = d && String(d.day || '');
+    const n = Number(d && d.count);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(day) && Number.isFinite(n) && n > 0) counts.set(day, n);
+  }
+  const keys = [...counts.keys()].sort();
+  return { first: keys[0] || '', last: keys[keys.length - 1] || '', counts };
+}
+
+/**
+ * 2.14.0：预期内缺口 = 制度起点之后、今天之前、**有新闻**、却没有完整早报的日子。
+ *
+ * 三条同时成立才算缺口（缺一不可）：
+ *   ① D < 今天（今天走页脚既有的时间分层，不并入缺口）；
+ *   ② D >= 制度起点（之前的年代不立规，但可以显式补写）；
+ *   ③ D 有新闻（count > 0，否则写不出早报，属合理空缺）。
+ * 「有新闻但没写」才是真缺口；这类才该在站点上显形、才可补写。
+ *
+ * @returns {Array<{day:string, news:number}>} 按日倒序（最近的缺口在前）
+ */
+export function scanGaps({ today, eraStart, counts, check, days = STATUS_KEEP_DAYS }) {
+  const out = [];
+  const map = counts instanceof Map ? counts : new Map(Object.entries(counts || {}));
+  if (!eraStart) return out;
+  for (let i = 1; i < Math.max(2, days + 1); i++) {
+    const date = addDays(today, -i);
+    if (date < eraStart) break;
+    const news = Number(map.get(date)) || 0;
+    if (!news) continue;                       // ③ 无新闻：不立缺口
+    const r = check(date) || {};
+    if (r.complete) continue;
+    out.push({ day: date, news });
+  }
+  return out;
+}
+
+/**
+ * 2.14.0：补写窗口守卫。补写是「按历史日的新闻切片重跑」，不是「随便填一天」。
+ *
+ * 拒绝的两类（都不估算、不生成）：
+ *   · 窗口沾到今天或未来 —— 今天由 09:00 那条链路负责，混进来会让「今日早报」有两份来源；
+ *   · 早于归档起点 —— 那天一条新闻都没有，切片为空，写出来只能是编造。
+ *
+ * @returns {{ok:boolean, code:string, reason:string}}
+ */
+export function guardBackfill({ from, to, today, archiveFirst }) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(from || '')) || !/^\d{4}-\d{2}-\d{2}$/.test(String(to || ''))) {
+    return { ok: false, code: 'bad-date', reason: `补写窗口日期格式不对：${from}..${to}` };
+  }
+  if (from > to) return { ok: false, code: 'bad-range', reason: `补写窗口非法：${from} 晚于 ${to}` };
+  if (to >= today) {
+    return {
+      ok: false,
+      code: 'includes-today',
+      reason: `补写只处理已过去的日子：${to} 不早于今天 ${today}（今天由 09:00 链路负责）`,
+    };
+  }
+  if (archiveFirst && from < archiveFirst) {
+    return {
+      ok: false,
+      code: 'before-archive',
+      reason: `${from} 早于归档起点 ${archiveFirst}：那天没有任何新闻可切片，不能补写`,
+    };
+  }
+  return { ok: true, code: 'ok', reason: '' };
+}
+
 /** 旧产物没有 source 字段 → 按 AI 处理（不回写历史文件）；2.3.0 起保留 draft */
 export function normalizeBriefingSource(doc) {
   if (doc && (doc.source === 'rule' || doc.source === 'draft')) return doc.source;
@@ -215,6 +311,11 @@ export function readStatus(file) {
 
 /**
  * 更新某一天的状态并落盘（保留最近 14 天）。
+ *
+ * 2.14.0 → 2.19.0 修正：**刚写入的那一天永远保留**。
+ * 历史补写会写一个 30 天前的日子，旧实现按日期排序直接 `shift()` 掉最老的键，
+ * 等于「写进去就被自己删掉」——补写状态永远读不到。现在只淘汰「不是本次写入日」
+ * 的最老键，总量仍是 keepDays（写入日占一个名额）。
  * @param {string} file
  * @param {string} date
  * @param {object} patch
@@ -225,7 +326,13 @@ export function updateStatus(file, date, patch, { now = Date.now(), keepDays = S
   const rec = { ...prev, date, ...patch };
   doc.days[date] = rec;
   const keys = Object.keys(doc.days).sort();
-  while (keys.length > keepDays) delete doc.days[keys.shift()];
+  let left = keys.length;
+  for (const k of keys) {
+    if (left <= keepDays) break;
+    if (k === date) continue;
+    delete doc.days[k];
+    left--;
+  }
   const ordered = {};
   Object.keys(doc.days).sort().forEach((k) => { ordered[k] = doc.days[k]; });
   const out = { v: STATUS_VERSION, updatedAt: beijingNow(now).iso, days: ordered };
