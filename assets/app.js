@@ -1285,6 +1285,14 @@
     else if (d.source === 'draft') a.appendChild(el('span', 'day-tag', '事实清单'));
     // 2.19.0：补写过的日子带「补写」标签，与当天自然生成区分（来源仍是 ai/rule/draft，不改语义）
     if (d.briefBackfill) a.appendChild(el('span', 'day-tag backfill', '补写'));
+    // 2.20.0：非当日生成的日子必须显形。跨日（如 11-14 的早报在 11-15 00:12 才出）
+    // 与同日明显晚到分开标：两者都和「补写」不是一回事，补写是事后追认，不在这两档里。
+    const tm = briefTiming(d.day, d.briefAt, d.briefBackfill);
+    if (tm && (tm.kind === 'late-same' || tm.kind === 'late-cross')) {
+      const tag = el('span', 'day-tag late', tm.kind === 'late-cross' ? '跨日' : '晚到');
+      tag.title = tm.text;
+      a.appendChild(tag);
+    }
     a.onclick = open;
     box.appendChild(a);
 
@@ -1327,12 +1335,11 @@
     return briefInflight.get(day);
   }
 
-  // 早报正文完整渲染（2.4.3）：overview → items → watch；只在展开时拉取。
-  const briefHm = (iso) => {
-    const d = new Date(iso || '');
-    if (isNaN(d.getTime())) return '';
-    return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-  };
+  // 2.20.0：生成时点分档（按时 / 同日明显晚到 / 跨日 / 补写）见 assets/brief-timing.js。
+  //   纯函数放在独立文件里，Node 测试可以逐档验证；这里只做绑定，不重复实现阈值。
+  const BT = window.MacroBriefTiming || {};
+  const briefTiming = (day, at, bf) => (BT.briefTiming ? BT.briefTiming(day, at, bf) : null);
+  const bjStamp = (iso) => (BT.bjStamp ? BT.bjStamp(iso) : '');
   // 2.13.0：早报覆盖区间。早报 JSON 的 window.fromAt/toAt 是北京墙钟字面量（…+08:00），
   // 直接按字面量切片，避免浏览器本地时区把 08:00 显示成别的时间。历史早报没有 window 时间戳，
   // 不凭空补，保持原样——只有 2.13.0 之后生成的早报才会显示这段说明。
@@ -1348,9 +1355,9 @@
   }
   function briefMetaText(b) {
     const n = Array.isArray(b && b.items) ? b.items.length : 0;
-    const hm = briefHm(b && (b.endedAt || b.generatedAt));
+    const tm = briefTiming(b && b.date, b && (b.endedAt || b.generatedAt), !!(b && b.backfill));
     const range = briefRange(b);
-    return `当日早报${n ? ' · ' + n + ' 条' : ''}${hm ? ' · ' + hm + ' 生成' : ''}` +
+    return `当日早报${n ? ' · ' + n + ' 条' : ''}${tm ? ' · ' + tm.text : ''}` +
       `${range ? ' · 覆盖 ' + range : ''}`;
   }
   function renderBriefItems(body, items) {
@@ -1423,6 +1430,12 @@
         const meta = briefMetaText(b);
         sum.textContent = meta;
         sum.title = meta;
+        // 2.20.0：晚到 / 跨日要在摘要行本身就可辨（棕色），按时生成保持中性不噪音
+        const tm = briefTiming(b && b.date, b && (b.endedAt || b.generatedAt), !!(b && b.backfill));
+        if (tm && (tm.kind === 'late-same' || tm.kind === 'late-cross')) {
+          sum.classList.add('brief-late');
+          sum.title = `该日早报未在 09:00 按时生成：${meta}`;
+        }
         if (det) det.classList.add('brief-loaded');
       }
       body.dataset.loaded = '1';
@@ -1514,11 +1527,15 @@
           briefLine: bm.briefLine || '',
           // 2.19.0：补写来源（服务端 publish 时写入索引），卡片据此打标签
           briefBackfill: !!bm.briefBackfill,
+          // 2.20.0：实际生成时刻（索引派生字段），卡片据此判「晚到 / 跨日」
+          briefAt: bm.briefAt || '',
           source: bm.hasBriefing ? (bm.source === 'rule' || bm.source === 'draft' ? bm.source : 'ai') : '',
         });
       }
       const list = [...map.values()].sort((a, b) => (a.day < b.day ? 1 : -1));
-      briefEraDay = list.filter((x) => x.hasBriefing).map((x) => x.day).sort()[0] || '';
+      // 2.20.0：制度起点只看**未补写**的最早一份。补写是事后追认，若把它算作起点，
+      //   10-30 一补，起点就落到 10-30，10-31 立刻变成假的「制度后缺失」（实测已发生）。
+      briefEraDay = list.filter((x) => x.hasBriefing && !x.briefBackfill).map((x) => x.day).sort()[0] || '';
       dayIndex = map;
       renderHistPanel(hist, list);
       box.innerHTML = '';
@@ -1737,24 +1754,31 @@
       const BRIEF_LATE_AT = BRIEF_AT + BRIEF_GRACE_MIN;
       let bTxt = '';
       let bLvl = '';
+      let bTitle = '';
       if (rec && rec.status === 'done') {
         const when = rec.endedAt || rec.startedAt || '';
+        // 2.20.0：生成时间统一走 briefTiming。旧写法用 fmtTime 得到「今天 00:12」，
+        //   11-14 的早报（实际 11-15 00:12 生成）因此被读成当日凌晨，且跨日迟到完全静默。
+        const tm = briefTiming(today, when, !!rec.backfill);
+        const stamp = tm ? tm.text : '完成';
+        const late = !!tm && (tm.kind === 'late-same' || tm.kind === 'late-cross');
         if (rec.pushed === false) {
           // 2.4.2：published 成功但 git 推送失败 —— 站点文件已写，仓库/线上还没有
           bTxt = '早报 已发布未入库';
           bLvl = 'warn';
         } else if (rec.source === 'rule') {
           // 兜底产物要能一眼看出来（不等于链路故障，所以用暖棕而不是红）
-          bTxt = '早报 自动 ' + (when ? fmtTime(when) : '完成');
+          bTxt = '早报 自动 ' + stamp;
           bLvl = 'warn';
         } else if (rec.source === 'draft') {
           // 2.3.0：LLM 定稿不可用时的确定性事实清单，同样必须可辨别
-          bTxt = '早报 事实清单 ' + (when ? fmtTime(when) : '完成');
+          bTxt = '早报 事实清单 ' + stamp;
           bLvl = 'warn';
         } else {
-          bTxt = '早报 ' + (when ? fmtTime(when) : '完成');
-          bLvl = 'ok';
+          bTxt = '早报 ' + stamp;
+          bLvl = late ? 'warn' : 'ok';
         }
+        if (late) bTitle = `该早报未在 ${today} 09:00 按时生成：${tm.text}`;
       } else if (rec && rec.status === 'awaiting') {
         // prepare 已完成、LLM 还没定稿：独立提示，不改变链路健康总灯
         bTxt = rec.stage === 'awaiting-publish' ? '早报 待发布' : '早报 待写作';
@@ -1786,7 +1810,8 @@
       if (bTxt) {
         box.appendChild(document.createTextNode(' · '));
         const sp = el('span', `ft-state ${bLvl}`, bTxt);
-        if (rec && (rec.pushError || rec.reason)) sp.title = rec.pushError || rec.reason;
+        if (bTitle) sp.title = bTitle;
+        else if (rec && (rec.pushError || rec.reason)) sp.title = rec.pushError || rec.reason;
         box.appendChild(sp);
       }
 
@@ -1795,8 +1820,10 @@
       // 三种态：补写中（棕）/ 缺失（棕）/ 已补写（绿，只报 48 小时内，避免长期噪音）。
       const dayRec = (d) => (brief.days || {})[d] || {};
       // 制度起点优先用归档面板算好的；面板还没渲染时用索引现推，避免依赖调用顺序
+      // 2.20.0：补写产物不算起点（与归档面板、后端 briefEraStart 同口径）
       const eraDay = briefEraDay
-        || (dayList || []).filter((d) => d && d.hasBriefing).map((d) => d.day).sort()[0]
+        || (dayList || []).filter((d) => d && d.hasBriefing && !d.briefBackfill)
+          .map((d) => d.day).sort()[0]
         || '';
       const gapDay = (dayList || [])
         .filter((d) => d && d.day && d.day < today && d.day >= eraDay
@@ -1829,7 +1856,9 @@
           gTitle = `该日有新闻但没有早报；可补写：ensure --backfill-from ${gapDay} --backfill-to ${gapDay}`;
         }
       } else if (doneBackfill) {
-        gTxt = `早报 ${doneBackfill.day} 已补写 ${fmtTime(doneBackfill.at)}`;
+        // 2.20.0：补写时刻带日期 —— 补写可能发生在很久以后，「今天 00:51」会误导成当日凌晨
+        const stamp = bjStamp(doneBackfill.at) || fmtTime(doneBackfill.at);
+        gTxt = `早报 ${doneBackfill.day} 已补写 ${stamp}`;
         gLvl = 'ok';
         gTitle = '该日早报为补写产物（按该日新闻切片重新生成）';
       }

@@ -288,6 +288,22 @@ test('制度起点与归档跨度：都从真实产物/索引推导，不硬编�
   atomicWriteJSON(path.join(dir, '2026-10-20.json'), { date: '2026-10-20', overview: 'x', items: [] });
   assert.equal(briefEraStart(dir), '2026-11-01');
 
+  // 2.20.0：补写产物不能把制度起点往前推。
+  //   起因：10-30 补写后起点落到 10-30，10-31 被误判成「制度后缺失」，页脚出现假告警。
+  atomicWriteJSON(path.join(dir, '2026-10-30.json'), {
+    date: '2026-10-30', source: 'ai', overview: '补写', endedAt: '2026-11-15T00:51:59+08:00',
+    items: [{ title: 't' }],
+    backfill: { kind: 'pre-era', at: '2026-11-15T00:51:59+08:00', note: 'x' },
+  });
+  assert.equal(briefEraStart(dir), '2026-11-01', '补写产物不得成为制度起点');
+  // 若目录里只有补写产物，则没有起点（不凭空立规）
+  const onlyBf = path.join(TMP, 'only-backfill');
+  atomicWriteJSON(path.join(onlyBf, '2026-10-30.json'), {
+    date: '2026-10-30', source: 'ai', overview: '补写', items: [{ title: 't' }],
+    backfill: { kind: 'pre-era', at: '2026-11-15T00:51:59+08:00', note: 'x' },
+  });
+  assert.equal(briefEraStart(onlyBf), '', '只有补写产物时起点为空');
+
   const span = archiveSpan({
     days: [
       { day: '2026-10-01', count: 0 },

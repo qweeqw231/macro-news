@@ -323,7 +323,7 @@ export function buildDraftFallback({ input, date, now = Date.now(), reason = '' 
 }
 
 /** 只改已存在的那一天；不新增日期（避免把没有归档的日子塞进索引） */
-export function patchIndexDoc(doc, { date, briefLine, source, backfill = false }) {
+export function patchIndexDoc(doc, { date, briefLine, source, backfill = false, at = '' }) {
   if (!doc || !Array.isArray(doc.days)) return false;
   const entry = doc.days.find((x) => x && (x.day === date || x.d === date));
   if (!entry) return false;
@@ -336,10 +336,15 @@ export function patchIndexDoc(doc, { date, briefLine, source, backfill = false }
   // 只在为真时写字段，历史索引不受影响（不批量回填、不猜）。
   if (backfill) entry.briefBackfill = true;
   else delete entry.briefBackfill;
+  // 2.20.0：实际生成时刻（派生自产物），卡片据此判「晚到 / 跨日」。
+  //   采集器每轮重建索引，同一字段也在 src/collect.mjs 里派生，两处口径一致。
+  const when = trim(at);
+  if (when) entry.briefAt = when;
+  else delete entry.briefAt;
   return true;
 }
 
-export function patchIndexFiles({ dataDir, date, briefLine, source, backfill = false }) {
+export function patchIndexFiles({ dataDir, date, briefLine, source, backfill = false, at = '' }) {
   if (!dataDir) return 0;
   let patched = 0;
   for (const rel of ['index.json', 'history/index.json']) {
@@ -347,7 +352,7 @@ export function patchIndexFiles({ dataDir, date, briefLine, source, backfill = f
     if (!fs.existsSync(file)) continue;
     const r = readJson(file);
     if (!r.ok) continue;
-    if (patchIndexDoc(r.value, { date, briefLine, source, backfill })) {
+    if (patchIndexDoc(r.value, { date, briefLine, source, backfill, at })) {
       atomicWriteJSON(file, r.value);
       patched++;
     }
@@ -536,10 +541,12 @@ export function publishRun({
     }, { now });
   };
   /** 补索引 + 立刻核对；核对不过就判失败（不吞掉） */
-  const patchAndVerify = (briefLine, source, bf = false) => {
-    patchIndexFiles({ dataDir, date, briefLine, source, backfill: bf });
+  const patchAndVerify = (briefLine, source, bf = false, at = '') => {
+    patchIndexFiles({ dataDir, date, briefLine, source, backfill: bf, at });
     return verifyIndexBriefing({ dataDir, date, expectLine: briefLine });
   };
+  /** 产物里的实际生成时刻；索引据此判「晚到 / 跨日」（2.20.0） */
+  const atOf = (doc) => String((doc && (doc.endedAt || doc.generatedAt)) || '');
   const indexFail = (v) => ({
     ok: false,
     code: 'index-not-patched',
@@ -554,7 +561,7 @@ export function publishRun({
     if (existingSite && existingSite.source === 'ai') {
       const reason = '已存在 AI 早报，未覆盖';
       // 文件已经在，索引也该立刻反映（不新增日期，只改已存在的那天）
-      const v = patchAndVerify(briefLineOf(existingSite.doc), 'ai');
+      const v = patchAndVerify(briefLineOf(existingSite.doc), 'ai', false, atOf(existingSite.doc));
       if (!v.ok) {
         markFailed(indexFail(v).reason);
         return { ...indexFail(v), source: 'ai', items: existingSite.items, preserved: true };
@@ -567,7 +574,7 @@ export function publishRun({
     const existingLocal = localFile ? readExisting(localFile) : null;
     if (existingLocal && existingLocal.source === 'ai') {
       atomicWriteText(siteFile, existingLocal.raw);
-      const v = patchAndVerify(briefLineOf(existingLocal.doc), 'ai');
+      const v = patchAndVerify(briefLineOf(existingLocal.doc), 'ai', false, atOf(existingLocal.doc));
       if (!v.ok) {
         markFailed(indexFail(v).reason);
         return { ...indexFail(v), source: 'ai', items: existingLocal.items, preserved: true };
@@ -611,7 +618,7 @@ export function publishRun({
         const draft = buildDraftFallback({ input, date, now, reason });
         if (bfStamp) draft.backfill = bfStamp;
         writeBriefingFiles({ doc: draft, localOut, siteOut });
-        const v = patchAndVerify(briefLineOf(draft), 'draft', !!bfStamp);
+        const v = patchAndVerify(briefLineOf(draft), 'draft', !!bfStamp, atOf(draft));
         if (!v.ok) {
           markFailed(indexFail(v).reason);
           return { ...indexFail(v), degraded: true, source: 'draft', items: draft.items.length, errors: verdict.errors };
@@ -640,7 +647,7 @@ export function publishRun({
     const doc = normalizeFinalForPublish({ doc: finalR.value, input, date, now });
     if (bfStamp) doc.backfill = bfStamp;
     writeBriefingFiles({ doc, localOut, siteOut });
-    const v = patchAndVerify(briefLineOf(doc), 'ai', !!bfStamp);
+    const v = patchAndVerify(briefLineOf(doc), 'ai', !!bfStamp, atOf(doc));
     if (!v.ok) {
       // 产物已写盘但索引没打上标记 ⇒ 不算发布成功（不回滚文件，明确提示先同步本地）
       markFailed(indexFail(v).reason);

@@ -81,8 +81,9 @@ test('页脚早报：状态文件不吃 HTTP 缓存（补跑后刷新即可见�
 // 这里锁定四件事：制度起点由索引推导、缺口三判据、三种文案、归档卡片标签。
 test('历史缺口：制度起点由索引推导，缺口只认「起点后 + 有新闻 + 无早报」', () => {
   assert.match(APP, /let briefEraDay = '';/, '缺少制度起点变量');
-  assert.match(APP, /briefEraDay = list\.filter\(\(x\) => x\.hasBriefing\)\.map\(\(x\) => x\.day\)\.sort\(\)\[0\] \|\| '';/,
-    '制度起点应取最早一份早报的日子');
+  // 2.20.0：补写产物不算起点（否则 10-30 一补，10-31 就变成假的「制度后缺失」）
+  assert.match(APP, /briefEraDay = list\.filter\(\(x\) => x\.hasBriefing && !x\.briefBackfill\)\.map\(\(x\) => x\.day\)\.sort\(\)\[0\] \|\| '';/,
+    '制度起点应取最早的**未补写**早报');
   assert.match(APP, /d\.day < today && d\.day >= eraDay\s*\n?\s*&& Number\(d\.count\) > 0 && !d\.hasBriefing/,
     '缺口判据应为「今天之前 + 制度起点之后 + 有新闻 + 无早报」');
 });
@@ -90,7 +91,7 @@ test('历史缺口：制度起点由索引推导，缺口只认「起点后 + �
 test('历史缺口：补写中 / 缺失 / 已补写 三种文案互斥且与今日 token 分开', () => {
   assert.match(APP, /gTxt = `早报 \$\{gapDay\} 补写中`;/);
   assert.match(APP, /gTxt = `早报 \$\{gapDay\} 缺失`;/);
-  assert.match(APP, /gTxt = `早报 \$\{doneBackfill\.day\} 已补写 \$\{fmtTime\(doneBackfill\.at\)\}`;/);
+  assert.match(APP, /gTxt = `早报 \$\{doneBackfill\.day\} 已补写 \$\{stamp\}`;/);
   // 三种文案都挂在独立的 g 变量上，不得写进今日的 bTxt
   assert.ok(!/bTxt = `早报 \$\{gapDay\}/.test(APP), '历史缺口不能写进今日 token');
   // 已补写只报 48 小时内，避免永久噪音
@@ -124,4 +125,21 @@ test('归档页：索引 60 秒后重新校验，避免停在旧渲染里看不�
   assert.ok(!APP.includes("jget('index.json', 'default')"), '不应再吃 10 分钟的 HTTP 强缓存');
   assert.match(APP, /if \(S\.archive\) return S\.archive;   \/\/ 重新校验失败：沿用旧索引/,
     '重新校验失败时应回落旧索引而不是让归档页报错');
+});
+
+// 2.20.0：生成时点分档（genuine 逻辑在 assets/brief-timing.js，用例见 brief-timing.test.mjs）。
+// 这里锁定前端接线：卡片标签、展开信息行、页脚 token 都必须走同一处派生，不能各写一套。
+test('晚到 / 跨日：卡片标签、展开信息行、页脚都用同一份派生结果', () => {
+  assert.ok(APP.includes("const BT = window.MacroBriefTiming || {};"), '缺少 brief-timing 绑定');
+  assert.match(APP, /briefAt: bm\.briefAt \|\| '',/, '索引的 briefAt 必须透传到卡片数据');
+  assert.match(APP, /const tm = briefTiming\(d\.day, d\.briefAt, d\.briefBackfill\);/,
+    '卡片标签应使用卡片数据里的生成时刻');
+  assert.match(APP, /tm\.kind === 'late-cross' \? '跨日' : '晚到'/, '跨日与同日明显晚到要分开标');
+  assert.match(APP, /sum\.classList\.add\('brief-late'\)/, '展开后的信息行也要醒目标出晚到');
+  assert.match(APP, /const tm = briefTiming\(today, when, !!rec\.backfill\);/, '页脚应使用同一分档');
+  assert.match(APP, /bLvl = late \? 'warn' : 'ok';/, '晚到的今日早报不能显示成正常绿');
+  assert.match(APP, /bTxt = '早报 ' \+ stamp;/, '页脚不再用 fmtTime 的「今天 HH:MM」');
+  assert.ok(!APP.includes("bTxt = '早报 ' + (when ? fmtTime(when) : '完成');"), '旧写法应已移除');
+  assert.ok(CSS.includes('.day-tag.late'), '缺少晚到标签样式');
+  assert.ok(CSS.includes('summary.brief-late'), '缺少晚到信息行样式');
 });

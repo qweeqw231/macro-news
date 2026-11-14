@@ -149,7 +149,14 @@ export function briefEraStart(siteOut) {
     .map((n) => /^(\d{4}-\d{2}-\d{2})\.json$/.exec(n))
     .filter(Boolean)
     .map((m) => m[1])
-    .filter((d) => checkBriefing(path.join(siteOut, `${d}.json`)).complete)
+    .filter((d) => {
+      const file = path.join(siteOut, `${d}.json`);
+      if (!checkBriefing(file).complete) return false;
+      // 2.20.0：补写产物不能把制度起点往前推。补写是「事后追认某天本该有」，
+      //   不是「制度从那天开始」。10-30 补写后起点从 11-01 落到 10-30，
+      //   11-01 之前那些日子（如 10-31）就会被误判成「制度后缺失」，页脚冒出假告警。
+      try { return !JSON.parse(fs.readFileSync(file, 'utf8')).backfill; } catch { return true; }
+    })
     .sort();
   return days[0] || '';
 }

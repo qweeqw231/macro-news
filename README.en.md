@@ -262,8 +262,13 @@ publish --date (script, deterministic)
   Backfilled artifacts carry `backfill:{kind:'gap'|'pre-era',at,note}`, and the day entry in `index.json` carries
   `briefBackfill:true` (the archive card then shows a `补写` tag). The LLM writing step still runs in the external
   harness — the repo only slices and validates. The footer gets a second token for the most recent historical gap:
-  `早报 <D> 补写中` (brown) / `早报 <D> 缺失` (brown) / `早报 <D> 已补写 HH:MM` (green, shown for 48 hours only),
-  kept separate from today's `早报 09:02`. A day with news but no briefing also gets a `缺早报` tag on its card.
+  `早报 <D> 补写中` (brown) / `早报 <D> 缺失` (brown) / `早报 <D> 已补写 11-15 00:51` (green, shown for 48 hours only),
+  kept separate from today's `早报 09:04 生成`. A day with news but no briefing also gets a `缺早报` tag on its card.
+- **Generation-time buckets (2.20.0)**: measured against 09:00 of news day `D`, four mutually exclusive buckets —
+  on time (within 30 minutes, shows only `09:04 生成`) / late on the same day (`18:43 生成 · 晚到 9 小时 43 分`, brown) /
+  cross-day (`11-15 00:12 生成 · 跨日 晚到 15 小时 12 分`, brown, card tag `跨日`) / explicit backfill
+  (`补写于 11-15 00:51`, never repeats "late"). The rules live in `assets/brief-timing.js`; `briefAt` /
+  `briefBackfill` in the index are derived from the artifact (the collector re-derives them on every index rebuild).
 - Status is written to `data/_briefing-status.json` (single file, kept 14 days, not high-frequency): the footer shows
   `早报 09:02` (green, AI) / `早报 事实清单 09:35` (brown, draft) / `早报 自动` (brown, rule) /
   `早报 待写作` / `早报 待发布` / `早报 补跑中` / `早报 失败` (Briefing 09:02 / Briefing fact list 09:35 / Briefing auto / Briefing awaiting writing / Briefing awaiting publish / Briefing catch-up running / Briefing failed).

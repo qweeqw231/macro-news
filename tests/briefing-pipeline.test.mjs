@@ -405,6 +405,39 @@ test('索引只改已存在的日期；没有归档条目不新增', () => {
   assert.equal(doc.days[0].source, 'draft');
 });
 
+// 2.20.0：索引要带实际生成时刻，归档卡片才能判「晚到 / 跨日」。
+// 采集器每轮重建索引（src/collect.mjs），同一字段在 src/brief-meta.mjs 里也从产物派生。
+test('索引写入 briefAt；没有时刻时删除而不是留空串', () => {
+  const doc = { days: [{ day: '2026-11-14', count: 364, hasBriefing: true }] };
+  patchIndexDoc(doc, {
+    date: '2026-11-14', briefLine: '主线', source: 'ai',
+    at: '2026-11-15T00:12:44+08:00',
+  });
+  assert.equal(doc.days[0].briefAt, '2026-11-15T00:12:44+08:00');
+  patchIndexDoc(doc, { date: '2026-11-14', briefLine: '主线', source: 'ai', at: '' });
+  assert.equal('briefAt' in doc.days[0], false, '空时刻应删除字段，不能写空串');
+});
+
+test('readBriefingMeta 派生补写标记与实际生成时刻', async () => {
+  const { readBriefingMeta } = await import('../src/brief-meta.mjs');
+  const briefs = path.join(fresh('brief-meta').dir, 'briefings');
+  fs.mkdirSync(briefs, { recursive: true });
+  fs.writeFileSync(path.join(briefs, '2026-10-30.json'), JSON.stringify({
+    date: '2026-10-30', source: 'ai', overview: '补写的主线',
+    generatedAt: '2026-11-15T00:48:50+08:00', endedAt: '2026-11-15T00:51:59+08:00',
+    items: [], backfill: { kind: 'pre-era', at: '2026-11-15T00:51:59+08:00', note: 'x' },
+  }));
+  fs.writeFileSync(path.join(briefs, '2026-11-13.json'), JSON.stringify({
+    date: '2026-11-13', source: 'ai', overview: '正常的主线',
+    generatedAt: '2026-11-13T09:11:17+08:00', items: [],
+  }));
+  const m = readBriefingMeta(briefs);
+  assert.equal(m.get('2026-10-30').backfill, true);
+  assert.equal(m.get('2026-10-30').at, '2026-11-15T00:51:59+08:00');
+  assert.equal(m.get('2026-11-13').backfill, false);
+  assert.equal(m.get('2026-11-13').at, '2026-11-13T09:11:17+08:00');
+});
+
 test('draft 来源不被读取端误判成 ai', () => {
   assert.equal(normalizeBriefingSource({ source: 'draft' }), 'draft');
   assert.equal(normalizeBriefingSource({ source: 'rule' }), 'rule');

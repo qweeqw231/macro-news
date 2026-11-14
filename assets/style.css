@@ -305,6 +305,9 @@ body { overflow-wrap: break-word; }
 }
 /* 2.19.0：补写 / 缺早报 用中性虚线框，与「自动摘要 / 事实清单」这类降级标记区分开 */
 .day-tag.backfill { color: var(--ink-mute); border-style: dashed; }
+/* 2.20.0：晚到 / 跨日 用暖色实线框 —— 这是「时间不对」而不是「来源降级」，
+   与补写的虚线中性框必须一眼可分；按时生成不加任何标签。 */
+.day-tag.late { color: var(--warm); border-color: var(--warm); background: transparent; }
 .day-brief { border-top: 1px dashed var(--rule); padding: 0.5rem 0.9rem 0.7rem; }
 .day-brief summary {
   cursor: pointer; color: var(--ink-soft); font-size: 0.8rem; line-height: 1.45;
@@ -314,6 +317,8 @@ body { overflow-wrap: break-word; }
 .brief-body { margin-top: 0.55rem; }
 /* 展开后摘要行换成“当日早报 · N 条 · HH:MM 生成”，字号/颜色降为信息行 */
 .day-brief.brief-loaded summary { color: var(--ink-faint); font-size: 0.72rem; }
+/* 2.20.0：晚到 / 跨日 的早报，信息行保持暖色，别让「晚到 X 小时」消隐在灰字里 */
+.day-brief.brief-loaded summary.brief-late { color: var(--warm); }
 .brief-overview {
   margin: 0.2rem 0 0.7rem; color: var(--ink); font-size: 0.95rem;
   line-height: 1.7; font-weight: 500;

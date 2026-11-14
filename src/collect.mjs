@@ -373,6 +373,11 @@ async function main() {
       hasBriefing: !!b,
       ...(b && b.briefLine ? { briefLine: b.briefLine } : {}),
       ...(b ? { source: b.source } : {}),
+      // 2.20.0：补写标记与实际生成时刻（派生自产物，见 src/brief-meta.mjs）。
+      //   索引每轮重建都只写这里列出的字段 —— 漏掉这两个字段，补写早报的
+      //   「补写」标签与「晚到 / 跨日」判定会在下一轮采集后消失。
+      ...(b && b.backfill ? { briefBackfill: true } : {}),
+      ...(b && b.at ? { briefAt: b.at } : {}),
     });
     allCount += d.items.length;
   }

@@ -26,8 +26,14 @@ export function briefLineOf(json, max = BRIEF_LINE_MAX) {
 }
 
 /**
- * 扫描早报目录，返回 Map<day, {briefLine}>。
+ * 扫描早报目录，返回 Map<day, {briefLine, source, backfill, at}>。
  * 只读；目录不存在时返回空 Map（站点还没发布过早报）。
+ *
+ * 2.20.0：多带两个派生字段供归档卡片判「晚到 / 跨日 / 补写」：
+ *   · backfill = 产物是否带 backfill 章（显式补写）；
+ *   · at       = 实际生成时刻（endedAt || generatedAt），卡片据此与「该日 09:00」比较。
+ *   采集器每轮会**重建**索引里的日条目（src/collect.mjs），只写这里返回的字段；
+ *   所以这两个字段必须在这里派生，否则下一轮采集就会把补写标记抹掉。
  */
 export function readBriefingMeta(dir) {
   const out = new Map();
@@ -40,10 +46,15 @@ export function readBriefingMeta(dir) {
       // 2.2.2：旧产物没有 source → 按 AI 处理（不回写历史文件）
       // 2.3.0：draft 是降级事实清单，必须保留来源，不能误判成 ai
       const source = j && (j.source === 'rule' || j.source === 'draft') ? j.source : 'ai';
-      out.set(m[1], { briefLine: briefLineOf(j), source });
+      out.set(m[1], {
+        briefLine: briefLineOf(j),
+        source,
+        backfill: !!(j && j.backfill),
+        at: String((j && (j.endedAt || j.generatedAt)) || ''),
+      });
     } catch {
       // 损坏的早报不应拖垮索引：标记为「有文件但无摘要」，前端只会显示「当日早报」
-      out.set(m[1], { briefLine: '', source: 'ai' });
+      out.set(m[1], { briefLine: '', source: 'ai', backfill: false, at: '' });
     }
   }
   return out;
