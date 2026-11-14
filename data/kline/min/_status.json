@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-14T00:53:01.443Z",
-  "ok": 8,
+  "generatedAt": "2026-11-14T01:23:09.396Z",
+  "ok": 11,
   "failed": 0,
   "failures": [],
   "rejected": [
@@ -39,18 +39,15 @@
     "jpycny/30m: shorter-overlap-mismatch（新 974 根 < 现有 987 根）",
     "krwcny/30m: shorter-overlap-mismatch（新 986 根 < 现有 999 根）",
     "audcny/30m: shorter-overlap-mismatch（新 964 根 < 现有 977 根）",
-    "n225/60m: shorter-overlap-mismatch（新 132 根 < 现有 144 根）",
-    "dax/60m: shorter-too-partial（新 126 根 < 现有 187 根）",
-    "cac40/60m: shorter-too-partial（新 126 根 < 现有 187 根）",
-    "ukx/60m: shorter-too-partial（新 126 根 < 现有 187 根）",
-    "kospi/60m: shorter-overlap-mismatch（新 133 根 < 现有 147 根）",
-    "sge_au9999/60m: shorter-overlap-mismatch（新 131 根 < 现有 143 根）",
-    "xag/60m: shorter-too-partial（新 144 根 < 现有 280 根）",
-    "xau/60m: shorter-no-overlap（新 144 根 < 现有 166 根）",
-    "eurcny/60m: shorter-overlap-mismatch（新 974 根 < 现有 981 根）",
-    "gbpcny/60m: shorter-overlap-mismatch（新 965 根 < 现有 971 根）",
-    "jpycny/60m: shorter-overlap-mismatch（新 975 根 < 现有 981 根）",
-    "krwcny/60m: shorter-overlap-mismatch（新 984 根 < 现有 990 根）",
-    "audcny/60m: shorter-overlap-mismatch（新 965 根 < 现有 971 根）"
+    "n225/15m: shorter-too-partial（新 484 根 < 现有 638 根）",
+    "dax/15m: shorter-too-partial（新 476 根 < 现有 710 根）",
+    "cac40/15m: shorter-too-partial（新 476 根 < 现有 710 根）",
+    "ukx/15m: shorter-overlap-mismatch（新 476 根 < 现有 541 根）",
+    "kospi/15m: shorter-too-partial（新 494 根 < 现有 676 根）",
+    "sge_au9999/15m: shorter-too-partial（新 520 根 < 现有 820 根）",
+    "xag/15m: shorter-too-partial（新 558 根 < 现有 1090 根）",
+    "xau/15m: shorter-too-partial（新 558 根 < 现有 1090 根）",
+    "sox/15m: shorter-too-partial（新 521 根 < 现有 654 根）",
+    "eurcny/15m: shorter-overlap-mismatch（新 589 根 < 现有 591 根）"
   ]
 }
