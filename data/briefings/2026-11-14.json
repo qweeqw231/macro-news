@@ -1,0 +1,168 @@
+{
+  "date": "2026-11-14",
+  "generatedAt": "2026-11-15T00:11:13+08:00",
+  "endedAt": "2026-11-15T00:12:44+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-13",
+    "to": "2026-11-14",
+    "fromAt": "2026-11-13T08:00:00+08:00",
+    "toAt": "2026-11-14T09:00:00+08:00",
+    "fromTs": 1794528000,
+    "toTs": 1794618000
+  },
+  "overview": "今日主线是中国金融总量与全球紧缩的对撞：央行10月金融数据显示社融、M2增速回到7%以上，但单月人民币贷款减少1000亿元、信贷负增长，专家据此判断年内降息降准可能性下降；海外方面美国10月PPI同比升6.5%创近四年最大升幅，美联储12月加息基本锁定，欧元区增长有韧性又给欧洲央行再加息留出空间，IEA则把四季度油市改判为供应过剩。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行10月金融数据：社融、M2增速双双超7%，单月人民币贷款减少1000亿元",
+      "summary": "央行公布10月金融数据：10月末社会融资规模存量469.16万亿元、同比增长7.2%，广义货币M2余额359.06万亿元、同比增长7.1%，两项增速均高于名义GDP增速；10月单月新增社融1.15万亿元，人民币贷款减少1000亿元、同比多减3200亿元。专家表示年内降息降准可能性下降。",
+      "why": "总量稳住了，但信贷负增长说明宽松空间在收窄。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-13T22:19",
+      "url": "https://wallstreetcn.com/livenews/3199857",
+      "refs": [
+        "http://forex.eastmoney.com/news/1131,202611133931037626.html",
+        "http://bond.eastmoney.com/news/1326,202611133931044365.html",
+        "http://finance.eastmoney.com/news/1350,202611133930763559.html",
+        "http://forex.eastmoney.com/news/1131,202611133930827877.html",
+        "https://wallstreetcn.com/livenews/3199743"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行买断式逆回购缩量续作：11月两期限合计净回笼3000亿元",
+      "summary": "央行公告11月16日以固定数量、利率招标、多重价位中标方式开展2000亿元、期限6个月的买断式逆回购，本次为缩量续作、净回笼1000亿元。东方金诚首席宏观分析师王青表示，11月两个期限的买断式逆回购合计净回笼3000亿元，而10月为净投放4000亿元；11月13日央行另开展3640亿元隔夜逆回购，操作利率1.25%与此前持平。",
+      "why": "中期资金从净投放转向净回笼，是宽松边际变化的信号。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-13T21:50",
+      "url": "http://finance.eastmoney.com/news/1352,202611133930977678.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199686",
+        "http://finance.eastmoney.com/news/1350,202611133930599312.html",
+        "https://wallstreetcn.com/livenews/3199455"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家发改委、国家能源局印发《“十五五”新型储能实施方案》",
+      "summary": "国家发改委、国家能源局印发《“十五五”新型储能实施方案》，为新型储能规模化发展提供顶层设计。在宏观政策持续加力的背景下，该方案是“十五五”期间能源侧的重要产业安排；央行同日公布的金融数据同样显示政策仍在加力。",
+      "why": "“十五五”产业顶层文件落地，储能是新增投资方向。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-13T21:00",
+      "url": "http://finance.eastmoney.com/news/1353,202611133930880015.html",
+      "refs": [
+        "http://forex.eastmoney.com/news/1131,202611133930778979.html",
+        "http://forex.eastmoney.com/news/1131,202611143931108285.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "美国10月PPI同比升6.5%，创近四年最大升幅",
+      "summary": "美国10月PPI同比升6.5%，创近四年最大升幅。数据公布后，美元指数短线走低约10点报103.13，现货黄金拉升逾10美元报3894.95美元/盎司，美股期货小幅回升、纳斯达克100指数期货涨0.5%；交易员一度降低对美联储紧缩力度的押注。",
+      "why": "生产端通胀超预期，加息理由更充分。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-13T21:52",
+      "url": "https://wallstreetcn.com/livenews/3199842",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199835",
+        "https://wallstreetcn.com/livenews/3199836"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "美联储12月加息基本锁定，市场焦点转向明年1月",
+      "summary": "美联储官员本周密集发表讲话，基本锁定市场对12月加息的预期，讨论焦点转向明年1月，并开启自2023年以来首次连续加息的可能性。周二公布的10月消费者价格报告显示通胀加速，纽约联储主席威廉姆斯称通胀仍然太高，芝加哥联储主席古尔斯比称这组数据几乎令人不安。",
+      "why": "加息预期从点阵图走向官员背书，路径正在被锁死。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-14T04:45",
+      "url": "https://wallstreetcn.com/livenews/3200004",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200064",
+        "https://wallstreetcn.com/livenews/3199895",
+        "https://wallstreetcn.com/livenews/3199988",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyrtxr3273738.shtml",
+        "https://wallstreetcn.com/livenews/3199885"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "欧元区三季度GDP增长0.4%，欧洲央行再加息概率升高",
+      "summary": "欧盟统计局数据显示，欧元区第三季度GDP增长0.4%，与10月公布的初值一致，而分析师此前仅预计这一水平的一半，显示经济在伊朗冲突推高能源价格后仍有韧性。欧洲央行管委、德国央行行长纳格尔表示通胀前景已明显恶化，欧洲央行很可能需要再次加息；目前通胀率已达2%目标的两倍。",
+      "why": "欧央行与英央行同步转向加息，全球长端利率同向承压。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-13T18:21",
+      "url": "https://wallstreetcn.com/livenews/3199749",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyrprr1005258.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyrprs7775780.shtml",
+        "https://wallstreetcn.com/livenews/3199928"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "美债长端续涨：10年期收益率报5.1352%，两年期本周累涨33个基点",
+      "summary": "周五纽约尾盘，美国10年期基准国债收益率涨0.81个基点报5.1352%，本周累计上涨27.78个基点，周内交投于4.8287%至5.1718%区间；两年期收益率跌3.95个基点报4.8419%，但本周仍累涨33.04个基点，三年、五年、七年期本周分别涨逾30个基点。财长贝森特称近20年来最强的一批国债拍卖就发生在近期，美元买盘旺盛。",
+      "why": "长端周涨近28个基点，通胀预期仍在推高期限溢价。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-14T06:20",
+      "url": "https://wallstreetcn.com/livenews/3200045",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199621",
+        "https://wallstreetcn.com/livenews/3199819",
+        "https://wallstreetcn.com/livenews/3199992",
+        "https://wallstreetcn.com/livenews/3199989"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "IEA月报：全球油市四季度转为供应过剩，油价连续第二周下跌",
+      "summary": "IEA月报预计，2026年四季度全球石油市场将出现约170万桶/日的供应过剩，此前的预测为短缺，2027年库存累积将更为显著；成员国计划在2027年2月底前进一步释放7100万桶紧急原油和成品油储备。IEA称波斯湾石油出口已恢复至战前水平的74%；WTI 12月合约收跌0.20%报88.56美元，本周累计下跌近2.5%。",
+      "why": "供给恢复正在推翻油价冲击叙事，通胀交易因此反转。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-13T17:04",
+      "url": "https://wallstreetcn.com/livenews/3199688",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199748",
+        "https://wallstreetcn.com/livenews/3199702",
+        "https://wallstreetcn.com/livenews/3199980"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "黄金恐创6月以来最差单周表现，加息预期重定价压制金价",
+      "summary": "随着交易员押注能源驱动的持续性通胀将促使美联储进一步收紧政策，黄金走向6月以来最差单周表现，在上一交易日暴跌至13个月低点后周五小幅走高，但周跌幅仍达4.6%。道明证券大宗商品策略师麦凯表示，看涨阵营的短期额外买盘寥寥无几，黄金易受美联储加息预期重定价的冲击。",
+      "why": "13个月低点说明避险溢价正被系统性重估。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-14T02:40",
+      "url": "https://wallstreetcn.com/livenews/3199963",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3199964",
+        "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-13/doc-iniypzqc1030987.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "英伟达恐创18个月来最差单周表现，市值蒸发逾6200亿美元",
+      "summary": "英伟达股价周五一度下跌4.7%，本周累计跌幅扩大至约14%，势创2025年4月以来最差单周表现，公司本周市值已蒸发逾6200亿美元，超过标普500指数中97%成分股各自的市值。费城半导体指数周五跌超3.4%，纳指综合指数收跌0.91%报25136.273点，标普500指数收跌0.40%报7561.67点、本周仍累涨2.51%。",
+      "why": "AI链估值锚动摇，叠加加息预期，冲击已从个股扩散到指数。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-14T02:49",
+      "url": "https://wallstreetcn.com/livenews/3199968",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200011",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniyryff0523159.shtml",
+        "https://wallstreetcn.com/livenews/3199434",
+        "https://wallstreetcn.com/livenews/3199923"
+      ]
+    }
+  ],
+  "watch": [
+    "央行11月16日2000亿元6个月期买断式逆回购的中标利率与净回笼规模，看“收水”是否延续",
+    "人民币中间价能否守住6.72（11月13日报6.7152、上调22个基点），离岸CNH 6.6749是否继续走强",
+    "美债10年期收益率能否突破本周高点5.1718%，12月加息定价是否继续向1月连续加息延伸",
+    "黄金能否守住13个月低点、美元指数能否站稳103；标普500本周累涨2.51%后能否守住7561点"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
