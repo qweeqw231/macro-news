@@ -32,6 +32,8 @@ on:
 
 permissions:
   contents: write
+  # push-data.sh 推送成功后会 dispatch pages.yml；GITHUB_TOKEN 需要 actions:write
+  actions: write
 
 # ⚠ 并发组**故意与其它三个 workflow 分开**：
 #   GitHub 的 concurrency group 语义是「同时最多 1 个 running + 1 个 pending，

@@ -52,9 +52,31 @@ prefix="${MSG_PREFIX:-data: 自动更新}"
 stamp=$(date -u '+%Y-%m-%d %H:%M UTC')
 git commit -m "${prefix}（${stamp}，${n} 个文件）"
 
+# 推送成功后显式触发一次 Pages 部署。
+# ⚠ 为什么必须显式触发：Actions 里推送用的是默认 GITHUB_TOKEN，而
+#   「用 GITHUB_TOKEN 产生的 push 事件不会创建新的 workflow run」（GitHub 防递归规则）。
+#   2026-11-15 把 Pages 源从「分支构建」切到「自定义 Actions」后，分支构建不再兜底
+#   ⇒ 这类推送既不触发 pages.yml、也不会自动发布，站点会停更（当天实测：线上 index.json
+#   停在 09:52，仓库已到 10:08）。定时兜底不可靠，所以在推送处直接 dispatch。
+#   失败不影响作业（下一轮或 pages.yml 的定时兜底会补）。
+notify_pages() {
+  if [ -z "${GITHUB_TOKEN:-}" ] || [ -z "${GITHUB_REPOSITORY:-}" ]; then return 0; fi
+  code=$(curl -sS -o /dev/null -w '%{http_code}' -X POST \
+    -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+    -H "Accept: application/vnd.github+json" \
+    "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/pages.yml/dispatches" \
+    -d '{"ref":"main"}' 2>/dev/null || echo 000)
+  case "$code" in
+    204) echo "已触发 Pages 部署" ;;
+    *)   echo "⚠ Pages 部署触发失败（HTTP $code），交由 pages.yml 定时兜底" ;;
+  esac
+  return 0
+}
+
 for i in 1 2 3 4 5 6; do
   if git push origin main; then
     echo "已提交 ${n} 个文件（第 ${i} 次推送成功）"
+    notify_pages
     exit 0
   fi
   echo "推送失败（第 ${i} 次）：fetch + rebase 后重试"
