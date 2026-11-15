@@ -1258,17 +1258,35 @@
       dd.appendChild(el('span', 'day-nd', '新闻日'));
       return dd;
     };
+    // 2.20.1：条数与状态标签同一行、标签右对齐（「397 条 ………… 跨日」）。
+    //   旧版每个标签独占一行，网格拉平高度后把虚线与摘要往下推，同行卡片参差。
+    const metaRow = (count, tags) => {
+      const row = el('div', 'day-meta');
+      row.appendChild(el('span', 'day-n', count + ' 条'));
+      if (tags.length) {
+        const slot = el('span', 'day-tags');
+        for (const t of tags) slot.appendChild(t);
+        row.appendChild(slot);
+      }
+      return row;
+    };
     if (!d.hasBriefing) {
       const a = el('a', 'day');
       a.href = '#';
       a.title = d.reason ? `${dayHint(d.day)}；${d.reason}` : dayHint(d.day);
-      a.appendChild(withTag(d.day));
-      a.appendChild(el('div', 'day-n', d.count + ' 条'));
+      const tags = [];
       // 2.19.0：制度起点之后、有新闻却没有早报 —— 这一天是「该有却没有」，必须显形。
       // 制度之前（起点为空或早于起点）不标，避免把历史常态说成缺失。
       if (briefEraDay && d.day >= briefEraDay && d.day < newsDay() && d.count > 0) {
-        a.appendChild(el('span', 'day-tag backfill', '缺早报'));
+        tags.push(el('span', 'day-tag backfill', '缺早报'));
       }
+      const head = el('div', 'day-head');
+      head.appendChild(withTag(d.day));
+      head.appendChild(metaRow(d.count, tags));
+      a.appendChild(head);
+      // 2.20.1：没有早报的日子也保留底部虚线块（空槽）——只剩有摘要的卡片有虚线，
+      //   是同行卡片错位的第二层原因。
+      a.appendChild(el('div', 'day-blank'));
       a.onclick = open;
       return a;
     }
@@ -1280,19 +1298,20 @@
     a.href = '#';
     a.title = d.reason ? `${dayHint(d.day)}；${d.reason}` : dayHint(d.day);
     a.appendChild(withTag(d.day));
-    a.appendChild(el('div', 'day-n', d.count + ' 条'));
-    if (d.source === 'rule') a.appendChild(el('span', 'day-tag', '自动摘要'));
-    else if (d.source === 'draft') a.appendChild(el('span', 'day-tag', '事实清单'));
+    const tags = [];
+    if (d.source === 'rule') tags.push(el('span', 'day-tag', '自动摘要'));
+    else if (d.source === 'draft') tags.push(el('span', 'day-tag', '事实清单'));
     // 2.19.0：补写过的日子带「补写」标签，与当天自然生成区分（来源仍是 ai/rule/draft，不改语义）
-    if (d.briefBackfill) a.appendChild(el('span', 'day-tag backfill', '补写'));
+    if (d.briefBackfill) tags.push(el('span', 'day-tag backfill', '补写'));
     // 2.20.0：非当日生成的日子必须显形。跨日（如 11-14 的早报在 11-15 00:12 才出）
     // 与同日明显晚到分开标：两者都和「补写」不是一回事，补写是事后追认，不在这两档里。
     const tm = briefTiming(d.day, d.briefAt, d.briefBackfill);
     if (tm && (tm.kind === 'late-same' || tm.kind === 'late-cross')) {
       const tag = el('span', 'day-tag late', tm.kind === 'late-cross' ? '跨日' : '晚到');
       tag.title = tm.text;
-      a.appendChild(tag);
+      tags.push(tag);
     }
+    a.appendChild(metaRow(d.count, tags));
     a.onclick = open;
     box.appendChild(a);
 

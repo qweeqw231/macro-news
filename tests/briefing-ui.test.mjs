@@ -14,14 +14,14 @@ const CSS = fs.readFileSync(path.join(ROOT, 'assets', 'style.css'), 'utf8');
 
 test('归档角标：rule=自动摘要、draft=事实清单，ai 无角标', () => {
   assert.ok(
-    APP.includes("if (d.source === 'rule') a.appendChild(el('span', 'day-tag', '自动摘要'));"),
+    APP.includes("if (d.source === 'rule') tags.push(el('span', 'day-tag', '自动摘要'));"),
     '缺少 rule 角标条件'
   );
   assert.ok(
-    APP.includes("else if (d.source === 'draft') a.appendChild(el('span', 'day-tag', '事实清单'));"),
+    APP.includes("else if (d.source === 'draft') tags.push(el('span', 'day-tag', '事实清单'));"),
     '缺少 draft 角标条件'
   );
-  assert.ok(!APP.includes("if (d.source === 'ai') a.appendChild(el('span', 'day-tag'"), 'AI 不应有角标');
+  assert.ok(!APP.includes("if (d.source === 'ai')"), 'AI 不应有角标');
   assert.ok(CSS.includes('.day-tag'), '缺少 .day-tag 样式');
 });
 
@@ -101,11 +101,26 @@ test('历史缺口：补写中 / 缺失 / 已补写 三种文案互斥且与今�
 test('历史缺口：归档卡片区分「补写」与「缺早报」，并透传索引字段', () => {
   assert.match(APP, /briefBackfill: !!bm\.briefBackfill,/,
     '索引的 briefBackfill 必须透传到卡片数据');
-  assert.match(APP, /if \(d\.briefBackfill\) a\.appendChild\(el\('span', 'day-tag backfill', '补写'\)\);/,
+  assert.match(APP, /if \(d\.briefBackfill\) tags\.push\(el\('span', 'day-tag backfill', '补写'\)\);/,
     '补写过的日子应有「补写」标签');
-  assert.match(APP, /el\('span', 'day-tag backfill', '缺早报'\)/,
+  assert.match(APP, /tags\.push\(el\('span', 'day-tag backfill', '缺早报'\)\);/,
     '该有却没有的日子应有「缺早报」标签');
   assert.ok(CSS.includes('.day-tag.backfill'), '缺少补写标签样式');
+});
+
+// 2.20.1：卡片固定骨架。状态标签不再独占一行，而是与条数同行右对齐；
+// 没有早报摘要的日子也保留底部虚线与一行空位，否则同一网格行里的虚线会参差。
+test('归档卡片：条数与状态同行右对齐，无早报也保留底部虚线块', () => {
+  assert.match(APP, /const metaRow = \(count, tags\) => \{/, '缺少条数+状态行构造函数');
+  assert.match(APP, /row\.appendChild\(el\('span', 'day-n', count \+ ' 条'\)\);/, '条数仍在 meta 行');
+  assert.match(APP, /const slot = el\('span', 'day-tags'\);/, '状态标签应放进右对齐的容器');
+  assert.ok(APP.includes("a.appendChild(el('div', 'day-blank'));"), '无早报卡片必须有底部空位');
+  assert.ok(!APP.includes("el('div', 'day-n', d.count + ' 条')"), '不得再逐行追加条数块');
+  assert.match(CSS, /\.day \{[\s\S]*?flex-direction: column;/, '卡片应为纵向 flex 骨架');
+  assert.match(CSS, /\.day-meta \{[\s\S]*?display: flex;/, 'meta 行应为 flex');
+  assert.match(CSS, /\.day-tags \{[\s\S]*?margin-left: auto;/, '状态标签应右对齐');
+  assert.match(CSS, /\.day-blank \{[\s\S]*?margin-top: auto;/, '空位块应沉底');
+  assert.match(CSS, /\.day-brief \{ margin-top: auto;/, '摘要块应沉底，保证同行虚线对齐');
 });
 
 // 2.20.0：补写早报「整块隐形」的两条链路。

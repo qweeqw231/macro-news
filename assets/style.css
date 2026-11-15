@@ -236,16 +236,34 @@ body { overflow-wrap: break-word; }
 .more:hover { border-color: var(--accent); }
 
 /* ---------- 归档 ---------- */
+/* 2.20.1：卡片改为固定骨架 —— 日期行 / 条数+状态行 / 弹性空隙 / 底部块（虚线 + 摘要）。
+   底部块 margin-top:auto 沉底，同一网格行内的虚线才会落在同一条水平线上；
+   没有早报摘要的日子也保留虚线和一行空位（.day-blank），节律才一致。 */
 .days { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.6rem; }
 .day {
-  display: block; text-decoration: none; color: var(--ink);
+  display: flex; flex-direction: column; text-decoration: none; color: var(--ink);
   background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
-  padding: 0.8rem 0.9rem; text-align: center;
+  padding: 0; text-align: center;
   transition: border-color .15s, transform .15s;
 }
 .day:hover { border-color: var(--accent); transform: translateY(-1px); }
+.day-head { padding: 0.8rem 0.9rem 0; }
 .day-d { font-family: var(--sans); font-weight: 600; font-variant-numeric: tabular-nums; }
-.day-n { font-family: var(--sans); font-size: 0.8rem; color: var(--ink-mute); margin-top: 0.15rem; }
+.day-n { font-family: var(--sans); font-size: 0.8rem; color: var(--ink-mute); white-space: nowrap; }
+/* 状态标签与条数同一行、右对齐；条数行右侧原本是空的，放进标签不增加任何高度 */
+.day-meta {
+  display: flex; align-items: center; gap: 0.3rem; flex-wrap: nowrap;
+  margin-top: 0.15rem; text-align: left;
+}
+.day-tags {
+  display: inline-flex; align-items: center; gap: 0.25rem; flex-wrap: nowrap;
+  margin-left: auto; min-width: 0; overflow: hidden;
+}
+/* 无早报的日子：底部虚线块 + 一行空位，与有摘要的卡片等高 */
+.day-blank {
+  margin-top: auto; border-top: 1px dashed var(--rule);
+  padding: 0.5rem 0.9rem 0.7rem; min-height: 2.36rem;
+}
 
 /* ---------- 归档页：新闻日口径说明（2.12.0） ---------- */
 /* 归档键是北京 08:00 起算的「新闻日」，必须在默认视图里看出来，不能只放 tooltip。 */
@@ -294,21 +312,23 @@ body { overflow-wrap: break-word; }
 .day.has-brief { padding: 0; text-align: left; }
 .day.has-brief.expanded { grid-column: 1 / -1; }
 .day.has-brief .day-open {
-  display: block; padding: 0.8rem 0.9rem; color: var(--ink); text-decoration: none;
+  display: block; padding: 0.8rem 0.9rem 0; color: var(--ink); text-decoration: none;
   text-align: center;
 }
 .day.has-brief .day-open:hover { background: var(--code-bg); }
 .day-tag {
-  display: inline-block; margin-top: 0.35rem; padding: 0.1rem 0.4rem;
+  display: inline-block; padding: 0.1rem 0.4rem;
   font-family: var(--sans); font-size: 0.68rem; color: var(--warm);
   border: 1px solid var(--rule-strong); border-radius: 3px; background: var(--code-bg);
+  white-space: nowrap;
 }
 /* 2.19.0：补写 / 缺早报 用中性虚线框，与「自动摘要 / 事实清单」这类降级标记区分开 */
 .day-tag.backfill { color: var(--ink-mute); border-style: dashed; }
 /* 2.20.0：晚到 / 跨日 用暖色实线框 —— 这是「时间不对」而不是「来源降级」，
    与补写的虚线中性框必须一眼可分；按时生成不加任何标签。 */
 .day-tag.late { color: var(--warm); border-color: var(--warm); background: transparent; }
-.day-brief { border-top: 1px dashed var(--rule); padding: 0.5rem 0.9rem 0.7rem; }
+/* 2.20.1：底部块沉底，与 .day-blank 用同一套 padding / 虚线，保证同行卡片虚线对齐 */
+.day-brief { margin-top: auto; border-top: 1px dashed var(--rule); padding: 0.5rem 0.9rem 0.7rem; }
 .day-brief summary {
   cursor: pointer; color: var(--ink-soft); font-size: 0.8rem; line-height: 1.45;
   display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
