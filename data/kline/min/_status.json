@@ -1,10 +1,8 @@
 {
-  "generatedAt": "2026-11-15T11:23:10.818Z",
+  "generatedAt": "2026-11-15T11:53:02.726Z",
   "ok": 7,
-  "failed": 1,
-  "failures": [
-    "sox/1m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)"
-  ],
+  "failed": 0,
+  "failures": [],
   "rejected": [
     "n225/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1010 根）",
     "dax/5m: shorter-overlap-mismatch（新 1000 根 < 现有 1003 根）",
@@ -48,6 +46,12 @@
     "kospi/1m: shorter-too-partial（新 390 根 < 现有 780 根）",
     "sge_au9999/1m: shorter-too-partial（新 390 根 < 现有 1560 根）",
     "xag/1m: shorter-too-partial（新 1395 根 < 现有 2620 根）",
-    "xau/1m: shorter-too-partial（新 1395 根 < 现有 2621 根）"
+    "xau/1m: shorter-too-partial（新 1395 根 < 现有 2621 根）",
+    "sox/1m: shorter-too-partial（新 390 根 < 现有 780 根）",
+    "eurcny/1m: shorter-no-overlap（新 300 根 < 现有 330 根）",
+    "gbpcny/1m: shorter-no-overlap（新 300 根 < 现有 304 根）",
+    "jpycny/1m: shorter-no-overlap（新 300 根 < 现有 304 根）",
+    "krwcny/1m: shorter-too-partial（新 304 根 < 现有 608 根）",
+    "audcny/1m: shorter-too-partial（新 421 根 < 现有 725 根）"
   ]
 }
