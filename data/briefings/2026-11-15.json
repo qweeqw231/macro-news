@@ -1,0 +1,164 @@
+{
+  "date": "2026-11-15",
+  "generatedAt": "2026-11-15T09:03:06+08:00",
+  "endedAt": "2026-11-15T09:03:16+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-14",
+    "to": "2026-11-15",
+    "fromAt": "2026-11-14T08:00:00+08:00",
+    "toAt": "2026-11-15T09:00:00+08:00",
+    "fromTs": 1794614400,
+    "toTs": 1794704400
+  },
+  "overview": "今日主线是稳增长加码与紧缩预期未退并行：央行自今日起上调金融机构外汇存款准备金率至6%，中美首次举行经贸磋商机制项下贸易理事会会议，10月出口同比大增35.2%，吴清称A股总市值突破100万亿元；海外方面霍尔木兹海峡两艘油轮触雷起火、化肥通道受阻，英国央行首席经济学家称2027年可能还需加息，美联储则把通胀列为加息决策首要指标。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行上调金融机构外汇存款准备金率2个百分点至6%，今日起施行",
+      "summary": "据央行公众号，为加强金融机构外汇流动性管理，中国人民银行决定自2026年11月15日起上调金融机构外汇存款准备金率2个百分点，即外汇存款准备金率由现行的4%提高到6%。",
+      "why": "外汇流动性收紧，直接影响银行结售汇与美元头寸。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-15T07:08",
+      "url": "http://forex.eastmoney.com/news/1131,202611153931387736.html"
+    },
+    {
+      "rank": 2,
+      "title": "中美首次举行经贸磋商机制项下贸易理事会会议：关税与“300亿对300亿”对等降税",
+      "summary": "11月13日，中美双方通过视频会议举行中美经贸磋商机制项下贸易理事会首次会议，以中美元首会晤重要共识为引领，围绕落实前期磋商成果，就关税、“300亿对300亿”对等降税安排、农产品贸易以及各自关心的其他议题进行了坦诚、深入、建设性的交流。",
+      "why": "关税与对等降税的落地路径，是外贸与汇率预期的锚。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-14T14:54",
+      "url": "https://wallstreetcn.com/livenews/3200113",
+      "refs": [
+        "http://forex.eastmoney.com/news/1131,202611153931387736.html",
+        "http://finance.eastmoney.com/news/1354,202611143931373168.html",
+        "http://finance.eastmoney.com/news/1354,202611153931392118.html",
+        "http://forex.eastmoney.com/news/1131,202611153931387833.html",
+        "http://finance.eastmoney.com/news/1354,202611143931354537.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "10月出口同比大增35.2%，前10个月外贸总值44.81万亿元、同比增20%",
+      "summary": "海关总署数据显示，前10个月我国货物贸易进出口总值44.81万亿元，同比增长20%；10月当月进出口4.87万亿元，同比增长31.2%。前10个月出口同比增长17.6%，其中机电产品出口增长25.2%、占出口总值64.7%；按美元计价，10月出口同比增长35.2%。",
+      "why": "出口是当前少数在加速的宏观变量，也是汇率走强的根基。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-14T11:07",
+      "url": "http://forex.eastmoney.com/news/1131,202611143931307527.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1355,202611143931295863.html",
+        "http://finance.eastmoney.com/news/1350,202611143931288550.html",
+        "http://finance.eastmoney.com/news/1354,202611143931292898.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "10月金融数据结构：社融同比多增逾3000亿，债券股票融资占前10月社融过半",
+      "summary": "央行11月13日发布10月金融统计数据：10月新增社融1.15万亿元、同比多增3333亿元；10月末M2同比增长7.1%、增速较上月末低0.1个百分点，M1同比增长4.4%、增速较上月末高1.2个百分点。前10个月社融增量28.61万亿元，其中债券和股票融资合计占比过半。",
+      "why": "信贷负增长下由直接融资顶上，是货币传导的新形态。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-14T19:36",
+      "url": "http://forex.eastmoney.com/news/1131,202611143931361743.html",
+      "refs": [
+        "http://bond.eastmoney.com/news/1326,202611153931384552.html",
+        "http://finance.eastmoney.com/news/1352,202611143931340816.html",
+        "http://finance.eastmoney.com/news/1350,202611143931297987.html"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "证监会吴清：A股总市值突破100万亿元，将有效防范市场异常波动",
+      "summary": "证监会主席吴清11月14日在2026中国资本市场学术年会上表示，错位发展、功能互补的股权市场体系基本健全，A股总市值突破100万亿元，中国债券市场规模超210万亿元；A股5500多家上市公司中，新经济领域公司数量、营收、市值在全市场占比均超一半；将深化市场稳定长效机制研究，有效防范市场异常波动。",
+      "why": "总市值破百万亿后，监管重心转向防波动。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-14T12:34",
+      "url": "http://stock.eastmoney.com/news/11215,202611143931322068.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200099",
+        "http://forex.eastmoney.com/news/1131,202611143931358056.html",
+        "http://finance.eastmoney.com/news/1346,202611143931339298.html",
+        "http://finance.eastmoney.com/news/1350,202611143931313856.html",
+        "http://finance.eastmoney.com/news/1350,202611143931324566.html",
+        "http://forex.eastmoney.com/news/1131,202611153931387833.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "2026版国家医保目录公布：调入107个品种，51个1类新药创历史新高",
+      "summary": "11月14日，2026年创新药高质量发展大会在苏州召开，2026年版国家基本医保药品目录正式公布，共调入107个品种，其中包括51个1类新药，再创历史新高。药明巨诺CAR-T产品瑞基奥仑赛注射液首次纳入基本医保，纳入前定价129万元/支；今年已有两款商保创新药目录药品纳入基本医保。",
+      "why": "支付端扩容，是创新药定价机制的一次重定价。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-14T12:53",
+      "url": "http://finance.eastmoney.com/news/1354,202611143931323251.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1354,202611143931351117.html",
+        "http://finance.eastmoney.com/news/1350,202611143931299716.html",
+        "http://forex.eastmoney.com/news/1131,202611153931387833.html"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "霍尔木兹海峡两艘油轮触雷起火，联合国呼吁恢复化肥运输",
+      "summary": "15日凌晨，伊朗革命卫队海军表示，两艘油轮在霍尔木兹海峡触碰水雷引发爆炸起火；14日清晨已有一艘油轮在海峡以东限制区域触雷起火。联合国项目事务厅执行主任达席尔瓦呼吁伊朗和美国立即允许化肥通过该海峡，称冲突前全球三分之一化肥经此运输，冲突以来全球化肥价格上涨约30%。",
+      "why": "海峡风险已从原油外溢到化肥与粮食安全。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-15T08:40",
+      "url": "https://wallstreetcn.com/livenews/3200147",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200126",
+        "https://wallstreetcn.com/livenews/3200145",
+        "https://wallstreetcn.com/livenews/3200149",
+        "https://wallstreetcn.com/livenews/3200128"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "英国央行首席经济学家Pill：12月加息之外，2027年可能还需进一步加息",
+      "summary": "英国央行首席经济学家皮尔（Huw Pill）周六刊出的采访中表示，为抑制通胀，英国央行除了在12月下次会议加息之外，2027年可能还需要进一步加息，并认为伊朗冲突结束的可能性极低。央行委员梅根·格林则称，与其冒险引发“第二轮效应”，不如现在就主动出击控制通胀。",
+      "why": "英央行路径决定英镑与全球长端利率的联动。",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-14T20:33",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniytfyx2726460.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/world/2026-11-14/doc-iniysrcc0597024.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniytfyz3959762.shtml",
+        "https://wallstreetcn.com/livenews/3200104"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "美联储Jefferson：通胀已成为决定利率的最重要指标",
+      "summary": "美联储副主席Philip Jefferson表示，在考虑进一步加息时，通胀已成为政策制定者最重要的衡量指标；近期经济活动和劳动力市场状况稳健，但价格压力依然顽固，10月物价数据与远高于目标的通胀水平相一致。波士顿联储行长柯林斯称，循序渐进地加息对降低通胀是适宜之举。",
+      "why": "官员口径趋同，12月加息的路径基本定型。",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-14T08:00",
+      "url": "https://wallstreetcn.com/livenews/3200064",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniytnhx3878101.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-14/doc-iniysepc0432942.shtml",
+        "https://wallstreetcn.com/livenews/3200068"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "国内金饰克价连跌四日累计约70元，较年内高点回撤超500元",
+      "summary": "据央视财经报道，受国际金价下跌传导，国内多家品牌金饰价格连续四日下调，四天累计下跌约70元/克；14日主流品牌足金饰品报价集中在1169元/克附近，较前一日普遍下跌6元/克。若以1月29日年内高点1700元/克以上计算，金饰克价回撤已超500元。",
+      "why": "实物端金价回撤，是市场对宽松预期的民间读数。",
+      "source": "东方财富",
+      "publishedAt": "2026-11-14T16:47",
+      "url": "http://finance.eastmoney.com/news/1350,202611143931348780.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1354,202611153931389960.html"
+      ]
+    }
+  ],
+  "watch": [
+    "霍尔木兹海峡后续：是否再有油轮触雷、美军护航进度，以及特朗普是否暂缓对伊朗军事打击",
+    "11月17-19日APEC深圳工商领导人峰会与领导人非正式会议的成果表述",
+    "外汇存款准备金率升至6%后的银行结售汇与人民币汇率反馈",
+    "国内金饰克价能否守住1169元/克一线（14日报价，较年内高点回撤超500元/克）"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
