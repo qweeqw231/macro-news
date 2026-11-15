@@ -259,10 +259,11 @@ body { overflow-wrap: break-word; }
   display: inline-flex; align-items: center; gap: 0.25rem; flex-wrap: nowrap;
   margin-left: auto; min-width: 0; overflow: hidden;
 }
-/* 无早报的日子：底部虚线块 + 一行空位，与有摘要的卡片等高 */
+/* 无早报的日子：底部虚线块 + 一行空位，与有摘要的卡片等高。
+   details 的高度 = 内边距 2.36rem + 1px 上边框，空槽补同样的 1px，虚线才落在同一条线上。 */
 .day-blank {
   margin-top: auto; border-top: 1px dashed var(--rule);
-  padding: 0.5rem 0.9rem 0.7rem; min-height: 2.36rem;
+  padding: 0.5rem 0.9rem 0.7rem; min-height: calc(2.36rem + 1px);
 }
 
 /* ---------- 归档页：新闻日口径说明（2.12.0） ---------- */
