@@ -55,6 +55,8 @@ on:
 
 permissions:
   contents: write
+  # push-data.sh 推送成功后会 dispatch pages.yml；GITHUB_TOKEN 需要 actions:write
+  actions: write
 
 # 与 collect.yml 等写分支的 workflow 各用各的 group → 互不排队、互不取消；
 # 并发推送由 scripts/push-data.sh 的 fetch + rebase 重试兜底

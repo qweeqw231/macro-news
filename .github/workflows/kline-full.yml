@@ -38,6 +38,8 @@ on:
 
 permissions:
   contents: write
+  # push-data.sh 推送成功后会 dispatch pages.yml；GITHUB_TOKEN 需要 actions:write
+  actions: write
 
 concurrency:
   group: macro-news-kline-full
