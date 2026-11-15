@@ -30,6 +30,13 @@ on:
       - '.github/workflows/kline-full.yml'
       - '.github/workflows/kline-minute.yml'
       - '.github/workflows/snapshot.yml'
+  # ⚠ 必须有定时兜底，不能只靠 push：
+  #   采集任务在 Actions 里用默认 GITHUB_TOKEN 推分支，而「用 GITHUB_TOKEN 推送不会触发其它
+  #   workflow」（GitHub 的既有防递归规则）。切到 Actions 部署后，这类推送既不会触发本
+  #   workflow，也不会再有分支构建兜底 ⇒ 站点会停在旧内容（2026-11-15 切换当天实测发生过）。
+  #   每 15 分钟扫一次 main，谁推的都能被发布出去。
+  schedule:
+    - cron: '*/15 * * * *'
   # 手动触发：切换 Pages 源之后用它做第一次验证
   workflow_dispatch:
 
@@ -43,7 +50,32 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # 定时触发时避免「内容没变也重新部署」：对比最近一次 github-pages 部署的 SHA
+  guard:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: read
+    outputs:
+      need: ${{ steps.check.outputs.need }}
+    steps:
+      - name: 判断是否已有同 SHA 的部署
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LAST=$(gh api "repos/${{ github.repository }}/deployments?environment=github-pages&per_page=1" \
+                  --jq '.[0].sha' 2>/dev/null || echo "")
+          echo "HEAD=$GITHUB_SHA LAST=$LAST"
+          if [ -n "$LAST" ] && [ "$LAST" = "$GITHUB_SHA" ]; then
+            echo "need=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "need=true" >> "$GITHUB_OUTPUT"
+          fi
+
   deploy:
+    needs: guard
+    if: needs.guard.outputs.need == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment:
