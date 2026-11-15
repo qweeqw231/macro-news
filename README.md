@@ -373,6 +373,13 @@ publish --date（脚本，确定性）
 **源侧可回溯深度（2026-11-15 实测）**：中新网日页 5 年全在；华尔街见闻 cursor 接口约 6 个月
 （05-24 起，09-15 单日五频道 1,117 条）；东财新闻列表约 5 个月（06-05 起）；新浪 roll 约 10 天。
 
+**全部历史检索（2.22.0）**：`search.json` 仍只管最近 62 天（首屏/首搜成本不变）；
+337 天切片另做按月分片 `data/search-history/YYYY-MM.json` + `manifest.json`
+（12 片，合计约 5.42 MB gzip，单片 0.35~0.55 MB）。搜索框输入后出现「在全部历史中搜索」按钮，
+点击才按月倒序、最多 3 并发拉取并逐月检索，结果追加在近期结果之后、标「历史」。
+补录/导出后由 `scripts/export-history.mjs` 自动重建；单独重建用
+`node scripts/build-search-history.mjs`，`--check` 校验是否过期（退出码 1）。
+
 **新闻日边界（2.4.19 起）**：统一为**北京 08:00 起算**（等价 UTC 自然日），
 `newsDay()` 唯一实现见 `assets/news-day.js`；归档文件、`index.json`、`latest.json`、
 `search.json`、历史切片与快照对账的日期判断都走它。因为北京 08:00 = UTC 00:00，

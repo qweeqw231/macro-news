@@ -13,6 +13,50 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.22.0] - 2026-11-15
+
+> **中版本，理由（规则 ②）**：站内搜索首次覆盖 337 天历史切片（77,256 条），
+> 并修掉「归档卡片有 260 条、搜索只命中 3 条」的用户可见错误。
+
+### 问题
+
+`search.json` 只由 `data/archive/` 构建、窗口 62 天，2.21.0 恢复的 08-17~09-18 等
+history 切片完全搜不到；窗口内 09-15~09-18 / 09-19 等「页面走 history」的日期，
+卡片与搜索条数也不一致（260 vs 3）。
+
+### 先测算再选型（2026-11-15 实测）
+
+| 方案 | 条数 | 原始 / gzip | Fuse（Node 桌面） | 结论 |
+|---|---|---|---|---|
+| 单文件全量 | 117,124 | 29.08 / **7.83 MB** | 705 ms/次 | 排除：手机每次按键 3~6 s |
+| **按月分片** | 77,256（12 片） | 19.60 / **5.42 MB**，单片 0.35~0.55 MB | 27 ms/次 | **采用** |
+| 轻量标题单文件 | 77,256 | 13.40 / 4.89 MB | 220 ms/次 | 只省 9%（中文标题压不动），且不能按需 |
+| 只补窗口内 20 天 | +4,003 | 2.43 → 2.72 MB | 与现状同 | 作为 D 一并做，但不覆盖 8 月 |
+
+### 改动
+
+| 文件 | 改动 |
+|---|---|
+| `src/search-history.mjs`（新） | 纯函数：单字母键 → 6 字段、按月分组、chunk/manifest 构建、合并去重、分片校验 |
+| `scripts/build-search-history.mjs`（新） | 由 `data/history/*` 生成 `data/search-history/YYYY-MM.json` + `manifest.json`；`--dry-run` / `--check`；单月 gzip 上限 800 KB、合计 8 MB |
+| `scripts/export-history.mjs` | 索引写完后自动重建搜索分片（`--no-search-index` 可跳过），补录后不会留下「有数据搜不到」的窗口 |
+| `src/collect.mjs` | **D**：`search.json` 的日期集合改为 archive ∪ history，窗口内判定复用 `assets/day-source.js` 的 `decideDaySource`，走 history 的日子改从切片取条目；新增 `fromHistory` 字段 |
+| `assets/search-history.js`（新） | 前端纯函数：月份倒序、chunk 路径、条目归一化（`_hist`/`h` 标记）、结果合并去重 |
+| `assets/app.js` | 搜索后出现「在全部历史中搜索（77,256 条）」按钮 + 月份选择；点击后按月倒序、最多 3 并发、逐月 Fuse、结果追加在近期结果之后并标「历史」；已拉月份内存缓存 |
+| `assets/style.css` | 历史检索条与「历史」角标样式 |
+| `index.html` | 引入 `search-history.js`，`app.js` / `search-history.js` 资源串 `20261115g` |
+| `tests/search-history.test.mjs`（新） | 6 字段同构、按月分组、manifest 覆盖全部月份、分片自洽与 gzip 上限、合并顺序与去重、窗口常量 62 不回退、`search.json` 不混入窗口外条目、`fromHistory` 与规则一致、前端接线与版本串 |
+| `tests/search-window.test.mjs` | 断言从「窗口外 break」改为「archive ∪ history 按 searchFrom 过滤」 |
+
+### 行为与边界
+
+- 首屏、首次搜索成本不变：`search.json` 仍是 62 天、约 2.4 MB gzip；历史分片在用户点按钮前**一个字节都不拉**。
+- 近期命中原样在前；历史结果追加在后，按月份倒序、月内相关度，id/url 去重，标「历史」。
+- 已知代价：全历史一次扫描需拉 12 片、合计 5.42 MB gzip（Pages 实测带宽下约 3~18 分钟）；
+  可只选单月（0.35~0.55 MB）。这是静态站 + 无后端的物理上限，已在按钮文案旁以进度提示说明。
+- 索引新鲜度：`export-history.mjs` 每次导出后自动重建；若补录走了别的脚本，需手动跑一次
+  `node scripts/build-search-history.mjs`，`--check` 会以退出码 1 报「已过期」。
+
 ## [2.21.0] - 2026-11-15
 
 > **中版本，理由（规则 ②）**：修复会造成用户可见错误数据——18 个历史日期的归档卡片

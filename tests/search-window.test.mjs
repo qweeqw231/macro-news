@@ -33,10 +33,11 @@ test('compactSearchItem 只留 6 个字段，不含 summary/channel', () => {
   assert.equal(out.channel, undefined);
 });
 
-test('collect 按窗口 break，并使用 compactSearchItem', () => {
+test('collect 按窗口取日，并使用 compactSearchItem', () => {
   const src = read('src/collect.mjs');
   assert.match(src, /searchCutoff\(startedAt\.getTime\(\)\)/);
-  assert.match(src, /if \(day < searchFrom\) break;/);
+  // 2.22.0：日期集合改为 archive ∪ history 后按 searchFrom 过滤（不再 break 循环）
+  assert.match(src, /\.filter\(\(d\) => d >= searchFrom\)/);
   assert.match(src, /compactSearchItem\(it\)/);
   assert.match(src, /windowDays: SEARCH_WINDOW_DAYS/);
 });

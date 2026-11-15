@@ -33,6 +33,7 @@ import {
   HISTORY_VERSION,
 } from './news-db/history-slice.mjs';
 import { readBriefingMeta } from '../src/brief-meta.mjs';
+import { buildSearchHistory } from './build-search-history.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -233,6 +234,16 @@ function main() {
     const oldIdx = fs.existsSync(idxFile) ? fs.readFileSync(idxFile, 'utf8') : '';
     if (stripVolatile(oldIdx) !== stripVolatile(indexText)) {
       fs.writeFileSync(idxFile, indexText, 'utf8');
+    }
+  }
+
+  // 2.22.0：索引写完后同步重建「按月分片」的搜索索引（data/search-history/**）。
+  // 这样任何一次导出/补录都不会留下「历史有数据、搜索搜不到」的窗口。
+  if (!DRY && !process.argv.includes('--no-search-index')) {
+    const rc = buildSearchHistory({ generatedAt: gen });
+    if (rc !== 0) {
+      console.error(`[history] ⚠ 搜索分片重建失败（exit ${rc}），data/search-history 可能已过期`);
+      return rc;
     }
   }
 

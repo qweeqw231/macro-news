@@ -660,6 +660,7 @@
     hd.appendChild(el('span', 'item-time', fmtTime(it.time)));
     hd.appendChild(el('span', `item-src${it.kind === 'official' ? ' official' : ''}`, it.source));
     hd.appendChild(el('span', 'item-time', it.channel || ''));
+    if (it.h) hd.appendChild(el('span', 'item-src hist', '历史'));
     a.appendChild(hd);
     a.appendChild(el('div', 'item-title', it.title));
     // RSS 源的 description 常与标题完全相同，重复显示没有意义
@@ -1062,9 +1063,14 @@
   async function runSearch(q) {
     S.q = q.trim();
     closeReader();
+    // 换关键词就作废正在进行的历史扫描（避免旧结果落到新查询上）
+    HIST.token++;
+    $('#qHistMeta').textContent = '';
     if (!S.q) {
       S.items = S.base || [];
       S.shown = PAGE;
+      S.recentHits = null;
+      $('#qHist').hidden = true;
       renderFilters();
       renderFeed();
       $('#qMeta').textContent = feedMetaText();
@@ -1093,11 +1099,130 @@
     //   于是「命中 120 条」其实是「至多 120 条」—— 真实命中更多时这个数字是假的
     //   （「加息」实测真实命中 185 条，界面却显示 120）。
     const res = S.fuse.search(S.q);
-    S.items = res.map((r) => r.item);
+    S.recentHits = res.map((r) => r.item);
+    S.items = S.recentHits;
     S.shown = PAGE;
     renderFilters();
     renderFeed();
     $('#qMeta').textContent = `全库 ${S.searchIdx.length} 条中命中 ${res.length} 条`;
+    syncHistBar();
+  }
+
+  // ---------- 全部历史检索（2.22.0，按月分片；显式按钮触发） ----------
+  //
+  // 为什么不是把 337 天塞进 search.json：实测单文件 gzip 7.83MB、Fuse 查询 705ms/次，
+  // 会同时拖慢首搜与低端机输入。这里按 12 个月分片（合计 gzip 5.41MB、单片 0.35~0.55MB），
+  // 只有用户点「在全部历史中搜索」才拉，最多 3 并发；已拉月份内存缓存并交给 Pages 的
+  // max-age=600 复用。近期结果始终在前，历史结果追加在后，现有命中顺序不受影响。
+  const HIST = { manifest: null, manifestPromise: null, chunks: new Map(), fuses: new Map(), token: 0 };
+  const HIST_ALL = '__all';
+
+  function histLib() { return window.MacroSearchHistory; }
+
+  function ensureHistManifest() {
+    if (HIST.manifest) return Promise.resolve(HIST.manifest);
+    if (!HIST.manifestPromise) {
+      HIST.manifestPromise = jget('search-history/manifest.json', 'default')
+        .then((m) => { HIST.manifest = m; return m; })
+        .catch((e) => { HIST.manifestPromise = null; throw e; });
+    }
+    return HIST.manifestPromise;
+  }
+
+  function syncHistBar() {
+    const on = !!(S.q && S.recentHits);
+    $('#qHist').hidden = !on;
+    if (!on) return;
+    const btn = $('#qHistBtn');
+    btn.textContent = HIST.manifest
+      ? `在全部历史中搜索（${HIST.manifest.total.toLocaleString()} 条）`
+      : '在全部历史中搜索';
+    // manifest 只有 ~1KB，但也不在首屏拉：等用户真的搜索了再取
+    if (!HIST.manifest) ensureHistManifest().then(syncHistBar).catch(() => {});
+    if (HIST.manifest && $('#qHistMonth').options.length <= 1) {
+      const sel = $('#qHistMonth');
+      sel.innerHTML = '';
+      const all = el('option', '', '全部月份');
+      all.value = HIST_ALL;
+      sel.appendChild(all);
+      histLib().monthsDesc(HIST.manifest).forEach((m) => {
+        const o = el('option', '', m);
+        o.value = m;
+        sel.appendChild(o);
+      });
+    }
+  }
+
+  async function loadHistMonth(m) {
+    if (HIST.chunks.has(m)) return HIST.chunks.get(m);
+    const doc = await jget(histLib().chunkUrl(m), 'default');
+    const items = (doc.items || []).map(histLib().toItem);
+    HIST.chunks.set(m, items);
+    return items;
+  }
+
+  function histFuse(m, items) {
+    if (HIST.fuses.has(m)) return HIST.fuses.get(m);
+    const f = new window.Fuse(items, {
+      includeScore: true, ignoreLocation: true, minMatchCharLength: 2, threshold: 0.4, distance: 100,
+      keys: [
+        { name: 'title', weight: 0.8 },
+        { name: 'source', weight: 0.2 },
+      ],
+    });
+    HIST.fuses.set(m, f);
+    return f;
+  }
+
+  async function runHistorySearch(scope) {
+    const q = S.q;
+    if (!q) return;
+    const token = ++HIST.token;
+    const meta = $('#qHistMeta');
+    meta.textContent = '历史索引载入中…';
+    let manifest;
+    try {
+      manifest = await ensureHistManifest();
+    } catch (e) {
+      meta.textContent = '历史索引载入失败：' + e.message;
+      return;
+    }
+    if (token !== HIST.token) return;
+    syncHistBar();
+    const months = scope && scope !== HIST_ALL ? [scope] : histLib().monthsDesc(manifest);
+    const queue = months.slice();
+    let done = 0;
+    let hits = [];
+    let lastAdded = 0;
+    const paint = () => {
+      S.items = histLib().mergeResults(S.recentHits || [], hits);
+      lastAdded = S.items.length - (S.recentHits || []).length;
+      S.shown = PAGE;
+      renderFilters();
+      renderFeed();
+      $('#qMeta').textContent =
+        `全库 ${S.searchIdx.length} 条中命中 ${(S.recentHits || []).length} 条 · 历史追加 ${lastAdded} 条`;
+    };
+    const worker = async () => {
+      while (queue.length) {
+        if (token !== HIST.token) return;
+        const m = queue.shift();
+        try {
+          const items = await loadHistMonth(m);
+          if (token !== HIST.token) return;
+          hits = hits.concat(histFuse(m, items).search(q).map((r) => r.item));
+          done++;
+          meta.textContent = `历史检索：已扫 ${done}/${months.length} 个月（${m}）· 命中 ${hits.length} 条`;
+          paint();
+        } catch (e) {
+          done++;
+          meta.textContent = `历史检索：${m} 载入失败（${e.message}）· 已扫 ${done}/${months.length} 个月`;
+        }
+      }
+    };
+    await Promise.all(Array.from({ length: Math.min(3, months.length) }, worker));
+    if (token !== HIST.token) return;
+    meta.textContent = `历史检索完成：${months.length} 个月 · 命中 ${hits.length} 条（去重后追加 ${lastAdded} 条）`;
   }
 
   // ---------- 视图切换 ----------
@@ -2414,6 +2539,9 @@
     $('#moreBtn').onclick = () => { S.shown += PAGE; renderFeed(); };
     $('#q').addEventListener('input', (e) => onSearchInput(e.target.value));
     $('#qClear').onclick = () => { $('#q').value = ''; onSearchInput(''); };
+    // 2.22.0：全部历史检索（显式触发；默认不拉任何分片）
+    $('#qHistBtn').onclick = () => runHistorySearch($('#qHistMonth').value || HIST_ALL);
+    $('#qHistMonth').onchange = () => { if (S.q) runHistorySearch($('#qHistMonth').value || HIST_ALL); };
     // 检索索引改为「用户碰搜索框才预取」：首屏不再后台拉 2.7MB，避免和归档/某天详情抢带宽。
     // 输入本身也会触发（runSearch 里 await ensureSearchIndex），这里只是给打字留出提前量。
     $('#q').addEventListener('focus', () => { ensureSearchIndex().catch(() => {}); });

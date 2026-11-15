@@ -41,6 +41,12 @@
         <button id="qClear" class="sb-clear" type="button" hidden aria-label="清空">×</button>
       </div>
       <div class="sb-meta" id="qMeta"></div>
+      <!-- 2.22.0：全部历史检索。默认隐藏，输入关键词后才出现；点按钮才按月拉分片。 -->
+      <div class="sb-hist" id="qHist" hidden>
+        <button id="qHistBtn" class="fchip" type="button">在全部历史中搜索</button>
+        <select id="qHistMonth" class="hist-sel" aria-label="历史检索范围"></select>
+        <span class="hist-meta" id="qHistMeta"></span>
+      </div>
     </section>
 
     <div class="filters" id="filters"><div class="skeleton">载入中…</div></div>
@@ -195,6 +201,7 @@
 <script src="assets/fuse.min.js?v=20261113c"></script>
 <script src="assets/market.js?v=20261113c"></script>
 <script src="assets/kline.js?v=20261113c"></script>
-<script src="assets/app.js?v=20261115f"></script>
+<script src="assets/search-history.js?v=20261115g"></script>
+<script src="assets/app.js?v=20261115g"></script>
 </body>
 </html>

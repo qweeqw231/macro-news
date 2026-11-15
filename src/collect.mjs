@@ -26,6 +26,13 @@ import { decideBars, markCloseOnlyBars } from './kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
 import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
+import { historyItemToSearch } from './search-history.mjs';
+import { createRequire } from 'node:module';
+
+// assets/day-source.js 是 UMD 纯函数（浏览器挂 window、Node 走 module.exports），
+// 这里直接复用，避免搜索索引与归档卡片各写一套「用 archive 还是 history」的阈值。
+const requireCjs = createRequire(import.meta.url);
+const { decideDaySource } = requireCjs('../assets/day-source.js');
 import { selectDayItems, OFFICIAL_RECENT_DAYS, isRecent, DAY_TOTAL, capState } from './quota.mjs';
 import { describeSourceError } from './source-error.mjs';
 
@@ -406,12 +413,31 @@ async function main() {
   // search.json：最近 62 个新闻日的精简副本（只有标题/来源/时间/链接，无摘要）
   // 2.4.19：窗口外的 archive 日期不再进索引；220 字摘要去掉，体积约减半。
   const searchFrom = searchCutoff(startedAt.getTime());
+  // 2.22.0：窗口内「归档页判定走 history」的日期，search.json 也要从 history 取条目。
+  // 不这么做就会出现「卡片 260 条、搜索只命中 3 条」（09-15~10-04 实测）。
+  // 判定直接复用 assets/day-source.js，保证卡片与搜索同一口径，不另写一套阈值。
+  const histIdx = await readJSON(path.join(DATA, 'history', 'index.json'), { days: [] });
+  const histCount = new Map((histIdx.days || []).map((x) => [x.d, Number(x.n) || 0]));
   const searchItems = [];
   let searchDays = 0;
-  for (const f of files.sort().reverse()) {
-    const day = f.replace('.json', '');
-    if (day < searchFrom) break;
-    const d = await readJSON(path.join(ARCHIVE, f), { items: [] });
+  let searchFromHistory = 0;
+  // 日期集合取「archive ∪ history」：09-19 这类只有 history 切片、没有 archive 文件的日期
+  // 以前根本不会进循环，等于整天空白。
+  const archiveDays = files.map((f) => f.replace('.json', '')).filter((d) => d >= searchFrom);
+  const historyOnly = [...histCount.keys()].filter((d) => d >= searchFrom && !archiveDays.includes(d));
+  for (const day of [...archiveDays, ...historyOnly].sort().reverse()) {
+    const d = await readJSON(path.join(ARCHIVE, `${day}.json`), { items: [] });
+    const h = histCount.get(day) || 0;
+    const dec = decideDaySource({ archiveCount: d.items.length, historyCount: h });
+    if (dec.kind === 'history') {
+      const hist = await readJSON(path.join(DATA, 'history', `${day}.json`), null);
+      if (hist && Array.isArray(hist.items)) {
+        for (const it of hist.items) searchItems.push(historyItemToSearch(it));
+        searchDays++;
+        searchFromHistory++;
+        continue;
+      }
+    }
     for (const it of d.items) searchItems.push(compactSearchItem(it));
     searchDays++;
   }
@@ -420,6 +446,7 @@ async function main() {
     windowDays: SEARCH_WINDOW_DAYS,
     from: searchFrom,
     days: searchDays,
+    fromHistory: searchFromHistory,
     total: searchItems.length,
     items: searchItems,
   });
