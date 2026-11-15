@@ -60,7 +60,10 @@ git commit -m "${prefix}（${stamp}，${n} 个文件）"
 #   停在 09:52，仓库已到 10:08）。定时兜底不可靠，所以在推送处直接 dispatch。
 #   失败不影响作业（下一轮或 pages.yml 的定时兜底会补）。
 notify_pages() {
-  if [ -z "${GITHUB_TOKEN:-}" ] || [ -z "${GITHUB_REPOSITORY:-}" ]; then return 0; fi
+  if [ -z "${GITHUB_TOKEN:-}" ] || [ -z "${GITHUB_REPOSITORY:-}" ]; then
+    echo "⚠ 未注入 GITHUB_TOKEN / GITHUB_REPOSITORY，跳过 Pages 触发（请给该步骤加 env）"
+    return 0
+  fi
   code=$(curl -sS -o /dev/null -w '%{http_code}' -X POST \
     -H "Authorization: Bearer ${GITHUB_TOKEN}" \
     -H "Accept: application/vnd.github+json" \

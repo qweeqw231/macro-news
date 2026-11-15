@@ -68,6 +68,10 @@ jobs:
       - name: 提交并推送（仅在数据有变化时）
         # ⚠ 必须整行加引号：plain scalar 里出现 `: `（MSG_PREFIX="data: ..."）
         #   会被 YAML 当成映射，整份 workflow 直接解析失败（run 建不出来，只留一条 failure）
+        # ⚠ GITHUB_TOKEN 不会自动进步骤环境，必须显式注入，否则 push-data.sh 里
+        #   的 Pages dispatch 会因取不到 token 静默跳过（2026-11-15 实测踩过）
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: 'bash scripts/push-data.sh data MSG_PREFIX="data: 自动采集"'
 
       - name: 上报本轮统计
