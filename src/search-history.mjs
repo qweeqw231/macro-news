@@ -93,18 +93,22 @@ export function chunkUrl(month) {
 export function mergeResults(recent, hist) {
   const seenId = new Set();
   const seenUrl = new Set();
-  const take = (x) => {
-    const id = x && x.id;
-    const url = x && x.url;
-    if (id && seenId.has(id)) return false;
-    if (!id && url && seenUrl.has(url)) return false;
-    if (id) seenId.add(id);
-    if (url) seenUrl.add(url);
-    return true;
-  };
   const out = [];
-  for (const x of recent || []) if (take(x)) out.push(x);
-  for (const x of hist || []) if (take(x)) out.push(x);
+  // 近期命中原样保留（2.21 之前的搜索行为不能被改：即使数据里有重复 id 也不在这里删）
+  for (const x of recent || []) {
+    out.push(x);
+    if (x && x.id) seenId.add(x.id);
+    if (x && x.url) seenUrl.add(x.url);
+  }
+  // 历史命中只跟「近期 + 已加进去的历史」去重
+  for (const x of hist || []) {
+    if (!x) continue;
+    if (x.id && seenId.has(x.id)) continue;
+    if (x.url && seenUrl.has(x.url)) continue;
+    out.push(x);
+    if (x.id) seenId.add(x.id);
+    if (x.url) seenUrl.add(x.url);
+  }
   return out;
 }
 

@@ -83,6 +83,12 @@ test('mergeResults：近期在前、历史追加、id/url 去重（web 与 src �
     const out = fn(recent, hist);
     assert.deepEqual(out.map((x) => x.id || x.url), ['a', 'b', 'c']);
   }
+  // 近期结果原样保留：数据里本来就有重复 id 时也不得在这里删（否则「历史追加」会变负数）
+  const dupRecent = [{ id: 'a', url: 'u1' }, { id: 'a', url: 'u1' }];
+  for (const fn of [mergeResults, WEB.mergeResults]) {
+    const out = fn(dupRecent, [{ id: 'a', url: 'u1' }, { id: 'z', url: 'uz' }]);
+    assert.deepEqual(out.map((x) => x.id), ['a', 'a', 'z']);
+  }
 });
 
 test('window 常量不回退：仍为 62 天，且 search.json 不混入窗口外条目', () => {

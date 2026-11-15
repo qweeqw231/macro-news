@@ -1197,11 +1197,12 @@
     const paint = () => {
       S.items = histLib().mergeResults(S.recentHits || [], hits);
       lastAdded = S.items.length - (S.recentHits || []).length;
-      S.shown = PAGE;
+      // 历史结果追加在末尾：一次性展开，否则用户要点十几次「加载更早」才看得到
+      S.shown = S.items.length;
       renderFilters();
       renderFeed();
       $('#qMeta').textContent =
-        `全库 ${S.searchIdx.length} 条中命中 ${(S.recentHits || []).length} 条 · 历史追加 ${lastAdded} 条`;
+        `全库 ${S.searchIdx.length} 条中命中 ${(S.recentHits || []).length} 条 · 历史追加 ${lastAdded} 条（列表末尾，标「历史」）`;
     };
     const worker = async () => {
       while (queue.length) {
@@ -1223,6 +1224,10 @@
     await Promise.all(Array.from({ length: Math.min(3, months.length) }, worker));
     if (token !== HIST.token) return;
     meta.textContent = `历史检索完成：${months.length} 个月 · 命中 ${hits.length} 条（去重后追加 ${lastAdded} 条）`;
+    // 历史结果在 600+ 条近期结果之后：跳过去一次，避免用户以为「没搜到」
+    const firstHist = S.items.findIndex((x) => x && x.h);
+    const node = firstHist >= 0 ? $('#feed').children[firstHist] : null;
+    if (node) node.scrollIntoView({ block: 'center' });
   }
 
   // ---------- 视图切换 ----------

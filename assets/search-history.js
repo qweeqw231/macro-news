@@ -43,19 +43,21 @@
     var seenId = {};
     var seenUrl = {};
     var out = [];
-    function take(x) {
-      if (!x) return false;
-      if (x.id) {
-        if (seenId[x.id]) return false;
-        seenId[x.id] = 1;
-      } else if (x.url) {
-        if (seenUrl[x.url]) return false;
-      }
+    // 近期命中原样保留（不在这里去重，避免改变既有搜索结果）
+    (recent || []).forEach(function (x) {
+      out.push(x);
+      if (x && x.id) seenId[x.id] = 1;
+      if (x && x.url) seenUrl[x.url] = 1;
+    });
+    // 历史命中只与「近期 + 已追加的历史」去重
+    (hist || []).forEach(function (x) {
+      if (!x) return;
+      if (x.id && seenId[x.id]) return;
+      if (x.url && seenUrl[x.url]) return;
+      out.push(x);
+      if (x.id) seenId[x.id] = 1;
       if (x.url) seenUrl[x.url] = 1;
-      return true;
-    }
-    (recent || []).forEach(function (x) { if (take(x)) out.push(x); });
-    (hist || []).forEach(function (x) { if (take(x)) out.push(x); });
+    });
     return out;
   }
 
