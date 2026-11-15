@@ -151,3 +151,22 @@ test('前端接线：历史检索脚本已加载、版本串一致、不修改 s
   assert.match(app, /runHistorySearch/);
   assert.match(app, /item-src hist/);
 });
+
+test('2.22.1 默认只扫最近 3 个月：常量、按钮接线、全部月份语义保留', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const app = fs.readFileSync(path.join(ROOT, 'assets/app.js'), 'utf8');
+  // 默认档位常量，改动要同步改本测试（不允许悄悄改成 12 个月）
+  assert.match(app, /const HIST_RECENT_N = 3;/);
+  assert.match(app, /const HIST_RECENT = '__recent';/);
+  // 主按钮与下拉默认走「最近 N 个月」，不是 __all
+  assert.match(app, /\$\('#qHistBtn'\)\.onclick = \(\) => runHistorySearch\(\$\('#qHistMonth'\)\.value \|\| HIST_RECENT\)/);
+  assert.doesNotMatch(app, /runHistorySearch\(\$\('#qHistMonth'\)\.value \|\| HIST_ALL\)/);
+  // 显式选「全部月份」仍是一次扫全量（不留尾、不出「继续扫描」）
+  assert.match(app, /scope === HIST_ALL \? all/);
+  assert.match(app, /HIST\.more = scope === HIST_RECENT \? all\.slice\(HIST_RECENT_N\) : \[\]/);
+  // 「继续扫描更早」按钮存在且接线
+  assert.match(html, /id="qHistMore"/);
+  assert.match(app, /'#qHistMore'\)\.onclick/);
+  // 下拉仍保留「全部月份」选项
+  assert.match(app, /全部月份（\$\{HIST\.manifest\.months\} 个月）/);
+});

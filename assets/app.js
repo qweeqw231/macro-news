@@ -1065,7 +1065,10 @@
     closeReader();
     // 换关键词就作废正在进行的历史扫描（避免旧结果落到新查询上）
     HIST.token++;
+    HIST.hits = [];
+    HIST.more = [];
     $('#qHistMeta').textContent = '';
+    $('#qHistMore').hidden = true;
     if (!S.q) {
       S.items = S.base || [];
       S.shown = PAGE;
@@ -1111,11 +1114,20 @@
   // ---------- 全部历史检索（2.22.0，按月分片；显式按钮触发） ----------
   //
   // 为什么不是把 337 天塞进 search.json：实测单文件 gzip 7.83MB、Fuse 查询 705ms/次，
-  // 会同时拖慢首搜与低端机输入。这里按 12 个月分片（合计 gzip 5.41MB、单片 0.35~0.55MB），
-  // 只有用户点「在全部历史中搜索」才拉，最多 3 并发；已拉月份内存缓存并交给 Pages 的
-  // max-age=600 复用。近期结果始终在前，历史结果追加在后，现有命中顺序不受影响。
-  const HIST = { manifest: null, manifestPromise: null, chunks: new Map(), fuses: new Map(), token: 0 };
+  // 会同时拖慢首搜与低端机输入。这里按 12 个月分片，只有用户显式触发才拉，
+  // 最多 3 并发；已拉月份内存缓存并交给 Pages 的 max-age=600 复用。
+  // 近期结果始终在前，历史结果追加在后，现有命中顺序不受影响。
+  //
+  // 2.22.1：外源补录后 history 涨到 168,913 条 / 12 片 / gzip 13.02 MB / raw 43.85 MB，
+  //   一次全扫要下 43 MB（实测吞吐折算约 3.5 分钟）。默认只扫最近 3 个月（gzip ~4.4 MB），
+  //   更早的月份交给「继续扫描更早 N 个月」二次触发；下拉里显式选「全部月份」仍一次扫全量。
+  const HIST = {
+    manifest: null, manifestPromise: null, chunks: new Map(), fuses: new Map(),
+    token: 0, hits: [], more: [],
+  };
   const HIST_ALL = '__all';
+  const HIST_RECENT = '__recent';
+  const HIST_RECENT_N = 3;
 
   function histLib() { return window.MacroSearchHistory; }
 
@@ -1135,14 +1147,17 @@
     if (!on) return;
     const btn = $('#qHistBtn');
     btn.textContent = HIST.manifest
-      ? `在全部历史中搜索（${HIST.manifest.total.toLocaleString()} 条）`
-      : '在全部历史中搜索';
+      ? `在历史中搜索（${HIST.manifest.total.toLocaleString()} 条）`
+      : '在历史中搜索';
     // manifest 只有 ~1KB，但也不在首屏拉：等用户真的搜索了再取
     if (!HIST.manifest) ensureHistManifest().then(syncHistBar).catch(() => {});
-    if (HIST.manifest && $('#qHistMonth').options.length <= 1) {
-      const sel = $('#qHistMonth');
-      sel.innerHTML = '';
-      const all = el('option', '', '全部月份');
+    const sel = $('#qHistMonth');
+    if (HIST.manifest && sel.options.length === 0) {
+      const recent = el('option', '', `最近 ${HIST_RECENT_N} 个月`);
+      recent.value = HIST_RECENT;
+      recent.selected = true;
+      sel.appendChild(recent);
+      const all = el('option', '', `全部月份（${HIST.manifest.months} 个月）`);
       all.value = HIST_ALL;
       sel.appendChild(all);
       histLib().monthsDesc(HIST.manifest).forEach((m) => {
@@ -1175,11 +1190,13 @@
   }
 
   async function runHistorySearch(scope) {
-    const q = S.q;
-    if (!q) return;
+    if (!S.q) return;
     const token = ++HIST.token;
     const meta = $('#qHistMeta');
     meta.textContent = '历史索引载入中…';
+    $('#qHistMore').hidden = true;
+    HIST.hits = [];
+    HIST.more = [];
     let manifest;
     try {
       manifest = await ensureHistManifest();
@@ -1189,20 +1206,30 @@
     }
     if (token !== HIST.token) return;
     syncHistBar();
-    const months = scope && scope !== HIST_ALL ? [scope] : histLib().monthsDesc(manifest);
+    const all = histLib().monthsDesc(manifest);
+    const months = scope === HIST_ALL ? all
+      : scope === HIST_RECENT ? all.slice(0, HIST_RECENT_N)
+      : [scope];
+    // 默认档只扫最近几个月，剩下的交给「继续扫描更早 N 个月」；显式选「全部月份」时不留尾
+    HIST.more = scope === HIST_RECENT ? all.slice(HIST_RECENT_N) : [];
+    await scanHistMonths(months, token);
+  }
+
+  // 逐月拉取 + 检索 + 追加渲染。token 变化（换关键词/新一次检索）时立即停手。
+  async function scanHistMonths(months, token) {
+    const meta = $('#qHistMeta');
     const queue = months.slice();
     let done = 0;
-    let hits = [];
-    let lastAdded = 0;
+    let added = 0;
     const paint = () => {
-      S.items = histLib().mergeResults(S.recentHits || [], hits);
-      lastAdded = S.items.length - (S.recentHits || []).length;
+      S.items = histLib().mergeResults(S.recentHits || [], HIST.hits);
+      added = S.items.length - (S.recentHits || []).length;
       // 历史结果追加在末尾：一次性展开，否则用户要点十几次「加载更早」才看得到
       S.shown = S.items.length;
       renderFilters();
       renderFeed();
       $('#qMeta').textContent =
-        `全库 ${S.searchIdx.length} 条中命中 ${(S.recentHits || []).length} 条 · 历史追加 ${lastAdded} 条（列表末尾，标「历史」）`;
+        `全库 ${S.searchIdx.length} 条中命中 ${(S.recentHits || []).length} 条 · 历史追加 ${added} 条（列表末尾，标「历史」）`;
     };
     const worker = async () => {
       while (queue.length) {
@@ -1211,9 +1238,9 @@
         try {
           const items = await loadHistMonth(m);
           if (token !== HIST.token) return;
-          hits = hits.concat(histFuse(m, items).search(q).map((r) => r.item));
+          HIST.hits = HIST.hits.concat(histFuse(m, items).search(S.q).map((r) => r.item));
           done++;
-          meta.textContent = `历史检索：已扫 ${done}/${months.length} 个月（${m}）· 命中 ${hits.length} 条`;
+          meta.textContent = `历史检索：已扫 ${done}/${months.length} 个月（${m}）· 命中 ${HIST.hits.length} 条`;
           paint();
         } catch (e) {
           done++;
@@ -1223,8 +1250,14 @@
     };
     await Promise.all(Array.from({ length: Math.min(3, months.length) }, worker));
     if (token !== HIST.token) return;
-    meta.textContent = `历史检索完成：${months.length} 个月 · 命中 ${hits.length} 条（去重后追加 ${lastAdded} 条）`;
-    // 历史结果在 600+ 条近期结果之后：跳过去一次，避免用户以为「没搜到」
+    const more = HIST.more.length;
+    const moreBtn = $('#qHistMore');
+    moreBtn.hidden = !more;
+    if (more) moreBtn.textContent = `继续扫描更早 ${more} 个月`;
+    meta.textContent =
+      `历史检索完成：已扫 ${months.length} 个月 · 命中 ${HIST.hits.length} 条（去重后追加 ${added} 条）` +
+      (more ? ` · 更早 ${more} 个月未扫` : '');
+    // 历史结果在几百条近期结果之后：跳过去一次，避免用户以为「没搜到」
     const firstHist = S.items.findIndex((x) => x && x.h);
     const node = firstHist >= 0 ? $('#feed').children[firstHist] : null;
     if (node) node.scrollIntoView({ block: 'center' });
@@ -2545,8 +2578,16 @@
     $('#q').addEventListener('input', (e) => onSearchInput(e.target.value));
     $('#qClear').onclick = () => { $('#q').value = ''; onSearchInput(''); };
     // 2.22.0：全部历史检索（显式触发；默认不拉任何分片）
-    $('#qHistBtn').onclick = () => runHistorySearch($('#qHistMonth').value || HIST_ALL);
-    $('#qHistMonth').onchange = () => { if (S.q) runHistorySearch($('#qHistMonth').value || HIST_ALL); };
+    // 2.22.1：默认只扫最近 3 个月，更早的走「继续扫描更早 N 个月」；下拉选「全部月份」仍扫全量
+    $('#qHistBtn').onclick = () => runHistorySearch($('#qHistMonth').value || HIST_RECENT);
+    $('#qHistMonth').onchange = () => { if (S.q) runHistorySearch($('#qHistMonth').value || HIST_RECENT); };
+    $('#qHistMore').onclick = () => {
+      const months = HIST.more.slice();
+      if (!months.length) return;
+      HIST.more = [];
+      $('#qHistMore').hidden = true;
+      scanHistMonths(months, ++HIST.token);
+    };
     // 检索索引改为「用户碰搜索框才预取」：首屏不再后台拉 2.7MB，避免和归档/某天详情抢带宽。
     // 输入本身也会触发（runSearch 里 await ensureSearchIndex），这里只是给打字留出提前量。
     $('#q').addEventListener('focus', () => { ensureSearchIndex().catch(() => {}); });

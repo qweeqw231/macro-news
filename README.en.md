@@ -221,8 +221,9 @@ calendar days (`T00:00:00+08:00` ~ `T23:59:59+08:00`) and pulled in 08:00–24:0
 
 **News database** `.local/news.db` (SQLite + FTS5, Chinese bigram tokenization): about 530k rows;
 the last 60 days have full text/summary, while the 5-year history is mostly title + link (China News Service backfill of about 500k).
-**Already wired into the static site**: 2.2.0 shipped the trailing-year history slices, 2.4.10 filled 09-20~10-04, 2.21.0 filled 08-17~09-18; currently
-**the trailing year (337 days) / 77,256 items / through 2026-10-04**, and dates after 09-20 use the `archive/` full text.
+**Already wired into the static site**: 2.2.0 shipped the trailing-year history slices, 2.4.10 filled 09-20~10-04, 2.21.0 filled 08-17~09-18,
+and the 2026-11-15 external backfill is final; currently
+**the trailing year (337 days) / 168,913 items / through 2026-10-04**, and dates after 09-20 use the `archive/` full text.
 History slices are mostly title/source/time/original link (136 with a summary), **with no body**.
 
 ⚠ Two measured pitfalls (the briefing task hits them every day, so they are written into the instructions):
@@ -325,11 +326,11 @@ No first-screen prefetch (measured 0 `briefings` requests); one briefing is 10 K
 | Data source | `.local/news.db` (SQLite, about 530k rows, from 2021-11) |
 | Export | `node scripts/export-history.mjs --days 365` → `data/history/YYYY-MM-DD.json` + `index.json` |
 | Scope | 365 days through **yesterday**; only dates not covered by `data/archive/` (gap-only); existing slices are not overwritten |
-| Status (2.21.0) | **the trailing year (337 days) / 77,256 items / through 2026-10-04**; dates from 09-20 with archive placeholder files are filled by `--include-archived`, and 2.21.0 filled the 18 days from 08-17 to 09-18 |
+| Status (2.22.1) | **the trailing year (337 days) / 168,913 items / through 2026-10-04**; dates from 09-20 with archive placeholder files are filled by `--include-archived`, 2.21.0 filled the 18 days from 08-17 to 09-18, and the 2026-11-15 external backfill (138 more news days) is final |
 | Fields | Mostly `title/source/time/original link` (136 with a summary), **no body** |
-| Gap | 2025-11~2026-10 is dominated by China News Service/official sources; Wallstreetcn/Eastmoney/Sina were not backfilled. The sources are not all unreachable (measured: Wallstreetcn about 6 months, Eastmoney about 5 months, Sina about 10 days) — the backfill simply has not been run |
+| Gap | 2025-11~2026-04 is still dominated by China News Service/official sources; Wallstreetcn/Eastmoney/Sina were not backfilled for that span. The sources are not all unreachable (measured: Wallstreetcn about 6 months, Eastmoney about 5 months, Sina about 10 days) — the backfill simply has not been run |
 | Per-day cap | 400 items (after same-hash dedupe, selected by "official / full text / source weight"); **mostly title/source/time/link (a few with summary), no body** |
-| Size | Measured **337 slices / 77,256 items / about 16.8 MB** (largest single day under 100 KB) |
+| Size | Measured **337 slices / 168,913 items / about 62.5 MB** (largest single day 0.80 MB) |
 | Read | The archive page fetches `history/index.json` only when switched to "Archive"; a day's slice is fetched only when clicked; LRU 3 days, `max-age=600` |
 
 History slices are **mostly title/source/time (a few with summary), with no body** (the body lives in the `archive/` day files); `search.json`
@@ -340,7 +341,7 @@ and does not cover `history/` — a full 365-day index is not feasible in a brow
 
 **Source look-back depth (measured 2026-11-15)**: China News Service keeps 5 years of daily pages; Wallstreetcn cursor API about 6 months (from 05-24; 09-15 alone had 1,117 items across five channels); Eastmoney news list about 5 months (from 06-05); Sina roll about 10 days.
 
-**Search across all history (2.22.0)**: `search.json` still covers only the last 62 days (first paint and first search cost unchanged). The 337 days of slices get monthly chunks `data/search-history/YYYY-MM.json` + `manifest.json` (12 chunks, about 5.42 MB gzip total, 0.35~0.55 MB each). After a query, a "search all history" button appears; clicking it fetches chunks newest-month-first with at most 3 concurrent requests, searches each month, and appends matches after the recent results tagged "历史". `scripts/export-history.mjs` rebuilds the chunks after every export; run `node scripts/build-search-history.mjs` manually otherwise, and `--check` fails with exit code 1 when stale.
+**Search across all history (2.22.0 / 2.22.1)**: `search.json` still covers only the last 62 days (first paint and first search cost unchanged). The 337 days of slices get monthly chunks `data/search-history/YYYY-MM.json` + `manifest.json` (**12 chunks / 168,913 items / 43.85 MB raw / 13.02 MB gzip** after the backfill, 105 KB~2.41 MB gzip each). After a query, a "search history" button appears; clicking it fetches chunks newest-month-first with at most 3 concurrent requests, searches each month, and appends matches after the recent results tagged "历史". **Since 2.22.1 the default covers only the latest 3 months** (about 4.4 MB gzip); older months are fetched by a follow-up "scan earlier N months" button, while explicitly picking "all months" still scans everything (about 43 MB raw, roughly 3.5 minutes at measured bandwidth). `scripts/export-history.mjs` rebuilds the chunks after every export; run `node scripts/build-search-history.mjs` manually otherwise, and `--check` fails with exit code 1 when stale.
 To fill placeholder-day slices: `node scripts/export-history.mjs --from <start> --to <end> --include-archived --force`.
 
 **News-day boundary (from 2.4.19)**: unified to **start at 08:00 Beijing time** (equivalent to the UTC calendar day);

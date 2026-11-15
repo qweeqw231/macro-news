@@ -41,10 +41,12 @@
         <button id="qClear" class="sb-clear" type="button" hidden aria-label="清空">×</button>
       </div>
       <div class="sb-meta" id="qMeta"></div>
-      <!-- 2.22.0：全部历史检索。默认隐藏，输入关键词后才出现；点按钮才按月拉分片。 -->
+      <!-- 2.22.0：全部历史检索。默认隐藏，输入关键词后才出现；点按钮才按月拉分片。
+           2.22.1：默认只扫最近 3 个月，「继续扫描更早」按需追加更早月份。 -->
       <div class="sb-hist" id="qHist" hidden>
-        <button id="qHistBtn" class="fchip" type="button">在全部历史中搜索</button>
+        <button id="qHistBtn" class="fchip" type="button">在历史中搜索</button>
         <select id="qHistMonth" class="hist-sel" aria-label="历史检索范围"></select>
+        <button id="qHistMore" class="fchip" type="button" hidden>继续扫描更早</button>
         <span class="hist-meta" id="qHistMeta"></span>
       </div>
     </section>
@@ -201,7 +203,7 @@
 <script src="assets/fuse.min.js?v=20261113c"></script>
 <script src="assets/market.js?v=20261113c"></script>
 <script src="assets/kline.js?v=20261113c"></script>
-<script src="assets/search-history.js?v=20261115h"></script>
-<script src="assets/app.js?v=20261115h"></script>
+<script src="assets/search-history.js?v=20261115i"></script>
+<script src="assets/app.js?v=20261115i"></script>
 </body>
 </html>
