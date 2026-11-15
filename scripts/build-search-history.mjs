@@ -27,6 +27,8 @@ const OUT = path.join(ROOT, 'data/search-history');
 const BUDGET_TOTAL_GZIP = 16 * 1024 * 1024;
 
 const gz = (text) => zlib.gzipSync(Buffer.from(text), { level: 9 }).length;
+// generatedAt 每次都会变，比较内容时应剔除，否则 --check 永远报过期
+const stripVolatile = (text) => text.replace(/"generatedAt":"[^"]*",?/, '').replace(/"generatedAt": "[^"]*",?/, '');
 const mb = (n) => (n / 1024 / 1024).toFixed(2) + ' MB';
 const kb = (n) => (n / 1024).toFixed(1) + ' KB';
 
@@ -105,13 +107,12 @@ export function buildSearchHistory({ dryRun = false, check = false, generatedAt 
 
   const stale =
     !fs.existsSync(path.join(OUT, 'manifest.json')) ||
-    fs.readFileSync(path.join(OUT, 'manifest.json'), 'utf8').replace(/"generatedAt": "[^"]*",?/, '') !==
-      manifestText.replace(/"generatedAt": "[^"]*",?/, '');
+    stripVolatile(fs.readFileSync(path.join(OUT, 'manifest.json'), 'utf8')) !== stripVolatile(manifestText);
 
   if (check) {
     const mismatched = chunks.filter(
       (c) => !fs.existsSync(path.join(OUT, `${c.m}.json`)) ||
-        fs.readFileSync(path.join(OUT, `${c.m}.json`), 'utf8') !== texts.get(c.m)
+        stripVolatile(fs.readFileSync(path.join(OUT, `${c.m}.json`), 'utf8')) !== stripVolatile(texts.get(c.m))
     );
     if (stale || mismatched.length) {
       console.error(
