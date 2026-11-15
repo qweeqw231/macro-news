@@ -10,9 +10,10 @@
 
 export const HISTORY_SEARCH_VERSION = 1;
 
-// 单个分片 gzip 体积上限：现有最大月约 0.55 MB，留 45% 余量。
-// 超过说明条目结构或条数失控，构建应当失败而不是悄悄继续。
-export const CHUNK_MAX_GZIP = 800 * 1024;
+// 单个分片 gzip 体积上限。导入期一个月约 0.35~0.55 MB；外源补录（华尔街见闻/东财）
+// 会让某个月涨到 0.9~1.5 MB，这里按实测上限留到 2.5 MB（Pages 5~30 KB/s 下约 85 秒，
+// 且用户可只选单月）。超过说明条目结构或条数失控，构建应当失败而不是悄悄继续。
+export const CHUNK_MAX_GZIP = 2560 * 1024;
 
 /** 历史条目（单字母键）→ 与 search.json 完全一致的 6 字段 */
 export function historyItemToSearch(it) {

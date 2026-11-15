@@ -375,7 +375,8 @@ publish --date（脚本，确定性）
 
 **全部历史检索（2.22.0）**：`search.json` 仍只管最近 62 天（首屏/首搜成本不变）；
 337 天切片另做按月分片 `data/search-history/YYYY-MM.json` + `manifest.json`
-（12 片，合计约 5.42 MB gzip，单片 0.35~0.55 MB）。搜索框输入后出现「在全部历史中搜索」按钮，
+（12 片，初始约 5.4 MB gzip、单片 0.35~0.55 MB；外源补录后合计会涨到约 6~8 MB，
+单月上限 2.5 MB、合计上限 16 MB，超限构建直接失败）。搜索框输入后出现「在全部历史中搜索」按钮，
 点击才按月倒序、最多 3 并发拉取并逐月检索，结果追加在近期结果之后、标「历史」。
 补录/导出后由 `scripts/export-history.mjs` 自动重建；单独重建用
 `node scripts/build-search-history.mjs`，`--check` 校验是否过期（退出码 1）。

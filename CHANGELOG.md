@@ -38,7 +38,7 @@ history 切片完全搜不到；窗口内 09-15~09-18 / 09-19 等「页面走 hi
 | 文件 | 改动 |
 |---|---|
 | `src/search-history.mjs`（新） | 纯函数：单字母键 → 6 字段、按月分组、chunk/manifest 构建、合并去重、分片校验 |
-| `scripts/build-search-history.mjs`（新） | 由 `data/history/*` 生成 `data/search-history/YYYY-MM.json` + `manifest.json`；`--dry-run` / `--check`；单月 gzip 上限 800 KB、合计 8 MB |
+| `scripts/build-search-history.mjs`（新） | 由 `data/history/*` 生成 `data/search-history/YYYY-MM.json` + `manifest.json`；`--dry-run` / `--check`；单月 gzip 上限 2.5 MB、合计 16 MB（外源补录实测：2026-05 从 0.55 MB 涨到 0.88 MB） |
 | `scripts/export-history.mjs` | 索引写完后自动重建搜索分片（`--no-search-index` 可跳过），补录后不会留下「有数据搜不到」的窗口 |
 | `src/collect.mjs` | **D**：`search.json` 的日期集合改为 archive ∪ history，窗口内判定复用 `assets/day-source.js` 的 `decideDaySource`，走 history 的日子改从切片取条目；新增 `fromHistory` 字段 |
 | `assets/search-history.js`（新） | 前端纯函数：月份倒序、chunk 路径、条目归一化（`_hist`/`h` 标记）、结果合并去重 |

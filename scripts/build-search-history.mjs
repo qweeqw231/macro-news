@@ -24,7 +24,7 @@ import {
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HISTORY = path.join(ROOT, 'data/history');
 const OUT = path.join(ROOT, 'data/search-history');
-const BUDGET_TOTAL_GZIP = 8 * 1024 * 1024;
+const BUDGET_TOTAL_GZIP = 16 * 1024 * 1024;
 
 const gz = (text) => zlib.gzipSync(Buffer.from(text), { level: 9 }).length;
 const mb = (n) => (n / 1024 / 1024).toFixed(2) + ' MB';
