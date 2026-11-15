@@ -1518,6 +1518,13 @@
           return window.MacroDaySource.decideDaySource({ archiveCount: a, historyCount: h });
         }
         if (a <= 0 && h <= 0) return { kind: 'none', count: 0, reason: '该日无归档与历史数据' };
+        // 2.21.0：与 assets/day-source.js 保持同一顺序——切片更全时优先切片
+        if (h > a) return {
+          kind: 'history', count: h,
+          reason: a < 20
+            ? `该日归档仅 ${a} 条，已改用历史切片 ${h} 条（仅标题/来源/时间，正文请点原文）`
+            : `该日归档 ${a} 条，少于历史切片 ${h} 条，已改用历史切片（仅标题/来源/时间，正文请点原文）`,
+        };
         if (a >= 20) return { kind: 'archive', count: a, reason: '归档全文' };
         if (h > 0) return {
           kind: 'history', count: h,
