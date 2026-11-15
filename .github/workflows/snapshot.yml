@@ -103,6 +103,10 @@ jobs:
       - name: 提交并推送（仅在数据有变化时）
         if: always()
         # ⚠ 必须整行加引号：plain scalar 里的 `: ` 会让 YAML 解析失败
+        # ⚠ GITHUB_TOKEN 不会自动进步骤环境，必须显式注入，否则 push-data.sh 里
+        #   的 Pages dispatch 会因取不到 token 静默跳过
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: 'bash scripts/push-data.sh data/snapshots data/macro data/kline/cgb_1y.json data/kline/cgb_1y_1w.json data/kline/cgb_1y_1M.json MSG_PREFIX="data: 时点快照 + 宏观兜底"'
 
       - name: 上报本轮统计
