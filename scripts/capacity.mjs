@@ -191,7 +191,7 @@ async function collect() {
   // 4) clone 包
   if (FAST) {
     m.pack_mib = round(sizePackBytes() / MIB);
-    m.pack_note = 'size-pack 近似（--fast）';
+    m.pack_note = 'size-pack 近似（--fast；含不可达对象，实测偏高约 30%）';
   } else {
     try {
       m.pack_mib = round((await clonePackBytes('HEAD')) / MIB);
