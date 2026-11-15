@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T21:07:48.018Z",
+  "generatedAt": "2026-11-15T21:22:59.613Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -1077,26 +1077,26 @@
       "key": "gbpcny",
       "name": "英镑/人民币",
       "market": "FX",
-      "price": 8.822232,
+      "price": 8.820676,
       "prevClose": 8.820676,
-      "changePct": 0.0176,
+      "changePct": 0,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-16T04:57:07+08:00",
+      "updatedAt": "2026-11-16T05:15:04+08:00",
       "note": ""
     },
     {
       "key": "jpycny",
       "name": "100日元/人民币",
       "market": "FX",
-      "price": 4.181284,
+      "price": 4.180497,
       "prevClose": 4.179973,
-      "changePct": 0.0502,
+      "changePct": 0.0314,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-16T03:51:34+08:00",
+      "updatedAt": "2026-11-16T05:17:36+08:00",
       "note": ""
     },
     {
@@ -1116,13 +1116,13 @@
       "key": "audcny",
       "name": "澳元/人民币",
       "market": "FX",
-      "price": 4.524887,
+      "price": 4.52284,
       "prevClose": 4.52284,
-      "changePct": 0.0905,
+      "changePct": 0.0452,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-16T05:02:45+08:00",
+      "updatedAt": "2026-11-16T05:22:16+08:00",
       "note": ""
     }
   ]
