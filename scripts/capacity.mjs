@@ -1,0 +1,411 @@
+#!/usr/bin/env node
+// scripts/capacity.mjs
+// 容量周报（只读）：把「快撞线」变成可观测的数字。
+//
+// 为什么需要它（2026-11-15 容量分析结论）：
+//   · 仓库体积增速 ≈ 站点内容增速 × 1.7（search.json / 当日归档每天被重写上百次）；
+//   · Pages 构建曾打到 10 次/小时软上限，而运行次数统计里完全看不出体积；
+//   · 现有 ops-stats.mjs 只数运行次数与 dirty 轮数，**不看任何体积指标**
+//     ⇒ 仓库从 97 MiB 涨到 700 MiB 的全过程不会有任何告警。
+//
+// 输出：
+//   1) 终端一张表；
+//   2) .local/metrics/capacity-<YYYY-Www>.json（本机台账，gitignore，不提交）；
+//   3) 任一指标到达红档时写 .local/metrics/capacity-alert.json（与 alert.json 同目录同风格）。
+//
+// 用法：
+//   node scripts/capacity.mjs                 # 立刻跑一次（写本周快照并打印趋势）
+//   node scripts/capacity.mjs --force         # 同上，忽略「本周已跑过」的节流
+//   node scripts/capacity.mjs --weekly        # 周节流：只在周一 09:00 之后、且本周还没跑过时才执行
+//   node scripts/capacity.mjs --fast          # 跳过 clone 包实测（省约 40 秒，用 size-pack 近似）
+//   node scripts/capacity.mjs --no-net        # 完全离线：不调 GitHub API / Cloudflare API
+//
+// 触发方式（二选一）：
+//   A. 手动：上面的命令；
+//   B. 挂到既有本机定时任务：在 MacroNews-Collect 的每轮命令后追加
+//        node scripts/capacity.mjs --weekly
+//      它平时立即退出（不产生网络与磁盘写），只在周一 09:00 后第一次调用时真正执行。
+//
+// 只读保证：不写 data/、不写仓库、不提交；所有产物都在 .local/metrics/。
+
+import fs from 'node:fs';
+import path from 'node:path';
+import zlib from 'node:zlib';
+import { spawn, spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const OUT_DIR = path.join(ROOT, '.local', 'metrics');
+const ALERT_FILE = path.join(OUT_DIR, 'capacity-alert.json');
+const REPO = process.env.CAPACITY_REPO || 'qweeqw231/macro-news';
+const API = 'https://api.github.com';
+const TZ = 'Asia/Shanghai';
+
+const argv = new Set(process.argv.slice(2));
+const FORCE = argv.has('--force');
+const WEEKLY = argv.has('--weekly');
+const FAST = argv.has('--fast');
+const NO_NET = argv.has('--no-net');
+
+const MIB = 1048576;
+
+// ── 阈值（来源：2026-11-15 容量预案 §5.1）────────────────────────────────
+// amber = 开始准备（写方案、跑对照，不动线上）；red = 开始执行（有窗口期）
+const LIMITS = {
+  repo_mib: { amber: 500, red: 700, hard: 1024, label: '仓库体积(API)' },
+  site_mb: { amber: 500, red: 700, hard: 1024, label: '站点发布体积' },
+  pack_mib: { amber: 150, red: 250, hard: null, label: 'clone 包' },
+  builds_per_hour: { amber: 8, red: 10, hard: null, label: '构建次数/小时(峰值)' },
+  worker_req_day: { amber: 50000, red: 80000, hard: 100000, label: 'Worker 请求/天' },
+  search_gz_mib: { amber: 4.5, red: 6, hard: null, label: 'search.json(gzip)' },
+};
+
+// ── 小工具 ────────────────────────────────────────────────────────────────
+function git(args, opts = {}) {
+  const r = spawnSync('git', args, {
+    cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * MIB, ...opts,
+  });
+  if (r.status !== 0) throw new Error(`git ${args.join(' ')}: ${(r.stderr || '').trim()}`);
+  return r.stdout;
+}
+
+function gitBuf(args, opts = {}) {
+  const r = spawnSync('git', args, { cwd: ROOT, maxBuffer: 64 * MIB, ...opts });
+  if (r.status !== 0) throw new Error(`git ${args.join(' ')} 失败`);
+  return r.stdout;
+}
+
+/** HEAD 里某个路径的 blob 字节（不受工作区抖动影响） */
+function blobSize(relPath) {
+  const out = spawnSync('git', ['cat-file', '-s', `HEAD:${relPath}`], { cwd: ROOT, encoding: 'utf8' });
+  if (out.status !== 0) return null;
+  const n = Number(out.stdout.trim());
+  return Number.isFinite(n) ? n : null;
+}
+
+function blobBuffer(relPath) {
+  const out = spawnSync('git', ['cat-file', 'blob', `HEAD:${relPath}`], { cwd: ROOT, maxBuffer: 64 * MIB });
+  return out.status === 0 ? out.stdout : null;
+}
+
+/** HEAD 全量文件清单：[{ path, size }] */
+function treeFiles() {
+  const out = git(['ls-tree', '-r', '-l', 'HEAD']);
+  const rows = [];
+  for (const line of out.split('\n')) {
+    if (!line) continue;
+    const [meta, p] = line.split('\t');
+    if (!meta || !p) continue;
+    const parts = meta.split(/\s+/);
+    const size = Number(parts[3]);
+    if (!Number.isFinite(size)) continue;
+    rows.push({ path: p, size });
+  }
+  return rows;
+}
+
+const sumWhere = (rows, pred) => rows.filter(pred).reduce((a, r) => a + r.size, 0);
+
+/** 等价「一次 clone 要下多少字节」：rev-list | pack-objects（与主报告同口径） */
+function clonePackBytes(rev = 'HEAD') {
+  return new Promise((resolve, reject) => {
+    const p1 = spawn('git', ['rev-list', '--objects', rev], { cwd: ROOT });
+    const p2 = spawn('git', ['pack-objects', '--stdout', '--quiet', '--delta-base-offset'], { cwd: ROOT });
+    let n = 0;
+    p1.stdout.pipe(p2.stdin);
+    p2.stdout.on('data', (d) => { n += d.length; });
+    p2.on('error', reject);
+    p1.on('error', reject);
+    p2.on('close', (code) => (code === 0 ? resolve(n) : reject(new Error(`pack-objects exit ${code}`))));
+  });
+}
+
+/** git 本机对象库的 size-pack（--fast 时的近似值） */
+function sizePackBytes() {
+  const out = git(['count-objects', '-v']);
+  const m = out.match(/size-pack:\s*(\d+)/);
+  return m ? Number(m[1]) * 1024 : 0;
+}
+
+function tzDay(iso) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  const p = new Intl.DateTimeFormat('en-CA', {
+    timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(d);
+  const g = (t) => p.find((x) => x.type === t)?.value || '';
+  return `${g('year')}-${g('month')}-${g('day')}`;
+}
+
+function isoWeek(d = new Date()) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = t.getUTCDay() || 7;
+  t.setUTCDate(t.getUTCDate() + 4 - day);
+  const y = t.getUTCFullYear();
+  const week = Math.ceil(((t - Date.UTC(y, 0, 1)) / 86400000 + 1) / 7);
+  return `${y}-W${String(week).padStart(2, '0')}`;
+}
+
+async function gh(pathname) {
+  const headers = { Accept: 'application/vnd.github+json', 'User-Agent': 'macro-news-capacity' };
+  if (process.env.GH_TOKEN) headers.Authorization = `Bearer ${process.env.GH_TOKEN}`;
+  const res = await fetch(`${API}${pathname}`, { headers });
+  if (!res.ok) throw new Error(`GitHub ${pathname} → ${res.status}`);
+  return res.json();
+}
+
+// ── 采集各项指标 ──────────────────────────────────────────────────────────
+async function collect() {
+  const m = { at: new Date().toISOString(), week: isoWeek(), notes: [] };
+
+  // 1) 仓库与站点体积（全部读 HEAD，避免工作区被并发会话改写导致抖动）
+  const files = treeFiles();
+  const siteBytes = files.reduce((a, r) => a + r.size, 0);
+  m.site_mb = round(siteBytes / MIB);
+  m.data_mb = round(sumWhere(files, (r) => r.path.startsWith('data/')) / MIB);
+  m.kline_mb = round(sumWhere(files, (r) => r.path.startsWith('data/kline/')) / MIB);
+  m.kline_min_mb = round(sumWhere(files, (r) => r.path.startsWith('data/kline/min/')) / MIB);
+  m.history_mb = round(sumWhere(files, (r) => r.path.startsWith('data/history/')) / MIB);
+  m.archive_mb = round(sumWhere(files, (r) => r.path.startsWith('data/archive/')) / MIB);
+  m.snapshots_mb = round(sumWhere(files, (r) => r.path.startsWith('data/snapshots/')) / MIB);
+  m.files = files.length;
+
+  // 2) search.json：原始 + gzip（体积代价在 gzip，前端拿到的就是它）
+  const sj = blobBuffer('data/search.json');
+  if (sj) {
+    m.search_mib = round(sj.length / MIB);
+    m.search_gz_mib = round(zlib.gzipSync(sj, { level: 6 }).length / MIB);
+    try { m.search_entries = JSON.parse(sj.toString('utf8')).items?.length ?? null; } catch { m.search_entries = null; }
+  } else {
+    m.notes.push('data/search.json 不存在（可能已按预案移出 git）');
+  }
+
+  // 3) 历史检索分片（2.22.0）：如果存在，单独看总量与单片刻度
+  const shardFiles = files.filter((r) => r.path.startsWith('data/search-history/') && r.path.endsWith('.json'));
+  if (shardFiles.length) {
+    m.shards = shardFiles.length;
+    m.shards_mb = round(shardFiles.reduce((a, r) => a + r.size, 0) / MIB);
+    m.shard_max_mb = round(Math.max(...shardFiles.map((r) => r.size)) / MIB);
+  }
+
+  // 4) clone 包
+  if (FAST) {
+    m.pack_mib = round(sizePackBytes() / MIB);
+    m.pack_note = 'size-pack 近似（--fast）';
+  } else {
+    try {
+      m.pack_mib = round((await clonePackBytes('HEAD')) / MIB);
+      m.pack_note = 'pack-objects 实测';
+    } catch (e) {
+      m.pack_mib = round(sizePackBytes() / MIB);
+      m.pack_note = `降级为 size-pack：${e.message}`;
+    }
+  }
+
+  // 5) GitHub：仓库登记体积 + 构建频率 + 部署健康
+  if (!NO_NET) {
+    try {
+      const info = await gh(`/repos/${REPO}`);
+      m.repo_mib = round((info.size || 0) / 1024);
+      m.pushed_at = info.pushed_at || '';
+    } catch (e) {
+      m.notes.push(`仓库体积获取失败：${e.message}`);
+    }
+    try {
+      const runs = [];
+      for (let p = 1; p <= 4; p++) {
+        const page = await gh(`/repos/${REPO}/actions/runs?per_page=100&page=${p}`);
+        runs.push(...(page.workflow_runs || []));
+        if ((page.workflow_runs || []).length < 100) break;
+      }
+      // 分支构建叫「pages build and deployment」，Actions 部署后是本仓库的 pages.yml
+      const isPages = (r) => r.name === 'pages build and deployment' || /pages\.ya?ml$/i.test(r.path || '');
+      const pagesRuns = runs.filter(isPages);
+      const byHour = new Map();
+      const byDay = new Map();
+      for (const r of pagesRuns) {
+        const h = (r.created_at || '').slice(0, 13);
+        const d = tzDay(r.created_at);
+        if (h) byHour.set(h, (byHour.get(h) || 0) + 1);
+        if (d) byDay.set(d, (byDay.get(d) || 0) + 1);
+      }
+      m.builds_per_hour = byHour.size ? Math.max(...byHour.values()) : null;
+      m.builds_per_hour_mean = byHour.size ? round(pagesRuns.length / byHour.size) : null;
+      m.builds_per_day = byDay.size ? round(pagesRuns.length / byDay.size) : null;
+      m.builds_sampled_hours = byHour.size;
+
+      // 部署健康：最近一次 pages 运行的结论与耗时
+      const last = pagesRuns.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''))[0];
+      if (last) {
+        const sec = (new Date(last.updated_at) - new Date(last.run_started_at)) / 1000;
+        m.last_deploy = {
+          name: last.name, conclusion: last.conclusion, event: last.event,
+          at: last.created_at, duration_s: Number.isFinite(sec) ? Math.round(sec) : null,
+          run_url: last.html_url,
+        };
+        const recent = pagesRuns.slice(0, 10);
+        m.deploy_fail_in_10 = recent.filter((r) => r.conclusion && r.conclusion !== 'success').length;
+      }
+    } catch (e) {
+      m.notes.push(`Actions 运行获取失败：${e.message}`);
+    }
+  }
+
+  // 6) Cloudflare Worker 调用量（可选：需要 CF_API_TOKEN + CF_ACCOUNT_ID）
+  if (!NO_NET && process.env.CF_API_TOKEN && process.env.CF_ACCOUNT_ID) {
+    try {
+      const q = `query { viewer { accounts(filter:{accountTag:"${process.env.CF_ACCOUNT_ID}"}) { workersInvocationsAdaptive(limit:7, filter:{datetime_geq:"${new Date(Date.now() - 7 * 864e5).toISOString()}"}) { sum { requests } dimensions { datetime } } } } }`;
+      const res = await fetch('https://api.cloudflare.com/client/v4/graphql', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${process.env.CF_API_TOKEN}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: q }),
+      });
+      const j = await res.json();
+      const rows = j?.data?.viewer?.accounts?.[0]?.workersInvocationsAdaptive || [];
+      const total = rows.reduce((a, r) => a + (r.sum?.requests || 0), 0);
+      m.worker_req_day = rows.length ? round(total / rows.length) : null;
+    } catch (e) {
+      m.notes.push(`Worker 调用量获取失败：${e.message}`);
+    }
+  } else if (!NO_NET) {
+    m.worker_req_day = null;
+    m.notes.push('Worker 调用量未采集（未设置 CF_API_TOKEN / CF_ACCOUNT_ID）');
+  }
+
+  return m;
+}
+
+// ── 趋势与判级 ────────────────────────────────────────────────────────────
+const round = (n) => (Number.isFinite(n) ? Math.round(n * 100) / 100 : null);
+
+function prevSnapshot() {
+  if (!fs.existsSync(OUT_DIR)) return null;
+  const files = fs.readdirSync(OUT_DIR)
+    .filter((f) => /^capacity-\d{4}-W\d{2}\.json$/.test(f))
+    .sort();
+  const cur = `capacity-${isoWeek()}.json`;
+  const older = files.filter((f) => f !== cur);
+  if (!older.length) return null;
+  try { return JSON.parse(fs.readFileSync(path.join(OUT_DIR, older[older.length - 1]), 'utf8')); } catch { return null; }
+}
+
+function withTrend(cur, prev) {
+  if (!prev) return cur;
+  const days = Math.max(0.5, (new Date(cur.at) - new Date(prev.at)) / 864e5);
+  const perMonth = (k) => (Number.isFinite(cur[k]) && Number.isFinite(prev[k])
+    ? round(((cur[k] - prev[k]) / days) * 30) : null);
+  cur.trend = {
+    since: prev.at, days: round(days),
+    repo_mib_per_month: perMonth('repo_mib'),
+    site_mb_per_month: perMonth('site_mb'),
+    pack_mib_per_month: perMonth('pack_mib'),
+    data_mb_per_month: perMonth('data_mb'),
+  };
+  return cur;
+}
+
+function grade(m) {
+  const out = [];
+  for (const [key, lim] of Object.entries(LIMITS)) {
+    const v = m[key];
+    if (!Number.isFinite(v)) continue;
+    const level = v >= lim.red ? 'red' : v >= lim.amber ? 'amber' : 'ok';
+    let eta = null;
+    const rateKey = { repo_mib: 'repo_mib_per_month', site_mb: 'site_mb_per_month', pack_mib: 'pack_mib_per_month' }[key];
+    const rate = rateKey ? m.trend?.[rateKey] : null;
+    if (lim.hard && Number.isFinite(rate) && rate > 0) {
+      eta = round(Math.max(0, (lim.hard - v) / rate));
+    }
+    out.push({ key, label: lim.label, value: v, amber: lim.amber, red: lim.red, hard: lim.hard, level, months_to_hard: eta });
+  }
+  return out;
+}
+
+// ── 输出 ──────────────────────────────────────────────────────────────────
+function printTable(m, rows) {
+  const pad = (s, n) => String(s).padEnd(n);
+  console.log(`\n容量周报 ${m.week}  ${m.at}`);
+  console.log('-'.repeat(92));
+  console.log(`${pad('指标', 22)}${pad('当前', 12)}${pad('阈值 黄/红', 14)}${pad('月化', 10)}状态`);
+  console.log('-'.repeat(92));
+  const g = Object.fromEntries(rows.map((r) => [r.key, r]));
+  const line = (key, value, unit, extra = '') => {
+    const r = g[key];
+    const th = r ? (r.hard ? `${r.amber}/${r.red}/${r.hard}` : `${r.amber}/${r.red}`) : '-';
+    const mark = r ? { ok: 'OK', amber: '黄·准备', red: '红·执行' }[r.level] : '';
+    console.log(`${pad(r?.label || key, 22)}${pad(`${value ?? '-'} ${unit}`, 12)}${pad(th, 14)}${pad(extra, 10)}${mark}`);
+  };
+  line('repo_mib', m.repo_mib, 'MiB', m.trend?.repo_mib_per_month != null ? `+${m.trend.repo_mib_per_month}/月` : '');
+  line('site_mb', m.site_mb, 'MB', m.trend?.site_mb_per_month != null ? `+${m.trend.site_mb_per_month}/月` : '');
+  line('pack_mib', m.pack_mib, 'MiB', m.trend?.pack_mib_per_month != null ? `+${m.trend.pack_mib_per_month}/月` : '');
+  line('builds_per_hour', m.builds_per_hour, '次/h', `均 ${m.builds_per_hour_mean ?? '-'}`);
+  line('worker_req_day', m.worker_req_day, '次/天', '');
+  line('search_gz_mib', m.search_gz_mib, 'MiB', `${m.search_entries ?? '-'} 条`);
+  console.log('-'.repeat(92));
+  console.log(`分项  data ${m.data_mb} MB（kline ${m.kline_mb}，其中分钟线 ${m.kline_min_mb}；`
+    + `history ${m.history_mb}；archive ${m.archive_mb}；snapshots ${m.snapshots_mb}）`);
+  if (m.shards) console.log(`分片  search-history ${m.shards} 片 / ${m.shards_mb} MB，最大单片 ${m.shard_max_mb} MB`);
+  if (m.last_deploy) {
+    console.log(`部署  最近一次「${m.last_deploy.name}」${m.last_deploy.conclusion}，`
+      + `${m.last_deploy.duration_s}s，${m.last_deploy.at}（近 10 次失败 ${m.deploy_fail_in_10}）`);
+  }
+  for (const r of rows.filter((x) => x.months_to_hard != null)) {
+    console.log(`预计   ${r.label} 距硬上限还有约 ${r.months_to_hard} 个月`);
+  }
+  for (const n of m.notes) console.log(`备注   ${n}`);
+  console.log('');
+}
+
+// ── 主流程 ────────────────────────────────────────────────────────────────
+async function main() {
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  const outFile = path.join(OUT_DIR, `capacity-${isoWeek()}.json`);
+
+  if (WEEKLY && !FORCE) {
+    const now = new Date();
+    const isMonday = new Intl.DateTimeFormat('en-CA', { timeZone: TZ, weekday: 'short' }).format(now) === 'Mon';
+    const hour = Number(new Intl.DateTimeFormat('en-GB', { timeZone: TZ, hour: '2-digit', hour12: false }).format(now));
+    if (fs.existsSync(outFile) || !isMonday || hour < 9) {
+      console.log(`容量周报：本周（${isoWeek()}）已跑过或未到周一 09:00，跳过。`);
+      return;
+    }
+  }
+
+  const cur = await collect();
+  const prev = prevSnapshot();
+  withTrend(cur, prev);
+  const rows = grade(cur);
+  cur.grades = rows;
+
+  // 只保留最近 12 周的快照，避免 .local 无限增长
+  const all = fs.readdirSync(OUT_DIR).filter((f) => /^capacity-\d{4}-W\d{2}\.json$/.test(f)).sort();
+  for (const f of all.slice(0, Math.max(0, all.length - 12))) {
+    if (f !== path.basename(outFile)) fs.unlinkSync(path.join(OUT_DIR, f));
+  }
+
+  fs.writeFileSync(outFile, JSON.stringify(cur, null, 1) + '\n', 'utf8');
+
+  const red = rows.filter((r) => r.level === 'red');
+  const amber = rows.filter((r) => r.level === 'amber');
+  const alert = {
+    updatedAt: cur.at,
+    kind: 'capacity',
+    active: red.length > 0,
+    red: red.map((r) => `${r.label}=${r.value}`),
+    amber: amber.map((r) => `${r.label}=${r.value}`),
+    note: red.length
+      ? '容量已达红档：按预案开始执行迁移（见 outputs/capacity-limit-runbook.md）'
+      : amber.length ? '容量进入黄档：开始准备，勿动线上' : '容量正常',
+  };
+  fs.writeFileSync(ALERT_FILE, JSON.stringify(alert) + '\n', 'utf8');
+
+  printTable(cur, rows);
+  console.log(`快照 → ${path.relative(ROOT, outFile)}`);
+  if (red.length) console.log(`⚠ 红档：${red.map((r) => r.label).join('、')}`);
+  else if (amber.length) console.log(`⚠ 黄档：${amber.map((r) => r.label).join('、')}`);
+}
+
+main().catch((e) => {
+  console.error('capacity.mjs 失败：', e.message);
+  process.exitCode = 1;
+});

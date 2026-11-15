@@ -1,0 +1,68 @@
+name: Pages 部署（自定义 Actions）
+
+# 为什么不再用「Deploy from a branch」：
+#   GitHub Pages 对「分支构建」有 **10 次/小时** 的软上限（官方文档 GitHub Pages limits）。
+#   本站每 15 分钟一轮采集、四条 workflow 各自 push，实测峰值已经打到 10 次/小时
+#   ⇒ 超出的构建会被跳过/取消，表现为「线上内容比仓库旧」，而且不报错、不易察觉。
+#   官方原文：该限制 *does not apply if you build and publish your site with a custom
+#   GitHub Actions workflow* —— 所以改成 Actions 部署后，10 次/小时 不再适用于本站。
+#
+# 与另外四条写数据 workflow 的关系：
+#   · 本 workflow **只读仓库、只发 Pages 部署**，不写分支，不参与 data 的推送竞争；
+#   · concurrency 组独立（group: pages），且 cancel-in-progress: false
+#     ⇒ 连续提交不会互相取消部署，最坏只是排队；这与仓库既有的
+#     「四条写分支 workflow 各自独立 concurrency、不连环取消」是同一个原则。
+#
+# ⚠ 两个体积相关的坑：
+#   1) 站点约 131 MB，每次部署都要打包上传一次。upload-pages-artifact 打包时
+#      排除 .git 与 .github，所以上传的是工作树而不是 260 MB；
+#   2) artifact 保留期必须显式设 1 天。默认值目前也是 1，但一旦被改成 90 天，
+#      按 160 次/天 × 131 MB 会把 Actions artifact 存储堆到 TB 级。
+
+on:
+  push:
+    branches: [main]
+    # 纯文档改动不需要重新发布站点，省掉一部分部署
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+      - '.github/workflows/collect.yml'
+      - '.github/workflows/kline-full.yml'
+      - '.github/workflows/kline-minute.yml'
+      - '.github/workflows/snapshot.yml'
+  # 手动触发：切换 Pages 源之后用它做第一次验证
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          # 部署只需要工作树，不需要历史（历史 129 MB，白拉）
+          fetch-depth: 1
+
+      - name: 打包站点
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+          # 显式写死：站点 131 MB × 每天约 160 次部署，保留 90 天就是 TB 级
+          retention-days: 1
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
