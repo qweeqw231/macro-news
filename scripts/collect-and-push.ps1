@@ -617,4 +617,24 @@ if (-not $pushOk) {
 
 } finally {
     Write-RunLedger
+
+    # ---- 8. 容量周报（每周一次，只读）----
+    # 挂在本任务上：每 2 小时被调用一次，但 --weekly 让它在非周一 / 本周已跑过时
+    # 立刻退出（约 0.1s、不联网、不写盘）。真正的体检只写 .local/metrics/，
+    # 不改 data/、不提交，因此不影响采集结果，失败也不改变本轮的 result。
+    try {
+        $capScript = Join-Path $root 'scripts\capacity.mjs'
+        if (Test-Path $capScript) {
+            $capOut = & node $capScript --weekly 2>&1 | Out-String
+            $capOut = $capOut.Trim()
+            if ($capOut) {
+                Say $capOut
+                $capLog = Join-Path $root '.local\metrics\capacity-run.log'
+                $stamp = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
+                Add-Content -LiteralPath $capLog -Value "[$stamp]`n$capOut`n" -Encoding UTF8
+            }
+        }
+    } catch {
+        Say "容量周报执行失败（不影响采集）：$($_.Exception.Message)"
+    }
 }

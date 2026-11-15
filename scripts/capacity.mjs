@@ -17,8 +17,14 @@
 //   node scripts/capacity.mjs                 # 立刻跑一次（写本周快照并打印趋势）
 //   node scripts/capacity.mjs --force         # 同上，忽略「本周已跑过」的节流
 //   node scripts/capacity.mjs --weekly        # 周节流：只在周一 09:00 之后、且本周还没跑过时才执行
+//                                             #   其它时间立刻退出（约 0.1s，不联网、不写盘）
 //   node scripts/capacity.mjs --fast          # 跳过 clone 包实测（省约 40 秒，用 size-pack 近似）
 //   node scripts/capacity.mjs --no-net        # 完全离线：不调 GitHub API / Cloudflare API
+//
+// 验证周节流（伪造"现在"）：
+//   $env:CAPACITY_FAKE_NOW='2026-11-18T10:00:00+08:00'; node scripts/capacity.mjs --weekly   # 周三 → 跳过
+//   $env:CAPACITY_FAKE_NOW='2026-11-16T08:10:00+08:00'; node scripts/capacity.mjs --weekly   # 周一 08:10 → 跳过
+//   $env:CAPACITY_FAKE_NOW='2026-11-16T09:10:00+08:00'; node scripts/capacity.mjs --weekly   # 周一 09:10 → 执行
 //
 // 触发方式（二选一）：
 //   A. 手动：上面的命令；
@@ -47,6 +53,11 @@ const WEEKLY = argv.has('--weekly');
 const FAST = argv.has('--fast');
 const NO_NET = argv.has('--no-net');
 
+// 便于验证周节流（伪造"现在"）：
+//   CAPACITY_FAKE_NOW=2026-11-16T09:10:00+08:00 node scripts/capacity.mjs --weekly
+const FAKE_NOW = process.env.CAPACITY_FAKE_NOW ? new Date(process.env.CAPACITY_FAKE_NOW) : null;
+const NOW = () => (FAKE_NOW && !Number.isNaN(FAKE_NOW.getTime()) ? FAKE_NOW : new Date());
+
 const MIB = 1048576;
 
 // ── 阈值（来源：2026-11-15 容量预案 §5.1）────────────────────────────────
@@ -55,7 +66,7 @@ const LIMITS = {
   repo_mib: { amber: 500, red: 700, hard: 1024, label: '仓库体积(API)' },
   site_mb: { amber: 500, red: 700, hard: 1024, label: '站点发布体积' },
   pack_mib: { amber: 150, red: 250, hard: null, label: 'clone 包' },
-  builds_per_hour: { amber: 8, red: 10, hard: null, label: '构建次数/小时(峰值)' },
+  builds_per_hour_6h: { amber: 8, red: 10, hard: null, label: '构建次数/小时(近6h峰值)' },
   worker_req_day: { amber: 50000, red: 80000, hard: 100000, label: 'Worker 请求/天' },
   search_gz_mib: { amber: 4.5, red: 6, hard: null, label: 'search.json(gzip)' },
 };
@@ -137,7 +148,7 @@ function tzDay(iso) {
   return `${g('year')}-${g('month')}-${g('day')}`;
 }
 
-function isoWeek(d = new Date()) {
+function isoWeek(d = NOW()) {
   const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
   const day = t.getUTCDay() || 7;
   t.setUTCDate(t.getUTCDate() + 4 - day);
@@ -149,14 +160,24 @@ function isoWeek(d = new Date()) {
 async function gh(pathname) {
   const headers = { Accept: 'application/vnd.github+json', 'User-Agent': 'macro-news-capacity' };
   if (process.env.GH_TOKEN) headers.Authorization = `Bearer ${process.env.GH_TOKEN}`;
-  const res = await fetch(`${API}${pathname}`, { headers });
-  if (!res.ok) throw new Error(`GitHub ${pathname} → ${res.status}`);
-  return res.json();
+  // 周报是低频任务，偶发 fetch terminated 不该让整份报告缺一半指标 ⇒ 重试一次
+  let lastErr;
+  for (let i = 0; i < 2; i++) {
+    try {
+      const res = await fetch(`${API}${pathname}`, { headers });
+      if (!res.ok) throw new Error(`GitHub ${pathname} → ${res.status}`);
+      return await res.json();
+    } catch (e) {
+      lastErr = e;
+      if (i === 0) await new Promise((r) => setTimeout(r, 1500));
+    }
+  }
+  throw lastErr;
 }
 
 // ── 采集各项指标 ──────────────────────────────────────────────────────────
 async function collect() {
-  const m = { at: new Date().toISOString(), week: isoWeek(), notes: [] };
+  const m = { at: NOW().toISOString(), week: isoWeek(), notes: [] };
 
   // 1) 仓库与站点体积（全部读 HEAD，避免工作区被并发会话改写导致抖动）
   const files = treeFiles();
@@ -230,6 +251,19 @@ async function collect() {
         if (d) byDay.set(d, (byDay.get(d) || 0) + 1);
       }
       m.builds_per_hour = byHour.size ? Math.max(...byHour.values()) : null;
+      // 判级用「近 6 小时峰值」：切换部署方式的那个小时会同时出现旧分支构建与新部署，
+      // 24h 峰值会被这类一次性重叠抬高（实测 16 次/h），不代表当前状态。
+      const cut6 = NOW().getTime() - 6 * 3600 * 1000;
+      const recentBuckets = [...byHour.entries()]
+        .filter(([h]) => new Date(`${h}:00:00Z`).getTime() >= cut6)
+        .map(([, c]) => c);
+      m.builds_per_hour_6h = recentBuckets.length ? Math.max(...recentBuckets) : null;
+      if (m.builds_per_hour_6h == null) {
+        // 近 6 小时没有构建记录（空闲期，或用 CAPACITY_FAKE_NOW 伪造时间做验证）时，
+        // 回落到 24h 峰值，避免指标整行缺失看不出状态
+        m.builds_per_hour_6h = m.builds_per_hour;
+        m.notes.push('近 6h 无构建记录，构建峰值回落为 24h 峰值');
+      }
       m.builds_per_hour_mean = byHour.size ? round(pagesRuns.length / byHour.size) : null;
       m.builds_per_day = byDay.size ? round(pagesRuns.length / byDay.size) : null;
       m.builds_sampled_hours = byHour.size;
@@ -245,6 +279,10 @@ async function collect() {
         };
         const recent = pagesRuns.slice(0, 10);
         m.deploy_fail_in_10 = recent.filter((r) => r.conclusion && r.conclusion !== 'success').length;
+        // 近 24h 构建失败数（cancelled 也算：10 次/小时超限时的表现就是被取消）
+        const since = NOW().getTime() - 24 * 3600 * 1000;
+        m.builds_fail_24h = pagesRuns.filter((r) => r.conclusion && r.conclusion !== 'success'
+          && new Date(r.created_at).getTime() >= since).length;
       }
     } catch (e) {
       m.notes.push(`Actions 运行获取失败：${e.message}`);
@@ -278,6 +316,22 @@ async function collect() {
 // ── 趋势与判级 ────────────────────────────────────────────────────────────
 const round = (n) => (Number.isFinite(n) ? Math.round(n * 100) / 100 : null);
 
+// 周节流状态：记录「本周是否已经真正跑过」。用状态文件而不是「快照文件是否存在」，
+// 因为手动 --force 也会产出快照，两者语义不同。
+const STATE_FILE = path.join(OUT_DIR, 'capacity-state.json');
+
+function readState() {
+  try { return JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); } catch { return {}; }
+}
+
+function writeState(week, at) {
+  fs.writeFileSync(STATE_FILE, `${JSON.stringify({ lastRunWeek: week, lastRunAt: at })}\n`, 'utf8');
+}
+
+function fmtWeekday(d) {
+  return new Intl.DateTimeFormat('zh-CN', { timeZone: TZ, weekday: 'long' }).format(d);
+}
+
 function prevSnapshot() {
   if (!fs.existsSync(OUT_DIR)) return null;
   const files = fs.readdirSync(OUT_DIR)
@@ -294,13 +348,20 @@ function withTrend(cur, prev) {
   const days = Math.max(0.5, (new Date(cur.at) - new Date(prev.at)) / 864e5);
   const perMonth = (k) => (Number.isFinite(cur[k]) && Number.isFinite(prev[k])
     ? round(((cur[k] - prev[k]) / days) * 30) : null);
+  // 间隔不足 7 天时不给「月化」：一次性回补（新增标的、历史补齐）会让单日增量
+  // 被放大成荒谬的月速率（实测把一次性 73 MB 回补算成 +2485/月）。
+  const trustworthy = days >= 7;
   cur.trend = {
-    since: prev.at, days: round(days),
-    repo_mib_per_month: perMonth('repo_mib'),
-    site_mb_per_month: perMonth('site_mb'),
-    pack_mib_per_month: perMonth('pack_mib'),
-    data_mb_per_month: perMonth('data_mb'),
+    since: prev.at, days: round(days), trustworthy,
+    repo_mib_per_month: trustworthy ? perMonth('repo_mib') : null,
+    site_mb_per_month: trustworthy ? perMonth('site_mb') : null,
+    // clone 包只在与上次同为「pack-objects 实测」时才比较，避免 --fast 的 size-pack 混入
+    pack_mib_per_month: trustworthy && prev.pack_note === cur.pack_note ? perMonth('pack_mib') : null,
+    data_mb_per_month: trustworthy ? perMonth('data_mb') : null,
   };
+  if (!trustworthy) {
+    cur.notes.push(`上次快照仅 ${cur.trend.days} 天前，间隔不足 7 天，本期不出月化速率`);
+  }
   return cur;
 }
 
@@ -333,12 +394,13 @@ function printTable(m, rows) {
     const r = g[key];
     const th = r ? (r.hard ? `${r.amber}/${r.red}/${r.hard}` : `${r.amber}/${r.red}`) : '-';
     const mark = r ? { ok: 'OK', amber: '黄·准备', red: '红·执行' }[r.level] : '';
-    console.log(`${pad(r?.label || key, 22)}${pad(`${value ?? '-'} ${unit}`, 12)}${pad(th, 14)}${pad(extra, 10)}${mark}`);
+    console.log(`${pad(r?.label || LIMITS[key]?.label || key, 22)}${pad(`${value ?? '-'} ${unit}`, 12)}${pad(th, 14)}${pad(extra, 10)}${mark}`);
   };
   line('repo_mib', m.repo_mib, 'MiB', m.trend?.repo_mib_per_month != null ? `+${m.trend.repo_mib_per_month}/月` : '');
   line('site_mb', m.site_mb, 'MB', m.trend?.site_mb_per_month != null ? `+${m.trend.site_mb_per_month}/月` : '');
   line('pack_mib', m.pack_mib, 'MiB', m.trend?.pack_mib_per_month != null ? `+${m.trend.pack_mib_per_month}/月` : '');
-  line('builds_per_hour', m.builds_per_hour, '次/h', `均 ${m.builds_per_hour_mean ?? '-'}`);
+  line('builds_per_hour_6h', m.builds_per_hour_6h, '次/h', `24h峰 ${m.builds_per_hour ?? '-'}`);
+  console.log(`${pad('构建失败(24h)', 22)}${pad(`${m.builds_fail_24h ?? '-'} 次`, 12)}${pad('-', 14)}${pad('', 10)}${(m.builds_fail_24h || 0) > 0 ? '需关注' : 'OK'}`);
   line('worker_req_day', m.worker_req_day, '次/天', '');
   line('search_gz_mib', m.search_gz_mib, 'MiB', `${m.search_entries ?? '-'} 条`);
   console.log('-'.repeat(92));
@@ -359,14 +421,24 @@ function printTable(m, rows) {
 // ── 主流程 ────────────────────────────────────────────────────────────────
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  const outFile = path.join(OUT_DIR, `capacity-${isoWeek()}.json`);
+  const now = NOW();
+  const week = isoWeek(now);
+  const outFile = path.join(OUT_DIR, `capacity-${week}.json`);
 
   if (WEEKLY && !FORCE) {
-    const now = new Date();
+    const state = readState();
     const isMonday = new Intl.DateTimeFormat('en-CA', { timeZone: TZ, weekday: 'short' }).format(now) === 'Mon';
     const hour = Number(new Intl.DateTimeFormat('en-GB', { timeZone: TZ, hour: '2-digit', hour12: false }).format(now));
-    if (fs.existsSync(outFile) || !isMonday || hour < 9) {
-      console.log(`容量周报：本周（${isoWeek()}）已跑过或未到周一 09:00，跳过。`);
+    if (state.lastRunWeek === week) {
+      console.log(`容量周报：${week} 本周已跑过（${state.lastRunAt}），跳过。`);
+      return;
+    }
+    if (!isMonday) {
+      console.log(`容量周报：今天是${fmtWeekday(now)}（${week}），非周一，跳过。`);
+      return;
+    }
+    if (hour < 9) {
+      console.log(`容量周报：今天周一 ${String(hour).padStart(2, '0')} 点，未到 09:00，跳过。`);
       return;
     }
   }
@@ -384,6 +456,7 @@ async function main() {
   }
 
   fs.writeFileSync(outFile, JSON.stringify(cur, null, 1) + '\n', 'utf8');
+  writeState(cur.week, cur.at);
 
   const red = rows.filter((r) => r.level === 'red');
   const amber = rows.filter((r) => r.level === 'amber');
