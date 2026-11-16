@@ -1,11 +1,235 @@
 {
-  "generatedAt": "2026-11-16T11:52:56.746Z",
+  "generatedAt": "2026-11-16T12:23:06.048Z",
   "windowDays": 62,
   "from": "2026-09-16",
   "days": 62,
   "fromHistory": 19,
-  "total": 56205,
+  "total": 56238,
   "items": [
+    {
+      "id": "2bps40",
+      "ts": 1794831757,
+      "time": "2026-11-16T20:22:37.000+08:00",
+      "source": "新浪财经",
+      "title": "机构观点：黄仁勋重返英伟达的可能性几乎为零，英伟达股价仍有下跌空间",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxuev1108775.shtml"
+    },
+    {
+      "id": "625b5x",
+      "ts": 1794831704,
+      "time": "2026-11-16T20:21:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国首相伯纳姆将发表讲话称脱欧并未奏效 失去比得到的更多",
+      "url": "https://wallstreetcn.com/livenews/3200671"
+    },
+    {
+      "id": "80ylof",
+      "ts": 1794831677,
+      "time": "2026-11-16T20:21:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "顺钠股份：拟以不低于1.2亿元且不超过2.4亿元回购股份，价格不超过12.36元/股，用于员工持股计划及/或股权激励计划，期限自董事会审议通过之日起12个月内。",
+      "url": "https://wallstreetcn.com/livenews/3200670"
+    },
+    {
+      "id": "dz4xen",
+      "ts": 1794831669,
+      "time": "2026-11-16T20:21:09.000+08:00",
+      "source": "华尔街见闻",
+      "title": "苑东生物：与中国科学院上海药物研究所、中科中山药物创新研究院共同研发的1类化学创新药EP-0226片，用于带状疱疹后神经痛的II/III期临床试验完成首例受试者给药。",
+      "url": "https://wallstreetcn.com/livenews/3200669"
+    },
+    {
+      "id": "1tgegzu",
+      "ts": 1794831624,
+      "time": "2026-11-16T20:20:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "报道：GIC、沙特电信竞购数据中心开发商Pure DC股权",
+      "url": "https://wallstreetcn.com/livenews/3200668"
+    },
+    {
+      "id": "1ozy0xg",
+      "ts": 1794831592,
+      "time": "2026-11-16T20:19:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "优利德：拟以简易程序向特定对象发行股票，募资不超过2.53亿元，用于河源仪器仪表产业园扩产项目、高端光电测量仪器研发及产业化项目及补充流动资金项目。",
+      "url": "https://wallstreetcn.com/livenews/3200667"
+    },
+    {
+      "id": "1q8t8f0",
+      "ts": 1794831582,
+      "time": "2026-11-16T20:19:42.000+08:00",
+      "source": "华尔街见闻",
+      "title": "科翔股份：拟以集中竞价方式回购股份，资金总额不低于8000万元且不超过1.2亿元，价格不超过115.00元/股，用于实施股权激励计划或员工持股计划，实施期限自董事会审议通过之日起不超过12个月。",
+      "url": "https://wallstreetcn.com/livenews/3200666"
+    },
+    {
+      "id": "en0p81",
+      "ts": 1794831515,
+      "time": "2026-11-16T20:18:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "影石Insta360发售全新品类Toast墨水屏相纸，拓展影像生态",
+      "url": "https://wallstreetcn.com/livenews/3200665"
+    },
+    {
+      "id": "i84b8f",
+      "ts": 1794831488,
+      "time": "2026-11-16T20:18:08.000+08:00",
+      "source": "新浪财经",
+      "title": "风波爆发前 特朗普持仓英伟达市值最高达6200万美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxuez5945801.shtml"
+    },
+    {
+      "id": "18x95gt",
+      "ts": 1794831345,
+      "time": "2026-11-16T20:15:45.000+08:00",
+      "source": "新浪财经",
+      "title": "风波之下英伟达仍在名单内：特朗普政府拟选定20余家AI“国家冠军企业”，助力拿下海外订单",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxuev1103513.shtml"
+    },
+    {
+      "id": "180t96r",
+      "ts": 1794831161,
+      "time": "2026-11-16T12:12:41.000Z",
+      "source": "中新网",
+      "title": "近半席位来自浑南 沈阳“AI+制造”集群领跑全省",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-16/10732998.shtml"
+    },
+    {
+      "id": "bbjzzz",
+      "ts": 1794831159,
+      "time": "2026-11-16T20:12:39.000+08:00",
+      "source": "新浪财经",
+      "title": "门店缩水、利润预降超43%！锅圈股价跳水",
+      "url": "https://finance.sina.com.cn/stock/s/2026-11-16/doc-iniyxufc2720078.shtml"
+    },
+    {
+      "id": "ytx4nd",
+      "ts": 1794831001,
+      "time": "2026-11-16T12:10:01.000Z",
+      "source": "中新网",
+      "title": "中船大连造船单日连交两船",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-16/10732996.shtml"
+    },
+    {
+      "id": "vanphh",
+      "ts": 1794830921,
+      "time": "2026-11-16T20:08:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国证监会在沪召开国际顾问委员会第23次会议",
+      "url": "https://wallstreetcn.com/livenews/3200664"
+    },
+    {
+      "id": "h5gago",
+      "ts": 1794830911,
+      "time": "2026-11-16T20:08:31.000+08:00",
+      "source": "华尔街见闻",
+      "title": "证监会在沪召开国际顾问委员会第23次会议",
+      "url": "https://wallstreetcn.com/livenews/3200663"
+    },
+    {
+      "id": "12voyke",
+      "ts": 1794830840,
+      "time": "2026-11-16T20:07:20.000+08:00",
+      "source": "新浪财经",
+      "title": "全文|巴菲特宣布：将向四家家族基金会捐赠B类股",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxufc2715671.shtml"
+    },
+    {
+      "id": "1y84yo9",
+      "ts": 1794830740,
+      "time": "2026-11-16T20:05:40.000+08:00",
+      "source": "东方财富",
+      "title": "国家市场监督管理总局副局长潘晓东在北京调研智慧监管体系建设工作",
+      "url": "http://finance.eastmoney.com/news/1350,202611163931998774.html"
+    },
+    {
+      "id": "t8z0lw",
+      "ts": 1794830581,
+      "time": "2026-11-16T20:03:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "巴菲特将向基金会捐赠923万股伯克希尔B类股",
+      "url": "https://wallstreetcn.com/livenews/3200662"
+    },
+    {
+      "id": "1sfkabx",
+      "ts": 1794830501,
+      "time": "2026-11-16T20:01:41.000+08:00",
+      "source": "东方财富",
+      "title": "在华新能源产品矩阵扩容至7款 日产中国马智欣：过去几年我们转型慢了，现在正全力以赴",
+      "url": "http://finance.eastmoney.com/news/1354,202611163932000091.html"
+    },
+    {
+      "id": "nashwv",
+      "ts": 1794830336,
+      "time": "2026-11-16T11:58:56.000Z",
+      "source": "中新网",
+      "title": "（深圳APEC）机器人“出海记”：“中国智造”如何链接亚太？",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-16/10732987.shtml"
+    },
+    {
+      "id": "1fv3zn5",
+      "ts": 1794830281,
+      "time": "2026-11-16T19:58:01.000+08:00",
+      "source": "新浪财经",
+      "title": "投资者消化黄仁勋辞职带来的连锁冲击，英伟达再跌3%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxuez5934810.shtml"
+    },
+    {
+      "id": "1y2n8dc",
+      "ts": 1794830280,
+      "time": "2026-11-16T11:58:00.000Z",
+      "source": "中新网",
+      "title": "美国马里兰州环境部部长：期待与中国在绿色低碳转型领域深化合作",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-16/10732991.shtml"
+    },
+    {
+      "id": "hv60v0",
+      "ts": 1794830275,
+      "time": "2026-11-16T19:57:55.000+08:00",
+      "source": "新浪财经",
+      "title": "欧盟批准裕信银行收购德国商业银行 欧洲银行业标志性交易再过一关",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxuez5934790.shtml"
+    },
+    {
+      "id": "1eioejr",
+      "ts": 1794830205,
+      "time": "2026-11-16T19:56:45.000+08:00",
+      "source": "华尔街见闻",
+      "title": "王小洪在四川调研时强调 坚定信心 抢抓机遇 全力完成全年经济社会发展主要目标任务",
+      "url": "https://wallstreetcn.com/livenews/3200661"
+    },
+    {
+      "id": "r8ueej",
+      "ts": 1794830132,
+      "time": "2026-11-16T11:55:32.000Z",
+      "source": "中新网",
+      "title": "美国务院前气候特使高级顾问：中美应通过学习实践深化气候合作",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-16/10732990.shtml"
+    },
+    {
+      "id": "1r9zn8l",
+      "ts": 1794830106,
+      "time": "2026-11-16T19:55:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧盟批准裕信银行收购德国商业银行 欧洲银行业标志性交易再过一关",
+      "url": "https://wallstreetcn.com/livenews/3200660"
+    },
+    {
+      "id": "fzxte2",
+      "ts": 1794830104,
+      "time": "2026-11-16T19:55:04.000+08:00",
+      "source": "新浪财经",
+      "title": "投资者静待美联储主席沃什讲话，美债收益率回落",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxuev1092643.shtml"
+    },
+    {
+      "id": "8g4z5g",
+      "ts": 1794830071,
+      "time": "2026-11-16T19:54:31.000+08:00",
+      "source": "新浪财经",
+      "title": "中天期货:沪锌延续调整 甲醇遇阻回落",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-16/doc-iniyxufc2709492.shtml"
+    },
     {
       "id": "6bv2yz",
       "ts": 1794829921,
@@ -13,6 +237,14 @@
       "source": "华尔街见闻",
       "title": "Diamondback将以21.5亿美元及1556万股股票收购Double Eagle旗下公司。",
       "url": "https://wallstreetcn.com/livenews/3200659"
+    },
+    {
+      "id": "1sdmrt0",
+      "ts": 1794829705,
+      "time": "2026-11-16T19:48:25.000+08:00",
+      "source": "东方财富",
+      "title": "国家数据局：加快编制《国家数据基础设施建设行动计划》",
+      "url": "http://finance.eastmoney.com/news/1352,202611163931994162.html"
     },
     {
       "id": "1p5tect",
@@ -37,6 +269,14 @@
       "source": "华尔街见闻",
       "title": "礼来将以最高15亿美元现金收购Calytrix Bio。",
       "url": "https://wallstreetcn.com/livenews/3200657"
+    },
+    {
+      "id": "t8u0rq",
+      "ts": 1794829611,
+      "time": "2026-11-16T19:46:51.000+08:00",
+      "source": "新浪财经",
+      "title": "提示退市风险！收盘价首次低于1元",
+      "url": "https://finance.sina.com.cn/stock/s/2026-11-16/doc-iniyxufc2708725.shtml"
     },
     {
       "id": "178zmv1",
@@ -69,6 +309,14 @@
       "source": "东方财富",
       "title": "柴油发电机全球爆单 柴油发电机订单排到明年年底",
       "url": "http://finance.eastmoney.com/news/1350,202611163931987554.html"
+    },
+    {
+      "id": "1ons4nu",
+      "ts": 1794829337,
+      "time": "2026-11-16T19:42:17.000+08:00",
+      "source": "东方财富",
+      "title": "服务中部地区崛起，本届中部投资贸易博览会有哪些亮点",
+      "url": "http://finance.eastmoney.com/news/1355,202611163931993867.html"
     },
     {
       "id": "1xf4rjh",
@@ -293,6 +541,14 @@
       "source": "华尔街见闻",
       "title": "韵达股份：控股股东上海罗颉思首次增持162.33万股，增持计划尚未实施完毕",
       "url": "https://wallstreetcn.com/livenews/3200647"
+    },
+    {
+      "id": "o5n3jz",
+      "ts": 1794826928,
+      "time": "2026-11-16T19:02:08.000+08:00",
+      "source": "东方财富",
+      "title": "事关轻工业高质量发展，工信部、市场监管总局最新发布！",
+      "url": "http://finance.eastmoney.com/news/1355,202611163931994952.html"
     },
     {
       "id": "s631bg",
@@ -1221,6 +1477,14 @@
       "source": "东方财富",
       "title": "“需求大幅增长可能性不大”，中国石化行业如何化解盈利危机",
       "url": "http://finance.eastmoney.com/news/1355,202611163931947811.html"
+    },
+    {
+      "id": "hbwytk",
+      "ts": 1794821504,
+      "time": "2026-11-16T17:31:44.000+08:00",
+      "source": "东方财富",
+      "title": "人民银行上海总部：10月上海非银行业金融机构存款增加4752亿元，同比多增2075亿元",
+      "url": "http://finance.eastmoney.com/news/1352,202611163931992998.html"
     },
     {
       "id": "1o6rigs",
