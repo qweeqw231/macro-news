@@ -1,0 +1,165 @@
+{
+  "date": "2026-11-16",
+  "generatedAt": "2026-11-16T09:08:02+08:00",
+  "endedAt": "2026-11-16T09:08:24+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-15",
+    "to": "2026-11-16",
+    "fromAt": "2026-11-15T08:00:00+08:00",
+    "toAt": "2026-11-16T09:00:00+08:00",
+    "fromTs": 1794700800,
+    "toTs": 1794790800
+  },
+  "overview": "今日主线是国内政策落地与海外通胀分歧并行：外汇存款准备金率已生效至6%，10月经济数据今日上午公布；APEC工商领导人峰会17—18日在深圳举行，将首次以倡议形式发布成果；美国PPI创四年来最大升幅，联储官员与白宫口径相反，油价则在霍尔木兹爆炸与谈判之间反复。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "外汇存款准备金率已正式生效：由4%上调至6%，意在打破人民币升值预期的自我实现",
+      "summary": "中国人民银行自11月15日起上调金融机构外汇存款准备金率2个百分点，由现行的4%提高到6%，已正式生效。央行称此举有助于促进外汇市场供求平衡，打破人民币升值预期的自我实现；该决定11月3日公布。中国外汇交易中心数据显示，11月13日人民币汇率指数按周涨0.78至104.43。",
+      "why": "升值预期越强，政策对冲成本越高",
+      "source": "东方财富",
+      "publishedAt": "2026-11-15T11:16",
+      "url": "http://finance.eastmoney.com/news/1350,202611153931418029.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200152",
+        "https://wallstreetcn.com/livenews/3200271"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "居民存款搬家节奏放缓：前10个月居民存款增8.47万亿元、贷款减少1.46万亿元",
+      "summary": "央行最新金融数据显示，今年前10个月居民部门累计新增存款8.47万亿元，贷款减少1.46万亿元，去杠杆与存款搬家同步进行。聚焦10月，居民存款与非银存款的跷跷板效应再现，但节奏较去年同期放缓。股债市场大幅波动干扰了居民投资行为，但配置多元化推动存款向非银迁移仍是趋势。",
+      "why": "居民加杠杆意愿是内需最直接的读数",
+      "source": "东方财富",
+      "publishedAt": "2026-11-15T20:28",
+      "url": "http://finance.eastmoney.com/news/1352,202611153931487453.html",
+      "refs": [
+        "http://bond.eastmoney.com/news/1326,202611153931504344.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "APEC工商领导人峰会17—18日在深圳举行，将发布《深圳倡议》",
+      "summary": "中国贸促会在深圳的专题新闻发布会上介绍，2026年APEC工商领导人峰会将于11月17日至18日在深圳前海国际会议中心举办，习近平主席与澳大利亚、加拿大等11位APEC经济体领导人将出席。这是峰会创办30年来首次以倡议形式发布成果文件，将形成《2026年APEC工商领导人峰会深圳倡议》，并向领导人非正式会议建言献策。",
+      "why": "本周中国主场外交与亚太经贸的主战场",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-15T11:39",
+      "url": "https://wallstreetcn.com/livenews/3200161",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200157",
+        "http://finance.eastmoney.com/news/1350,202611153931499682.html",
+        "https://wallstreetcn.com/livenews/3200160",
+        "http://finance.eastmoney.com/news/1361,202611163931542910.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "今日2000亿元买断式逆回购对冲到期量，《衍生品交易监督管理办法》施行",
+      "summary": "11月16日有3640亿元隔夜逆回购与3000亿元买断式逆回购到期，央行将以固定数量、利率招标、多重价位中标方式开展2000亿元、期限6个月的买断式逆回购操作。同日《衍生品交易监督管理办法（试行）》正式施行；国务院新闻办于上午10时举行发布会，介绍10月份国民经济运行情况。",
+      "why": "流动性对冲与监管新规同日落地",
+      "source": "东方财富",
+      "publishedAt": "2026-11-16T07:53",
+      "url": "http://finance.eastmoney.com/news/11848,202611163931557360.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200234",
+        "http://forex.eastmoney.com/news/1131,202611163931561438.html"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "前三季度服务贸易总额57687.7亿元同比增8.5%，出口增长14.8%",
+      "summary": "商务部服贸司数据显示，2026年1—9月我国服务进出口总额57687.7亿元，同比增长8.5%；其中出口22714亿元，增长14.8%，进口34973.7亿元，增长4.8%。服务贸易逆差12259.7亿元，同比缩小1326.6亿元。分领域看运输服务是前三季度增长最快的门类，知识密集型服务占比达43.9%。",
+      "why": "服务出口正接棒货物出口成为第二增长极",
+      "source": "东方财富",
+      "publishedAt": "2026-11-15T15:47",
+      "url": "http://finance.eastmoney.com/news/1352,202611153931499585.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1352,202611163931542364.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "美国PPI创四年来最大升幅，通胀口径出现分歧",
+      "summary": "美国PPI创四年来最大升幅，美联储官员密集释放加息信号。堪萨斯城联储主席施密德称通胀仍然过热，美联储偏爱的价格指标9月同比上涨3.6%，高于2%目标且正朝错误方向发展；财长贝森特则称核心通胀保持温和、已接近目标，预计下个月通胀将大幅下降。",
+      "why": "同一份通胀数据被读出两种政策含义",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-16T07:30",
+      "url": "https://wallstreetcn.com/livenews/3200251",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200238",
+        "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-16/doc-iniywnmk5850443.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniywnmm1416357.shtml",
+        "https://finance.sina.com.cn/7x24/2026-11-15/doc-iniyvvpt1689841.shtml",
+        "https://wallstreetcn.com/livenews/3200213",
+        "https://finance.sina.com.cn/stock/hkstock/hkstocknews/2026-11-15/doc-iniyuinp3473991.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "伊朗称两艘油轮触雷爆炸，一艘载超200万桶原油沉没",
+      "summary": "伊朗革命卫队海军11月15日称，两艘油轮触雷爆炸，其中一艘载有超200万桶原油，爆炸后沉没。同日伊朗议会国家安全与外交政策委员会发言人称，该委员会已完成方案审议，就霍尔木兹海峡通行航道与两个沿岸国家达成协议。美军中央司令部称在美方保护下已有超17亿桶原油通过该海峡。",
+      "why": "一边爆炸一边谈判，油价风险溢价看落地顺序",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-16T07:43",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-16/doc-iniywste8968409.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200196",
+        "https://wallstreetcn.com/livenews/3200145",
+        "https://finance.sina.com.cn/money/future/wemedia/2026-11-16/doc-iniywnmp2625449.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "日本三季度实际GDP季环比初值0%，年化转为-0.1%",
+      "summary": "日本三季度实际GDP季环比初值为0%，低于市场预期的0.1%，前值为0.4%；年化季环比初值为-0.1%，预期0.2%，前值1.4%。分项看，外需对GDP的贡献为-0.6个百分点，内需贡献为+0.6个百分点，平减指数同比初值2.4%。机构认为这一表现可能不会阻止日本央行在12月加息。",
+      "why": "增长转负，但机构认为不挡日本央行12月加息",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-16T07:50",
+      "url": "https://wallstreetcn.com/livenews/3200256",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200257",
+        "https://wallstreetcn.com/livenews/3200260",
+        "https://wallstreetcn.com/livenews/3200258",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniywsth5771131.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "黄仁勋被传出讨论重返英伟达，财长贝森特要求外部换帅",
+      "summary": "报道称被罢免的CEO黄仁勋正讨论重返英伟达，其硅谷盟友正在推动复职。消息传出后，Hyperliquid上挂钩英伟达股价的永续期货合约涨幅一度达4.5%，报价触及166.97美元；美股暗盘英伟达一度涨超4%，其他AI硬件股亦集体走高。财长贝森特则称，黄仁勋去职后英伟达领导层需要一场剧烈重组，应从公司外部寻找新领导人。",
+      "why": "AI链估值锚仍系在一个人身上",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-16T07:15",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniywnmm1409722.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/wm/2026-11-16/doc-iniywsth5743213.shtml",
+        "https://wallstreetcn.com/livenews/3200212",
+        "https://finance.sina.com.cn/7x24/2026-11-15/doc-iniyvvpv2911966.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniywnmh9064317.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "国际金价月内冲高回落，COMEX黄金12月合约创阶段性新低3856美元",
+      "summary": "11月以来国际金价整体冲高回落，纽约商品交易所COMEX黄金期货12月合约期价一度冲高至4157.7美元/盎司后持续下探，近日创出阶段性新低3856美元。金饰零售端随之进入促销窗口，品牌加大克减、满减力度。韩国央行在时隔13年重新布局黄金后，三季度将一只黄金ETF持仓增持超40%，趁金价走低买入。",
+      "why": "央行逢低买入托底，需求端尚未反转",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-16T06:54",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-16/doc-iniywnmk5850509.shtml",
+      "refs": [
+        "http://finance.eastmoney.com/news/1361,202611163931542910.html",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-15/doc-iniyuyka6430476.shtml",
+        "https://wallstreetcn.com/livenews/3200243"
+      ]
+    }
+  ],
+  "watch": [
+    "今日9:30 70个大中城市住宅销售价格月度报告与10:00 国新办发布会：10月规模以上工业增加值、社会消费品零售总额、1—10月城镇固定资产投资",
+    "今日公开市场净投放：2000亿元6个月期买断式逆回购对冲3640亿元隔夜逆回购与3000亿元买断式逆回购到期的力度；本周五11月LPR报价",
+    "11月17—19日深圳APEC工商领导人峰会与领导人非正式会议成果，《深圳倡议》是否如期发布",
+    "本周美国10月零售销售、美联储10月货币政策会议纪要与英伟达财报披露时点；COMEX黄金12月合约3856美元一线能否守住"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
