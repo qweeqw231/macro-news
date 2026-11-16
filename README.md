@@ -708,6 +708,10 @@ powershell -ExecutionPolicy Bypass -File scripts\set-worker-secret.ps1
 拿不到 16:14 生成的 pm。三档 16:18 / 16:33 / 16:48 覆盖「云端刚提交 → 本地可见」的窗口，
 日志与台账在 `.local/logs/sync-close-*.log`、`.local/metrics/close-sync.jsonl`。
 
+**2.23.0 起**：ff-only 被挡住时，它还会用 `git cat-file -e origin/main:data/snapshots/<日期>_pm.json`
+只读探测 pm 到底有没有生成 —— 本地缺、远端有就明说「本地不是最新（behind/ahead/result）」，
+不再把它误报成「云端可能尚未生成」。
+
 注册（工作日三档，PowerShell 单行；`/st` 必须带冒号）：
 
 ```powershell
@@ -719,14 +723,24 @@ schtasks /create /tn "MacroNews-Sync-1648" /tr "wscript.exe //nologo C:\Work\Min
 回滚：`schtasks /delete /tn "MacroNews-Sync-1618" /f`（其余两档替换任务名）。
 
 `MacroNews-Collect` 是**先同步、再按陈旧度**驱动的：每轮先 `git fetch origin main`
-比较 `HEAD`/`origin/main`（落后且干净 → ff-only；有已跟踪改动 → stash → ff-only → pop；
+比较 `HEAD`/`origin/main`（落后且干净 → ff-only；有已跟踪改动 → 整轮让路，不 stash/pop；
 分叉走普通 merge，冲突 abort 跳过）；同步结果与 `HEAD` 短哈希写入日志。
+fetch 由 `scripts/git-sync-lib.ps1` 统一处理：3 次重试（退避 5s / 15s）+ 每次硬超时 90s ——
+SSH-443 会被随机 reset，而 `ConnectTimeout`/`ServerAlive*` 不构成整体 deadline
+（2026-11-16 实测单次卡 178s，复测卡 6 分钟以上）。
 之后再**看** `data/latest.json` 的最新条目，不到 `-NewsStaleMinutes`（默认 45）分钟就整轮跳过新闻/行情采集 —— 云端 15 分钟一轮正常时，
 本机一次都不会重复采；云端排程器丢事件时，最多 45 分钟后本机接管。
 日/周/月 K 同理按 `-KlineStaleHours`（默认 6）判新鲜度。
-2.4.16 起不再使用 `-X ours`；任何合并冲突只 abort/保留 stash，不覆盖本地文件。
-同步跳过会写入 `data/_last-run.json` 的 `localSync`，页脚显示「本机同步跳过 N 轮」：
+2.4.16 起不再使用 `-X ours`；任何合并冲突只 abort，不覆盖本地文件。
+同步成功时结果写入 `data/_last-run.json` 的 `localSync`，页脚显示「本机同步跳过 N 轮」：
 0 次不显示、1~2 次琥珀、≥3 次红色；它不改变既有链路总灯。
+
+**2.23.0 起：fetch 失败 / 落后 / 脏工作区一律不写 `data/`**（写而不提交会让工作区永久变脏，
+下一轮起每轮都被 `dirty-worktree` 判据挡下）。这些状态改写到
+`.local/metrics/sync-state.json`（已 gitignore）：
+`localFresh=false` = 本地工作树不含最近一次成功 fetch 到的 `origin/main`；
+`remoteRefStale=true` = 本轮 fetch 失败，`.git` 里的 `origin/main` 这个 ref 本身也是旧的，
+不能当远端现状。
 
 `MacroNews-Collect` / `MacroNews-Pull` 均用 `wscript + run-hidden.vbs` 零窗口启动，
 `-StartWhenAvailable` 允许睡眠/关机后补跑。

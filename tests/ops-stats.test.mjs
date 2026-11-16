@@ -194,7 +194,7 @@ test('静态：collect-and-push 台账字段、try/finally、失败不改退出�
   assert.match(block, /\$LASTEXITCODE = \$prevCode/);
   // try 必须在同步之前；finally 在文件末尾
   assert.ok(src.indexOf('try {') < src.indexOf('# ---- 0.1 先同步再跑'));
-  assert.match(src, /\} finally \{\s*Write-RunLedger\s*\}/);
+  assert.match(src, /\} finally \{\s*Write-RunLedger/);
   for (const r of ['skipped', 'failed', 'ok']) {
     assert.match(src, new RegExp(`result = '${r}'`), `缺 result=${r}`);
   }

@@ -27,6 +27,9 @@ function Say($m) {
     Add-Content -Path $log -Value $line -Encoding UTF8
 }
 
+# 2.23.0：fetch 重试 + 本地对齐哨兵（只写 .local/）
+. (Join-Path $PSScriptRoot 'git-sync-lib.ps1')
+
 $runStart = Get-Date
 $ledgerDir = Join-Path $root '.local\metrics'
 $ledgerFile = Join-Path $ledgerDir 'close-sync.jsonl'
@@ -41,6 +44,14 @@ $st = [ordered]@{
     pmExists = $false
     pmCapturedAt = ''
     pmGate = ''
+    # 2.23.0：pm 到底有没有生成，要看 origin/main 对象，而不是本地工作树
+    pmInRemote = $false
+    pmRemoteCapturedAt = ''
+    pmRemoteGate = ''
+    localFresh = $false
+    originMainHead = ''
+    fetchAttempts = 0
+    syncError = ''
     durationMs = 0
 }
 
@@ -67,18 +78,15 @@ function Invoke-Sync {
     $st.headBefore = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
     if (-not $st.headBefore) { $st.headBefore = 'unknown' }
 
-    # ---- 1. fetch ----
-    $oldSsh = $env:GIT_SSH_COMMAND
-    $env:GIT_SSH_COMMAND = 'ssh -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=3'
-    $fetchOut = & git fetch origin main 2>&1 | Out-String
-    $fetchOk = ($LASTEXITCODE -eq 0)
-    if ($null -eq $oldSsh) { Remove-Item Env:\GIT_SSH_COMMAND -ErrorAction SilentlyContinue }
-    else { $env:GIT_SSH_COMMAND = $oldSsh }
+    # ---- 1. fetch（2.23.0：SSH-443 会被随机 reset，沿用采集侧的 3 次重试）----
+    $f = Invoke-GitFetchRetry -Max 3
+    $st.fetchAttempts = $f.attempts
 
-    if (-not $fetchOk) {
-        $first = ($fetchOut.Trim() -split "`r?`n" | Select-Object -First 1)
+    if (-not $f.ok) {
         $st.result = 'fetch-failed'
-        Say "git fetch 失败（网络问题）：$first"
+        $st.syncError = $f.error
+        Say "git fetch 失败（已重试 $($f.attempts) 次）：$($f.error)"
+        Say "⚠ 本地不是最新，且本地 origin/main ref 也是旧的：请勿把本地 data/ 的截面当收盘基准"
         return 1
     }
 
@@ -110,7 +118,29 @@ function Invoke-Sync {
     # ---- 3. 只读体检：今天的 pm 到没到、能不能过消费方门禁 ----
     #    不写任何文件，只把结论写进日志与台账。
     $today = Get-Date -Format 'yyyy-MM-dd'
+    $pmRel = "data/snapshots/${today}_pm.json"
     $pmPath = Join-Path $root ("data\snapshots\{0}_pm.json" -f $today)
+    $st.originMainHead = [string](& git rev-parse --short origin/main 2>$null | Select-Object -First 1)
+    $st.localFresh = ($st.behind -eq 0)
+
+    # 2.23.0：pm 有没有生成，不能被「本地脏/落后」掩盖 —— 直接看 origin/main 里的对象。
+    #   旧实现只查工作树，ff 被脏文件挡住时会把「本地没同步」误写成「云端还没生成」。
+    $null = & git cat-file -e ("origin/main:" + $pmRel) 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        $st.pmInRemote = $true
+        try {
+            $raw = & git show ("origin/main:" + $pmRel) 2>$null | Out-String
+            $rdoc = ConvertFrom-Json $raw
+            $st.pmRemoteCapturedAt = [string]$rdoc.capturedAt
+            $rcap = [datetimeoffset]::Parse([string]$rdoc.capturedAt)
+            $rcapMin = $rcap.Hour * 60 + $rcap.Minute
+            $rGateOk = ($rdoc.date -eq $today) -and ($rdoc.isTradingDay -eq $true) -and ($rcapMin -ge (16 * 60 + 10))
+            $st.pmRemoteGate = if ($rGateOk) { 'ok' } else { 'pending' }
+        } catch {
+            $st.pmRemoteGate = 'unreadable'
+        }
+    }
+
     if (Test-Path $pmPath) {
         try {
             $doc = ConvertFrom-Json (Get-Content $pmPath -Raw -Encoding UTF8)
@@ -120,14 +150,18 @@ function Invoke-Sync {
             $capMin = $cap.Hour * 60 + $cap.Minute
             $gateOk = ($doc.date -eq $today) -and ($doc.isTradingDay -eq $true) -and ($capMin -ge (16 * 60 + 10))
             $st.pmGate = if ($gateOk) { 'ok' } else { 'pending' }
-            Say "pm：$today 已到本地 · capturedAt=$($st.pmCapturedAt) · gate=$($st.pmGate)"
+            Say "pm：$today 已到本地 · capturedAt=$($st.pmCapturedAt) · gate=$($st.pmGate) · localFresh=$($st.localFresh)"
         } catch {
             $st.pmGate = 'unreadable'
             Say "pm：文件存在但解析失败（$($_.Exception.Message)）"
         }
+    } elseif ($st.pmInRemote) {
+        $st.pmGate = 'missing-local'
+        Say "pm：$today 在 origin/main 已存在（capturedAt=$($st.pmRemoteCapturedAt) · gate=$($st.pmRemoteGate)），本地没有"
+        Say "⚠ 本地不是最新（behind=$($st.behind) ahead=$($st.ahead) result=$($st.result)）：不要把本地 data/quotes.json 当收盘基准；可直接 git show origin/main:$pmRel"
     } else {
         $st.pmGate = 'missing'
-        Say "pm：$today 还没有落到本地（云端可能尚未生成，等下一次 16:33 / 16:48）"
+        Say "pm：$today 本地与 origin/main（$($st.originMainHead)）都没有（云端尚未生成或尚未提交，等下一次 16:33 / 16:48）"
     }
     return 0
 }
@@ -137,6 +171,10 @@ try {
     $code = Invoke-Sync
 } finally {
     Write-Ledger
+    # 2.23.0：把「本地是否最新 / origin-main-ref 是否陈旧」写到 .local/metrics/sync-state.json
+    Write-SyncState -Root $root -Source 'sync-close.ps1' -Result $st.result `
+        -Error $st.syncError -FetchAttempts $st.fetchAttempts -Head $st.headBefore `
+        -Behind $st.behind -Ahead $st.ahead -FetchOk ($st.result -ne 'fetch-failed') -LocalFresh $st.localFresh
 }
 
 exit $code

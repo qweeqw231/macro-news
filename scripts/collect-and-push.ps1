@@ -39,6 +39,9 @@ function Say($m) {
     Add-Content -Path $log -Value $line -Encoding UTF8
 }
 
+# 2.23.0：同步层共享件（fetch 重试 + 本地对齐哨兵），只写 .local/，绝不写 data/
+. (Join-Path $PSScriptRoot 'git-sync-lib.ps1')
+
 # 只保留最近 14 天的日志，避免无限增长
 Get-ChildItem $logDir -Filter 'collect-*.log' -ErrorAction SilentlyContinue |
     Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-14) } |
@@ -70,6 +73,9 @@ $runStats = [ordered]@{
     skipReason = ''
     dirtyStreak = 0
     syncResult = ''
+    # 2.23.0：fetch 失败要能自证「重试了几次、最后一句错误是什么」
+    fetchAttempts = 0
+    syncError = ''
     durationMs = 0
     # 2.9.0：跳过采集 = result 仍 ok，但 collected 必须是 false，不能再混成「成功采集」
     collected = $false
@@ -217,20 +223,14 @@ function Write-LocalSync($result) {
 }
 
 # 跳过轮只发布状态文件：仅在 HEAD 与 origin/main 同步时提交，不 merge、不 force
+# 2.23.0：写盘顺序必须是 fetch → at-origin 判定 → 写盘 → 提交。
+#   旧实现先写 data/_last-run.json 再判，一旦 fetch 失败或 behind≠0 就直接 return，
+#   这个**已跟踪**文件就永远停在脏状态，后续每轮都被 dirty-worktree 判据挡下
+#   （2026-11-16：15:57 fetch 失败 → 16:18/16:33/16:48 收盘同步全部 ff 失败）。
 function Publish-LocalSync($result) {
-    if (-not (Write-LocalSync $result)) { return }
-
-    $oldSsh = $env:GIT_SSH_COMMAND
-    $env:GIT_SSH_COMMAND = 'ssh -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=3'
-    $fetchOut = & git fetch origin main 2>&1 | Out-String
-    $fetchOk = ($LASTEXITCODE -eq 0)
-    if ($null -eq $oldSsh) {
-        Remove-Item Env:\GIT_SSH_COMMAND -ErrorAction SilentlyContinue
-    } else {
-        $env:GIT_SSH_COMMAND = $oldSsh
-    }
-    if (-not $fetchOk) {
-        Say "localSync:publish=offline（fetch 失败，状态仅写本地）"
+    $f = Invoke-GitFetchRetry -Max 2
+    if (-not $f.ok) {
+        Say "localSync:publish=offline（fetch 失败，重试 $($f.attempts) 次；不写 data/，状态见 .local/metrics/sync-state.json）"
         return
     }
 
@@ -238,9 +238,18 @@ function Publish-LocalSync($result) {
     $behind = [int](& git rev-list --count HEAD..origin/main 2>$null)
     $ahead = [int](& git rev-list --count origin/main..HEAD 2>$null)
     if ($behind -ne 0 -or $ahead -ne 0) {
-        Say "localSync:publish=skipped-not-at-origin（behind=$behind ahead=$ahead；状态仅写本地）"
+        Say "localSync:publish=skipped-not-at-origin（behind=$behind ahead=$ahead；不写 data/，避免留下脏工作区）"
         return
     }
+
+    # 未合并状态下 commit 必然失败，写盘只会再留一个脏文件；直接不写
+    $unmergedNow = @(& git ls-files -u 2>$null)
+    if ($unmergedNow.Count -gt 0) {
+        Say "localSync:publish=skipped-unmerged（存在未合并文件；不写 data/，先人工解决）"
+        return
+    }
+
+    if (-not (Write-LocalSync $result)) { return }
 
     $null = git add -- data/_last-run.json
     $commitOut = & git commit -m "data: 本机同步跳过（$result）" -- data/_last-run.json 2>&1 | Out-String
@@ -296,27 +305,23 @@ $dirtyPaths = @($statusOut | ForEach-Object {
 } | Where-Object { $_ } | Sort-Object -Unique)
 $dirty = if ($dirtyPaths.Count -gt 0) { 'yes' } else { 'no' }
 
-$oldSsh = $env:GIT_SSH_COMMAND
-$env:GIT_SSH_COMMAND = 'ssh -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=3'
-$fetchOut = & git fetch origin main 2>&1 | Out-String
-$fetchOk = ($LASTEXITCODE -eq 0)
-if ($null -eq $oldSsh) {
-    Remove-Item Env:\GIT_SSH_COMMAND -ErrorAction SilentlyContinue
-} else {
-    $env:GIT_SSH_COMMAND = $oldSsh
-}
+$fetchRetry = Invoke-GitFetchRetry
+$fetchOk = $fetchRetry.ok
 
 if (-not $fetchOk) {
-    $first = ($fetchOut.Trim() -split "`r?`n" | Select-Object -First 1)
+    $first = $fetchRetry.error
     $runStats.result = 'skipped'
     $runStats.skipReason = 'fetch-failed'
     $runStats.syncResult = 'skipped:fetch-failed'
-    Say "sync: head=$headBefore behind=unknown ahead=unknown dirty=$dirty result=skipped:fetch-failed head_after=$headBefore stash=none（$first）"
-    Say "同步失败，本轮不采集、不提交；下一轮重试。"
-    if (-not $SyncOnly) {
-        $null = Write-LocalSync 'skipped:fetch-failed'
-        Say "localSync:publish=offline（fetch 失败，状态仅写本地）"
-    }
+    $runStats.fetchAttempts = $fetchRetry.attempts
+    $runStats.syncError = $first
+    $refSha = [string](& git rev-parse --short origin/main 2>$null | Select-Object -First 1)
+    $refAt = [string](& git log -1 --format=%cI origin/main 2>$null | Select-Object -First 1)
+    Say "sync: head=$headBefore behind=unknown ahead=unknown dirty=$dirty result=skipped:fetch-failed head_after=$headBefore stash=none（重试 $($fetchRetry.attempts) 次：$first）"
+    Say "⚠ 本轮 fetch 失败：本地工作树＝上次成功同步的截面，**不是远端最新**；本地 origin/main ref 停在 $refSha（$refAt），也不能代表远端现状。"
+    Say "本轮不采集、不提交，也不写 data/（写而不提交会把工作区永久弄脏，导致后续每轮全部让路）；状态只写 .local/metrics/sync-state.json，下一轮重试。"
+    Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result 'skipped:fetch-failed' `
+        -Error $first -FetchAttempts $fetchRetry.attempts -Head $headBefore -FetchOk $false -LocalFresh $false
     exit 0
 }
 
@@ -336,6 +341,9 @@ if ($dirty -eq 'yes') {
         $headBefore, $behind, $ahead)
     Say ("sync: 工作区有 {0} 个受版本控制的文件未提交改动，脚本主动让路——本轮不 stash、不合并、不 pop、不写任何工作区文件；下一轮重试。" -f $dirtyPaths.Count)
     foreach ($p in $dirtyPaths) { Say "sync: dirty: $p" }
+    # 2.23.0：脏轮不写 data/，但必须让消费方知道「本地落后多少」
+    Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result 'skipped:dirty-worktree' `
+        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh ($behind -eq 0)
     exit 0
 }
 
@@ -376,6 +384,8 @@ if ($syncResult -like 'skipped:*') {
     $runStats.result = 'skipped'
     $runStats.skipReason = ($syncResult -replace '^skipped:', '')
     if (-not $SyncOnly) { Publish-LocalSync $syncResult }
+    Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result $syncResult `
+        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh ($behind -eq 0)
     Say "同步未完成（$syncResult），本轮不采集、不提交；下一轮重试。"
     exit 0
 }
@@ -384,6 +394,8 @@ if ($syncResult -like 'skipped:*') {
 if (-not $SyncOnly) {
     $null = Write-LocalSync $syncResult
 }
+Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result $syncResult `
+    -Head $headAfter -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh $true
 
 # 同步更新了代码/HEAD 时再复核一次守卫（旧代码检查已在启动时做过）
 if ($headAfter -ne $headBefore -or $guardBefore -eq 'missing') {

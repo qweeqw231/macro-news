@@ -13,6 +13,38 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.23.0] - 2026-11-16
+
+> **中版本，理由**：本机同步层自锁让下游 17:00 收盘复盘拿到 15:08 的盘中截面
+> （当日 pm 已在远端），属于「用户可见的错误数据」。
+
+### 已修复
+
+2026-11-16 15:54 那一轮 `git fetch` 被 SSH-443 通道 reset（耗时 178s），
+失败分支把 `data/_last-run.json` 写进工作区却不提交 ⇒ 工作区永久变脏 ⇒
+16:18 / 16:33 / 16:48 三档 `sync-close` 的 ff-only 全部失败、17:54 与 19:54 两轮采集
+被判 `dirty-worktree` 跳过。一次网络抖动放大成 3 小时以上断档，且无法自愈。
+
+| 层 | 修法 |
+|---|---|
+| 触发 | fetch 改为 3 次重试（退避 5s / 15s），每次硬超时 90s；与 push 侧既有重试一致 |
+| 放大器 | fetch 失败 / behind≠0 时**不再写 `data/`**；`Publish-LocalSync` 改为 fetch → at-origin → 才写盘 → 提交，任何「写而不提交」路径一律消除 |
+| 掩盖 | `sync-close` 用 `git cat-file -e origin/main:<pm>` 只读探测，本地缺 pm 但远端有时明说「本地不是最新（behind/ahead/result）」，不再误报「云端可能尚未生成」 |
+
+### 新增
+
+- `scripts/git-sync-lib.ps1`：`Invoke-GitWithTimeout` / `Invoke-GitFetchRetry` / `Write-SyncState`（只写 `.local/`）。
+- `.local/metrics/sync-state.json` 本地哨兵：`localFresh`、`remoteRefStale`、`remoteRefAt`、`fetchAttempts`、`error`，
+  供消费方判断「本地是不是最新」——`origin/main` 是本地 ref，fetch 失败时它本身也是旧的。
+- 采集台账新增 `fetchAttempts`、`syncError` 两个字段（只增不改）。
+
+### 测试
+
+`tests/collect-sync.test.mjs` 新增 5 组静态守卫：fetch 重试/硬超时存在、失败分支不得写 `data/`、
+写盘顺序必须在 fetch 与 at-origin 之后、哨兵只落 `.local/`、`sync-close` 必须探测 `origin/main` 且不再出现旧误报文案。
+
+详见 `docs/superpowers/specs/2026-11-16-sync-fetch-resilience-2.23.0-design.md`。
+
 ## [2.22.1] - 2026-11-15
 
 > **补丁位，理由（规则 ③）**：外源补录定稿后的数据重建 + 默认检索范围调整，

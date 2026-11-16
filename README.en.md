@@ -656,14 +656,24 @@ Three pitfalls that masquerade as "a broken token":
 | Remote sync | Every 4 hours | `scripts\pull-remote.ps1` | `scripts\register-pull-task.ps1` |
 
 `MacroNews-Collect` is **sync first, then staleness-driven**: each round first runs `git fetch origin main`
-to compare `HEAD`/`origin/main` (behind and clean → ff-only; tracked changes → stash → ff-only → pop;
+to compare `HEAD`/`origin/main` (behind and clean → ff-only; tracked changes → skip the whole round, no stash/pop;
 diverged → normal merge, abort and skip on conflict); the sync result and short `HEAD` hash go to the log.
+`fetch` is wrapped by `scripts/git-sync-lib.ps1`: 3 attempts (5s / 15s backoff) with a **90s hard timeout each** —
+the SSH-443 channel gets randomly reset, and `ConnectTimeout`/`ServerAlive*` do not bound the overall call
+(measured: one call hung 178s on 2026-11-16, and 6+ minutes on a re-test).
 Then it **reads** the newest item in `data/latest.json`; if it is younger than `-NewsStaleMinutes` (default 45) minutes, the whole round skips news/quote collection — when the cloud 15-minute rounds are healthy,
 the local machine never collects twice; when the cloud scheduler drops events, the local machine takes over after at most 45 minutes.
 Daily/weekly/monthly K use `-KlineStaleHours` (default 6) the same way.
-From 2.4.16 we no longer use `-X ours`; any merge conflict only aborts/keeps the stash and never overwrites local files.
-Skipped syncs are written to `localSync` in `data/_last-run.json`, and the footer shows "Local sync skipped N rounds":
+From 2.4.16 we no longer use `-X ours`; any merge conflict only aborts and never overwrites local files.
+A successful sync is written to `localSync` in `data/_last-run.json`, and the footer shows "Local sync skipped N rounds":
 0 not shown, 1–2 amber, ≥3 red; it does not change the existing overall pipeline light.
+
+**Since 2.23.0, a failed `fetch`, a diverged state or a dirty worktree never writes `data/`**
+(writing without committing leaves the worktree permanently dirty, and every later round is then skipped
+by the `dirty-worktree` gate). Those states go to `.local/metrics/sync-state.json` (gitignored) instead:
+`localFresh=false` means the worktree does not contain the last successfully fetched `origin/main`;
+`remoteRefStale=true` means this round's fetch failed, so the local `origin/main` ref itself is stale
+and must not be treated as the remote head.
 
 `MacroNews-Collect` / `MacroNews-Pull` both start with zero windows via `wscript + run-hidden.vbs`;
 `-StartWhenAvailable` allows catch-up after sleep/shutdown.

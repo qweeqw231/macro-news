@@ -117,7 +117,9 @@ test('本机脚本在跳过分支写 localSync，并只提交 _last-run.json', (
   assert.match(ps, /local-sync-write\.mjs/);
   assert.match(ps, /function Publish-LocalSync/);
   assert.match(ps, /Publish-LocalSync 'skipped:unmerged'/);
-  assert.match(ps, /Write-LocalSync 'skipped:fetch-failed'/);
+  // 2.23.0：fetch 失败分支不得写 data/（写而不提交会让工作区永久变脏、后续每轮让路）
+  assert.doesNotMatch(ps, /Write-LocalSync 'skipped:fetch-failed'/);
+  assert.match(ps, /Write-SyncState/);
   assert.match(ps, /Publish-LocalSync \$syncResult/);
   assert.match(ps, /git commit -m "data: 本机同步跳过（\$result）" -- data\/_last-run\.json/);
   assert.doesNotMatch(ps, /git push[^\n]*--force/i);
