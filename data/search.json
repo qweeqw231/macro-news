@@ -1,11 +1,83 @@
 {
-  "generatedAt": "2026-11-16T07:07:59.474Z",
+  "generatedAt": "2026-11-16T07:18:11.675Z",
   "windowDays": 62,
   "from": "2026-09-16",
   "days": 62,
   "fromHistory": 19,
-  "total": 55837,
+  "total": 55850,
   "items": [
+    {
+      "id": "108drhc",
+      "ts": 1794813439,
+      "time": "2026-11-16T15:17:19.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国海上贸易行动中心收到报告：一艘船只在霍尔木兹海峡被射弹击中。",
+      "url": "https://wallstreetcn.com/livenews/3200486"
+    },
+    {
+      "id": "ru5biu",
+      "ts": 1794813438,
+      "time": "2026-11-16T15:17:18.000+08:00",
+      "source": "华尔街见闻",
+      "title": "外交部谈中俄美元首会晤：具有开创性意义",
+      "url": "https://wallstreetcn.com/livenews/3200485"
+    },
+    {
+      "id": "8xcooh",
+      "ts": 1794813389,
+      "time": "2026-11-16T15:16:29.000+08:00",
+      "source": "新浪财经",
+      "title": "Helsing投资方Plural募资11亿美元，支持欧洲科技项目",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxiqy5654526.shtml"
+    },
+    {
+      "id": "glfpte",
+      "ts": 1794813286,
+      "time": "2026-11-16T15:14:46.000+08:00",
+      "source": "新浪财经",
+      "title": "韩国政府：谷歌已满足高精度地图数据的安全要求",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxiqw8877020.shtml"
+    },
+    {
+      "id": "nprxen",
+      "ts": 1794813250,
+      "time": "2026-11-16T15:14:10.000+08:00",
+      "source": "东方财富",
+      "title": "前10个月西部陆海新通道沿线经通道进出口超8700亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611163931759198.html"
+    },
+    {
+      "id": "id2dgt",
+      "ts": 1794813190,
+      "time": "2026-11-16T15:13:10.000+08:00",
+      "source": "新浪财经",
+      "title": "徽商期货马鞍山营业部“保险+期货”知识培训走进舒城县庐镇乡庐镇村",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-16/doc-iniyxiqw8875456.shtml"
+    },
+    {
+      "id": "8u40gj",
+      "ts": 1794812992,
+      "time": "2026-11-16T15:09:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "超级计算机FUGAKU遭入侵后用户信息可能已泄露。",
+      "url": "https://wallstreetcn.com/livenews/3200483"
+    },
+    {
+      "id": "12d5v3q",
+      "ts": 1794812923,
+      "time": "2026-11-16T15:08:43.000+08:00",
+      "source": "东方财富",
+      "title": "第十四届中国中部投资贸易博览会本月21日至23日举行 筹备工作基本就绪",
+      "url": "http://finance.eastmoney.com/news/1350,202611163931758434.html"
+    },
+    {
+      "id": "84cpvv",
+      "ts": 1794812912,
+      "time": "2026-11-16T15:08:32.000+08:00",
+      "source": "华尔街见闻",
+      "title": "AII卫星通信工作组会议在无锡召开",
+      "url": "https://wallstreetcn.com/livenews/3200482"
+    },
     {
       "id": "du074i",
       "ts": 1794812828,
@@ -13,6 +85,22 @@
       "source": "新浪财经",
       "title": "欧洲银行风险转移业务蓬勃发展，“被动去杠杆” 风险上升",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxiqy5644896.shtml"
+    },
+    {
+      "id": "1o69mjv",
+      "ts": 1794812769,
+      "time": "2026-11-16T15:06:09.000+08:00",
+      "source": "东方财富",
+      "title": "1-10月烟酒零售额5547亿元 同比增长11.7%",
+      "url": "http://finance.eastmoney.com/news/1346,202611163931760451.html"
+    },
+    {
+      "id": "1wyu8ag",
+      "ts": 1794812668,
+      "time": "2026-11-16T15:04:28.000+08:00",
+      "source": "东方财富",
+      "title": "两部门：探索制定“零碳工厂”标准 引领轻工重点行业实现双碳目标",
+      "url": "http://finance.eastmoney.com/news/1355,202611163931759340.html"
     },
     {
       "id": "1h71o5c",
@@ -31,6 +119,14 @@
       "url": "https://wallstreetcn.com/livenews/3200480"
     },
     {
+      "id": "1jts85d",
+      "ts": 1794812633,
+      "time": "2026-11-16T15:03:53.000+08:00",
+      "source": "东方财富",
+      "title": "两部门：大力推广应用数字化车间、智能工厂、智慧园区等现行标准 加快培育建设一批高水平标准应用试点项目",
+      "url": "http://finance.eastmoney.com/news/1355,202611163931759649.html"
+    },
+    {
       "id": "1guxlgw",
       "ts": 1794812576,
       "time": "2026-11-16T15:02:56.000+08:00",
@@ -45,6 +141,14 @@
       "source": "东方财富",
       "title": "聚焦轻工业焕新！《以标准提升引领轻工业优化升级实施方案》发布",
       "url": "http://finance.eastmoney.com/news/1350,202611163931756151.html"
+    },
+    {
+      "id": "12vwlbr",
+      "ts": 1794812549,
+      "time": "2026-11-16T15:02:29.000+08:00",
+      "source": "东方财富",
+      "title": "两部门：到2027年 制修订产品标准、方法标准等200项左右",
+      "url": "http://finance.eastmoney.com/news/1355,202611163931759749.html"
     },
     {
       "id": "uxojx3",
