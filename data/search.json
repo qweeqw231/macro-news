@@ -1,17 +1,137 @@
 {
-  "generatedAt": "2026-11-16T04:08:11.043Z",
+  "generatedAt": "2026-11-16T04:23:02.292Z",
   "windowDays": 62,
   "from": "2026-09-16",
   "days": 62,
   "fromHistory": 19,
-  "total": 55602,
+  "total": 55617,
   "items": [
     {
-      "id": "vu9v37",
+      "id": "12u98ug",
+      "ts": 1794802867,
+      "time": "2026-11-16T12:21:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "内蒙古特高压累计外送电量突破1万亿度",
+      "url": "https://wallstreetcn.com/livenews/3200406"
+    },
+    {
+      "id": "1y2sprr",
+      "ts": 1794802697,
+      "time": "2026-11-16T12:18:17.000+08:00",
+      "source": "新浪财经",
+      "title": "科技股重挫叠加需求前景蒙阴 铜价跌至四个月低点",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxcic1208082.shtml"
+    },
+    {
+      "id": "m74ff",
+      "ts": 1794802521,
+      "time": "2026-11-16T04:15:21.000Z",
+      "source": "中新网",
+      "title": "Token首次走进直播间 如何管住AI解决问题的能力？",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-16/10732705.shtml"
+    },
+    {
+      "id": "1c5tarx",
+      "ts": 1794802475,
+      "time": "2026-11-16T12:14:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家统计局：实现全年预期目标有支撑，也有条件",
+      "url": "https://wallstreetcn.com/livenews/3200405"
+    },
+    {
+      "id": "eo2y0n",
+      "ts": 1794802444,
+      "time": "2026-11-16T12:14:04.000+08:00",
+      "source": "新浪财经",
+      "title": "高盛预计2027年石油市场将“大量过剩” 油价料承压",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxcic1205636.shtml"
+    },
+    {
+      "id": "1i0yejv",
+      "ts": 1794802424,
+      "time": "2026-11-16T12:13:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "汇丰银行将英伟达评级下调至“持有”，目标价从365美元大幅下调至170美元。",
+      "url": "https://wallstreetcn.com/livenews/3200404"
+    },
+    {
+      "id": "122dao3",
+      "ts": 1794802365,
+      "time": "2026-11-16T12:12:45.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：实现全年预期目标有支撑 也有条件",
+      "url": "http://finance.eastmoney.com/news/1346,202611163931663949.html"
+    },
+    {
+      "id": "x90a9u",
+      "ts": 1794802357,
+      "time": "2026-11-16T12:12:37.000+08:00",
+      "source": "华尔街见闻",
+      "title": "台湾证交所加权股价指数下跌5%至41,490.26点。",
+      "url": "https://wallstreetcn.com/livenews/3200403"
+    },
+    {
+      "id": "16sr9g0",
+      "ts": 1794802332,
+      "time": "2026-11-16T12:12:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日本央行委员高田创：一旦加息开始对企业行为产生不利影响，日本央行即可将其视为政策利率已达到中性水平的信号，并开始考虑潜在的降息。",
+      "url": "https://wallstreetcn.com/livenews/3200402"
+    },
+    {
+      "id": "zv6sk",
+      "ts": 1794802300,
+      "time": "2026-11-16T12:11:40.000+08:00",
+      "source": "新浪财经",
+      "title": "汇丰将英伟达评级下调至持有 目标价从365美元下调至170美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxchy8902176.shtml"
+    },
+    {
+      "id": "19f2iux",
+      "ts": 1794802193,
+      "time": "2026-11-16T12:09:53.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家统计局：10月份部分指标增速回落一定程度是受错月因素影响",
+      "url": "https://wallstreetcn.com/livenews/3200401"
+    },
+    {
+      "id": "fwssjt",
+      "ts": 1794802191,
+      "time": "2026-11-16T04:09:51.000Z",
+      "source": "中新网",
+      "title": "从“速度竞赛”转向“价值深耕” 小零食何以做出大声量",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-16/10732703.shtml"
+    },
+    {
+      "id": "50fi3",
+      "ts": 1794802164,
+      "time": "2026-11-16T12:09:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "【国家统计局：10月份部分指标增速回落一定程度是受错月因素影响】国家统计局新闻发言人、国民经济综合统计司副司长王冠华在国新办新闻发布会上表示，受经济自身运行特点、季节性因素、节假日安排以及上年的对比基数等因素的影响，月度指标出现波动是经济运行当中比较常见的现象。",
+      "url": "https://wallstreetcn.com/livenews/3200400"
+    },
+    {
+      "id": "j6uiab",
+      "ts": 1794802155,
+      "time": "2026-11-16T12:09:15.000+08:00",
+      "source": "新浪财经",
+      "title": "消息称特朗普政府将英伟达列为AI“国家冠军”企业名单",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxchy8900409.shtml"
+    },
+    {
+      "id": "1al2n2o",
+      "ts": 1794802062,
+      "time": "2026-11-16T12:07:42.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：要从供需两端协同发力 推动商品消费扩容升级",
+      "url": "http://finance.eastmoney.com/news/1346,202611163931662738.html"
+    },
+    {
+      "id": "1khvli2",
       "ts": 1794801926,
       "time": "2026-11-16T12:05:26.000+08:00",
       "source": "华尔街见闻",
-      "title": "日本央行委员高田创：需要灵活调整政策利率。",
+      "title": "日本央行委员高田创：物价上涨目前更有可能引发第二轮效应。",
       "url": "https://wallstreetcn.com/livenews/3200399"
     },
     {
