@@ -6,84 +6,93 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-15T23:52:57.796Z",
-  "durationMs": 10500,
+  "startedAt": "2026-11-16T00:07:50.623Z",
+  "durationMs": 13479,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 6446
+      "ms": 6609
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1050
+      "ms": 1251
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1169
+      "ms": 1530
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 943
+      "ms": 1123
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1741
+      "ms": 2296
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 801
+      "ms": 1213
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1191
+      "ms": 1645
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 4266
+      "ms": 7338
     }
   ],
-  "quotes": 73,
-  "added": 17,
+  "quotes": 74,
+  "added": 19,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 8153,
-    "kept": 8153,
+    "candidates": 8172,
+    "kept": 8172,
     "evicted": 0,
-    "deduped": 212,
+    "deduped": 223,
     "days": [
       {
-        "day": "2026-11-15",
-        "incoming": 213,
-        "candidates": 421,
-        "kept": 421,
+        "day": "2026-11-16",
+        "incoming": 10,
+        "candidates": 10,
+        "kept": 10,
         "evicted": 0,
-        "deduped": 196,
-        "added": 17
+        "deduped": 0,
+        "added": 10
+      },
+      {
+        "day": "2026-11-15",
+        "incoming": 216,
+        "candidates": 430,
+        "kept": 430,
+        "evicted": 0,
+        "deduped": 207,
+        "added": 9
       },
       {
         "day": "2026-11-14",
@@ -140,6 +149,5 @@
         "added": 0
       }
     ]
-  },
-  "quoteError": "1/66 失败：批量端点返回无效价(f2=-)"
+  }
 }
