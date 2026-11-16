@@ -6,93 +6,84 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-16T19:53:06.859Z",
-  "durationMs": 9221,
+  "startedAt": "2026-11-16T20:08:05.157Z",
+  "durationMs": 12885,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 4930
+      "ms": 4646
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1052
+      "ms": 1212
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1140
+      "ms": 1286
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 1062
+      "ms": 452
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 2038
+      "ms": 1316
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 971
+      "ms": 1474
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1489
+      "ms": 1238
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 5167
+      "ms": 8789
     }
   ],
   "quotes": 74,
-  "added": 5,
+  "added": 6,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 9481,
-    "kept": 9481,
+    "candidates": 9051,
+    "kept": 9051,
     "evicted": 0,
-    "deduped": 322,
+    "deduped": 320,
     "days": [
       {
         "day": "2026-11-16",
         "incoming": 310,
-        "candidates": 1315,
-        "kept": 1315,
+        "candidates": 1319,
+        "kept": 1319,
         "evicted": 0,
         "deduped": 306,
-        "added": 5
-      },
-      {
-        "day": "2026-11-15",
-        "incoming": 2,
-        "candidates": 434,
-        "kept": 434,
-        "evicted": 0,
-        "deduped": 2,
-        "added": 0
+        "added": 6
       },
       {
         "day": "2026-11-14",
