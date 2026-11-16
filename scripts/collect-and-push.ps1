@@ -343,7 +343,8 @@ if ($dirty -eq 'yes') {
     foreach ($p in $dirtyPaths) { Say "sync: dirty: $p" }
     # 2.23.0：脏轮不写 data/，但必须让消费方知道「本地落后多少」
     Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result 'skipped:dirty-worktree' `
-        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh ($behind -eq 0)
+        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh ($behind -eq 0) `
+        -FetchAttempts $fetchRetry.attempts
     exit 0
 }
 
@@ -385,7 +386,8 @@ if ($syncResult -like 'skipped:*') {
     $runStats.skipReason = ($syncResult -replace '^skipped:', '')
     if (-not $SyncOnly) { Publish-LocalSync $syncResult }
     Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result $syncResult `
-        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh ($behind -eq 0)
+        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh ($behind -eq 0) `
+        -FetchAttempts $fetchRetry.attempts
     Say "同步未完成（$syncResult），本轮不采集、不提交；下一轮重试。"
     exit 0
 }
@@ -395,7 +397,8 @@ if (-not $SyncOnly) {
     $null = Write-LocalSync $syncResult
 }
 Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result $syncResult `
-    -Head $headAfter -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh $true
+    -Head $headAfter -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh $true `
+    -FetchAttempts $fetchRetry.attempts
 
 # 同步更新了代码/HEAD 时再复核一次守卫（旧代码检查已在启动时做过）
 if ($headAfter -ne $headBefore -or $guardBefore -eq 'missing') {
