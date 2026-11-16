@@ -6,84 +6,84 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-16T09:07:57.104Z",
-  "durationMs": 39492,
+  "startedAt": "2026-11-16T09:22:57.579Z",
+  "durationMs": 17342,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 8595
+      "ms": 7747
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1420
+      "ms": 1505
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1934
+      "ms": 1881
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 655
+      "ms": 1255
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1857
+      "ms": 2113
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 865
+      "ms": 1270
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1307
+      "ms": 1712
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 7275
+      "ms": 8869
     }
   ],
-  "quotes": 57,
-  "added": 30,
+  "quotes": 75,
+  "added": 26,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 8930,
-    "kept": 8930,
+    "candidates": 8955,
+    "kept": 8955,
     "evicted": 0,
-    "deduped": 309,
+    "deduped": 316,
     "days": [
       {
         "day": "2026-11-16",
-        "incoming": 300,
-        "candidates": 764,
-        "kept": 764,
+        "incoming": 302,
+        "candidates": 789,
+        "kept": 789,
         "evicted": 0,
-        "deduped": 270,
-        "added": 30
+        "deduped": 277,
+        "added": 26
       },
       {
         "day": "2026-11-15",
@@ -149,6 +149,5 @@
         "added": 0
       }
     ]
-  },
-  "quoteError": "18/66 失败：东财批量失败：fetch failed"
+  }
 }
