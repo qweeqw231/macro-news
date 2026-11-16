@@ -6,84 +6,84 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-16T18:38:03.225Z",
-  "durationMs": 10983,
+  "startedAt": "2026-11-16T18:52:57.442Z",
+  "durationMs": 43808,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 6375
+      "ms": 5533
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1190
+      "ms": 971
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1933
+      "ms": 1055
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 824
+      "ms": 869
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1992
+      "ms": 1844
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 848
+      "ms": 784
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1192
+      "ms": 1510
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 5503
+      "ms": 4174
     }
   ],
-  "quotes": 74,
-  "added": 17,
+  "quotes": 56,
+  "added": 4,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 9455,
-    "kept": 9455,
+    "candidates": 9459,
+    "kept": 9459,
     "evicted": 0,
-    "deduped": 316,
+    "deduped": 328,
     "days": [
       {
         "day": "2026-11-16",
         "incoming": 316,
-        "candidates": 1289,
-        "kept": 1289,
+        "candidates": 1293,
+        "kept": 1293,
         "evicted": 0,
-        "deduped": 300,
-        "added": 17
+        "deduped": 312,
+        "added": 4
       },
       {
         "day": "2026-11-15",
@@ -149,5 +149,6 @@
         "added": 0
       }
     ]
-  }
+  },
+  "quoteError": "18/66 失败：东财批量失败：fetch failed"
 }
