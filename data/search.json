@@ -1,17 +1,73 @@
 {
-  "generatedAt": "2026-11-16T18:52:57.442Z",
+  "generatedAt": "2026-11-16T19:07:50.976Z",
   "windowDays": 62,
   "from": "2026-09-16",
   "days": 62,
   "fromHistory": 19,
-  "total": 56540,
+  "total": 56547,
   "items": [
     {
-      "id": "7ra5bx",
+      "id": "1pl762i",
+      "ts": 1794855886,
+      "time": "2026-11-17T03:04:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "老虎环球管理公司向美国证券交易委员会（SEC）提交的文件显示，其将所持英伟达股票增持7.2%，至1200万股。",
+      "url": "https://wallstreetcn.com/livenews/3200806"
+    },
+    {
+      "id": "n3gtto",
+      "ts": 1794855872,
+      "time": "2026-11-17T03:04:32.000+08:00",
+      "source": "华尔街见闻",
+      "title": "高盛预计，由于各国央行持续购金，到2027年底金价将逐步攀升至每盎司4650美元。",
+      "url": "https://wallstreetcn.com/livenews/3200805"
+    },
+    {
+      "id": "7u8tmu",
+      "ts": 1794855813,
+      "time": "2026-11-17T03:03:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "俄国防部：俄军一天击落超两千架乌无人机",
+      "url": "https://wallstreetcn.com/livenews/3200804"
+    },
+    {
+      "id": "s9hs66",
+      "ts": 1794855750,
+      "time": "2026-11-17T03:02:30.000+08:00",
+      "source": "华尔街见闻",
+      "title": "在岸人民币兑美元北京时间03:00收报6.6642，较上一交易日夜盘收盘涨84点。",
+      "url": "https://wallstreetcn.com/livenews/3200803"
+    },
+    {
+      "id": "16hwarl",
+      "ts": 1794855697,
+      "time": "2026-11-17T03:01:37.000+08:00",
+      "source": "华尔街见闻",
+      "title": "在岸人民币兑美元（CNY）北京时间03:00收报6.6642元，较上周五夜盘收盘涨84点。",
+      "url": "https://wallstreetcn.com/livenews/3200802"
+    },
+    {
+      "id": "1e759fm",
+      "ts": 1794855630,
+      "time": "2026-11-17T03:00:30.000+08:00",
+      "source": "华尔街见闻",
+      "title": "恒生指数主连夜盘收跌0.34%，报23669点。",
+      "url": "https://wallstreetcn.com/livenews/3200801"
+    },
+    {
+      "id": "ft7cg9",
+      "ts": 1794855212,
+      "time": "2026-11-17T02:53:32.000+08:00",
+      "source": "新浪财经",
+      "title": "道明证券料美元保持韧性 美联储鹰派前景提供支撑",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyymar2089697.shtml"
+    },
+    {
+      "id": "17sbd7x",
       "ts": 1794855072,
       "time": "2026-11-17T02:51:12.000+08:00",
       "source": "华尔街见闻",
-      "title": "美国加州起诉OpenAI，指控其AI模型失控事件。",
+      "title": "美国加州起诉OpenAI，指控其AI模型失控事件",
       "url": "https://wallstreetcn.com/livenews/3200800"
     },
     {
