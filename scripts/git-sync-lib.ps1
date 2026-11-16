@@ -18,32 +18,40 @@ function Say-Lib($m) {
 
 # 单次 git 调用 + 停滞检测（不是固定总超时）。
 # 为什么不用固定总超时：2026-11-16 夜间实测同一通道有两种形态 ——
-#   · 限速：一次 fetch 只下 2~3 MB 就走不动，但仍在动；
+#   · 限速：一次 fetch 只下 2~3 MB 就走不动，但仍在动（一次 17 MB 要 6 分钟）；
 #   · 真停滞：整段时间一个字节都不动。
-# 固定总超时会把前者误杀。判据改为「两个信号都不再变化」才中止：
-#   ① `.git/objects/pack/tmp_pack_*` 字节数（网络侧进度）
-#   ② git 的 stderr 输出（--progress 的进度行，含 index-pack 的 receiving/resolving）
-# 不用 CPU 时间做信号：父 git 进程会周期性醒来，几毫秒的 tick 会不断重置计时器（实测导致判据失效）。
-# 另设 MaxSeconds 绝对上限。ConnectTimeout / ServerAlive* 只约束建连与会话保活，替代不了这一层。
+# 固定总超时会把前者误杀。判据改为「pack 字节数持续 StallSeconds 秒不变」才中止，另设 MaxSeconds 绝对上限。
+# ConnectTimeout / ServerAlive* 只约束建连与会话保活，替代不了这一层。
+# 注意：这里刻意用 .NET Process 而不是 Start-Process —— 后者在 PS 5.1 下
+#   `$p.ExitCode` 恒为空（实测），会把「fetch 成功」误判成失败，导致整轮白让路。
 # 返回 [ordered]@{ exitCode; out; timedOut; reason; bytes; elapsedSec }
 function Invoke-GitWithTimeout {
     param(
         [Parameter(Mandatory)][string[]]$GitArgs,
-        [int]$StallSeconds = 120,
+        [int]$StallSeconds = 180,
         [int]$MaxSeconds = 600,
         [string]$ProgressDir = ''
     )
     $res = [ordered]@{ exitCode = 124; out = ''; timedOut = $false; reason = ''; bytes = 0; elapsedSec = 0 }
-    $tmpOut = [System.IO.Path]::GetTempFileName()
-    $tmpErr = [System.IO.Path]::GetTempFileName()
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = 'git'
+    $psi.Arguments = ($GitArgs -join ' ')
+    $psi.UseShellExecute = $false
+    $psi.CreateNoWindow = $true
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+    $psi.WorkingDirectory = (Get-Location).Path
+    $proc = New-Object System.Diagnostics.Process
+    $proc.StartInfo = $psi
     $start = Get-Date
     $watching = ($ProgressDir -ne '') -and (Test-Path $ProgressDir)
     try {
-        $p = Start-Process -FilePath 'git' -ArgumentList $GitArgs -NoNewWindow -PassThru `
-            -RedirectStandardOutput $tmpOut -RedirectStandardError $tmpErr
-        $lastSig = -1
+        $null = $proc.Start()
+        $outTask = $proc.StandardOutput.ReadToEndAsync()
+        $errTask = $proc.StandardError.ReadToEndAsync()
+        $lastSize = -1
         $lastChange = $start
-        while (-not $p.WaitForExit(5000)) {
+        while (-not $proc.WaitForExit(5000)) {
             $now = Get-Date
             $packBytes = 0
             if ($watching) {
@@ -53,15 +61,12 @@ function Invoke-GitWithTimeout {
                 } catch { }
             }
             $res.bytes = $packBytes
-            $errBytes = 0
-            try { $errBytes = (New-Object System.IO.FileInfo($tmpErr)).Length } catch { }
-            $sig = $packBytes + $errBytes
-            if ($sig -ne $lastSig) { $lastSig = $sig; $lastChange = $now }
+            if ($packBytes -gt $lastSize) { $lastSize = $packBytes; $lastChange = $now }
             $elapsed = ($now - $start).TotalSeconds
             $idle = ($now - $lastChange).TotalSeconds
             if ($watching -and $elapsed -ge $StallSeconds -and $idle -ge $StallSeconds) {
                 $res.timedOut = $true
-                $res.reason = "stalled：${StallSeconds}s 无任何进展（已收 $($res.bytes) 字节）"
+                $res.reason = "stalled：${StallSeconds}s 无数据增长（已收 $($res.bytes) 字节）"
                 break
             }
             if ($elapsed -ge $MaxSeconds) {
@@ -72,30 +77,31 @@ function Invoke-GitWithTimeout {
         }
         if ($res.timedOut) {
             # 连 ssh 子进程一起杀，避免留下占着连接的孤儿进程
-            try { $null = & taskkill.exe /PID $p.Id /T /F 2>&1 } catch { }
-            try { $p.Kill() } catch { }
+            try { $null = & taskkill.exe /PID $proc.Id /T /F 2>&1 } catch { }
+            try { $proc.Kill() } catch { }
+            $null = $proc.WaitForExit(3000)
         } else {
-            $res.exitCode = $p.ExitCode
+            $res.exitCode = $proc.ExitCode
         }
         $res.elapsedSec = [int](((Get-Date) - $start).TotalSeconds)
         $stdout = ''
         $stderr = ''
-        try { $stdout = [System.IO.File]::ReadAllText($tmpOut) } catch { }
-        try { $stderr = [System.IO.File]::ReadAllText($tmpErr) } catch { }
+        try { if ($outTask.Wait(3000)) { $stdout = [string]$outTask.Result } } catch { }
+        try { if ($errTask.Wait(3000)) { $stderr = [string]$errTask.Result } } catch { }
         $res.out = (($stdout.TrimEnd() + "`n" + $stderr.TrimEnd()).Trim())
     } finally {
-        Remove-Item $tmpOut, $tmpErr -Force -ErrorAction SilentlyContinue
+        try { $proc.Dispose() } catch { }
     }
     return $res
 }
 
-# fetch 重试：默认 3 次（间隔 5s / 15s）；单次用停滞检测（120s 无字节/进度变化即中止，绝对上限 10 分钟）。
+# fetch 重试：默认 3 次（间隔 5s / 15s）；单次用停滞检测（180s 无数据增长即中止，绝对上限 10 分钟）。
 # 返回 [ordered]@{ ok; attempts; error; bytes; elapsedSec }
 function Invoke-GitFetchRetry {
     param(
         [int]$Max = 3,
         [int[]]$BackoffSeconds = @(0, 5, 15),
-        [int]$StallSeconds = 120,
+        [int]$StallSeconds = 180,
         [int]$MaxSeconds = 600
     )
     $res = [ordered]@{ ok = $false; attempts = 0; error = ''; bytes = 0; elapsedSec = 0 }

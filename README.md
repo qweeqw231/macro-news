@@ -727,7 +727,7 @@ schtasks /create /tn "MacroNews-Sync-1648" /tr "wscript.exe //nologo C:\Work\Min
 分叉走普通 merge，冲突 abort 跳过）；同步结果与 `HEAD` 短哈希写入日志。
 fetch 由 `scripts/git-sync-lib.ps1` 统一处理：3 次重试（退避 5s / 15s）+ **停滞检测** ——
 SSH-443 会出现两种形态：限速后 90s 只下来 2~3 MB（慢但在动）、或整段时间一个字节都不动；
-所以判据是「120s 内 `tmp_pack_*` 字节数与 git 进度行都不变」，而不是固定总超时（单次绝对上限 10 分钟）。
+所以判据是「180s 内 `tmp_pack_*` 没有增长」，而不是固定总超时（单次绝对上限 10 分钟）。
 `ConnectTimeout`/`ServerAlive*` 只约束建连与会话保活，不能替代这一层。
 之后再**看** `data/latest.json` 的最新条目，不到 `-NewsStaleMinutes`（默认 45）分钟就整轮跳过新闻/行情采集 —— 云端 15 分钟一轮正常时，
 本机一次都不会重复采；云端排程器丢事件时，最多 45 分钟后本机接管。

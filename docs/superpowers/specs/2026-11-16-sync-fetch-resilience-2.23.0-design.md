@@ -63,10 +63,12 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 
 新增 `scripts/git-sync-lib.ps1`（被两个 ps1 点源引入，只写 `.local/`）：
 
-- `Invoke-GitWithTimeout`：`Start-Process` + `WaitForExit(5000)` 轮询，
-  以 `tmp_pack_*` 字节数 + git stderr（`--progress` 进度行）为进度信号；**持续 120s 两个信号都不变**才判定停滞，
+- `Invoke-GitWithTimeout`：直接构造 .NET `Process`（**不用 `Start-Process`**）+ 异步读 stdout/stderr，
+  以 `WaitForExit(5000)` 轮询；以 `tmp_pack_*` 字节数为进度信号，**持续 180s 不增长**才判定停滞，
   绝对上限 10 分钟；超时用 `taskkill /T /F` 连 ssh 子进程一起杀（避免孤儿连接占着通道）。
-  刻意不用进程 CPU 时间：父 git 进程会周期性醒来，几毫秒 tick 就足以不断重置计时器，实测会让判据完全失效。
+  两个实测坑都写进了注释：① `Start-Process -PassThru` 在 PS 5.1 下 `$p.ExitCode` 恒为空，
+  会把「fetch 成功」判成失败（21:54 那轮就因此白让路了一整轮）；② 用进程 CPU 时间做进度信号无效，
+  父进程的毫秒级 tick 会不断重置停滞计时器。
 - `Invoke-GitFetchRetry`：默认 3 次，间隔 5s / 15s（`sync-close` 用 2 次，保证能塞进 16:18→16:33 的档位）；
   顺手清掉超过 1 天的 `tmp_pack_*` 残骸。返回 `{ ok, attempts, error, bytes, elapsedSec }`，
   错误文本去掉 PowerShell 装饰行。
@@ -133,3 +135,6 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 4. 真实弱网下的形态记录：一次 fetch 在 281s 后被 reset，期间 stderr 一直在输出
    `remote: Counting objects` 进度（说明是限速/饿死，不是纯挂死）；另一次 71s 收下 17 MB
    后被旧的 60s 固定判据误杀 —— 这两条直接促成了「停滞检测」取代「固定总超时」。
+5. 21:54 的定时采集在真实弱网下跑了一遍新逻辑：fetch 实际成功并更新了 `origin/main`，
+   却因为 `Start-Process` 的退出码恒为空被判成 `skipped:fetch-failed` —— 这一条促成了
+   改用 .NET `Process` 直读 ExitCode。修正后同一仓库同一网络下 fetch 1 次 6s 返回 `ok=True`。
