@@ -1,11 +1,155 @@
 {
-  "generatedAt": "2026-11-16T02:07:49.845Z",
+  "generatedAt": "2026-11-16T02:22:48.732Z",
   "windowDays": 62,
   "from": "2026-09-16",
   "days": 62,
   "fromHistory": 19,
-  "total": 55426,
+  "total": 55453,
   "items": [
+    {
+      "id": "1j1swxd",
+      "ts": 1794795742,
+      "time": "2026-11-16T10:22:22.000+08:00",
+      "source": "华尔街见闻",
+      "title": "全球AI大模型周调用量榜单出炉：前四名被中国模型包揽",
+      "url": "https://wallstreetcn.com/livenews/3200352"
+    },
+    {
+      "id": "tazdn6",
+      "ts": 1794795736,
+      "time": "2026-11-16T10:22:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "日本经济财政大臣城内实谈及7-9月GDP时表示，展望未来，就业与所得环境改善预料将支撑经济逐步复苏；",
+      "url": "https://wallstreetcn.com/livenews/3200351"
+    },
+    {
+      "id": "j9tfrb",
+      "ts": 1794795346,
+      "time": "2026-11-16T10:15:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "A股电池产业链探底回升，领湃科技涨超15%，野马电池此前涨停，时代万恒、天虹锂电、欣旺达、宁德时代跟涨。",
+      "url": "https://wallstreetcn.com/livenews/3200350"
+    },
+    {
+      "id": "1xuxk2h",
+      "ts": 1794795346,
+      "time": "2026-11-16T10:15:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "电池产业链探底回升，领湃科技涨超15%，野马电池此前涨停，时代万恒、天虹锂电、欣旺达、宁德时代跟涨。",
+      "url": "https://wallstreetcn.com/livenews/3200349"
+    },
+    {
+      "id": "jdwc7i",
+      "ts": 1794795297,
+      "time": "2026-11-16T10:14:57.000+08:00",
+      "source": "新浪财经",
+      "title": "摩根士丹利建议“最大幅度超配”全球股票 认为AI资本支出周期依然完好",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniywwza8949000.shtml"
+    },
+    {
+      "id": "1301sju",
+      "ts": 1794795275,
+      "time": "2026-11-16T10:14:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "摩根士丹利建议“最大幅度超配”全球股票 认为AI资本支出周期依然完好",
+      "url": "https://wallstreetcn.com/livenews/3200348"
+    },
+    {
+      "id": "1ixbifv",
+      "ts": 1794795271,
+      "time": "2026-11-16T02:14:31.000Z",
+      "source": "中新网",
+      "title": "国家统计局：10月份国民经济运行总体平稳、向新向优",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-16/10732626.shtml"
+    },
+    {
+      "id": "rl9mcb",
+      "ts": 1794795231,
+      "time": "2026-11-16T10:13:51.000+08:00",
+      "source": "新浪财经",
+      "title": "NTT Docomo称日本移动通信服务出现故障",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniywwze5724131.shtml"
+    },
+    {
+      "id": "6mp03m",
+      "ts": 1794795169,
+      "time": "2026-11-16T10:12:49.000+08:00",
+      "source": "新浪财经",
+      "title": "光大期货金融类日报20261116",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-16/doc-iniywwze5723124.shtml"
+    },
+    {
+      "id": "1uydpqt",
+      "ts": 1794795101,
+      "time": "2026-11-16T10:11:41.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：1—10月规上工业发电量同比增长1.8%",
+      "url": "http://finance.eastmoney.com/news/1346,202611163931615110.html"
+    },
+    {
+      "id": "yhsu2q",
+      "ts": 1794795060,
+      "time": "2026-11-16T10:11:00.000+08:00",
+      "source": "新浪财经",
+      "title": "国家统计局：10月份规上工业发电量7940亿千瓦时 同比下降2.1%",
+      "url": "https://finance.sina.com.cn/china/2026-11-16/doc-iniywwzi2483872.shtml"
+    },
+    {
+      "id": "1nxj2xk",
+      "ts": 1794795040,
+      "time": "2026-11-16T10:10:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家统计局：10月份，规上工业天然气产量222亿立方米，同比增长0.8%，9月份为下降1.0%；",
+      "url": "https://wallstreetcn.com/livenews/3200347"
+    },
+    {
+      "id": "o0pgam",
+      "ts": 1794795000,
+      "time": "2026-11-16T10:10:00.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：10月份全国服务业生产指数同比增长4.6%",
+      "url": "http://finance.eastmoney.com/news/1346,202611163931611264.html"
+    },
+    {
+      "id": "16q4ukk",
+      "ts": 1794794999,
+      "time": "2026-11-16T10:09:59.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家统计局：10月份，规上工业原油产量1845万吨，同比增长2.3%，增速比9月份加快0.1个百分点；",
+      "url": "https://wallstreetcn.com/livenews/3200346"
+    },
+    {
+      "id": "gvi20l",
+      "ts": 1794794954,
+      "time": "2026-11-16T10:09:14.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家统计局：10月份，规上工业原煤产量3.8亿吨，同比下降5.8%，降幅比9月份收窄1.0个百分点；",
+      "url": "https://wallstreetcn.com/livenews/3200345"
+    },
+    {
+      "id": "8la25l",
+      "ts": 1794794901,
+      "time": "2026-11-16T10:08:21.000+08:00",
+      "source": "东方财富",
+      "title": "中消协：网购服装问题多 平台担责要切实",
+      "url": "http://finance.eastmoney.com/news/1350,202611163931609631.html"
+    },
+    {
+      "id": "18v6ijb",
+      "ts": 1794794883,
+      "time": "2026-11-16T10:08:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国家统计局：规上工业电力生产有所下降",
+      "url": "https://wallstreetcn.com/livenews/3200344"
+    },
+    {
+      "id": "at7tyw",
+      "ts": 1794794838,
+      "time": "2026-11-16T10:07:18.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：10月份我国工业机器人产量同比增长26%",
+      "url": "http://finance.eastmoney.com/news/1352,202611163931612613.html"
+    },
     {
       "id": "1sdqzzp",
       "ts": 1794794828,
@@ -13,6 +157,22 @@
       "source": "华尔街见闻",
       "title": "国家统计局：总的来看，10月份国民经济总体平稳，延续动能向新、结构向优的发展态势。",
       "url": "https://wallstreetcn.com/livenews/3200343"
+    },
+    {
+      "id": "1mbikkc",
+      "ts": 1794794828,
+      "time": "2026-11-16T10:07:08.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：1—10月份新建商品房销售面积同比下降13.7%",
+      "url": "http://money.eastmoney.com/news/11261,202611163931612582.html"
+    },
+    {
+      "id": "jr3ams",
+      "ts": 1794794827,
+      "time": "2026-11-16T10:07:07.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：1—10月份，全国房地产开发投资同比下降21.6%",
+      "url": "http://money.eastmoney.com/news/11261,202611163931612728.html"
     },
     {
       "id": "1qqbrfy",
@@ -31,12 +191,44 @@
       "url": "https://wallstreetcn.com/livenews/3200341"
     },
     {
+      "id": "a1g6dk",
+      "ts": 1794794760,
+      "time": "2026-11-16T10:06:00.000+08:00",
+      "source": "新浪财经",
+      "title": "国家统计局：1—10月全国网上商品和服务零售额169811亿元 同比增长3.7%",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-16/doc-iniywwzi2480404.shtml"
+    },
+    {
       "id": "swep16",
       "ts": 1794794742,
       "time": "2026-11-16T10:05:42.000+08:00",
       "source": "东方财富",
       "title": "10月份我国工业机器人产量同比增长26%",
       "url": "http://finance.eastmoney.com/news/1350,202611163931608396.html"
+    },
+    {
+      "id": "oo7imo",
+      "ts": 1794794736,
+      "time": "2026-11-16T10:05:36.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：10月份一线城市商品住宅销售价格环比总体上涨",
+      "url": "http://money.eastmoney.com/news/11261,202611163931615668.html"
+    },
+    {
+      "id": "1xi2dkv",
+      "ts": 1794794721,
+      "time": "2026-11-16T10:05:21.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：1—10月份，全国固定资产投资（不含农户）同比下降8.1%",
+      "url": "http://finance.eastmoney.com/news/1352,202611163931612420.html"
+    },
+    {
+      "id": "o2qwxh",
+      "ts": 1794794713,
+      "time": "2026-11-16T10:05:13.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：1—10月社会消费品零售总额同比增长1.0%",
+      "url": "http://finance.eastmoney.com/news/1352,202611163931612975.html"
     },
     {
       "id": "14xuyd2",
@@ -63,6 +255,14 @@
       "url": "http://finance.eastmoney.com/news/1346,202611163931609380.html"
     },
     {
+      "id": "rbj9lm",
+      "ts": 1794794653,
+      "time": "2026-11-16T10:04:13.000+08:00",
+      "source": "新浪财经",
+      "title": "国家统计局：就业形势总体稳定 城镇调查失业率下降",
+      "url": "https://finance.sina.com.cn/roll/2026-11-16/doc-iniywwzi2480125.shtml"
+    },
+    {
       "id": "1lon2sz",
       "ts": 1794794640,
       "time": "2026-11-16T10:04:00.000+08:00",
@@ -77,6 +277,14 @@
       "source": "华尔街见闻",
       "title": "国家统计局：1-10月社会消费商品和服务零售总额同比增长2.5%",
       "url": "https://wallstreetcn.com/livenews/3200338"
+    },
+    {
+      "id": "1tax87l",
+      "ts": 1794794587,
+      "time": "2026-11-16T10:03:07.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：10月份，规模以上工业增加值同比实际增长4.8%",
+      "url": "http://finance.eastmoney.com/news/1352,202611163931612895.html"
     },
     {
       "id": "3txwjd",
@@ -1333,6 +1541,14 @@
       "source": "东方财富",
       "title": "何立峰人民日报撰文：推动干部树立和践行正确政绩观",
       "url": "http://finance.eastmoney.com/news/1344,202611163931564469.html"
+    },
+    {
+      "id": "zlzthh",
+      "ts": 1794788067,
+      "time": "2026-11-16T08:14:27.000+08:00",
+      "source": "东方财富",
+      "title": "投资日历：周一资本市场大事提醒",
+      "url": "http://stock.eastmoney.com/news/11215,202611163931615411.html"
     },
     {
       "id": "1hak7xk",
