@@ -78,8 +78,8 @@ function Invoke-Sync {
     $st.headBefore = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
     if (-not $st.headBefore) { $st.headBefore = 'unknown' }
 
-    # ---- 1. fetch（2.23.0：SSH-443 会被随机 reset，沿用采集侧的 3 次重试）----
-    $f = Invoke-GitFetchRetry -Max 3
+    # ---- 1. fetch（2.23.0：SSH-443 会被随机 reset；2 次够用且能塞进 16:18→16:33 的档位）----
+    $f = Invoke-GitFetchRetry -Max 2
     $st.fetchAttempts = $f.attempts
 
     if (-not $f.ok) {

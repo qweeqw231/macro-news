@@ -43,13 +43,16 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 
 补充证据：2026-11-16 21:24 复测时，`git fetch` 在 `ConnectTimeout=15 / ServerAlive*`
 生效的前提下仍卡了 6 分钟以上 —— 这两个 SSH 选项只约束建连与会话保活，**不构成整体 deadline**。
+进一步实测发现同一通道有两种形态：有时 90 秒只下来 2~3 MB（被限速，但一直在动），
+有时整 90 秒一个字节都不动（真停滞）。因此**固定总超时会误杀前者**，必须以「有无数据增长」为判据。
 
 ## 3. 方案选择
 
 | 方案 | 结论 | 理由 |
 |---|---|---|
 | A. fetch 重试 + 退避 | **采用** | 与 push 侧既有实践一致；SSH-443 的 reset 是瞬时的，重试即可 |
-| B. 单次硬超时 | **采用** | 无 deadline 时一次 fetch 可以卡死整档任务（21:24 实测） |
+| B. 单次固定总超时 | 不采用 | 实测「慢但在动」（2~3 MB/90s）与「真停滞」都会触发，会误杀大包拉取 |
+| B'. 单次停滞检测 | **采用** | 持续 120s 无进展才中止；慢速大包只要在动就让它跑完（单次绝对上限 10 分钟） |
 | C. 换备用拉取路径（HTTPS / 镜像） | 不采用 | 需引入凭证或第三方代理，且国内 HTTPS 同样会被 reset；收益不抵复杂度 |
 | D. 失败时把告警做得更醒目 | **部分采用** | 但**不能**再靠写 `data/` 来告警——那正是自锁来源；改成本地哨兵 + 日志 + 台账 |
 
@@ -60,9 +63,13 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 
 新增 `scripts/git-sync-lib.ps1`（被两个 ps1 点源引入，只写 `.local/`）：
 
-- `Invoke-GitWithTimeout`：`Start-Process` + `WaitForExit(ms)`，超时用 `taskkill /T /F` 连 ssh 子进程一起杀。
-- `Invoke-GitFetchRetry`：默认 3 次，间隔 5s / 15s，每次硬超时 90s（最坏约 5 分钟，
-  仍在 15 分钟档位内）。返回 `{ ok, attempts, error }`，错误文本去掉 PowerShell 装饰行。
+- `Invoke-GitWithTimeout`：`Start-Process` + `WaitForExit(5000)` 轮询，
+  以 `tmp_pack_*` 字节数 + git stderr（`--progress` 进度行）为进度信号；**持续 120s 两个信号都不变**才判定停滞，
+  绝对上限 10 分钟；超时用 `taskkill /T /F` 连 ssh 子进程一起杀（避免孤儿连接占着通道）。
+  刻意不用进程 CPU 时间：父 git 进程会周期性醒来，几毫秒 tick 就足以不断重置计时器，实测会让判据完全失效。
+- `Invoke-GitFetchRetry`：默认 3 次，间隔 5s / 15s（`sync-close` 用 2 次，保证能塞进 16:18→16:33 的档位）；
+  顺手清掉超过 1 天的 `tmp_pack_*` 残骸。返回 `{ ok, attempts, error, bytes, elapsedSec }`，
+  错误文本去掉 PowerShell 装饰行。
 - `Write-SyncState`：写 `.local/metrics/sync-state.json`：
   `{ updatedAt, source, result, localFresh, remoteRefStale, remoteRefAt, head, behind, ahead, fetchAttempts, error }`。
 
@@ -105,17 +112,24 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 
 `tests/collect-sync.test.mjs` 新增静态守卫：
 
-- fetch 重试 / 退避 / 硬超时存在；
+- fetch 重试 / 退避 / **停滞检测**（`StallSeconds`、`tmp_pack_`）存在，且没有再退回固定总超时；
 - fetch 失败分支不得出现 `Write-LocalSync` 或 `_last-run.json`；
 - `Publish-LocalSync` 里「fetch → at-origin → 写盘」的顺序；
 - 两脚本都点源 `git-sync-lib.ps1`，且 lib 不写 `data/`；
 - `sync-close` 必须用 `git cat-file -e` 探测 `origin/main`，且不得再出现「云端可能尚未生成」。
 
-手工验证（2026-11-16）：
+`tests/local-sync.test.mjs` 同步更新：`Write-LocalSync 'skipped:fetch-failed'` 必须不存在。
 
-1. `Invoke-GitFetchRetry` 指向不可达 remote：2 次尝试、错误文本干净；
-2. 临时把 `remote.origin.url` 改成不可达地址跑 `collect-and-push.ps1 -SyncOnly`：
-   3 次重试 + 5s/15s 退避（28.5s 结束），**`git status` 无任何 `data/` 变更**，
-   哨兵 `remoteRefStale=true / localFresh=false / fetchAttempts=3`；
-3. 真仓库 `git cat-file -e origin/main:data/snapshots/2026-11-16_pm.json` 命中，
-   证明「pm 在远端、本地没有」这个场景可以被如实报告。
+手工验证（2026-11-16 夜间，真实环境 + 故障环境）：
+
+1. `Invoke-GitFetchRetry` 指向不可达 remote（`ssh://git@127.0.0.1:1`）：2 次尝试、1s 退避，错误文本干净无 PowerShell 装饰；
+2. 临时把 `remote.origin.url` 指向不可达地址跑 `collect-and-push.ps1 -SyncOnly`：
+   3 次重试 + 5s/15s 退避（27.5s 结束），**`git status` 无任何 `data/` 变更**，
+   哨兵 `remoteRefStale=true / localFresh=false / fetchAttempts=3`，日志明确写出
+   「本地 origin/main ref 停在 cd123dfe（2026-11-16T11:53:15Z），也不能代表远端现状」；
+3. 真仓库 `git cat-file -e origin/main:data/snapshots/2026-11-16_pm.json` 命中
+   （capturedAt `2026-11-16T16:14:12+08:00`、`isTradingDay=true`），本地无该文件 ——
+   「pm 在远端、本地没有」这个事故场景现在能被如实报告出来；
+4. 真实弱网下的形态记录：一次 fetch 在 281s 后被 reset，期间 stderr 一直在输出
+   `remote: Counting objects` 进度（说明是限速/饿死，不是纯挂死）；另一次 71s 收下 17 MB
+   后被旧的 60s 固定判据误杀 —— 这两条直接促成了「停滞检测」取代「固定总超时」。

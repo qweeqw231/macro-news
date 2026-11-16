@@ -27,7 +27,7 @@
 
 | 层 | 修法 |
 |---|---|
-| 触发 | fetch 改为 3 次重试（退避 5s / 15s），每次硬超时 90s；与 push 侧既有重试一致 |
+| 触发 | fetch 改为 3 次重试（退避 5s / 15s）+ 停滞检测（120s 无打包字节/进度行变化才中止，单次上限 10 分钟）；与 push 侧既有重试一致 |
 | 放大器 | fetch 失败 / behind≠0 时**不再写 `data/`**；`Publish-LocalSync` 改为 fetch → at-origin → 才写盘 → 提交，任何「写而不提交」路径一律消除 |
 | 掩盖 | `sync-close` 用 `git cat-file -e origin/main:<pm>` 只读探测，本地缺 pm 但远端有时明说「本地不是最新（behind/ahead/result）」，不再误报「云端可能尚未生成」 |
 

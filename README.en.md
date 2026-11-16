@@ -658,9 +658,10 @@ Three pitfalls that masquerade as "a broken token":
 `MacroNews-Collect` is **sync first, then staleness-driven**: each round first runs `git fetch origin main`
 to compare `HEAD`/`origin/main` (behind and clean → ff-only; tracked changes → skip the whole round, no stash/pop;
 diverged → normal merge, abort and skip on conflict); the sync result and short `HEAD` hash go to the log.
-`fetch` is wrapped by `scripts/git-sync-lib.ps1`: 3 attempts (5s / 15s backoff) with a **90s hard timeout each** —
-the SSH-443 channel gets randomly reset, and `ConnectTimeout`/`ServerAlive*` do not bound the overall call
-(measured: one call hung 178s on 2026-11-16, and 6+ minutes on a re-test).
+`fetch` is wrapped by `scripts/git-sync-lib.ps1`: 3 attempts (5s / 15s backoff) with **stall detection** —
+the SSH-443 channel both throttles (2–3 MB per 90s, slow but alive) and truly stalls (zero bytes),
+so the kill criterion is "no change in `tmp_pack_*` bytes or git progress output for 120s" rather than a
+fixed total timeout (10-minute per-attempt ceiling). `ConnectTimeout`/`ServerAlive*` only bound connect and keep-alive.
 Then it **reads** the newest item in `data/latest.json`; if it is younger than `-NewsStaleMinutes` (default 45) minutes, the whole round skips news/quote collection — when the cloud 15-minute rounds are healthy,
 the local machine never collects twice; when the cloud scheduler drops events, the local machine takes over after at most 45 minutes.
 Daily/weekly/monthly K use `-KlineStaleHours` (default 6) the same way.

@@ -725,9 +725,10 @@ schtasks /create /tn "MacroNews-Sync-1648" /tr "wscript.exe //nologo C:\Work\Min
 `MacroNews-Collect` 是**先同步、再按陈旧度**驱动的：每轮先 `git fetch origin main`
 比较 `HEAD`/`origin/main`（落后且干净 → ff-only；有已跟踪改动 → 整轮让路，不 stash/pop；
 分叉走普通 merge，冲突 abort 跳过）；同步结果与 `HEAD` 短哈希写入日志。
-fetch 由 `scripts/git-sync-lib.ps1` 统一处理：3 次重试（退避 5s / 15s）+ 每次硬超时 90s ——
-SSH-443 会被随机 reset，而 `ConnectTimeout`/`ServerAlive*` 不构成整体 deadline
-（2026-11-16 实测单次卡 178s，复测卡 6 分钟以上）。
+fetch 由 `scripts/git-sync-lib.ps1` 统一处理：3 次重试（退避 5s / 15s）+ **停滞检测** ——
+SSH-443 会出现两种形态：限速后 90s 只下来 2~3 MB（慢但在动）、或整段时间一个字节都不动；
+所以判据是「120s 内 `tmp_pack_*` 字节数与 git 进度行都不变」，而不是固定总超时（单次绝对上限 10 分钟）。
+`ConnectTimeout`/`ServerAlive*` 只约束建连与会话保活，不能替代这一层。
 之后再**看** `data/latest.json` 的最新条目，不到 `-NewsStaleMinutes`（默认 45）分钟就整轮跳过新闻/行情采集 —— 云端 15 分钟一轮正常时，
 本机一次都不会重复采；云端排程器丢事件时，最多 45 分钟后本机接管。
 日/周/月 K 同理按 `-KlineStaleHours`（默认 6）判新鲜度。

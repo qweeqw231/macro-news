@@ -18,7 +18,7 @@ test('同步在陈旧度判定 / 采集之前', () => {
   const fetchAt = SCRIPT.indexOf('Invoke-GitFetchRetry');
   const staleAt = SCRIPT.indexOf('$latestFile');
   assert.ok(fetchAt >= 0, '缺少 Invoke-GitFetchRetry（fetch 重试入口）');
-  assert.match(LIB, /'fetch', 'origin', 'main'/);
+  assert.match(LIB, /'fetch', '--progress', 'origin', 'main'/);
   assert.ok(staleAt > fetchAt, '同步必须在 $latestFile 陈旧度判定之前');
   assert.ok(SCRIPT.indexOf('src\\collect.mjs --no-kline') > fetchAt, '同步必须在采集之前');
 });
@@ -85,13 +85,17 @@ test('同步-only 测试开关存在，但生产任务默认不传', () => {
   assert.doesNotMatch(REGISTER, /-SyncOnly/, '注册任务不应传测试开关');
 });
 
-test('fetch 有 SSH 超时，且带重试/退避（SSH-443 会被随机 reset）', () => {
+test('fetch 有 SSH 超时，且带重试/退避/停滞检测（SSH-443 会被随机 reset）', () => {
   assert.match(LIB, /GIT_SSH_COMMAND/);
   assert.match(LIB, /ConnectTimeout=15/);
   assert.match(LIB, /ServerAliveInterval=15/);
   assert.match(LIB, /function Invoke-GitFetchRetry/);
   assert.match(LIB, /Start-Sleep/);
   assert.match(LIB, /BackoffSeconds/);
+  // 判据必须是「停滞」而不是固定总超时：慢速大包（2~3 MB/90s）不能被误杀
+  assert.match(LIB, /function Invoke-GitWithTimeout/);
+  assert.match(LIB, /StallSeconds/);
+  assert.match(LIB, /tmp_pack_/);
   assert.match(SCRIPT, /Invoke-GitFetchRetry/);
   assert.match(CLOSE, /Invoke-GitFetchRetry/);
 });
