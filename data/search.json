@@ -1,11 +1,115 @@
 {
-  "generatedAt": "2026-11-17T02:07:57.888Z",
+  "generatedAt": "2026-11-17T02:23:04.264Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 55608,
+  "total": 55624,
   "items": [
+    {
+      "id": "1giy24h",
+      "ts": 1794882150,
+      "time": "2026-11-17T10:22:30.000+08:00",
+      "source": "新浪财经",
+      "title": "劲方医药-B盘中涨超6% GFH276胰腺癌联合疗法研究完成中国及海外首例入组患者给药",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-17/doc-iniyyzyp2334826.shtml"
+    },
+    {
+      "id": "1gg5z9t",
+      "ts": 1794882125,
+      "time": "2026-11-17T10:22:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "深圳APEC领导人非正式会议成果文件磋商工作已启动",
+      "url": "https://wallstreetcn.com/livenews/3200964"
+    },
+    {
+      "id": "1ghrc7w",
+      "ts": 1794881997,
+      "time": "2026-11-17T10:19:57.000+08:00",
+      "source": "新浪财经",
+      "title": "TCL电子早盘涨超5% 第三季度经调整归母净利润同比增长54.94%",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-17/doc-iniyyzyi1895872.shtml"
+    },
+    {
+      "id": "ufcg38",
+      "ts": 1794881964,
+      "time": "2026-11-17T10:19:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "深成指、创业板指双双翻红，光刻机、贵金属、电网设备、小家电等方向领涨，沪深京三市上涨个股超1700只。",
+      "url": "https://wallstreetcn.com/livenews/3200962"
+    },
+    {
+      "id": "12uimbc",
+      "ts": 1794881869,
+      "time": "2026-11-17T10:17:49.000+08:00",
+      "source": "新浪财经",
+      "title": "百胜中国早盘涨近3% 第三季度净新增门店692家创单季新高",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-17/doc-iniyyzyp7777645.shtml"
+    },
+    {
+      "id": "14xiw63",
+      "ts": 1794881805,
+      "time": "2026-11-17T10:16:45.000+08:00",
+      "source": "华尔街见闻",
+      "title": "沪指、创业板指均跌超1%，深成指跌近1%，传媒游戏、煤炭、零售、房地产等板块跌幅居前，沪深京三市下跌个股超3700只。",
+      "url": "https://wallstreetcn.com/livenews/3200961"
+    },
+    {
+      "id": "17ywj2m",
+      "ts": 1794881654,
+      "time": "2026-11-17T10:14:14.000+08:00",
+      "source": "华尔街见闻",
+      "title": "王传福、雷军、王兴兴等参会，APEC工商领导人峰会今天开幕",
+      "url": "https://wallstreetcn.com/livenews/3200960"
+    },
+    {
+      "id": "1yopy1s",
+      "ts": 1794881400,
+      "time": "2026-11-17T10:10:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国10月末境外机构持有银行间市场债券3.23万亿元人民币。",
+      "url": "https://wallstreetcn.com/livenews/3200959"
+    },
+    {
+      "id": "11t1jdr",
+      "ts": 1794881367,
+      "time": "2026-11-17T10:09:27.000+08:00",
+      "source": "华尔街见闻",
+      "title": "大型运投无人机“长鹰-8”完成运输投送试验",
+      "url": "https://wallstreetcn.com/livenews/3200958"
+    },
+    {
+      "id": "n1ile2",
+      "ts": 1794881365,
+      "time": "2026-11-17T02:09:25.000Z",
+      "source": "中新网",
+      "title": "TOP500、HPCG双榜第一！“灵晟”蝉联全球超算榜首",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733254.shtml"
+    },
+    {
+      "id": "1coj0q4",
+      "ts": 1794881333,
+      "time": "2026-11-17T10:08:53.000+08:00",
+      "source": "华尔街见闻",
+      "title": "曾毓群、李彦宏、王兴兴、王传福、雷军、何超琼、董明珠、李东生、周群飞等，今天齐聚深圳",
+      "url": "https://wallstreetcn.com/livenews/3200956"
+    },
+    {
+      "id": "bxidjv",
+      "ts": 1794881292,
+      "time": "2026-11-17T10:08:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "TOP500、HPCG双榜第一！“灵晟”蝉联全球超算榜首",
+      "url": "https://wallstreetcn.com/livenews/3200955"
+    },
+    {
+      "id": "e6p1jb",
+      "ts": 1794881162,
+      "time": "2026-11-17T10:06:02.000+08:00",
+      "source": "东方财富",
+      "title": "夯实产业战略支点 仁怀加快建设世界酱香白酒核心产区",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932707440.html"
+    },
     {
       "id": "1ale7b9",
       "ts": 1794881142,
@@ -21,6 +125,22 @@
       "source": "华尔街见闻",
       "title": "TOP500、HPCG双榜第一！“灵晟”蝉联全球超算榜首",
       "url": "https://wallstreetcn.com/livenews/3200952"
+    },
+    {
+      "id": "5ram27",
+      "ts": 1794880971,
+      "time": "2026-11-17T10:02:51.000+08:00",
+      "source": "东方财富",
+      "title": "国家邮政局：10月中国快递发展指数为477.8 同比提升0.5%",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932707631.html"
+    },
+    {
+      "id": "bz895x",
+      "ts": 1794880900,
+      "time": "2026-11-17T10:01:40.000+08:00",
+      "source": "东方财富",
+      "title": "新华财媒｜新动能成增长新亮点 10月跨境资金净流入",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932705813.html"
     },
     {
       "id": "kb4v8n",
@@ -221,6 +341,14 @@
       "source": "华尔街见闻",
       "title": "我国北斗终端设备应用数量近4200万",
       "url": "https://wallstreetcn.com/livenews/3200942"
+    },
+    {
+      "id": "1cajjpn",
+      "ts": 1794879676,
+      "time": "2026-11-17T09:41:16.000+08:00",
+      "source": "东方财富",
+      "title": "国家邮政局：我国快递量已连续两月超170亿",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932711558.html"
     },
     {
       "id": "1x4ap08",
