@@ -1,11 +1,123 @@
 {
-  "generatedAt": "2026-11-17T08:07:59.403Z",
+  "generatedAt": "2026-11-17T08:23:08.645Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 55982,
+  "total": 55999,
   "items": [
+    {
+      "id": "1byg67d",
+      "ts": 1794903628,
+      "time": "2026-11-17T16:20:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "韩媒：三星电子与苹果接近签署DRAM长期供应协议",
+      "url": "https://wallstreetcn.com/livenews/3201143"
+    },
+    {
+      "id": "1owja5d",
+      "ts": 1794903604,
+      "time": "2026-11-17T16:20:04.000+08:00",
+      "source": "华尔街见闻",
+      "title": "巨人网络：2026年11月17日首次以集中竞价方式回购80万股，占总股本0.04%，成交价19.20元/股至18.84元/股，成交总金额1519.71万元。",
+      "url": "https://wallstreetcn.com/livenews/3201142"
+    },
+    {
+      "id": "f2kmyx",
+      "ts": 1794903600,
+      "time": "2026-11-17T16:20:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "马斯克确认将前往中国",
+      "url": "https://wallstreetcn.com/livenews/3201141"
+    },
+    {
+      "id": "19arphm",
+      "ts": 1794903594,
+      "time": "2026-11-17T16:19:54.000+08:00",
+      "source": "华尔街见闻",
+      "title": "李彦宏提智能组织三原则：打破岗位边界、沉淀隐性知识、形成工作流闭环",
+      "url": "https://wallstreetcn.com/livenews/3201140"
+    },
+    {
+      "id": "1ytnqv6",
+      "ts": 1794903552,
+      "time": "2026-11-17T16:19:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中方呼吁构建中东地区安全新架构",
+      "url": "https://wallstreetcn.com/livenews/3201139"
+    },
+    {
+      "id": "1g9l5wd",
+      "ts": 1794903476,
+      "time": "2026-11-17T16:17:56.000+08:00",
+      "source": "华尔街见闻",
+      "title": "马斯克确认将前往中国",
+      "url": "https://wallstreetcn.com/livenews/3201138"
+    },
+    {
+      "id": "tmnf7w",
+      "ts": 1794903264,
+      "time": "2026-11-17T16:14:24.000+08:00",
+      "source": "新浪财经",
+      "title": "罕见拟签长期供货协议 苹果将采购三星DRAM锁定供应",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzswc5413162.shtml"
+    },
+    {
+      "id": "1j8kng",
+      "ts": 1794903180,
+      "time": "2026-11-17T16:13:00.000+08:00",
+      "source": "东方财富",
+      "title": "国务院新闻办公室将于2026年11月17日（星期二）下午3时举行新闻发布会",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932878639.html"
+    },
+    {
+      "id": "1f12bx5",
+      "ts": 1794903165,
+      "time": "2026-11-17T08:12:45.000Z",
+      "source": "中新网",
+      "title": "“出口中国”有了操作手册：卖什么，怎么卖，卖得好",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733509.shtml"
+    },
+    {
+      "id": "bdwm18",
+      "ts": 1794903127,
+      "time": "2026-11-17T16:12:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "韩媒：三星电子与苹果接近签署DRAM长期供应协议",
+      "url": "https://wallstreetcn.com/livenews/3201137"
+    },
+    {
+      "id": "lrco93",
+      "ts": 1794903052,
+      "time": "2026-11-17T16:10:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "恒指收跌1.03%，恒生科技指数跌1.14%。",
+      "url": "https://wallstreetcn.com/livenews/3201136"
+    },
+    {
+      "id": "8wvl14",
+      "ts": 1794903047,
+      "time": "2026-11-17T16:10:47.000+08:00",
+      "source": "东方财富",
+      "title": "商务部：可再生资源回收推行“两网融合”“互联网+回收”“以车代库”模式",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932874237.html"
+    },
+    {
+      "id": "owu35i",
+      "ts": 1794902996,
+      "time": "2026-11-17T16:09:56.000+08:00",
+      "source": "华尔街见闻",
+      "title": "恒生指数收盘跌1.03%，恒生科技指数跌1.14%",
+      "url": "https://wallstreetcn.com/livenews/3201135"
+    },
+    {
+      "id": "11ydguf",
+      "ts": 1794902919,
+      "time": "2026-11-17T16:08:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "井松智能：截至2026年11月16日，公司以集中竞价交易方式累计回购股份100.59万股，占总股本1.00%，回购价格区间16.61元/股至18.99元/股，已支付资金总额1772.17万元（不含印花税、交易佣金等交易费用），回购股份用于员工持股计划或股权激励。",
+      "url": "https://wallstreetcn.com/livenews/3201134"
+    },
     {
       "id": "1ef6gv8",
       "ts": 1794902881,
@@ -13,6 +125,14 @@
       "source": "华尔街见闻",
       "title": "《国家中小企业公共服务示范平台（基地）基地类建设指引》印发",
       "url": "https://wallstreetcn.com/livenews/3201133"
+    },
+    {
+      "id": "1xw0zkj",
+      "ts": 1794902764,
+      "time": "2026-11-17T16:06:04.000+08:00",
+      "source": "东方财富",
+      "title": "《国家中小企业公共服务示范平台（基地）基地类建设指引》印发",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932876563.html"
     },
     {
       "id": "owi5hs",
@@ -31,6 +151,14 @@
       "url": "https://wallstreetcn.com/livenews/3201131"
     },
     {
+      "id": "trimjn",
+      "ts": 1794902610,
+      "time": "2026-11-17T16:03:30.000+08:00",
+      "source": "东方财富",
+      "title": "中加联合成果文件出炉：中方欢迎加拿大养老金等长线资金投资中国市场",
+      "url": "http://finance.eastmoney.com/news/1352,202611173932874659.html"
+    },
+    {
       "id": "lqnl1j",
       "ts": 1794902541,
       "time": "2026-11-17T16:02:21.000+08:00",
@@ -45,6 +173,14 @@
       "source": "华尔街见闻",
       "title": "我国牵头制定的甲醛净化效果评价国际标准正式发布",
       "url": "https://wallstreetcn.com/livenews/3201130"
+    },
+    {
+      "id": "vfl502",
+      "ts": 1794902475,
+      "time": "2026-11-17T16:01:15.000+08:00",
+      "source": "新浪财经",
+      "title": "港股收评：恒指跌1.03% 科指跌1.14% 科网股普跌 AI应用股走弱 MINIMAX跌超7%",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-17/doc-iniyzsvz1723744.shtml"
     },
     {
       "id": "pv92pn",
@@ -815,20 +951,20 @@
       "url": "https://wallstreetcn.com/livenews/3201076"
     },
     {
-      "id": "cnelok",
-      "ts": 1794898801,
-      "time": "2026-11-17T15:00:01.000+08:00",
-      "source": "华尔街见闻",
-      "title": "英国10月失业率 4.46%，前值 4.4%。",
-      "url": "https://wallstreetcn.com/livenews/3201075"
-    },
-    {
       "id": "1s6q84b",
       "ts": 1794898801,
       "time": "2026-11-17T15:00:01.000+08:00",
       "source": "华尔街见闻",
       "title": "英国10月失业金申请人数变动 3.32万人，前值 3.03万人。",
       "url": "https://wallstreetcn.com/livenews/3201074"
+    },
+    {
+      "id": "cnelok",
+      "ts": 1794898801,
+      "time": "2026-11-17T15:00:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国10月失业率 4.46%，前值 4.4%。",
+      "url": "https://wallstreetcn.com/livenews/3201075"
     },
     {
       "id": "62bhpj",
