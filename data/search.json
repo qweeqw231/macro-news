@@ -1,11 +1,75 @@
 {
-  "generatedAt": "2026-11-17T20:52:53.126Z",
+  "generatedAt": "2026-11-17T21:08:02.302Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 56722,
+  "total": 56730,
   "items": [
+    {
+      "id": "1fyqa04",
+      "ts": 1794949662,
+      "time": "2026-11-18T05:07:42.000+08:00",
+      "source": "华尔街见闻",
+      "title": "OpenAI首席执行官Altman： 6.2 Sol 与 Astra 现已发布。",
+      "url": "https://wallstreetcn.com/livenews/3201516"
+    },
+    {
+      "id": "1u9ul6a",
+      "ts": 1794949632,
+      "time": "2026-11-18T05:07:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周二（11月17日），美股行业ETF全线溃败，全球航空业ETF收跌2.31%，网络股指数ETF跌1.96%，金融业ETF跌1.89%，区域银行ETF跌1.86%，银行业ETF跌1.79%，科技行业ETF跌0.89%，全球科技股指数ETF跌0.86%，半导体ETF跌0.39%“领跑”。",
+      "url": "https://wallstreetcn.com/livenews/3201515"
+    },
+    {
+      "id": "xxstdc",
+      "ts": 1794949290,
+      "time": "2026-11-18T05:01:30.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达收跌0.5%，该公司即将发布业绩报告。",
+      "url": "https://wallstreetcn.com/livenews/3201514"
+    },
+    {
+      "id": "17w78ps",
+      "ts": 1794949241,
+      "time": "2026-11-18T05:00:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "纳斯达克金龙中国指数初步收跌1.9%。",
+      "url": "https://wallstreetcn.com/livenews/3201513"
+    },
+    {
+      "id": "12zs9rx",
+      "ts": 1794949235,
+      "time": "2026-11-18T05:00:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "纳斯达克金龙中国指数初步收跌1.9%。",
+      "url": "https://wallstreetcn.com/livenews/3201512"
+    },
+    {
+      "id": "183xuyw",
+      "ts": 1794949212,
+      "time": "2026-11-18T05:00:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美股费城半导体指数跌1.1%，英伟达初步收跌0.7%，存储芯片指数跌1.4%，半导体设备指数跌1.3%，科技股七巨头指数跌1.3%、超大市值科技股指数跌1.5%，AI赢家指数跌1.1%、AI软件先驱指数跌4.4%——成分股Salesforce、ServiceNOW、C3.ai领跌。",
+      "url": "https://wallstreetcn.com/livenews/3201510"
+    },
+    {
+      "id": "fizfpe",
+      "ts": 1794949207,
+      "time": "2026-11-18T05:00:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美股费城半导体指数跌1.1%，英伟达初步收跌0.7%，存储芯片指数跌1.4%，半导体设备指数跌1.3%，科技股七巨头指数跌1.3%、超大市值科技股指数跌1.5%，AI赢家指数跌1.1%、AI软件先驱指数跌4.4%——成分股Salesforce、ServiceNOW、C3.ai领跌。",
+      "url": "https://wallstreetcn.com/livenews/3201509"
+    },
+    {
+      "id": "1c2r542",
+      "ts": 1794949145,
+      "time": "2026-11-18T04:59:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "黄仁勋离职之际，美国证券交易委员会（SEC）正调查其公司英伟达。",
+      "url": "https://wallstreetcn.com/livenews/3201508"
+    },
     {
       "id": "15uzevx",
       "ts": 1794948653,
@@ -743,20 +807,20 @@
       "url": "http://finance.eastmoney.com/news/1348,202611183933304833.html"
     },
     {
-      "id": "13ynsef",
-      "ts": 1794937022,
-      "time": "2026-11-18T01:37:02.000+08:00",
-      "source": "华尔街见闻",
-      "title": "亚马逊CEO安迪·贾西：（就屏蔽Meta的Muse一事）只有在满足两个条件的情况下才会对Meta及其他智能体开放网站，一是实现良好的价值交换，二是有利于客户。",
-      "url": "https://wallstreetcn.com/livenews/3201448"
-    },
-    {
       "id": "8r6b8s",
       "ts": 1794937022,
       "time": "2026-11-18T01:37:02.000+08:00",
       "source": "东方财富",
       "title": "共商亚太发展大计 共创亚太美好未来",
       "url": "http://finance.eastmoney.com/news/1350,202611183933304755.html"
+    },
+    {
+      "id": "13ynsef",
+      "ts": 1794937022,
+      "time": "2026-11-18T01:37:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "亚马逊CEO安迪·贾西：（就屏蔽Meta的Muse一事）只有在满足两个条件的情况下才会对Meta及其他智能体开放网站，一是实现良好的价值交换，二是有利于客户。",
+      "url": "https://wallstreetcn.com/livenews/3201448"
     },
     {
       "id": "1xu0o8i",
