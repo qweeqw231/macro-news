@@ -1,11 +1,67 @@
 {
-  "generatedAt": "2026-11-17T16:53:03.462Z",
+  "generatedAt": "2026-11-17T17:08:10.238Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 56604,
+  "total": 56612,
   "items": [
+    {
+      "id": "9u85n8",
+      "ts": 1794935294,
+      "time": "2026-11-18T01:08:14.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国际铜夜盘收跌0.08%，沪铜收跌0.38%，沪铝收跌1.33%，沪锌收跌0.4%，沪铅收跌0.35%，沪镍收涨3.04%，沪锡收跌1.35%。",
+      "url": "https://wallstreetcn.com/livenews/3201440"
+    },
+    {
+      "id": "6vpi2j",
+      "ts": 1794935163,
+      "time": "2026-11-18T01:06:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "谷歌：Gemini推出系列高级功能，率先在美国上线。",
+      "url": "https://wallstreetcn.com/livenews/3201439"
+    },
+    {
+      "id": "1jcbxd",
+      "ts": 1794934994,
+      "time": "2026-11-18T01:03:14.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国众议院民主党领导人Jeffries被问及政府是否会关门，称：（国会山）正在积极磋商。",
+      "url": "https://wallstreetcn.com/livenews/3201438"
+    },
+    {
+      "id": "bkz5l5",
+      "ts": 1794934932,
+      "time": "2026-11-18T01:02:12.000+08:00",
+      "source": "新浪财经",
+      "title": "大型炸鸡连锁加盟商申请第11章破产保护",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizapzr1473254.shtml"
+    },
+    {
+      "id": "1h550d5",
+      "ts": 1794934869,
+      "time": "2026-11-18T01:01:09.000+08:00",
+      "source": "华尔街见闻",
+      "title": "阿尔斯通财年上半年调整后EBIT亏损3.96亿欧元，上年同期利润5.8亿欧元。",
+      "url": "https://wallstreetcn.com/livenews/3201437"
+    },
+    {
+      "id": "1v34grb",
+      "ts": 1794934656,
+      "time": "2026-11-18T00:57:36.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国众议院民主党领导人Jeffries：我昨天与交通部长Duffy通电话。",
+      "url": "https://wallstreetcn.com/livenews/3201436"
+    },
+    {
+      "id": "bz7k5h",
+      "ts": 1794934473,
+      "time": "2026-11-18T00:54:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Stan Druckenmiller：我做空铜。",
+      "url": "https://wallstreetcn.com/livenews/3201435"
+    },
     {
       "id": "1ui00wg",
       "ts": 1794934373,
@@ -15,7 +71,7 @@
       "url": "https://wallstreetcn.com/livenews/3201434"
     },
     {
-      "id": "1qdhwck",
+      "id": "6jcucs",
       "ts": 1794934333,
       "time": "2026-11-18T00:52:13.000+08:00",
       "source": "华尔街见闻",
@@ -61,6 +117,14 @@
       "source": "华尔街见闻",
       "title": "耐克CEO：预计截至2031财年的运动鞋服业务将保持3%-4%的增长。",
       "url": "https://wallstreetcn.com/livenews/3201430"
+    },
+    {
+      "id": "1r7lf62",
+      "ts": 1794933540,
+      "time": "2026-11-18T00:39:00.000+08:00",
+      "source": "东方财富",
+      "title": "四载深耕 “专精特新”专板服务企业超2万家",
+      "url": "http://finance.eastmoney.com/news/1350,202611183933297283.html"
     },
     {
       "id": "1jux3mn",
@@ -567,11 +631,11 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-inizaitx2056564.shtml"
     },
     {
-      "id": "1czc32z",
+      "id": "tztm1r",
       "ts": 1794927170,
       "time": "2026-11-17T22:52:50.000+08:00",
       "source": "华尔街见闻",
-      "title": "亚马逊计划到2030年将电力碳密度削减65%。",
+      "title": "亚马逊计划到2030年将电力碳强度削减65%。",
       "url": "https://wallstreetcn.com/livenews/3201379"
     },
     {
