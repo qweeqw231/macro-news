@@ -1,17 +1,105 @@
 {
-  "generatedAt": "2026-11-17T21:37:59.749Z",
+  "generatedAt": "2026-11-17T21:53:00.860Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 56745,
+  "total": 56756,
   "items": [
     {
-      "id": "16fihqm",
+      "id": "1oevyj6",
+      "ts": 1794952282,
+      "time": "2026-11-18T05:51:22.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达终迎利好 黄仁勋事件后的首份财报给出了稳健财测",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrp4997728.shtml"
+    },
+    {
+      "id": "1fbdm5j",
+      "ts": 1794952226,
+      "time": "2026-11-18T05:50:26.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达CEO更迭后首次发布乐观指引",
+      "url": "https://wallstreetcn.com/livenews/3201536"
+    },
+    {
+      "id": "3u190s",
+      "ts": 1794952105,
+      "time": "2026-11-18T05:48:25.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周二（11月17日）纽约尾盘，现货黄金跌0.15%，报3850.96美元/盎司。",
+      "url": "https://wallstreetcn.com/livenews/3201535"
+    },
+    {
+      "id": "1wsvy57",
+      "ts": 1794952070,
+      "time": "2026-11-18T05:47:50.000+08:00",
+      "source": "新浪财经",
+      "title": "原油：油价震荡 中东战事再起威胁供应宽松前景",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrr1772064.shtml"
+    },
+    {
+      "id": "1efy95k",
+      "ts": 1794952040,
+      "time": "2026-11-18T05:47:20.000+08:00",
+      "source": "新浪财经",
+      "title": "美国袭击伊朗格什姆岛导弹发射场 美伊双方持续互袭",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrm1274735.shtml"
+    },
+    {
+      "id": "yng1kt",
+      "ts": 1794951901,
+      "time": "2026-11-18T05:45:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "新西兰三季度PPI产出季环比 0.8%，前值 1.6%。",
+      "url": "https://wallstreetcn.com/livenews/3201534"
+    },
+    {
+      "id": "lalxaa",
+      "ts": 1794951901,
+      "time": "2026-11-18T05:45:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "新西兰三季度PPI投入季环比 0.7%，前值 2.9%。",
+      "url": "https://wallstreetcn.com/livenews/3201533"
+    },
+    {
+      "id": "1j3uw3x",
+      "ts": 1794951891,
+      "time": "2026-11-18T05:44:51.000+08:00",
+      "source": "华尔街见闻",
+      "title": "民主党调查美国司法部在OpenAI版权纠纷中的角色。",
+      "url": "https://wallstreetcn.com/livenews/3201532"
+    },
+    {
+      "id": "jaqe77",
+      "ts": 1794951887,
+      "time": "2026-11-18T05:44:47.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达Q3财报：营收1158亿美元同比增103%，Vera Rubin量产，Q4指引1300亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrp4993837.shtml"
+    },
+    {
+      "id": "1jayc9g",
+      "ts": 1794951677,
+      "time": "2026-11-18T05:41:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "【美官员称对伊朗格什姆岛实施“自卫”打击】美国军方官员17日说，美军当天对伊朗格什姆岛一处导弹发射场实施精确打击，以回应伊朗伊斯兰革命卫队针对美国人员和资产的“侵略行径”。",
+      "url": "https://wallstreetcn.com/livenews/3201531"
+    },
+    {
+      "id": "1dri8bc",
+      "ts": 1794951530,
+      "time": "2026-11-18T05:38:50.000+08:00",
+      "source": "华尔街见闻",
+      "title": "以色列议会选举马坦·卡哈纳为新任议长",
+      "url": "https://wallstreetcn.com/livenews/3201530"
+    },
+    {
+      "id": "1srk5ho",
       "ts": 1794951446,
       "time": "2026-11-18T05:37:26.000+08:00",
       "source": "华尔街见闻",
-      "title": "美国石油协会（API）数据显示，上周，美国API原油库存 +527.8万桶，之前一周 +896.8万桶。",
+      "title": "行业周报：美国上周API原油库存增超500万桶",
       "url": "https://wallstreetcn.com/livenews/3201529"
     },
     {
