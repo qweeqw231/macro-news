@@ -1,11 +1,51 @@
 {
-  "generatedAt": "2026-11-17T17:08:10.238Z",
+  "generatedAt": "2026-11-17T17:23:11.661Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 56612,
+  "total": 56623,
   "items": [
+    {
+      "id": "18szbt5",
+      "ts": 1794936042,
+      "time": "2026-11-18T01:20:42.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达聘请猎头公司Heidrick & Struggles来寻找下一任CEO。",
+      "url": "https://wallstreetcn.com/livenews/3201444"
+    },
+    {
+      "id": "1egp5w9",
+      "ts": 1794935825,
+      "time": "2026-11-18T01:17:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "亚马逊CEO安迪·贾西在谈及英伟达相关影响时表示，英伟达“长期以来一直是极其重要的合作伙伴，并且在未来可预见的时期内仍将如此”。",
+      "url": "https://wallstreetcn.com/livenews/3201443"
+    },
+    {
+      "id": "1c2j0ht",
+      "ts": 1794935625,
+      "time": "2026-11-18T01:13:45.000+08:00",
+      "source": "华尔街见闻",
+      "title": "德国芬兰总统表示欧洲必须参与乌克兰危机谈判",
+      "url": "https://wallstreetcn.com/livenews/3201442"
+    },
+    {
+      "id": "63cna0",
+      "ts": 1794935528,
+      "time": "2026-11-18T01:12:08.000+08:00",
+      "source": "新浪财经",
+      "title": "Anthropic上市后 亚马逊和谷歌将合计持股约28%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizapzv7358468.shtml"
+    },
+    {
+      "id": "4yowun",
+      "ts": 1794935330,
+      "time": "2026-11-18T01:08:50.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达在2025年停止披露新加坡销售数据。",
+      "url": "https://wallstreetcn.com/livenews/3201441"
+    },
     {
       "id": "9u85n8",
       "ts": 1794935294,
@@ -119,12 +159,60 @@
       "url": "https://wallstreetcn.com/livenews/3201430"
     },
     {
+      "id": "1j4rs14",
+      "ts": 1794933540,
+      "time": "2026-11-18T00:39:00.000+08:00",
+      "source": "东方财富",
+      "title": "脱离“买来智造” AI沉入车间 规模化提上日程灯塔工厂从单点走向连片",
+      "url": "http://finance.eastmoney.com/news/1354,202611183933299196.html"
+    },
+    {
       "id": "1r7lf62",
       "ts": 1794933540,
       "time": "2026-11-18T00:39:00.000+08:00",
       "source": "东方财富",
       "title": "四载深耕 “专精特新”专板服务企业超2万家",
       "url": "http://finance.eastmoney.com/news/1350,202611183933297283.html"
+    },
+    {
+      "id": "k2fwlc",
+      "ts": 1794933540,
+      "time": "2026-11-18T00:39:00.000+08:00",
+      "source": "东方财富",
+      "title": "财险公司费用分摊管理迎新规 促行业降本增效",
+      "url": "http://insurance.eastmoney.com/news/1214,202611183933301385.html"
+    },
+    {
+      "id": "1euqu25",
+      "ts": 1794933540,
+      "time": "2026-11-18T00:39:00.000+08:00",
+      "source": "东方财富",
+      "title": "商务部等9部门深入推进再生资源回收体系建设 全面提升“新三样”固废回收拆解利用水平",
+      "url": "http://finance.eastmoney.com/news/1355,202611183933301118.html"
+    },
+    {
+      "id": "10pra4y",
+      "ts": 1794933540,
+      "time": "2026-11-18T00:39:00.000+08:00",
+      "source": "东方财富",
+      "title": "以标准完善促轻工业高质量发展",
+      "url": "http://finance.eastmoney.com/news/1355,202611183933300897.html"
+    },
+    {
+      "id": "wja8hc",
+      "ts": 1794933540,
+      "time": "2026-11-18T00:39:00.000+08:00",
+      "source": "东方财富",
+      "title": "从“尝鲜”到“热销” 智能消费扩容升级",
+      "url": "http://finance.eastmoney.com/news/1355,202611183933300372.html"
+    },
+    {
+      "id": "1q2gi1b",
+      "ts": 1794933540,
+      "time": "2026-11-18T00:39:00.000+08:00",
+      "source": "东方财富",
+      "title": "动力电池回收产业迈向规范化发展",
+      "url": "http://finance.eastmoney.com/news/1354,202611183933300231.html"
     },
     {
       "id": "1jux3mn",
@@ -1775,20 +1863,20 @@
       "url": "http://finance.eastmoney.com/news/1354,202611173933124736.html"
     },
     {
-      "id": "4fegse",
-      "ts": 1794920623,
-      "time": "2026-11-17T21:03:43.000+08:00",
-      "source": "东方财富",
-      "title": "4万亿算力网铺开：项目建设提速，上架率分化待解",
-      "url": "http://finance.eastmoney.com/news/1355,202611173933126467.html"
-    },
-    {
       "id": "m8rq9h",
       "ts": 1794920623,
       "time": "2026-11-17T13:03:43.000Z",
       "source": "中新网",
       "title": "从街头烟火到千亿产业：兰州牛肉面如何“拉长”发展链条？",
       "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733718.shtml"
+    },
+    {
+      "id": "4fegse",
+      "ts": 1794920623,
+      "time": "2026-11-17T21:03:43.000+08:00",
+      "source": "东方财富",
+      "title": "4万亿算力网铺开：项目建设提速，上架率分化待解",
+      "url": "http://finance.eastmoney.com/news/1355,202611173933126467.html"
     },
     {
       "id": "8kl6sz",
