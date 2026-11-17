@@ -1,11 +1,131 @@
 {
-  "generatedAt": "2026-11-17T01:22:50.078Z",
+  "generatedAt": "2026-11-17T01:37:58.894Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 55552,
+  "total": 55569,
   "items": [
+    {
+      "id": "rdadbu",
+      "ts": 1794879472,
+      "time": "2026-11-17T09:37:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "光刻机、光刻胶概念异动拉升，西陇科学、盛剑科技涨停，华融化学、华软科技、怡达股份、联合化学、国风新材等纷纷走高。",
+      "url": "https://wallstreetcn.com/livenews/3200939"
+    },
+    {
+      "id": "14igb8o",
+      "ts": 1794879187,
+      "time": "2026-11-17T09:33:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "芯片股局部反弹，伟测科技涨超10%，华虹宏力涨超7%，灿芯股份、盛合晶微、燧原科技、燕东微涨幅居前。",
+      "url": "https://wallstreetcn.com/livenews/3200937"
+    },
+    {
+      "id": "m57zku",
+      "ts": 1794879115,
+      "time": "2026-11-17T09:31:55.000+08:00",
+      "source": "华尔街见闻",
+      "title": "创业板指跌超1%，沪指跌0.52%，深成指跌0.73%，短剧、光伏、算力硬件等方向跌幅居前，沪深京三市下跌个股近4200只。",
+      "url": "https://wallstreetcn.com/livenews/3200935"
+    },
+    {
+      "id": "gmprmu",
+      "ts": 1794879097,
+      "time": "2026-11-17T09:31:37.000+08:00",
+      "source": "东方财富",
+      "title": "预告：商务部定于2026年11月19日(星期四)下午3时举行新闻发布会",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932685092.html"
+    },
+    {
+      "id": "1v9qmqx",
+      "ts": 1794879071,
+      "time": "2026-11-17T09:31:11.000+08:00",
+      "source": "新浪财经",
+      "title": "中信建投期货：11月17日能化早报",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyyzyi1855189.shtml"
+    },
+    {
+      "id": "1lobl6d",
+      "ts": 1794879047,
+      "time": "2026-11-17T09:30:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中证转债指数开盘下跌0.02%。",
+      "url": "https://wallstreetcn.com/livenews/3200934"
+    },
+    {
+      "id": "1khb72b",
+      "ts": 1794879044,
+      "time": "2026-11-17T09:30:44.000+08:00",
+      "source": "东方财富",
+      "title": "从耐立克到利生妥：医保赋能国产“真创新”",
+      "url": "http://finance.eastmoney.com/news/1354,202611173932686462.html"
+    },
+    {
+      "id": "1y9j7ww",
+      "ts": 1794879034,
+      "time": "2026-11-17T09:30:34.000+08:00",
+      "source": "新浪财经",
+      "title": "中信建投期货：11月17日黑色系早报",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyyzyp7737836.shtml"
+    },
+    {
+      "id": "13dvf7b",
+      "ts": 1794879007,
+      "time": "2026-11-17T09:30:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "摩根大通：交易正在正常处理，先前遇到技术问题。",
+      "url": "https://wallstreetcn.com/livenews/3200933"
+    },
+    {
+      "id": "1kbtww7",
+      "ts": 1794878950,
+      "time": "2026-11-17T09:29:10.000+08:00",
+      "source": "新浪财经",
+      "title": "民调显示特朗普支持率仍陷32%低迷水位，接近任内谷底",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyyzyp2287788.shtml"
+    },
+    {
+      "id": "1il83pv",
+      "ts": 1794878943,
+      "time": "2026-11-17T09:29:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国债期货开盘，30年期主力合约涨0.51%，10年期主力合约涨0.11%，5年期主力合约涨0.05%，2年期主力合约涨0.03%。",
+      "url": "https://wallstreetcn.com/livenews/3200932"
+    },
+    {
+      "id": "1wsiirk",
+      "ts": 1794878877,
+      "time": "2026-11-17T09:27:57.000+08:00",
+      "source": "华尔街见闻",
+      "title": "游戏、AI漫剧概念开盘调整，电魂网络、大晟文化、文投控股跌停，凯撒文化、横店影视、果麦文化跌超5%。",
+      "url": "https://wallstreetcn.com/livenews/3200930"
+    },
+    {
+      "id": "fzcjfn",
+      "ts": 1794878825,
+      "time": "2026-11-17T09:27:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "AR1001阿尔茨海默病III期结果公布：单药人群疾病进展减缓31%",
+      "url": "https://wallstreetcn.com/livenews/3200929"
+    },
+    {
+      "id": "i6ksjr",
+      "ts": 1794878746,
+      "time": "2026-11-17T09:25:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "三大指数集体低开，沪指低开0.47%，深成指低开0.8%，创业板指低开0.86%。",
+      "url": "https://wallstreetcn.com/livenews/3200928"
+    },
+    {
+      "id": "2mqp96",
+      "ts": 1794878735,
+      "time": "2026-11-17T09:25:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "上证指数开盘报3585.67点，跌0.47%。",
+      "url": "https://wallstreetcn.com/livenews/3200927"
+    },
     {
       "id": "1oev9hj",
       "ts": 1794878544,
@@ -23,11 +143,11 @@
       "url": "https://wallstreetcn.com/livenews/3200925"
     },
     {
-      "id": "1opz5zv",
+      "id": "151hhhq",
       "ts": 1794878464,
       "time": "2026-11-17T09:21:04.000+08:00",
       "source": "华尔街见闻",
-      "title": "恒指低开0.98%，恒生科技指数跌1.09%。",
+      "title": "恒指低开0.98%，报23521.16点；",
       "url": "https://wallstreetcn.com/livenews/3200924"
     },
     {
@@ -79,6 +199,14 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyyzyi1842407.shtml"
     },
     {
+      "id": "gr1amy",
+      "ts": 1794877980,
+      "time": "2026-11-17T09:13:00.000+08:00",
+      "source": "东方财富",
+      "title": "10月消费新亮点出炉：居民消费从“有没有”到“好不好”转变，智能绿色商品成新宠儿",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932683395.html"
+    },
+    {
       "id": "pyr2po",
       "ts": 1794877853,
       "time": "2026-11-17T09:10:53.000+08:00",
@@ -109,6 +237,14 @@
       "source": "新浪财经",
       "title": "英矽智能于11月16日斥资921.75万港元回购26.2万股",
       "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-17/doc-iniyyzyp2272987.shtml"
+    },
+    {
+      "id": "1pdkj7c",
+      "ts": 1794877620,
+      "time": "2026-11-17T09:07:00.000+08:00",
+      "source": "东方财富",
+      "title": "超话车｜深圳举办APEC会议，交通管理让人眼前一亮",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932638491.html"
     },
     {
       "id": "j3y9o7",
