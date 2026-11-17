@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchMargin, fetchUs10y, fetchCgbCurveOneY } from '../src/portfolio.mjs';
+import { mergeLatestDaily } from '../src/macro-refresh.mjs';
 import { aggregateDaily } from '../src/aggregate.mjs';
 import { mergeBars } from '../src/kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
@@ -100,7 +101,53 @@ async function main() {
   let filled = 0;
   let skipped = 0;
   let noData = 0;
+  let toppedUp = 0;
   const errors = [];
+
+  /** 补某一天的 1Y 国债日 K（已有则返回「已有」；返回是否真的追加） */
+  async function fillCgbBar(day) {
+    const before = bars.length;
+    if (barDay.has(day)) return { text: '已有', added: false };
+    try {
+      const c = await fetchCgbCurveOneY(day);
+      if (c && c.srcDate === day && Number.isFinite(c.oneY)) {
+        bars.push({ t: day, o: c.oneY, c: c.oneY, h: c.oneY, l: c.oneY, v: 0 });
+        barDay.add(day);
+        cgbChanged = true;
+        return { text: `${c.oneY}%`, added: bars.length > before };
+      }
+      return { text: '无当日曲线', added: false };
+    } catch (e) {
+      return { text: `失败（${e.message}）`, added: false };
+    }
+  }
+
+  // ---- 2.19.0：最新一条记录补新 ----
+  // 17:13 的日更拿不到「当天才发布」的两融（晚间）与 10Y 美债（美股收盘后），
+  // 之后门禁又不会再跑 → 消费端一整天停在 T-1（11-17 实测：11-16 记录里还是 11-13）。
+  // 每轮回到源侧取一次最新可用值，只有数据日期变新才写回。
+  const newest = list.reduce(
+    (a, b) => (!a || String(b?.date || '') > String(a.date || '') ? b : a),
+    null
+  );
+  if (newest && !REFRESH) {
+    const [mLate, uLate] = await Promise.allSettled([fetchMargin(), fetchUs10y()]);
+    const latest = [];
+    if (mLate.status === 'fulfilled') latest.push(mLate.value);
+    if (uLate.status === 'fulfilled') latest.push(uLate.value);
+    const merged = mergeLatestDaily(newest.items, latest);
+    if (merged.changes.length) {
+      newest.items = merged.items;
+      toppedUp++;
+      detail(`${newest.date}（最新记录）：源侧有新值 ${merged.changes.join('、')}`);
+    }
+    if (!latest.length) {
+      detail(
+        `${newest.date}：源侧最新值均取不到（两融 ${mLate.reason?.message || mLate.reason || '失败'}；` +
+        `美债 ${uLate.reason?.message || uLate.reason || '失败'}）`
+      );
+    }
+  }
 
   for (let day = lo; day <= hi; day = addDays(day, 1)) {
     if (weekday(day) === 0 || weekday(day) === 6) {
@@ -110,8 +157,17 @@ async function main() {
     }
     const existing = list.find((x) => x && x.date === day);
     if (existing && hasDailyItems(existing) && !REFRESH) {
-      skipped++;
-      detail(`${day}：两融/美债都在，跳过`);
+      // 2.19.0：记录完整时通常跳过；但最近 3 个自然日里可能有「17:13 那次中债曲线还没发布，
+      //   日 K 被回退成前一交易日」造成的缺根（2026-11-16 实测缺了一根），必须单独补，
+      //   否则 hasDailyItems 会让这根永久漏掉。
+      if (day >= addDays(bjToday(), -3) && !barDay.has(day)) {
+        const { text, added } = await fillCgbBar(day);
+        if (added) filled++;
+        detail(`${day} ${WEEK[weekday(day)]}：记录完整，补 1Y 国债日 K ${text}`);
+      } else {
+        skipped++;
+        detail(`${day}：两融/美债都在，跳过`);
+      }
       continue;
     }
 
@@ -128,22 +184,7 @@ async function main() {
       : `失败（${uRes.reason?.message || '未知'}）`;
 
     // 1Y 国债：只补目标日那一根
-    let cgbText = '已有';
-    if (!barDay.has(day)) {
-      try {
-        const c = await fetchCgbCurveOneY(day);
-        if (c && c.srcDate === day && Number.isFinite(c.oneY)) {
-          bars.push({ t: day, o: c.oneY, c: c.oneY, h: c.oneY, l: c.oneY, v: 0 });
-          barDay.add(day);
-          cgbChanged = true;
-          cgbText = `${c.oneY}%`;
-        } else {
-          cgbText = '无当日曲线';
-        }
-      } catch (e) {
-        cgbText = `失败（${e.message}）`;
-      }
-    }
+    const { text: cgbText } = await fillCgbBar(day);
 
     if (!dailyItems.length) {
       noData++;
@@ -192,7 +233,20 @@ async function main() {
     );
   }
 
-  if (filled && !DRY) {
+  // 2.19.0：今天的曲线 17:00 后才发布，17:13 的日更可能还没拿到（2026-11-17 实测：
+  //   当轮把 11-16 当成最新写了，11-17 的日 K 要等次日才回退补上）。这里每轮幂等补一次。
+  if (!DRY) {
+    const today = bjToday();
+    if (weekday(today) !== 0 && weekday(today) !== 6 && !barDay.has(today)) {
+      const { text } = await fillCgbBar(today);
+      if (barDay.has(today)) {
+        filled++;
+        detail(`${today}（今天）：补 1Y 国债日 K ${text}`);
+      }
+    }
+  }
+
+  if ((filled || toppedUp) && !DRY) {
     list.sort((a, b) => String(b.date).localeCompare(String(a.date)));
     writeJSON(MACRO_FILE, list.slice(0, 400));
   }
@@ -223,7 +277,7 @@ async function main() {
     }
   }
 
-  if (!DRY && (filled > 0 || noData > 0)) {
+  if (!DRY && (filled > 0 || noData > 0 || toppedUp > 0)) {
     // 诊断文件：云端回补失败时（例如 Actions 访问不了两融接口）能直接从仓库里看到原因。
     // 用「日期」而不是精确时刻，避免同一天重复运行时反复产生提交。
     writeJSON(STATUS_FILE, {
@@ -231,6 +285,7 @@ async function main() {
       from: lo,
       to: hi,
       filled,
+      toppedUp,
       noData,
       skipped,
       errors: errors.sort((a, b) => a.date.localeCompare(b.date)),
@@ -238,7 +293,7 @@ async function main() {
   }
 
   say(
-    `完成：补齐 ${filled} 天，跳过 ${skipped} 天（周末/已有），无数据 ${noData} 天` +
+    `完成：补齐 ${filled} 天，最新记录补新 ${toppedUp} 条，跳过 ${skipped} 天（周末/已有），无数据 ${noData} 天` +
     `${DRY ? '（dry-run 未写盘）' : ''}`
   );
 }

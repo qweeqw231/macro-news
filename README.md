@@ -56,7 +56,7 @@
 | ① | **新闻 + 行情** | GitHub Actions `collect.yml`（Cloudflare Worker 外部触发） | 15 分钟 | `data/archive/`、`latest.json`、`search.json`、`quotes.json` |
 | ② | **K 线** | Actions `kline-full.yml` / `kline-minute.yml` | 全量每天 12:23；最后一根每小时 | `data/kline/` |
 | ③ | **时点快照** | Actions `snapshot.yml`（Worker 每 30 分钟触发，回补 5 天） | 30 分钟 | `data/snapshots/` |
-| ④ | **宏观指标** | Actions `snapshot.yml`（17:00 后幂等补当天） | 每个交易日 | `data/macro/daily.json`、`kline/cgb_1y*` |
+| ④ | **宏观指标** | Actions `snapshot.yml`（17:00 后幂等补当天；每轮用源侧最新值补最新记录的两融/美债） | 每个交易日 | `data/macro/daily.json`、`kline/cgb_1y*` |
 | ⑤ | **本机回退 / 同步** | Windows 计划任务 `MacroNews-Collect` / `MacroNews-Pull` | 120 分钟 / 4 小时 | 本地 `data/`（回退采集、拉回远端） |
 
 ```
