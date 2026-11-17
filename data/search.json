@@ -1,11 +1,171 @@
 {
-  "generatedAt": "2026-11-17T07:53:04.801Z",
+  "generatedAt": "2026-11-17T08:07:59.403Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 55960,
+  "total": 55982,
   "items": [
+    {
+      "id": "1ef6gv8",
+      "ts": 1794902881,
+      "time": "2026-11-17T16:08:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "《国家中小企业公共服务示范平台（基地）基地类建设指引》印发",
+      "url": "https://wallstreetcn.com/livenews/3201133"
+    },
+    {
+      "id": "owi5hs",
+      "ts": 1794902733,
+      "time": "2026-11-17T16:05:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "德意志银行欧股下跌6.2%，此前有报道称该行曾处理爱泼斯坦相关巨额款项。",
+      "url": "https://wallstreetcn.com/livenews/3201132"
+    },
+    {
+      "id": "1jq68ak",
+      "ts": 1794902637,
+      "time": "2026-11-17T16:03:57.000+08:00",
+      "source": "华尔街见闻",
+      "title": "共同社：预计日本和俄罗斯领导人将在APEC会议期间会晤。",
+      "url": "https://wallstreetcn.com/livenews/3201131"
+    },
+    {
+      "id": "lqnl1j",
+      "ts": 1794902541,
+      "time": "2026-11-17T16:02:21.000+08:00",
+      "source": "东方财富",
+      "title": "工信部中小企业局印发《国家中小企业公共服务示范平台（基地）基地类建设指引》",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932870155.html"
+    },
+    {
+      "id": "zcpx2w",
+      "ts": 1794902506,
+      "time": "2026-11-17T16:01:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "我国牵头制定的甲醛净化效果评价国际标准正式发布",
+      "url": "https://wallstreetcn.com/livenews/3201130"
+    },
+    {
+      "id": "pv92pn",
+      "ts": 1794902472,
+      "time": "2026-11-17T16:01:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧股集体低开",
+      "url": "https://wallstreetcn.com/livenews/3201129"
+    },
+    {
+      "id": "biihgv",
+      "ts": 1794902433,
+      "time": "2026-11-17T16:00:33.000+08:00",
+      "source": "新浪财经",
+      "title": "报道：以色列向亚马逊人脸识别平台上传数百万张照片，用于追踪巴勒斯坦人",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzswc5402864.shtml"
+    },
+    {
+      "id": "1to01f0",
+      "ts": 1794902423,
+      "time": "2026-11-17T16:00:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "董明珠现身APEC会议现场",
+      "url": "https://wallstreetcn.com/livenews/3201128"
+    },
+    {
+      "id": "e4m1bp",
+      "ts": 1794902410,
+      "time": "2026-11-17T16:00:10.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达Vera CPU机架级平台发布：搭载首款自研数据中心CPU 攻坚高性能科学仿真",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzswf7598975.shtml"
+    },
+    {
+      "id": "60m22",
+      "ts": 1794902406,
+      "time": "2026-11-17T16:00:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "王传福现身APEC会议现场",
+      "url": "https://wallstreetcn.com/livenews/3201127"
+    },
+    {
+      "id": "ac73up",
+      "ts": 1794902352,
+      "time": "2026-11-17T15:59:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "明冠新材：实控人一致行动人上海博强拟增持2000万元至2500万元",
+      "url": "https://wallstreetcn.com/livenews/3201126"
+    },
+    {
+      "id": "mzmb2f",
+      "ts": 1794902329,
+      "time": "2026-11-17T15:58:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "小米CEO雷军：智能机器人产业未来发展潜力将超过汽车产业。",
+      "url": "https://wallstreetcn.com/livenews/3201125"
+    },
+    {
+      "id": "9wjkg5",
+      "ts": 1794902285,
+      "time": "2026-11-17T15:58:05.000+08:00",
+      "source": "东方财富",
+      "title": "中国烹饪协会：10月全国餐饮收入5235亿元 同比增长0.7%",
+      "url": "http://finance.eastmoney.com/news/1346,202611173932866836.html"
+    },
+    {
+      "id": "e5yc3s",
+      "ts": 1794902258,
+      "time": "2026-11-17T15:57:38.000+08:00",
+      "source": "华尔街见闻",
+      "title": "习近平会见墨西哥总统辛鲍姆",
+      "url": "https://wallstreetcn.com/livenews/3201124"
+    },
+    {
+      "id": "10cotku",
+      "ts": 1794902250,
+      "time": "2026-11-17T15:57:30.000+08:00",
+      "source": "东方财富",
+      "title": "前十月新动能贡献超五成 工业增长焕发强劲创新活力",
+      "url": "http://finance.eastmoney.com/news/1352,202611173932859920.html"
+    },
+    {
+      "id": "w03voq",
+      "ts": 1794902250,
+      "time": "2026-11-17T15:57:30.000+08:00",
+      "source": "东方财富",
+      "title": "煤电气多源协同发力 迎峰度冬能源供应有保障",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932859348.html"
+    },
+    {
+      "id": "1gq3723",
+      "ts": 1794902181,
+      "time": "2026-11-17T15:56:21.000+08:00",
+      "source": "新浪财经",
+      "title": "巴克莱维持特斯拉超配评级，Robotaxi全天候运营验证纯视觉技术进展",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzswc5399537.shtml"
+    },
+    {
+      "id": "ic5eqf",
+      "ts": 1794902071,
+      "time": "2026-11-17T15:54:31.000+08:00",
+      "source": "华尔街见闻",
+      "title": "曹操出行在天津成立新公司，注册资本5000万",
+      "url": "https://wallstreetcn.com/livenews/3201123"
+    },
+    {
+      "id": "8zqok9",
+      "ts": 1794902020,
+      "time": "2026-11-17T15:53:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "《半导体设备与零部件质量管理体系》行业标准发布",
+      "url": "https://wallstreetcn.com/livenews/3201122"
+    },
+    {
+      "id": "9lcr4m",
+      "ts": 1794902002,
+      "time": "2026-11-17T15:53:22.000+08:00",
+      "source": "东方财富",
+      "title": "官方：鼓励各地聚焦特色产业、优势品类，扶优培强地理标志相关产业龙头企业",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932859160.html"
+    },
     {
       "id": "upsz5l",
       "ts": 1794901944,
@@ -21,6 +181,22 @@
       "source": "华尔街见闻",
       "title": "金融监管总局上海监管局等：银行保险机构围绕能源绿色转型、绿色航运与贸易等领域加大金融支持",
       "url": "https://wallstreetcn.com/livenews/3201120"
+    },
+    {
+      "id": "i9yzs2",
+      "ts": 1794901653,
+      "time": "2026-11-17T15:47:33.000+08:00",
+      "source": "东方财富",
+      "title": "商务部部长助理袁晓明：稳妥应对“新三样”固废退役高峰期",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932856093.html"
+    },
+    {
+      "id": "fkqwvu",
+      "ts": 1794901646,
+      "time": "2026-11-17T15:47:26.000+08:00",
+      "source": "东方财富",
+      "title": "到2030年地理标志产品直接产值预期超1万亿",
+      "url": "http://finance.eastmoney.com/news/1352,202611173932869240.html"
     },
     {
       "id": "474voh",
