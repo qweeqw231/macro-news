@@ -1,18 +1,210 @@
 {
-  "generatedAt": "2026-11-17T01:37:58.894Z",
+  "generatedAt": "2026-11-17T01:53:07.148Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 55569,
+  "total": 55596,
   "items": [
     {
-      "id": "rdadbu",
+      "id": "17v724s",
+      "ts": 1794880363,
+      "time": "2026-11-17T09:52:43.000+08:00",
+      "source": "新浪财经",
+      "title": "华住集团-S早盘涨超5% 第三季度业绩双位数增长公司上调全年业绩指引",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-17/doc-iniyyzym5536753.shtml"
+    },
+    {
+      "id": "hiu2h9",
+      "ts": 1794880348,
+      "time": "2026-11-17T09:52:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "机器人、物理AI概念震荡走弱，国机精工、大业股份跌停，襄阳轴承、索辰科技、征和工业、中鼎股份跌超6%。",
+      "url": "https://wallstreetcn.com/livenews/3200946"
+    },
+    {
+      "id": "4e3mug",
+      "ts": 1794880300,
+      "time": "2026-11-17T09:51:40.000+08:00",
+      "source": "新浪财经",
+      "title": "光大期货：11月17日有色金属日报",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyyzyi1875575.shtml"
+    },
+    {
+      "id": "1305ng",
+      "ts": 1794880294,
+      "time": "2026-11-17T09:51:34.000+08:00",
+      "source": "华尔街见闻",
+      "title": "恒生科技指数盘中跌2%，阿里巴巴跌超5%，百度跌超6%。",
+      "url": "https://wallstreetcn.com/livenews/3200945"
+    },
+    {
+      "id": "n04ree",
+      "ts": 1794880242,
+      "time": "2026-11-17T09:50:42.000+08:00",
+      "source": "新浪财经",
+      "title": "光大期货：11月17日软商品日报",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyyzyi1874772.shtml"
+    },
+    {
+      "id": "1ioubde",
+      "ts": 1794880221,
+      "time": "2026-11-17T09:50:21.000+08:00",
+      "source": "新浪财经",
+      "title": "小鹏集团-W盘中涨超5% 第三季度营收及交付量均创新高",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-17/doc-iniyyzyi1874228.shtml"
+    },
+    {
+      "id": "n4im8r",
+      "ts": 1794880207,
+      "time": "2026-11-17T09:50:07.000+08:00",
+      "source": "新浪财经",
+      "title": "光大期货：11月17日农产品日报",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyyzyp7757299.shtml"
+    },
+    {
+      "id": "1u29qgl",
+      "ts": 1794880163,
+      "time": "2026-11-17T09:49:23.000+08:00",
+      "source": "新浪财经",
+      "title": "光大期货：11月17日能源化工日报",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyyzym5533241.shtml"
+    },
+    {
+      "id": "h0crn5",
+      "ts": 1794880114,
+      "time": "2026-11-17T09:48:34.000+08:00",
+      "source": "新浪财经",
+      "title": "光大期货：11月17日矿钢煤焦日报",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyyzyp2308519.shtml"
+    },
+    {
+      "id": "14swt97",
+      "ts": 1794880095,
+      "time": "2026-11-17T09:48:15.000+08:00",
+      "source": "新浪财经",
+      "title": "华虹宏力盘初涨超12% 大和重申“买入”评级",
+      "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-17/doc-iniyyzyp2308144.shtml"
+    },
+    {
+      "id": "16x2wrc",
+      "ts": 1794880073,
+      "time": "2026-11-17T09:47:53.000+08:00",
+      "source": "新浪财经",
+      "title": "光大期货：11月17日金融日报",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyyzyp7755245.shtml"
+    },
+    {
+      "id": "1dctgvq",
+      "ts": 1794879941,
+      "time": "2026-11-17T09:45:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "零售股震荡下挫，上海九百触及跌停，百大集团、合百集团、宁波中百、茂业商业、红旗连锁跌超5%。",
+      "url": "https://wallstreetcn.com/livenews/3200944"
+    },
+    {
+      "id": "1935jki",
+      "ts": 1794879914,
+      "time": "2026-11-17T01:45:14.000Z",
+      "source": "中新网",
+      "title": "我国快递业务量连续两个月超170亿件",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733229.shtml"
+    },
+    {
+      "id": "6lg3v0",
+      "ts": 1794879806,
+      "time": "2026-11-17T01:43:26.000Z",
+      "source": "中新网",
+      "title": "理响中国·一笔一画｜算电协同，为数字中国建设注入坚实动能",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733227.shtml"
+    },
+    {
+      "id": "qyr6gp",
+      "ts": 1794879742,
+      "time": "2026-11-17T09:42:22.000+08:00",
+      "source": "华尔街见闻",
+      "title": "我国快递业务量连续两个月超170亿件",
+      "url": "https://wallstreetcn.com/livenews/3200943"
+    },
+    {
+      "id": "172zght",
+      "ts": 1794879725,
+      "time": "2026-11-17T09:42:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "我国北斗终端设备应用数量近4200万",
+      "url": "https://wallstreetcn.com/livenews/3200942"
+    },
+    {
+      "id": "1x4ap08",
+      "ts": 1794879655,
+      "time": "2026-11-17T09:40:55.000+08:00",
+      "source": "新浪财经",
+      "title": "高盛一个月内第二次下调黄金预测，金价重返历史高点还需两年！",
+      "url": "https://finance.sina.com.cn/roll/2026-11-17/doc-iniyyzyp2301784.shtml"
+    },
+    {
+      "id": "2s10jx",
+      "ts": 1794879553,
+      "time": "2026-11-17T09:39:13.000+08:00",
+      "source": "华尔街见闻",
+      "title": "越共中央总书记、国家主席苏林抵达深圳",
+      "url": "https://wallstreetcn.com/livenews/3200941"
+    },
+    {
+      "id": "1vv9esb",
+      "ts": 1794879540,
+      "time": "2026-11-17T09:39:00.000+08:00",
+      "source": "东方财富",
+      "title": "“迎峰度冬”能源保供系列报道 迎寒潮暖民生 能源行业夯实保供“底气”",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932695877.html"
+    },
+    {
+      "id": "1m0vef0",
+      "ts": 1794879535,
+      "time": "2026-11-17T09:38:55.000+08:00",
+      "source": "华尔街见闻",
+      "title": "家电板块反复活跃，长虹美菱2连板，小熊电器触及涨停，华帝股份、海尔智家、北鼎股份、美的集团跟涨。",
+      "url": "https://wallstreetcn.com/livenews/3200940"
+    },
+    {
+      "id": "1gju3ul",
       "ts": 1794879472,
       "time": "2026-11-17T09:37:52.000+08:00",
       "source": "华尔街见闻",
-      "title": "光刻机、光刻胶概念异动拉升，西陇科学、盛剑科技涨停，华融化学、华软科技、怡达股份、联合化学、国风新材等纷纷走高。",
+      "title": "光刻机、光刻胶概念异动拉升，西陇科学、盛剑科技直线涨停，华融化学、华软科技、怡达股份、联合化学、国风新材等纷纷走高。",
       "url": "https://wallstreetcn.com/livenews/3200939"
+    },
+    {
+      "id": "1ubdkhz",
+      "ts": 1794879437,
+      "time": "2026-11-17T09:37:17.000+08:00",
+      "source": "东方财富",
+      "title": "我国快递业务量连续两个月超170亿件",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932697972.html"
+    },
+    {
+      "id": "vd89dd",
+      "ts": 1794879360,
+      "time": "2026-11-17T09:36:00.000+08:00",
+      "source": "东方财富",
+      "title": "2026年医保目录公布：科创板多款新药入保，创新药可及性进一步提升",
+      "url": "http://finance.eastmoney.com/news/1354,202611173932690345.html"
+    },
+    {
+      "id": "cg190a",
+      "ts": 1794879325,
+      "time": "2026-11-17T01:35:25.000Z",
+      "source": "中新网",
+      "title": "11月17日央行开展7140亿元隔夜逆回购操作",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733218.shtml"
+    },
+    {
+      "id": "z7emf4",
+      "ts": 1794879317,
+      "time": "2026-11-17T01:35:17.000Z",
+      "source": "中新网",
+      "title": "11月17日人民币对美元中间价报6.7132 上调9个基点",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733212.shtml"
     },
     {
       "id": "14igb8o",
@@ -37,6 +229,14 @@
       "source": "东方财富",
       "title": "预告：商务部定于2026年11月19日(星期四)下午3时举行新闻发布会",
       "url": "http://finance.eastmoney.com/news/1350,202611173932685092.html"
+    },
+    {
+      "id": "1qn1th7",
+      "ts": 1794879083,
+      "time": "2026-11-17T09:31:23.000+08:00",
+      "source": "东方财富",
+      "title": "每平方公里7家上市公司，机器人按周迭代：今天的“深圳速度”有多“离谱”？",
+      "url": "http://finance.eastmoney.com/news/1354,202611173932690046.html"
     },
     {
       "id": "1v9qmqx",
@@ -93,6 +293,14 @@
       "source": "华尔街见闻",
       "title": "国债期货开盘，30年期主力合约涨0.51%，10年期主力合约涨0.11%，5年期主力合约涨0.05%，2年期主力合约涨0.03%。",
       "url": "https://wallstreetcn.com/livenews/3200932"
+    },
+    {
+      "id": "1qyg5oc",
+      "ts": 1794878940,
+      "time": "2026-11-17T09:29:00.000+08:00",
+      "source": "东方财富",
+      "title": "10月失业率降到5.1%，就业大局稳住了",
+      "url": "http://finance.eastmoney.com/news/1352,202611173932685876.html"
     },
     {
       "id": "1wsiirk",
@@ -661,6 +869,14 @@
       "source": "新浪财经",
       "title": "前OpenAI研究员阿申布伦纳的对冲基金在10月股市暴跌前再次押注人工智能",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyyvsr2368316.shtml"
+    },
+    {
+      "id": "a54lj",
+      "ts": 1794874648,
+      "time": "2026-11-17T08:17:28.000+08:00",
+      "source": "东方财富",
+      "title": "中国与APEC：三次落子，开放持续深化！廿五载协作共赢",
+      "url": "http://finance.eastmoney.com/news/1346,202611173932685197.html"
     },
     {
       "id": "1pk2i8i",
