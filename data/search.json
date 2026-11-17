@@ -1,11 +1,139 @@
 {
-  "generatedAt": "2026-11-17T09:12:29.028Z",
+  "generatedAt": "2026-11-17T09:22:59.355Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 56098,
+  "total": 56120,
   "items": [
+    {
+      "id": "18a6emq",
+      "ts": 1794907354,
+      "time": "2026-11-17T17:22:34.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美元兑日元连续第三个交易日下跌，跌幅达0.4%，报158.90。",
+      "url": "https://wallstreetcn.com/livenews/3201184"
+    },
+    {
+      "id": "1jz6zfh",
+      "ts": 1794907208,
+      "time": "2026-11-17T17:20:08.000+08:00",
+      "source": "新浪财经",
+      "title": "加州就Hugging Face遭袭及其他网络安全事件起诉OpenAI",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzswf7651155.shtml"
+    },
+    {
+      "id": "1c8tuxw",
+      "ts": 1794907084,
+      "time": "2026-11-17T17:18:04.000+08:00",
+      "source": "新浪财经",
+      "title": "微软即将推出产品，旨在降低客户的人工智能使用成本",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzswf2233092.shtml"
+    },
+    {
+      "id": "142687s",
+      "ts": 1794907084,
+      "time": "2026-11-17T17:18:04.000+08:00",
+      "source": "新浪财经",
+      "title": "国泰君安期货：加息预期升温+AI叙事动摇 金银延续承压状态",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyzswf7650216.shtml"
+    },
+    {
+      "id": "b34p9y",
+      "ts": 1794907027,
+      "time": "2026-11-17T17:17:07.000+08:00",
+      "source": "新浪财经",
+      "title": "伊朗威胁称若美国打击其民用设施 将采取类似报复行动",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzswc5456178.shtml"
+    },
+    {
+      "id": "zlr58z",
+      "ts": 1794906820,
+      "time": "2026-11-17T17:13:40.000+08:00",
+      "source": "东方财富",
+      "title": "商务部：加紧研究修订《再生资源回收管理办法》",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932924880.html"
+    },
+    {
+      "id": "120o26m",
+      "ts": 1794906758,
+      "time": "2026-11-17T17:12:38.000+08:00",
+      "source": "东方财富",
+      "title": "商务部：加紧研究修订《再生资源回收管理办法》",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932932147.html"
+    },
+    {
+      "id": "wc51a5",
+      "ts": 1794906733,
+      "time": "2026-11-17T17:12:13.000+08:00",
+      "source": "新浪财经",
+      "title": "三十亿理财信披遗漏被罚，白银有色索赔递交立案",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-17/doc-iniyzswf7647509.shtml"
+    },
+    {
+      "id": "ivw3a8",
+      "ts": 1794906731,
+      "time": "2026-11-17T17:12:11.000+08:00",
+      "source": "新浪财经",
+      "title": "三十亿理财违规未披，白银有色索赔递交立案",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-17/doc-iniyzswf7650753.shtml"
+    },
+    {
+      "id": "1gnz6r9",
+      "ts": 1794906729,
+      "time": "2026-11-17T17:12:09.000+08:00",
+      "source": "新浪财经",
+      "title": "*ST航图索赔持续征集，财务总监上任次日即辞职",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-17/doc-iniyzswc5457828.shtml"
+    },
+    {
+      "id": "wh21uv",
+      "ts": 1794906728,
+      "time": "2026-11-17T17:12:08.000+08:00",
+      "source": "新浪财经",
+      "title": "公章被冒用！300081，又出新状况",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-17/doc-iniyzswc5458016.shtml"
+    },
+    {
+      "id": "ydvot9",
+      "ts": 1794906726,
+      "time": "2026-11-17T17:12:06.000+08:00",
+      "source": "新浪财经",
+      "title": "*ST航图财务总监刚上任就辞职，立案调查叠加退市风险",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-17/doc-iniyzsvz1768494.shtml"
+    },
+    {
+      "id": "wucrm1",
+      "ts": 1794906724,
+      "time": "2026-11-17T17:12:04.000+08:00",
+      "source": "新浪财经",
+      "title": "ST恒信公章被冒用，投资者索赔持续征集",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-17/doc-iniyzsvz1768256.shtml"
+    },
+    {
+      "id": "17et0y8",
+      "ts": 1794906723,
+      "time": "2026-11-17T17:12:03.000+08:00",
+      "source": "新浪财经",
+      "title": "立案结案叠加会计差错更正，清水源索赔仍待调查结论",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-17/doc-iniyzsvz1768017.shtml"
+    },
+    {
+      "id": "t4ydov",
+      "ts": 1794906721,
+      "time": "2026-11-17T17:12:01.000+08:00",
+      "source": "新浪财经",
+      "title": "清水源涉信披违规被立案，索赔登记启动",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-17/doc-iniyzswf2229407.shtml"
+    },
+    {
+      "id": "192s4mm",
+      "ts": 1794906642,
+      "time": "2026-11-17T17:10:42.000+08:00",
+      "source": "东方财富",
+      "title": "《数字广东建设“十五五”规划》：开展“广东强芯”工程 攻关人工智能芯片、存算一体芯片、多模态智能传感器等基础硬件",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932924385.html"
+    },
     {
       "id": "ysb0y1",
       "ts": 1794906613,
@@ -15,12 +143,44 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzswc5428479.shtml"
     },
     {
+      "id": "h1e1b6",
+      "ts": 1794906573,
+      "time": "2026-11-17T17:09:33.000+08:00",
+      "source": "东方财富",
+      "title": "《数字广东建设“十五五”规划》：探索词元交易等新型数据流通模式 培育词元市场全链条生态",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932924210.html"
+    },
+    {
       "id": "bd1lqt",
       "ts": 1794906556,
       "time": "2026-11-17T17:09:16.000+08:00",
       "source": "华尔街见闻",
       "title": "美股股指期货延续跌势，纳指期货、标普500指数期货跌近0.5%，触及盘中低点。",
       "url": "https://wallstreetcn.com/livenews/3201183"
+    },
+    {
+      "id": "6beoyi",
+      "ts": 1794906546,
+      "time": "2026-11-17T09:09:06.000Z",
+      "source": "中新网",
+      "title": "中国太保寿险举办2026年客户节 发布“冠军之选”产品",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733548.shtml"
+    },
+    {
+      "id": "1idh1qz",
+      "ts": 1794906498,
+      "time": "2026-11-17T09:08:18.000Z",
+      "source": "中新网",
+      "title": "我国牵头制定的全球首个物联网智慧水产养殖国际标准发布",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733550.shtml"
+    },
+    {
+      "id": "1od3j5r",
+      "ts": 1794906441,
+      "time": "2026-11-17T17:07:21.000+08:00",
+      "source": "东方财富",
+      "title": "广东：加快打造新的万亿级数字产业集群，壮大集成电路制造、先进封测等产业",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932932519.html"
     },
     {
       "id": "1epwpvc",
@@ -77,6 +237,14 @@
       "source": "华尔街见闻",
       "title": "三丰智能：2026年11月16日收到监察机关通知，公司董事吴建军被立案调查并实施留置措施。",
       "url": "https://wallstreetcn.com/livenews/3201179"
+    },
+    {
+      "id": "mo7kmi",
+      "ts": 1794906240,
+      "time": "2026-11-17T17:04:00.000+08:00",
+      "source": "东方财富",
+      "title": "广东：力争到2030年 数字广东升级跃迁为“数智广东”",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932932478.html"
     },
     {
       "id": "1rnbuzq",
@@ -293,6 +461,14 @@
       "source": "东方财富",
       "title": "全国供销合作总社答澎湃：推动企业不断提升废旧家电和废旧3C电子产品回收拆解水平",
       "url": "http://finance.eastmoney.com/news/1350,202611173932917362.html"
+    },
+    {
+      "id": "1sv71ap",
+      "ts": 1794905646,
+      "time": "2026-11-17T16:54:06.000+08:00",
+      "source": "东方财富",
+      "title": "中国证监会陈华平副主席与国际证监会组织秘书长举行会谈",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932932060.html"
     },
     {
       "id": "1hr9k1o",
