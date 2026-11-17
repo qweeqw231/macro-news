@@ -1,11 +1,91 @@
 {
-  "generatedAt": "2026-11-17T05:53:02.683Z",
+  "generatedAt": "2026-11-17T06:07:54.976Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 55791,
+  "total": 55820,
   "items": [
+    {
+      "id": "ef42q5",
+      "ts": 1794895571,
+      "time": "2026-11-17T14:06:11.000+08:00",
+      "source": "华尔街见闻",
+      "title": "克里米亚大桥连续第二天遭袭 交通已暂停",
+      "url": "https://wallstreetcn.com/livenews/3201049"
+    },
+    {
+      "id": "1clz09b",
+      "ts": 1794895422,
+      "time": "2026-11-17T14:03:42.000+08:00",
+      "source": "东方财富",
+      "title": "10月中国快递发展指数同比提升0.5%",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932802534.html"
+    },
+    {
+      "id": "1pc3ez1",
+      "ts": 1794895343,
+      "time": "2026-11-17T14:02:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "整点回顾：市场午后震荡回升，沪指一度拉升翻红，随后又再度走弱，华为算力概念持续走高，卡莱特20cm涨停，北交所新股N菊乐盘中涨超100%，触发临停，个股跌多涨少，沪深京三市超3500股飘绿，成交达1.15万亿，较上日此时缩量超100亿。",
+      "url": "https://wallstreetcn.com/livenews/3201048"
+    },
+    {
+      "id": "nj5v6j",
+      "ts": 1794895313,
+      "time": "2026-11-17T14:01:53.000+08:00",
+      "source": "华尔街见闻",
+      "title": "印度卢比兑美元上涨0.5%，至93.4938，创4月以来最高水平。",
+      "url": "https://wallstreetcn.com/livenews/3201047"
+    },
+    {
+      "id": "12cbx9s",
+      "ts": 1794895182,
+      "time": "2026-11-17T05:59:42.000Z",
+      "source": "中新网",
+      "title": "中国快递业务量连续两个月超170亿件",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733362.shtml"
+    },
+    {
+      "id": "43vnyt",
+      "ts": 1794895028,
+      "time": "2026-11-17T05:57:08.000Z",
+      "source": "中新网",
+      "title": "前10个月北京服务机器人产量同比增长1.7倍",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733361.shtml"
+    },
+    {
+      "id": "s4nujm",
+      "ts": 1794894978,
+      "time": "2026-11-17T13:56:18.000+08:00",
+      "source": "华尔街见闻",
+      "title": "港股新世界发展股价跌幅扩大至18%，触及盘中低点。",
+      "url": "https://wallstreetcn.com/livenews/3201046"
+    },
+    {
+      "id": "1vmgq3s",
+      "ts": 1794894856,
+      "time": "2026-11-17T13:54:16.000+08:00",
+      "source": "东方财富",
+      "title": "财政部发布第二次中加经济财金战略对话联合成果文件",
+      "url": "http://finance.eastmoney.com/news/1352,202611173932799647.html"
+    },
+    {
+      "id": "wcjkj5",
+      "ts": 1794894842,
+      "time": "2026-11-17T13:54:02.000+08:00",
+      "source": "新浪财经",
+      "title": "国泰君安期货：指数承压3600点，背后经济现状如何？",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-17/doc-iniyznqi2207979.shtml"
+    },
+    {
+      "id": "ut4yme",
+      "ts": 1794894802,
+      "time": "2026-11-17T13:53:22.000+08:00",
+      "source": "华尔街见闻",
+      "title": "第二次中加经济财金战略对话：中方欢迎加拿大养老金等长线资金投资中国资本市场",
+      "url": "https://wallstreetcn.com/livenews/3201045"
+    },
     {
       "id": "1cz5r98",
       "ts": 1794894695,
@@ -47,12 +127,28 @@
       "url": "https://wallstreetcn.com/livenews/3201041"
     },
     {
+      "id": "1bbo2a",
+      "ts": 1794894180,
+      "time": "2026-11-17T13:43:00.000+08:00",
+      "source": "东方财富",
+      "title": "政策红利释放与龙头业绩提振家电股 TCL电子绩后大涨超6%",
+      "url": "http://finance.eastmoney.com/news/1354,202611173932790251.html"
+    },
+    {
       "id": "9l9hwe",
       "ts": 1794894055,
       "time": "2026-11-17T13:40:55.000+08:00",
       "source": "华尔街见闻",
       "title": "蒙古国总统宣布辞职",
       "url": "https://wallstreetcn.com/livenews/3201040"
+    },
+    {
+      "id": "1bvctw5",
+      "ts": 1794893955,
+      "time": "2026-11-17T13:39:15.000+08:00",
+      "source": "东方财富",
+      "title": "前10月上海对APEC其他经济体进出口增长22.9%",
+      "url": "http://finance.eastmoney.com/news/1346,202611173932792460.html"
     },
     {
       "id": "k380st",
@@ -87,6 +183,22 @@
       "url": "https://wallstreetcn.com/livenews/3201036"
     },
     {
+      "id": "4uyhjo",
+      "ts": 1794893650,
+      "time": "2026-11-17T13:34:10.000+08:00",
+      "source": "东方财富",
+      "title": "从“要素流动”向“规则协同”，中国—东盟自贸区迎来3.0版升级",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932783247.html"
+    },
+    {
+      "id": "1g2qlav",
+      "ts": 1794893569,
+      "time": "2026-11-17T13:32:49.000+08:00",
+      "source": "东方财富",
+      "title": "今年前10月上海对APEC其他经济体进出口额同比增逾两成",
+      "url": "http://stock.eastmoney.com/news/1439,202611173932783846.html"
+    },
+    {
       "id": "1iomiqw",
       "ts": 1794893291,
       "time": "2026-11-17T13:28:11.000+08:00",
@@ -95,20 +207,20 @@
       "url": "https://wallstreetcn.com/livenews/3201034"
     },
     {
-      "id": "1dsivvl",
-      "ts": 1794893161,
-      "time": "2026-11-17T13:26:01.000+08:00",
-      "source": "新浪财经",
-      "title": "IMF预测韩国2026年GDP增长率为3.9%，2027年为3.3%",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyznqf5417264.shtml"
-    },
-    {
       "id": "1bunzc4",
       "ts": 1794893161,
       "time": "2026-11-17T13:26:01.000+08:00",
       "source": "东方财富",
       "title": "网约车监管信息交互系统10月份共收到订单信息10.29亿单",
       "url": "http://finance.eastmoney.com/news/1350,202611173932775043.html"
+    },
+    {
+      "id": "1dsivvl",
+      "ts": 1794893161,
+      "time": "2026-11-17T13:26:01.000+08:00",
+      "source": "新浪财经",
+      "title": "IMF预测韩国2026年GDP增长率为3.9%，2027年为3.3%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyznqf5417264.shtml"
     },
     {
       "id": "wptuwh",
@@ -125,6 +237,14 @@
       "source": "华尔街见闻",
       "title": "智谱MaaS平台开发者数量突破1000万 GLM开源模型Token调用占比超60%",
       "url": "https://wallstreetcn.com/livenews/3201033"
+    },
+    {
+      "id": "9y6rtt",
+      "ts": 1794892930,
+      "time": "2026-11-17T13:22:10.000+08:00",
+      "source": "东方财富",
+      "title": "中国贸促会会长任鸿斌出席振兴多边贸易体制工商圆桌会",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932784146.html"
     },
     {
       "id": "hd62fg",
@@ -191,6 +311,14 @@
       "url": "https://finance.sina.com.cn/stock/hkstock/hkgg/2026-11-17/doc-iniyznqi2185544.shtml"
     },
     {
+      "id": "e0crly",
+      "ts": 1794892118,
+      "time": "2026-11-17T13:08:38.000+08:00",
+      "source": "东方财富",
+      "title": "畅通循环回收利用链条，九部门发文推进再生资源回收体系建设",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932787070.html"
+    },
+    {
       "id": "1cv34k7",
       "ts": 1794892085,
       "time": "2026-11-17T13:08:05.000+08:00",
@@ -215,6 +343,14 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyznqi2183137.shtml"
     },
     {
+      "id": "j72qwr",
+      "ts": 1794891807,
+      "time": "2026-11-17T13:03:27.000+08:00",
+      "source": "东方财富",
+      "title": "9部门：推行多品类综合性再生资源回收模式",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932784445.html"
+    },
+    {
       "id": "e4su38",
       "ts": 1794891727,
       "time": "2026-11-17T13:02:07.000+08:00",
@@ -229,6 +365,14 @@
       "source": "华尔街见闻",
       "title": "西班牙不看好欧洲“上桌”乌美俄谈判",
       "url": "https://wallstreetcn.com/livenews/3201029"
+    },
+    {
+      "id": "el2luw",
+      "ts": 1794891520,
+      "time": "2026-11-17T12:58:40.000+08:00",
+      "source": "东方财富",
+      "title": "从种苗育苗到智慧田园，泰兴黄桥以产业链铺就共富路",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932789648.html"
     },
     {
       "id": "mtj783",
@@ -277,6 +421,14 @@
       "source": "新浪财经",
       "title": "中信里昂：周大福创建目标价11.2港元 维持“跑赢大市”评级",
       "url": "https://finance.sina.com.cn/stock/hkstock/hkgg/2026-11-17/doc-iniyzhhm2308482.shtml"
+    },
+    {
+      "id": "1qb3384",
+      "ts": 1794891108,
+      "time": "2026-11-17T12:51:48.000+08:00",
+      "source": "东方财富",
+      "title": "官方：鼓励各地扶优培强地理标志相关产业龙头企业",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932783744.html"
     },
     {
       "id": "4eg4c1",
@@ -389,6 +541,14 @@
       "source": "华尔街见闻",
       "title": "杭州土拍成交额50亿元 最高溢价率32.8%",
       "url": "https://wallstreetcn.com/livenews/3201021"
+    },
+    {
+      "id": "1uamwlo",
+      "ts": 1794889859,
+      "time": "2026-11-17T12:30:59.000+08:00",
+      "source": "东方财富",
+      "title": "深圳一二手房房价继续涨!",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932790488.html"
     },
     {
       "id": "1q9dl4n",
@@ -519,12 +679,44 @@
       "url": "https://wallstreetcn.com/livenews/3201015"
     },
     {
+      "id": "15xxvx6",
+      "ts": 1794888480,
+      "time": "2026-11-17T12:08:00.000+08:00",
+      "source": "东方财富",
+      "title": "新华社权威快报丨商务部等9部门深入推进再生资源回收体系建设",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932791631.html"
+    },
+    {
+      "id": "mes3f9",
+      "ts": 1794888420,
+      "time": "2026-11-17T12:07:00.000+08:00",
+      "source": "东方财富",
+      "title": "由“筇”致富 云南昭通竹产业“拔节生长”",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932791538.html"
+    },
+    {
       "id": "1o4l1pg",
       "ts": 1794888377,
       "time": "2026-11-17T12:06:17.000+08:00",
       "source": "华尔街见闻",
       "title": "第二届中埃投资论坛在开罗举行",
       "url": "https://wallstreetcn.com/livenews/3201014"
+    },
+    {
+      "id": "1k5hji9",
+      "ts": 1794888372,
+      "time": "2026-11-17T12:06:12.000+08:00",
+      "source": "东方财富",
+      "title": "商务部等9部门：建立完善大件废旧家具回收清运模式",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932792915.html"
+    },
+    {
+      "id": "y6v58z",
+      "ts": 1794888372,
+      "time": "2026-11-17T12:06:12.000+08:00",
+      "source": "东方财富",
+      "title": "商务部等9部门：推动家电生产企业自建或合资建设回收、分拣、拆解、利用设施",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932792868.html"
     },
     {
       "id": "e6r9se",
@@ -575,6 +767,14 @@
       "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733324.shtml"
     },
     {
+      "id": "1qzzgs0",
+      "ts": 1794888060,
+      "time": "2026-11-17T12:01:00.000+08:00",
+      "source": "东方财富",
+      "title": "商务部等9部门发布关于深入推进再生资源回收体系建设、促进回收行业高质量发展的意见",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932793627.html"
+    },
+    {
       "id": "qr65z1",
       "ts": 1794888058,
       "time": "2026-11-17T12:00:58.000+08:00",
@@ -589,6 +789,14 @@
       "source": "新浪财经",
       "title": "港股午评：恒指跌0.77% 科指跌0.46% 科网股普跌 半导体板块走强 华虹宏力涨超9%",
       "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-17/doc-iniyzhhm2277434.shtml"
+    },
+    {
+      "id": "1ixr0ma",
+      "ts": 1794888000,
+      "time": "2026-11-17T12:00:00.000+08:00",
+      "source": "东方财富",
+      "title": "出口增长连续超过30%，四季度中国经济有支撑",
+      "url": "http://finance.eastmoney.com/news/1346,202611173932793485.html"
     },
     {
       "id": "mqny23",
@@ -655,6 +863,14 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzhhm7706912.shtml"
     },
     {
+      "id": "7yqgdl",
+      "ts": 1794887191,
+      "time": "2026-11-17T11:46:31.000+08:00",
+      "source": "东方财富",
+      "title": "连续6年稳步上行，海关总署发布西部陆海新通道对外贸易指数",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932796680.html"
+    },
+    {
       "id": "13efi7o",
       "ts": 1794887190,
       "time": "2026-11-17T11:46:30.000+08:00",
@@ -685,6 +901,22 @@
       "source": "东方财富",
       "title": "上海前10个月对APEC其他经济体进出口2.76万亿元 同比增长22.9%",
       "url": "http://finance.eastmoney.com/news/1350,202611173932748626.html"
+    },
+    {
+      "id": "dyezwj",
+      "ts": 1794886884,
+      "time": "2026-11-17T11:41:24.000+08:00",
+      "source": "东方财富",
+      "title": "广西前10月文旅体与传媒支出近49亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611173932799351.html"
+    },
+    {
+      "id": "onljf6",
+      "ts": 1794886884,
+      "time": "2026-11-17T11:41:24.000+08:00",
+      "source": "东方财富",
+      "title": "500强企业集聚海口江东新区：在这里出海更高效",
+      "url": "http://finance.eastmoney.com/news/1355,202611173932800198.html"
     },
     {
       "id": "1nprybx",
