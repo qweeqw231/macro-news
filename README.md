@@ -742,6 +742,9 @@ SSH-443 会出现两种形态：限速后 90s 只下来 2~3 MB（慢但在动）
 `localFresh=false` = 本地工作树不含最近一次成功 fetch 到的 `origin/main`；
 `remoteRefStale=true` = 本轮 fetch 失败，`.git` 里的 `origin/main` 这个 ref 本身也是旧的，
 不能当远端现状。
+2.23.1 起该文件还带 `pm` 子对象（`date / available / capturedAt / gate / inRemote`）：
+「当天收盘快照能不能用」看 `pm`，「本地整仓是否落后」看 `localFresh`（两者独立判读）；
+`behind / localFresh` 均为同步动作完成后的实测值，不会再出现「已同步却报落后」。
 
 `MacroNews-Collect` / `MacroNews-Pull` 均用 `wscript + run-hidden.vbs` 零窗口启动，
 `-StartWhenAvailable` 允许睡眠/关机后补跑。

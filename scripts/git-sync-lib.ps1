@@ -147,9 +147,12 @@ function Invoke-GitFetchRetry {
 }
 
 # 本地对齐状态哨兵（.local/metrics/sync-state.json，已 gitignore，不入库）
-#   localFresh     = 本地工作树是否已包含最近一次成功 fetch 的 origin/main
+#   localFresh     = 本地工作树是否已包含最近一次成功 fetch 的 origin/main（严格：behind==0）
 #   remoteRefStale = 本轮 fetch 是否失败（true ⇒ 本地 origin/main ref 本身也是旧的）
 #   remoteRefAt    = origin/main 这个 ref 最后一次被刷新成功的时刻（保留上一轮值）
+#   pm.*           = 当天 pm 快照的可用性，与 localFresh 解耦：
+#                    消费端要判「今天能不能用 pm 收盘价」看 pm.available/ok，
+#                    要判「本地整体是否落后」看 localFresh —— 两件事不要互相替代。
 function Write-SyncState {
     param(
         [Parameter(Mandatory)][string]$Root,
@@ -161,7 +164,12 @@ function Write-SyncState {
         $Behind = $null,
         $Ahead = $null,
         [bool]$FetchOk = $true,
-        [bool]$LocalFresh = $false
+        [bool]$LocalFresh = $false,
+        [string]$PmDate = '',
+        [bool]$PmAvailable = $false,
+        [string]$PmCapturedAt = '',
+        [string]$PmGate = '',
+        [bool]$PmInRemote = $false
     )
     try {
         $dir = Join-Path $Root '.local\metrics'
@@ -186,7 +194,14 @@ function Write-SyncState {
             ahead = $Ahead
             fetchAttempts = $FetchAttempts
             error = $Error
-            note = '本地是否最新以本文件为准；origin/main 是本地 ref，fetch 失败时它本身就是旧的'
+            pm = [ordered]@{
+                date = $PmDate
+                available = [bool]$PmAvailable
+                capturedAt = $PmCapturedAt
+                gate = $PmGate
+                inRemote = [bool]$PmInRemote
+            }
+            note = 'localFresh=是否已与最近一次 fetch 的 origin/main 对齐（behind==0）；pm.available/gate=当天收盘快照是否可用，二者独立判读'
         }
         $enc = New-Object System.Text.UTF8Encoding($false)
         [System.IO.File]::WriteAllText($file, (($doc | ConvertTo-Json -Compress) + "`n"), $enc)

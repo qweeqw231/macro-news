@@ -136,8 +136,34 @@ test('本地对齐哨兵：两脚本都点源 git-sync-lib，且只写 .local', 
 
 test('收盘同步：pm 缺失时看 origin/main，不得断言「云端可能尚未生成」', () => {
   assert.match(CLOSE, /git cat-file -e/);
-  assert.match(CLOSE, /"origin\/main:" \+ \$pmRel/);
+  assert.match(CLOSE, /cat-file blob/);
+  assert.doesNotMatch(CLOSE, /git show \("origin\/main:"/, 'git show 可能走分页器导致空输出');
   assert.match(CLOSE, /pmInRemote/);
   assert.match(CLOSE, /本地不是最新/);
   assert.doesNotMatch(CLOSE, /云端可能尚未生成/);
+});
+
+test('2.23.1：behind/ahead 必须在同步之后重算，localFresh 不得用同步前的旧值', () => {
+  // 收盘同步：ff 之后重新计数，且 localFresh 的赋值排在重算之后
+  const mergeAt = CLOSE.indexOf('git merge --ff-only');
+  const recalcAt = CLOSE.indexOf('同步后：head=');
+  const freshAt = CLOSE.indexOf('$st.localFresh = ($st.behind -eq 0)');
+  assert.ok(mergeAt > 0 && recalcAt > mergeAt, 'ff 之后必须重算 behind/ahead');
+  assert.ok(freshAt > recalcAt, 'localFresh 必须基于重算后的 behind');
+  // 写入的 head 必须是同步后的值
+  assert.match(CLOSE, /\$stateHead = \$st\.headAfter/);
+
+  // 采集侧：同样在同步后重算，并把重算值传给哨兵
+  const cRecalc = SCRIPT.indexOf('$behindAfter = ');
+  assert.ok(cRecalc > 0, 'collect 也必须在同步后重算 behind');
+  assert.match(SCRIPT, /-Behind \$behindAfter/);
+  assert.doesNotMatch(SCRIPT, /-LocalFresh \$true/, 'localFresh 不得硬编码为 true');
+});
+
+test('2.23.1：当天 pm 的可用性独立成 pm 子对象，与 localFresh 解耦', () => {
+  assert.match(LIB, /pm = \[ordered\]@\{/);
+  assert.match(LIB, /available = \[bool\]\$PmAvailable/);
+  assert.match(LIB, /capturedAt = \$PmCapturedAt/);
+  assert.match(LIB, /inRemote = \[bool\]\$PmInRemote/);
+  assert.match(CLOSE, /-PmAvailable \(\$st\.pmExists -and \$st\.pmGate -eq 'ok'\)/);
 });

@@ -115,6 +115,15 @@ function Invoke-Sync {
         }
     }
 
+    # 2.23.1：behind/ahead 必须在同步之后再测一次。
+    #   旧实现拿「同步前」的 behind 去算 localFresh：ff 成功后 HEAD 已经等于 origin/main，
+    #   但 behind 仍留着 1，于是写出「result=synced + localFresh=false + behind=1」的自相矛盾
+    #   （2026-11-17 消费端据此把当天数字标成「估（本地未同步）」）。
+    $st.behind = [int](& git rev-list --count HEAD..origin/main 2>$null)
+    $st.ahead = [int](& git rev-list --count origin/main..HEAD 2>$null)
+    $st.headAfter = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
+    Say "同步后：head=$($st.headAfter) behind=$($st.behind) ahead=$($st.ahead)"
+
     # ---- 3. 只读体检：今天的 pm 到没到、能不能过消费方门禁 ----
     #    不写任何文件，只把结论写进日志与台账。
     $today = Get-Date -Format 'yyyy-MM-dd'
@@ -129,7 +138,10 @@ function Invoke-Sync {
     if ($LASTEXITCODE -eq 0) {
         $st.pmInRemote = $true
         try {
-            $raw = & git show ("origin/main:" + $pmRel) 2>$null | Out-String
+            # cat-file blob + --no-pager：旧写法 git show 一旦走到分页器，管道会拿到空串，
+            # 台账里就出现 pmInRemote=true 但 pmRemoteGate=unreadable 的怪状态。
+            $raw = & git --no-pager cat-file blob ("origin/main:" + $pmRel) 2>$null | Out-String
+            if (-not $raw.Trim()) { throw 'pm blob 为空（可能被分页器/管道吞掉）' }
             $rdoc = ConvertFrom-Json $raw
             $st.pmRemoteCapturedAt = [string]$rdoc.capturedAt
             $rcap = [datetimeoffset]::Parse([string]$rdoc.capturedAt)
@@ -138,6 +150,7 @@ function Invoke-Sync {
             $st.pmRemoteGate = if ($rGateOk) { 'ok' } else { 'pending' }
         } catch {
             $st.pmRemoteGate = 'unreadable'
+            Say "pm(remote)：读取失败（$($_.Exception.Message)）"
         }
     }
 
@@ -172,9 +185,15 @@ try {
 } finally {
     Write-Ledger
     # 2.23.0：把「本地是否最新 / origin-main-ref 是否陈旧」写到 .local/metrics/sync-state.json
+    # 2.23.1：head 用同步后的值；behind/ahead 也是同步后重算的；pm 可用性独立成 pm.* 子对象
+    $stateHead = $st.headAfter
+    if (-not $stateHead) { $stateHead = $st.headBefore }
     Write-SyncState -Root $root -Source 'sync-close.ps1' -Result $st.result `
-        -Error $st.syncError -FetchAttempts $st.fetchAttempts -Head $st.headBefore `
-        -Behind $st.behind -Ahead $st.ahead -FetchOk ($st.result -ne 'fetch-failed') -LocalFresh $st.localFresh
+        -Error $st.syncError -FetchAttempts $st.fetchAttempts -Head $stateHead `
+        -Behind $st.behind -Ahead $st.ahead -FetchOk ($st.result -ne 'fetch-failed') -LocalFresh $st.localFresh `
+        -PmDate (Get-Date -Format 'yyyy-MM-dd') `
+        -PmAvailable ($st.pmExists -and $st.pmGate -eq 'ok') `
+        -PmCapturedAt $st.pmCapturedAt -PmGate $st.pmGate -PmInRemote $st.pmInRemote
 }
 
 exit $code

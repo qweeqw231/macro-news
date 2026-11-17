@@ -13,6 +13,31 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.23.1] - 2026-11-17
+
+### 已修复
+
+2026-11-17 的 `sync-state.json` 出现自相矛盾：`result=synced` + `localFresh=false` + `behind=1`，
+下游 17:00 任务据此把当天数字标成「估（本地未同步）」。
+
+根因：`sync-close.ps1` 在 **ff 之前** 计算 `behind`，ff 成功后 HEAD 已等于 `origin/main`，
+但没有重算，`localFresh = (behind -eq 0)` 用的还是同步前的 1；写入的 `head` 也是同步前的短哈希。
+`collect-and-push.ps1` 有同一类缺陷（behind 是合并前值，`localFresh` 硬编码 true）。
+
+### 变更
+
+- 两条写入路径都在同步完成后重算 `behind/ahead/head`，`localFresh` 一律由重算后的值决定；
+- `sync-state.json` 新增 `pm` 子对象：`{ date, available, capturedAt, gate, inRemote }`，
+  把「当天收盘快照是否可用」与「本地是否落后」解耦 —— 消费端判 pm 看 `pm.available/gate`，
+  判整仓新鲜度看 `localFresh`，不再互相顶替；
+- `pm(remote)` 探测从 `git show` 改为 `git --no-pager cat-file blob`：旧写法一旦走到分页器，
+  管道拿到空串，台账里会出现 `pmInRemote=true` 但 `pmRemoteGate=unreadable`；
+- 新增 3 组静态守卫（重算顺序、`localFresh` 不得用旧值、`pm` 子对象）。
+
+验收（临时最小仓库，三条边界）：干净且远端领先 1 → `synced / behind=0 / localFresh=true`；
+远端领先 1 且工作区有会被覆盖的脏文件 → `skipped-dirty / behind=1 / localFresh=false`；
+origin 不可达 → `fetch-failed / localFresh=false / remoteRefStale=true`。
+
 ## [2.23.0] - 2026-11-16
 
 > **中版本，理由**：本机同步层自锁让下游 17:00 收盘复盘拿到 15:08 的盘中截面

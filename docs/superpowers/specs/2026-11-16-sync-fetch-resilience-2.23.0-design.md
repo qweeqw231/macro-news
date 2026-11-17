@@ -59,6 +59,23 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 修复后的不变式：**任何对 `data/` 的写，都必须紧跟着一次提交尝试**。
 只写不提交的路径一律改成写 `.local/`。
 
+## 3.5 补丁 2.23.1：behind 的测量时点与 pm 可用性解耦
+
+2026-11-17 的哨兵出现 `result=synced` + `localFresh=false` + `behind=1` 的自相矛盾。
+根因不是语义，是**测量时点**：`behind` 在 `git merge --ff-only` 之前算，ff 成功后没有重算；
+`localFresh = (behind -eq 0)` 与写入的 `head` 都用了同步前的值。
+`collect-and-push.ps1` 同病（合并后用旧 behind，`localFresh` 直接写 true）。
+
+判据选择（结论）：**保持 `localFresh` 的严格定义**（本地工作树是否已与最近一次成功 fetch 的
+`origin/main` 对齐，即重算后的 `behind == 0`），**不**把它改成「当天 pm 可用」。
+理由：这两件事的失效原因完全不同 ——
+前者是「仓库内容落后」，后者是「快照有没有生成/合格」。用一个字段同时表达，会让
+「落后但 pm 可用」被粉饰成健康（正是把门放宽），也会让「不落后但 pm 缺失」被误判成同步故障。
+因此只修测量时点，并把 pm 可用性做成独立的 `pm.{date,available,capturedAt,gate,inRemote}`。
+
+补充：`pm(remote)` 探测改用 `git --no-pager cat-file blob`。旧写法 `git show ... | Out-String`
+一旦触发分页器，管道会拿到空串，台账因此出现 `pmInRemote=true` + `pmRemoteGate=unreadable`。
+
 ## 4. 实现
 
 新增 `scripts/git-sync-lib.ps1`（被两个 ps1 点源引入，只写 `.local/`）：
