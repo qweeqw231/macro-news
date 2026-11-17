@@ -58,4 +58,6 @@ test('回补脚本接上了补新与「记录完整但缺日 K」两个分支', 
   assert.match(src, /mergeLatestDaily\(newest\.items, latest\)/);
   assert.match(src, /addDays\(bjToday\(\), -3\)/);
   assert.match(src, /记录完整，补 1Y 国债日 K/);
+  // 今天：17:13 那轮可能拿不到 17:00 后的曲线，必须每轮幂等补一次
+  assert.match(src, /（今天）：补 1Y 国债日 K/);
 });

@@ -233,6 +233,19 @@ async function main() {
     );
   }
 
+  // 2.19.0：今天的曲线 17:00 后才发布，17:13 的日更可能还没拿到（2026-11-17 实测：
+  //   当轮把 11-16 当成最新写了，11-17 的日 K 要等次日才回退补上）。这里每轮幂等补一次。
+  if (!DRY) {
+    const today = bjToday();
+    if (weekday(today) !== 0 && weekday(today) !== 6 && !barDay.has(today)) {
+      const { text } = await fillCgbBar(today);
+      if (barDay.has(today)) {
+        filled++;
+        detail(`${today}（今天）：补 1Y 国债日 K ${text}`);
+      }
+    }
+  }
+
   if ((filled || toppedUp) && !DRY) {
     list.sort((a, b) => String(b.date).localeCompare(String(a.date)));
     writeJSON(MACRO_FILE, list.slice(0, 400));
