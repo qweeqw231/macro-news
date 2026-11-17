@@ -1,11 +1,163 @@
 {
-  "generatedAt": "2026-11-17T22:23:02.846Z",
+  "generatedAt": "2026-11-17T22:38:04.260Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 56793,
+  "total": 56816,
   "items": [
+    {
+      "id": "p5b1bd",
+      "ts": 1794955062,
+      "time": "2026-11-18T06:37:42.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达盘后涨幅达到4%。",
+      "url": "https://wallstreetcn.com/livenews/3201562"
+    },
+    {
+      "id": "u3aezz",
+      "ts": 1794955053,
+      "time": "2026-11-18T06:37:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：预计四季度营收将为1300亿美元+/-3%。",
+      "url": "https://wallstreetcn.com/livenews/3201561"
+    },
+    {
+      "id": "ycr6mw",
+      "ts": 1794954933,
+      "time": "2026-11-18T06:35:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：四季度将是毛利润率的底部。",
+      "url": "https://wallstreetcn.com/livenews/3201560"
+    },
+    {
+      "id": "19bvqb",
+      "ts": 1794954916,
+      "time": "2026-11-18T06:35:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "微软：英伟达闹剧可能会利好竞争对手的那些芯片。",
+      "url": "https://wallstreetcn.com/livenews/3201559"
+    },
+    {
+      "id": "1iidz13",
+      "ts": 1794954827,
+      "time": "2026-11-18T06:33:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达董事会主席：将从公司内部、外部寻找CEO候选人。",
+      "url": "https://wallstreetcn.com/livenews/3201558"
+    },
+    {
+      "id": "1eunle1",
+      "ts": 1794954627,
+      "time": "2026-11-18T06:30:27.000+08:00",
+      "source": "新浪财经",
+      "title": "11月18日隔夜要闻：美股收低 中概股普跌 黄仁勋称愿回归 董事会主席表示无此意 浑水在英伟达",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrp5014003.shtml"
+    },
+    {
+      "id": "1imlqag",
+      "ts": 1794954562,
+      "time": "2026-11-18T06:29:22.000+08:00",
+      "source": "新浪财经",
+      "title": "美国股市：标普500指数创9月以来最长连跌 英伟达业绩考验AI交易信心",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrm1290913.shtml"
+    },
+    {
+      "id": "zkcdx0",
+      "ts": 1794954488,
+      "time": "2026-11-18T06:28:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：供需支持最新指引。",
+      "url": "https://wallstreetcn.com/livenews/3201557"
+    },
+    {
+      "id": "f2w887",
+      "ts": 1794954443,
+      "time": "2026-11-18T06:27:23.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达据报遭美国证交会调查 涉及公司披露是否误导投资者",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrp5013299.shtml"
+    },
+    {
+      "id": "82hwdr",
+      "ts": 1794954426,
+      "time": "2026-11-18T06:27:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：所有过剩的自由现金流（FCF）将留给股东们。",
+      "url": "https://wallstreetcn.com/livenews/3201556"
+    },
+    {
+      "id": "1mzss3l",
+      "ts": 1794954365,
+      "time": "2026-11-18T06:26:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "OpenAI：我们推出面向销售场景的ChatGPT。",
+      "url": "https://wallstreetcn.com/livenews/3201555"
+    },
+    {
+      "id": "1g69dva",
+      "ts": 1794954342,
+      "time": "2026-11-18T06:25:42.000+08:00",
+      "source": "新浪财经",
+      "title": "大宗商品综述：油价上涨 铝价跌至近一年低点 逼仓缓解 金价走弱",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrr7173262.shtml"
+    },
+    {
+      "id": "k0ndzo",
+      "ts": 1794954318,
+      "time": "2026-11-18T06:25:18.000+08:00",
+      "source": "东方财富",
+      "title": "从1.0到3.0 中国—东盟自贸区“升级包”带来哪些商机",
+      "url": "http://finance.eastmoney.com/news/1346,202611183933337591.html"
+    },
+    {
+      "id": "pg2n7z",
+      "ts": 1794954256,
+      "time": "2026-11-18T06:24:16.000+08:00",
+      "source": "新浪财经",
+      "title": "11月18日美股成交额前20：SpaceX涨超3% 高盛维持买入评级 看好星舰第15次试飞的技术突破",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrp5012267.shtml"
+    },
+    {
+      "id": "5380ma",
+      "ts": 1794954049,
+      "time": "2026-11-18T06:20:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达临时CEO：预计到2028财年公司企业业务收入将增长一倍以上。",
+      "url": "https://wallstreetcn.com/livenews/3201554"
+    },
+    {
+      "id": "or2fjx",
+      "ts": 1794954035,
+      "time": "2026-11-18T06:20:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：评估未来投资。",
+      "url": "https://wallstreetcn.com/livenews/3201553"
+    },
+    {
+      "id": "4105ti",
+      "ts": 1794954021,
+      "time": "2026-11-18T06:20:21.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：日本软银集团那些能源计划处于正轨之上。",
+      "url": "https://wallstreetcn.com/livenews/3201552"
+    },
+    {
+      "id": "k5diiy",
+      "ts": 1794954000,
+      "time": "2026-11-18T06:20:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：与供应链伙伴们（包括Amkor、Spil、Kinsus、Foxconn等）扩大承诺。",
+      "url": "https://wallstreetcn.com/livenews/3201551"
+    },
+    {
+      "id": "zlhthd",
+      "ts": 1794953959,
+      "time": "2026-11-18T06:19:19.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：为自身研发锁定数据中心产能。",
+      "url": "https://wallstreetcn.com/livenews/3201550"
+    },
     {
       "id": "1qzl8lp",
       "ts": 1794953889,
@@ -23,6 +175,22 @@
       "url": "http://finance.eastmoney.com/news/1354,202611183933334623.html"
     },
     {
+      "id": "1jbo9bm",
+      "ts": 1794953728,
+      "time": "2026-11-18T06:15:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：公司将在新云支持方面带有纪律性和选择性。",
+      "url": "https://wallstreetcn.com/livenews/3201547"
+    },
+    {
+      "id": "ageyhf",
+      "ts": 1794953669,
+      "time": "2026-11-18T06:14:29.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达临时CEO表示，根据多年期协议，Hopper GPU的重新签约价格最高达到原价的两倍，而B300自推出以来价格上涨超过60%。",
+      "url": "https://wallstreetcn.com/livenews/3201546"
+    },
+    {
       "id": "17jji6g",
       "ts": 1794953525,
       "time": "2026-11-17T22:12:05.000Z",
@@ -35,8 +203,24 @@
       "ts": 1794953486,
       "time": "2026-11-18T06:11:26.000+08:00",
       "source": "新浪财经",
-      "title": "11月18日热门中概股 阿里跌超4% 京东跌超7% 百度跌超3%",
+      "title": "11月18日热门中概股多数下跌 阿里跌超4% 京东跌超7% 百度跌超3%",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrm1285188.shtml"
+    },
+    {
+      "id": "1iolkay",
+      "ts": 1794953364,
+      "time": "2026-11-18T06:09:24.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周二（11月17日）纽约尾盘，标普500股指期货最终跌0.96%，道指期货跌1.65%，纳斯达克100股指期货跌0.57%。",
+      "url": "https://wallstreetcn.com/livenews/3201545"
+    },
+    {
+      "id": "6s7x7a",
+      "ts": 1794953319,
+      "time": "2026-11-18T06:08:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达：云产业订单积压2.5万亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3201544"
     },
     {
       "id": "zqlx06",
@@ -55,11 +239,11 @@
       "url": "https://wallstreetcn.com/livenews/3201542"
     },
     {
-      "id": "11741k6",
+      "id": "ivgx6c",
       "ts": 1794953206,
       "time": "2026-11-18T06:06:46.000+08:00",
       "source": "华尔街见闻",
-      "title": "英伟达CFO：Rubin产品带来200亿美元收入。",
+      "title": "英伟达：Rubin产品带来200亿美元收入。",
       "url": "https://wallstreetcn.com/livenews/3201541"
     },
     {
@@ -2159,20 +2343,20 @@
       "url": "https://wallstreetcn.com/livenews/3201375"
     },
     {
-      "id": "gjnyz4",
-      "ts": 1794926654,
-      "time": "2026-11-17T22:44:14.000+08:00",
-      "source": "新浪财经",
-      "title": "美国制造业产值连续第二个月增长0.3% 延续今年回升势头",
-      "url": "https://finance.sina.com.cn/world/2026-11-17/doc-inizaitt1557817.shtml"
-    },
-    {
       "id": "12p8bid",
       "ts": 1794926654,
       "time": "2026-11-17T22:44:14.000+08:00",
       "source": "华尔街见闻",
       "title": "特朗普最新表态：我期待访问中国",
       "url": "https://wallstreetcn.com/livenews/3201374"
+    },
+    {
+      "id": "gjnyz4",
+      "ts": 1794926654,
+      "time": "2026-11-17T22:44:14.000+08:00",
+      "source": "新浪财经",
+      "title": "美国制造业产值连续第二个月增长0.3% 延续今年回升势头",
+      "url": "https://finance.sina.com.cn/world/2026-11-17/doc-inizaitt1557817.shtml"
     },
     {
       "id": "16toz60",
