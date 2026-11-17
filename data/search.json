@@ -1,11 +1,75 @@
 {
-  "generatedAt": "2026-11-17T14:53:00.421Z",
+  "generatedAt": "2026-11-17T15:07:59.646Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 56525,
+  "total": 56536,
   "items": [
+    {
+      "id": "1hyeund",
+      "ts": 1794928038,
+      "time": "2026-11-17T23:07:18.000+08:00",
+      "source": "华尔街见闻",
+      "title": "黄仁勋将于12月1日出席美国众议院多个委员会的听证会。",
+      "url": "https://wallstreetcn.com/livenews/3201387"
+    },
+    {
+      "id": "sz4pfi",
+      "ts": 1794927666,
+      "time": "2026-11-17T23:01:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国11月NAHB房产市场指数下降至25，意味着住房营建商信心创最近十四年新低。",
+      "url": "https://wallstreetcn.com/livenews/3201386"
+    },
+    {
+      "id": "14f8f3v",
+      "ts": 1794927635,
+      "time": "2026-11-17T23:00:35.000+08:00",
+      "source": "华尔街见闻",
+      "title": "焦煤夜盘收跌约2.9%，棕榈油跌1.1%，PVC跌1%，焦炭跌0.8%。",
+      "url": "https://wallstreetcn.com/livenews/3201385"
+    },
+    {
+      "id": "vgqmod",
+      "ts": 1794927600,
+      "time": "2026-11-17T23:00:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国9月商业库存环比 0.5%，预期 0.5%，前值 0.4%。",
+      "url": "https://wallstreetcn.com/livenews/3201384"
+    },
+    {
+      "id": "pxb0w8",
+      "ts": 1794927600,
+      "time": "2026-11-17T23:00:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国11月NAHB房产市场指数 25，预期 29，前值 29。",
+      "url": "https://wallstreetcn.com/livenews/3201383"
+    },
+    {
+      "id": "o4w8nj",
+      "ts": 1794927401,
+      "time": "2026-11-17T22:56:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "首批18只主动ETF最高仓位超90%，下周一上市",
+      "url": "https://wallstreetcn.com/livenews/3201382"
+    },
+    {
+      "id": "1lqb8ro",
+      "ts": 1794927287,
+      "time": "2026-11-17T22:54:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "今年上海二手房网签套数已超去年全年，11月多个新房楼盘开盘“日光”",
+      "url": "https://wallstreetcn.com/livenews/3201380"
+    },
+    {
+      "id": "ipm1lo",
+      "ts": 1794927276,
+      "time": "2026-11-17T22:54:36.000+08:00",
+      "source": "新浪财经",
+      "title": "机构：明年AI算力建设的融资形势愈发反常",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-inizaitx2056564.shtml"
+    },
     {
       "id": "1czc32z",
       "ts": 1794927170,
@@ -29,6 +93,14 @@
       "source": "华尔街见闻",
       "title": "Altman：芯片厂商在高估OpenAI需求",
       "url": "https://wallstreetcn.com/livenews/3201377"
+    },
+    {
+      "id": "a9g1j6",
+      "ts": 1794926937,
+      "time": "2026-11-17T22:48:57.000+08:00",
+      "source": "东方财富",
+      "title": "551.5万个岗位点亮秋招！新赛道成为揽才主战场",
+      "url": "http://finance.eastmoney.com/news/1352,202611173933250423.html"
     },
     {
       "id": "38mbup",
@@ -215,11 +287,11 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-inizaitx2043275.shtml"
     },
     {
-      "id": "cwguo0",
+      "id": "1v0cgoa",
       "ts": 1794925735,
       "time": "2026-11-17T22:28:55.000+08:00",
       "source": "华尔街见闻",
-      "title": "高盛、阿波罗将牵头SpaceX的402亿美元ABS融资。",
+      "title": "报道：SpaceX以AI芯片为抵押的债务融资最早本周入市",
       "url": "https://wallstreetcn.com/livenews/3201365"
     },
     {
@@ -687,11 +759,11 @@
       "url": "http://finance.eastmoney.com/news/1355,202611173933167957.html"
     },
     {
-      "id": "15kp6iw",
+      "id": "15u9o9j",
       "ts": 1794922843,
       "time": "2026-11-17T21:40:43.000+08:00",
       "source": "华尔街见闻",
-      "title": "投资者Steve Eisman：AI新云概念股因英伟达事件而陷入“巨大麻烦”。",
+      "title": "投资者Eisman：AI新云概念股将成为英伟达丑闻持续发酵过程中的最大输家",
       "url": "https://wallstreetcn.com/livenews/3201338"
     },
     {
@@ -781,6 +853,14 @@
       "source": "新浪财经",
       "title": "突发！300069，重大资产重组终止",
       "url": "https://finance.sina.com.cn/stock/s/2026-11-17/doc-inizacmz2145931.shtml"
+    },
+    {
+      "id": "13toflj",
+      "ts": 1794922386,
+      "time": "2026-11-17T21:33:06.000+08:00",
+      "source": "东方财富",
+      "title": "央行公告：11月17日开展7140亿元隔夜逆回购操作",
+      "url": "http://finance.eastmoney.com/news/1350,202611173933244160.html"
     },
     {
       "id": "1lszbas",
@@ -1029,6 +1109,14 @@
       "source": "华尔街见闻",
       "title": "美国圣路易斯联储主席Musalem：人工智能正在提前拉动需求和投资。",
       "url": "https://wallstreetcn.com/livenews/3201319"
+    },
+    {
+      "id": "1eolslj",
+      "ts": 1794921059,
+      "time": "2026-11-17T21:10:59.000+08:00",
+      "source": "东方财富",
+      "title": "住建部：指导地方健全大件垃圾回收体系",
+      "url": "http://finance.eastmoney.com/news/1350,202611173933244973.html"
     },
     {
       "id": "182if4x",
