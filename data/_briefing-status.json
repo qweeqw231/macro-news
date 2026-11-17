@@ -1,25 +1,7 @@
 {
   "v": 1,
-  "updatedAt": "2026-11-16T09:08:35+08:00",
+  "updatedAt": "2026-11-17T17:51:31+08:00",
   "days": {
-    "2026-11-03": {
-      "date": "2026-11-03",
-      "status": "done",
-      "stage": "publish",
-      "startedAt": "2026-11-03T13:12:35+08:00",
-      "endedAt": "2026-11-03T13:12:35+08:00",
-      "exitCode": 0,
-      "candidates": 120,
-      "items": 10,
-      "source": "ai",
-      "reason": "已存在 AI 早报，未覆盖",
-      "durationMs": 11,
-      "generator": "existing",
-      "attempt": 1,
-      "pushed": true,
-      "pushError": "",
-      "pushAt": "2026-11-03T13:12:47+08:00"
-    },
     "2026-11-04": {
       "date": "2026-11-04",
       "status": "done",
@@ -296,6 +278,26 @@
       "pushErrorKind": "",
       "statusCommit": null,
       "statusError": ""
+    },
+    "2026-11-17": {
+      "date": "2026-11-17",
+      "status": "done",
+      "stage": "publish",
+      "startedAt": "2026-11-17T17:51:31+08:00",
+      "endedAt": "2026-11-17T17:51:31+08:00",
+      "exitCode": 0,
+      "items": 10,
+      "source": "ai",
+      "reason": "",
+      "durationMs": 25,
+      "generator": "llm-v1",
+      "attempt": 0,
+      "backfill": false,
+      "backfillKind": "",
+      "backfilledAt": "",
+      "pushed": null,
+      "pushError": "",
+      "pushAt": ""
     }
   }
 }

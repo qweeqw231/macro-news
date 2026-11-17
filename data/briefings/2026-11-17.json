@@ -1,0 +1,163 @@
+{
+  "date": "2026-11-17",
+  "generatedAt": "2026-11-17T17:49:58+08:00",
+  "endedAt": "2026-11-17T17:51:31+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-16",
+    "to": "2026-11-17",
+    "fromAt": "2026-11-16T08:00:00+08:00",
+    "toAt": "2026-11-17T09:00:00+08:00",
+    "fromTs": 1794787200,
+    "toTs": 1794877200
+  },
+  "overview": "今日主线是10月数据落地叠加全球紧缩预期再起：中国工业增速放缓但PPI创近52个月新高，美联储官员继续释放加息信号、欧洲央行称明年仍需收紧；美股科技股三连跌，美元创18个月新高，油价因中东出口恢复大幅回落。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "10月经济数据落地：工业增加值增速放缓至4.8%、社零增0.4%、1—10月固投降8.1%",
+      "summary": "国家统计局16日发布10月国民经济运行情况：规模以上工业增加值同比增长4.8%，增速较上月放缓；社会消费品零售总额同比增长0.4%，较上月下滑0.7个百分点；1—10月固定资产投资下降8.1%，房地产开发投资下降21.6%。10月数据是四季度增长与政策定调的基准读数。",
+      "why": "四季度增长基准，也是后续政策定调的输入",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-17T07:20",
+      "url": "https://wallstreetcn.com/livenews/3200887",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200413",
+        "http://forex.eastmoney.com/news/1131,202611163931561438.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "10月PPI同比涨5.7%创近52个月新高，CPI环比持平",
+      "summary": "国家统计局公布，10月居民消费价格指数环比持平、同比上涨0.7%；工业生产者出厂价格指数环比上涨0.7%、有所抬升，同比上涨5.7%，创近52个月新高。生产端价格明显抬升而消费端温和持平，两者之间的差距决定了后续货币与稳增长政策的空间。",
+      "why": "生产端与消费端价格剪刀差，决定政策空间",
+      "source": "东方财富",
+      "publishedAt": "2026-11-16T12:31",
+      "url": "http://finance.eastmoney.com/news/1355,202611163931685537.html",
+      "refs": [
+        "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965837.html",
+        "http://finance.eastmoney.com/news/1352,202611163931617537.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "10月房地产边际改善：开发投资降21.6%，但商品房库存连降8个月",
+      "summary": "统计局发布1—10月全国房地产市场基本情况：全国房地产开发投资5.72万亿元，同比下降21.6%，房屋新开工面积下降24.4%。但全国二手房交易网签面积增幅继续扩大，商品房待售面积已连续8个月同比下降；10月70个大中城市中一线城市商品住宅销售价格环比总体上涨，二三线城市环比下降。",
+      "why": "地产拖累与边际企稳并存，关系信用扩张",
+      "source": "东方财富",
+      "publishedAt": "2026-11-16T20:51",
+      "url": "http://finance.eastmoney.com/news/1350,202611163932129841.html",
+      "refs": [
+        "http://money.eastmoney.com/news/11261,202611163931952642.html",
+        "http://finance.eastmoney.com/news/1346,202611173932213060.html",
+        "http://money.eastmoney.com/news/11261,202611173932209226.html",
+        "https://wallstreetcn.com/livenews/3200370"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "2026年超长期特别国债发行收官，明年发行利率能否维持存疑",
+      "summary": "2026年超长期特别国债发行收官。自2024年起连续三年共发行3.6万亿元超长期特别国债，在无风险利率不断下行背景下，该品种为社保资金、保险资金、商业银行及公募提供了高于2%年化收益的稳健投资品。随着今年发行结束，明年能否维持该收益率水平，机构普遍关注。",
+      "why": "无风险利率下行的财政与配置线索",
+      "source": "东方财富",
+      "publishedAt": "2026-11-16T12:41",
+      "url": "http://insurance.eastmoney.com/news/1214,202611163931692589.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200897"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "美联储继续释放加息信号：哈马克主张渐进加息，沃什今晚讲话",
+      "summary": "克利夫兰联储主席哈马克表示，倾向以连续小幅加息方式逐步收紧货币政策，但若通胀压力进一步加剧，美联储可能不得不加快步伐；她同时称美联储双重使命之间目前没有太大冲突。投资者正等待美联储主席沃什今日晚些时候的讲话，10年期美债收益率周一已回落2.23个基点至5.1129%。",
+      "why": "决定美债、美元与全球风险资产的定价",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-17T06:00",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-17/doc-iniyyvsp5532370.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200809",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxuev1092643.shtml",
+        "https://finance.sina.com.cn/world/2026-11-16/doc-iniyxuez5915514.shtml",
+        "https://wallstreetcn.com/livenews/3200642"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "欧洲央行紧缩预期升温：官员称明年仍需收紧，行长竞逐未决",
+      "summary": "欧洲央行副行长武伊契奇称，市场押注该行2027年进一步收紧货币政策似乎并非不合理，通胀前景需要审慎适度应对；管委Simkus表示可能需要在12月计划加息之外进一步收紧，并称近期通胀前景进一步恶化。西班牙则希望尽快敲定下一任行长人选，并再次力挺本国候选人。",
+      "why": "欧元区政策转向与人事不确定性叠加",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-16T18:21",
+      "url": "https://wallstreetcn.com/livenews/3200623",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200613",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyymav7957940.shtml",
+        "https://wallstreetcn.com/livenews/3200507"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "中东出口恢复盖过地缘风险，布伦特收跌3.55%至92.44美元",
+      "summary": "霍尔木兹海峡航运运输逐步恢复，现货市场供应充足的迹象压过了中东紧张局势可能阻碍出口的风险，油价创约一周来最大跌幅。布伦特1月原油期货收跌3.40美元、报92.44美元/桶，跌幅3.55%；WTI 12月合约收跌2.84美元、报85.72美元/桶，跌幅3.21%。",
+      "why": "霍尔木兹航运恢复，是通胀交易方向的关键",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-17T03:31",
+      "url": "https://wallstreetcn.com/livenews/3200816",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyyrkr5620485.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyyeux8076743.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-16/doc-iniyxuev1075645.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "金价跌至2025年10月以来最低，白银创去年11年以来新低",
+      "summary": "美国通胀居高不下强化了市场对加息延续至明年的预期，黄金大跌至2025年10月以来最低水平，金价一度下跌1.3%至每盎司3830美元附近；白银跌逾3%，创去年11月以来新低。纽约尾盘现货黄金跌0.73%报3855.92美元，亚太午盘曾跌至3832.59美元。国内实物端出现购金潮，专家提示不要急于抄底。",
+      "why": "加息预期驱动贵金属重定价，已进入抄底讨论",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-16T14:56",
+      "url": "https://wallstreetcn.com/livenews/3200471",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200859",
+        "https://wallstreetcn.com/livenews/3200744",
+        "https://finance.sina.com.cn/money/future/2026-11-16/doc-iniyxpwx1113066.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "美元兑多数G10货币走强，欧元加元触及2025年以来低点",
+      "summary": "交易员维持对美联储加息的鹰派押注，美元兑多数G10货币走强，欧元和加元兑美元均触及2025年以来最低水平，彭博美元即期指数小幅上涨0.1%。避险情绪主导市场，美元创18个月新高；德银则指出，亚洲不断扩大的芯片贸易顺差正成为美元的一大支撑，相关资金越来越多被投入美国股市。",
+      "why": "美元强弱边际变化决定新兴市场资金流向",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-17T06:36",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyyvsp5535531.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyyvsr2330404.shtml",
+        "https://wallstreetcn.com/livenews/3200743",
+        "https://wallstreetcn.com/livenews/3200799",
+        "https://wallstreetcn.com/livenews/3200887"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美股科技股三连跌：芯片行业指数跌5.3%，等英伟达业绩与Anthropic上市",
+      "summary": "科技股抛售延续至新的一周，芯片股再度重挫，相关行业指数下跌5.3%，纳斯达克100指数下跌2.67%。周一标普500指数收跌1.92%报7416.59点，纳斯达克综合指数收跌2.49%，道琼斯指数收跌1.41%。市场等待英伟达备受关注的业绩，以及Anthropic预计本周进行的上市。",
+      "why": "AI资本支出可持续性的第一次集中检验",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-17T06:45",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyyvsr2314830.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200838",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyyvsp5535655.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "今晚美联储主席沃什讲话及威廉姆斯等官员表态，对10年期美债收益率（周一夜盘报5.1129%）与美元指数的指引",
+    "今日英伟达业绩与本周Anthropic上市进展，美股科技股三连跌能否收敛",
+    "本周五11月LPR报价；今日15:00英国9月ILO失业率、17:00欧洲央行管委Pereira与执委Cipollone讲话",
+    "11月18—19日深圳APEC第三十三次领导人非正式会议成果与《深圳倡议》发布情况"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
