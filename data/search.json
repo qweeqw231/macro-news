@@ -1,11 +1,139 @@
 {
-  "generatedAt": "2026-11-17T13:22:53.110Z",
+  "generatedAt": "2026-11-17T13:38:12.112Z",
   "windowDays": 62,
   "from": "2026-09-17",
   "days": 62,
   "fromHistory": 18,
-  "total": 56387,
+  "total": 56407,
   "items": [
+    {
+      "id": "12n0g39",
+      "ts": 1794922597,
+      "time": "2026-11-17T21:36:37.000+08:00",
+      "source": "新浪财经",
+      "title": "美国10月份零售销售较前月上升0.2% 预估为0.1%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-inizacmx5368949.shtml"
+    },
+    {
+      "id": "1p2nekp",
+      "ts": 1794922561,
+      "time": "2026-11-17T21:36:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美联储理事丽莎·库克（Lisa Cook）拒绝参加12月14日的白宫听证会。",
+      "url": "https://wallstreetcn.com/livenews/3201337"
+    },
+    {
+      "id": "8qj5i0",
+      "ts": 1794922392,
+      "time": "2026-11-17T21:33:12.000+08:00",
+      "source": "新浪财经",
+      "title": "突发！300069，重大资产重组终止",
+      "url": "https://finance.sina.com.cn/stock/s/2026-11-17/doc-inizacmz2145931.shtml"
+    },
+    {
+      "id": "1lszbas",
+      "ts": 1794922338,
+      "time": "2026-11-17T13:32:18.000Z",
+      "source": "中新网",
+      "title": "广西乡村振兴成效亮眼 蚕茧产量连续21年居全国第一",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733753.shtml"
+    },
+    {
+      "id": "43zhmg",
+      "ts": 1794922277,
+      "time": "2026-11-17T21:31:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "伊朗格什姆岛传出爆炸声",
+      "url": "https://wallstreetcn.com/livenews/3201336"
+    },
+    {
+      "id": "1tlsm31",
+      "ts": 1794922203,
+      "time": "2026-11-17T21:30:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "加拿大9月海外投资者净买入证券 194.62亿加元，前值 -173.1亿加元。",
+      "url": "https://wallstreetcn.com/livenews/3201335"
+    },
+    {
+      "id": "1la88hh",
+      "ts": 1794922202,
+      "time": "2026-11-17T21:30:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国10月进口价格指数(除汽油)环比 0.8%，预期 0.5%，前值 0.8%。",
+      "url": "https://wallstreetcn.com/livenews/3201334"
+    },
+    {
+      "id": "15iuc80",
+      "ts": 1794922202,
+      "time": "2026-11-17T21:30:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国10月出口价格指数环比 1.1%，预期 0.5%，前值 2.2%。",
+      "url": "https://wallstreetcn.com/livenews/3201333"
+    },
+    {
+      "id": "1cvqj0s",
+      "ts": 1794922202,
+      "time": "2026-11-17T21:30:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国10月进口价格指数环比 1.1%，预期 0.7%，前值 1.1%。",
+      "url": "https://wallstreetcn.com/livenews/3201332"
+    },
+    {
+      "id": "12lzjcx",
+      "ts": 1794922201,
+      "time": "2026-11-17T21:30:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国10月零售销售环比 0.2%，预期 0.1%，前值 0.8%。",
+      "url": "https://wallstreetcn.com/livenews/3201331"
+    },
+    {
+      "id": "ck1wpa",
+      "ts": 1794922201,
+      "time": "2026-11-17T21:30:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国10月零售销售(除汽车)环比 0.6%，预期 0.4%，前值 0.9%。",
+      "url": "https://wallstreetcn.com/livenews/3201330"
+    },
+    {
+      "id": "xwnkai",
+      "ts": 1794922201,
+      "time": "2026-11-17T21:30:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国10月零售销售(除汽车与汽油)环比 0.5%，预期 0.3%，前值 0.2%。",
+      "url": "https://wallstreetcn.com/livenews/3201329"
+    },
+    {
+      "id": "6nzwrj",
+      "ts": 1794922189,
+      "time": "2026-11-17T21:29:49.000+08:00",
+      "source": "新浪财经",
+      "title": "高盛：美股AI行情进入新阶段 2027年AI资本开支扩张放缓",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-inizacmv1650167.shtml"
+    },
+    {
+      "id": "w2qfvh",
+      "ts": 1794922092,
+      "time": "2026-11-17T21:28:12.000+08:00",
+      "source": "新浪财经",
+      "title": "New Street Research给予Anthropic买入评级及105美元目标价",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-inizacmv1649570.shtml"
+    },
+    {
+      "id": "opgf30",
+      "ts": 1794921879,
+      "time": "2026-11-17T21:24:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "WTI原油日内涨幅达1.0%，报86.58美元/桶；",
+      "url": "https://wallstreetcn.com/livenews/3201328"
+    },
+    {
+      "id": "1pjbp90",
+      "ts": 1794921794,
+      "time": "2026-11-17T13:23:14.000Z",
+      "source": "中新网",
+      "title": "中国商务部回应美发布限制远程获取先进半导体相关措施",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733735.shtml"
+    },
     {
       "id": "1v4uwu7",
       "ts": 1794921746,
@@ -15,11 +143,11 @@
       "url": "https://wallstreetcn.com/livenews/3201326"
     },
     {
-      "id": "1ksbk1k",
+      "id": "bvszya",
       "ts": 1794921720,
       "time": "2026-11-17T21:22:00.000+08:00",
       "source": "华尔街见闻",
-      "title": "伊朗的格什姆岛传出爆炸声。",
+      "title": "伊朗的格什姆岛传出爆炸声，目前爆炸的确切性质尚不清楚。",
       "url": "https://wallstreetcn.com/livenews/3201325"
     },
     {
@@ -215,6 +343,14 @@
       "url": "https://wallstreetcn.com/livenews/3201313"
     },
     {
+      "id": "8vp21p",
+      "ts": 1794920413,
+      "time": "2026-11-17T21:00:13.000+08:00",
+      "source": "东方财富",
+      "title": "11月17日东方财富财经晚报（附新闻联播）",
+      "url": "http://finance.eastmoney.com/news/1353,202611173933073525.html"
+    },
+    {
       "id": "1chyn4l",
       "ts": 1794920400,
       "time": "2026-11-17T21:00:00.000+08:00",
@@ -245,6 +381,14 @@
       "source": "华尔街见闻",
       "title": "特朗普：美国致力于其众多朋友的成功。",
       "url": "https://wallstreetcn.com/livenews/3201310"
+    },
+    {
+      "id": "q6q2qm",
+      "ts": 1794920163,
+      "time": "2026-11-17T20:56:03.000+08:00",
+      "source": "东方财富",
+      "title": "全国供销合作总社：鼓励系统各类经营主体积极参与回收合作",
+      "url": "http://finance.eastmoney.com/news/1350,202611173933157524.html"
     },
     {
       "id": "ue4rmv",
@@ -365,6 +509,14 @@
       "source": "东方财富",
       "title": "6G商用冲刺，8省市正式获批部省协同试点，广东成功入列",
       "url": "http://finance.eastmoney.com/news/1355,202611173933127322.html"
+    },
+    {
+      "id": "14q7q5v",
+      "ts": 1794919309,
+      "time": "2026-11-17T20:41:49.000+08:00",
+      "source": "新浪财经",
+      "title": "360市场部“一号位”被查， AI能治大厂腐败？",
+      "url": "https://finance.sina.com.cn/stock/s/2026-11-17/doc-inizacmz7532371.shtml"
     },
     {
       "id": "8j1u04",
@@ -1269,6 +1421,14 @@
       "source": "中新网",
       "title": "一张邀请函，全球企业赴约深圳",
       "url": "https://www.chinanews.com.cn/cj/2026/11-17/10733603.shtml"
+    },
+    {
+      "id": "1gv5izt",
+      "ts": 1794912188,
+      "time": "2026-11-17T18:43:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧盟称法国经济增长乏力 将无法实现减赤目标",
+      "url": "https://wallstreetcn.com/livenews/3201327"
     },
     {
       "id": "81c5jk",
