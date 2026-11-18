@@ -96,6 +96,12 @@ for i in 1 2 3 4 5 6; do
   fi
   echo "推送失败（第 ${i} 次）：fetch + rebase 后重试"
   git fetch origin main || true
+  # 并发场景：同一分钟的另一条运行已经把同样内容推上去了（:17 定时 + push 触发同时跑）。
+  #   这时 rebase 必冲突，但数据并没有丢 ⇒ 视为成功，不要误报红。
+  if git diff --quiet origin/main -- "${STAGE_PATHS[@]}"; then
+    echo "远端已是同样内容（并发运行已推送），本轮无需再推"
+    exit 0
+  fi
   if ! git rebase origin/main; then
     git rebase --abort || true
     strict_fail "rebase 冲突：本轮放弃（不强推，下一轮会重新采集）"
