@@ -1,11 +1,147 @@
 {
-  "generatedAt": "2026-11-18T00:22:50.372Z",
+  "generatedAt": "2026-11-18T00:38:09.053Z",
   "windowDays": 62,
   "from": "2026-09-18",
   "days": 62,
   "fromHistory": 17,
-  "total": 56040,
+  "total": 56060,
   "items": [
+    {
+      "id": "1c1jrfo",
+      "ts": 1794962283,
+      "time": "2026-11-18T08:38:03.000+08:00",
+      "source": "新浪财经",
+      "title": "皇庭智家授出合共1.25亿份购股权",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-18/doc-inizcexm4956403.shtml"
+    },
+    {
+      "id": "1xmig9l",
+      "ts": 1794962247,
+      "time": "2026-11-18T08:37:27.000+08:00",
+      "source": "新浪财经",
+      "title": "Anthropic获老股东加码 红杉、Lightspeed等拟向其IPO再投数十亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcexp1732392.shtml"
+    },
+    {
+      "id": "wj8ihp",
+      "ts": 1794962242,
+      "time": "2026-11-18T08:37:22.000+08:00",
+      "source": "新浪财经",
+      "title": "Waymo暂停在全美高速公路上运营自动驾驶出租车",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcexp7104238.shtml"
+    },
+    {
+      "id": "duehq0",
+      "ts": 1794962233,
+      "time": "2026-11-18T08:37:13.000+08:00",
+      "source": "新浪财经",
+      "title": "嘉兴燃气拟收购燃气发电项目设备",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-18/doc-inizcexp1732184.shtml"
+    },
+    {
+      "id": "1mq46yt",
+      "ts": 1794962047,
+      "time": "2026-11-18T08:34:07.000+08:00",
+      "source": "新浪财经",
+      "title": "融信中国公布中瑞和信辞任公司核数师",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-18/doc-inizcexm4953704.shtml"
+    },
+    {
+      "id": "1y2tks9",
+      "ts": 1794962034,
+      "time": "2026-11-18T08:33:54.000+08:00",
+      "source": "新浪财经",
+      "title": "日本10月份出口同比增长20.5%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcexm4953559.shtml"
+    },
+    {
+      "id": "1lv6jxf",
+      "ts": 1794961989,
+      "time": "2026-11-18T08:33:09.000+08:00",
+      "source": "新浪财经",
+      "title": "三星电机因英伟达宣布新供应协议股价大涨8%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcexm4952792.shtml"
+    },
+    {
+      "id": "m23dpr",
+      "ts": 1794961978,
+      "time": "2026-11-18T08:32:58.000+08:00",
+      "source": "新浪财经",
+      "title": "华沿机器人于11月17日斥资509.15万港元回购78.04万股",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-18/doc-inizcexp1728946.shtml"
+    },
+    {
+      "id": "1fcc3i0",
+      "ts": 1794961961,
+      "time": "2026-11-18T08:32:41.000+08:00",
+      "source": "新浪财经",
+      "title": "乐天集团股价跌至近三年低点 子公司乐天证券称客户数据可能泄露",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcexm4952502.shtml"
+    },
+    {
+      "id": "1qswhz9",
+      "ts": 1794961934,
+      "time": "2026-11-18T08:32:14.000+08:00",
+      "source": "新浪财经",
+      "title": "极智嘉-W于11月17日斥资约223.45万港元回购36.9万股",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-18/doc-inizcexm4952116.shtml"
+    },
+    {
+      "id": "b0rjn2",
+      "ts": 1794961858,
+      "time": "2026-11-18T08:30:58.000+08:00",
+      "source": "新浪财经",
+      "title": "摩根大通与现代信用卡合作测试无需人工参与的AI智能体交易",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcexp7100446.shtml"
+    },
+    {
+      "id": "ljmhvk",
+      "ts": 1794961841,
+      "time": "2026-11-18T08:30:41.000+08:00",
+      "source": "新浪财经",
+      "title": "微软CEO盛赞黄仁勋，回应大规模服务中断和员工买断计划",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcexm4950812.shtml"
+    },
+    {
+      "id": "wcooed",
+      "ts": 1794961831,
+      "time": "2026-11-18T08:30:31.000+08:00",
+      "source": "新浪财经",
+      "title": "康方生物拟新增不超过2亿港元在公开市场购买股份",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-18/doc-inizcexi1216862.shtml"
+    },
+    {
+      "id": "138xtql",
+      "ts": 1794961801,
+      "time": "2026-11-18T08:30:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "澳大利亚三季度薪资价格指数（不包括奖金）季环比 1.1%，预期 1%，前值 0.8%。",
+      "url": "https://wallstreetcn.com/livenews/3201607"
+    },
+    {
+      "id": "6b62jb",
+      "ts": 1794961801,
+      "time": "2026-11-18T08:30:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "澳大利亚三季度薪资价格指数（不包括奖金）同比 3.5%，预期 3.4%，前值 3.2%。",
+      "url": "https://wallstreetcn.com/livenews/3201606"
+    },
+    {
+      "id": "1gj62tk",
+      "ts": 1794961708,
+      "time": "2026-11-18T08:28:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Seed STEM计划分子逆合成挑战赛启动，睿智医药承担湿实验验证",
+      "url": "https://wallstreetcn.com/livenews/3201605"
+    },
+    {
+      "id": "1gx8rx0",
+      "ts": 1794961476,
+      "time": "2026-11-18T08:24:36.000+08:00",
+      "source": "华尔街见闻",
+      "title": "投资者需求强劲，Anthropic计划上调IPO价格，估值将达1.5-1.6万亿美元",
+      "url": "https://wallstreetcn.com/livenews/3201604"
+    },
     {
       "id": "1q6trqi",
       "ts": 1794961354,
@@ -167,6 +303,14 @@
       "url": "http://finance.eastmoney.com/news/1354,202611183933562573.html"
     },
     {
+      "id": "v8qcye",
+      "ts": 1794960009,
+      "time": "2026-11-18T08:00:09.000+08:00",
+      "source": "东方财富",
+      "title": "银行备战“开门红”！大行“闷声干活”，中小行扎堆动员",
+      "url": "http://bank.eastmoney.com/news/1174,202611183933544456.html"
+    },
+    {
       "id": "6lfph8",
       "ts": 1794960000,
       "time": "2026-11-18T08:00:00.000+08:00",
@@ -311,6 +455,14 @@
       "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-18/doc-inizcexp7074792.shtml"
     },
     {
+      "id": "170kenr",
+      "ts": 1794959168,
+      "time": "2026-11-18T07:46:08.000+08:00",
+      "source": "东方财富",
+      "title": "读创财经晨汇｜①2000余位政商界代表参加2026年APEC工商领导人峰会②英伟达财报三季报大超预期",
+      "url": "http://finance.eastmoney.com/news/1355,202611183933530572.html"
+    },
+    {
       "id": "163sdai",
       "ts": 1794959124,
       "time": "2026-11-18T07:45:24.000+08:00",
@@ -333,6 +485,14 @@
       "source": "新浪财经",
       "title": "高盛预计明年新兴市场债券总回报将达10%",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcexm4920196.shtml"
+    },
+    {
+      "id": "1jkese0",
+      "ts": 1794959100,
+      "time": "2026-11-18T07:45:00.000+08:00",
+      "source": "东方财富",
+      "title": "早新闻 | 6G，大消息",
+      "url": "http://finance.eastmoney.com/news/1354,202611183933529015.html"
     },
     {
       "id": "1e3yt0q",
