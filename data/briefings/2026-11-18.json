@@ -1,0 +1,159 @@
+{
+  "date": "2026-11-18",
+  "generatedAt": "2026-11-18T09:05:55+08:00",
+  "endedAt": "2026-11-18T09:06:12+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-17",
+    "to": "2026-11-18",
+    "fromAt": "2026-11-17T08:00:00+08:00",
+    "toAt": "2026-11-18T09:00:00+08:00",
+    "fromTs": 1794873600,
+    "toTs": 1794963600
+  },
+  "overview": "今日主线是外部紧缩预期再起与国内政策对冲并行：中俄美元首会晤19日在深圳举行、特朗普今日抵深参加APEC，美联储鹰派称明年春季前可能需数次加息，10年美债收益率年内收于5%以上的天数逼近2007年纪录；中国则以7140亿元隔夜逆回购、中加经贸磋商成果与对美半导体措施的反制表态应对。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行开展7140亿元隔夜逆回购操作，操作利率1.25%",
+      "summary": "中国人民银行11月17日以固定利率、数量招标方式开展7140亿元隔夜逆回购操作，投标量7140亿元、中标量7140亿元，全额满足了一级交易商需求，操作利率1.25%。单日投放规模处于年内高位，为年末跨年资金与债市供给提供流动性支撑，也是观察后续政策利率取向的直接窗口。",
+      "why": "年末流动性与资金面定价的当日基准",
+      "source": "东方财富",
+      "publishedAt": "2026-11-17T21:33",
+      "url": "http://finance.eastmoney.com/news/1350,202611173933244160.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/11-17/10733218.shtml",
+        "https://wallstreetcn.com/livenews/3200926"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中俄美元首会晤19日在深圳举行，特朗普今日抵深参加APEC",
+      "summary": "特朗普17日在马尼拉表示期待访问中国，预计18日前往深圳参加APEC领导人非正式会议，随行团包括国务卿鲁比奥、财政部长贝森特和贸易代表格里尔。外交部发言人宣布，11月19日将在深圳举行中俄美元首会晤，为中俄美三国元首历史上首次面对面会晤。",
+      "why": "三国元首历史性会晤，本周最大宏观事件",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-17T22:44",
+      "url": "https://wallstreetcn.com/livenews/3201374",
+      "refs": [
+        "https://finance.sina.com.cn/money/forex/whqqscgd/2026-11-17/doc-iniyzhhi5469714.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrm1267295.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "商务部就美方限制远程获取先进半导体措施答记者问：强烈不满、坚决反对",
+      "summary": "就美商务部发布限制远程获取先进半导体相关措施，商务部新闻发言人回应称，中方对此强烈不满，坚决反对。外交部同时表示，美方滥用出口管制措施，中方将坚决维护自身正当权益。相关表态使半导体与人工智能产业链的外部约束再度成为市场变量。",
+      "why": "中美科技管制摩擦直连半导体与AI链预期",
+      "source": "东方财富",
+      "publishedAt": "2026-11-18T07:27",
+      "url": "http://finance.eastmoney.com/news/1354,202611183933355348.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3201388"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "中加经贸磋商成果落地：联合成果文件发布，豁免措施延长2年",
+      "summary": "财政部发布第二次中加经济财金战略对话联合成果文件。11月8日至9日，国务院副总理何立峰与加拿大财政部长商鹏飞、国际贸易部长西杜在温哥华共同主持该次对话。商务部表示，双方同意将初步联合安排的相关豁免措施延长2年，加方还将进一步扩大对中国钢铝产品的豁免范围。",
+      "why": "关税与钢铝豁免变化牵动贸易和产业预期",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T07:31",
+      "url": "https://wallstreetcn.com/livenews/3201583",
+      "refs": [
+        "http://finance.eastmoney.com/news/1352,202611173932799647.html",
+        "https://wallstreetcn.com/livenews/3201043"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "圣路易斯联储主席穆萨莱姆：2027年春季前可能需要数次加息",
+      "summary": "圣路易斯联储主席穆萨莱姆周二在阿根廷发表讲话称，美联储在2027年春季之前经济可能需要数次加息，经通胀调整后的实际政策利率到明年春季可能需要上升约1个百分点。他表示，若不进一步撤回宽松的货币政策，未来18个月通胀将持续明显高于2%的目标。",
+      "why": "最鹰派的声音直接改写全球利率路径",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-17T20:32",
+      "url": "https://wallstreetcn.com/livenews/3201303",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-inizaitt1550011.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-inizaitx7438217.shtml",
+        "https://finance.sina.com.cn/world/2026-11-17/doc-inizacmx5344145.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "威廉姆斯称当前形势不需要大幅政策行动，10年美债5%以上天数逼近2007年纪录",
+      "summary": "纽约联储主席威廉姆斯表示，经济强劲且持续向好，通胀仍顽固偏高，美联储在把通胀降至2%方面仍有更多工作要做，但他认为当前形势不需要采取大幅政策行动，并称关税的影响已基本过去。收益率方面，美国10年期国债收益率今年已有27个交易日收于5%以上，逼近2007年的29个交易日纪录。",
+      "why": "联储两种口径并存，关税通胀与利率水平互为注脚",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T03:25",
+      "url": "https://wallstreetcn.com/livenews/3201482",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3201415",
+        "https://wallstreetcn.com/livenews/3201502"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "欧洲央行行长德科斯接近敲定，德国提名布伦纳迈尔任首席经济学家",
+      "summary": "知情人士称，在柏林达成一项关键政治协议后，西班牙人巴勃罗·埃尔南德斯·德科斯正稳步迈向欧洲央行行长一职；作为联合执政协议的一部分，德国将提名普林斯顿大学学者马库斯·布伦纳迈尔担任欧洲央行首席经济学家，德国内阁预计周三敲定。官员同时称2027年仍可能需要进一步收紧。",
+      "why": "欧央行人事落地决定紧缩路径与欧元走向",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-17T18:55",
+      "url": "https://wallstreetcn.com/livenews/3201258",
+      "refs": [
+        "https://finance.sina.com.cn/world/2026-11-17/doc-inizacmz2112063.shtml",
+        "https://wallstreetcn.com/livenews/3200913"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "中东战事再起威胁供应宽松前景，布伦特结算价接近93美元",
+      "summary": "原油价格走势震荡反复，中东战事再起令日益宽松的供应前景能否持续受到质疑。布伦特原油小幅上涨，结算价接近每桶93美元，日内波动区间约3美元；WTI 12月合约收涨0.29美元、涨幅0.34%，报86.01美元/桶。油价反弹会反向加固通胀与加息预期。",
+      "why": "油价反弹会反向加固通胀与加息预期",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-18T05:47",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrr1772064.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/money/future/fmnews/2026-11-18/doc-inizcexp7087711.shtml",
+        "https://wallstreetcn.com/livenews/3201485",
+        "https://wallstreetcn.com/livenews/3201200"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "高盛一个月内第二次下调黄金预测，2027年底目标降至4650美元",
+      "summary": "高盛称，黄金今年1月曾用一个月上涨逾30%并刷新纪录高位，但在美联储持续加息压制下短期将进一步走弱、波动加剧，该行一个月内第二次下调预测，将2027年底金价目标从4800美元降至4650美元，预计2028年底前才可能升至5600美元。纽约尾盘现货黄金跌0.15%，报3850.96美元。",
+      "why": "央行购金与美联储紧缩之间的定价拉锯",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-17T14:57",
+      "url": "https://wallstreetcn.com/livenews/3201072",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-inizacmz7522981.shtml",
+        "https://finance.sina.com.cn/roll/2026-11-17/doc-iniyyzyp2301784.shtml",
+        "https://finance.sina.com.cn/jjxw/2026-11-17/doc-iniyyzyp7721503.shtml",
+        "https://wallstreetcn.com/livenews/3201535"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "英伟达第四财季营收指引1300亿美元超预期，黄仁勋称愿回归",
+      "summary": "英伟达周二公布的销售预测超出华尔街预期，第四财季营收预计为1300亿美元、上下浮动3%，分析师平均预期为1253亿美元，毛利率预计约71.5%，上季营收首次突破千亿。黄仁勋离任后首次发声，表示若董事会邀请愿意回归担任CEO；董事会主席则称不打算恢复其CEO职务。",
+      "why": "AI资本支出周期的第一次集中检验结果",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T05:50",
+      "url": "https://wallstreetcn.com/livenews/3201536",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3201583",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizayrp5012267.shtml",
+        "https://wallstreetcn.com/livenews/3201510"
+      ]
+    }
+  ],
+  "watch": [
+    "今日10:45 欧洲央行管委兼德国央行行长Nagel、欧洲央行管委Escriva讲话，以及15:00英国10月CPI",
+    "11月19日中俄美元首会晤与特朗普深圳APEC行程的成果表述：是否涉及经贸与科技管制议题",
+    "美债：10年期收益率能否守住5%上方，今年收于5%以上的天数是否逼近2007年29个交易日纪录",
+    "Anthropic 11月19日开盘定价（IPO区间70—78美元，New Street给出105美元目标价）与英伟达财报后卖方目标价调整"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
