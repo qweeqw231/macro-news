@@ -1,11 +1,75 @@
 {
-  "generatedAt": "2026-11-18T15:08:05.522Z",
+  "generatedAt": "2026-11-18T15:20:45.996Z",
   "windowDays": 62,
   "from": "2026-09-18",
   "days": 62,
   "fromHistory": 17,
-  "total": 57011,
+  "total": 57020,
   "items": [
+    {
+      "id": "62poyy",
+      "ts": 1795015242,
+      "time": "2026-11-18T23:20:42.000+08:00",
+      "source": "华尔街见闻",
+      "title": "提醒：北京时间23:30，美国能源信息署（EIA）将发布政府版原油库存周报。",
+      "url": "https://wallstreetcn.com/livenews/3202036"
+    },
+    {
+      "id": "mudcbw",
+      "ts": 1795015188,
+      "time": "2026-11-18T23:19:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "OpenAI的CEO Altman：AI行业将需要一些共同的安全标准。",
+      "url": "https://wallstreetcn.com/livenews/3202035"
+    },
+    {
+      "id": "aow0xi",
+      "ts": 1795015088,
+      "time": "2026-11-18T23:18:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Anthropic正考虑扩大IPO规模，散户的认购需求接近1000亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3202034"
+    },
+    {
+      "id": "1phg5nr",
+      "ts": 1795015063,
+      "time": "2026-11-18T23:17:43.000+08:00",
+      "source": "新浪财经",
+      "title": "两份最新住房报告预示楼市寒冬将至，房屋销量创下历史新低",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizesyv1400252.shtml"
+    },
+    {
+      "id": "1qit0pm",
+      "ts": 1795015052,
+      "time": "2026-11-18T23:17:32.000+08:00",
+      "source": "新浪财经",
+      "title": "美国新屋开工数攀升 多户住宅建设反弹",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizesyt4623868.shtml"
+    },
+    {
+      "id": "udzz5o",
+      "ts": 1795014854,
+      "time": "2026-11-18T23:14:14.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普政府称近期时间高度重合的科技系统宕机事件并无关联",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizesyt4623000.shtml"
+    },
+    {
+      "id": "hwwo5u",
+      "ts": 1795014587,
+      "time": "2026-11-18T23:09:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "克里姆林宫：并没有安排俄罗斯总统普京与美国总统特朗普在11月19日全面会谈。",
+      "url": "https://wallstreetcn.com/livenews/3202033"
+    },
+    {
+      "id": "49oze8",
+      "ts": 1795014553,
+      "time": "2026-11-18T23:09:13.000+08:00",
+      "source": "华尔街见闻",
+      "title": "智力化工矿业公司（SQM）预计2027年锂需求将增长15%-20%。",
+      "url": "https://wallstreetcn.com/livenews/3202032"
+    },
     {
       "id": "ab8m0i",
       "ts": 1795014409,
@@ -13,6 +77,14 @@
       "source": "华尔街见闻",
       "title": "英国央行行长贝利：冲突持续的时间越长，就需要更高的利率。",
       "url": "https://wallstreetcn.com/livenews/3202031"
+    },
+    {
+      "id": "1shemkb",
+      "ts": 1795014395,
+      "time": "2026-11-18T23:06:35.000+08:00",
+      "source": "东方财富",
+      "title": "北大发布“AI计划”，联合海淀打造“一公里转化圈”",
+      "url": "http://finance.eastmoney.com/news/1355,202611183934330013.html"
     },
     {
       "id": "1d32cx6",
@@ -23,11 +95,11 @@
       "url": "https://wallstreetcn.com/livenews/3202030"
     },
     {
-      "id": "14d6vqx",
+      "id": "vvpy5n",
       "ts": 1795014269,
       "time": "2026-11-18T23:04:29.000+08:00",
       "source": "华尔街见闻",
-      "title": "丙烯夜盘收跌3.37%，LPG跌3.21%，聚丙烯跌2.96%，乙二醇跌2.92%，燃油跌2.7%，焦煤跌1.78%，焦炭跌0.89%。",
+      "title": "内盘期货夜市多数收跌",
       "url": "https://wallstreetcn.com/livenews/3202029"
     },
     {
@@ -223,11 +295,11 @@
       "url": "https://wallstreetcn.com/livenews/3202011"
     },
     {
-      "id": "1wlvdp0",
+      "id": "1ki9s27",
       "ts": 1795012579,
       "time": "2026-11-18T22:36:19.000+08:00",
       "source": "华尔街见闻",
-      "title": "加纳央行下调基准利率300个基点至11%，前值14%。",
+      "title": "加纳意外大幅降息300个基点，从而与市场对齐",
       "url": "https://wallstreetcn.com/livenews/3202010"
     },
     {
