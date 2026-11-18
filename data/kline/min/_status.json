@@ -1,0 +1,12 @@
+{
+  "generatedAt": "2026-11-18T20:22:58.609Z",
+  "ok": 52,
+  "failed": 4,
+  "failures": [
+    "gbpcny/1m: 只取到 26 根",
+    "jpycny/1m: 只取到 25 根",
+    "krwcny/1m: 只取到 25 根",
+    "audcny/1m: 只取到 25 根"
+  ],
+  "rejected": []
+}
