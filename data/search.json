@@ -1,11 +1,83 @@
 {
-  "generatedAt": "2026-11-18T21:38:11.429Z",
+  "generatedAt": "2026-11-18T21:53:03.075Z",
   "windowDays": 62,
   "from": "2026-09-18",
   "days": 62,
   "fromHistory": 17,
-  "total": 57229,
+  "total": 57238,
   "items": [
+    {
+      "id": "dijmxr",
+      "ts": 1795038756,
+      "time": "2026-11-19T05:52:36.000+08:00",
+      "source": "华尔街见闻",
+      "title": "以军称在加沙地带“黄线”以西开展地道拆除行动",
+      "url": "https://wallstreetcn.com/livenews/3202199"
+    },
+    {
+      "id": "6fxk2p",
+      "ts": 1795038526,
+      "time": "2026-11-19T05:48:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "明晟公司MSCI新兴市场股票指数跌0.2%，发展中国家外汇指数跌0.1%。",
+      "url": "https://wallstreetcn.com/livenews/3202198"
+    },
+    {
+      "id": "12kpp3h",
+      "ts": 1795038359,
+      "time": "2026-11-19T05:45:59.000+08:00",
+      "source": "华尔街见闻",
+      "title": "在美国麻疹疫情蔓延之际，宾州确认第八例与麻疹相关的死亡病例",
+      "url": "https://wallstreetcn.com/livenews/3202197"
+    },
+    {
+      "id": "6ug9gs",
+      "ts": 1795038301,
+      "time": "2026-11-19T05:45:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "新西兰10月进口 97.2亿纽元，前值 84.4亿纽元。",
+      "url": "https://wallstreetcn.com/livenews/3202196"
+    },
+    {
+      "id": "et5z7l",
+      "ts": 1795038301,
+      "time": "2026-11-19T05:45:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "新西兰10月出口 69.5亿纽元，前值 64.7亿纽元。",
+      "url": "https://wallstreetcn.com/livenews/3202195"
+    },
+    {
+      "id": "1nwcj3",
+      "ts": 1795038301,
+      "time": "2026-11-19T05:45:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "新西兰10月贸易帐 -27.72亿纽元，前值 -19.71亿纽元。",
+      "url": "https://wallstreetcn.com/livenews/3202194"
+    },
+    {
+      "id": "1nnztbv",
+      "ts": 1795038301,
+      "time": "2026-11-19T05:45:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "新西兰10月12个月贸易帐 -75.19亿纽元，前值 -61.75亿纽元。",
+      "url": "https://wallstreetcn.com/livenews/3202193"
+    },
+    {
+      "id": "1io98r5",
+      "ts": 1795037996,
+      "time": "2026-11-19T05:39:56.000+08:00",
+      "source": "华尔街见闻",
+      "title": "派拓网络PANW美股盘后涨超10%。",
+      "url": "https://wallstreetcn.com/livenews/3202192"
+    },
+    {
+      "id": "73z6hy",
+      "ts": 1795037909,
+      "time": "2026-11-19T05:38:29.000+08:00",
+      "source": "华尔街见闻",
+      "title": "谷歌公司CEO Pichai：Gemini 4 Neon今天开始发推出。",
+      "url": "https://wallstreetcn.com/livenews/3202191"
+    },
     {
       "id": "t2vqav",
       "ts": 1795037771,
@@ -199,11 +271,11 @@
       "url": "https://wallstreetcn.com/livenews/3202168"
     },
     {
-      "id": "11mxy3t",
+      "id": "gw7fsy",
       "ts": 1795035601,
       "time": "2026-11-19T05:00:01.000+08:00",
       "source": "华尔街见闻",
-      "title": "美股费城金银指数跌5.8%，纽交所金矿开采商指数跌5.5%。",
+      "title": "标普500指数收跌16.90点，跌幅0.23%，报7323.63点。",
       "url": "https://wallstreetcn.com/livenews/3202167"
     },
     {
@@ -1583,20 +1655,20 @@
       "url": "https://wallstreetcn.com/livenews/3202046"
     },
     {
-      "id": "1w33uy7",
-      "ts": 1795015802,
-      "time": "2026-11-18T23:30:02.000+08:00",
-      "source": "华尔街见闻",
-      "title": "美国11月13日当周EIA汽油库存变动 519.2万桶，前值 179.9万桶。",
-      "url": "https://wallstreetcn.com/livenews/3202044"
-    },
-    {
       "id": "kah92m",
       "ts": 1795015802,
       "time": "2026-11-18T23:30:02.000+08:00",
       "source": "华尔街见闻",
       "title": "美国11月13日当周EIA精炼油库存变动 157.1万桶，前值 407.1万桶。",
       "url": "https://wallstreetcn.com/livenews/3202045"
+    },
+    {
+      "id": "1w33uy7",
+      "ts": 1795015802,
+      "time": "2026-11-18T23:30:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国11月13日当周EIA汽油库存变动 519.2万桶，前值 179.9万桶。",
+      "url": "https://wallstreetcn.com/livenews/3202044"
     },
     {
       "id": "62nj8y",
@@ -2079,11 +2151,11 @@
       "url": "https://finance.sina.com.cn/stock/s/2026-11-18/doc-inizensx1516763.shtml"
     },
     {
-      "id": "cgwpj9",
+      "id": "1bscn5d",
       "ts": 1795012140,
       "time": "2026-11-18T22:29:00.000+08:00",
       "source": "东方财富",
-      "title": "三个英文热词 读懂APEC谈论的中国未来",
+      "title": "APEC观察｜三个英文热词，读懂APEC谈论的中国未来",
       "url": "http://finance.eastmoney.com/news/1354,202611183934313587.html"
     },
     {
