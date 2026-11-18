@@ -1,11 +1,99 @@
 {
-  "generatedAt": "2026-11-18T19:37:53.747Z",
+  "generatedAt": "2026-11-18T19:53:12.412Z",
   "windowDays": 62,
   "from": "2026-09-18",
   "days": 62,
   "fromHistory": 17,
-  "total": 57155,
+  "total": 57167,
   "items": [
+    {
+      "id": "1eis7yh",
+      "ts": 1795031568,
+      "time": "2026-11-19T03:52:48.000+08:00",
+      "source": "新浪财经",
+      "title": "美联储会议纪要显示几乎所有官员预计还需加息",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfcqp4429949.shtml"
+    },
+    {
+      "id": "18ky7f",
+      "ts": 1795030922,
+      "time": "2026-11-19T03:42:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国纽约联储主席威廉姆斯：人工智能使用激增带来的强劲需求提供了新的维度，改变了我们的做事方式和思维方式。",
+      "url": "https://wallstreetcn.com/livenews/3202141"
+    },
+    {
+      "id": "18trrah",
+      "ts": 1795030910,
+      "time": "2026-11-19T03:41:50.000+08:00",
+      "source": "华尔街见闻",
+      "title": "德银因AI繁荣与美国增长上调2027年美元预测",
+      "url": "https://wallstreetcn.com/livenews/3202140"
+    },
+    {
+      "id": "s8i067",
+      "ts": 1795030820,
+      "time": "2026-11-19T03:40:20.000+08:00",
+      "source": "华尔街见闻",
+      "title": "哈马斯称以军在加沙中部军事行动违反停火协议",
+      "url": "https://wallstreetcn.com/livenews/3202139"
+    },
+    {
+      "id": "e5x7ct",
+      "ts": 1795030726,
+      "time": "2026-11-19T03:38:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国纽约联储主席威廉姆斯：美联储各分行正探讨如何弥补市场缺失，更多设计团队正在组建，相关资助项目陆续获批，其他联邦储备银行也开始在其辖区举办类似活动。",
+      "url": "https://wallstreetcn.com/livenews/3202138"
+    },
+    {
+      "id": "vyzuhn",
+      "ts": 1795030422,
+      "time": "2026-11-19T03:33:42.000+08:00",
+      "source": "华尔街见闻",
+      "title": "新西兰联储主席Breman：经济复苏仍然不均衡。",
+      "url": "https://wallstreetcn.com/livenews/3202137"
+    },
+    {
+      "id": "1bdsgh7",
+      "ts": 1795030360,
+      "time": "2026-11-19T03:32:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国参议院共和党议员图恩（John Thune）：民主党还没有参与讨论政府融资问题。",
+      "url": "https://wallstreetcn.com/livenews/3202136"
+    },
+    {
+      "id": "1u4c2ps",
+      "ts": 1795030249,
+      "time": "2026-11-19T03:30:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "WTI 12月原油期货收跌2.75美元，跌幅3.20%，报83.26美元/桶。",
+      "url": "https://wallstreetcn.com/livenews/3202135"
+    },
+    {
+      "id": "26o88s",
+      "ts": 1795030142,
+      "time": "2026-11-19T03:29:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Anthropic在加拿大递交IPO文件。",
+      "url": "https://wallstreetcn.com/livenews/3202134"
+    },
+    {
+      "id": "172x8vy",
+      "ts": 1795030101,
+      "time": "2026-11-19T03:28:21.000+08:00",
+      "source": "华尔街见闻",
+      "title": "全球头部钛白粉生产商Tronox：公司尚未与债权人团体展开接触，公司流动性充裕，处于有利地位，下一笔重大债务到期时间不早于2029年。",
+      "url": "https://wallstreetcn.com/livenews/3202133"
+    },
+    {
+      "id": "1gm0qkc",
+      "ts": 1795030012,
+      "time": "2026-11-19T03:26:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "报道：英伟达董事会所聘猎头公司接洽Arm首席执行官Rene Haas",
+      "url": "https://wallstreetcn.com/livenews/3202132"
+    },
     {
       "id": "jrj3ob",
       "ts": 1795029925,
@@ -15,12 +103,20 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizexhp0754527.shtml"
     },
     {
-      "id": "m47u9e",
+      "id": "to9u9x",
       "ts": 1795029735,
       "time": "2026-11-19T03:22:15.000+08:00",
       "source": "华尔街见闻",
-      "title": "NASA与SpaceX因天气原因推迟龙飞船货运舱的脱离对接。",
+      "title": "美国国家航空航天局（NASA）与SpaceX因天气原因推迟龙飞船货运舱的脱离对接。",
       "url": "https://wallstreetcn.com/livenews/3202131"
+    },
+    {
+      "id": "14xw6ez",
+      "ts": 1795029562,
+      "time": "2026-11-19T03:19:22.000+08:00",
+      "source": "新浪财经",
+      "title": "10月美联储暂停加息或只是时机考量，而非政策转向",
+      "url": "https://finance.sina.com.cn/7x24/2026-11-19/doc-inizexhr4557009.shtml"
     },
     {
       "id": "f1cjsl",
@@ -79,11 +175,11 @@
       "url": "https://wallstreetcn.com/livenews/3202124"
     },
     {
-      "id": "1f5hj8x",
+      "id": "1grhz1q",
       "ts": 1795028450,
       "time": "2026-11-19T03:00:50.000+08:00",
       "source": "华尔街见闻",
-      "title": "美联储会议纪要：两名官员称12月加息超25个基点是有保障的，几乎所有与会者认为继续行动可能适宜。",
+      "title": "美联储会议纪要显示几乎所有官员预计将再加息",
       "url": "https://wallstreetcn.com/livenews/3202123"
     },
     {
@@ -455,20 +551,20 @@
       "url": "https://wallstreetcn.com/livenews/3202090"
     },
     {
-      "id": "1bco374",
-      "ts": 1795021511,
-      "time": "2026-11-19T01:05:11.000+08:00",
-      "source": "新浪财经",
-      "title": "消息人士称，投资者需求火爆，Anthropic考虑上调IPO发行规模",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizesyt4661723.shtml"
-    },
-    {
       "id": "171zx8o",
       "ts": 1795021511,
       "time": "2026-11-19T01:05:11.000+08:00",
       "source": "华尔街见闻",
       "title": "谷歌公司发布长程运行智能体Stitch Loop。",
       "url": "https://wallstreetcn.com/livenews/3202089"
+    },
+    {
+      "id": "1bco374",
+      "ts": 1795021511,
+      "time": "2026-11-19T01:05:11.000+08:00",
+      "source": "新浪财经",
+      "title": "消息人士称，投资者需求火爆，Anthropic考虑上调IPO发行规模",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizesyt4661723.shtml"
     },
     {
       "id": "1cde6yw",
