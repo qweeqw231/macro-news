@@ -1,11 +1,211 @@
 {
-  "generatedAt": "2026-11-18T06:53:01.592Z",
+  "generatedAt": "2026-11-18T07:08:03.173Z",
   "windowDays": 62,
   "from": "2026-09-18",
   "days": 62,
   "fromHistory": 17,
-  "total": 56407,
+  "total": 56435,
   "items": [
+    {
+      "id": "1hgmhpt",
+      "ts": 1794985637,
+      "time": "2026-11-18T15:07:17.000+08:00",
+      "source": "华尔街见闻",
+      "title": "集邦咨询：3Q26全球OLED显示器出货年增翻倍，上游供应充裕带动品牌加速放量",
+      "url": "https://wallstreetcn.com/livenews/3201760"
+    },
+    {
+      "id": "1ontgo9",
+      "ts": 1794985632,
+      "time": "2026-11-18T15:07:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "现货黄金日内跌幅达2.0%，报3772.15美元/盎司。",
+      "url": "https://wallstreetcn.com/livenews/3201759"
+    },
+    {
+      "id": "14s9j8n",
+      "ts": 1794985440,
+      "time": "2026-11-18T15:04:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "农发行发行5年期债券，规模40亿元，发行利率1.4633%，预期1.4000%，投标倍数10.64倍，边际倍数9.02倍；",
+      "url": "https://wallstreetcn.com/livenews/3201757"
+    },
+    {
+      "id": "v48l7u",
+      "ts": 1794985417,
+      "time": "2026-11-18T15:03:37.000+08:00",
+      "source": "华尔街见闻",
+      "title": "交易员削减对英国央行加息的押注，预计到2027年底将累计加息91个基点。",
+      "url": "https://wallstreetcn.com/livenews/3201756"
+    },
+    {
+      "id": "212bvd",
+      "ts": 1794985371,
+      "time": "2026-11-18T15:02:51.000+08:00",
+      "source": "新浪财经",
+      "title": "光大期货1118热点追踪：板块情绪低迷叠加装置重启，乙二醇继续下挫",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-18/doc-inizcvvc4829596.shtml"
+    },
+    {
+      "id": "h1p9vh",
+      "ts": 1794985326,
+      "time": "2026-11-18T15:02:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "A股收盘：科创50指数涨超2%，算力硬件、算力租赁概念集体反弹，全市场成交仅1.38万亿",
+      "url": "https://wallstreetcn.com/livenews/3201755"
+    },
+    {
+      "id": "a5i65o",
+      "ts": 1794985309,
+      "time": "2026-11-18T15:01:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "WTI原油日内跌幅达2.0%，报82.96美元/桶；",
+      "url": "https://wallstreetcn.com/livenews/3201754"
+    },
+    {
+      "id": "ndu73f",
+      "ts": 1794985263,
+      "time": "2026-11-18T15:01:03.000+08:00",
+      "source": "新浪财经",
+      "title": "英国超市巨头Asda考虑收购其他零售商，行业酝酿新一轮并购潮",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvc4827541.shtml"
+    },
+    {
+      "id": "1blxmyx",
+      "ts": 1794985254,
+      "time": "2026-11-18T15:00:54.000+08:00",
+      "source": "华尔街见闻",
+      "title": "11月18日收评：科创50指数涨超2%，算力硬件、算力租赁概念集体反弹",
+      "url": "https://wallstreetcn.com/livenews/3201752"
+    },
+    {
+      "id": "1hc12ff",
+      "ts": 1794985228,
+      "time": "2026-11-18T15:00:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "商品期货收盘，乙二醇、铂主力合约跌超4%，焦煤跌近4%，对二甲苯、沪锡、纯苯、丙烯、LU燃油跌超3%。",
+      "url": "https://wallstreetcn.com/livenews/3201750"
+    },
+    {
+      "id": "355y1a",
+      "ts": 1794985206,
+      "time": "2026-11-18T15:00:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国10月核心CPI同比 2.8%，预期 2.8%，前值 2.8%。",
+      "url": "https://wallstreetcn.com/livenews/3201749"
+    },
+    {
+      "id": "q86vsl",
+      "ts": 1794985206,
+      "time": "2026-11-18T15:00:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国10月CPI环比 0.5%，预期 0.5%，前值 0.4%。",
+      "url": "https://wallstreetcn.com/livenews/3201746"
+    },
+    {
+      "id": "1xlfymi",
+      "ts": 1794985206,
+      "time": "2026-11-18T15:00:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国10月零售物价指数同比 4.2%，预期 4.1%，前值 3.9%。",
+      "url": "https://wallstreetcn.com/livenews/3201748"
+    },
+    {
+      "id": "1cbklqt",
+      "ts": 1794985206,
+      "time": "2026-11-18T15:00:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国10月核心零售物价指数同比 4.1%，前值 3.9%。",
+      "url": "https://wallstreetcn.com/livenews/3201747"
+    },
+    {
+      "id": "1vqllbj",
+      "ts": 1794985206,
+      "time": "2026-11-18T15:00:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国10月CPI同比 3.6%，预期 3.6%，前值 3.5%。",
+      "url": "https://wallstreetcn.com/livenews/3201745"
+    },
+    {
+      "id": "19d7vdy",
+      "ts": 1794985206,
+      "time": "2026-11-18T15:00:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国10月调和CPI同比 3.7%，预期 3.7%，前值 3.6%。",
+      "url": "https://wallstreetcn.com/livenews/3201744"
+    },
+    {
+      "id": "1gsy3zs",
+      "ts": 1794985206,
+      "time": "2026-11-18T15:00:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英国10月零售物价指数环比 0.6%，预期 0.5%，前值 0.1%。",
+      "url": "https://wallstreetcn.com/livenews/3201743"
+    },
+    {
+      "id": "d6a6hb",
+      "ts": 1794985168,
+      "time": "2026-11-18T14:59:28.000+08:00",
+      "source": "新浪财经",
+      "title": "微软推出Copilot Workspace，打造人机协同工作空间",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvuz1056889.shtml"
+    },
+    {
+      "id": "156ob1e",
+      "ts": 1794985136,
+      "time": "2026-11-18T06:58:56.000Z",
+      "source": "中新网",
+      "title": "“十五五”时期四川国资国企将“三业”并举助力高质量发展",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-18/10734081.shtml"
+    },
+    {
+      "id": "1ab6ims",
+      "ts": 1794985120,
+      "time": "2026-11-18T06:58:40.000Z",
+      "source": "中新网",
+      "title": "商家赠品、抽奖怎么缴税？专家详解",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-18/10734090.shtml"
+    },
+    {
+      "id": "xljhyy",
+      "ts": 1794985088,
+      "time": "2026-11-18T14:58:08.000+08:00",
+      "source": "新浪财经",
+      "title": "伯恩斯坦上调半导体设备支出预期，应用材料、阿斯麦等获列首选股",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvf6939428.shtml"
+    },
+    {
+      "id": "vqpfsa",
+      "ts": 1794985070,
+      "time": "2026-11-18T06:57:50.000Z",
+      "source": "中新网",
+      "title": "到2030年末 四川力争全省地方国企资产总额突破30万亿元",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-18/10734074.shtml"
+    },
+    {
+      "id": "nyf2ee",
+      "ts": 1794985066,
+      "time": "2026-11-18T14:57:46.000+08:00",
+      "source": "新浪财经",
+      "title": "美国法官宣判涉2500万美元欺诈案无罪",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvf1601762.shtml"
+    },
+    {
+      "id": "z0x3iu",
+      "ts": 1794984799,
+      "time": "2026-11-18T14:53:19.000+08:00",
+      "source": "新浪财经",
+      "title": "德意志银行放行哥伦比亚数千笔涉嫌非法交易",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvf1598703.shtml"
+    },
+    {
+      "id": "v9eu0p",
+      "ts": 1794984737,
+      "time": "2026-11-18T14:52:17.000+08:00",
+      "source": "东方财富",
+      "title": "前10个月深圳对APEC其他经济体进出口增长超四成",
+      "url": "http://stock.eastmoney.com/news/1439,202611183933934252.html"
+    },
     {
       "id": "djhjxt",
       "ts": 1794984691,
@@ -71,6 +271,14 @@
       "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-18/doc-inizcvvf1595267.shtml"
     },
     {
+      "id": "38pbdy",
+      "ts": 1794984360,
+      "time": "2026-11-18T14:46:00.000+08:00",
+      "source": "东方财富",
+      "title": "链动APEC：机器人上岗“花式”搞会务，湾区智造强势出圈",
+      "url": "http://finance.eastmoney.com/news/1355,202611183933931458.html"
+    },
+    {
       "id": "v38rzf",
       "ts": 1794984344,
       "time": "2026-11-18T14:45:44.000+08:00",
@@ -101,6 +309,14 @@
       "source": "东方财富",
       "title": "青年失业率两连降 地方密集加派稳就业“礼包”",
       "url": "http://finance.eastmoney.com/news/1346,202611183933926979.html"
+    },
+    {
+      "id": "ihzw2q",
+      "ts": 1794984136,
+      "time": "2026-11-18T14:42:16.000+08:00",
+      "source": "东方财富",
+      "title": "辽宁对APEC其他经济体进出口规模创新高",
+      "url": "http://finance.eastmoney.com/news/1350,202611183933932258.html"
     },
     {
       "id": "i2tf7n",
@@ -141,6 +357,14 @@
       "source": "新浪财经",
       "title": "英国首相伯纳姆反驳约翰逊批评，称改善英欧关系有助于降低生活成本",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvf1587260.shtml"
+    },
+    {
+      "id": "1fv2co3",
+      "ts": 1794983691,
+      "time": "2026-11-18T14:34:51.000+08:00",
+      "source": "新浪财经",
+      "title": "黄金，大跌！最新预测→",
+      "url": "https://finance.sina.com.cn/wm/2026-11-18/doc-inizcvvf1595862.shtml"
     },
     {
       "id": "iqqsmh",
@@ -1447,20 +1671,20 @@
       "url": "https://wallstreetcn.com/livenews/3201674"
     },
     {
-      "id": "1k50o6u",
-      "ts": 1794970492,
-      "time": "2026-11-18T10:54:52.000+08:00",
-      "source": "华尔街见闻",
-      "title": "A股军工板块震荡下探，航发科技逼近跌停，洪都航空、建设工业、国科军工、中航成飞、航天南湖等跌超7%。",
-      "url": "https://wallstreetcn.com/livenews/3201673"
-    },
-    {
       "id": "ofdsxf",
       "ts": 1794970492,
       "time": "2026-11-18T10:54:52.000+08:00",
       "source": "华尔街见闻",
       "title": "军工板块震荡下探，航发科技逼近跌停，洪都航空、建设工业、国科军工、中航成飞、航天南湖等跌超7%。",
       "url": "https://wallstreetcn.com/livenews/3201672"
+    },
+    {
+      "id": "1k50o6u",
+      "ts": 1794970492,
+      "time": "2026-11-18T10:54:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "A股军工板块震荡下探，航发科技逼近跌停，洪都航空、建设工业、国科军工、中航成飞、航天南湖等跌超7%。",
+      "url": "https://wallstreetcn.com/livenews/3201673"
     },
     {
       "id": "17wn29a",
