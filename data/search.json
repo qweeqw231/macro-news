@@ -1,11 +1,163 @@
 {
-  "generatedAt": "2026-11-18T22:08:04.428Z",
+  "generatedAt": "2026-11-18T22:23:07.642Z",
   "windowDays": 62,
   "from": "2026-09-18",
   "days": 62,
   "fromHistory": 17,
-  "total": 57257,
+  "total": 57277,
   "items": [
+    {
+      "id": "awc5dx",
+      "ts": 1795040321,
+      "time": "2026-11-19T06:18:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "OpenAI总裁：网络安全业务的规模可能超过编程业务",
+      "url": "https://wallstreetcn.com/livenews/3202208"
+    },
+    {
+      "id": "hczuv7",
+      "ts": 1795040292,
+      "time": "2026-11-19T06:18:12.000+08:00",
+      "source": "华尔街见闻",
+      "title": "微软首席执行官萨提亚·纳德拉就英伟达前首席执行官黄仁勋辞职一事表示，希望给予其空间以解决问题，后续步骤将由英伟达董事会决定。",
+      "url": "https://wallstreetcn.com/livenews/3202207"
+    },
+    {
+      "id": "1vx8p4m",
+      "ts": 1795040292,
+      "time": "2026-11-19T06:18:12.000+08:00",
+      "source": "新浪财经",
+      "title": "纽约汇市：美元上涨 英镑在通胀数据公布后跌至近一年低点",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfiwp6417576.shtml"
+    },
+    {
+      "id": "2i2p64",
+      "ts": 1795039999,
+      "time": "2026-11-19T06:13:19.000+08:00",
+      "source": "华尔街见闻",
+      "title": "最近24小时，现货比特币跌3.09%，暂报62300美元；",
+      "url": "https://wallstreetcn.com/livenews/3202206"
+    },
+    {
+      "id": "1l50fm2",
+      "ts": 1795039973,
+      "time": "2026-11-19T06:12:53.000+08:00",
+      "source": "东方财富",
+      "title": "“看五十年的中国就来深圳”（记者手记）",
+      "url": "http://finance.eastmoney.com/news/1350,202611193934406184.html"
+    },
+    {
+      "id": "19oc0m5",
+      "ts": 1795039971,
+      "time": "2026-11-19T06:12:51.000+08:00",
+      "source": "东方财富",
+      "title": "“创新优势”从何而来（人民论坛）",
+      "url": "http://finance.eastmoney.com/news/1350,202611193934405933.html"
+    },
+    {
+      "id": "mj8yf2",
+      "ts": 1795039971,
+      "time": "2026-11-19T06:12:51.000+08:00",
+      "source": "东方财富",
+      "title": "今年前10月我国与APEC其他经济体贸易增长25.4%",
+      "url": "http://finance.eastmoney.com/news/1352,202611193934404857.html"
+    },
+    {
+      "id": "4za3mj",
+      "ts": 1795039968,
+      "time": "2026-11-19T06:12:48.000+08:00",
+      "source": "东方财富",
+      "title": "《地理标志保护和运用“十五五”规划》印发",
+      "url": "http://finance.eastmoney.com/news/1346,202611193934403217.html"
+    },
+    {
+      "id": "pghz4u",
+      "ts": 1795039967,
+      "time": "2026-11-19T06:12:47.000+08:00",
+      "source": "东方财富",
+      "title": "从一份“成绩单”看粤港澳大湾区外贸新意足",
+      "url": "http://finance.eastmoney.com/news/1352,202611193934404056.html"
+    },
+    {
+      "id": "rers0y",
+      "ts": 1795039967,
+      "time": "2026-11-19T06:12:47.000+08:00",
+      "source": "东方财富",
+      "title": "从一颗车厘子看跨境贸易便利化",
+      "url": "http://finance.eastmoney.com/news/1354,202611193934403433.html"
+    },
+    {
+      "id": "3g633k",
+      "ts": 1795039965,
+      "time": "2026-11-19T06:12:45.000+08:00",
+      "source": "东方财富",
+      "title": "一道地方美食，奋力迈向百亿产业（神州看点）",
+      "url": "http://finance.eastmoney.com/news/1355,202611193934404147.html"
+    },
+    {
+      "id": "13bhfu1",
+      "ts": 1795039963,
+      "time": "2026-11-19T06:12:43.000+08:00",
+      "source": "东方财富",
+      "title": "一增一稳，外商真金白银投下信任票（读数）",
+      "url": "http://finance.eastmoney.com/news/1352,202611193934405056.html"
+    },
+    {
+      "id": "6pjcco",
+      "ts": 1795039962,
+      "time": "2026-11-19T06:12:42.000+08:00",
+      "source": "东方财富",
+      "title": "贵州毕节 奋力赶超跨越 加快建设贯彻新发展理念示范区",
+      "url": "http://finance.eastmoney.com/news/1354,202611193934402942.html"
+    },
+    {
+      "id": "1mj0xfb",
+      "ts": 1795039960,
+      "time": "2026-11-19T06:12:40.000+08:00",
+      "source": "东方财富",
+      "title": "贵州黔南州 奋力谱写民族地区高质量发展和现代化建设新篇章",
+      "url": "http://finance.eastmoney.com/news/1355,202611193934404249.html"
+    },
+    {
+      "id": "vygagh",
+      "ts": 1795039919,
+      "time": "2026-11-19T06:11:59.000+08:00",
+      "source": "新浪财经",
+      "title": "美国股市：科技股反弹 Anthropic重磅IPO将成AI交易试金石",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfiwp6415364.shtml"
+    },
+    {
+      "id": "hygxxd",
+      "ts": 1795039906,
+      "time": "2026-11-19T06:11:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "穆迪：下调英伟达评级展望",
+      "url": "https://wallstreetcn.com/livenews/3202205"
+    },
+    {
+      "id": "bvhe6v",
+      "ts": 1795039868,
+      "time": "2026-11-19T06:11:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周三（11月18日）纽约尾盘（周四北京时间05:59），离岸人民币（CNH）兑美元报6.6693元，较周二纽约尾盘跌21点，日内整体交投于6.6646-6.6703元区间。",
+      "url": "https://wallstreetcn.com/livenews/3202204"
+    },
+    {
+      "id": "8ams8o",
+      "ts": 1795039720,
+      "time": "2026-11-19T06:08:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周三（11月18日）纽约尾盘，标普500股指期货最终大跌0.26%，道指期货跌1.13%，纳斯达克100股指期货涨0.35%。",
+      "url": "https://wallstreetcn.com/livenews/3202203"
+    },
+    {
+      "id": "ehfddc",
+      "ts": 1795039509,
+      "time": "2026-11-18T22:05:09.000Z",
+      "source": "中新网",
+      "title": "首次运投成功！国产“空中重卡”来了",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-19/10734435.shtml"
+    },
     {
       "id": "13wohw8",
       "ts": 1795039501,
@@ -117,6 +269,14 @@
       "source": "东方财富",
       "title": "高端农机驶向全链自主可控",
       "url": "http://finance.eastmoney.com/news/1354,202611193934396830.html"
+    },
+    {
+      "id": "1pieegl",
+      "ts": 1795039337,
+      "time": "2026-11-19T06:02:17.000+08:00",
+      "source": "东方财富",
+      "title": "在产业协同发展中优化收入分配",
+      "url": "http://finance.eastmoney.com/news/1350,202611193934399439.html"
     },
     {
       "id": "1yw788y",
