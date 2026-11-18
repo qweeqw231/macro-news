@@ -6,92 +6,95 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-18T15:20:45.996Z",
-  "durationMs": 19897,
+  "startedAt": "2026-11-18T15:23:18.461Z",
+  "durationMs": 23254,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
-      "ok": true,
-      "count": 250,
-      "ms": 9296
+      "ok": false,
+      "count": 0,
+      "ms": 17014,
+      "error": "fetch failed",
+      "causeCode": "UND_ERR_CONNECT_TIMEOUT",
+      "causeMessage": "Connect Timeout Error (attempted address: api-one.wallstcn.com:443, timeout: 10000ms)"
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1190
+      "ms": 1346
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 2727
+      "ms": 2442
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 1320
+      "ms": 3830
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 2700
+      "ms": 4330
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1958
+      "ms": 2507
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 2379
+      "ms": 2902
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 15156
+      "ms": 14345
     }
   ],
   "quotes": 75,
-  "added": 11,
+  "added": 2,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7146,
-    "kept": 7146,
+    "candidates": 7148,
+    "kept": 7148,
     "evicted": 0,
-    "deduped": 296,
+    "deduped": 149,
     "days": [
       {
         "day": "2026-11-18",
-        "incoming": 273,
-        "candidates": 998,
-        "kept": 998,
+        "incoming": 133,
+        "candidates": 1000,
+        "kept": 1000,
         "evicted": 0,
-        "deduped": 264,
-        "added": 11
+        "deduped": 131,
+        "added": 2
       },
       {
         "day": "2026-11-17",
-        "incoming": 15,
+        "incoming": 1,
         "candidates": 1454,
         "kept": 1454,
         "evicted": 0,
-        "deduped": 15,
+        "deduped": 1,
         "added": 0
       },
       {
