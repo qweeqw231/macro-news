@@ -137,6 +137,8 @@ test('降级表也必须认识 CMDTY（假日表加载失败时不能退回休�
   assert.match(src, /CMDTY: \[6, 29\]/);
   assert.match(src, /market === 'CMDTY' && h < 5/);
   assert.match(src, /market === 'CMDTY' && wd === 1 && h < 6/);
+  // 两处判定共用一套模型：不再以「假日表是否加载」为前提
+  assert.doesNotMatch(src, /QSx\.sessionAt && MARKET_CAL/);
 });
 
 test('worstState：local > delayed > realtime', () => {

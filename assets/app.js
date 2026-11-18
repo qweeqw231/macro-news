@@ -245,7 +245,12 @@
   function isTrading(market, now = new Date()) {
     // 2.4.1：优先用 IANA 时区 + 假日表的统一时段模型（否则日本文化の日会显示“交易中”）
     const QSx = window.MacroQuoteStatus;
-    if (QSx && QSx.sessionAt && MARKET_CAL) {
+    // 2026-11-18：不再要求「假日表已加载」才用统一模型 —— 否则 MARKET_CAL 缺失时
+    // 分组标题会退回下面的本地窗口表，而卡片状态仍走 sessionAt/classifySession，
+    // 两处判定分裂（CMDTY 曾因此显示「休市」而卡片是「实时」）。
+    // sessionAt 对 calendar 为空是安全的（holidaySet → calendar || {}），
+    // 只是这期间不识别假日，与旧降级表的能力一致。
+    if (QSx && QSx.sessionAt) {
       const info = QSx.sessionAt(market, now.getTime(), MARKET_CAL);
       if (info.known) return info.phase === 'open';
     }
