@@ -6,86 +6,86 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-18T14:53:02.238Z",
-  "durationMs": 14180,
+  "startedAt": "2026-11-18T15:00:29.052Z",
+  "durationMs": 15533,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 9030
+      "ms": 9601
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1827
+      "ms": 1924
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 3270
+      "ms": 2113
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 1289
+      "ms": 858
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 2623
+      "ms": 1687
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1768
+      "ms": 889
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 2192
+      "ms": 1431
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": false,
       "count": 0,
-      "ms": 7218,
+      "ms": 3006,
       "error": "RSS 全部入口失败：/sj/zxfb/rss.xml → fetch failed（ETIMEDOUT）",
       "causeCode": "ETIMEDOUT"
     }
   ],
   "quotes": 75,
-  "added": 8,
+  "added": 10,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 6723,
-    "kept": 6723,
+    "candidates": 6733,
+    "kept": 6733,
     "evicted": 0,
-    "deduped": 297,
+    "deduped": 289,
     "days": [
       {
         "day": "2026-11-18",
-        "incoming": 279,
-        "candidates": 972,
-        "kept": 972,
+        "incoming": 273,
+        "candidates": 982,
+        "kept": 982,
         "evicted": 0,
-        "deduped": 271,
-        "added": 8
+        "deduped": 263,
+        "added": 10
       },
       {
         "day": "2026-11-17",
