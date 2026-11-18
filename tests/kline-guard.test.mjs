@@ -169,8 +169,11 @@ test('增量 upsert：只刷新最后几根时保留历史与成交量', () => {
 });
 
 test('写 K 线的脚本都接入共享守卫', () => {
-  assert.match(read('src/collect.mjs'), /import \{ decideBars, markCloseOnlyBars \} from '\.\/kline-guard\.mjs'/);
-  assert.match(read('src/collect.mjs'), /const decision = decideBars\(prev && prev\.bars, incoming\)/);
+  assert.match(read('src/collect.mjs'), /import \{ decideBars, markCloseOnlyBars, barTime \} from '\.\/kline-guard\.mjs'/);
+  assert.match(read('src/collect.mjs'), /: decideBars\(prev && prev\.bars, incoming\)/);
+  // 2026-11-18：6 个周/月文件改由自有日 K 聚合维护，且聚合结果明显变短时仍拒
+  assert.match(read('src/collect.mjs'), /WM_FROM_DAILY/);
+  assert.match(read('src/collect.mjs'), /derive-shorter/);
   // 2026-11-18：分钟窗口是滚动窗口，不再走「短覆盖」判定，改为 upsert + 尾部裁剪
   assert.match(read('scripts/update-kline-minute.mjs'), /upsertBars\(oldDoc\.bars, incoming\)/);
   assert.match(read('scripts/update-kline-minute.mjs'), /KEEP_SPEC/);

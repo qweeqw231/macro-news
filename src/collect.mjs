@@ -22,7 +22,8 @@ import { fetchPortfolioQuotesFast } from './portfolio.mjs';
 import { finalizeClosedQuotes } from './quote-finalize.mjs';
 import { readBriefingMeta } from './brief-meta.mjs';
 import { dedupeItems } from './news-dedupe.mjs';
-import { decideBars, markCloseOnlyBars } from './kline-guard.mjs';
+import { decideBars, markCloseOnlyBars, barTime } from './kline-guard.mjs';
+import { aggregateDaily } from './aggregate.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
 import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
@@ -144,6 +145,16 @@ async function collectKlines(startedAt, onlyKeys) {
     { period: '1w', limit: KLINE_NO_CAP, suffix: '_1w' },
     { period: '1M', limit: KLINE_NO_CAP, suffix: '_1M' },
   ];
+  // 2026-11-18：源侧周/月历史比我们短（或首桶口径不同）的这 6 个文件，不再依赖源侧周/月线，
+  //   改用自有日 K 聚合生成：replace = 整条替换（早期导入的桶按 CHANGELOG 2.25.1 记录后移除），
+  //   union = 保留早期历史、重叠段用聚合值覆盖（ndx 聚合只有 2019 起，不能砍掉 2007/2000 起的部分）。
+  const WM_FROM_DAILY = new Map([
+    ['sz_comp', { '1w': 'replace' }],
+    ['hsi', { '1M': 'replace' }],
+    ['spx', { '1M': 'replace' }],
+    ['brent', { '1w': 'replace' }],
+    ['ndx', { '1w': 'union', '1M': 'union' }],
+  ]);
   for (const key of keys) {
     if (!klineAvailable(key)) { klineSkip.push(key); continue; }
     const meta = klineTarget(key);
@@ -155,7 +166,26 @@ async function collectKlines(startedAt, onlyKeys) {
         //   固定 1000 时，文件被 update-kline-last 加过一根（1,001 根）后，
         //   每轮抓到的 1000 根首根更晚、根数更少 ⇒ 被 decideBars 判 shorter 整体拒绝，
         //   usdcny / xau 自 2026-11-04 起停更。现在按源侧全量抓取，两文件按并集自然长大。
-        const incoming = await fetchKline(key, spec.period, spec.limit);
+        // 2026-11-18：ndx 的源侧周/月只有 2019 起（398 / 92 根），而文件里有 2007-08 / 2000-01
+        //   起的早期历史。源侧直取必然「根数更少 + 左端更晚」⇒ 按约定必须拒
+        //   （不能拿短序列覆盖长历史），于是这两个周期改为「自有日 K 聚合 ∪ 现有历史」，
+        //   既保住早期历史，又跟得上最新一周/月；重叠段聚合值与源侧逐桶一致。
+        const derive = spec.period !== '1d' ? WM_FROM_DAILY.get(key)?.[spec.period] : null;
+        let incoming;
+        if (derive) {
+          const daily = await fetchKline(key, '1d', 20000);
+          const agg = aggregateDaily(daily, spec.period === '1w' ? 'week' : 'month');
+          if (derive === 'union') {
+            const prevDoc = await readJSON(file, null);
+            const merged = new Map((prevDoc?.bars || []).map((b) => [barTime(b), b]));
+            for (const b of agg) merged.set(barTime(b), b);
+            incoming = [...merged.values()].sort((a, b) => (barTime(a) < barTime(b) ? -1 : 1));
+          } else {
+            incoming = agg;
+          }
+        } else {
+          incoming = await fetchKline(key, spec.period, spec.limit);
+        }
         const lock = await acquireKlineLock(key);
         if (!lock.ok) {
           lockSkipped++;
@@ -166,7 +196,13 @@ async function collectKlines(startedAt, onlyKeys) {
         try {
           const prev = await readJSON(file, null);
           // 2.4.10：短序列不得覆盖长序列（见 src/kline-guard.mjs）
-          const decision = decideBars(prev && prev.bars, incoming);
+          //   derived（自有日 K 聚合）不走源侧比较：聚合是我们自己的口径，重叠段已与源侧逐桶一致；
+          //   只做一条防呆 —— 聚合根数不能明显少于现有文件（防止日 K 抓残后把周/月写秃）。
+          const decision = derive
+            ? (incoming.length >= (prev?.bars?.length || 0) - 5
+                ? { action: 'derive', bars: incoming }
+                : { action: 'reject', reason: 'derive-shorter', bars: incoming })
+            : decideBars(prev && prev.bars, incoming);
           if (decision.action === 'reject') {
             rejected.push(
               `${key}/${spec.period}: ${decision.reason}` +
@@ -193,10 +229,10 @@ async function collectKlines(startedAt, onlyKeys) {
             period: spec.period,
             generatedAt: startedAt.toISOString(),
             // 取数源写进文件：离线快照必须能自证是哪来的（东财 / 新浪 / 新浪外盘 / 上金所 / 腾讯）
-            source: getKlineSource() || '',
+            source: derive ? '自有日 K 重聚合（src/aggregate.mjs）' : (getKlineSource() || ''),
             bars,
           });
-          done.push(`${spec.period}:${bars.length}${decision.action === 'merge' ? '/merge' : ''}`);
+          done.push(`${spec.period}:${bars.length}${decision.action === 'merge' ? '/merge' : decision.action === 'derive' ? '/derive' : ''}`);
           written++;
         } finally {
           await releaseKlineLock(lock);
