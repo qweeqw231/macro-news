@@ -13,8 +13,9 @@
 #   bash scripts/push-data.sh data
 #   bash scripts/push-data.sh data/kline MSG_PREFIX="data: 服务端预生成分钟K"
 #
-# 退出码恒为 0：推送失败不是作业失败（数据没丢，下一轮会再推），
-#   标红只会把真正的问题淹没在噪声里 —— 与 update-kline-minute.mjs 的口径一致。
+# 退出码：默认 0（推送失败不是作业失败，数据没丢，下一轮会再推；标红只会淹没真问题）。
+#   但传 STRICT=1 时，rebase 冲突 / 连续 6 次推送失败会 exit 1 —— 用于「这条链路
+#   断了必须有人知道」的场景（kline-minute 的最后一根日 K，2026-11-18 曾静默空窗一小时）。
 
 set -uo pipefail
 
@@ -27,12 +28,23 @@ STAGE_PATHS=()
 for a in "$@"; do
   case "$a" in
     MSG_PREFIX=*) MSG_PREFIX="${a#MSG_PREFIX=}" ;;
+    STRICT=*) STRICT="${a#STRICT=}" ;;
     *) STAGE_PATHS+=("$a") ;;
   esac
 done
 if [ "${#STAGE_PATHS[@]}" -eq 0 ]; then
   STAGE_PATHS=(data)
 fi
+
+# 推送失败时的收敛动作：STRICT=1 让 step 真的失败（作业标红），否则保持宽松。
+strict_fail() {
+  if [ "${STRICT:-0}" = "1" ]; then
+    echo "❌ $1（STRICT=1 ⇒ 本步骤失败，作业标红）"
+    exit 1
+  fi
+  echo "$1（按宽松口径不标红，下一轮会重新采集）"
+  exit 0
+}
 
 git config user.name  "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -86,11 +98,9 @@ for i in 1 2 3 4 5 6; do
   git fetch origin main || true
   if ! git rebase origin/main; then
     git rebase --abort || true
-    echo "rebase 冲突：本轮放弃（不强推，下一轮会重新采集）"
-    exit 0
+    strict_fail "rebase 冲突：本轮放弃（不强推，下一轮会重新采集）"
   fi
   sleep 5
 done
 
-echo "连续 6 次推送失败：提交仍保留在本 runner 上，等下一轮再推"
-exit 0
+strict_fail "连续 6 次推送失败：提交仍保留在本 runner 上"

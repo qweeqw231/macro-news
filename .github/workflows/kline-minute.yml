@@ -114,4 +114,4 @@ jobs:
         #   的 Pages dispatch 会因取不到 token 静默跳过
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: 'bash scripts/push-data.sh data/kline MSG_PREFIX="data: 服务端预生成分钟K"'
+        run: 'bash scripts/push-data.sh data/kline MSG_PREFIX="data: 服务端预生成分钟K" STRICT=1'

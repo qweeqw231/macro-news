@@ -5,15 +5,17 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
 
 const require = createRequire(import.meta.url);
 const QS = require('../assets/quote-status.js');
+const CAL = JSON.parse(readFileSync(new URL('../assets/market-calendar.json', import.meta.url), 'utf8'));
+const { lastClosedBarDate } = await import('../src/kline-finalize.mjs');
 
 const NOW = Date.parse('2026-11-03T10:00:00+08:00');
 const at = (hm) => `2026-11-03T${hm}:00+08:00`;
 
-test('无源时间永远不能是 realtime', () => {
-  const r = QS.quoteStatus({ sourceTime: null, now: NOW });
+test('无源时间永远不能是 realtime', () => {  const r = QS.quoteStatus({ sourceTime: null, now: NOW });
   assert.equal(r.state, 'delayed');
   assert.equal(r.card, '延迟（无源时间）');
   assert.equal(r.summary, '数据时间未知 · 延迟');
@@ -101,6 +103,40 @@ test('K线本地预生成：来源与三态必须写本地快照', () => {
   assert.equal(local.state, 'local');
   assert.equal(local.full, '本地预生成 · 11-02 · 昨日收盘 · 本地快照');
   assert.ok(local.short.includes('本地快照'));
+});
+
+// 2026-11-18：CMDTY 原先没有连续时段配置 ⇒ sessionAt 返回 known:false ⇒
+//   分组标题降级判成「休市」，而卡片时间是新鲜的。补一段与 05:00 定稿对齐的窗口。
+test('CMDTY：盘中 open，05:00-06:00 与周末为休市', () => {
+  const at = (s) => Date.parse(s);
+  const phase = (s) => QS.sessionAt('CMDTY', at(s), CAL).phase;
+  assert.equal(phase('2026-11-18T23:00:00+08:00'), 'open', '周三盘中');
+  assert.equal(phase('2026-11-18T12:00:00+08:00'), 'open', '周三午间（24h 品种无午休）');
+  assert.equal(phase('2026-11-18T02:00:00+08:00'), 'open', '凌晨仍属前一日那根');
+  assert.notEqual(phase('2026-11-18T05:30:00+08:00'), 'open', '05:00-06:00 日间休市');
+  assert.notEqual(phase('2026-11-21T05:30:00+08:00'), 'open', '周六 05:00 之后休市');
+  assert.equal(phase('2026-11-21T02:00:00+08:00'), 'open', '周六 00:00-05:00 仍是周五那根');
+  assert.notEqual(phase('2026-11-22T23:00:00+08:00'), 'open', '周日全天休市');
+  assert.notEqual(phase('2026-11-23T05:00:00+08:00'), 'open', '周一 06:00 前休市');
+  assert.equal(phase('2026-11-23T06:30:00+08:00'), 'open', '周一 06:00 开盘');
+});
+
+test('CMDTY 与 K 线定稿口径一致：05:00 后状态不是 open，且上一根才刚定稿', () => {
+  const before = Date.parse('2026-11-18T04:30:00+08:00');
+  // 04:30 仍在交易（11-17 那根还在走）⇒ 最后一根已定稿的是 11-16
+  assert.equal(QS.sessionAt('CMDTY', before, CAL).phase, 'open');
+  assert.equal(lastClosedBarDate('CMDTY', before, CAL), '2026-11-16');
+  // 05:30 已过 05:00 ⇒ 状态必须不是 open，且 11-17 那根刚定稿
+  const after = Date.parse('2026-11-18T05:30:00+08:00');
+  assert.notEqual(QS.sessionAt('CMDTY', after, CAL).phase, 'open');
+  assert.equal(lastClosedBarDate('CMDTY', after, CAL), '2026-11-17');
+});
+
+test('降级表也必须认识 CMDTY（假日表加载失败时不能退回休市）', () => {
+  const src = readFileSync(new URL('../assets/app.js', import.meta.url), 'utf8');
+  assert.match(src, /CMDTY: \[6, 29\]/);
+  assert.match(src, /market === 'CMDTY' && h < 5/);
+  assert.match(src, /market === 'CMDTY' && wd === 1 && h < 6/);
 });
 
 test('worstState：local > delayed > realtime', () => {

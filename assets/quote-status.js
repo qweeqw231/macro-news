@@ -138,6 +138,19 @@
       tail: 360, openWeekday: 1,
       note: '24h 连续：周一 06:00 开盘 → 周六 06:00 收盘（= 22:00 UTC 日切）',
     },
+    // CMDTY（伦敦金/银、布伦特）：周一 06:00 开盘 → 周六 05:00 收盘（北京），
+    //   每天 05:00-06:00 是唯一休市窗口。
+    //   · 与 src/kline-finalize.mjs 的 NO_SESSION_CLOSE.CMDTY（北京 05:00 收盘、
+    //     D+1 05:00 定稿）是同一个口径：05:00-06:00 状态为「已收盘」，K 线也在 05:00
+    //     之后定稿，不会出现「状态说在交易、K 线已定稿」的自相矛盾。
+    //   · tail:300 → 周六 00:00-05:00 仍算周五那根；openWeekday:1 → 周一 06:00 前是周末。
+    //   · 刻意不做夏令时区分：仓库的收盘/定稿口径本身就固定北京 05:00，
+    //     跟着伦敦/纽约夏令时位移反而与定稿时刻打架。
+    CMDTY: {
+      tz: 'Asia/Shanghai', windows: [[360, 1740]],
+      tail: 300, openWeekday: 1,
+      note: '24h 准连续：周一 06:00 开盘 → 周六 05:00 收盘（05:00-06:00 日间休市）',
+    },
   };
   var cfgFor = function (market) { return MARKET_SESSIONS[market] || CONTINUOUS_SESSIONS[market]; };
 
