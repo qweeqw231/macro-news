@@ -52,7 +52,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchKline, getKlineSource, klineTarget } from '../src/sources.mjs';
-import { decideBars } from '../src/kline-guard.mjs';
+import { upsertBars } from '../src/kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -118,6 +118,16 @@ const PERIOD_SPEC = {
   '15m': { limit: 600,  order: 4 },   // ≈ 24 个交易日
   '1m':  { limit: 300,  order: 5 },   // ≈ 1.2 个交易日
 };
+
+/**
+ * 落盘窗口（根数）——与上面的抓取 limit **解耦**。
+ *
+ * 2026-11-18：原先这里是「抓 600 根 → 用 decideBars 和存量 1090 根比 → 判 shorter
+ * 整条拒绝」，于是 15m/1m 只要被拒一次就永远回不去（84 个分钟文件全部冻结）。
+ * 现在改成 upsert 合并后再按窗口裁掉最老的部分；窗口只决定保留多久，不参与新旧比较。
+ */
+const KEEP_SPEC = { '5m': 2000, '30m': 1600, '60m': 1200, '15m': 1200, '1m': 1000 };
+const DEFAULT_KEEP = 2000;
 
 // 请求之间的间隔（毫秒）：东财按 IP 限流，打太密就会被挂住/拒绝。
 // ⚠ Actions 的 runner IP 是**共享**的（同一 IP 上还有别的用户在打东财）⇒ 经常处于限流边缘，
@@ -242,21 +252,20 @@ outer: for (const period of periodList) {
       continue;
     }
     try {
-      // 2.4.10：短序列不得覆盖长序列
+      // 2.4.10 的短覆盖守卫**不适用于分钟窗口**：分钟序列是「只增不减的滚动窗口」，
+      //   且每一轮写入的最后一根都是还没走完的 bar，下一轮必被源侧重述
+      //   （实测 eurusd/5m 只有最后一根 1.1052 → 1.1053 的差异）。
+      //   用 decideBars 逐根精确比较 ⇒ 一条 1 分钱的差异就把整条判死、文件永久冻结。
+      //   ⇒ 按时间键 upsert（保留旧历史、新值覆盖），再按 KEEP_SPEC 裁掉最老的头部。
       let outBars = incoming;
       let oldDoc = null;
       if (existsSync(file)) {
         try { oldDoc = JSON.parse(await readFile(file, 'utf8')); } catch { oldDoc = null; }
-        if (oldDoc) {
-          const d = decideBars(oldDoc.bars, incoming);
-          if (d.action === 'reject') {
-            rejected.push(`${key}/${period}: ${d.reason}（新 ${incoming.length} 根 < 现有 ${(oldDoc.bars || []).length} 根）`);
-            console.log(`  ⛔ ${key.padEnd(9)} ${period.padEnd(3)} rejected: ${d.reason}，保留现有文件`);
-            await sleep(GAP_MS);
-            continue;
-          }
-          outBars = d.bars;
-        }
+      }
+      if (oldDoc && Array.isArray(oldDoc.bars) && oldDoc.bars.length) {
+        const merged = upsertBars(oldDoc.bars, incoming);
+        const keep = KEEP_SPEC[period] || DEFAULT_KEEP;
+        outBars = merged.length > keep ? merged.slice(merged.length - keep) : merged;
       }
 
       const payload = {

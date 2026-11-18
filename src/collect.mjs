@@ -11,7 +11,7 @@
 //   node src/collect.mjs              # 正常采集
 //   node src/collect.mjs --since 48   # 回补最近 48 小时（首次初始化用）
 
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -122,6 +122,11 @@ async function collectKlines(startedAt, onlyKeys) {
   const klineOk = [];
   const klineSkip = [];
   let lockSkipped = 0;
+  // 2026-11-18：周/月的 reject 必须落盘。此前只打在 Actions 日志里（要鉴权才看得到），
+  //   结果 csi300_1w 之类被守卫拦了 5 个交易日都只能靠「末根不动」发现。
+  //   格式与 data/kline/min/_status.json 一致：{generatedAt, ok, failed, failures, rejected}。
+  const rejected = [];
+  let written = 0;
   const { INDICES, PORTFOLIO_KLINE, fetchKline, klineAvailable, klineTarget, getKlineSource } =
     await import('./sources.mjs');
   // 23 个指数 + 6 个组合标的（纳指100 / 伦敦金 / 上海金 / 伦敦银 / 布伦特 / 人民币中间价）
@@ -163,6 +168,10 @@ async function collectKlines(startedAt, onlyKeys) {
           // 2.4.10：短序列不得覆盖长序列（见 src/kline-guard.mjs）
           const decision = decideBars(prev && prev.bars, incoming);
           if (decision.action === 'reject') {
+            rejected.push(
+              `${key}/${spec.period}: ${decision.reason}` +
+                `（新 ${incoming.length} 根 < 现有 ${(prev.bars || []).length} 根）`
+            );
             console.log(
               `  ⛔ ${key} ${spec.period} rejected: ${decision.reason}` +
                 `（新 ${incoming.length} 根 / 现有 ${(prev.bars || []).length} 根），保留现有文件`
@@ -188,6 +197,7 @@ async function collectKlines(startedAt, onlyKeys) {
             bars,
           });
           done.push(`${spec.period}:${bars.length}${decision.action === 'merge' ? '/merge' : ''}`);
+          written++;
         } finally {
           await releaseKlineLock(lock);
         }
@@ -204,6 +214,29 @@ async function collectKlines(startedAt, onlyKeys) {
     `[collect] K线：${klineOk.length} 个标的 × ${KLINE_SPEC.length} 个周期，跳过 ${klineSkip.length} 个（${klineSkip.join(', ') || '无'}），锁占用 ${lockSkipped} 次`
   );
   if (klineOk.length) console.log(`[collect] K线明细：${klineOk.join(' ')}`);
+
+  // 守卫拒绝明细落盘（与分钟预生成同一格式）；没有拒绝时删掉上一轮的状态文件。
+  const statusFile = path.join(DATA, 'kline', '_status.json');
+  if (rejected.length) {
+    await writeFile(
+      statusFile,
+      JSON.stringify(
+        {
+          generatedAt: new Date().toISOString(),
+          ok: written,
+          failed: klineSkip.length,
+          failures: [],
+          rejected,
+        },
+        null,
+        2
+      ),
+      'utf8'
+    );
+    console.log(`  ⚠ 守卫拒绝明细已写入 ${path.relative(ROOT, statusFile)}（${rejected.length} 条）`);
+  } else if (existsSync(statusFile)) {
+    await rm(statusFile, { force: true });
+  }
 }
 
 async function main() {

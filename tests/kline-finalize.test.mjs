@@ -123,3 +123,16 @@ test('writePlan：盘中更新 / 收盘补定稿 / 已定稿幂等 / 收盘缓�
   // 没有交易时段配置、也没有 NO_SESSION_CLOSE 规则的：不归本脚本管
   assert.equal(writePlan('XX', now, {}).action, 'skip');
 });
+
+test('2026-11-18：CMDTY 已定稿但源侧已有下一根 ⇒ open（xau 缺 11-18 事故）', () => {
+  const now = BJ('2026-11-18T22:30:00');
+  const st = { lastBar: '2026-11-17', generatedAt: '2026-11-17T21:23:03Z' };
+  // 源侧还没出现 11-18 那根 ⇒ 维持「已定稿」，不重复写
+  assert.equal(writePlan('CMDTY', now, st).action, 'skip');
+  // 源侧已经有 11-18 那根 ⇒ 必须 open，否则这根在途 bar 永远没有路径被创建
+  const p = writePlan('CMDTY', now, { ...st, srcLast: '2026-11-18' });
+  assert.equal(p.action, 'open');
+  assert.equal(p.reason, 'source-newer-bar');
+  // 源侧末根仍是已定稿那根 ⇒ 不需要额外写
+  assert.equal(writePlan('CMDTY', now, { ...st, srcLast: '2026-11-17' }).action, 'skip');
+});

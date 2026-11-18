@@ -171,7 +171,10 @@ test('增量 upsert：只刷新最后几根时保留历史与成交量', () => {
 test('写 K 线的脚本都接入共享守卫', () => {
   assert.match(read('src/collect.mjs'), /import \{ decideBars, markCloseOnlyBars \} from '\.\/kline-guard\.mjs'/);
   assert.match(read('src/collect.mjs'), /const decision = decideBars\(prev && prev\.bars, incoming\)/);
-  assert.match(read('scripts/update-kline-minute.mjs'), /decideBars\(oldDoc\.bars, incoming\)/);
+  // 2026-11-18：分钟窗口是滚动窗口，不再走「短覆盖」判定，改为 upsert + 尾部裁剪
+  assert.match(read('scripts/update-kline-minute.mjs'), /upsertBars\(oldDoc\.bars, incoming\)/);
+  assert.match(read('scripts/update-kline-minute.mjs'), /KEEP_SPEC/);
+  assert.doesNotMatch(read('scripts/update-kline-minute.mjs'), /const d = decideBars/);
   assert.match(read('scripts/update-kline-full.mjs'), /decideBars\(oldTrimmed, incoming\)/);
   // 2.9.0：存量先裁掉未收盘的当天 bar，否则 decideBars 会把它当缺失历史合并回来
   assert.match(read('scripts/update-kline-full.mjs'), /dropUnclosedBars\(old\.bars/);
@@ -184,4 +187,47 @@ test('只刷新最后一根的脚本也必须经过守卫（2.4.11 漏网点）'
   assert.match(src, /markCloseOnlyBars\(upsertBars\(old\.bars, latest\)\)/);
   // 不能再回到「Map 直接覆盖」：上金所官网无 volume，会抹掉东财成交量
   assert.doesNotMatch(src, /new Map\(\(old\.bars/);
+});
+
+// ── 2026-11-18：只放宽「最后一桶」与「价格精度」，不拆守卫 ──
+
+test('最后一桶被源侧重述 ⇒ 仍然并集（xau_1w 3910.34 → 3879.92 的真实形态）', () => {
+  const old = ['2026-10-19', '2026-10-26', '2026-11-02', '2026-11-09', '2026-11-13'].map((t, i) => obj(t, 100 + i));
+  // 源侧起点更晚（左端残缺）、最后一桶 close 被重述（103 → 109）、右端更新
+  const next = ['2026-11-02', '2026-11-09', '2026-11-13', '2026-11-18'].map((t, i) =>
+    obj(t, i === 2 ? 109 : 102 + i)
+  );
+  const d = decideBars(old, next);
+  assert.equal(d.action, 'merge');
+  assert.equal(d.reason, 'left-edge-merge');
+  assert.equal(d.bars.length, 6, '旧左端 10-19 / 10-26 必须保留');
+  assert.equal(d.bars.at(-1).t, '2026-11-18');
+  assert.equal(d.bars.find((b) => b.t === '2026-11-13').c, 109, '最后一桶按源侧最新值覆盖');
+});
+
+test('价格精度容差：997.323 vs 997.32 不算不一致', () => {
+  const old = ['2026-10-26', '2026-11-02', '2026-11-09', '2026-11-13'].map((t) => ({
+    t, o: 997.323, h: 997.323, l: 997.323, c: 997.323, v: 0,
+  }));
+  const next = ['2026-11-02', '2026-11-09', '2026-11-13', '2026-11-18'].map((t) => ({
+    t, o: 997.32, h: 997.32, l: 997.32, c: 997.32, v: 0,
+  }));
+  const d = decideBars(old, next);
+  assert.equal(d.action, 'merge', '精度差异不应把整条序列判死');
+});
+
+test('中段真实不一致 / 真短序列仍然拒绝（守卫没有被拆掉）', () => {
+  const old = ['2026-10-19', '2026-10-26', '2026-11-02', '2026-11-09', '2026-11-13'].map((t, i) => obj(t, 100 + i));
+  // 11-02 是中段、不是最后一桶：差 100% ⇒ 必须拒
+  const mid = ['2026-11-02', '2026-11-09', '2026-11-13', '2026-11-18'].map((t, i) =>
+    obj(t, i === 0 ? 200 : 101 + i)
+  );
+  const d1 = decideBars(old, mid);
+  assert.equal(d1.action, 'reject');
+  assert.equal(d1.reason, 'shorter-overlap-mismatch');
+  // 源侧只回 2 根（覆盖不足 80%）⇒ 仍然拒，且不能靠「最后一桶」放行
+  const tiny = ['2026-11-13', '2026-11-18'].map((t) => obj(t));
+  const d2 = decideBars(old, tiny);
+  assert.equal(d2.action, 'reject');
+  assert.equal(d2.reason, 'shorter-too-partial');
 });

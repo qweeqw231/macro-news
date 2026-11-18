@@ -144,17 +144,37 @@ function normBar(b) {
   return { t: String((b && b.t) || ''), o: +(b && b.o), c: +(b && b.c), h: +(b && b.h), l: +(b && b.l) };
 }
 
-const sameBar = (a, b) =>
-  a.o === b.o && a.h === b.h && a.l === b.l && a.c === b.c;
+/**
+ * 2026-11-18：价格精度容差。
+ * 源侧对同一根 bar 的报价精度会变（中证指数周线 997.323 → 997.32）、
+ * 或者重算历史（开盘价按复权/集合竞价修正）。用精确相等会把整条序列永久判死。
+ * 相对容差 1e-5（万分之一），并在小额价格上用绝对值 1e-5 兜底。
+ */
+export const PRICE_EPS_REL = 1e-5;
+
+const near = (a, b, eps) => Math.abs(a - b) <= eps * Math.max(1, Math.abs(a), Math.abs(b));
+
+const sameBarWithin = (a, b, eps) =>
+  near(a.o, b.o, eps) && near(a.h, b.h, eps) && near(a.l, b.l, eps) && near(a.c, b.c, eps);
 
 /**
+ * @param {Array} old 现有 bars
+ * @param {Array} next 本次抓取 bars（起点更晚且更短）
+ * @param {{priceEps?:number}} [opts] priceEps = 价格相对容差（默认 PRICE_EPS_REL）
  * @returns {string|null} null = 允许并集；否则返回拒绝原因
  *   · shorter-too-partial     新序列不足现有 80%（源端残缺/只回几十根）
  *   · shorter-right-behind    新序列右端比现有末根更旧
  *   · shorter-no-overlap      新旧序列没有共同时间键
- *   · shorter-overlap-mismatch 重叠区间 OHLC 对不上（不是同一序列）
+ *   · shorter-overlap-mismatch 重叠区间（除最后一桶外）OHLC 对不上（不是同一序列）
+ *
+ * ⚠ 2026-11-18 只放宽两处，**没有**放弃「短序列不得覆盖长序列」：
+ *   1) 重叠比较用价格精度容差（见 sameBarWithin）；
+ *   2) **跳过重叠区间的最后一桶** —— 周/月/分钟的最新一桶在写入时往往还没走完，
+ *      下一轮必然被源侧重述（xau_1w 3910.34 → 3879.92），拿它判死会让文件永久冻结。
+ *   覆盖率 < 80%、右端倒退、无重叠这三种真正残缺的情形仍然拒绝。
  */
-export function leftEdgeVerdict(old, next) {
+export function leftEdgeVerdict(old, next, opts = {}) {
+  const eps = Number.isFinite(opts.priceEps) ? opts.priceEps : PRICE_EPS_REL;
   const list = Array.isArray(old) ? old : [];
   const inc = Array.isArray(next) ? next : [];
   if (!list.length || !inc.length) return 'shorter-no-overlap';
@@ -162,13 +182,20 @@ export function leftEdgeVerdict(old, next) {
   if (barTime(inc[inc.length - 1]) < barTime(list[list.length - 1])) return 'shorter-right-behind';
   const oldMap = new Map(list.map((b) => [barTime(b), normBar(b)]));
   let overlap = 0;
+  let lastKey = '';
   for (const b of inc) {
-    const o = oldMap.get(barTime(b));
-    if (!o) continue;
+    const k = barTime(b);
+    if (!oldMap.has(k)) continue;
     overlap++;
-    if (!sameBar(o, normBar(b))) return 'shorter-overlap-mismatch';
+    if (k > lastKey) lastKey = k;
   }
   if (!overlap) return 'shorter-no-overlap';
+  for (const b of inc) {
+    const k = barTime(b);
+    const o = oldMap.get(k);
+    if (!o || k === lastKey) continue; // 最后一桶可能仍在变，留给并集覆盖
+    if (!sameBarWithin(o, normBar(b), eps)) return 'shorter-overlap-mismatch';
+  }
   return null;
 }
 

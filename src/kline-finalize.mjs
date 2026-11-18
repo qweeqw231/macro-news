@@ -134,7 +134,9 @@ export function dropUnclosedBars(bars, market, nowMs = Date.now(), calendar = CA
  *   skip     ：其余
  * @param {string} market
  * @param {number} nowMs
- * @param {{generatedAt?:string, lastBar?:string}} state 现有文件的状态
+ * @param {{generatedAt?:string, lastBar?:string, srcLast?:string}} state 现有文件的状态
+ *   srcLast = 源侧当前最后一根 bar 的日期（只有 FX / CMDTY 这类无交易时段的市场需要，
+ *   由调用方先抓一次最近几根再传进来；其它市场不看它）
  */
 export function writePlan(market, nowMs, state = {}, calendar = CAL) {
   const noSession = NO_SESSION_CLOSE[market];
@@ -145,10 +147,19 @@ export function writePlan(market, nowMs, state = {}, calendar = CAL) {
     const now = Number(nowMs);
     const closedDate = lastClosedNoSessionDate(market, now);
     const lastBar = String(state.lastBar || '');
+    const srcLast = String(state.srcLast || '');
     // 文件里已有比「最后一根已收完的 bar」更新的 bar（24h 品种的当天 bar、
     // 上海金夜盘写出的下一交易日 bar）⇒ 它还在变化，走 open 每轮 upsert。
     if (lastBar && closedDate && lastBar > closedDate) {
       return { action: 'open', reason: 'in-progress-bar' };
+    }
+    // 2026-11-18 事故（xau 缺 11-18 日 K）：CMDTY 在 05:00 后定稿的是昨天那根，
+    // 而源侧的「今天这根」往往要到定稿那一轮之后才出现。此时文件 lastBar == closedDate
+    // 且已定稿 ⇒ 下面的 already-finalized 会永久 skip，这根在途 bar 再也没有路径被创建。
+    // ⇒ 定稿状态不能只看文件，还要看源侧：源侧已经有比 closedDate 更新的 bar 就必须 open。
+    //   open 会 upsert 最近几根，顺带把已定稿那根按源侧重述值覆盖（收盘价会被修正）。
+    if (srcLast && closedDate && srcLast > closedDate) {
+      return { action: 'open', reason: 'source-newer-bar' };
     }
     const closeMs = barCloseMs(market, closedDate, calendar);
     if (closeMs == null || now - closeMs < 2 * 60 * 1000) {

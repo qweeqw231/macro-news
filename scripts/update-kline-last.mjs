@@ -19,7 +19,7 @@ import {
 } from '../src/sources.mjs';
 import { upsertBars, markCloseOnlyBars } from '../src/kline-guard.mjs';
 import { withKlineLock, lockSkipText } from '../src/kline-lock.mjs';
-import { writePlan, barDate, CAL } from '../src/kline-finalize.mjs';
+import { writePlan, barDate, CAL, NO_SESSION_CLOSE } from '../src/kline-finalize.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -56,12 +56,25 @@ async function main() {
       skipped++;
       continue;
     }
+    // FX / CMDTY 没有交易时段表，光看文件判断不出「源侧是不是已经有下一根」：
+    //   先抓最近 5 根再定计划 —— CMDTY 在 05:00 定稿那一轮，源侧的「今天这根」
+    //   常常还没出现；之后每一轮如果只看文件就会一直 already-finalized，
+    //   这根在途 bar 永远不会被创建（2026-11-18 xau 缺根事故）。
+    let prefetched = null;
+    if (NO_SESSION_CLOSE[market]) {
+      try {
+        prefetched = await fetchKline(key, '1d', 5);
+        if (prefetched && prefetched.length) {
+          state.srcLast = barDate(prefetched[prefetched.length - 1]);
+        }
+      } catch { prefetched = null; }
+    }
     const plan = writePlan(market, nowMs, state, CAL);
     if (plan.action === 'skip') { skipped++; continue; }
 
     try {
       // 只取最近 5 根：够覆盖「今天 + 上一交易日」，不会把全量历史拖下来
-      const latest = await fetchKline(key, '1d', 5);
+      const latest = prefetched && prefetched.length ? prefetched : await fetchKline(key, '1d', 5);
       if (!latest || !latest.length) { skipped++; continue; }
       // 定稿轮必须真的拿到「收盘日」那一根：源侧还没吐出今天的话，等下一轮，
       // 绝不能把昨天那根重新写一遍就算完。
