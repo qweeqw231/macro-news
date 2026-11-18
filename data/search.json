@@ -1,17 +1,145 @@
 {
-  "generatedAt": "2026-11-18T07:52:51.345Z",
+  "generatedAt": "2026-11-18T08:07:54.555Z",
   "windowDays": 62,
   "from": "2026-09-18",
   "days": 62,
   "fromHistory": 17,
-  "total": 56482,
+  "total": 56504,
   "items": [
     {
-      "id": "uxd5p9",
+      "id": "vsr6a8",
+      "ts": 1794989226,
+      "time": "2026-11-18T16:07:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "阿尔斯通欧股下跌7.8%创22年来新低，此前该公司公布了业绩报告。",
+      "url": "https://wallstreetcn.com/livenews/3201786"
+    },
+    {
+      "id": "dm6d8g",
+      "ts": 1794989168,
+      "time": "2026-11-18T16:06:08.000+08:00",
+      "source": "新浪财经",
+      "title": "CoreWeave首席执行官：没有黄仁勋英伟达不会受影响",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvuz1106882.shtml"
+    },
+    {
+      "id": "mkl2n1",
+      "ts": 1794989097,
+      "time": "2026-11-18T16:04:57.000+08:00",
+      "source": "华尔街见闻",
+      "title": "格灵深瞳：2026年11月18日首次回购公司股份34.22万股，占总股本0.13%，价格区间14.93元/股至15.43元/股，支付资金总额519.81万元。",
+      "url": "https://wallstreetcn.com/livenews/3201785"
+    },
+    {
+      "id": "lrwej6",
+      "ts": 1794988996,
+      "time": "2026-11-18T16:03:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美湖股份：2026年11月18日首次回购25万股，占总股本0.07%，成交价19.41元/股至19.98元/股，支付491.41万元。",
+      "url": "https://wallstreetcn.com/livenews/3201784"
+    },
+    {
+      "id": "1iniiv9",
+      "ts": 1794988990,
+      "time": "2026-11-18T16:03:10.000+08:00",
+      "source": "华尔街见闻",
+      "title": "贝达药业：控股子公司Xcovery申报的盐酸恩沙替尼胶囊获欧盟委员会批准上市，用于ALK阳性晚期非小细胞肺癌成人患者治疗，成为首个在中国、美国及欧盟均获批上市的国产ALK抑制剂。",
+      "url": "https://wallstreetcn.com/livenews/3201783"
+    },
+    {
+      "id": "1uje6aq",
+      "ts": 1794988961,
+      "time": "2026-11-18T16:02:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "生益电子：持股5%以上股东的一致行动人东莞科创投资集团增持计划实施完毕，2026年11月9日至11月17日以集中竞价累计增持162.27万股，占总股本0.19%，金额9996.1万元。",
+      "url": "https://wallstreetcn.com/livenews/3201782"
+    },
+    {
+      "id": "1wfuq9j",
+      "ts": 1794988954,
+      "time": "2026-11-18T16:02:34.000+08:00",
+      "source": "新浪财经",
+      "title": "AI股票虽遭抛售 加密期货押注料Anthropic估值可达1.7万亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvf6987422.shtml"
+    },
+    {
+      "id": "ag0sup",
+      "ts": 1794988928,
+      "time": "2026-11-18T16:02:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "大疆正式调价，部分云台相机售价上涨",
+      "url": "https://wallstreetcn.com/livenews/3201781"
+    },
+    {
+      "id": "8vtpeu",
+      "ts": 1794988925,
+      "time": "2026-11-18T16:02:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "AI股票虽遭抛售 加密期货押注料Anthropic估值可达1.7万亿美元",
+      "url": "https://wallstreetcn.com/livenews/3201780"
+    },
+    {
+      "id": "mkw169",
+      "ts": 1794988866,
+      "time": "2026-11-18T16:01:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧洲斯托克50指数开盘涨0.3%，德国DAX指数平开，英国富时100指数跌0.3%，法国CAC 40指数平开。",
+      "url": "https://wallstreetcn.com/livenews/3201779"
+    },
+    {
+      "id": "18in5eg",
+      "ts": 1794988774,
+      "time": "2026-11-18T15:59:34.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达超预期财报未能打消华尔街顾虑：三家机构下调目标价，一家下调评级",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvf1656188.shtml"
+    },
+    {
+      "id": "18n6l6v",
+      "ts": 1794988667,
+      "time": "2026-11-18T15:57:47.000+08:00",
+      "source": "华尔街见闻",
+      "title": "金砖国家新开发银行首次批准乌兹别克斯坦贷款项目 规模3亿美元",
+      "url": "https://wallstreetcn.com/livenews/3201778"
+    },
+    {
+      "id": "1gv8zx2",
+      "ts": 1794988659,
+      "time": "2026-11-18T15:57:39.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普称与菲律宾签署全新贸易协议",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvc4878919.shtml"
+    },
+    {
+      "id": "1f36p54",
+      "ts": 1794988657,
+      "time": "2026-11-18T15:57:37.000+08:00",
+      "source": "新浪财经",
+      "title": "英国10月通胀率3.6%创一年最高，车用燃料成本同比飙升33.2%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvf6984336.shtml"
+    },
+    {
+      "id": "nhym1d",
+      "ts": 1794988456,
+      "time": "2026-11-18T15:54:16.000+08:00",
+      "source": "东方财富",
+      "title": "国家统计局：10月全国城镇不包含在校生16-24岁劳动力失业率为17.2%，连续两个月下降",
+      "url": "http://finance.eastmoney.com/news/1352,202611183933982412.html"
+    },
+    {
+      "id": "d0qiwy",
+      "ts": 1794988391,
+      "time": "2026-11-18T15:53:11.000+08:00",
+      "source": "东方财富",
+      "title": "专访德勤中国主席：“深圳周期”背后，中国制造业竞争力正在重塑",
+      "url": "http://finance.eastmoney.com/news/1355,202611183933969375.html"
+    },
+    {
+      "id": "1ng0jhi",
       "ts": 1794988290,
       "time": "2026-11-18T15:51:30.000+08:00",
       "source": "华尔街见闻",
-      "title": "特朗普：美国与菲律宾达成了一项不同以往的新贸易协议。",
+      "title": "特朗普称与菲律宾签署全新贸易协议",
       "url": "https://wallstreetcn.com/livenews/3201777"
     },
     {
@@ -47,12 +175,36 @@
       "url": "https://wallstreetcn.com/livenews/3201775"
     },
     {
+      "id": "1wfebng",
+      "ts": 1794987981,
+      "time": "2026-11-18T15:46:21.000+08:00",
+      "source": "东方财富",
+      "title": "高质量发展｜从“熊猫名片”到“开放引擎”，天府新区构建内陆开放新范式",
+      "url": "http://finance.eastmoney.com/news/1350,202611183933969620.html"
+    },
+    {
+      "id": "tichgw",
+      "ts": 1794987978,
+      "time": "2026-11-18T15:46:18.000+08:00",
+      "source": "东方财富",
+      "title": "政策速递｜多领域新政密集落地 天府新区求贤引才",
+      "url": "http://finance.eastmoney.com/news/1355,202611183933969465.html"
+    },
+    {
       "id": "1qu6fxj",
       "ts": 1794987962,
       "time": "2026-11-18T15:46:02.000+08:00",
       "source": "新浪财经",
       "title": "比特币徘徊在6.5万美元附近",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvf6975434.shtml"
+    },
+    {
+      "id": "1cq181s",
+      "ts": 1794987864,
+      "time": "2026-11-18T15:44:24.000+08:00",
+      "source": "东方财富",
+      "title": "吉林TIR跨境货运增长迅猛 前十月货值突破50亿元",
+      "url": "http://finance.eastmoney.com/news/1350,202611183933970675.html"
     },
     {
       "id": "2y5rw",
@@ -69,6 +221,14 @@
       "source": "华尔街见闻",
       "title": "陕西发行7年期一般债地方债，规模95.0000亿元，发行利率1.4900%，边际倍数5.07倍，倍数预期1.49；",
       "url": "https://wallstreetcn.com/livenews/3201774"
+    },
+    {
+      "id": "w93rds",
+      "ts": 1794987839,
+      "time": "2026-11-18T15:43:59.000+08:00",
+      "source": "东方财富",
+      "title": "聚焦降本增效 惠企减负政策运行机制将持续完善",
+      "url": "http://finance.eastmoney.com/news/1352,202611183933965974.html"
     },
     {
       "id": "lpcxg2",
@@ -157,6 +317,14 @@
       "source": "华尔街见闻",
       "title": "越南VN指数下跌2.9%，报1,677.39点。",
       "url": "https://wallstreetcn.com/livenews/3201771"
+    },
+    {
+      "id": "ketf26",
+      "ts": 1794986981,
+      "time": "2026-11-18T15:29:41.000+08:00",
+      "source": "东方财富",
+      "title": "毕马威发布2026年四季度《中国经济观察》",
+      "url": "http://finance.eastmoney.com/news/1352,202611183933967668.html"
     },
     {
       "id": "1tz3261",
@@ -327,6 +495,14 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvc4837681.shtml"
     },
     {
+      "id": "1pdheug",
+      "ts": 1794985753,
+      "time": "2026-11-18T15:09:13.000+08:00",
+      "source": "新浪财经",
+      "title": "图集丨习近平出席亚太经合组织工商领导人峰会开幕式并发表主旨演讲",
+      "url": "https://finance.sina.com.cn/china/2026-11-18/doc-inizcvvf1652971.shtml"
+    },
+    {
       "id": "bwwk21",
       "ts": 1794985730,
       "time": "2026-11-18T15:08:50.000+08:00",
@@ -439,11 +615,11 @@
       "url": "http://insurance.eastmoney.com/news/1215,202611183933938862.html"
     },
     {
-      "id": "1blxmyx",
+      "id": "12i8um7",
       "ts": 1794985254,
       "time": "2026-11-18T15:00:54.000+08:00",
       "source": "华尔街见闻",
-      "title": "11月18日收评：科创50指数涨超2%，算力硬件、算力租赁概念集体反弹",
+      "title": "11月18日收评：创业板指探底回升涨0.85%，两市成交仅1.37万亿",
       "url": "https://wallstreetcn.com/livenews/3201752"
     },
     {
