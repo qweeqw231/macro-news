@@ -1,11 +1,107 @@
 {
-  "generatedAt": "2026-11-18T20:53:10.589Z",
+  "generatedAt": "2026-11-18T21:08:16.269Z",
   "windowDays": 62,
   "from": "2026-09-18",
   "days": 62,
   "fromHistory": 17,
-  "total": 57202,
+  "total": 57214,
   "items": [
+    {
+      "id": "1qwywon",
+      "ts": 1795036016,
+      "time": "2026-11-19T05:06:56.000+08:00",
+      "source": "华尔街见闻",
+      "title": "据知情人士透露，Anthropic PBC的美国IPO股票发行价为每股83美元。",
+      "url": "https://wallstreetcn.com/livenews/3202176"
+    },
+    {
+      "id": "8qmcys",
+      "ts": 1795035976,
+      "time": "2026-11-19T05:06:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "派拓网络预计全年营收145.2亿-145.7亿美元，公司原本预计141亿-142亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3202175"
+    },
+    {
+      "id": "1a75ke4",
+      "ts": 1795035880,
+      "time": "2026-11-19T05:04:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国9月国际资本净流入 2610亿美元，前值 1998亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3202174"
+    },
+    {
+      "id": "1wr8uyh",
+      "ts": 1795035880,
+      "time": "2026-11-19T05:04:40.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国9月长期资本净流入 1553亿美元，前值 2792亿美元。",
+      "url": "https://wallstreetcn.com/livenews/3202173"
+    },
+    {
+      "id": "1m58uqz",
+      "ts": 1795035742,
+      "time": "2026-11-19T05:02:22.000+08:00",
+      "source": "华尔街见闻",
+      "title": "派拓网络PAWN将按45亿美元收购Applied Compute。",
+      "url": "https://wallstreetcn.com/livenews/3202172"
+    },
+    {
+      "id": "1sfgqvh",
+      "ts": 1795035668,
+      "time": "2026-11-19T05:01:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "加拿大股市下跌2.1%，创2020年11月以来最大单日跌幅。",
+      "url": "https://wallstreetcn.com/livenews/3202171"
+    },
+    {
+      "id": "n9ayjj",
+      "ts": 1795035615,
+      "time": "2026-11-19T05:00:15.000+08:00",
+      "source": "华尔街见闻",
+      "title": "纳斯达克金龙中国指数初步收跌1.3%。",
+      "url": "https://wallstreetcn.com/livenews/3202170"
+    },
+    {
+      "id": "1fip46d",
+      "ts": 1795035610,
+      "time": "2026-11-19T05:00:10.000+08:00",
+      "source": "华尔街见闻",
+      "title": "纳斯达克金龙中国指数初步收跌1.3%。",
+      "url": "https://wallstreetcn.com/livenews/3202169"
+    },
+    {
+      "id": "1qhujpi",
+      "ts": 1795035606,
+      "time": "2026-11-19T05:00:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美股费城金银指数跌5.8%，纽交所金矿开采商指数跌5.5%。",
+      "url": "https://wallstreetcn.com/livenews/3202168"
+    },
+    {
+      "id": "11mxy3t",
+      "ts": 1795035601,
+      "time": "2026-11-19T05:00:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美股费城金银指数跌5.8%，纽交所金矿开采商指数跌5.5%。",
+      "url": "https://wallstreetcn.com/livenews/3202167"
+    },
+    {
+      "id": "jl3tes",
+      "ts": 1795035308,
+      "time": "2026-11-19T04:55:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Robinhood首席执行官：提及市场（Mention Markets）容易被操纵。",
+      "url": "https://wallstreetcn.com/livenews/3202166"
+    },
+    {
+      "id": "zbjt1h",
+      "ts": 1795035268,
+      "time": "2026-11-19T04:54:28.000+08:00",
+      "source": "新浪财经",
+      "title": "旧金山联储行长支持进一步加息 呼吁审慎推进政策收紧",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfcqm0639237.shtml"
+    },
     {
       "id": "1nw301z",
       "ts": 1795035044,
@@ -613,6 +709,14 @@
       "source": "华尔街见闻",
       "title": "CoreWeave淡化黄仁勋离任影响，称英伟达仍是关键合作伙伴",
       "url": "https://wallstreetcn.com/livenews/3202107"
+    },
+    {
+      "id": "114eknh",
+      "ts": 1795024805,
+      "time": "2026-11-19T02:00:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美联储10月会议纪要关注点",
+      "url": "https://wallstreetcn.com/livenews/3201988"
     },
     {
       "id": "mymm13",
@@ -2125,14 +2229,6 @@
       "source": "新浪财经",
       "title": "美联储沃勒：央行或需以50个基点加息“震撼市场”",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizensv4713711.shtml"
-    },
-    {
-      "id": "114eknh",
-      "ts": 1795009819,
-      "time": "2026-11-18T21:50:19.000+08:00",
-      "source": "华尔街见闻",
-      "title": "美联储10月会议纪要关注点",
-      "url": "https://wallstreetcn.com/livenews/3201988"
     },
     {
       "id": "obo9wq",
