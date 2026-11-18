@@ -1,11 +1,67 @@
 {
-  "generatedAt": "2026-11-18T14:38:14.383Z",
+  "generatedAt": "2026-11-18T14:49:11.022Z",
   "windowDays": 62,
   "from": "2026-09-18",
   "days": 62,
   "fromHistory": 17,
-  "total": 56973,
+  "total": 56986,
   "items": [
+    {
+      "id": "1xpa8g9",
+      "ts": 1795013230,
+      "time": "2026-11-18T22:47:10.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达跌幅扩大至1%，此前一度涨2.7%。",
+      "url": "https://wallstreetcn.com/livenews/3202018"
+    },
+    {
+      "id": "gv2vzu",
+      "ts": 1795013209,
+      "time": "2026-11-18T22:46:49.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美债价格上涨。",
+      "url": "https://wallstreetcn.com/livenews/3202017"
+    },
+    {
+      "id": "152dbmy",
+      "ts": 1795013174,
+      "time": "2026-11-18T22:46:14.000+08:00",
+      "source": "华尔街见闻",
+      "title": "腾讯总裁刘炽平谈架构调整：理想状态是把人部署到新业务和新增长引擎上",
+      "url": "https://wallstreetcn.com/livenews/3202016"
+    },
+    {
+      "id": "1hla9rt",
+      "ts": 1795012968,
+      "time": "2026-11-18T22:42:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧洲央行行长拉加德：欧洲经济展现出韧性，其韧性超乎想象。",
+      "url": "https://wallstreetcn.com/livenews/3202015"
+    },
+    {
+      "id": "1t3dazl",
+      "ts": 1795012876,
+      "time": "2026-11-18T22:41:16.000+08:00",
+      "source": "华尔街见闻",
+      "title": "欧洲央行行长拉加德：人工智能（AI）是非常雄心勃勃的。",
+      "url": "https://wallstreetcn.com/livenews/3202014"
+    },
+    {
+      "id": "lbi59a",
+      "ts": 1795012858,
+      "time": "2026-11-18T22:40:58.000+08:00",
+      "source": "华尔街见闻",
+      "title": "墨西哥总统辛鲍姆：美国总统特朗普表示我们正接近达成贸易协议。",
+      "url": "https://wallstreetcn.com/livenews/3202013"
+    },
+    {
+      "id": "1o7b50a",
+      "ts": 1795012750,
+      "time": "2026-11-18T22:39:10.000+08:00",
+      "source": "华尔街见闻",
+      "title": "纳斯达克100指数转跌，成分股CoreWeave跌4.99%，Strategy跌4.15%，迈威尔科技、闪迪至多跌2.46%。",
+      "url": "https://wallstreetcn.com/livenews/3202012"
+    },
     {
       "id": "cdxwud",
       "ts": 1795012687,
@@ -29,6 +85,14 @@
       "source": "华尔街见闻",
       "title": "半导体ETF涨1.07%，在美股盘初领跑行业ETF，全球科技股指数ETF涨0.76%，科技行业ETF涨0.69%，能源业ETF跌1.06%。",
       "url": "https://wallstreetcn.com/livenews/3202009"
+    },
+    {
+      "id": "1qb8by0",
+      "ts": 1795012360,
+      "time": "2026-11-18T14:32:40.000Z",
+      "source": "中新网",
+      "title": "从“买卖全球”到共创共享 浙江诠释对外开放新内涵",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-18/10734418.shtml"
     },
     {
       "id": "qyge1q",
@@ -79,12 +143,44 @@
       "url": "https://wallstreetcn.com/livenews/3202006"
     },
     {
+      "id": "10ecdcf",
+      "ts": 1795012252,
+      "time": "2026-11-18T22:30:52.000+08:00",
+      "source": "东方财富",
+      "title": "新就业群体劳动权益如何保障？这场研讨会上专家这样说→",
+      "url": "http://finance.eastmoney.com/news/1350,202611183934311982.html"
+    },
+    {
       "id": "1d7gbqt",
       "ts": 1795012238,
       "time": "2026-11-18T22:30:38.000+08:00",
       "source": "华尔街见闻",
       "title": "标普500指数高开15.16点，涨幅0.21%，报7355.69点；",
       "url": "https://wallstreetcn.com/livenews/3202005"
+    },
+    {
+      "id": "lua8w1",
+      "ts": 1795012218,
+      "time": "2026-11-18T22:30:18.000+08:00",
+      "source": "东方财富",
+      "title": "毕马威：增量资金集中落地，四季度增长动能有望走强",
+      "url": "http://finance.eastmoney.com/news/1355,202611183934311659.html"
+    },
+    {
+      "id": "iajsae",
+      "ts": 1795012153,
+      "time": "2026-11-18T22:29:13.000+08:00",
+      "source": "新浪财经",
+      "title": "京东健康Q3期内利润下降15%！里昂下调Q4收入增速指引",
+      "url": "https://finance.sina.com.cn/stock/s/2026-11-18/doc-inizensx1516775.shtml"
+    },
+    {
+      "id": "1icyrd1",
+      "ts": 1795012153,
+      "time": "2026-11-18T22:29:13.000+08:00",
+      "source": "新浪财经",
+      "title": "业绩会上，投资者追问英伟达管理层变动影响！沐曦股份董事长陈维良回应",
+      "url": "https://finance.sina.com.cn/stock/s/2026-11-18/doc-inizensx1516763.shtml"
     },
     {
       "id": "akaqc5",
@@ -245,6 +341,14 @@
       "source": "华尔街见闻",
       "title": "报道：字节跳动将通过微软使用OpenAI的模型",
       "url": "https://wallstreetcn.com/livenews/3201993"
+    },
+    {
+      "id": "fdddou",
+      "ts": 1795010579,
+      "time": "2026-11-18T14:02:59.000Z",
+      "source": "中新网",
+      "title": "中外企业奏响产业创新协奏曲",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-18/10734399.shtml"
     },
     {
       "id": "1pn0ra5",
