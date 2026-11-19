@@ -5,6 +5,11 @@ name: 临时诊断-统计局源
 
 on:
   workflow_dispatch:
+  # 临时：本文件被更新时自动跑一次（当前 token 无 actions:write，无法 dispatch）
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/diag-stats.yml'
 
 permissions:
   contents: read
