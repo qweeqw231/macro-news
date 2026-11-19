@@ -1,11 +1,171 @@
 {
-  "generatedAt": "2026-11-19T09:07:55.869Z",
+  "generatedAt": "2026-11-19T09:23:02.695Z",
   "windowDays": 62,
   "from": "2026-09-19",
   "days": 62,
   "fromHistory": 16,
-  "total": 56972,
+  "total": 56994,
   "items": [
+    {
+      "id": "fkrr8h",
+      "ts": 1795080139,
+      "time": "2026-11-19T17:22:19.000+08:00",
+      "source": "华尔街见闻",
+      "title": "有道Q3连续九个季度经营利润为正：子曰双模型登顶Hugging Face，AI订阅销售额超1亿",
+      "url": "https://wallstreetcn.com/livenews/3202483"
+    },
+    {
+      "id": "7htxpy",
+      "ts": 1795079986,
+      "time": "2026-11-19T17:19:46.000+08:00",
+      "source": "华尔街见闻",
+      "title": "泡泡玛特：于11月19日斥资6965.95万港元回购49万股。",
+      "url": "https://wallstreetcn.com/livenews/3202482"
+    },
+    {
+      "id": "1uelofp",
+      "ts": 1795079923,
+      "time": "2026-11-19T17:18:43.000+08:00",
+      "source": "东方财富",
+      "title": "报告：中国GSS+债券累计发行规模达7290亿美元 绿色债券“压舱石”作用凸显",
+      "url": "http://bond.eastmoney.com/news/1332,202611193935093061.html"
+    },
+    {
+      "id": "13lpwvd",
+      "ts": 1795079910,
+      "time": "2026-11-19T17:18:30.000+08:00",
+      "source": "华尔街见闻",
+      "title": "中国贸促会会长邀请马斯克明年参加链博会",
+      "url": "https://wallstreetcn.com/livenews/3202481"
+    },
+    {
+      "id": "1nwh2ez",
+      "ts": 1795079863,
+      "time": "2026-11-19T17:17:43.000+08:00",
+      "source": "新浪财经",
+      "title": "Anthropic IPO募资超810亿美元，创下史上最大规模IPO，超过SpaceX",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizhfae7813576.shtml"
+    },
+    {
+      "id": "v8z90y",
+      "ts": 1795079773,
+      "time": "2026-11-19T17:16:13.000+08:00",
+      "source": "新浪财经",
+      "title": "欧洲央行管委穆兰：受油价影响，通胀水平依旧过高",
+      "url": "https://finance.sina.com.cn/world/2026-11-19/doc-inizhfae7812697.shtml"
+    },
+    {
+      "id": "1renfya",
+      "ts": 1795079673,
+      "time": "2026-11-19T17:14:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "普洛药业：控股股东一致行动人禹山运动增持605.79万股，增持计划实施完毕",
+      "url": "https://wallstreetcn.com/livenews/3202480"
+    },
+    {
+      "id": "k26bh5",
+      "ts": 1795079661,
+      "time": "2026-11-19T17:14:21.000+08:00",
+      "source": "东方财富",
+      "title": "今年三季度，京东把电商生意做进更多生活场景",
+      "url": "http://stock.eastmoney.com/news/11231,202611193935089542.html"
+    },
+    {
+      "id": "xq2gr7",
+      "ts": 1795079659,
+      "time": "2026-11-19T17:14:19.000+08:00",
+      "source": "华尔街见闻",
+      "title": "恒瑞医药：子公司福建盛迪医药有限公司收到国家药监局通知，批准注射用磷罗拉匹坦帕洛诺司琼新增适应症，用于成年患者预防中度致吐性化疗（MEC）引起的急性和迟发性恶心和呕吐。",
+      "url": "https://wallstreetcn.com/livenews/3202479"
+    },
+    {
+      "id": "kcsr7a",
+      "ts": 1795079655,
+      "time": "2026-11-19T17:14:15.000+08:00",
+      "source": "华尔街见闻",
+      "title": "翰宇药业：HY3003注射液获药物临床试验批准通知书，同意开展成人体重管理适应症临床试验。",
+      "url": "https://wallstreetcn.com/livenews/3202478"
+    },
+    {
+      "id": "jfk46r",
+      "ts": 1795079649,
+      "time": "2026-11-19T17:14:09.000+08:00",
+      "source": "华尔街见闻",
+      "title": "浩物股份：截至2026年11月18日回购方案实施完毕，累计回购524.25万股，占总股本0.9841%，成交总金额1999.54万元（不含交易费用）",
+      "url": "https://wallstreetcn.com/livenews/3202477"
+    },
+    {
+      "id": "mkf6uv",
+      "ts": 1795079644,
+      "time": "2026-11-19T17:14:04.000+08:00",
+      "source": "新浪财经",
+      "title": "诺华押注重磅新药拉动增长，预计到2031年销售额年增速达5%",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizhfae7811167.shtml"
+    },
+    {
+      "id": "m5nupz",
+      "ts": 1795079641,
+      "time": "2026-11-19T17:14:01.000+08:00",
+      "source": "华尔街见闻",
+      "title": "世纪华通：2026年11月19日首次以集中竞价方式回购股份360.31万股，占总股本0.0489%，成交价10.73元/股至10.82元/股，成交总金额3881.77万元。",
+      "url": "https://wallstreetcn.com/livenews/3202476"
+    },
+    {
+      "id": "163do0f",
+      "ts": 1795079638,
+      "time": "2026-11-19T17:13:58.000+08:00",
+      "source": "华尔街见闻",
+      "title": "水晶光电：2026年11月19日首次回购175.46万股，占总股本0.13%，最高成交价21.91元/股、最低21.70元/股，成交总金额3822.09万元。",
+      "url": "https://wallstreetcn.com/livenews/3202475"
+    },
+    {
+      "id": "h5qeun",
+      "ts": 1795079628,
+      "time": "2026-11-19T17:13:48.000+08:00",
+      "source": "华尔街见闻",
+      "title": "上大股份：控股股东、实际控制人栾东海的一致行动人中和上大有限公司拟自公告披露之日起6个月内，通过深交所集中竞价交易增持公司A股，金额不低于3000万元且不超过6000万元，不设价格区间，资金来源为自有资金及股份增持专项贷款。",
+      "url": "https://wallstreetcn.com/livenews/3202474"
+    },
+    {
+      "id": "607jcq",
+      "ts": 1795079621,
+      "time": "2026-11-19T17:13:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "国林科技：首次出售回购股份3万股，成交金额42.9万元",
+      "url": "https://wallstreetcn.com/livenews/3202473"
+    },
+    {
+      "id": "1kdirbc",
+      "ts": 1795079596,
+      "time": "2026-11-19T17:13:16.000+08:00",
+      "source": "新浪财经",
+      "title": "中东紧张局势威胁供应 欧洲天然气价格上涨",
+      "url": "https://finance.sina.com.cn/world/2026-11-19/doc-inizhfam1053759.shtml"
+    },
+    {
+      "id": "1df5810",
+      "ts": 1795079491,
+      "time": "2026-11-19T17:11:31.000+08:00",
+      "source": "新浪财经",
+      "title": "马斯克指责泽连斯基就乌克兰 “星盾” 系统的限制问题撒谎",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizhfam1052204.shtml"
+    },
+    {
+      "id": "17dudgb",
+      "ts": 1795079467,
+      "time": "2026-11-19T17:11:07.000+08:00",
+      "source": "新浪财经",
+      "title": "石油交易商与卡塔尔能源洽谈长期供货",
+      "url": "https://finance.sina.com.cn/world/2026-11-19/doc-inizhfah4584562.shtml"
+    },
+    {
+      "id": "p31nsc",
+      "ts": 1795079298,
+      "time": "2026-11-19T17:08:18.000+08:00",
+      "source": "新浪财经",
+      "title": "数源科技（000909）投资者索赔案已提交法院立案",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-19/doc-inizhfae7806827.shtml"
+    },
     {
       "id": "1ns4yb0",
       "ts": 1795079166,
@@ -13,6 +173,14 @@
       "source": "新浪财经",
       "title": "日本农林中央银行提前完成年度利润目标 复苏进程取得进展",
       "url": "https://finance.sina.com.cn/world/2026-11-19/doc-inizhfac6269487.shtml"
+    },
+    {
+      "id": "mahimr",
+      "ts": 1795079158,
+      "time": "2026-11-19T17:05:58.000+08:00",
+      "source": "新浪财经",
+      "title": "萃华珠宝（002731）索赔案获得法院立案，天创时尚（603608）索赔案已有股民胜诉",
+      "url": "https://finance.sina.com.cn/stock/gmwq/rightscase/2026-11-19/doc-inizhfac6270620.shtml"
     },
     {
       "id": "73ob0t",
@@ -133,6 +301,14 @@
       "source": "华尔街见闻",
       "title": "欧元区9月季调后经常帐 124.74亿欧元，前值 87亿欧元。",
       "url": "https://wallstreetcn.com/livenews/3202465"
+    },
+    {
+      "id": "lugwbm",
+      "ts": 1795078800,
+      "time": "2026-11-19T17:00:00.000+08:00",
+      "source": "东方财富",
+      "title": "开学前，先租房：更多高校不向研究生提供宿舍",
+      "url": "http://finance.eastmoney.com/news/1350,202611193935084976.html"
     },
     {
       "id": "u2921h",
