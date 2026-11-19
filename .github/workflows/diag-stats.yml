@@ -1,6 +1,6 @@
 name: 临时诊断-统计局源
 
-# 临时：量化 GitHub runner 上 Happy Eyeballs 250ms 抢跑导致的失败率，并验证 IPv4 强制连接是否消除失败。
+# 临时：验证 autoSelectFamilyAttemptTimeout 250ms→3000ms 是否消除建连误判。
 # 只做只读网络测试，不写 data/，跑完即删除本文件。
 
 on:
@@ -28,59 +28,41 @@ jobs:
         with:
           node-version: '22'
 
-      - name: 现行 fetch 路径连续 8 次（每次独立进程，模拟生产单轮）
+      - name: 建连抢跑对比（默认 250ms vs 设定 3000ms，各 40 次）
         run: |
-          cat > /tmp/one.mjs <<'EOF'
-          const HOST = 'www.stats.gov.cn';
-          const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36';
-          const s = Date.now();
-          const ctrl = new AbortController();
-          const timer = setTimeout(() => ctrl.abort(), 30000);
-          try {
-            const r = await fetch(`https://${HOST}/sj/zxfb/rss.xml`, {
-              signal: ctrl.signal,
-              headers: { 'User-Agent': UA, Accept: '*/*', Range: 'bytes=0-393215' },
-            });
-            const b = await r.text();
-            console.log(`ok status=${r.status} bytes=${Buffer.byteLength(b)} ms=${Date.now() - s}`);
-          } catch (e) {
-            const c = e.cause;
-            const sub = c?.errors ? ' | ' + c.errors.map((x) => (x.code || x.message) + ':' + (x.message || '')).join(' ; ') : '';
-            console.log(`FAIL ms=${Date.now() - s} cause=${c?.code || c?.message || '-'}${sub}`);
-          } finally { clearTimeout(timer); }
-          EOF
-          for i in $(seq 1 8); do node /tmp/one.mjs; done
-
-      - name: autoSelectFamily 250ms vs 3000ms 对比（各 12 次）
-        run: |
-          cat > /tmp/race.mjs <<'EOF'
+          cat > /tmp/race2.mjs <<'EOF'
           import net from 'node:net';
+          import dns from 'node:dns';
           const HOST = 'www.stats.gov.cn';
-          const V4 = process.argv[2];
-          const V6 = process.argv[3];
-          const attempt = Number(process.argv[4] || 0);
+          const [V4, V6] = await Promise.all([
+            dns.promises.resolve4(HOST).then((a) => a[0]),
+            dns.promises.resolve6(HOST).then((a) => a[0] || ''),
+          ]);
           const mk = (order) => (hostname, opts, cb) => {
             const list = order.map((a) => ({ address: a, family: a.includes(':') ? 6 : 4 }));
             if (opts && opts.all) cb(null, list); else cb(null, list[0].address, list[0].family);
           };
           const one = () => new Promise((res) => {
             const s = process.hrtime.bigint();
-            const o = { host: HOST, port: 443, autoSelectFamily: true, lookup: mk([V4, V6]) };
-            if (attempt) o.autoSelectFamilyAttemptTimeout = attempt;
-            const sock = net.connect(o);
+            const sock = net.connect({ host: HOST, port: 443, autoSelectFamily: true, lookup: mk([V4, V6]) });
             const fin = (r) => { try { sock.destroy(); } catch {} res({ r, ms: Math.round(Number(process.hrtime.bigint() - s) / 1e6) }); };
             sock.setTimeout(15000, () => fin('local15s'));
             sock.on('connect', () => fin('ok'));
             sock.on('error', (e) => fin(e.errors ? e.errors.map((x) => x.code).join(',') : e.code));
           });
-          const out = [];
-          for (let i = 0; i < 12; i++) out.push(await one());
-          const fails = out.filter((x) => x.r !== 'ok');
-          console.log(`attempt=${attempt || 'default250'} 失败 ${fails.length}/12`, JSON.stringify(out));
+          const run = async (label, n = 40) => {
+            const out = [];
+            for (let i = 0; i < n; i++) out.push(await one());
+            const fails = out.filter((x) => x.r !== 'ok');
+            const okMs = out.filter((x) => x.r === 'ok').map((x) => x.ms).sort((a, b) => a - b);
+            console.log(`${label}: 失败 ${fails.length}/${n} | 失败样本 ${JSON.stringify(fails)} | 成功 ms min=${okMs[0]} p50=${okMs[Math.floor(okMs.length / 2)]} max=${okMs[okMs.length - 1]}`);
+          };
+          console.log(`V4=${V4} V6=${V6}`);
+          console.log('getDefaultAutoSelectFamilyAttemptTimeout =', net.getDefaultAutoSelectFamilyAttemptTimeout());
+          await run('默认阈值(250ms)');
+          net.setDefaultAutoSelectFamilyAttemptTimeout(3000);
+          console.log('after set =', net.getDefaultAutoSelectFamilyAttemptTimeout());
+          await run('设定阈值(3000ms)');
           process.exit(0);
           EOF
-          V4=$(node -e "require('node:dns').resolve4('www.stats.gov.cn',(e,a)=>console.log(a[0]))")
-          V6=$(node -e "require('node:dns').resolve6('www.stats.gov.cn',(e,a)=>console.log(a[0]||''))")
-          echo "V4=$V4 V6=$V6"
-          node /tmp/race.mjs "$V4" "$V6" 0
-          node /tmp/race.mjs "$V4" "$V6" 3000
+          node /tmp/race2.mjs
