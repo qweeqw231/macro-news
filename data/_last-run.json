@@ -6,84 +6,93 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-18T23:53:11.622Z",
-  "durationMs": 9585,
+  "startedAt": "2026-11-19T00:08:03.414Z",
+  "durationMs": 14979,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 5178
+      "ms": 9201
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1049
+      "ms": 1309
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1164
+      "ms": 1866
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 708
+      "ms": 3354
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1347
+      "ms": 2099
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 585
+      "ms": 1349
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1384
+      "ms": 1786
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 3807
+      "ms": 6816
     }
   ],
   "quotes": 74,
-  "added": 23,
+  "added": 26,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7494,
-    "kept": 7494,
+    "candidates": 7520,
+    "kept": 7520,
     "evicted": 0,
     "deduped": 276,
     "days": [
       {
+        "day": "2026-11-19",
+        "incoming": 14,
+        "candidates": 14,
+        "kept": 14,
+        "evicted": 0,
+        "deduped": 0,
+        "added": 14
+      },
+      {
         "day": "2026-11-18",
-        "incoming": 280,
-        "candidates": 1346,
-        "kept": 1346,
+        "incoming": 270,
+        "candidates": 1358,
+        "kept": 1358,
         "evicted": 0,
         "deduped": 258,
-        "added": 23
+        "added": 12
       },
       {
         "day": "2026-11-17",

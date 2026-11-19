@@ -1,10 +1,15 @@
 {
-  "generatedAt": "2026-11-18T23:53:11.622Z",
-  "total": 44566,
+  "generatedAt": "2026-11-19T00:08:03.414Z",
+  "total": 44592,
   "days": [
     {
+      "day": "2026-11-19",
+      "count": 14,
+      "hasBriefing": false
+    },
+    {
       "day": "2026-11-18",
-      "count": 1346,
+      "count": 1358,
       "hasBriefing": true,
       "briefLine": "今日主线是外部紧缩预期再起与国内政策对冲并行：中俄美元首会晤19日在深圳举行、特朗普今日抵深参加APEC，美联储鹰派称明年春季前可能需数次加息，10年美债收益率",
       "source": "ai",
