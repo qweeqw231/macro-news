@@ -1,11 +1,59 @@
 {
-  "generatedAt": "2026-11-19T18:38:17.381Z",
+  "generatedAt": "2026-11-19T18:53:08.815Z",
   "windowDays": 62,
   "from": "2026-09-19",
   "days": 62,
   "fromHistory": 16,
-  "total": 57517,
+  "total": 57530,
   "items": [
+    {
+      "id": "12my2aq",
+      "ts": 1795114312,
+      "time": "2026-11-20T02:51:52.000+08:00",
+      "source": "新浪财经",
+      "title": "伊朗加大对油轮的袭击 霍尔木兹海峡石油运输风险上升",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihpr5875826.shtml"
+    },
+    {
+      "id": "9wga0r",
+      "ts": 1795114264,
+      "time": "2026-11-20T02:51:04.000+08:00",
+      "source": "新浪财经",
+      "title": "交易员押注三大央行利率将在数年内保持高位",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihpu4221462.shtml"
+    },
+    {
+      "id": "l7a717",
+      "ts": 1795114012,
+      "time": "2026-11-20T02:46:52.000+08:00",
+      "source": "新浪财经",
+      "title": "欧洲债市：欧债下跌 油价上涨促使交易员加码加息押注",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihpu4220731.shtml"
+    },
+    {
+      "id": "sr5ahw",
+      "ts": 1795113982,
+      "time": "2026-11-20T02:46:22.000+08:00",
+      "source": "新浪财经",
+      "title": "美国抵押贷款利率六周来首次上涨 房地产市场继续承压",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihpu4220622.shtml"
+    },
+    {
+      "id": "8yen20",
+      "ts": 1795113913,
+      "time": "2026-11-20T02:45:13.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普会晤普京后称不会在未与泽连斯基磋商的情况下作出决定",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihps7444032.shtml"
+    },
+    {
+      "id": "5ck6w7",
+      "ts": 1795113695,
+      "time": "2026-11-20T02:41:35.000+08:00",
+      "source": "新浪财经",
+      "title": "Alphabet重返加拿大债市 拟发债融资至少35亿美元",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihps7443506.shtml"
+    },
     {
       "id": "1bi0c8v",
       "ts": 1795113475,
@@ -55,6 +103,38 @@
       "url": "https://wallstreetcn.com/livenews/3202754"
     },
     {
+      "id": "v9n7dn",
+      "ts": 1795112321,
+      "time": "2026-11-20T02:18:41.000+08:00",
+      "source": "东方财富",
+      "title": "中国虚拟电厂发展报告发布 6月底已提前完成2027年调节能力目标",
+      "url": "http://finance.eastmoney.com/news/1355,202611203935443619.html"
+    },
+    {
+      "id": "1y95w4c",
+      "ts": 1795112310,
+      "time": "2026-11-20T02:18:30.000+08:00",
+      "source": "东方财富",
+      "title": "量身定制融资方案 银行加码支持“六张网”建设",
+      "url": "http://finance.eastmoney.com/news/1348,202611203935444585.html"
+    },
+    {
+      "id": "1qbie6m",
+      "ts": 1795112310,
+      "time": "2026-11-20T02:18:30.000+08:00",
+      "source": "东方财富",
+      "title": "“资本市场服务荆楚行”黄石站活动举行",
+      "url": "http://finance.eastmoney.com/news/1350,202611203935444327.html"
+    },
+    {
+      "id": "1r4jqci",
+      "ts": 1795112255,
+      "time": "2026-11-20T02:17:35.000+08:00",
+      "source": "东方财富",
+      "title": "小微信贷考核“松绑”半年后：一线指标压力未散 投放逻辑转向按需融资",
+      "url": "http://bank.eastmoney.com/news/1174,202611203935442138.html"
+    },
+    {
       "id": "1ul3dhq",
       "ts": 1795112245,
       "time": "2026-11-20T02:17:25.000+08:00",
@@ -93,6 +173,30 @@
       "source": "华尔街见闻",
       "title": "美国能源部长Wright：昨日霍尔木兹海峡的流出量迄今最大。",
       "url": "https://wallstreetcn.com/livenews/3202750"
+    },
+    {
+      "id": "bniks8",
+      "ts": 1795111661,
+      "time": "2026-11-20T02:07:41.000+08:00",
+      "source": "东方财富",
+      "title": "中小银行改革化险持续推进 贵州年内又有19家机构“退场”",
+      "url": "http://bank.eastmoney.com/news/1174,202611203935444176.html"
+    },
+    {
+      "id": "6xvved",
+      "ts": 1795111658,
+      "time": "2026-11-20T02:07:38.000+08:00",
+      "source": "东方财富",
+      "title": "商务部：消费市场规模稳步扩大 服务零售额增速较快",
+      "url": "http://finance.eastmoney.com/news/1346,202611203935443939.html"
+    },
+    {
+      "id": "1uhtlu0",
+      "ts": 1795111658,
+      "time": "2026-11-20T02:07:38.000+08:00",
+      "source": "东方财富",
+      "title": "工信部启动2026年“5G+工业互联网”融合应用城市试点工作 充分释放乘数效应 支撑先进制造业持续做大做强",
+      "url": "http://finance.eastmoney.com/news/1355,202611203935443878.html"
     },
     {
       "id": "n0w3z1",
