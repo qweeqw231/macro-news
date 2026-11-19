@@ -1,11 +1,139 @@
 {
-  "generatedAt": "2026-11-19T23:08:16.750Z",
+  "generatedAt": "2026-11-19T23:22:57.256Z",
   "windowDays": 62,
   "from": "2026-09-19",
   "days": 62,
   "fromHistory": 16,
-  "total": 57682,
+  "total": 57703,
   "items": [
+    {
+      "id": "1ioiwmp",
+      "ts": 1795130572,
+      "time": "2026-11-20T07:22:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国加州正调查英伟达是否误导投资者",
+      "url": "https://wallstreetcn.com/livenews/3202860"
+    },
+    {
+      "id": "1tyis5g",
+      "ts": 1795130499,
+      "time": "2026-11-20T07:21:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国联邦能源监管委员会批准五个能源项目",
+      "url": "https://wallstreetcn.com/livenews/3202859"
+    },
+    {
+      "id": "e8ephb",
+      "ts": 1795130476,
+      "time": "2026-11-20T07:21:16.000+08:00",
+      "source": "新浪财经",
+      "title": "加州正调查英伟达是否误导投资者",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitcn7266989.shtml"
+    },
+    {
+      "id": "1f61enr",
+      "ts": 1795130432,
+      "time": "2026-11-20T07:20:32.000+08:00",
+      "source": "新浪财经",
+      "title": "美国联邦能源监管委员会批准五个能源项目",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitcn7266642.shtml"
+    },
+    {
+      "id": "1a5ifnh",
+      "ts": 1795130316,
+      "time": "2026-11-20T07:18:36.000+08:00",
+      "source": "东方财富",
+      "title": "部分基金经理“抄底”科技股 外资巨头频频加仓 上市公司回购公告透底机构动向",
+      "url": "http://finance.eastmoney.com/news/1354,202611203935442286.html"
+    },
+    {
+      "id": "obh6bg",
+      "ts": 1795130193,
+      "time": "2026-11-20T07:16:33.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达据悉洽谈至少5亿美元收购Inception，以助力开发其Nemotron开源模型",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitcq4040607.shtml"
+    },
+    {
+      "id": "impnrs",
+      "ts": 1795130174,
+      "time": "2026-11-20T07:16:14.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达正就收购Inception进行深入谈判",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitcn7264058.shtml"
+    },
+    {
+      "id": "v9n7dn",
+      "ts": 1795130141,
+      "time": "2026-11-20T07:15:41.000+08:00",
+      "source": "东方财富",
+      "title": "中国虚拟电厂发展报告发布 6月底已提前完成2027年调节能力目标",
+      "url": "http://finance.eastmoney.com/news/1355,202611203935443619.html"
+    },
+    {
+      "id": "hxa7l",
+      "ts": 1795130031,
+      "time": "2026-11-20T07:13:51.000+08:00",
+      "source": "华尔街见闻",
+      "title": "澳大利亚股指S&P/ASX 200指数下跌1%。",
+      "url": "https://wallstreetcn.com/livenews/3202858"
+    },
+    {
+      "id": "3rlij",
+      "ts": 1795129848,
+      "time": "2026-11-20T07:10:48.000+08:00",
+      "source": "东方财富",
+      "title": "走进宁波产业一线：一根导管解码科技金融 ——摆脱抵押惯性，银行比拼“读懂”硬科技真本领",
+      "url": "http://bank.eastmoney.com/news/1174,202611203935479770.html"
+    },
+    {
+      "id": "15ydxla",
+      "ts": 1795129846,
+      "time": "2026-11-20T07:10:46.000+08:00",
+      "source": "东方财富",
+      "title": "我国消费市场规模继续稳步扩大",
+      "url": "http://finance.eastmoney.com/news/1346,202611203935480091.html"
+    },
+    {
+      "id": "65xqc3",
+      "ts": 1795129842,
+      "time": "2026-11-20T07:10:42.000+08:00",
+      "source": "东方财富",
+      "title": "报告显示 民营企业踊跃参与虚拟电厂项目投资",
+      "url": "http://finance.eastmoney.com/news/1355,202611203935478793.html"
+    },
+    {
+      "id": "1d2ksjs",
+      "ts": 1795129837,
+      "time": "2026-11-20T07:10:37.000+08:00",
+      "source": "东方财富",
+      "title": "新一批城市试点启动 “5G+工业互联网”加快规模化应用",
+      "url": "http://finance.eastmoney.com/news/1355,202611203935479024.html"
+    },
+    {
+      "id": "1salxww",
+      "ts": 1795129806,
+      "time": "2026-11-20T07:10:06.000+08:00",
+      "source": "东方财富",
+      "title": "朱雀三号“二手”发动机再次完成试车",
+      "url": "http://finance.eastmoney.com/news/1350,202611203935480151.html"
+    },
+    {
+      "id": "1nc4cas",
+      "ts": 1795129716,
+      "time": "2026-11-20T07:08:36.000+08:00",
+      "source": "华尔街见闻",
+      "title": "周五亚太盘初，纳指期货跌0.4%，科技股AMD盘后跌2.4%，Anthropic跌2.2%，英特尔、Meta Platforms、美光、CoreWeave、Nebius集团、西部数据至少跌约1.1%。",
+      "url": "https://wallstreetcn.com/livenews/3202857"
+    },
+    {
+      "id": "3cwt2k",
+      "ts": 1795129712,
+      "time": "2026-11-20T07:08:32.000+08:00",
+      "source": "新浪财经",
+      "title": "股海导航_2026年11月20日_沪深股市公告与交易提示",
+      "url": "https://finance.sina.com.cn/stock/s/2026-11-20/doc-inizitct0466903.shtml"
+    },
     {
       "id": "1p370lq",
       "ts": 1795129647,
@@ -39,6 +167,14 @@
       "url": "https://wallstreetcn.com/livenews/3202853"
     },
     {
+      "id": "7k4c3y",
+      "ts": 1795129399,
+      "time": "2026-11-20T07:03:19.000+08:00",
+      "source": "新浪财经",
+      "title": "黄金今年走势持续恶化，短期尚未见底？长期配置价值却仍获认可",
+      "url": "https://finance.sina.com.cn/money/nmetal/gjshz/2026-11-20/doc-inizitcm5686918.shtml"
+    },
+    {
       "id": "1kvljgt",
       "ts": 1795129377,
       "time": "2026-11-20T07:02:57.000+08:00",
@@ -61,6 +197,30 @@
       "source": "新浪财经",
       "title": "大宗商品综述：油价震荡 伦铜反弹 金价迈向5月份以来最长连跌",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvq7382801.shtml"
+    },
+    {
+      "id": "9l9q41",
+      "ts": 1795129200,
+      "time": "2026-11-20T07:00:00.000+08:00",
+      "source": "东方财富",
+      "title": "央广财经早报（11月20日）丨美联储纪要“几乎全体”支持进一步加息；黄金跌破3730美元",
+      "url": "http://forex.eastmoney.com/news/1131,202611203935478291.html"
+    },
+    {
+      "id": "1u34grk",
+      "ts": 1795129200,
+      "time": "2026-11-20T07:00:00.000+08:00",
+      "source": "东方财富",
+      "title": "APEC让世界重新认识深圳丨潮涌亚太",
+      "url": "http://finance.eastmoney.com/news/1355,202611203935476972.html"
+    },
+    {
+      "id": "112yn84",
+      "ts": 1795129200,
+      "time": "2026-11-20T07:00:00.000+08:00",
+      "source": "东方财富",
+      "title": "解码2026APEC“中国年”丨从深圳再出发 超六成世界经济总量，21个经济体的共同答卷",
+      "url": "http://finance.eastmoney.com/news/1346,202611203935476872.html"
     },
     {
       "id": "d7rbn2",
@@ -173,6 +333,22 @@
       "source": "华尔街见闻",
       "title": "锂企“试水”金属锂，加码固态电池材料",
       "url": "https://wallstreetcn.com/livenews/3202844"
+    },
+    {
+      "id": "waw0pb",
+      "ts": 1795127820,
+      "time": "2026-11-20T06:37:00.000+08:00",
+      "source": "新浪财经",
+      "title": "【沥燃日报】成本止跌企稳下低硫率先反弹，关注上方反弹可持续性",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-20/doc-inizitcq4042055.shtml"
+    },
+    {
+      "id": "xrrkci",
+      "ts": 1795127820,
+      "time": "2026-11-20T06:37:00.000+08:00",
+      "source": "新浪财经",
+      "title": "原油收平，但美股金银铜继续大跌显示大环境并不平静",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-20/doc-inizitcn7261671.shtml"
     },
     {
       "id": "zlladd",
@@ -743,19 +919,19 @@
       "url": "https://wallstreetcn.com/livenews/3202807"
     },
     {
-      "id": "1gq49dx",
+      "id": "1dpmf3z",
       "ts": 1795122009,
       "time": "2026-11-20T05:00:09.000+08:00",
       "source": "华尔街见闻",
-      "title": "标普500指数初步收跌2%，可选消费板块跌2.8%，电信板块跌2.8%，保健、工业、原材料、科技、房地产、金融、日用品、公用事业板块至少跌1.1%，能源板块跌0.6%。",
+      "title": "美国股市创2024年以来最长连跌，华尔街大行板块出现死叉",
       "url": "https://wallstreetcn.com/livenews/3202806"
     },
     {
-      "id": "1b4ut6n",
+      "id": "1v4hiww",
       "ts": 1795122004,
       "time": "2026-11-20T05:00:04.000+08:00",
       "source": "华尔街见闻",
-      "title": "Anthropic美国IPO首日初步收涨16.3%。",
+      "title": "美国股市创2024年以来最长连跌，华尔街大行板块出现死叉",
       "url": "https://wallstreetcn.com/livenews/3202805"
     },
     {
@@ -1287,14 +1463,6 @@
       "url": "https://wallstreetcn.com/livenews/3202754"
     },
     {
-      "id": "v9n7dn",
-      "ts": 1795112321,
-      "time": "2026-11-20T02:18:41.000+08:00",
-      "source": "东方财富",
-      "title": "中国虚拟电厂发展报告发布 6月底已提前完成2027年调节能力目标",
-      "url": "http://finance.eastmoney.com/news/1355,202611203935443619.html"
-    },
-    {
       "id": "1qbie6m",
       "ts": 1795112310,
       "time": "2026-11-20T02:18:30.000+08:00",
@@ -1695,6 +1863,14 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-iniziafu7542528.shtml"
     },
     {
+      "id": "zlntsn",
+      "ts": 1795106460,
+      "time": "2026-11-20T00:41:00.000+08:00",
+      "source": "新浪财经",
+      "title": "金价回调 “黄金类”银行理财降温",
+      "url": "https://finance.sina.com.cn/money/nmetal/gjshz/2026-11-20/doc-iniziafu7556607.shtml"
+    },
+    {
       "id": "1dc367i",
       "ts": 1795106460,
       "time": "2026-11-20T00:41:00.000+08:00",
@@ -1749,14 +1925,6 @@
       "source": "东方财富",
       "title": "领航级智能工厂培育名单扩容",
       "url": "http://finance.eastmoney.com/news/1354,202611203935432132.html"
-    },
-    {
-      "id": "zlntsn",
-      "ts": 1795106460,
-      "time": "2026-11-20T00:41:00.000+08:00",
-      "source": "新浪财经",
-      "title": "金价回调 “黄金类”银行理财降温",
-      "url": "https://finance.sina.com.cn/money/nmetal/gjshz/2026-11-20/doc-iniziafu7556607.shtml"
     },
     {
       "id": "14x09c1",
