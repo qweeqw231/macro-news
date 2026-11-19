@@ -1,11 +1,35 @@
 {
-  "generatedAt": "2026-11-19T20:38:16.419Z",
+  "generatedAt": "2026-11-19T20:53:18.501Z",
   "windowDays": 62,
   "from": "2026-09-19",
   "days": 62,
   "fromHistory": 16,
-  "total": 57580,
+  "total": 57584,
   "items": [
+    {
+      "id": "16thwh8",
+      "ts": 1795121334,
+      "time": "2026-11-20T04:48:54.000+08:00",
+      "source": "新浪财经",
+      "title": "纽约汇市：美元走高 市场避险情绪升温",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvp5769475.shtml"
+    },
+    {
+      "id": "1gpleov",
+      "ts": 1795121257,
+      "time": "2026-11-20T04:47:37.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美能源部长：波斯湾成品油、俄柴油供给增加，美国柴油价料持续下行",
+      "url": "https://wallstreetcn.com/livenews/3202802"
+    },
+    {
+      "id": "1tm31v9",
+      "ts": 1795120879,
+      "time": "2026-11-20T04:41:19.000+08:00",
+      "source": "新浪财经",
+      "title": "美能源部长：波斯湾成品油、俄柴油供给增加 美国柴油价料持续下行",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihps7467296.shtml"
+    },
     {
       "id": "fyxkq9",
       "ts": 1795120674,
@@ -189,6 +213,14 @@
       "source": "新浪财经",
       "title": "芝加哥联储行长古尔斯比称AI建设和支出可能导致经济过热",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihpx0666158.shtml"
+    },
+    {
+      "id": "lol1ib",
+      "ts": 1795117198,
+      "time": "2026-11-20T03:39:58.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美联储告诉地区联储的员工们，2027年将至少涨薪1%。",
+      "url": "https://wallstreetcn.com/livenews/3202801"
     },
     {
       "id": "uvy4i7",
@@ -619,7 +651,7 @@
       "ts": 1795111326,
       "time": "2026-11-20T02:02:06.000+08:00",
       "source": "华尔街见闻",
-      "title": "美国财政部拍卖190亿美元10年期通胀保值国债（TIPS），得标利率2.903%，投标倍数2.43。",
+      "title": "美国财政部拍卖190亿美元10年期通胀保值国债（TIPS），得标利率2.903%——创2002年以来新高，投标倍数2.43。",
       "url": "https://wallstreetcn.com/livenews/3202746"
     },
     {
