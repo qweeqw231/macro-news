@@ -13,6 +13,7 @@
 
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { INDICES, SOURCES, fetchQuotes, getQuoteError } from './sources.mjs';
@@ -278,6 +279,17 @@ async function collectKlines(startedAt, onlyKeys) {
 async function main() {
   const startedAt = new Date();
   console.log(`[collect] 开始 · 回补窗口 ${SINCE_HOURS}h`);
+
+  // Happy Eyeballs 抢跑修（2026-11-19）：Node 对「多地址域名」只给首个地址
+  // autoSelectFamilyAttemptTimeout（默认 250ms）建连时间，超时就判 ETIMEDOUT 转下一个。
+  // 统计局 www.stats.gov.cn 同时有 A/AAAA，且跨境 RTT 正好压在阈值上：
+  //   GitHub southcentralus runner 实测 TCP 216ms（12 次样本 227-257ms）、TLS 1360ms，
+  //   IPv6 侧 1ms 内 ENETUNREACH（runner 无 IPv6 出网路由）。
+  //   同一 runner 上 12 次建连里 2 次在 251ms 报 `ETIMEDOUT 121.32.243.92:443`，
+  //   放宽到 3000ms 后 12/12 成功 —— 与 _last-run 里 `fetch failed（ETIMEDOUT）` 完全对应。
+  // 该设置只在「首个地址超时」时生效；IPv4 能连上（本机 23ms、云端 216ms）就不会等待，
+  // 因此对 fed/ecb 等境外源没有影响，对同为跨境直连的国内源只会减少误判。
+  net.setDefaultAutoSelectFamilyAttemptTimeout(3000);
 
   // --kline-only：只刷 K 线文件（不抓新闻、不写行情快照），用于单独补某个标的的 K 线
   if (process.argv.includes('--kline-only')) {

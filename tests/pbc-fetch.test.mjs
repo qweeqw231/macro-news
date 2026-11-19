@@ -4,6 +4,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
+import { readFileSync } from 'node:fs';
 import { httpsGetText, fetchPbcHtml } from '../src/sources.mjs';
 import { describeSourceError } from '../src/source-error.mjs';
 
@@ -104,3 +105,16 @@ test('fetchPbcHtml：降级也失败时最多 2 次尝试，并抛出最后一�
   assert.deepEqual(calls, ['https', 'fetch']);
   assert.equal(calls.length, 2, '不能超过原 retries:1 的 2 次预算');
 });
+
+// 2026-11-19：统计局源 `fetch failed（ETIMEDOUT）` 的根因同样是 Happy Eyeballs 抢跑，
+// 但这次是 IPv4 在 250ms 边界被掐断（云端实测 2/12）。修复放在采集进程启动时放宽阈值，
+// 源码锁定防止后续重构把这一行删掉或挪到源扇出之后（那时已无效）。
+test('collect.mjs：启动时放宽 autoSelectFamily 建连阈值，且早于各源并发采集', () => {
+  const src = readFileSync(new URL('../src/collect.mjs', import.meta.url), 'utf8');
+  const fixAt = src.indexOf('net.setDefaultAutoSelectFamilyAttemptTimeout(3000)');
+  const fanoutAt = src.indexOf('const perSource = await Promise.all');
+  assert.ok(fixAt > 0, '必须保留 net.setDefaultAutoSelectFamilyAttemptTimeout(3000)');
+  assert.ok(fanoutAt > 0, '采集扇出锚点缺失，测试需要同步更新');
+  assert.ok(fixAt < fanoutAt, '阈值必须在采集开始前设置，否则对首轮请求无效');
+});
+
