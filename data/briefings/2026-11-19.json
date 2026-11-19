@@ -1,0 +1,163 @@
+{
+  "date": "2026-11-19",
+  "generatedAt": "2026-11-19T09:03:56+08:00",
+  "endedAt": "2026-11-19T09:04:10+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-18",
+    "to": "2026-11-19",
+    "fromAt": "2026-11-18T08:00:00+08:00",
+    "toAt": "2026-11-19T09:00:00+08:00",
+    "fromTs": 1794960000,
+    "toTs": 1795050000
+  },
+  "overview": "今日主线是美联储10月会议纪要坐实加息路径：几乎所有官员预计未来数月继续加息，沃勒主张12月加50个基点，商品市场同步重定价，金银铜油全线大跌；中国则以中间价创2022年以来新高、年末财政工具持续用力对冲外部紧缩。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "人民币兑美元中间价创2022年以来新高，报6.7118",
+      "summary": "中国人民银行授权中国外汇交易中心公布，11月18日银行间外汇市场人民币汇率中间价为1美元对人民币6.7118元，较上日上调14个基点，创2022年以来新高。境外机构连续第六个月增持中国国债，减持美债与人民币走强同步发生，反映外部紧缩背景下跨境资金的选择。",
+      "why": "汇率与资本流动是外部紧缩下的中国读数",
+      "source": "中新网",
+      "publishedAt": "2026-11-18T09:54",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-18/10733879.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3201703",
+        "https://wallstreetcn.com/livenews/3202182"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "年末财政政策工具持续用力，扩大内需与专项债精准投放并举",
+      "summary": "临近年末，多项财政政策工具持续发力，为稳增长注入动力。专家认为，今年更加注重财政资金使用方式创新和财政金融协同，通过精准施策、工具创新放大财政资金撬动效应；扩大内需将是后续财政政策重点发力方向，新增专项债投向精准有效地发挥了政府投资的带动作用。",
+      "why": "对冲外需与地产拖累的国内政策主线",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T09:25",
+      "url": "https://wallstreetcn.com/livenews/3201626",
+      "refs": [
+        "http://finance.eastmoney.com/news/1352,202611183933915088.html",
+        "http://finance.eastmoney.com/news/1352,202611183933965974.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "美联储10月会议纪要：几乎所有官员预计未来数月继续加息",
+      "summary": "美联储10月27日至28日会议纪要显示，几乎所有与会者在其通胀和劳动力市场基本预测下，认为未来几个月进一步上调联邦基金利率目标区间可能是适当的，以确保通胀及时回归2%。少数与会者指出，若后续通胀数据不利，12月会议加息超过25个基点可能是合理的。",
+      "why": "12月加息路径的官方确认，决定全球资产定价",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-19T03:00",
+      "url": "https://wallstreetcn.com/livenews/3202122",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3202123",
+        "https://finance.sina.com.cn/money/forex/forexroll/2026-11-19/doc-inizfiwm4344691.shtml",
+        "https://finance.sina.com.cn/7x24/2026-11-19/doc-inizexhr4557009.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "沃勒称12月应考虑加息50个基点，戴利、巴尔同步支持进一步收紧",
+      "summary": "美联储理事沃勒表示通胀正朝错误方向发展、并担心通胀正在扩散，必须在加息方面稍微更激进一些；如不想释放1月加息的信号，就应该在12月加息50个基点。旧金山联储行长戴利称美联储需要进一步加息，但应审慎推进；理事巴尔表示进一步提高利率可能是合适的。",
+      "why": "加息幅度而非方向成为新的定价变量",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T20:39",
+      "url": "https://wallstreetcn.com/livenews/3201956",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizensx1471711.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfcqm0639237.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfcqm0635226.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizensv4713711.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "9月外国投资者美债持仓缩水755亿美元，创六个月来最大降幅",
+      "summary": "美国财政部数据显示，9月海外投资者持有的美国国债规模较8月下降755亿美元，至一年来最低的9.24万亿美元，为六个月来最大降幅。中国持有的美债降至5639亿美元，较8月减少268亿美元；日本降至1.0631万亿美元，减少52亿美元；英国降至9945亿美元，减少87亿美元。",
+      "why": "美债需求与美元信用的中期压力",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-19T06:41",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfiwi0540825.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-19/doc-inizfiwi0545862.shtml",
+        "https://wallstreetcn.com/livenews/3202182"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "英国10月CPI同比涨3.6%创一年新高，交易员削减加息押注",
+      "summary": "英国国家统计局数据显示，受能源账单和车用燃油成本上涨推动，10月消费者价格同比上涨3.6%，符合经济学家预期，但高于9月的3.5%，为连续第四个月上涨并创一年来最高水平。数据公布后英镑跌0.3%至1.3173美元，交易员把到2027年底累计加息90个基点的预期下调6个基点。",
+      "why": "能源冲击下英国央行路径的拐点信号",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T16:45",
+      "url": "https://wallstreetcn.com/livenews/3201869",
+      "refs": [
+        "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-18/doc-inizcvvf1662717.shtml",
+        "https://wallstreetcn.com/livenews/3202083",
+        "https://wallstreetcn.com/livenews/3201756"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "欧洲央行金融稳定报告警示AI估值与财政失衡，拉加德称AI估值非常激进",
+      "summary": "欧洲央行18日发布金融稳定评估报告称，欧元区金融稳定前景正受到AI企业估值、财政失衡以及地缘经济紧张局势衍生风险的影响；对AI企业盈利预期的过度乐观，使金融市场容易受到估值突然调整的冲击，主权债务风险可能重新定价。拉加德称AI公司高估值最终可能回落。",
+      "why": "欧央行同时承认AI泡沫与主权债风险",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T22:28",
+      "url": "https://wallstreetcn.com/livenews/3202004",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizehkz6823060.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizesyr0853159.shtml",
+        "https://wallstreetcn.com/livenews/3201945"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "现货黄金跌破3800美元创14个月新低，白银与铜同步重挫",
+      "summary": "受美联储官员接连释放鹰派加息信号及10年期美债收益率逼近5%拖累，周三纽约尾盘现货黄金跌3.26%，报3724.23美元/盎司，逼近2025年9月22日盘中最低的3683.79美元；现货白银跌4.93%，报45.0723美元；COMEX铜期货跌5.27%，报5.7585美元/磅。",
+      "why": "实际利率与紧缩预期对贵金属的定价重置",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-19T06:05",
+      "url": "https://wallstreetcn.com/livenews/3202202",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3202051",
+        "https://finance.sina.com.cn/money/nmetal/gjshz/2026-11-18/doc-inizcvvc4794364.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-18/doc-inizcvvc4808944.shtml",
+        "https://wallstreetcn.com/livenews/3202189"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "原油在波斯湾交火升级中反跌，WTI结算价接近83美元",
+      "summary": "尽管中东冲突加剧、油轮供应风险上升，WTI原油仍下跌3.2%，结算价接近每桶83美元，因交易员获利了结并因加息预期转向避险资产。周三商品市场全线降温，伦铜跌逾4%，伦锡跌逾8%，伦镍跌逾3%，上期所原油2701合约夜盘收跌4.8%。",
+      "why": "加息预期压过地缘溢价，是通胀路径的反向信号",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-19T06:38",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfiwp1121397.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3202135",
+        "https://finance.sina.com.cn/money/future/fmnews/2026-11-19/doc-inizfiwp1148217.shtml",
+        "https://finance.sina.com.cn/money/future/fmnews/2026-11-19/doc-inizfiwp1143301.shtml",
+        "https://wallstreetcn.com/livenews/3202115"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "腾讯三季报：营收同比增8%，资本开支814亿元大超预期",
+      "summary": "腾讯发布三季报，营收同比增长8%，资本开支达814.3亿元、大幅超出市场预期，WorkBuddy日活突破千万，自由现金流延续负值。电话会上称，WorkBuddy七天年化收入突破5亿美元，是腾讯会议的两倍以上；受算力限制，下一代混元的推出时间可能延迟。",
+      "why": "中国AI资本开支的对应面，算力需求是否延续",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-19T07:21",
+      "url": "https://wallstreetcn.com/livenews/3202232",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3201702"
+      ]
+    }
+  ],
+  "watch": [
+    "今日植田和男出席日本国会会议的表态，以及86%受访经济学家预期日本央行12月加息至1.5%",
+    "Anthropic 11月19日开盘定价（IPO区间70—78美元）与英伟达出席美国国会听证的后续表态",
+    "欧洲央行行长候选人提名截止日11月20日，11月25日将讨论银行最低准备金由1%上调至2%",
+    "价格位：10年期美债收益率能否守住5%上方、现货黄金3800美元一线与WTI 83美元附近"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
