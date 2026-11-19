@@ -1,11 +1,10 @@
 name: 临时诊断-统计局源
 
-# 临时：定位国家统计局 RSS 在 GitHub runner 上的失败层级（DNS/TCP/TLS/读取）。
+# 临时：量化 GitHub runner 上 Happy Eyeballs 250ms 抢跑导致的失败率，并验证 IPv4 强制连接是否消除失败。
 # 只做只读网络测试，不写 data/，跑完即删除本文件。
 
 on:
   workflow_dispatch:
-  # 临时：本文件被更新时自动跑一次（当前 token 无 actions:write，无法 dispatch）
   push:
     branches: [main]
     paths:
@@ -21,7 +20,7 @@ concurrency:
 jobs:
   diag:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -29,102 +28,59 @@ jobs:
         with:
           node-version: '22'
 
-      - name: 系统侧信息
+      - name: 现行 fetch 路径连续 8 次（每次独立进程，模拟生产单轮）
         run: |
-          echo "== date =="; date -u
-          echo "== tcp_syn_retries =="; sysctl net.ipv4.tcp_syn_retries 2>/dev/null || true
-          echo "== ipv6 default route =="; ip -6 route show default 2>/dev/null || echo "(none)"
-          echo "== getent ahosts =="; getent ahosts www.stats.gov.cn || true
-          echo "== curl timing =="
-          curl -sS -o /dev/null -m 40 --range 0-393215 \
-            -w 'connect=%{time_connect} appconnect=%{time_appconnect} starttransfer=%{time_starttransfer} total=%{time_total} code=%{http_code} ip=%{remote_ip}\n' \
-            https://www.stats.gov.cn/sj/zxfb/rss.xml || echo "curl failed rc=$?"
-
-      - name: 分层网络测试
-        run: |
-          cat > /tmp/diag.mjs <<'EOF'
-          import dns from 'node:dns';
-          import net from 'node:net';
-          import tls from 'node:tls';
-          import https from 'node:https';
-
+          cat > /tmp/one.mjs <<'EOF'
           const HOST = 'www.stats.gov.cn';
-          const PATH = '/sj/zxfb/rss.xml';
           const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36';
-          const ns = () => process.hrtime.bigint();
-          const ms = (a, b) => Math.round(Number(b - a) / 1e6);
+          const s = Date.now();
+          const ctrl = new AbortController();
+          const timer = setTimeout(() => ctrl.abort(), 30000);
+          try {
+            const r = await fetch(`https://${HOST}/sj/zxfb/rss.xml`, {
+              signal: ctrl.signal,
+              headers: { 'User-Agent': UA, Accept: '*/*', Range: 'bytes=0-393215' },
+            });
+            const b = await r.text();
+            console.log(`ok status=${r.status} bytes=${Buffer.byteLength(b)} ms=${Date.now() - s}`);
+          } catch (e) {
+            const c = e.cause;
+            const sub = c?.errors ? ' | ' + c.errors.map((x) => (x.code || x.message) + ':' + (x.message || '')).join(' ; ') : '';
+            console.log(`FAIL ms=${Date.now() - s} cause=${c?.code || c?.message || '-'}${sub}`);
+          } finally { clearTimeout(timer); }
+          EOF
+          for i in $(seq 1 8); do node /tmp/one.mjs; done
 
-          const d = {};
-          for (const fn of ['resolve4', 'resolve6']) {
-            const s = ns();
-            try { d[fn] = { addrs: await dns.promises[fn](HOST), ms: ms(s, ns()) }; }
-            catch (e) { d[fn] = { err: e.code, ms: ms(s, ns()) }; }
-          }
-          { const s = ns();
-            try { d.lookupAll = { addrs: await dns.promises.lookup(HOST, { all: true }), ms: ms(s, ns()) }; }
-            catch (e) { d.lookupAll = { err: e.code, ms: ms(s, ns()) }; } }
-          console.log('DNS', JSON.stringify(d));
-
-          const ips = [
-            ...(d.resolve4.addrs || []).map((ip) => ({ ip, f: 4 })),
-            ...(d.resolve6.addrs || []).map((ip) => ({ ip, f: 6 })),
-          ];
-
-          const tcp = ({ ip }) => new Promise((res) => {
-            const s = ns();
-            const sock = net.connect({ host: ip, port: 443 });
-            const fin = (r) => { try { sock.destroy(); } catch {} res({ ip, ms: ms(s, ns()), ...r }); };
-            sock.setTimeout(12000, () => fin({ err: 'local12s' }));
-            sock.on('connect', () => fin({ ok: true, local: sock.localAddress }));
-            sock.on('error', (e) => fin({ err: e.code || e.message }));
-          });
-
-          const tlsT = ({ ip }) => new Promise((res) => {
-            const s = ns();
-            const sock = tls.connect({ host: ip, port: 443, servername: HOST });
-            const fin = (r) => { try { sock.destroy(); } catch {} res({ ip, ms: ms(s, ns()), ...r }); };
-            sock.setTimeout(12000, () => fin({ err: 'local12s' }));
-            sock.on('secureConnect', () => fin({ ok: true, proto: sock.getProtocol() }));
-            sock.on('error', (e) => fin({ err: e.code || e.message }));
-          });
-
-          for (const ip of ips) console.log('TCP', JSON.stringify(await tcp(ip)));
-          for (const ip of ips) console.log('TLS', JSON.stringify(await tlsT(ip)));
-
-          // 生产同款 fetch：30s 超时 / 1 次重试 / Range 限长
-          const fetchOnce = async () => {
-            const s = ns();
-            const ctrl = new AbortController();
-            const timer = setTimeout(() => ctrl.abort(), 30000);
-            try {
-              const r = await fetch(`https://${HOST}${PATH}`, {
-                signal: ctrl.signal,
-                headers: { 'User-Agent': UA, Accept: '*/*', Range: 'bytes=0-393215' },
-              });
-              const b = await r.text();
-              return `ok status=${r.status} bytes=${Buffer.byteLength(b)} ms=${ms(s, ns())}`;
-            } catch (e) {
-              const c = e.cause;
-              const sub = c?.errors ? ' sub=' + c.errors.map((x) => `${x.code || x.message}/${x.message || ''}`).join('|') : '';
-              return `FAIL ms=${ms(s, ns())} msg=${e.message} cause=${c?.code || c?.message || '-'}${sub}`;
-            } finally { clearTimeout(timer); }
+      - name: autoSelectFamily 250ms vs 3000ms 对比（各 12 次）
+        run: |
+          cat > /tmp/race.mjs <<'EOF'
+          import net from 'node:net';
+          const HOST = 'www.stats.gov.cn';
+          const V4 = process.argv[2];
+          const V6 = process.argv[3];
+          const attempt = Number(process.argv[4] || 0);
+          const mk = (order) => (hostname, opts, cb) => {
+            const list = order.map((a) => ({ address: a, family: a.includes(':') ? 6 : 4 }));
+            if (opts && opts.all) cb(null, list); else cb(null, list[0].address, list[0].family);
           };
-          for (let i = 1; i <= 3; i++) console.log(`FETCH#${i}`, await fetchOnce());
+          const one = () => new Promise((res) => {
+            const s = process.hrtime.bigint();
+            const o = { host: HOST, port: 443, autoSelectFamily: true, lookup: mk([V4, V6]) };
+            if (attempt) o.autoSelectFamilyAttemptTimeout = attempt;
+            const sock = net.connect(o);
+            const fin = (r) => { try { sock.destroy(); } catch {} res({ r, ms: Math.round(Number(process.hrtime.bigint() - s) / 1e6) }); };
+            sock.setTimeout(15000, () => fin('local15s'));
+            sock.on('connect', () => fin('ok'));
+            sock.on('error', (e) => fin(e.errors ? e.errors.map((x) => x.code).join(',') : e.code));
+          });
+          const out = [];
+          for (let i = 0; i < 12; i++) out.push(await one());
+          const fails = out.filter((x) => x.r !== 'ok');
+          console.log(`attempt=${attempt || 'default250'} 失败 ${fails.length}/12`, JSON.stringify(out));
           process.exit(0);
           EOF
-          node /tmp/diag.mjs
-
-      - name: 生产适配器实测
-        run: |
-          node -e "
-          import('./src/sources.mjs').then(async (m) => {
-            const src = m.SOURCES.find((s) => s.id === 'stats');
-            const t0 = Date.now();
-            try {
-              const items = await src.run();
-              console.log('ADAPTER ok', items.length, 'items', Date.now() - t0, 'ms');
-            } catch (e) {
-              console.log('ADAPTER FAIL', Date.now() - t0, 'ms', e.message, '| cause', e.cause && (e.cause.code || e.cause.message));
-            }
-          });
-          "
+          V4=$(node -e "require('node:dns').resolve4('www.stats.gov.cn',(e,a)=>console.log(a[0]))")
+          V6=$(node -e "require('node:dns').resolve6('www.stats.gov.cn',(e,a)=>console.log(a[0]||''))")
+          echo "V4=$V4 V6=$V6"
+          node /tmp/race.mjs "$V4" "$V6" 0
+          node /tmp/race.mjs "$V4" "$V6" 3000
