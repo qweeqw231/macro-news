@@ -1,11 +1,59 @@
 {
-  "generatedAt": "2026-11-19T21:38:04.877Z",
+  "generatedAt": "2026-11-19T21:53:06.505Z",
   "windowDays": 62,
   "from": "2026-09-19",
   "days": 62,
   "fromHistory": 16,
-  "total": 57610,
+  "total": 57616,
   "items": [
+    {
+      "id": "dydhoy",
+      "ts": 1795124931,
+      "time": "2026-11-20T05:48:51.000+08:00",
+      "source": "新浪财经",
+      "title": "11月20日外盘头条：Anthropic首秀市值达1.3万亿美元 特朗普9月交易记录曝光 美联储官员未排除更大幅度加息",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvp5784689.shtml"
+    },
+    {
+      "id": "1cy6m0a",
+      "ts": 1795124919,
+      "time": "2026-11-20T05:48:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "明晟公司MSCI新兴市场股票指数跌1.3%，发展中国家外汇指数跌0.06%。",
+      "url": "https://wallstreetcn.com/livenews/3202827"
+    },
+    {
+      "id": "10tkxw0",
+      "ts": 1795124779,
+      "time": "2026-11-20T05:46:19.000+08:00",
+      "source": "华尔街见闻",
+      "title": "苹果公司正在开发一款自主人工智能代理，能够代表用户完成各类任务。",
+      "url": "https://wallstreetcn.com/livenews/3202826"
+    },
+    {
+      "id": "fhplxn",
+      "ts": 1795124752,
+      "time": "2026-11-20T05:45:52.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国行业协会拉响警报：全球PCB短缺危机正在蔓延 供应紧张局面或持续至2028年年中",
+      "url": "https://wallstreetcn.com/livenews/3202825"
+    },
+    {
+      "id": "1wpk128",
+      "ts": 1795124423,
+      "time": "2026-11-20T05:40:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "苹果公司正开发自家AI智能体，以期与OpenAI、Anthropic竞争",
+      "url": "https://wallstreetcn.com/livenews/3202824"
+    },
+    {
+      "id": "1bwqz5w",
+      "ts": 1795124381,
+      "time": "2026-11-20T05:39:41.000+08:00",
+      "source": "新浪财经",
+      "title": "Anthropic首秀市值达1.3万亿美元 又一巨型AI公司登陆纳斯达克",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvp5782425.shtml"
+    },
     {
       "id": "1u025wo",
       "ts": 1795124177,
@@ -159,19 +207,19 @@
       "url": "https://wallstreetcn.com/livenews/3202809"
     },
     {
-      "id": "xpilyx",
+      "id": "irwxcy",
       "ts": 1795122017,
       "time": "2026-11-20T05:00:17.000+08:00",
       "source": "华尔街见闻",
-      "title": "纳斯达克金龙中国指数初步收跌1.8%。",
+      "title": "纳斯达克金龙中国指数收跌1.86%，报5193.02点，整体持续震荡下行，继续逼近2024年8月5日盘中最低位5185.61点和2022年11月9日收盘位4959.22点。",
       "url": "https://wallstreetcn.com/livenews/3202808"
     },
     {
-      "id": "aqg4xy",
+      "id": "kz5c1",
       "ts": 1795122013,
       "time": "2026-11-20T05:00:13.000+08:00",
       "source": "华尔街见闻",
-      "title": "纳斯达克金龙中国指数初步收跌1.8%。",
+      "title": "纳斯达克金龙中国指数收跌1.86%，报5193.02点，整体持续震荡下行，继续逼近2024年8月5日盘中最低位5185.61点和2022年11月9日收盘位4959.22点。",
       "url": "https://wallstreetcn.com/livenews/3202807"
     },
     {
@@ -871,11 +919,11 @@
       "url": "https://wallstreetcn.com/livenews/3202745"
     },
     {
-      "id": "1u88ef1",
+      "id": "g2ytng",
       "ts": 1795110975,
       "time": "2026-11-20T01:56:15.000+08:00",
       "source": "华尔街见闻",
-      "title": "欧洲央行管委Panetta：必须阻止通胀变得根深蒂固。",
+      "title": "欧洲央行帕内塔：决不能让通胀在经济中扎根",
       "url": "https://wallstreetcn.com/livenews/3202744"
     },
     {
