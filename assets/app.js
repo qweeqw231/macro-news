@@ -1826,6 +1826,35 @@
     return briefPromise;
   }
 
+  // K 线新鲜度心跳（2026-11-19 哨兵）
+  //
+  // ⚠ 这是本文件里唯一「新增的状态文件」。原本（见 renderFoot 顶上的注释）特意不新增，
+  //   但这次的事故证明「运行 success」不能当判据：22:48 那次结论 success、push 却静默
+  //   放弃，main 上没有任何变化。心跳文件由 K 线 workflow 在**推送之前**写入、与数据
+  //   同一笔提交 ⇒ 它只会在真正推成功时前进，正好就是「最后一次 kline 数据提交时间」。
+  //   体积约 100 字节，且本来每次运行就会有一笔 kline 提交。
+  const KLINE_HB_TTL = 60 * 1000;
+  let klineHb = null;
+  let klineHbAt = 0;
+  let klineHbPromise = null;
+  function loadKlineHeartbeat() {
+    if (klineHb && Date.now() - klineHbAt < KLINE_HB_TTL) return Promise.resolve(klineHb);
+    if (!klineHbPromise) {
+      klineHbPromise = jget('kline/_heartbeat.json')
+        .then((d) => {
+          klineHb = d || null;
+          klineHbAt = Date.now();
+          klineHbPromise = null;
+          return klineHb;
+        })
+        .catch(() => {
+          klineHbPromise = null;
+          return null;
+        });
+    }
+    return klineHbPromise;
+  }
+
   async function renderSources() {
     const box = $('#sources');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
@@ -1884,7 +1913,9 @@
     const box = $('#ftMeta');
     try {
       // 早报状态与采集概况并行取：前者是单独的小文件，失败不影响整行
-      const [{ last, total, days, dayList }, brief] = await Promise.all([loadRunMeta(), loadBriefStatus()]);
+      const [{ last, total, days, dayList }, brief, hb] = await Promise.all([
+        loadRunMeta(), loadBriefStatus(), loadKlineHeartbeat(),
+      ]);
       // 字段形状要按实际产物校验：`macroOk` 是数组，而 `macroFail` 在无失败时写的是 `{}`，
       // 直接 forEach 会抛「is not a function」，把整行页脚变成错误信息。
       const srcs = Array.isArray(last.sources) ? last.sources : [];
@@ -1913,6 +1944,19 @@
         state = `归档触顶 · 淘汰 ${Number(newsMeta.evicted) || 0} 条`;
       }
 
+      // K 线新鲜度哨兵（2026-11-19）：判据是心跳时间戳，而不是「运行是否 success」。
+      //   心跳由 K 线 workflow 在推送前写入、与数据同一笔提交 ⇒ 推不上去就不会前进。
+      //   阈值默认 90 分钟（心跳文件可覆盖）：cron 每 30 分钟一轮、单轮约 6 分钟，
+      //   正常最长约 36 分钟；丢一轮约 66 分钟；90 分钟留出一轮完整余量。
+      const KL = window.MacroQuoteStatus || {};
+      const kf = typeof KL.klineFreshness === 'function'
+        ? KL.klineFreshness(hb, Date.now())
+        : { level: 'none', ageMin: null, thresholdMin: 90 };
+      if (kf.level === 'bad') {
+        level = 'bad';
+        state = `K线停摆 ${agoText(kf.ageMin)}`;
+      }
+
       const bits = [];
       if (last.runner === 'cloud') bits.push('云端');
       else if (last.runner === 'local') bits.push('本机');
@@ -1920,6 +1964,7 @@
       if (srcs.length) bits.push(`源 ${srcs.length - srcBad.length}/${srcs.length}`);
       if (capped) bits.push(`归档上限 ${newsMeta.cap || '?'}`);
       if (newsMin != null) bits.push('最新新闻 ' + agoText(newsMin));
+      if (kf.level !== 'none') bits.push(`K线 ${agoText(kf.ageMin)}`);
       // 与 #quoteTime 共用同一段三态文案，避免一处实时一处快照
       bits.push(S.quoteStatusText || '行情 未记录');
       if (macroOk.length || macroFail.length) bits.push(`宏观 ${macroOk.length}/${macroOk.length + macroFail.length}`);

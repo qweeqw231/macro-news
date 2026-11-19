@@ -794,6 +794,29 @@
     throw new Error('东财/腾讯报价均失败（预算 ' + total + 'ms）');
   }
 
+  /**
+   * K 线新鲜度（页脚哨兵）。
+   *
+   * 判据是 `data/kline/_heartbeat.json` 的 `at` —— 这个文件由 K 线 workflow 在
+   * **推送之前**写入，和数据同一笔提交。所以它只会在「真的提交上去了」时前进：
+   * 2026-11-18 那次 success 但 push 被静默放弃的运行，时间戳就没动过。
+   *
+   * @param {{at?:string, thresholdMin?:number}} hb 心跳文件内容（读不到传 null）
+   * @param {number} nowMs
+   * @returns {{level:'ok'|'bad'|'none', ageMin:number|null, thresholdMin:number}}
+   *   ok：未超阈值；bad：超过阈值（或时间戳在未来，说明时钟异常）；none：没有心跳文件
+   */
+  function klineFreshness(hb, nowMs) {
+    var threshold = Number(hb && hb.thresholdMin) > 0 ? Number(hb.thresholdMin) : 90;
+    var at = hb && hb.at ? Date.parse(hb.at) : NaN;
+    if (!isFinite(at)) return { level: 'none', ageMin: null, thresholdMin: threshold };
+    var ageMin = (Number(nowMs) - at) / 60000;
+    // 时间戳在未来 = 本机时钟或产物异常，同样按异常处理（不能显示「正常」）
+    if (ageMin < -5) return { level: 'bad', ageMin: 0, thresholdMin: threshold };
+    var mins = Math.round(Math.max(0, ageMin));
+    return { level: mins > threshold ? 'bad' : 'ok', ageMin: mins, thresholdMin: threshold };
+  }
+
   var API = {
     REALTIME_MAX_AGE_MS: REALTIME_MAX_AGE_MS,
     QUOTE_TOTAL_BUDGET_MS: QUOTE_TOTAL_BUDGET_MS,
@@ -825,6 +848,7 @@
     aggregateStatus: aggregateStatus,
     shortSource: shortSource,
     klineMarker: klineMarker,
+    klineFreshness: klineFreshness,
   };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = API;

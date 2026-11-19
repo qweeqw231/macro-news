@@ -71,6 +71,10 @@ jobs:
       #   若在此处继续跑 collect --kline-only，CF 04:17 会与同分钟的 kline-minute 写同一批日 K。
       # 本 workflow 只负责 _full.json。
 
+      - name: K线心跳（新鲜度哨兵）
+        # 时间戳必须在推送之前写：它和数据同一笔提交，推不上去就不会前进
+        run: node scripts/kline-heartbeat.mjs full
+
       - name: 提交并推送（仅在数据有变化时）
         # ⚠ 必须整行加引号：plain scalar 里的 `: ` 会让 YAML 解析失败
         # ⚠ GITHUB_TOKEN 不会自动进步骤环境，必须显式注入，否则 push-data.sh 里

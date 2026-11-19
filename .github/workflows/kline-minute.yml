@@ -108,6 +108,10 @@ jobs:
             echo "跳过日/周/月K：仅 UTC 04 点执行（当前 $h:$m，event=$ev）"
           fi
 
+      - name: K线心跳（新鲜度哨兵）
+        # 时间戳必须在推送之前写：它和数据同一笔提交，推不上去就不会前进
+        run: node scripts/kline-heartbeat.mjs minute
+
       - name: 提交并推送（仅在数据有变化时）
         # ⚠ 必须整行加引号：plain scalar 里的 `: ` 会让 YAML 解析失败
         # ⚠ GITHUB_TOKEN 不会自动进步骤环境，必须显式注入，否则 push-data.sh 里
