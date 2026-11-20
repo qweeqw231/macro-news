@@ -1,0 +1,149 @@
+{
+  "date": "2026-10-15",
+  "generatedAt": "2026-11-20T17:29:54+08:00",
+  "endedAt": "2026-11-20T17:29:59+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-10-14",
+    "to": "2026-10-15",
+    "fromAt": "2026-10-14T08:00:00+08:00",
+    "toAt": "2026-10-15T09:00:00+08:00",
+    "fromTs": 1791936000,
+    "toTs": 1792026000
+  },
+  "overview": "9月CPI同比涨0.9%、PPI涨5.0%，涨幅双双扩大；前三季度社融增量27.46万亿元、M2增7.2%，央行宣布15日开展7000亿元6个月买断式逆回购。海外方面，美国9月CPI同比3.7%、核心2.6%超预期，加息押注升温，美元创逾一年新高，金银大跌。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "9月CPI同比涨0.9%，PPI涨5.0%创近四年新高",
+      "summary": "国家统计局数据显示，9月CPI环比上涨0.2%、同比上涨0.9%，涨幅比上月扩大0.1个百分点；PPI环比上涨1.2%、同比上涨5.0%，涨幅扩大1.2个百分点，其中数据存储设备价格同比上涨46.7%。",
+      "why": "物价双扩，PPI创近四年新高",
+      "source": "东方财富",
+      "publishedAt": "2026-10-15T07:17",
+      "url": "http://finance.eastmoney.com/news/1352,202610153895956236.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1352,202610143895306166.html",
+        "https://wallstreetcn.com/livenews/3178293"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行15日开展7000亿元6个月买断式逆回购",
+      "summary": "央行公告，为保持银行体系流动性充裕，10月15日将以固定数量、利率招标、多重价位中标方式开展7000亿元买断式逆回购操作，期限6个月（182天），到期日为2027年4月15日。",
+      "why": "中长期流动性投放加码",
+      "source": "东方财富",
+      "publishedAt": "2026-10-14T21:19",
+      "url": "http://finance.eastmoney.com/news/1346,202610143895730974.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202610143895561411.html",
+        "https://www.chinanews.com.cn/cj/2026/10-15/10714753.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "前三季度社融增量27.46万亿元，M2同比增长7.2%",
+      "summary": "央行数据显示，9月末社融存量468.17万亿元、同比增长7.1%，M2余额359.63万亿元、同比增长7.2%；前三季度社融增量累计27.46万亿元，人民币贷款增加11.52万亿元，直接融资占比上升。",
+      "why": "社融与M2增速均超7%",
+      "source": "东方财富",
+      "publishedAt": "2026-10-15T00:59",
+      "url": "http://finance.eastmoney.com/news/1350,202610153895865879.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1345,202610143895517426.html",
+        "http://bond.eastmoney.com/news/1326,202610143895750842.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "美国9月CPI同比涨3.7%，核心CPI涨2.6%超预期",
+      "summary": "美国劳工统计局数据显示，9月CPI环比上涨0.6%、同比上涨3.7%，核心CPI同比上涨2.6%，均高于市场预期；数据公布后美元指数、美债收益率拉升，现货黄金短线走低约30美元。",
+      "why": "美国通胀超预期重燃加息担忧",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-14T20:42",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-14/doc-inivezmf8407795.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3178720",
+        "https://wallstreetcn.com/livenews/3178764"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "美元升至逾一年高点，10月加息押注升温",
+      "summary": "美国通胀数据高于预期，促使交易员加大对美联储加息的押注，美元升至2025年5月以来最高水平，兑所有G10货币均走强；交易员把10月加息概率从22%上调至50%。",
+      "why": "美元与美债收益率同步走高",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-15T03:34",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-15/doc-inivfsie1291367.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3178885",
+        "https://wallstreetcn.com/livenews/3178949"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "标普结束53日平静期，芯片股连续第六日下跌",
+      "summary": "美国通胀数据走高引发加息担忧，标普500指数收跌86.51点、跌幅1.11%报7718.94点，连续53个交易日未出现单日1%以上跌幅的纪录就此终结；纳指跌近2%，费城半导体指数六连跌。",
+      "why": "通胀数据打破美股平静期",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-15T04:00",
+      "url": "https://wallstreetcn.com/livenews/3178895",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-15/doc-inivfwqy4476272.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "国际金价跌1.37%，白银重挫逾6%",
+      "summary": "10月14日纽约尾盘，现货黄金跌1.37%报4103.80美元/盎司，美国CPI数据发布后短线加速下跌；现货白银跌6.08%报55.5609美元/盎司，COMEX白银期货跌6.20%。",
+      "why": "加息预期打压贵金属",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-15T05:05",
+      "url": "https://wallstreetcn.com/livenews/3178914"
+    },
+    {
+      "rank": 8,
+      "title": "美联储戴利：很可能还需加息，但并无紧迫性",
+      "summary": "旧金山联储主席戴利表示，很可能还需要进一步加息，但并无紧迫性，“我们并不处于紧急状态，最好花时间审慎、周密地决策”；她称市场对CPI数据的强烈反应目前已趋于平静。",
+      "why": "官员淡化10月加息紧迫性",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-15T05:38",
+      "url": "https://wallstreetcn.com/livenews/3178926",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-15/doc-inivfsie1294479.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "沪指跌0.88%，创业板指跌3.1%",
+      "summary": "截至10月14日收盘，上证综指跌0.88%报3767.23点，深证成指跌1.97%报12110.59点，创业板指跌3.1%报2866.76点；午间恒生指数涨0.16%，恒生科技指数涨1.61%。",
+      "why": "创业板领跌，港股相对抗跌",
+      "source": "东方财富",
+      "publishedAt": "2026-10-15T08:09",
+      "url": "http://bank.eastmoney.com/news/1174,202610153896133395.html",
+      "refs": [
+        "http://hk.eastmoney.com/news/1556,202610143895257290.html"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中金：美联储10月或暂停加息，12月再行动",
+      "summary": "中金公司研报称，美国9月CPI季调环比涨0.6%、同比涨3.7%，核心CPI环比涨0.3%、同比涨2.6%，均较上月反弹且超出预期，涨价来源较广；预计美联储10月仍可能暂停加息，12月再度行动。",
+      "why": "机构预计加息延后至12月",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-15T08:58",
+      "url": "https://wallstreetcn.com/livenews/3178984"
+    }
+  ],
+  "watch": [
+    "美国9月PPI与零售销售（今晚）",
+    "美联储官员对10月会议的定调",
+    "布伦特原油能否守住105美元",
+    "10年期美债收益率5.2%关口"
+  ],
+  "model": "deepseek-v4.1-flash",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-20T17:29:59+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
