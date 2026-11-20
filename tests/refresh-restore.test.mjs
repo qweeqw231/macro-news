@@ -79,8 +79,13 @@ test('要闻流：对齐一致时一个节点都不动，只在顶部补插', ()
   assert.match(patch, /if \(!off && !drop\) return true;/, '一致时必须直接返回，不碰 DOM');
   assert.match(patch, /box\.insertBefore\(frag, box\.firstChild\)/, '新增条目只插到顶部');
   assert.doesNotMatch(patch, /box\.innerHTML\s*=|box\.replaceChildren\(/, '增量路径不得整块重建');
-  // 条目下标改成点击时按 id 反查：补插后旧节点的闭包下标会错位
-  assert.match(APP, /a\.onclick = \(\) => openReader\(idxOfItem\(it\)\)/);
+  // 条目下标改成点击时按 id 反查：补插后旧节点的闭包下标会错位。
+  // 只约束「触发时按 idxOfItem(it) 反查」这一意图，不绑定 onclick 的具体函数写法。
+  const item = APP.slice(APP.indexOf('function itemNode(it)'), APP.indexOf('function renderFeed()'));
+  assert.ok(item.length > 0, '缺少 itemNode');
+  assert.match(item, /a\.onclick[\s\S]{0,200}openReader\(idxOfItem\(it\)\)/, '点击时必须按 id 反查下标');
+  assert.match(item, /a\.onkeydown[\s\S]{0,240}openReader\(idxOfItem\(it\)\)/, '键盘触发时也必须按 id 反查下标');
+  assert.doesNotMatch(item, /openReader\(\d+\)/, '不得把列表下标固化进节点闭包');
 });
 
 test('boot 顺序：要闻流回填早于假日表与新数据', () => {
