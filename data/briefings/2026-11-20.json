@@ -1,0 +1,169 @@
+{
+  "date": "2026-11-20",
+  "generatedAt": "2026-11-20T13:51:43+08:00",
+  "endedAt": "2026-11-20T13:57:40+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-19",
+    "to": "2026-11-20",
+    "fromAt": "2026-11-19T08:00:00+08:00",
+    "toAt": "2026-11-20T09:00:00+08:00",
+    "fromTs": 1795046400,
+    "toTs": 1795136400
+  },
+  "overview": "今日主线是全球紧缩预期压过宽松叙事：美联储官员称12月不排除单次加息50个基点、AI热潮正在推高通胀，欧洲央行明确12月加息信号，日本核心CPI升至2.2%创年内新高；商品与风险资产同步下挫，Anthropic创下史上最大IPO仍未提振美股；人民币由升转贬，中间价转为下调。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "离岸人民币跳水跌至6.6999，中间价转为下调10个基点",
+      "summary": "离岸人民币在美股早盘一度跌0.5%，触及6.6999，纽约尾盘报6.6934元；在岸人民币北京时间03:00收报6.6950，较上一交易日夜盘收盘跌272点。11月19日人民币对美元中间价报6.7128、下调10个基点，终结前一日创2022年以来新高的升势，美元走强令新兴市场货币普遍承压。",
+      "why": "外部紧缩与风险偏好共振下的资本流动拐点",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-20T00:08",
+      "url": "https://wallstreetcn.com/livenews/3202767",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/11-19/10734499.shtml",
+        "https://wallstreetcn.com/livenews/3202766",
+        "https://wallstreetcn.com/livenews/3202848",
+        "https://wallstreetcn.com/livenews/3202272"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国债利息收入免征所得税议题升温，央行货政报告表述被市场放大",
+      "summary": "国债等政府债券利息收入恢复征收增值税一年多后，讨论正延伸到是否征收利息所得税。央行2026年三季度货币政策执行报告提出，国内目前对国债利息收入免征所得税，使投资者接受低于应税债券的收益率；征收利息所得税有助发挥国债收益率曲线的定价基准作用。",
+      "why": "国债收益率曲线定价基准的制度变量",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-20T07:36",
+      "url": "https://wallstreetcn.com/livenews/3202869",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3202837"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "日本10月核心CPI同比升2.2%创年内新高，支持央行12月加息",
+      "summary": "日本总务省数据显示，10月剔除生鲜食品的核心消费者价格指数同比上涨2.2%，涨幅较9月略有扩大，为年内最快，印证价格上涨压力正在蔓延。10月CPI公布于日本央行行长植田和男国会会议发言之前，86%的受访经济学家预计日本央行12月将加息至1.5%，2027年3月底之前升至1.75%。",
+      "why": "亚洲货币政策的松紧拐点",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-20T07:55",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitcq4059161.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitcn7281362.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitct0478473.shtml",
+        "https://wallstreetcn.com/livenews/3202637",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfqef0531504.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "美联储官员密集表态：古尔斯比不排除12月单次加50个基点，杰斐逊称AI热潮正推高通胀",
+      "summary": "芝加哥联储主席古尔斯比表示，下月议息会议将考虑所有政策选项，并未排除一次性加息50个基点。美联储副主席杰斐逊称，AI基础设施建设正对需求和通胀施加上行压力；理事巴尔称宽松金融条件推动经济强劲与通胀持续，需进一步调整利率。",
+      "why": "决定12月会议的定价区间与后续路径",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-20T06:01",
+      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-20/doc-inizinvs4151873.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvq7338509.shtml",
+        "https://finance.sina.com.cn/money/forex/whqqscgd/2026-11-20/doc-inizinvq7370864.shtml",
+        "https://wallstreetcn.com/livenews/3202633",
+        "https://wallstreetcn.com/livenews/3202797",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvp5775362.shtml",
+        "https://wallstreetcn.com/livenews/3202865"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "欧洲央行12月加息信号明确，Nagel称将释放控制通胀的决心",
+      "summary": "欧洲央行管委兼德国央行行长Nagel表示，欧洲央行管理委员会已两次加息，12月再次加息将释放一个强烈信号，表明决策者控制通胀的决心，并称可能需要采取进一步行动。意大利央行行长帕内塔称必须避免让通胀在经济中扎根；法国央行行长穆兰则称欧元区通胀率约为4%，是2%目标的两倍。",
+      "why": "欧元区通胀4%下的紧缩路径确认",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-19T21:23",
+      "url": "https://wallstreetcn.com/livenews/3202609",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizhrsf0928929.shtml",
+        "https://wallstreetcn.com/livenews/3202744",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizhmki0948572.shtml",
+        "https://finance.sina.com.cn/world/2026-11-19/doc-inizhfae7812697.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihpu4220731.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "法国巴黎银行上调加息预期：12月、1月、3月连续三次25个基点",
+      "summary": "法国巴黎银行在利率预测中新增美联储明年3月加息的预期，预计继今年12月和明年1月之后，美联储将连续第三次加息25个基点。此前市场普遍预期美联储12月加息25个基点，部分官员放鹰后单次加50个基点的概率明显升温，加息周期正从一次扩展为连续三次。",
+      "why": "加息周期从一次被扩展为连续三次",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-20T07:27",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitct0474689.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3202799",
+        "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-20/doc-inizinvs4151873.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvq7338509.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "交易员押注三大央行2027年底结束加息后，利率将数年内维持不变",
+      "summary": "交易员押注，主要央行在2027年底结束加息后，将在数年内基本维持利率不变。2026年初，货币市场原本计价美联储、欧洲央行和英国央行将降息，但伊朗战争导致石油供应受阻、通胀重燃，加息周期启动后，降息预期被彻底挤出曲线，高利率平台期成为基准情景。",
+      "why": "从降息叙事转为长期高利率平台期",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-20T02:51",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizihpu4221462.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3202729"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "黄金失守3600美元创年内新低，9月全球央行净购金61吨创年内最高",
+      "summary": "美联储加息预期助力美元继续飙升，现货黄金周四单日下跌2.66%，收于每盎司3625.33美元，盘中一度触及3620美元，创2025年9月以来最低水平，美国12月交割期金同步收跌。另一面，世界黄金协会数据显示9月全球央行公开净购金量达61吨，创2026年迄今单月最高，波兰和中国是购金主力。",
+      "why": "价格重定价与官方需求托底的背离",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-20T07:43",
+      "url": "https://finance.sina.com.cn/money/nmetal/hjzx/2026-11-20/doc-inizitcn7278728.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3202562",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfyuk4581825.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizhvxw7609142.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "伊朗加大对油轮袭击，油价却几乎收平，WTI报83.21美元",
+      "summary": "WTI 12月原油期货周四收跌0.05美元，跌幅0.06%，报83.21美元/桶，油价在伊朗加大对油轮袭击的背景下几乎收平。布伦特原油日内涨幅一度达1.5%，报93.39美元/桶；上期所原油2701合约夜盘收涨2.84%，报593.30元人民币/桶。交易员获利了结并因加息预期转向避险资产。",
+      "why": "地缘溢价与紧缩预期赛跑的结果",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-20T03:30",
+      "url": "https://wallstreetcn.com/livenews/3202782",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3202634",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvq7375587.shtml",
+        "https://wallstreetcn.com/livenews/3202756"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "Anthropic首秀冲高回落收涨17%，成为史上最大IPO",
+      "summary": "Anthropic在纳斯达克挂牌首日冲高回落，盘中涨幅一度达34%，随后回吐半数涨幅，收涨约17%，成为史上最大IPO。前美联储主席伯南克现身首笔股票成交现场。上市首日的强劲表现未能持续提振市场对AI交易的信心，美股三大指数均跌超2%，道指跌破5万点。",
+      "why": "AI一级市场热度与二级市场信心的背离",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-20T07:29",
+      "url": "https://wallstreetcn.com/livenews/3202865",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvp5784689.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizinvq7375587.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizhrsa4480848.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-iniziafw4325297.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "今日公布的11月LPR：一年期与五年期以上是否维持3.0%和3.5%不变",
+    "美元指数能否突破104关口（周四收103.899，逼近2025年4月盘中最高104.314）",
+    "恒生指数公司第三季指数系列检讨结果公布时点与成分股调整对被动资金的影响",
+    "澳洲失业率升至4.9%后澳洲央行降息押注升温，澳元能否止住抹去全年涨幅的跌势"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
