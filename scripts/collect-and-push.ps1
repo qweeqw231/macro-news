@@ -73,6 +73,9 @@ $runStats = [ordered]@{
     skipReason = ''
     dirtyStreak = 0
     syncResult = ''
+    # 2.28.3：脏清单也进台账——`sync-state.json` 是「最新一轮」，台账要能逐轮回看
+    consumedDirty = @()
+    dirtyPaths = @()
     # 2.23.0：fetch 失败要能自证「重试了几次、最后一句错误是什么」
     fetchAttempts = 0
     syncError = ''
@@ -307,6 +310,9 @@ $allDirtyPaths = @(Get-GitDirtyPaths)
 $dirtyPaths = @(Get-CloseBasisDirtyPaths)
 $unrelatedDirtyPaths = @($allDirtyPaths | Where-Object { $dirtyPaths -notcontains $_ })
 $dirty = if ($dirtyPaths.Count -gt 0) { 'yes' } else { 'no' }
+# 2.28.3：台账与 sync-state.json 同源记录脏清单，事后不必再翻当轮日志
+$runStats.consumedDirty = @($dirtyPaths | Select-Object -First 20)
+$runStats.dirtyPaths = @($allDirtyPaths | Select-Object -First 20)
 if ($unrelatedDirtyPaths.Count -gt 0) {
     Say ("sync: 无关脏 {0} 个（不影响本轮，仅记录）：{1}" -f $unrelatedDirtyPaths.Count, (($unrelatedDirtyPaths | Select-Object -First 6) -join ', '))
 }
