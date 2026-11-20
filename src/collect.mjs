@@ -24,7 +24,7 @@ import { finalizeClosedQuotes } from './quote-finalize.mjs';
 import { readBriefingMeta } from './brief-meta.mjs';
 import { dedupeItems } from './news-dedupe.mjs';
 import { decideBars, markCloseOnlyBars, barTime } from './kline-guard.mjs';
-import { aggregateDaily } from './aggregate.mjs';
+import { aggregateDaily, collapsePeriodDuplicates } from './aggregate.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
 import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
@@ -215,8 +215,22 @@ async function collectKlines(startedAt, onlyKeys) {
             );
             continue;
           }
+          // 2.27.2：周/月 K 一个周期只能有一根。未走完的桶其 `t` 是「桶内最后一根日线」、
+          //   每天前移，decideBars 会把它判成「缺旧末根键」走 merge 并集 ⇒ 每天多一根。
+          //   xau/brent/usdcny/n225/kospi 等全标的的 2026-11 因此各出现十余根假 K 线。
+          //   收敛放在 markCloseOnlyBars 之前，保留最后一根（最新的累计值）。
+          const unit = spec.period === '1w' ? 'week' : spec.period === '1M' ? 'month' : null;
+          const collapsed = unit ? collapsePeriodDuplicates(decision.bars, unit) : null;
+          if (collapsed?.collapsed) {
+            const detail = Object.entries(collapsed.periods)
+              .map(([k, n]) => `${k}×${n}`)
+              .join(' ');
+            console.log(
+              `  🧹 ${key} ${spec.period}：同周期重复 ${collapsed.collapsed} 根已收敛（${detail}）`
+            );
+          }
           // 2.18.0：o=h=l=0 且只有收盘的 bar 必须显式标记后进库（不许静默当正常 bar）
-          const marked = markCloseOnlyBars(decision.bars);
+          const marked = markCloseOnlyBars(collapsed ? collapsed.bars : decision.bars);
           const bars = marked.bars;
           if (marked.count) {
             console.log(

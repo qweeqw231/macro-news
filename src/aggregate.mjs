@@ -20,6 +20,59 @@
 const isCloseOnly = (b) => (b && (b.z === 1 || b.z === true)) ||
   (b && +b.o === 0 && +b.h === 0 && +b.l === 0 && +b.c > 0);
 
+/** 时间键：对象行取 t、紧凑数组行取 [0]（与 kline-guard.barTime 同口径，这里避免循环依赖） */
+export const barTimeOf = (b) => (Array.isArray(b) ? String(b[0]) : String((b && b.t) || ''));
+
+/**
+ * 周/月 K 的「周期键」：同一周期只能有一根 bar。
+ *   · month → `YYYY-MM`
+ *   · week  → 该周周一的 `YYYY-MM-DD`（ISO 周）
+ */
+export function periodKey(t, unit) {
+  const s = String(t || '');
+  if (unit === 'month') return s.slice(0, 7);
+  const d = new Date(s.slice(0, 10) + 'T00:00:00Z');
+  if (isNaN(d)) return s;
+  d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
+  return d.toISOString().slice(0, 10);
+}
+
+/**
+ * 2.27.2：收敛同一周/月内的重复 bar（只保留最后一根）。
+ *
+ * 背景：未走完的周/月桶，其 bar 的 `t` 是「该桶内最后一根日线」，每天前移
+ *   （2026-11-18 → 11-19）。kline-guard.decideBars 因此认为新序列「缺旧末根键」，
+ *   走 merge 并集 ⇒ 新旧两个桶都保留 ⇒ 每天多一根，逐日累积。
+ *   xau_1M 的 2026-11 从 1 根长到 12 根就是这么来的（2026-11-04 引入）。
+ *   `t` 每天变是数据源口径，不能改；能保证的不变量是「一个周期只有一根」。
+ *
+ * 为什么保留最后一根：重复桶的 o/h 固定为区间首日开与区间最高、l 逐日下探、
+ *   c 是当日收、v 累加 ⇒ 最后一根就是该周期最新的累计值（与 aggregateDaily 口径一致）。
+ *
+ * @param {Array} bars 周/月 bars（对象行或紧凑数组行，按时间升序）
+ * @param {'week'|'month'} unit
+ * @returns {{bars:Array, collapsed:number, periods:Object<string,number>}} periods = 发生重复的周期 → 该周期原有根数（便于日志/报告）
+ */
+export function collapsePeriodDuplicates(bars, unit) {
+  const list = Array.isArray(bars) ? bars : [];
+  const out = [];
+  const seen = new Map(); // 周期键 → out 下标
+  let collapsed = 0;
+  const periods = {};
+  for (const b of list) {
+    const k = periodKey(barTimeOf(b), unit);
+    if (seen.has(k)) {
+      out[seen.get(k)] = b; // 同周期：保留最后（最新）一根，位置不变
+      collapsed++;
+      periods[k] = (periods[k] || 1) + 1;
+    } else {
+      seen.set(k, out.length);
+      out.push(b);
+    }
+  }
+  return { bars: out, collapsed, periods };
+}
+
 /**
  * 把日 K 序列聚合成周 K 或月 K。
  * @param {Array<{t:string,o:number,c:number,h:number,l:number,v:number}>} daily 日K（按时间升序）
