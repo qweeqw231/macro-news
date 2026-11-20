@@ -44,7 +44,7 @@ test('实时文案与页脚口径一致', () => {
 test('本地快照：卡片与汇总都必须写本地快照', () => {
   const r = QS.quoteStatus({ sourceTime: at('09:52'), now: NOW, fromLocal: true });
   assert.equal(r.state, 'local');
-  assert.equal(r.card, '本地快照');
+  assert.equal(r.card, '本地快照 · 11-03 09:52');
   assert.equal(r.summary, '本地快照 · 数据时间 09:52 · 8 分钟前');
   assert.equal(r.footer, '行情 本地快照 8 分钟前');
   const noTime = QS.quoteStatus({ sourceTime: null, now: NOW, fromLocal: true });
@@ -67,6 +67,12 @@ test('相对陈旧度：刚刚 / 分钟 / 小时 / 昨日收盘 / 天', () => {
 
 test('腾讯时间 / K线 bar 时间解析', () => {
   assert.equal(QS.parseTencentTime('20261102161500'), '2026-11-02T16:15:00+08:00');
+  // 港股实际返回 'YYYY/MM/DD HH:mm:ss'；美股返回 'YYYY-MM-DD HH:mm:ss' 且是美东时间
+  assert.equal(QS.parseTencentTime('2026/11/20 18:31:27'), '2026-11-20T18:31:27+08:00');
+  assert.equal(
+    QS.parseTencentTime('2026-11-20 10:18:40', 'US'),
+    '2026-11-20T15:18:40.000Z'
+  );
   assert.equal(QS.parseTencentTime('bad'), null);
   assert.deepEqual(QS.parseBarTime('2026-11-02'), {
     date: '2026-11-02', hm: '', iso: '2026-11-02T00:00:00+08:00', year: '2026',
@@ -92,8 +98,56 @@ test('K线标记：日K 昨日收盘、分钟 3 分钟前、年K 今年', () => 
   const year = QS.klineMarker({
     src: '东财直连', bars: [{ t: '2026-01-01' }], period: '1y', now: NOW,
   });
-  assert.equal(year.state, 'realtime');
-  assert.equal(year.full, '东财 · 2026 · 今年 · 实时');
+  assert.equal(year.state, 'delayed');
+  assert.equal(year.full, '东财 · 2026 · 今年 · 进行中');
+  const oldYear = QS.klineMarker({
+    src: '东财直连', bars: [{ t: '2024-01-01' }], period: '1y', now: NOW,
+  });
+  assert.equal(oldYear.state, 'closed');
+  assert.equal(oldYear.full, '东财 · 2024 · 2 年前 · 收盘');
+});
+
+test('行情卡：无源时间按市场阶段给终值语义，不一律报延迟', () => {
+  // 2026-11-20（周五）22:53 北京：港股 16:00 已收盘，美股 09:53 ET 盘中
+  const now = Date.parse('2026-11-20T22:53:00+08:00');
+  const hk = QS.quoteStatus({ sourceTime: null, now, market: 'HK', calendar: CAL });
+  assert.equal(hk.state, 'closed');
+  assert.equal(hk.card, '已收盘（无源时间）');
+
+  const us = QS.quoteStatus({ sourceTime: null, now, market: 'US', calendar: CAL });
+  assert.equal(us.state, 'delayed');
+  assert.equal(us.card, '延迟（无源时间）');
+
+  const jp = QS.quoteStatus({
+    sourceTime: null, now: Date.parse('2026-11-03T12:20:00+08:00'),
+    market: 'JP', calendar: CAL,
+  });
+  assert.equal(jp.state, 'holiday');
+  assert.equal(jp.card, '休市（无源时间）');
+});
+
+test('K线标记：周/月必须写周线/月线，不是日线', () => {
+  const now = Date.parse('2026-11-03T16:00:00+08:00');
+  const week = QS.klineMarker({
+    src: '东财直连', bars: [{ t: '2026-11-03' }], period: '1w',
+    now, market: 'CN', calendar: CAL,
+  });
+  assert.equal(week.full, '东财 · 11-03 · 收盘（周线）');
+  const month = QS.klineMarker({
+    src: '东财直连', bars: [{ t: '2026-11-03' }], period: '1M',
+    now, market: 'CN', calendar: CAL,
+  });
+  assert.equal(month.full, '东财 · 11-03 · 收盘（月线）');
+});
+
+test('行情卡：收盘后展示收盘时刻，源时间作为「更新」', () => {
+  const now = Date.parse('2026-11-03T16:11:00+08:00');
+  const r = QS.quoteStatus({
+    sourceTime: '2026-11-03T16:11:00+08:00', now, market: 'CN', calendar: CAL,
+  });
+  assert.equal(r.state, 'closed');
+  assert.equal(r.card, '已收盘 · 11-03 15:00');
+  assert.match(r.summary, /已收盘 · 11-03 15:00 · 更新 16:11/);
 });
 
 test('K线本地预生成：来源与三态必须写本地快照', () => {

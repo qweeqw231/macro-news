@@ -82,7 +82,7 @@ test('行情卡：源时间已到收盘之后 → 正常已收盘', () => {
     market: 'HK', calendar: CAL,
   });
   assert.equal(r.state, 'closed');
-  assert.equal(r.card, '已收盘 · 11-06 16:09');
+  assert.equal(r.card, '已收盘 · 11-06 16:00');
   assert.equal(r.partial, undefined);
 });
 

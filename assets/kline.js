@@ -23,6 +23,9 @@ class KlineChart {
     this.period = '1d';       // 周期：决定横轴刻度格式与年份标记
     // 2.15.0：价格显示精度（按标的源精度分级，默认 2 位；外汇/中间价/国债为 4 位）
     this.decimals = 2;
+    // 空画布文案：加载中 / 暂无数据 / 无该周期。由 app.js 在取数前后切换，
+    // 避免出现「顶部加载中、画布却说暂无数据」的自相矛盾。
+    this.emptyText = '暂无数据';
     this._anim = null;        // 缩放动画的 requestAnimationFrame id
     this._zoomTarget = this.barsShown; // 连续缩放时的目标根数（避免动画中反复重算基准）
     // 均线：5/10/20/30/60/120/250，可在弹窗里逐条开关（年K 不画均线）
@@ -68,6 +71,14 @@ class KlineChart {
   setMAEnabled(list) {
     this.maEnabled = new Set((list || []).filter((n) => n >= 2));
     this.render();
+  }
+
+  /** 设置空画布文案（无数据时绘制）；只在当前确实没有 bar 时触发重绘 */
+  setEmptyText(text) {
+    const next = text || '暂无数据';
+    if (this.emptyText === next) return;
+    this.emptyText = next;
+    if (!this.bars.length) this.render();
   }
 
   /** 2.15.0：设置价格显示精度（轴标签 / 均线图例 / 十字线明细共用） */
@@ -423,7 +434,7 @@ class KlineChart {
       ctx.fillStyle = '#9a9a9a';
       ctx.font = '14px system-ui';
       ctx.textAlign = 'center';
-      ctx.fillText('暂无数据', w / 2, h / 2);
+      ctx.fillText(this.emptyText || '暂无数据', w / 2, h / 2);
       return;
     }
 

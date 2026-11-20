@@ -179,6 +179,15 @@ body { overflow-wrap: break-word; }
   min-height: 44px;           /* 触控高度 */
 }
 .sb-input::placeholder { color: var(--ink-faint); }
+/* type=search 自带原生清除 ×，与应用自己的 #qClear/#mqClear 并排会显示两个。
+   统一隐藏原生控件，只保留一个可控的清除按钮。 */
+.sb-input::-webkit-search-cancel-button,
+.sb-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+.sb-input::-ms-clear { display: none; }
 .sb-clear {
   border: none; background: transparent; cursor: pointer;
   color: var(--ink-mute); font-size: 1.3rem; line-height: 1;
@@ -186,6 +195,13 @@ body { overflow-wrap: break-word; }
 }
 .sb-clear:hover { background: var(--code-bg); color: var(--accent); }
 .sb-meta { font-size: 0.8rem; color: var(--ink-mute); margin-top: 0.35rem; font-family: var(--sans); min-height: 1.2em; }
+/* 2.29.1：索引下载中的取消按钮（与 qMeta 文案同一行） */
+.sb-cancel {
+  border: 1px solid var(--rule); background: transparent; cursor: pointer;
+  color: var(--ink-mute); font-family: var(--sans); font-size: 0.75rem;
+  margin-left: 0.5rem; padding: 0.05rem 0.5rem; border-radius: 999px;
+}
+.sb-cancel:hover { color: var(--accent); border-color: var(--accent); }
 
 /* 2.22.0：全部历史检索条（默认隐藏，输入关键词后出现） */
 .sb-hist { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; margin-top: 0.4rem; }
@@ -297,7 +313,9 @@ body { overflow-wrap: break-word; }
 }
 
 /* ---------- 归档页：近一年历史入口（日期跳转） ---------- */
-.hist {
+/* 2.29.0：只作用于归档历史面板。原先的通用 `.hist` 会命中历史检索结果里的
+   `.item-src.hist` 小标签，把 chip 撑成 61×54 的卡片（行高 73 → 122）。 */
+#histPanel {
   border: 1px solid var(--rule); background: var(--surface); border-radius: 6px;
   padding: 1rem 1.15rem; margin: 0 0 1.1rem;
 }

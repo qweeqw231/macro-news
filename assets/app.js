@@ -36,6 +36,11 @@
     total: 0,        // 库内总条数（用于标注当前列表的母集）
   };
 
+  // 页面级数据健康：页脚总灯不能只看「采集运行状态」，
+  // 还要反映当前页面真正依赖的 latest.json / quotes.json 是否可用。
+  let feedLoadOk = true;
+  let quotesLoadOk = true;
+
   const $ = (s) => document.querySelector(s);
   const el = (t, c, txt) => {
     const n = document.createElement(t);
@@ -471,7 +476,8 @@
 
     if (!live) {
       if (!localQuotes) {
-        box.innerHTML = '<div class="skeleton">行情载入失败：实时源与本地快照均不可用</div>';
+        quotesLoadOk = false;
+        box.innerHTML = '<div class="skeleton">行情载入失败：实时源与本地快照均不可用，请稍后刷新重试</div>';
         return;
       }
       quotes = localQuotes.map((q) => ({ ...q, __fromLocal: true }));
@@ -510,6 +516,7 @@
       }
     }
 
+    quotesLoadOk = true;
     const statusOf = (q) => {
       if (!QS.quoteStatus) {
         return {
@@ -1051,11 +1058,71 @@
   // 从 GitHub Pages 拉一次要**几十秒**（本机实测带宽 5~30 KB/s）。
   // ⇒ **用户碰搜索框（focus）或开始输入时才预取**：首屏、归档、行情都不跟它抢带宽。
   //   还没下完时 qMeta 会显示「检索索引载入中…」。
+  //
+  // 2.29.1：18 MB 的索引在 12.5 KB/s 下要 5~6 分钟，原先只有一句「请稍候」，
+  //   用户无法判断是卡死还是在下载。改用 XHR 拿 onprogress：显示「已下载 / 总大小 · 百分比」，
+  //   并给一个「取消」按钮（abort 后保留会话，重新输入关键词即重试）。
+  //   注意 onprogress 的字节数是**压缩后**的传输量，与 Pages 实际下发的 gzip 一致。
   let searchIdxPromise = null;
+  let searchXhr = null;
+  let searchProgress = null; // { loaded, total }
+
+  const fmtMB = (n) => `${(n / 1048576).toFixed(n >= 1048576 * 10 ? 0 : 1)} MB`;
+
+  function renderSearchProgress() {
+    const meta = $('#qMeta');
+    if (!meta) return;
+    const p = searchProgress;
+    let txt = '检索索引载入中…（首次检索要下载索引）';
+    if (p && p.total > 0) {
+      const pct = Math.min(100, Math.round((p.loaded / p.total) * 100));
+      txt = `检索索引载入中… ${fmtMB(p.loaded)} / ${fmtMB(p.total)} · ${pct}%`;
+    } else if (p && p.loaded > 0) {
+      txt = `检索索引载入中… 已下载 ${fmtMB(p.loaded)}`;
+    }
+    meta.textContent = txt;
+    if (!searchXhr) return;
+    const b = el('button', 'sb-cancel', '取消');
+    b.type = 'button';
+    b.onclick = () => { if (searchXhr) searchXhr.abort(); };
+    meta.appendChild(b);
+  }
+
+  function loadSearchIndex() {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      searchXhr = xhr;
+      searchProgress = { loaded: 0, total: 0 };
+      xhr.open('GET', `${DATA}/search.json`, true);
+      xhr.responseType = 'json';
+      const clear = () => { if (searchXhr === xhr) searchXhr = null; searchProgress = null; };
+      xhr.onprogress = (e) => {
+        if (!searchXhr) return;
+        searchProgress.loaded = e.loaded || 0;
+        if (e.lengthComputable) searchProgress.total = e.total || 0;
+        if (S.q) renderSearchProgress();
+      };
+      xhr.onload = () => {
+        clear();
+        if (xhr.status >= 200 && xhr.status < 300 && xhr.response) resolve(xhr.response);
+        else reject(new Error(`search.json HTTP ${xhr.status}`));
+      };
+      xhr.onerror = () => { clear(); reject(new Error('search.json 网络错误')); };
+      xhr.onabort = () => {
+        clear();
+        const e = new Error('已取消载入索引');
+        e.aborted = true;
+        reject(e);
+      };
+      renderSearchProgress();
+      xhr.send();
+    });
+  }
+
   function ensureSearchIndex() {
     if (S.searchIdx) return Promise.resolve(S.searchIdx);
     if (!searchIdxPromise) {
-      searchIdxPromise = jget('search.json', 'default')
+      searchIdxPromise = loadSearchIndex()
         .then((d) => {
           S.searchIdx = d.items || [];
           S.fuse = new window.Fuse(S.searchIdx, {
@@ -1093,14 +1160,16 @@
       return;
     }
     if (!S.searchIdx) {
-      $('#qMeta').textContent = '检索索引载入中…（首次检索要下载索引，请稍候）';
+      renderSearchProgress();
       try {
         // ⚠ 别用 requestIdleCallback：用户已经在等搜索结果了，等「空闲」反而更慢
         //   （而且 requestIdleCallback 在后台标签页里可能迟迟不触发 → 搜索看起来「没反应」）
         await ensureSearchIndex();
         doSearch();
       } catch (e) {
-        $('#qMeta').textContent = '索引载入失败：' + e.message;
+        $('#qMeta').textContent = e.aborted
+          ? '已取消载入索引（重新输入关键词可再试）'
+          : '索引载入失败：' + e.message;
         return;
       }
     } else {
@@ -1929,8 +1998,12 @@
       // 状态灯：源失败、采集停摆优先于「新闻暂时没有新的」
       let level = 'ok';
       let state = '链路正常';
-      if (runMin != null && runMin > 24 * 60) { level = 'bad'; state = '采集可能停摆'; }
-      else if (runMin != null && runMin > 180) { level = 'warn'; state = '采集滞后'; }
+      // 页面自身的数据文件失败优先级最高：此时列表/行情已经不可用，
+      // 再显示绿色「链路正常」会直接误导用户。
+      if (!feedLoadOk) { level = 'bad'; state = '要闻数据缺失（latest.json）'; }
+      else if (!quotesLoadOk) { level = 'bad'; state = '行情数据缺失（quotes.json）'; }
+      if (level !== 'bad' && runMin != null && runMin > 24 * 60) { level = 'bad'; state = '采集可能停摆'; }
+      else if (level !== 'bad' && runMin != null && runMin > 180) { level = 'warn'; state = '采集滞后'; }
       if (srcBad.length && level !== 'bad') {
         level = 'warn';
         state = `${srcs.length - srcBad.length}/${srcs.length} 源正常`;
@@ -1958,6 +2031,8 @@
       }
 
       const bits = [];
+      if (!feedLoadOk) bits.push('要闻载入失败 latest.json');
+      if (!quotesLoadOk) bits.push('行情载入失败 quotes.json');
       if (last.runner === 'cloud') bits.push('云端');
       else if (last.runner === 'local') bits.push('本机');
       if (runMin != null) bits.push('采集 ' + agoText(runMin));
@@ -2339,6 +2414,8 @@
     const meta = $('#kmMeta');
     note.textContent = '';
     if (meta) meta.textContent = '加载中…';
+    // 画布与顶部必须同步：取数期间画布也写「加载中…」，不能先写「暂无数据」
+    if (kChart.setEmptyText) kChart.setEmptyText('加载中…');
     kChart.setData([], period);          // ← 立刻清空画布，绝不留上一个标的的图
     maBars = 0;
     renderMA();
@@ -2402,7 +2479,8 @@
     // ---- 第 1 波：直连多源赛马（东财/新浪/腾讯 同时发）+ 本地快路径（走 Pages）----
     // 直连源走外网、本地文件走 GitHub Pages，两条路带宽互不争抢，谁先回先出图。
     // 本地那一路是**保险**：直连全挂时，它也能在 1~4 秒内给出一张图（近 4 年 / 1000 根）。
-    window.MarketData.localKline(key, period)
+    // ⚠ 必须保留 promise：慢网下本地文件可能还在下载，直连先全部失败时不能据此判「无数据」。
+    const localPromise = window.MarketData.localKline(key, period)
       .then((bars) => apply(
         bars,
         isYear
@@ -2443,9 +2521,17 @@
       }
     }
 
+    // 慢网下本地文件可能仍在下载：直连失败不能立刻判「无数据」，
+    // 必须先等本地那一路落地（成功会走 apply 落图，失败才是真的两端都没有）。
+    if (myId === klineReqId && shown === 0) {
+      await localPromise;
+      if (myId !== klineReqId) return;
+    }
+
     if (myId === klineReqId && shown === 0) {
       const metaBox = $('#kmMeta');
       if (metaBox) metaBox.textContent = '无数据';
+      if (kChart.setEmptyText) kChart.setEmptyText('暂无数据');
       // 分钟级若是「全网本来就没有同口径的分钟源」，要说清楚**为什么**，
       // 别让用户以为页面坏了（2026-10-30：伦敦金/布伦特原油属于这一类）。
       const minuteReason = isMinute() && window.MarketData.getMinuteUnavailableReason
@@ -2458,7 +2544,12 @@
         note.textContent =
           '加载失败：直连源此刻不可达，且本地分钟快照尚未生成（服务端每小时刷新，可能正在补齐）。';
       } else {
-        note.textContent = '加载失败：直连与本地均无该周期数据（本地仅有日/周/月）。';
+        // 文案必须与所请求的周期一致：用户点的就是周K/月K/年K，
+        // 不能再写「本地仅有日/周/月」这种自相矛盾的话。
+        const pLabel = period === '1w' ? '周K'
+          : period === '1M' ? '月K'
+            : period === '1y' ? '年K' : '日K';
+        note.textContent = `加载失败：直连与本地${pLabel}均不可用，请稍后重试。`;
       }
     }
   }
@@ -2666,10 +2757,19 @@
     if (histForm) {
       histForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const day = ($('#histDate') || {}).value || '';
+        const dateEl = $('#histDate') || {};
+        const day = dateEl.value || '';
         const hint = $('#histHint');
         if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
           if (hint) hint.textContent = '请选择日期';
+          return;
+        }
+        // 表单已加 novalidate：min/max 只做控件约束，不能让它静默拦下提交。
+        // 越界日期必须给出明确的行内提示，否则用户点了「打开」毫无反馈。
+        const min = String(dateEl.min || '').slice(0, 10);
+        const max = String(dateEl.max || '').slice(0, 10);
+        if ((min && day < min) || (max && day > max)) {
+          if (hint) hint.textContent = `该日期不在归档范围（${min || '?'} ~ ${max || '?'}）`;
           return;
         }
         const hit = dayIndex.get(day);
@@ -2713,7 +2813,9 @@
       $('#ftMeta').textContent = `库内 ${d.total} 条 · 快照生成于 ${new Date(d.generatedAt).toLocaleString('zh-CN', { hour12: false })}`;
       renderFoot();
     } catch (e) {
-      $('#feed').innerHTML = `<div class="empty">数据载入失败：${esc(e.message)}<br>请先运行 <code>node src/collect.mjs</code></div>`;
+      feedLoadOk = false;
+      $('#feed').innerHTML = '<div class="empty">数据载入失败：最新要闻尚未生成或暂时不可用，请稍后刷新重试。</div>';
+      renderFoot();
     }
     restoreFeedUI();
   }

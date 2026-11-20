@@ -174,7 +174,7 @@
     // 1Y 国债收益率：全站只有中债「逐日收益率曲线」这一个源
     //   ⇒ 没有东财 secid、也没有腾讯代码，**K线只能走本地预生成文件**
     //   data/kline/cgb_1y.json（采集器每天追加一根）。
-    { key: 'cgb_1y', secid: null, market: 'CN', name: '1Y国债收益率' },
+    { key: 'cgb_1y', secid: null, market: 'CN', name: '1Y国债收益率', decimals: 4 },
   ];
   const byKey = new Map(META.map((m) => [m.key, m]));
 
@@ -408,7 +408,7 @@
         key: meta.key, name: meta.name, market: meta.market,
         price: num(a[3]), prevClose: num(a[4]), open: num(a[5]),
         volume: num(a[6]), high: num(a[33]), low: num(a[34]), changePct: num(a[32]),
-        updatedAt: QS().parseTencentTime ? QS().parseTencentTime(a[30]) : null,
+        updatedAt: QS().parseTencentTime ? QS().parseTencentTime(a[30], meta.market) : null,
         source: 'tencent',
       });
     }
@@ -1012,19 +1012,20 @@
     if (period === '1w' || period === '1M') {
       const suffix = period === '1w' ? '_1w' : '_1M';
       try {
-        const j = await fetchLocalFile(`data/kline/${key}${suffix}.json`);
+        // 慢网实测：周K 文件 40s 才下完。超时若仍是 15s，会把「正在下载」误判成「没有文件」。
+        const j = await fetchLocalFile(`data/kline/${key}${suffix}.json`, 45000);
         const bars = j.bars;
         if (Array.isArray(bars) && bars.length) return bars;
       } catch (e) { /* 没有该周期文件 → 落到下面的日K聚合 */ }
     }
     if (period === '1y') {
       try {
-        const j = await fetchLocalFile(`data/kline/${key}_1M.json`);
+        const j = await fetchLocalFile(`data/kline/${key}_1M.json`, 45000);
         const m = j.bars;
         if (Array.isArray(m) && m.length) return aggregateYear(m);
       } catch (e) { /* 没有月K文件 → 用日K聚合 */ }
     }
-    const j = await fetchLocalFile(`data/kline/${key}.json`);
+    const j = await fetchLocalFile(`data/kline/${key}.json`, 45000);
     const daily = j.bars;
     if (!Array.isArray(daily) || !daily.length) throw new Error('本地日K为空');
     // 2.9.2：把文件生成时刻带给 K 线头部，用来判断「收盘后但仍是盘中写入」。

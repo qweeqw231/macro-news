@@ -38,11 +38,30 @@
     };
   }
 
-  /** 'YYYYMMDDHHMMSS'（腾讯字段 30）→ 北京时间 ISO */
-  function parseTencentTime(s) {
-    var m = String(s || '').match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
+  /**
+   * 腾讯行情字段 30 → 北京时间 ISO。
+   * 支持两种实际格式：
+   *   · A股/ETF：'YYYYMMDDHHMMSS'（北京时间）
+   *   · 港股/美股：'YYYY/MM/DD HH:mm:ss' 或 'YYYY-MM-DD HH:mm:ss'
+   * 美股的时间是**美东本地时间**，不是北京时间，必须按 America/New_York 换算。
+   * 之前只认紧凑格式，导致腾讯备源时港股/美股全部 updatedAt=null，
+   * 收盘后的港股被误标成「延迟（无源时间）」。
+   * @param {string} s
+   * @param {string} [market] 'US' 时按美东时间换算；其余按北京时间
+   */
+  function parseTencentTime(s, market) {
+    var str = String(s || '').trim();
+    var compact = str.match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
+    var loose = str.match(/^(\d{4})[/-](\d{2})[/-](\d{2})[ T](\d{2}):(\d{2})(?::(\d{2}))?$/);
+    var m = compact || loose;
     if (!m) return null;
-    return m[1] + '-' + m[2] + '-' + m[3] + 'T' + m[4] + ':' + m[5] + ':' + m[6] + '+08:00';
+    var y = m[1], mo = m[2], d = m[3], hh = m[4], mm = m[5], ss = m[6] || '00';
+    if (market === 'US') {
+      var utc = zonedToUtc(y + '-' + mo + '-' + d, Number(hh) * 60 + Number(mm), 'America/New_York');
+      // UTC 毫秒 → 带秒的 ISO；clock() 会再按北京时间展示
+      return new Date(utc + (Number(ss) || 0) * 1000).toISOString();
+    }
+    return y + '-' + mo + '-' + d + 'T' + hh + ':' + mm + ':' + ss + '+08:00';
   }
 
   /** epoch 秒 → 北京时间 ISO */
@@ -391,7 +410,10 @@
     var age = ageMs(sourceTime, now);
     var info = sessionAt(market, now, calendar);
     if (!info.known) return classifyState(sourceTime, now, false);
-    if (age == null) return { state: 'delayed', phase: info.phase, hasTime: false, ageMs: null };
+    if (age == null) return {
+      state: 'delayed', phase: info.phase, hasTime: false, ageMs: null,
+      halfDay: !!info.halfDay,
+    };
     if (info.phase === 'open') {
       return {
         state: age <= REALTIME_MAX_AGE_MS ? 'realtime' : 'delayed',
@@ -480,16 +502,29 @@
     var age = relativeAge(opts.sourceTime, now, {});
     var label = STATE_LABEL[c.state];
     if (c.state === 'closed' || c.state === 'holiday') {
-      var stamp = clock(opts.sourceTime, now, true);
+      var srcStamp = clock(opts.sourceTime, now, true);
+      // 卡片上的时刻必须是**收盘时刻**，不是数据写入/抓取时刻：
+      // 上证 15:00 收盘后，行情源直到 16:11 仍在刷新时间戳，写 16:11 会被当成收盘价产生时间。
+      // 但若源时间早于最近收盘（半日市仍显示上一交易日旧价），旧价不能被写成今天的收盘时刻。
+      var srcMs = Date.parse(opts.sourceTime || '');
+      var closeISO = c.state === 'closed' && c.lastClose && Number.isFinite(c.lastClose.ms)
+        && Number.isFinite(srcMs) && srcMs >= c.lastClose.ms - 2 * 60 * 1000
+        ? new Date(c.lastClose.ms).toISOString()
+        : '';
+      var stamp = closeISO ? clock(closeISO, now, true) : srcStamp;
       var lbl = c.state === 'holiday' ? '休市'
         : (c.phase === 'lunch' ? '午间休市'
           : (c.halfDay ? '已收盘（半日市）'
             : (opts.priceSource === 'dailyK' ? '收盘（日线）' : '已收盘')));
-      var rel0 = relativeAge(opts.sourceTime, now, {});
+      var rel0 = relativeAge(closeISO || opts.sourceTime, now, {});
+      // 收盘时刻与源时间不同时，把源时间作为「更新」单独标出，两种时间不混为一谈。
+      var upd = closeISO && srcStamp && srcStamp !== stamp
+        ? ' · 更新 ' + clock(opts.sourceTime, now, false)
+        : '';
       return {
         state: c.state,
         card: lbl + (stamp ? ' · ' + stamp : ''),
-        summary: lbl + (stamp ? ' · ' + stamp : '') +
+        summary: lbl + (stamp ? ' · ' + stamp : '') + upd +
           (rel0 !== '时间未知' ? ' · ' + rel0 : ''),
         footer: '行情 ' + lbl,
         label: lbl,
@@ -500,9 +535,11 @@
     }
     if (c.state === 'local') {
       var data = tm ? '数据时间 ' + tm : '数据时间未知';
+      var localStamp = clock(opts.sourceTime, now, true);
       return {
         state: c.state,
-        card: '本地快照',
+        // 卡片必须带具体时刻：只写「本地快照」无法判断这份数据是什么时候的
+        card: '本地快照' + (localStamp ? ' · ' + localStamp : ''),
         summary: '本地快照 · ' + data + (age !== '时间未知' ? ' · ' + age : ''),
         footer: '行情 本地快照' + (age !== '时间未知' ? ' ' + age : ''),
         label: label,
@@ -510,6 +547,46 @@
       };
     }
     if (!c.hasTime) {
+      // 没有源时间不等于「数据不可用」：市场已收盘/休市时，手里的值就是终值。
+      // 之前一律落「延迟（无源时间）」，导致港股 16:00 收盘后仍被标成延迟。
+      var ph = c.phase;
+      var half = !!c.halfDay;
+      if (ph === 'holiday' || ph === 'weekend') {
+        var hLbl = '休市';
+        return {
+          state: 'holiday',
+          card: hLbl + '（无源时间）',
+          summary: hLbl + ' · 数据时间未知',
+          footer: '行情 ' + hLbl,
+          label: hLbl,
+          ageMs: null,
+          phase: ph,
+        };
+      }
+      if (ph === 'lunch') {
+        return {
+          state: 'closed',
+          card: '午间休市（无源时间）',
+          summary: '午间休市 · 数据时间未知',
+          footer: '行情 午间休市',
+          label: '午间休市',
+          ageMs: null,
+          phase: ph,
+        };
+      }
+      if (ph === 'post' || ph === 'pre') {
+        var cLbl = half ? '已收盘（半日市）' : '已收盘';
+        return {
+          state: 'closed',
+          card: cLbl + '（无源时间）',
+          summary: cLbl + ' · 数据时间未知',
+          footer: '行情 ' + cLbl,
+          label: cLbl,
+          ageMs: null,
+          phase: ph,
+          halfDay: half,
+        };
+      }
       return {
         state: 'delayed',
         card: '延迟（无源时间）',
@@ -517,6 +594,7 @@
         footer: '行情 延迟（无源时间）',
         label: '延迟',
         ageMs: null,
+        phase: ph,
       };
     }
     // 2.9.0：收盘后但源时间还停在该市场收盘之前 ⇒ 这是盘中值，不是收盘价。
@@ -665,18 +743,22 @@
     if (isYear) {
       var yp = bjParts(Number(now));
       var sameYear = String(bt.year) === String(yp.y);
-      var stateY = fromLocal ? 'local' : (sameYear ? 'realtime' : 'delayed');
+      // 年 K 永远不是「实时」：今年这根还没走完，历史年份早已定稿。
+      var stateY = fromLocal ? 'local' : (sameYear ? 'delayed' : 'closed');
       var relY = sameYear ? '今年' : (yp.y - Number(bt.year)) + ' 年前';
+      var tailY = fromLocal ? STATE_LABEL.local : (sameYear ? '进行中' : '收盘');
       return {
         state: stateY,
-        full: src + ' · ' + bt.year + ' · ' + relY + ' · ' + STATE_LABEL[stateY],
-        short: src + ' ' + bt.year + ' · ' + relY + ' · ' + STATE_LABEL[stateY],
+        full: src + ' · ' + bt.year + ' · ' + relY + ' · ' + tailY,
+        short: src + ' ' + bt.year + ' · ' + relY + ' · ' + tailY,
       };
     }
     var sourceTime = bt.iso;
     var state = classifyState(sourceTime, now, fromLocal).state;
     // 日/周/月：按“bar 日期”判新鲜度；今天算刚刚/实时，昨日及更早算延迟
     if (daily) {
+      var periodLabel = period === '1w' ? '收盘（周线）'
+        : (period === '1M' ? '收盘（月线）' : '收盘（日线）');
       var p = bjParts(Number(now));
       var today = p.y + '-' + p.m + '-' + p.d;
       if (!fromLocal) state = bt.date === today ? 'realtime' : 'delayed';
@@ -729,12 +811,12 @@
           invalid: true,
         };
       }
-      // 2.9.2：该市场当日已收盘（含半日市、跨时区市场的本地日期）→ 收盘（日线）
+      // 2.9.2：该市场当日已收盘（含半日市、跨时区市场的本地日期）→ 收盘（日线/周线/月线）
       if (bt.date === mktToday && phase && phase.phase === 'post') {
         return {
           state: 'closed',
-          full: src + ' · ' + clockText + ' · 收盘（日线）',
-          short: src + ' ' + clockText + ' · 收盘（日线）',
+          full: src + ' · ' + clockText + ' · ' + periodLabel,
+          short: src + ' ' + clockText + ' · ' + periodLabel,
           closed: true,
         };
       }
