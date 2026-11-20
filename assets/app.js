@@ -1089,16 +1089,15 @@
   let filtersSig = '';
   function renderFilters() {
     const box = $('#filters');
-    // 最新流启用同题折叠后，分类计数也按「该分类内折叠后」的条目算，
-    // 否则跨分类的同题组只在主条目所属分类里减 1，分类相加会对不上「全部」。
-    const foldOn = feedFoldActive();
-    const channels = [...new Set(S.items.map((i) => i.channel || '其他'))];
+    // 最新流先按标题全局折叠，再按主条目所属分类计数/过滤：
+    // 这样「全部」= 各分类之和，且每个分类点进去的条数与 chip 数字一致。
+    // 若先按分类过滤再折叠，跨分类的同题组会在每个分类各算一次，合计会大于「全部」。
+    const items = feedFoldActive() ? foldFeedItems(S.items) : S.items;
     const counts = new Map();
-    channels.forEach((k) => {
-      const raw = S.items.filter((i) => (i.channel || '其他') === k);
-      counts.set(k, foldOn ? foldFeedItems(raw).length : raw.length);
+    items.forEach((i) => {
+      const k = i.channel || '其他';
+      counts.set(k, (counts.get(k) || 0) + 1);
     });
-    const allN = foldOn ? foldFeedItems(S.items).length : S.items.length;
     const sig = S.filter + '|' + [...counts.entries()]
       .sort((a, b) => b[1] - a[1])
       .map(([k, n]) => `${k}:${n}`).join(',');
@@ -1110,7 +1109,7 @@
       b.onclick = () => { S.filter = key; S.shown = PAGE; renderFilters(); renderFeed(); };
       return b;
     };
-    box.appendChild(mk('全部', 'all', allN));
+    box.appendChild(mk('全部', 'all', items.length));
     [...counts.entries()]
       .sort((a, b) => b[1] - a[1])
       .forEach(([k, n]) => box.appendChild(mk(k, k, n)));
@@ -1160,10 +1159,16 @@
   }
 
   function applyFilter() {
+    if (feedFoldActive()) {
+      // 先全局折叠、再按主条目的分类过滤；与 renderFilters 的计数口径完全一致
+      const folded = foldFeedItems(S.items);
+      return S.filter === 'all'
+        ? folded
+        : folded.filter((i) => (i.channel || '其他') === S.filter);
+    }
     const list = S.filter === 'all'
       ? S.items
       : S.items.filter((i) => (i.channel || '其他') === S.filter);
-    if (feedFoldActive()) return foldFeedItems(list);
     // 搜索/归档不做折叠：清掉上一次留下的 _dups，
     // 否则搜索结果里的原始条目会带着「另有 N 家报道」这种只属于最新流的标记。
     (S.items || []).forEach((it) => { if (it && it._dups) delete it._dups; });
