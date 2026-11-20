@@ -894,7 +894,11 @@
   // ⚠ 必须带超时：实测 Pages 偶发「传到一半就卡住」（HTTP 仍是 200），
   //   没有 AbortController 的话 fetch 会**无限期挂起**，用户只看到一句「加载中…」。
   const localFileCache = new Map();
-  const DATA_STAMP = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  // 2.28.0：周/月 K 修正了「同一周期多根」的存量数据（xau/usdcny/n225… 的 2026-11
+  //   曾出现十余根假 K 线）。按天戳在同一天内不会变 ⇒ 已经缓存过坏数据的客户端
+  //   （尤其手机）当天仍会看到错图。这里加一个手工版本位，让老缓存一次性失效。
+  const DATA_REV = 'r2.28.0';
+  const DATA_STAMP = new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + DATA_REV;
   // 分钟快照是**每小时**更新的 ⇒ 版本戳也按小时变。
   // ⚠ 为什么不能只用按天戳（2026-10-30 实测）：分钟文件是**逐步补齐**的
   //   （服务端每轮只补一部分），用户在「文件还不存在」时打开过一次，

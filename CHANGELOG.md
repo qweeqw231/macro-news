@@ -58,6 +58,9 @@
   默认 dry-run 只报告，`--write` 才落盘，幂等；顺带报告日 K 同日重复。
 - [tests/kline-period-dupes.test.mjs](tests/kline-period-dupes.test.mjs)：周期键、收敛口径、
   closeOnly 标记保留、写盘顺序锁定、全库防回归（同周期重复必须为 0）。
+- [assets/market.js](assets/market.js)：本地 K 线文件的版本戳加 `r2.28.0` 位，并同步
+  [index.html](index.html) 的 `market.js` 版本串 —— 按天戳在同一 UTC 日内不会变，
+  已经缓存过坏数据的客户端（尤其手机）当天仍会看到错图，必须让老缓存一次性失效。
 
 **为什么保留最后一根**：重复桶的 `o`/`h` 固定为区间首日开与区间最高、`l` 逐日下探、
 `c` 是当日收、`v` 累加 ⇒ 最后一根就是该周期最新的累计值，与 `aggregateDaily` 口径一致。
