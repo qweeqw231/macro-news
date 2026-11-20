@@ -675,10 +675,13 @@ by the `dirty-worktree` gate). Those states go to `.local/metrics/sync-state.jso
 `localFresh=false` means the worktree does not contain the last successfully fetched `origin/main`;
 `remoteRefStale=true` means this round's fetch failed, so the local `origin/main` ref itself is stale
 and must not be treated as the remote head.
-Since 2.23.1 the file also carries a `pm` object (`date / available / capturedAt / gate / inRemote`):
-read `pm` to decide whether today's close snapshot is usable, and `localFresh` to decide whether the
-whole worktree is behind — the two are independent. Both `behind` and `localFresh` are measured
-**after** the sync step, so "synced yet reported behind" can no longer happen.
+Since 2.23.1 the file also carries a `pm` object (`date / available / capturedAt / gate / inRemote / drift`).
+**Since 2.28.1 the meaning of `localFresh` changed**: it no longer equals "the whole tree is even with
+`origin/main`" but "**today's pm close basis is usable**" — `data/snapshots/<date>_pm.json` exists,
+`gate=ok`, has no uncommitted local change, and is not behind `origin/main`. The skip gate is scoped the
+same way (only `data/snapshots` dirt blocks a round); dirty sources, tests or briefing indexes are recorded
+in `dirtyPaths` only and no longer mark the day as "local not synced". Use `behind / ahead` for repo lag
+and `pm.available / pm.gate` for whether today's pm can be consumed.
 
 `MacroNews-Collect` / `MacroNews-Pull` both start with zero windows via `wscript + run-hidden.vbs`;
 `-StartWhenAvailable` allows catch-up after sleep/shutdown.

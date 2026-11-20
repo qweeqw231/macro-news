@@ -25,8 +25,8 @@ test('同步在陈旧度判定 / 采集之前', () => {
 
 test('落后时只做 ff-only；脏工作区整轮跳过，不 stash / 不 pop', () => {
   assert.match(SCRIPT, /git merge --ff-only origin\/main/);
-  // 2.13.4：脏检测只看受版本控制的文件
-  assert.match(SCRIPT, /git status --porcelain --untracked-files=no/);
+  // 2.13.4：脏检测只看受版本控制的文件（2.24.1：实现移进 git-sync-lib.ps1）
+  assert.match(LIB, /'status', '--porcelain', '--untracked-files=no'/);
   assert.match(SCRIPT, /skipReason = 'dirty-worktree'/);
   assert.match(SCRIPT, /skipped:dirty-worktree/);
   // 2.13.4：脏工作区上绝不再 stash/pop（2026-11-11 19:54 事故根因）
@@ -135,9 +135,10 @@ test('本地对齐哨兵：两脚本都点源 git-sync-lib，且只写 .local', 
 });
 
 test('收盘同步：pm 缺失时看 origin/main，不得断言「云端可能尚未生成」', () => {
-  assert.match(CLOSE, /git cat-file -e/);
-  assert.match(CLOSE, /cat-file blob/);
-  assert.doesNotMatch(CLOSE, /git show \("origin\/main:"/, 'git show 可能走分页器导致空输出');
+  // 2.24.1：pm 探测抽到 lib 的 Get-PmSnapshotState，两个脚本共用
+  assert.match(LIB, /git cat-file -e/);
+  assert.match(LIB, /cat-file blob/);
+  assert.doesNotMatch(LIB, /git show \("origin\/main:"/, 'git show 可能走分页器导致空输出');
   assert.match(CLOSE, /pmInRemote/);
   assert.match(CLOSE, /本地不是最新/);
   assert.doesNotMatch(CLOSE, /云端可能尚未生成/);
@@ -147,9 +148,9 @@ test('2.23.1：behind/ahead 必须在同步之后重算，localFresh 不得用�
   // 收盘同步：ff 之后重新计数，且 localFresh 的赋值排在重算之后
   const mergeAt = CLOSE.indexOf('git merge --ff-only');
   const recalcAt = CLOSE.indexOf('同步后：head=');
-  const freshAt = CLOSE.indexOf('$st.localFresh = ($st.behind -eq 0)');
+  const freshAt = CLOSE.indexOf('$st.localFresh = ($pm.exists');
   assert.ok(mergeAt > 0 && recalcAt > mergeAt, 'ff 之后必须重算 behind/ahead');
-  assert.ok(freshAt > recalcAt, 'localFresh 必须基于重算后的 behind');
+  assert.ok(freshAt > recalcAt, 'localFresh 必须在同步后按当时的真实状态判定');
   // 写入的 head 必须是同步后的值
   assert.match(CLOSE, /\$stateHead = \$st\.headAfter/);
 
@@ -166,4 +167,24 @@ test('2.23.1：当天 pm 的可用性独立成 pm 子对象，与 localFresh 解
   assert.match(LIB, /capturedAt = \$PmCapturedAt/);
   assert.match(LIB, /inRemote = \[bool\]\$PmInRemote/);
   assert.match(CLOSE, /-PmAvailable \(\$st\.pmExists -and \$st\.pmGate -eq 'ok'\)/);
+});
+
+test('2.24.1：脏判定收敛到 data/snapshots，无关脏不再让路', () => {
+  // 让路判据只看收盘基准目录
+  assert.match(LIB, /\$script:CloseBasisPaths = @\('data\/snapshots'\)/);
+  assert.match(LIB, /function Get-CloseBasisDirtyPaths/);
+  // 两个脚本都必须按该作用域判脏，而不是全树
+  assert.match(SCRIPT, /Get-CloseBasisDirtyPaths/);
+  assert.match(CLOSE, /Get-CloseBasisDirtyPaths/);
+  assert.doesNotMatch(SCRIPT, /^.*git status --porcelain --untracked-files=no/m, '全树状态查询必须走 lib');
+  // 收盘基准目录脏仍然整轮跳过
+  assert.match(CLOSE, /if \(\$st\.closeBasisDirty\.Count -gt 0\) \{/);
+  assert.match(CLOSE, /skipped-dirty-unrelated/);
+  // 新鲜度只看当天 pm：存在 + gate ok + 无本地改动 + 不落后
+  assert.match(LIB, /function Get-PmSnapshotState/);
+  assert.match(CLOSE, /\$st\.localFresh = \(\$pm\.exists -and \(\$pm\.gate -eq 'ok'\) -and \(-not \$pm\.dirty\) -and \(-not \$pm\.drift\)\)/);
+  assert.match(SCRIPT, /\$localFreshAfter = \(\$pmState\.exists -and \$pmState\.gate -eq 'ok'/);
+  // 哨兵要把判据一起写出去，便于下游区分「无关脏」与「快照脏」
+  assert.match(LIB, /consumedDirty = @\(\$CloseBasisDirty\)/);
+  assert.match(LIB, /drift = \[bool\]\$PmDrift/);
 });

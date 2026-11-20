@@ -32,6 +32,50 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.28.1] - 2026-11-20
+
+### 修复：17:00 收盘同步被「无关脏」反复挡下（`result=skipped-dirty`）
+
+连续多天 `sync-state.json` 都是 `result=skipped-dirty` + `localFresh=false`，而当天 pm 快照
+（如 16:14:40 / gate=ok / 76 键）其实早就在本地。下游只能退回 `quotes.json` 并把当天标成
+「估（本地未同步）」。
+
+**根因（两条叠加）**
+1. 脏判定是全树 `git status`：并行开发会话的 `.github/workflows/diag-stats.yml`、`src/collect.mjs`、
+   `tests/pbc-fetch.test.mjs`、`CHANGELOG.md`、`scripts/briefing/pipeline.mjs`，以及早报线持续改写的
+   `data/_briefing-status.json`、`data/history/index.json`、`data/index.json`，都被算成「脏工作区」。
+2. 云端每 15 分钟提交「采集 6 件套」（`_last-run/archive/<day>/index/latest/quotes/search`）。
+   `data/index.json` 长期是脏的，又正好在每轮 incoming diff 里 ⇒ `git merge --ff-only` 必然报
+   "Your local changes ... would be overwritten" ⇒ 每天都 `skipped-dirty`。
+   附带问题：日志只保留该报错的第一行，事后根本看不出被哪个文件挡住。
+
+**改动（改同步门，不动数据）**
+- 让路判据从「全树」收敛到「收盘基准本体」`data/snapshots`：只有该目录有未提交改动才跳过；
+  其它路径的脏只写日志与哨兵的 `dirtyPaths`，不再让路。
+- `localFresh` 的语义从「整树 behind==0」改为「**当天 pm 收盘基准可用**」：
+  `data/snapshots/<date>_pm.json` 存在 + `gate=ok`（date/isTradingDay/capturedAt≥16:10）
+  + 本地无未提交改动 + 内容不落后 `origin/main`。判据集中在 `git-sync-lib.ps1` 的
+  `Get-PmSnapshotState`，`sync-close.ps1` 与 `collect-and-push.ps1` 共用。
+- 为什么这样不算放宽：pm 缺失时下游才退回 `quotes.json`，而那时 `pm.exists=false`、
+  `localFresh` 照样是 false；pm 被本地改动或远端重新生成时 `dirty/drift` 也会把它打成 false；
+  fetch 失败时仍然 `localFresh=false` + `remoteRefStale=true`。
+- `ff` 失败时把**完整阻断文件清单**写进日志与台账（`dirtyBlocking`），并按是否属于 `data/snapshots`
+  区分 `skipped-dirty` 与 `skipped-dirty-unrelated`。
+- 哨兵新增 `consumedDirty`（快照目录的脏清单）、`pm.drift`、`dirtyPaths`（全树诊断，最多 20 条）；
+  `pm` 子对象在 fetch 失败时沿用上一轮，不用空值冒充「云端没有」。
+
+**判定口径变更（下游需要知道）**
+`localFresh` 不再等价于「HEAD 与 origin/main 齐平」。整仓落后看 `behind/ahead`，
+快照是否可信看 `localFresh`，当天能否用 pm 看 `pm.available/gate`。
+
+**验收（真实网络 + 临时 worktree）**
+- 无关脏（`data/index.json` + `data/history/index.json`）挡住 ff：`result=skipped-dirty-unrelated`、
+  `behind=21`、`localFresh=true`、`pm.available=true`（旧实现这里是 `skipped-dirty` + false）。
+- `data/snapshots/2026-11-20_pm.json` 加一个字节：`skipped-dirty`、`localFresh=false`。
+- 干净且落后 21 个提交：`synced`、`behind=0`、`localFresh=true`。
+- 本地提交改写 pm（drift）：`skipped-local-ahead`、`localFresh=false`（打印「pm 落后 origin/main」）。
+- origin 不可达：`fetch-failed`、`localFresh=false`、`remoteRefStale=true`，退出码 1。
+
 ## [2.28.0] - 2026-11-20
 
 > **中版本，理由**：修复用户可见的错误数据 —— 周/月 K 在同一周期出现多根假 K 线。

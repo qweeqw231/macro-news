@@ -49,6 +49,10 @@ $st = [ordered]@{
     pmRemoteCapturedAt = ''
     pmRemoteGate = ''
     localFresh = $false
+    # 2.24.1：被消费数据的脏/落后清单（localFresh 的唯一判据）
+    closeBasisDirty = @()
+    pmDrift = $false
+    dirtyBlocking = @()
     originMainHead = ''
     fetchAttempts = 0
     syncError = ''
@@ -95,7 +99,23 @@ function Invoke-Sync {
     $st.ahead = [int](& git rev-list --count origin/main..HEAD 2>$null)
     Say "head=$($st.headBefore) behind=$($st.behind) ahead=$($st.ahead)"
 
-    if ($st.ahead -gt 0) {
+    # 2.24.1：让路判据只看「收盘基准本体」data/snapshots。
+    #   旧口径是全树：并行会话的源码/测试/工作流改动、早报线的 data/index.json 等都会让 ff 失败，
+    #   于是每天都写 skipped-dirty + localFresh=false，下游只能把当天标成「估（本地未同步）」。
+    $st.closeBasisDirty = @(Get-CloseBasisDirtyPaths)
+    $allDirty = @(Get-GitDirtyPaths)
+    $unrelatedDirty = @($allDirty | Where-Object { $st.closeBasisDirty -notcontains $_ })
+    if ($unrelatedDirty.Count -gt 0) {
+        Say ("脏面：全树 {0} 个，其中 data/snapshots {1} 个；无关脏（只记录、不让路）：{2}" -f `
+            $allDirty.Count, $st.closeBasisDirty.Count, (($unrelatedDirty | Select-Object -First 6) -join ', '))
+    }
+
+    if ($st.closeBasisDirty.Count -gt 0) {
+        # 收盘基准目录本身有未提交改动 ⇒ 本地快照不可信，直接让路（不放宽核心保证）
+        $st.result = 'skipped-dirty'
+        Say ("data/snapshots 有 {0} 个未提交改动，跳过快进（不 stash、不合并）：" -f $st.closeBasisDirty.Count)
+        foreach ($p in $st.closeBasisDirty) { Say "  脏(快照): $p" }
+    } elseif ($st.ahead -gt 0) {
         # 本地有独有提交：ff 会失败，且任何合并都会改变历史 ⇒ 直接跳过，交给人工/采集任务
         $st.result = 'skipped-local-ahead'
         Say "本地有 $($st.ahead) 个独有提交，跳过（只读任务不做合并）"
@@ -105,9 +125,27 @@ function Invoke-Sync {
     } else {
         $mergeOut = & git merge --ff-only origin/main 2>&1 | Out-String
         if ($LASTEXITCODE -ne 0) {
-            $first = ($mergeOut.Trim() -split "`r?`n" | Select-Object -First 1)
-            $st.result = 'skipped-dirty'
-            Say "快进失败（工作区有未提交改动），已安全跳过：$first"
+            # 2.24.1：把**完整**阻断清单写进日志与台账（旧实现只留第一行，根本看不出被谁挡住）
+            $mergeLines = @($mergeOut -split "`r?`n")
+            $blocking = @($mergeLines | Where-Object { $_ -match '^\s+(\S.*)$' } |
+                ForEach-Object { $_.Trim() } |
+                Where-Object { $_ -and $_ -notmatch '^(Please|Aborting|Updating|\+|git\.exe|CategoryInfo|FullyQualifiedErrorId|所在位置)' } |
+                Sort-Object -Unique)
+            $st.dirtyBlocking = $blocking
+            $basisBlocked = @($blocking | Where-Object {
+                $p = $_
+                ($script:CloseBasisPaths | Where-Object { $p -eq $_ -or $p.StartsWith($_ + '/') }).Count -gt 0
+            })
+            if ($basisBlocked.Count -gt 0) {
+                $st.result = 'skipped-dirty'
+                Say ("快进失败，阻断文件属于收盘基准目录（{0} 个）" -f $basisBlocked.Count)
+            } else {
+                # 阻断都来自无关路径：快照本体没被改，可用性另行由 pm 体检判定
+                $st.result = 'skipped-dirty-unrelated'
+                Say '快进失败，但阻断文件都不在 data/snapshots 内（无关脏），不影响本地收盘快照可用性'
+            }
+            if ($blocking.Count -gt 0) { foreach ($p in $blocking) { Say "  阻断: $p" } }
+            else { Say ("  阻断: 无法解析 git 输出首行：{0}" -f (($mergeLines | Where-Object { $_ -match '\S' } | Select-Object -First 1))) }
         } else {
             $st.result = 'synced'
             $st.headAfter = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
@@ -126,51 +164,31 @@ function Invoke-Sync {
 
     # ---- 3. 只读体检：今天的 pm 到没到、能不能过消费方门禁 ----
     #    不写任何文件，只把结论写进日志与台账。
+    #    2.24.1：localFresh 的口径从「整树 behind==0」改为「当天 pm 收盘基准可用」——
+    #    存在 + gate ok + 本地没有未提交改动 + 内容不落后 origin/main。
+    #    无关脏（源码/测试/早报索引）与无关提交不再把当天打成「本地未同步」。
     $today = Get-Date -Format 'yyyy-MM-dd'
     $pmRel = "data/snapshots/${today}_pm.json"
-    $pmPath = Join-Path $root ("data\snapshots\{0}_pm.json" -f $today)
     $st.originMainHead = [string](& git rev-parse --short origin/main 2>$null | Select-Object -First 1)
-    $st.localFresh = ($st.behind -eq 0)
+    $pm = Get-PmSnapshotState -Root $root -Date $today
+    $st.pmExists = $pm.exists
+    $st.pmCapturedAt = $pm.capturedAt
+    $st.pmGate = $pm.gate
+    $st.pmInRemote = $pm.inRemote
+    $st.pmRemoteCapturedAt = $pm.remoteCapturedAt
+    $st.pmRemoteGate = $pm.remoteGate
+    $st.pmDrift = $pm.drift
+    $st.localFresh = ($pm.exists -and ($pm.gate -eq 'ok') -and (-not $pm.dirty) -and (-not $pm.drift))
 
-    # 2.23.0：pm 有没有生成，不能被「本地脏/落后」掩盖 —— 直接看 origin/main 里的对象。
-    #   旧实现只查工作树，ff 被脏文件挡住时会把「本地没同步」误写成「云端还没生成」。
-    $null = & git cat-file -e ("origin/main:" + $pmRel) 2>$null
-    if ($LASTEXITCODE -eq 0) {
-        $st.pmInRemote = $true
-        try {
-            # cat-file blob + --no-pager：旧写法 git show 一旦走到分页器，管道会拿到空串，
-            # 台账里就出现 pmInRemote=true 但 pmRemoteGate=unreadable 的怪状态。
-            $raw = & git --no-pager cat-file blob ("origin/main:" + $pmRel) 2>$null | Out-String
-            if (-not $raw.Trim()) { throw 'pm blob 为空（可能被分页器/管道吞掉）' }
-            $rdoc = ConvertFrom-Json $raw
-            $st.pmRemoteCapturedAt = [string]$rdoc.capturedAt
-            $rcap = [datetimeoffset]::Parse([string]$rdoc.capturedAt)
-            $rcapMin = $rcap.Hour * 60 + $rcap.Minute
-            $rGateOk = ($rdoc.date -eq $today) -and ($rdoc.isTradingDay -eq $true) -and ($rcapMin -ge (16 * 60 + 10))
-            $st.pmRemoteGate = if ($rGateOk) { 'ok' } else { 'pending' }
-        } catch {
-            $st.pmRemoteGate = 'unreadable'
-            Say "pm(remote)：读取失败（$($_.Exception.Message)）"
-        }
-    }
-
-    if (Test-Path $pmPath) {
-        try {
-            $doc = ConvertFrom-Json (Get-Content $pmPath -Raw -Encoding UTF8)
-            $st.pmExists = $true
-            $st.pmCapturedAt = [string]$doc.capturedAt
-            $cap = [datetimeoffset]::Parse([string]$doc.capturedAt)
-            $capMin = $cap.Hour * 60 + $cap.Minute
-            $gateOk = ($doc.date -eq $today) -and ($doc.isTradingDay -eq $true) -and ($capMin -ge (16 * 60 + 10))
-            $st.pmGate = if ($gateOk) { 'ok' } else { 'pending' }
-            Say "pm：$today 已到本地 · capturedAt=$($st.pmCapturedAt) · gate=$($st.pmGate) · localFresh=$($st.localFresh)"
-        } catch {
-            $st.pmGate = 'unreadable'
-            Say "pm：文件存在但解析失败（$($_.Exception.Message)）"
-        }
-    } elseif ($st.pmInRemote) {
+    if ($pm.exists -and $pm.gate -eq 'ok') {
+        Say "pm：$today 已到本地 · capturedAt=$($pm.capturedAt) · gate=ok · localFresh=$($st.localFresh)"
+        if ($pm.dirty) { Say "  localFresh=false · pm 有未提交改动：$pmRel" }
+        if ($pm.drift) { Say "  localFresh=false · pm 落后 origin/main：$pmRel（origin 版 capturedAt=$($pm.remoteCapturedAt)）" }
+    } elseif ($pm.exists) {
+        Say "pm：文件存在但未过门禁 · capturedAt=$($pm.capturedAt) · gate=$($pm.gate)"
+    } elseif ($pm.inRemote) {
         $st.pmGate = 'missing-local'
-        Say "pm：$today 在 origin/main 已存在（capturedAt=$($st.pmRemoteCapturedAt) · gate=$($st.pmRemoteGate)），本地没有"
+        Say "pm：$today 在 origin/main 已存在（capturedAt=$($pm.remoteCapturedAt) · gate=$($pm.remoteGate)），本地没有"
         Say "⚠ 本地不是最新（behind=$($st.behind) ahead=$($st.ahead) result=$($st.result)）：不要把本地 data/quotes.json 当收盘基准；可直接 git show origin/main:$pmRel"
     } else {
         $st.pmGate = 'missing'
@@ -191,6 +209,8 @@ try {
     Write-SyncState -Root $root -Source 'sync-close.ps1' -Result $st.result `
         -Error $st.syncError -FetchAttempts $st.fetchAttempts -Head $stateHead `
         -Behind $st.behind -Ahead $st.ahead -FetchOk ($st.result -ne 'fetch-failed') -LocalFresh $st.localFresh `
+        -CloseBasisDirty $st.closeBasisDirty -PmDrift $st.pmDrift `
+        -DirtyPaths @(Get-GitDirtyPaths) `
         -PmDate (Get-Date -Format 'yyyy-MM-dd') `
         -PmAvailable ($st.pmExists -and $st.pmGate -eq 'ok') `
         -PmCapturedAt $st.pmCapturedAt -PmGate $st.pmGate -PmInRemote $st.pmInRemote

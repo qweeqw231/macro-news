@@ -296,14 +296,20 @@ if ($unmerged.Count -gt 0) {
 # 2.13.3：脏工作区只用来**让路**，不再 stash/pop。
 #   2026-11-11 19:54 事故：脚本在脏工作区上 stash → ff-only 拉远端 → pop，
 #   而远端那几个提交改的正是本地正在编辑的同一批文件 ⇒ pop 直接冲突。
-#   现在：只要**受版本控制的文件**有未提交改动，本轮整轮跳过（不 stash、不 merge、不 pop）。
+#   现在：工作区脏就整轮跳过（不 stash、不 merge、不 pop）。
 #   未跟踪文件（`??`）不计入脏：git 拉取不会覆盖它们，`git stash`（不带 -u）也不会碰，
 #   把它们算脏会让 `.trae-html-share-packages/` 这类工具目录把本机采集永久卡死。
-$statusOut = @(& git status --porcelain --untracked-files=no 2>$null)
-$dirtyPaths = @($statusOut | ForEach-Object {
-    if ($_ -match '^..\s+(.+)$') { $matches[1] }
-} | Where-Object { $_ } | Sort-Object -Unique)
+# 2.24.1：脏的作用域收敛到「收盘基准真正消费的数据」（见 git-sync-lib.ps1 的 ConsumedPaths）。
+#   2026-11-18~20 连续事故：并行会话的源码/测试/工作流改动、早报线的 data/index.json 长期脏，
+#   而云端每 15 分钟就提交 index/latest/quotes 等同一批文件 ⇒ 每天都 skipped:dirty-worktree，
+#   17:00 消费端只能把当天标成「估（本地未同步）」。这些脏与「本地收盘截面能不能用」无关。
+$allDirtyPaths = @(Get-GitDirtyPaths)
+$dirtyPaths = @(Get-CloseBasisDirtyPaths)
+$unrelatedDirtyPaths = @($allDirtyPaths | Where-Object { $dirtyPaths -notcontains $_ })
 $dirty = if ($dirtyPaths.Count -gt 0) { 'yes' } else { 'no' }
+if ($unrelatedDirtyPaths.Count -gt 0) {
+    Say ("sync: 无关脏 {0} 个（不影响本轮，仅记录）：{1}" -f $unrelatedDirtyPaths.Count, (($unrelatedDirtyPaths | Select-Object -First 6) -join ', '))
+}
 
 $fetchRetry = Invoke-GitFetchRetry
 $fetchOk = $fetchRetry.ok
@@ -339,12 +345,17 @@ if ($dirty -eq 'yes') {
     $runStats.syncResult = 'skipped:dirty-worktree'
     Say ("sync: head={0} behind={1} ahead={2} dirty=yes result=skipped:dirty-worktree head_after={0} stash=none" -f `
         $headBefore, $behind, $ahead)
-    Say ("sync: 工作区有 {0} 个受版本控制的文件未提交改动，脚本主动让路——本轮不 stash、不合并、不 pop、不写任何工作区文件；下一轮重试。" -f $dirtyPaths.Count)
+    Say ("sync: 被消费数据有 {0} 个文件未提交改动，脚本主动让路——本轮不 stash、不合并、不 pop、不写任何工作区文件；下一轮重试。" -f $dirtyPaths.Count)
     foreach ($p in $dirtyPaths) { Say "sync: dirty: $p" }
     # 2.23.0：脏轮不写 data/，但必须让消费方知道「本地落后多少」
+    # 2.24.1：只有 data/snapshots 脏才会走到这里；localFresh 直接 false（判据与 sync-close 一致）
+    $pmDirty = Get-PmSnapshotState -Root $root -Date (Get-Date -Format 'yyyy-MM-dd')
     Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result 'skipped:dirty-worktree' `
-        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh ($behind -eq 0) `
-        -FetchAttempts $fetchRetry.attempts
+        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh $false `
+        -CloseBasisDirty $dirtyPaths -PmDrift $pmDirty.drift -DirtyPaths $allDirtyPaths `
+        -FetchAttempts $fetchRetry.attempts `
+        -PmDate $pmDirty.date -PmAvailable ($pmDirty.exists -and $pmDirty.gate -eq 'ok') `
+        -PmCapturedAt $pmDirty.capturedAt -PmGate $pmDirty.gate -PmInRemote $pmDirty.inRemote
     exit 0
 }
 
@@ -390,13 +401,23 @@ $runStats.behind = $behindAfter
 $runStats.ahead = $aheadAfter
 Say ("sync: behind_after={0} ahead_after={1}" -f $behindAfter, $aheadAfter)
 
+# 2.24.1：localFresh 与 sync-close 用同一判据（当天 pm 收盘基准是否可用），不再用 behind==0：
+#   无关路径脏或无关提交落后，都不该让下游把当天标成「本地未同步」。
+$todayState = Get-Date -Format 'yyyy-MM-dd'
+$pmState = Get-PmSnapshotState -Root $root -Date $todayState
+$localFreshAfter = ($pmState.exists -and $pmState.gate -eq 'ok' -and (-not $pmState.dirty) -and (-not $pmState.drift))
+$allDirtyAfter = @(Get-GitDirtyPaths)
+
 if ($syncResult -like 'skipped:*') {
     $runStats.result = 'skipped'
     $runStats.skipReason = ($syncResult -replace '^skipped:', '')
     if (-not $SyncOnly) { Publish-LocalSync $syncResult }
     Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result $syncResult `
         -Head $headAfter -Behind $behindAfter -Ahead $aheadAfter -FetchOk $true `
-        -LocalFresh ($behindAfter -eq 0) -FetchAttempts $fetchRetry.attempts
+        -LocalFresh $localFreshAfter -CloseBasisDirty $dirtyPaths -PmDrift $pmState.drift `
+        -DirtyPaths $allDirtyAfter -FetchAttempts $fetchRetry.attempts `
+        -PmDate $todayState -PmAvailable ($pmState.exists -and $pmState.gate -eq 'ok') `
+        -PmCapturedAt $pmState.capturedAt -PmGate $pmState.gate -PmInRemote $pmState.inRemote
     Say "同步未完成（$syncResult），本轮不采集、不提交；下一轮重试。"
     exit 0
 }
@@ -407,7 +428,10 @@ if (-not $SyncOnly) {
 }
 Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result $syncResult `
     -Head $headAfter -Behind $behindAfter -Ahead $aheadAfter -FetchOk $true `
-    -LocalFresh ($behindAfter -eq 0) -FetchAttempts $fetchRetry.attempts
+    -LocalFresh $localFreshAfter -CloseBasisDirty $dirtyPaths -PmDrift $pmState.drift `
+    -DirtyPaths $allDirtyAfter -FetchAttempts $fetchRetry.attempts `
+    -PmDate $todayState -PmAvailable ($pmState.exists -and $pmState.gate -eq 'ok') `
+    -PmCapturedAt $pmState.capturedAt -PmGate $pmState.gate -PmInRemote $pmState.inRemote
 
 # 同步更新了代码/HEAD 时再复核一次守卫（旧代码检查已在启动时做过）
 if ($headAfter -ne $headBefore -or $guardBefore -eq 'missing') {

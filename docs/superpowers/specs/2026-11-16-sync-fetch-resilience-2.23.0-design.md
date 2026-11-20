@@ -155,3 +155,65 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 5. 21:54 的定时采集在真实弱网下跑了一遍新逻辑：fetch 实际成功并更新了 `origin/main`，
    却因为 `Start-Process` 的退出码恒为空被判成 `skipped:fetch-failed` —— 这一条促成了
    改用 .NET `Process` 直读 ExitCode。修正后同一仓库同一网络下 fetch 1 次 6s 返回 `ok=True`。
+
+## 3.6 补丁 2.28.1：脏判定与新鲜度判定收敛到「当天收盘基准」
+
+2026-11-18~20 连续多天 17:00 收盘同步都以 `result=skipped-dirty` 跳过，`localFresh=false`，
+而当天 pm（16:14:40 / gate=ok / 76 键）早就在本地。下游只能退回 `quotes.json` 并标「估（本地未同步）」。
+
+### 根因
+
+1. **让路判据是全树**：`git status --porcelain --untracked-files=no` 把并行开发会话的
+   `.github/workflows/diag-stats.yml`、`src/collect.mjs`、`tests/pbc-fetch.test.mjs`、`CHANGELOG.md`、
+   `scripts/briefing/pipeline.mjs`，以及早报线持续改写的 `data/_briefing-status.json`、
+   `data/history/index.json`、`data/index.json` 全算成脏。
+2. **云端每 15 分钟提交「采集 6 件套」**（`_last-run / archive/<day> / index / latest / quotes / search`），
+   其中 `data/index.json` 长期是脏的 ⇒ `git merge --ff-only` 必然报
+   "Your local changes to the following files would be overwritten by merge"，于是每天 skipped-dirty。
+   已用临时 worktree 复现：把 `_briefing-status.json` + `history/index.json` 弄脏后 ff 到 16:48 那个
+   落后提交**能成功**，说明这两个不是今天的阻断者，真正阻断的是采集 6 件套里的脏文件（`data/index.json`）。
+3. **告警无诊断**：旧实现只把 git 报错的**第一行**写进日志，事后无法知道被哪个文件挡住。
+
+### 判据（结论）
+
+`localFresh` 改为「**当天收盘基准可用**」，而不是「整树 behind==0」：
+
+```
+localFresh = pm.exists && pm.gate == 'ok' && !pm.dirty && !pm.drift
+```
+
+- `pm` 指 `data/snapshots/<date>_pm.json`（下游 17:00 真正消费的文件）；
+- `dirty` = 该文件有未提交改动；`drift` = 该文件落后 `origin/main`；
+- gate 口径沿用下游：date 匹配、`isTradingDay`、`capturedAt >= 16:10`。
+
+让路判据同步收敛到 `data/snapshots`（`CloseBasisPaths`）：只有快照本体脏才跳过。
+
+**为什么不算放宽核心保证**：
+- pm 缺失时下游才退回 `quotes.json`，而那时 `pm.exists=false` ⇒ `localFresh=false`，保护伞仍在；
+- pm 被本地改动（dirty）或远端重新生成（drift）⇒ 仍为 false；
+- fetch 失败 ⇒ `localFresh=false` 且 `remoteRefStale=true`；
+- 被忽略的只是「与收盘数字无关」的脏：源码/测试/工作流/早报索引。它们的落后由 `behind/ahead`
+  与 `dirtyPaths` 如实记录，只是不再冒充「本地快照不可用」。
+
+### 实现
+
+- `git-sync-lib.ps1`：新增 `$script:CloseBasisPaths`、`Get-GitDirtyPaths -Pathspec`、
+  `Get-CloseBasisDirtyPaths`、`Get-PmSnapshotState`（本地文件 + `origin/main` 对象 + dirty/drift）。
+  pm 探测继续用 `git --no-pager cat-file blob`（`git show` 会走分页器拿到空串）。
+- `sync-close.ps1`：门禁按 `data/snapshots`；ff 失败时解析**完整**阻断清单，写日志与台账
+  （`dirtyBlocking`），并按是否命中 `data/snapshots` 区分 `skipped-dirty` / `skipped-dirty-unrelated`。
+- `collect-and-push.ps1`：同样的门禁与 `localFresh` 判据；fetch 失败时 `pm` 子对象沿用上一轮值，
+  不拿空值冒充「云端没有」。
+- 哨兵新增 `consumedDirty`（快照目录脏清单）、`pm.drift`、`dirtyPaths`（全树诊断，≤20 条）。
+- 判定口径变更写进 `CHANGELOG.md` 2.28.1 与 README 中英。
+
+### 验收（真实网络 + 临时 worktree）
+
+| 场景 | result | behind | localFresh | pm.available |
+|---|---|---|---|---|
+| 无关脏（`index.json` + `history/index.json`）挡住 ff | `skipped-dirty-unrelated` | 21 | **true** | true |
+| `data/snapshots/<day>_pm.json` 改一个字节 | `skipped-dirty` | 21 | false | true |
+| 干净且落后 21 个提交 | `synced` | 0 | true | true |
+| 本地提交改写 pm（drift） | `skipped-local-ahead` | 0 | false | true |
+| origin 不可达 | `fetch-failed` | null | false | — |
+| 真仓库（改完后） | `synced` | 0 | true | true |
