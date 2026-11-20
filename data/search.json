@@ -1,20 +1,148 @@
 {
-  "generatedAt": "2026-11-20T17:53:19.849Z",
+  "generatedAt": "2026-11-20T18:07:59.893Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-20",
   "hotFrom": "2026-11-14",
   "days": 62,
   "fromHistory": 15,
-  "total": 58130,
-  "hotTotal": 7595,
+  "total": 58146,
+  "hotTotal": 7611,
   "items": [
     {
-      "id": "1eodune",
+      "id": "bxtqkx",
+      "ts": 1795198035,
+      "time": "2026-11-21T02:07:15.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普：美国与加拿大要达成贸易协议 仍有更多工作要做",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmmnx0089167.shtml"
+    },
+    {
+      "id": "183irdl",
+      "ts": 1795198028,
+      "time": "2026-11-21T02:07:08.000+08:00",
+      "source": "华尔街见闻",
+      "title": "法国央行行长Moulin：法国必须处置好太高的债务和赤字问题。",
+      "url": "https://wallstreetcn.com/livenews/3203524"
+    },
+    {
+      "id": "7bc3q7",
+      "ts": 1795198019,
+      "time": "2026-11-21T02:06:59.000+08:00",
+      "source": "新浪财经",
+      "title": "雀巢与微软、波士顿动力、谷歌合作 计划打造智能体AI生产线",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmmns6989990.shtml"
+    },
+    {
+      "id": "191jj5a",
+      "ts": 1795197981,
+      "time": "2026-11-21T02:06:21.000+08:00",
+      "source": "华尔街见闻",
+      "title": "巴克莱策略师Themistoklis Fiotakis等人表示，即使美国经济增长放缓，美元仍可能保持韧性，因为过去美国经济下行通常也伴随着世界其他地区经济增长走弱。",
+      "url": "https://wallstreetcn.com/livenews/3203523"
+    },
+    {
+      "id": "1wknqmd",
+      "ts": 1795197941,
+      "time": "2026-11-21T02:05:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "德银：若美国科技股继续回落，我司货币预测将面临下行风险",
+      "url": "https://wallstreetcn.com/livenews/3203522"
+    },
+    {
+      "id": "4cila0",
+      "ts": 1795197873,
+      "time": "2026-11-21T02:04:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "加拿大丰业银行首席外汇策略师Shaun Osborne：AI叙事与美国“例外论”联系如此紧密，因此如果AI板块大幅回撤，从基本面来看将对美元不利，因为这可能意味着经济增长放缓、通胀压力减弱，或降低美联储大幅加息的必要性。",
+      "url": "https://wallstreetcn.com/livenews/3203521"
+    },
+    {
+      "id": "hgpsi0",
+      "ts": 1795197824,
+      "time": "2026-11-21T02:03:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "加拿大帝国商业银行的外汇策略主管Sarah Ying表示，投资者转向日元和瑞郎，因为在避险情绪升温时，这两种货币通常会受益。",
+      "url": "https://wallstreetcn.com/livenews/3203520"
+    },
+    {
+      "id": "k07mfh",
+      "ts": 1795197808,
+      "time": "2026-11-21T02:03:28.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美联储理事库克：人工智能（AI）提振生产力还需时间。",
+      "url": "https://wallstreetcn.com/livenews/3203519"
+    },
+    {
+      "id": "14hxotr",
+      "ts": 1795197764,
+      "time": "2026-11-21T02:02:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "全球AI抛售潮提振日元和瑞郎避险需求，美元走弱",
+      "url": "https://wallstreetcn.com/livenews/3203518"
+    },
+    {
+      "id": "1ls45t",
+      "ts": 1795197663,
+      "time": "2026-11-21T02:01:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国11月20日当周天然气钻井数 128，前值 127。",
+      "url": "https://wallstreetcn.com/livenews/3203517"
+    },
+    {
+      "id": "f8jv14",
+      "ts": 1795197663,
+      "time": "2026-11-21T02:01:03.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国11月20日当周石油钻井数 469，前值 463。",
+      "url": "https://wallstreetcn.com/livenews/3203516"
+    },
+    {
+      "id": "1h74sfy",
+      "ts": 1795197632,
+      "time": "2026-11-21T02:00:32.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国11月20日当周总钻井数 607，前值 601。",
+      "url": "https://wallstreetcn.com/livenews/3203515"
+    },
+    {
+      "id": "71g0ab",
+      "ts": 1795197453,
+      "time": "2026-11-21T01:57:33.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国总统特朗普：与纽约市长马姆达尼关系不错。",
+      "url": "https://wallstreetcn.com/livenews/3203514"
+    },
+    {
+      "id": "1vaaqd5",
+      "ts": 1795197381,
+      "time": "2026-11-21T01:56:21.000+08:00",
+      "source": "华尔街见闻",
+      "title": "美国总统特朗普：俄罗斯总统普京表示希望以外交方式结束战争。",
+      "url": "https://wallstreetcn.com/livenews/3203513"
+    },
+    {
+      "id": "mzlarf",
+      "ts": 1795197328,
+      "time": "2026-11-21T01:55:28.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普称将阻止美国企业赴海外建设数据中心",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmmnr5304942.shtml"
+    },
+    {
+      "id": "1pw2354",
+      "ts": 1795197256,
+      "time": "2026-11-21T01:54:16.000+08:00",
+      "source": "新浪财经",
+      "title": "摩根大通面临英国1.2亿英镑银行税 CEO称将设法对冲",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmmns6984992.shtml"
+    },
+    {
+      "id": "w0xvto",
       "ts": 1795197091,
       "time": "2026-11-21T01:51:31.000+08:00",
       "source": "华尔街见闻",
-      "title": "LME期铜收跌366美元，报12160美元/吨。",
+      "title": "伦铜本周累跌超9.2%",
       "url": "https://wallstreetcn.com/livenews/3203512"
     },
     {
