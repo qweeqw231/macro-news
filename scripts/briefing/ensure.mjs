@@ -89,7 +89,7 @@ const log = (...a) => { if (!QUIET) console.log(...a); };
 const siteFile = (d) => path.join(SITE_OUT, `${d}.json`);
 const localFile = (d) => path.join(OUT, `${d}.json`);
 
-// 2.23.0：「这天有没有新闻」= archive 与 history 切片取大者。
+// 2.28.2：「这天有没有新闻」= archive 与 history 切片取大者。
 // 只看 archive 会把薄归档但切片完整的日子判成 no-news，补写窗口里会被整段跳过。
 const readSpan = () => archiveSpan(
   readJson(path.join(DATA_DIR, 'index.json')).value,

@@ -166,7 +166,7 @@ export function briefEraStart(siteOut) {
  * 2.14.0：归档跨度与逐日条数（判「这天有没有新闻可写」的唯一依据）。
  * 只认 count > 0 的日子：无新闻的日子写不出早报，那是合理空缺，不是缺失。
  *
- * 2.23.0：把近一年历史切片（data/history/index.json）也算进来，取两者较大值。
+ * 2.28.2：把近一年历史切片（data/history/index.json）也算进来，取两者较大值。
  * 只看 archive 会把「归档只有 0~4 条、切片有 90~300 条」的日子（08-17~09-18 等）
  * 判成 no-news 而跳过；页面上这些日子本来就是按切片显示的，口径要一致。
  * @param {object} indexDoc data/index.json 的文档

@@ -25,7 +25,7 @@ test('同步在陈旧度判定 / 采集之前', () => {
 
 test('落后时只做 ff-only；脏工作区整轮跳过，不 stash / 不 pop', () => {
   assert.match(SCRIPT, /git merge --ff-only origin\/main/);
-  // 2.13.4：脏检测只看受版本控制的文件（2.24.1：实现移进 git-sync-lib.ps1）
+  // 2.13.4：脏检测只看受版本控制的文件（2.23.0：实现移进 git-sync-lib.ps1）
   assert.match(LIB, /'status', '--porcelain', '--untracked-files=no'/);
   assert.match(SCRIPT, /skipReason = 'dirty-worktree'/);
   assert.match(SCRIPT, /skipped:dirty-worktree/);
@@ -135,7 +135,7 @@ test('本地对齐哨兵：两脚本都点源 git-sync-lib，且只写 .local', 
 });
 
 test('收盘同步：pm 缺失时看 origin/main，不得断言「云端可能尚未生成」', () => {
-  // 2.24.1：pm 探测抽到 lib 的 Get-PmSnapshotState，两个脚本共用
+  // 2.28.1：pm 探测抽到 lib 的 Get-PmSnapshotState，两个脚本共用
   assert.match(LIB, /git cat-file -e/);
   assert.match(LIB, /cat-file blob/);
   assert.doesNotMatch(LIB, /git show \("origin\/main:"/, 'git show 可能走分页器导致空输出');
@@ -169,7 +169,7 @@ test('2.23.1：当天 pm 的可用性独立成 pm 子对象，与 localFresh 解
   assert.match(CLOSE, /-PmAvailable \(\$st\.pmExists -and \$st\.pmGate -eq 'ok'\)/);
 });
 
-test('2.24.1：脏判定收敛到 data/snapshots，无关脏不再让路', () => {
+test('2.28.1：脏判定收敛到 data/snapshots，无关脏不再让路', () => {
   // 让路判据只看收盘基准目录
   assert.match(LIB, /\$script:CloseBasisPaths = @\('data\/snapshots'\)/);
   assert.match(LIB, /function Get-CloseBasisDirtyPaths/);

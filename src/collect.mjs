@@ -215,7 +215,7 @@ async function collectKlines(startedAt, onlyKeys) {
             );
             continue;
           }
-          // 2.27.2：周/月 K 一个周期只能有一根。未走完的桶其 `t` 是「桶内最后一根日线」、
+          // 2.28.0：周/月 K 一个周期只能有一根。未走完的桶其 `t` 是「桶内最后一根日线」、
           //   每天前移，decideBars 会把它判成「缺旧末根键」走 merge 并集 ⇒ 每天多一根。
           //   xau/brent/usdcny/n225/kospi 等全标的的 2026-11 因此各出现十余根假 K 线。
           //   收敛放在 markCloseOnlyBars 之前，保留最后一根（最新的累计值）。
