@@ -80,7 +80,8 @@ jobs:
     timeout-minutes: 15
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      # 首次部署失败（artifact 列表竞态）时 page_url 为空，回退到重试步骤的输出
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
@@ -97,4 +98,17 @@ jobs:
 
       - name: 部署到 GitHub Pages
         id: deployment
+        # 已知竞态（2026-11-20 21:23 实测，约 2%）：upload 成功 0.33s 后，
+        # deploy 侧查 artifact 列表偶尔仍返回 0 条，报 "Artifact not found"。
+        # 这不是产物问题，等几秒重试一次即可；症状固定且不会自愈到下次 HEAD 前进。
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: 等待 artifact 入列表
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 10
+
+      - name: 部署重试（artifact 列表竞态）
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
