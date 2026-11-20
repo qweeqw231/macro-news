@@ -1,14 +1,118 @@
 {
-  "generatedAt": "2026-11-20T20:53:19.762Z",
+  "generatedAt": "2026-11-20T21:07:59.097Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-20",
   "hotFrom": "2026-11-14",
   "days": 62,
   "fromHistory": 15,
-  "total": 58230,
-  "hotTotal": 7695,
+  "total": 58243,
+  "hotTotal": 7708,
   "items": [
+    {
+      "id": "15mj1f8",
+      "ts": 1795208727,
+      "time": "2026-11-21T05:05:27.000+08:00",
+      "source": "新浪财经",
+      "title": "原油：油价连续第三周下跌 供应充足抵消了战争风险",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmruv0018676.shtml"
+    },
+    {
+      "id": "n1salr",
+      "ts": 1795208698,
+      "time": "2026-11-21T05:04:58.000+08:00",
+      "source": "华尔街见闻",
+      "title": "CrowdStrike洽谈收购网络安全公司Zscaler。",
+      "url": "https://wallstreetcn.com/livenews/3203583"
+    },
+    {
+      "id": "13ks16z",
+      "ts": 1795208669,
+      "time": "2026-11-21T05:04:29.000+08:00",
+      "source": "华尔街见闻",
+      "title": "加拿大股市陷入回调区间。",
+      "url": "https://wallstreetcn.com/livenews/3203582"
+    },
+    {
+      "id": "169g2dm",
+      "ts": 1795208561,
+      "time": "2026-11-21T05:02:41.000+08:00",
+      "source": "华尔街见闻",
+      "title": "万斯：袭击伊朗的决定由总统特朗普作出，自己的职责是支持总统",
+      "url": "https://wallstreetcn.com/livenews/3203581"
+    },
+    {
+      "id": "1df2kn9",
+      "ts": 1795208527,
+      "time": "2026-11-21T05:02:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "特朗普：中俄美元首会晤“史无前例”“意义重大”",
+      "url": "https://wallstreetcn.com/livenews/3203580"
+    },
+    {
+      "id": "1uqe7ul",
+      "ts": 1795208483,
+      "time": "2026-11-21T05:01:23.000+08:00",
+      "source": "华尔街见闻",
+      "title": "英伟达收盘重挫14%，创2025年1月份以来最大单日跌幅。",
+      "url": "https://wallstreetcn.com/livenews/3203579"
+    },
+    {
+      "id": "b6k4zj",
+      "ts": 1795208454,
+      "time": "2026-11-21T05:00:54.000+08:00",
+      "source": "华尔街见闻",
+      "title": "Anthropic初步收跌9.13%，报88.30美元。",
+      "url": "https://wallstreetcn.com/livenews/3203578"
+    },
+    {
+      "id": "fmkwa2",
+      "ts": 1795208418,
+      "time": "2026-11-21T05:00:18.000+08:00",
+      "source": "华尔街见闻",
+      "title": "纳斯达克金龙中国指数初步收跌3.4%，本周累计下跌大约9%。",
+      "url": "https://wallstreetcn.com/livenews/3203576"
+    },
+    {
+      "id": "198nwnj",
+      "ts": 1795208405,
+      "time": "2026-11-21T05:00:05.000+08:00",
+      "source": "华尔街见闻",
+      "title": "本周，标普累跌约8.4%，半导体指数累跌约16.7%、半导体设备指数跌18.7%，存储芯片指数跌19.8%，科技股七巨头指数跌9.99%、超大市值科技股指数跌11.6%，AI赢家指数跌16.4%、AI软件先驱指数跌13.4%。",
+      "url": "https://wallstreetcn.com/livenews/3203574"
+    },
+    {
+      "id": "5izzo2",
+      "ts": 1795208402,
+      "time": "2026-11-21T05:00:02.000+08:00",
+      "source": "新浪财经",
+      "title": "英伟达重挫 报道称美国监管机构正调查该公司的会计操作",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmrup5236680.shtml"
+    },
+    {
+      "id": "rhhyp5",
+      "ts": 1795208356,
+      "time": "2026-11-21T04:59:16.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普撤换国家网络总监Cairncross 由五角大楼首席信息官接任",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmruq6923523.shtml"
+    },
+    {
+      "id": "1dvwjl5",
+      "ts": 1795208204,
+      "time": "2026-11-21T04:56:44.000+08:00",
+      "source": "新浪财经",
+      "title": "OIS合约不再充分反映美联储12月加息25个基点",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmruv0015975.shtml"
+    },
+    {
+      "id": "157y81d",
+      "ts": 1795208167,
+      "time": "2026-11-21T04:56:07.000+08:00",
+      "source": "华尔街见闻",
+      "title": "标普500指数期货跌4.00%，道琼斯指数期货跌2.15%，纳斯达克指数期货跌5.99%。",
+      "url": "https://wallstreetcn.com/livenews/3203573"
+    },
     {
       "id": "1bwpjjo",
       "ts": 1795207910,
