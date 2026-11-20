@@ -210,37 +210,65 @@
     {
       "day": "2026-10-26",
       "count": 949,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "中国共产党第二十届中央委员会第五次全体会议于10月26日至29日举行，是本周最大的政策变量。同日修订后的上证系列综合指数编制方案正式实施，单个样本权重上限设为1",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T14:42:46+08:00"
     },
     {
       "day": "2026-10-25",
       "count": 370,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "周末政策信息密集。国办印发意见部署适应人工智能发展、构建就业友好型发展方式；财政部数据显示前三季度新增专项债约3.56万亿元、发行进度81%，一般公共预算收入增",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T14:43:32+08:00"
     },
     {
       "day": "2026-10-24",
       "count": 281,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "国内方面，财政部在香港招标发行2026年第五期155亿元人民币国债，认购倍数3.43倍；A股当日普跌，创业板指半日跌超2%、下跌个股超4800只。海外美国10月",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T14:41:54+08:00"
     },
     {
       "day": "2026-10-23",
       "count": 1093,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "日本9月核心CPI今年以来首度升破2%，叠加央行放风将确认通胀达标，12月加息基本锁定。中东方面沙特国防部与原油设施遇袭，布油突破112美元，避险情绪令纳指收跌",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T14:41:54+08:00"
     },
     {
       "day": "2026-10-22",
       "count": 1139,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "国内层面，中办、国办发布“两创融合”文件，提出开展颠覆性技术挖掘甄别；住房贷款贴息实施一个月后，广州、深圳150万元以下房源成交加速。海外英国9月CPI升至3.",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T14:41:02+08:00"
     },
     {
       "day": "2026-10-21",
       "count": 1094,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "政策利率换锚进入落地阶段：央行公告10月21日至11月2日连续9个工作日开展隔夜逆回购，采用固定利率、数量招标；同日LPR连续第17个月持平。发改委称将根据需要",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T14:40:33+08:00"
     },
     {
       "day": "2026-10-20",
       "count": 1091,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "今日主线是金融街论坛上的货币政策框架重构：政策利率拟由7天逆回购切换到隔夜回购，并退出存贷款基准利率、另设非银机构大额赎回流动性支持工具。同日统计局确认前三季度",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T14:40:33+08:00"
     },
     {
       "day": "2026-10-19",
