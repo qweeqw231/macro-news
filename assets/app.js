@@ -669,11 +669,16 @@
   function itemNode(it) {
     const a = el('article', 'item');
     a.dataset.id = itemKey(it);
+    a.dataset.dups = (it._dups || []).map(itemKey).join(',');
     a.tabIndex = 0;
     a.setAttribute('role', 'button');
     a.setAttribute('aria-label', `阅读：${it.title || ''}`);
-    a.onclick = () => openReader(idxOfItem(it));
+    a.onclick = (e) => {
+      if (e.target && e.target.closest && e.target.closest('button, a')) return;
+      openReader(idxOfItem(it));
+    };
     a.onkeydown = (e) => {
+      if (e.target && e.target.closest && e.target.closest('button, a')) return;
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader(idxOfItem(it)); }
     };
     const hd = el('div', 'item-hd');
@@ -686,6 +691,38 @@
     // RSS 源的 description 常与标题完全相同，重复显示没有意义
     const sum = (it.summary || '').trim();
     if (sum && sum !== it.title.trim()) a.appendChild(el('div', 'item-sum clamp', sum));
+
+    // 同题转载折叠（纯展示层）：主条目后面标「另有 N 家报道」，点开就地列出其它来源。
+    // 数据层 S.items 不合并，阅读器/搜索/归档仍能看到每一条原始记录。
+    const dups = it._dups || [];
+    if (dups.length) {
+      const list = el('div', 'item-dups');
+      list.hidden = true;
+      dups.forEach((d) => {
+        const row = d.url ? el('a', 'item-dup') : el('div', 'item-dup');
+        if (d.url) {
+          row.href = d.url;
+          row.target = '_blank';
+          row.rel = 'noopener noreferrer';
+          row.onclick = (e) => e.stopPropagation();
+        }
+        row.appendChild(el('span', 'item-dup-src', d.source || '其他来源'));
+        row.appendChild(el('span', 'item-dup-time', fmtTime(d.time)));
+        list.appendChild(row);
+      });
+      const btn = el('button', 'item-dup-toggle', `另有 ${dups.length} 家报道`);
+      btn.type = 'button';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const open = list.hidden;
+        list.hidden = !open;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.classList.toggle('on', open);
+      };
+      a.appendChild(btn);
+      a.appendChild(list);
+    }
     return a;
   }
 
@@ -720,9 +757,13 @@
 
   // 要闻流的母集说明：空搜索时列表是「最新快照」，检索却覆盖全库 —— 不写清楚，
   // 同一个分类会出现「带关键词的条数 > 不带的条数」这种看起来自相矛盾的数字。
-  const feedMetaText = () =>
-    `最新快照 ${(S.base || []).length} 条` +
-    (S.total ? ` · 库内共 ${S.total} 条（输入关键词可检索全库）` : '');
+  const feedMetaText = () => {
+    const raw = (S.base || []).length;
+    const shown = feedFoldActive() ? foldFeedItems(S.base || []).length : raw;
+    const fold = raw > shown ? `（原始 ${raw} 条，同题合并 ${raw - shown} 条）` : '';
+    return `最新快照 ${shown} 条${fold}` +
+      (S.total ? ` · 库内共 ${S.total} 条（输入关键词可检索全库）` : '');
+  };
 
   function saveFeedCache() {
     try {
@@ -805,7 +846,11 @@
     }
     if (off < 0) return false;
     for (let i = 0; i < nodes.length && off + i < list.length; i++) {
-      if (nodes[i].dataset.id !== itemKey(list[off + i])) return false;
+      const t = list[off + i];
+      if (nodes[i].dataset.id !== itemKey(t)) return false;
+      // 同题转载组发生变化（新增/减少来源、主条目换人）时直接整块重建，
+      // 否则卡片上的「另有 N 家报道」会停在旧数字上。
+      if ((nodes[i].dataset.dups || '') !== (t._dups || []).map(itemKey).join(',')) return false;
     }
     if (nodes.length + off < list.length) return false;   // 旧列表比目标短：交给整块重建
 
@@ -960,12 +1005,38 @@
       body.appendChild(el('p', 'rd-empty', '本条仅有标题，暂无正文内容，可点击「阅读原文」查看。'));
     }
 
+    // 同题转载的其它来源：主条目正文之后列出可点原文，保证折叠后仍可追溯
+    const dups = it._dups || [];
+    if (dups.length) {
+      const sec = el('div', 'rd-dups');
+      sec.appendChild(el('div', 'rd-dups-hd', `另有 ${dups.length} 家报道`));
+      dups.forEach((d) => {
+        const row = d.url ? el('a', 'rd-dup') : el('div', 'rd-dup');
+        if (d.url) {
+          row.href = d.url;
+          row.target = '_blank';
+          row.rel = 'noopener noreferrer';
+        }
+        row.appendChild(el('span', 'rd-dup-src', d.source || '其他来源'));
+        row.appendChild(el('span', 'rd-dup-time', fmtFullTime(d.time)));
+        sec.appendChild(row);
+      });
+      body.appendChild(sec);
+    }
+
     // 缺正文（多半是搜索命中）→ 异步从归档补齐后重绘
     if (!(it.content || '').trim()) {
       const cur = readerIdx;
+      const key = itemKey(it);
       fetchFullItem(it).then((full) => {
-        if (readerIdx !== cur || !S.items[cur] || full === it) return;
-        S.items[cur] = full;
+        if (readerIdx !== cur || full === it) return;
+        const curIt = (S.visible || S.items || [])[readerIdx];
+        if (!curIt || itemKey(curIt) !== key) return;
+        // 折叠后的主条目是 S.items 里的原始对象，但不是同一下标：
+        // 必须原地补全（保留 _dups），再按 id 同步回数据列表。
+        Object.assign(it, full);
+        const i = (S.items || []).findIndex((x) => itemKey(x) === key);
+        if (i >= 0) S.items[i] = it;
         renderReader();
       });
     }
@@ -1018,11 +1089,16 @@
   let filtersSig = '';
   function renderFilters() {
     const box = $('#filters');
+    // 最新流启用同题折叠后，分类计数也按「该分类内折叠后」的条目算，
+    // 否则跨分类的同题组只在主条目所属分类里减 1，分类相加会对不上「全部」。
+    const foldOn = feedFoldActive();
+    const channels = [...new Set(S.items.map((i) => i.channel || '其他'))];
     const counts = new Map();
-    S.items.forEach((i) => {
-      const k = i.channel || '其他';
-      counts.set(k, (counts.get(k) || 0) + 1);
+    channels.forEach((k) => {
+      const raw = S.items.filter((i) => (i.channel || '其他') === k);
+      counts.set(k, foldOn ? foldFeedItems(raw).length : raw.length);
     });
+    const allN = foldOn ? foldFeedItems(S.items).length : S.items.length;
     const sig = S.filter + '|' + [...counts.entries()]
       .sort((a, b) => b[1] - a[1])
       .map(([k, n]) => `${k}:${n}`).join(',');
@@ -1034,15 +1110,64 @@
       b.onclick = () => { S.filter = key; S.shown = PAGE; renderFilters(); renderFeed(); };
       return b;
     };
-    box.appendChild(mk('全部', 'all', S.items.length));
+    box.appendChild(mk('全部', 'all', allN));
     [...counts.entries()]
       .sort((a, b) => b[1] - a[1])
       .forEach(([k, n]) => box.appendChild(mk(k, k, n)));
   }
 
+  // ---------- 同题转载折叠（纯展示层）----------
+  // 只对「最新快照」生效；搜索/归档仍按原始条目展示，保证每条都能追溯。
+  function feedFoldActive() {
+    return !S.q && !openedDay && S.items === S.base;
+  }
+
+  /**
+   * 按标题**精确匹配**分组，每组只输出一条主条目。
+   * 主条目取「最完整」的：正文 > 摘要 > 带链接；都相同时取时间更新的一条。
+   * 其它来源挂在 `_dups` 上，由卡片上的「另有 N 家报道」展开，数据本身不删除。
+   */
+  function foldFeedItems(list) {
+    if (!Array.isArray(list) || !list.length) return list || [];
+    const order = [];
+    const byTitle = new Map();
+    list.forEach((it) => {
+      if (!it) return;
+      // 每次重算都先清掉上一次的折叠标记，避免条目不再重复时残留旧来源
+      if (it._dups) delete it._dups;
+      const title = String(it.title || '').trim();
+      if (!title) { order.push({ single: it }); return; }   // 空标题不参与折叠
+      let g = byTitle.get(title);
+      if (!g) { g = { items: [] }; byTitle.set(title, g); order.push(g); }
+      g.items.push(it);
+    });
+    const score = (x) =>
+      (String(x.content || '').length * 1000) +
+      (String(x.summary || '').length * 10) +
+      (x.url ? 1 : 0);
+    const ts = (x) => Date.parse(x.time || '') || 0;
+    return order.map((g) => {
+      if (g.single) return g.single;
+      if (g.items.length === 1) return g.items[0];
+      let main = g.items[0];
+      for (const it of g.items) {
+        const s = score(it), sm = score(main);
+        if (s > sm || (s === sm && ts(it) > ts(main))) main = it;
+      }
+      main._dups = g.items.filter((x) => x !== main);
+      return main;
+    });
+  }
+
   function applyFilter() {
-    if (S.filter === 'all') return S.items;
-    return S.items.filter((i) => (i.channel || '其他') === S.filter);
+    const list = S.filter === 'all'
+      ? S.items
+      : S.items.filter((i) => (i.channel || '其他') === S.filter);
+    if (feedFoldActive()) return foldFeedItems(list);
+    // 搜索/归档不做折叠：清掉上一次留下的 _dups，
+    // 否则搜索结果里的原始条目会带着「另有 N 家报道」这种只属于最新流的标记。
+    (S.items || []).forEach((it) => { if (it && it._dups) delete it._dups; });
+    return list;
   }
 
   // ---------- 搜索 ----------
@@ -1059,7 +1184,7 @@
   // ⇒ **用户碰搜索框（focus）或开始输入时才预取**：首屏、归档、行情都不跟它抢带宽。
   //   还没下完时 qMeta 会显示「检索索引载入中…」。
   //
-  // 2.29.1：18 MB 的索引在 12.5 KB/s 下要 5~6 分钟，原先只有一句「请稍候」，
+  // 2.29.0：18 MB 的索引在 12.5 KB/s 下要 5~6 分钟，原先只有一句「请稍候」，
   //   用户无法判断是卡死还是在下载。改用 XHR 拿 onprogress：显示「已下载 / 总大小 · 百分比」，
   //   并给一个「取消」按钮（abort 后保留会话，重新输入关键词即重试）。
   //   注意 onprogress 的字节数是**压缩后**的传输量，与 Pages 实际下发的 gzip 一致。
