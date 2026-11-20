@@ -20,6 +20,7 @@
 //   与东财口径一致（实测上证：3651.43 / 3681.47 / 3676.77 两源全等）。
 
 import { emGetJSON, emGetText } from './em.mjs';
+import { parseTencentTime } from './quote-time.mjs';
 
 const UA_QUOTE_FIELDS = 'f2,f3,f5,f12,f13,f14,f15,f16,f17,f18,f124,f297';
 const TX_HOSTS = ['https://qt.gtimg.cn', 'https://sqt.gtimg.cn'];
@@ -130,9 +131,9 @@ export async function fetchBatchQuotes(targets) {
             prevClose: num(a[4]),
             volume: num(a[6]),
             changePct: num(a[32]),
-            updatedAt: /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(a[30])
-              ? `${a[30].replace(' ', 'T')}+08:00`
-              : new Date().toISOString(),
+            // 2.31.0：腾讯 [30] 有 3 种格式（A股紧凑 / 港股 YYYY/MM/DD / 美股美东时间），
+            //   一律走共享解析，别再落回抓取时刻（那会把旧行情伪装成"刚刚更新"）。
+            updatedAt: parseTencentTime(a[30], meta.market) || new Date().toISOString(),
             source: 'tencent',
           });
           delete fail[meta.key];

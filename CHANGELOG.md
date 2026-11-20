@@ -13,6 +13,27 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.31.0] - 2026-11-21
+
+### 修复：腾讯备源时港股/美股 `updatedAt` 解析不出来
+
+**问题**：东财不可达降级腾讯 `qt.gtimg.cn` 时，字段 [30] 的时间按市场有三种格式：
+A股 `YYYYMMDDHHMMSS`、港股 `YYYY/MM/DD HH:mm:ss`（北京时间）、美股同样的斜杠格式但**是美东时间**。
+采集侧只认 `YYYY-MM-DD HH:mm:ss`，港股/美股的源时间落到抓取时刻或空值，
+下游（17:00 任务、pm 快照、同步哨兵的 `pm.capturedAt`）跟着拿到空/错时间。
+
+**改动**
+- 新增 `src/quote-time.mjs`：`parseTencentTime(s, market)` 统一解析三种格式；
+  `US` 用 `America/New_York` 两遍修正 DST，输出仍是**带 +08:00 的 ISO**（与 quotes.json 既有语义一致）。
+- `src/quotes.mjs` 腾讯批量备源、`src/portfolio.mjs` 的 `usNDX` 改走该解析；
+  删除 `portfolio.mjs` 里已无调用方的 `isoFromCNDateTime`。
+- 新增 `tests/quote-time.test.mjs`：三种格式 + 无法识别返回 null + 与前端
+  `assets/quote-status.js` 的 `parseTencentTime` 逐条比对（含 2026 年两处 DST 边界）。
+
+**核对（真实响应 2026-11-21 01:0x 北京时间）**
+`hkHSI 2026/11/20 18:31:27`、`hk00700 16:08:37`、`usNDX/usAAPL 2026/11/20 11:09:20`（美东）：
+采集侧与前端算出的时刻逐一相等；美股 `11:09:20 EST → 2026-11-21T00:09:20+08:00`。
+
 ## [2.30.0] - 2026-11-20
 
 ### 搜索索引拆成「热段 + 月度分片」两段

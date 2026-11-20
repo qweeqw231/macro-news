@@ -8,6 +8,8 @@
 // 所有字段索引均经本机实测验证（2026-10-28/29），未采信规格书里的示例值。
 // 规格书与实测不一致处，已在对应代码处注明原因。
 
+import { parseTencentTime } from './quote-time.mjs';
+
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
   '(KHTML, like Gecko) Chrome/122.0 Safari/537.36';
@@ -58,13 +60,6 @@ function isoCN(d = new Date()) {
   const t = new Date(d.getTime() + 8 * 3600 * 1000);
   return `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}T` +
     `${pad(t.getUTCHours())}:${pad(t.getUTCMinutes())}:${pad(t.getUTCSeconds())}+08:00`;
-}
-
-/** "2026-10-28 12:20:20"（北京时间）→ ISO(+08:00) */
-function isoFromCNDateTime(s) {
-  const m = String(s).match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);
-  if (!m) return isoCN();
-  return `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}+08:00`;
 }
 
 const stripTags = (s = '') =>
@@ -171,7 +166,9 @@ async function fetchNdx() {
     low: num(f[34]),
     prevClose,
     changePct,
-    updatedAt: isoFromCNDateTime(f[30]),
+    // 2.31.0：usNDX 的 [30] 是美东本地时间（YYYY/MM/DD HH:mm:ss），
+    //   旧的正则只认 YYYY-MM-DD ⇒ 解析失败退回 isoCN()（抓取时刻），源时间被掩盖。
+    updatedAt: parseTencentTime(f[30], 'US') || isoCN(),
     note: '',
   };
 }
