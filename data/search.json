@@ -1,14 +1,54 @@
 {
-  "generatedAt": "2026-11-20T16:00:32.904Z",
+  "generatedAt": "2026-11-20T16:08:07.462Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-20",
   "hotFrom": "2026-11-14",
   "days": 62,
   "fromHistory": 15,
-  "total": 58067,
-  "hotTotal": 7532,
+  "total": 58072,
+  "hotTotal": 7537,
   "items": [
+    {
+      "id": "1x2u9p6",
+      "ts": 1795190863,
+      "time": "2026-11-21T00:07:43.000+08:00",
+      "source": "新浪财经",
+      "title": "在Anthropic与SpaceX IPO前夕，比特币出现高度相似的抛售行情",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmfeu7065319.shtml"
+    },
+    {
+      "id": "1j7gv9o",
+      "ts": 1795190759,
+      "time": "2026-11-21T00:05:59.000+08:00",
+      "source": "华尔街见闻",
+      "title": "阿波罗与高盛宣布SpaceX 440亿美元GPU融资定价。",
+      "url": "https://wallstreetcn.com/livenews/3203472"
+    },
+    {
+      "id": "133du85",
+      "ts": 1795190616,
+      "time": "2026-11-21T00:03:36.000+08:00",
+      "source": "新浪财经",
+      "title": "牛市遭遇新难题：“聪明资金”正在卖出股票",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmfeu7062993.shtml"
+    },
+    {
+      "id": "ausbht",
+      "ts": 1795190601,
+      "time": "2026-11-21T00:03:21.000+08:00",
+      "source": "华尔街见闻",
+      "title": "纳斯达克100指数跌幅扩大至3%，标普500指数跌1.5%。",
+      "url": "https://wallstreetcn.com/livenews/3203471"
+    },
+    {
+      "id": "6bx9q2",
+      "ts": 1795190526,
+      "time": "2026-11-21T00:02:06.000+08:00",
+      "source": "华尔街见闻",
+      "title": "马斯克：我们不会提供开源模型。",
+      "url": "https://wallstreetcn.com/livenews/3203470"
+    },
     {
       "id": "1sxkjmp",
       "ts": 1795190439,
@@ -154,11 +194,11 @@
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizmfeu7050219.shtml"
     },
     {
-      "id": "14vauu9",
+      "id": "7br0iz",
       "ts": 1795189189,
       "time": "2026-11-20T23:39:49.000+08:00",
       "source": "华尔街见闻",
-      "title": "伊朗Qeshm岛传出爆炸声。",
+      "title": "伊朗媒体：格什姆岛上空传出爆炸声",
       "url": "https://wallstreetcn.com/livenews/3203459"
     },
     {
