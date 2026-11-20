@@ -1,0 +1,154 @@
+{
+  "date": "2026-10-31",
+  "generatedAt": "2026-11-20T18:21:00+08:00",
+  "endedAt": "2026-11-20T18:19:51+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-10-30",
+    "to": "2026-10-31",
+    "fromAt": "2026-10-30T08:00:00+08:00",
+    "toAt": "2026-10-31T09:00:00+08:00",
+    "fromTs": 1793318400,
+    "toTs": 1793408400
+  },
+  "overview": "央行宣布11月2日起每个工作日开展隔夜逆回购招标、操作利率1.25%，政策利率“换锚”迈出关键一步；央行、证监会党委会议同日部署宽松货币与稳市场。日本央行维持1.25%不变并以8比1保留加息异议，多位美联储与欧洲央行官员主张进一步加息。金价跌破3900美元，油价升至104美元，全球科技股大跌。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行“换锚”：11月2日起每个工作日开展隔夜逆回购招标",
+      "summary": "央行10月30日发布公开市场业务公告，为优化短端利率调控机制，从11月2日起每个工作日开展隔夜逆回购操作招标，采用固定利率、数量招标，目前操作利率为1.25%；7天期逆回购调整为固定数量、利率招标、多重价位中标，主要在税期、月末等时点开展。",
+      "why": "短端利率调控机制重构",
+      "source": "东方财富",
+      "publishedAt": "2026-10-31T05:44",
+      "url": "http://forex.eastmoney.com/news/1131,202610313917324529.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1345,202610303916569143.html",
+        "https://finance.sina.com.cn/jjxw/2026-10-31/doc-iniwztxk2098924.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行、证监会党委会议部署宽松货币与稳市场",
+      "summary": "10月30日，央行行长潘功胜主持召开党委会议，强调继续实施适度宽松的货币政策，综合运用多种货币政策工具保持流动性充裕；证监会同日召开党委（扩大）会议，提出全力稳市场稳预期，持续提升资本市场韧性和信心。",
+      "why": "五中全会后政策落实",
+      "source": "东方财富",
+      "publishedAt": "2026-10-30T22:01",
+      "url": "http://forex.eastmoney.com/news/1131,202610303917211321.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3191599",
+        "http://finance.eastmoney.com/news/1344,202610313917377062.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "前9月国企利润总额同比增长3%",
+      "summary": "财政部10月30日公布数据，1至9月全国国有及国有控股企业营业总收入600060.9亿元，同比下降3.2%；利润总额33103.5亿元，同比增长3%，不含国有一级金融企业及所属企业。",
+      "why": "营收降而利润增",
+      "source": "东方财富",
+      "publishedAt": "2026-10-31T00:12",
+      "url": "http://finance.eastmoney.com/news/1352,202610313917298552.html"
+    },
+    {
+      "rank": 4,
+      "title": "日本央行维持利率1.25%，8比1保留加息异议",
+      "summary": "日本央行10月30日以8票赞成、1票反对的结果，将基准利率维持在1.25%不变，符合预期；审议委员高田创投下反对票并提议上调短期利率目标。声明称基础通胀已达到与2%目标一致的水平，为12月加息打开空间。",
+      "why": "通胀达标为12月铺路",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-31T07:00",
+      "url": "https://finance.sina.com.cn/roll/2026-10-31/doc-inixakuy5011186.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3191222",
+        "https://wallstreetcn.com/livenews/3190960",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-30/doc-iniwyncy2344830.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "三位美联储官员支持进一步加息",
+      "summary": "三位美联储官员重申有必要进一步加息，同时主张采取渐进的紧缩方式，以尽量减少对金融市场和经济的冲击；达拉斯联储主席Logan表示，她仍认为至少需要再加息两次、每次25个基点。",
+      "why": "鹰派声音延续",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-31T05:22",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-31/doc-inixaepa5104387.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3191826",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-31/doc-inixaepa5092597.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "欧洲央行管委：必要时将果断行动，12月或再加息",
+      "summary": "欧洲央行管委、德国央行行长Nagel表示，若有必要欧洲央行将果断行动，把通胀率拉回目标水平；近期消费物价涨幅回升，能源成本上升是主要推动因素，若12月通胀前景未改善，官员们已准备好再次加息。",
+      "why": "能源推升通胀预期",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-30T17:39",
+      "url": "https://wallstreetcn.com/livenews/3191417",
+      "refs": [
+        "https://finance.sina.com.cn/world/2026-10-30/doc-iniwziin5428010.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "金价跌破3900美元，创一年新低",
+      "summary": "周五纽约尾盘，现货黄金跌3.65%报3874.76美元/盎司，盘中跌破3900美元关口，创一年新低，较今年高点回撤超30%，逼近100周均线；纽约银日内跌幅一度达6%。",
+      "why": "加息预期压制贵金属",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-31T05:04",
+      "url": "https://wallstreetcn.com/livenews/3191862",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3191750"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "WTI收涨2.08%报104.12美元，布油触及半年新高",
+      "summary": "WTI 12月原油期货收涨2.12美元、涨幅近2.08%，报104.12美元/桶；布伦特原油触及半年新高。市场严阵以待，担忧美国中期选举后海湾局势升温，华尔街主要银行上调油价预测。",
+      "why": "供应冲击风险未消",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-31T02:30",
+      "url": "https://wallstreetcn.com/livenews/3191843",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3191702",
+        "https://finance.sina.com.cn/world/2026-10-30/doc-iniwzprr4517683.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "纳指跌2.86%，半导体指数重挫7.2%",
+      "summary": "周五美股全线收跌，纳指跌2.86%报25437点，标普500指数跌1.82%报7580.07点，道指跌1.09%报51770.31点；半导体指数重挫7.2%、10月累跌超15%，英特尔暴跌超28%，英伟达市值一夜蒸发1.4万亿元，苹果市值重回全球第一。",
+      "why": "AI回报质疑引发抛售",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-31T08:15",
+      "url": "https://wallstreetcn.com/livenews/3191878",
+      "refs": [
+        "https://finance.sina.com.cn/world/gjcj/2026-10-31/doc-inixakvf4120683.shtml",
+        "https://wallstreetcn.com/livenews/3191715"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "沪指半日跌0.3%，恒指涨1.6%",
+      "summary": "10月30日午间收盘，上证指数跌0.3%，深证成指跌0.58%，创业板指跌1.18%；港股恒生指数涨1.64%，恒生科技指数涨1.43%，医药、消费股集体走强。",
+      "why": "港股与A股走势分化",
+      "source": "东方财富",
+      "publishedAt": "2026-10-30T12:02",
+      "url": "http://finance.eastmoney.com/news/1350,202610303916090485.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3190987"
+      ]
+    }
+  ],
+  "watch": [
+    "隔夜逆回购新机制首日操作量",
+    "日本央行12月加息预期变化",
+    "金价在3900美元下方的承接",
+    "美股AI板块能否止跌"
+  ],
+  "model": "deepseek-v4.1-flash",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-20T18:19:51+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

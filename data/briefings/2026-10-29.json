@@ -1,0 +1,151 @@
+{
+  "date": "2026-10-29",
+  "generatedAt": "2026-11-20T18:18:30+08:00",
+  "endedAt": "2026-11-20T18:18:18+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-10-28",
+    "to": "2026-10-29",
+    "fromAt": "2026-10-28T08:00:00+08:00",
+    "toAt": "2026-10-29T09:00:00+08:00",
+    "fromTs": 1793145600,
+    "toTs": 1793235600
+  },
+  "overview": "央行公布三季度贷款投向，人民币贷款余额283.44万亿元、同比增4.8%，8000亿元新型政策性金融工具全部投放完成。美联储维持利率3.75%至4.00%不变，两票主张加息并宣布减少议息频次；加拿大央行加息25个基点，新西兰联储意外按兵不动。油价重上102美元，美股三连涨，谷歌财报后盘后重挫。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "三季度贷款余额283.44万亿，同比增4.8%",
+      "summary": "央行10月28日发布的2026年三季度金融机构贷款投向统计报告显示，三季度末金融机构人民币各项贷款余额283.44万亿元，同比增长4.8%，前三季度人民币贷款增加11.52万亿元；信贷结构呈现积极变化，科技领域信贷表现亮眼。",
+      "why": "信贷结构改善科技贷款亮眼",
+      "source": "东方财富",
+      "publishedAt": "2026-10-29T02:06",
+      "url": "http://forex.eastmoney.com/news/1131,202610293912763625.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/10-28/10722329.shtml",
+        "http://finance.eastmoney.com/news/1354,202610283912363793.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "8000亿元新型政策性金融工具全部投放完成",
+      "summary": "国开行、进出口银行、农发行三家政策性银行数据显示，截至10月28日，2026年新型政策性金融工具全部完成投放，共计8000亿元；其中国开新型政策性金融工具、进银新型政策性金融工具、农发新型政策性金融工具分别投放3650亿元、1200亿元、3150亿元。",
+      "why": "政策性资金形成资本金",
+      "source": "东方财富",
+      "publishedAt": "2026-10-29T07:00",
+      "url": "http://forex.eastmoney.com/news/1131,202610293912812937.html",
+      "refs": [
+        "http://stock.eastmoney.com/news/11134,202610293913035797.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "美联储维持利率不变，两票主张加息",
+      "summary": "美联储10月28日结束议息会议，以10比2的投票结果将联邦基金利率目标区间维持在3.75%至4.00%不变；理事库克与克利夫兰联储主席哈马克持异议，倾向于加息25个基点。声明称更多信息的积累将有助于委员会确定合适的政策立场。",
+      "why": "分歧票与降频安排同现",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-29T02:13",
+      "url": "https://wallstreetcn.com/livenews/3189338",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3189333",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwvsim5523675.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "加拿大央行加息25个基点至2.5%",
+      "summary": "加拿大央行10月28日将基准利率上调25个基点至2.5%，为三年多来的首次加息，符合预期，意在降低持续高企的能源价格向其他商品和服务价格扩散的风险；决议声明称可能还有必要进一步提高政策利率，但将谨慎行事。",
+      "why": "三年多来首次转向加息",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-28T21:45",
+      "url": "https://wallstreetcn.com/livenews/3189219",
+      "refs": [
+        "https://finance.sina.com.cn/world/2026-10-28/doc-iniwuzmr9330672.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "新西兰联储意外维持利率2.75%不变",
+      "summary": "新西兰联储出人意料地维持基准利率在2.75%不变，称全球不确定性正在影响国内需求；决定公布后，新西兰元兑美元一度下跌1.7%至0.5586。市场此前预期该行加息25个基点。",
+      "why": "预期加息却按兵不动",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-28T09:29",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-28/doc-iniwttrx3866525.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3188021"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "英国预算案公布，追加对乌100亿英镑援助",
+      "summary": "英国财政大臣希利10月28日公布新政府首份预算案，国债发行计划为2506亿英镑、基本符合预期，英国国债小幅走高；他同时宣布向乌克兰追加100亿英镑经济和军事援助，包括贷款、出口融资担保及5亿英镑冬季紧急军事资金。",
+      "why": "财政纪律与援乌同步落地",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-28T23:40",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-28/doc-iniwuzmq3258426.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3189475"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "油价收涨2.9%，美伊风险再起",
+      "summary": "WTI 12月原油期货收涨2.9%报102.78美元/桶，布伦特同期走高；报道称美国警告海湾国家，中期选举后或对伊朗发动短暂而猛烈的袭击，市场在冲突风险与外交努力之间权衡。",
+      "why": "地缘风险重回定价",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-29T03:53",
+      "url": "https://wallstreetcn.com/livenews/3189381",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3189201",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwvsie6208525.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "标普三连涨，甲骨文大涨11%、谷歌盘后重挫",
+      "summary": "周三美股小幅收涨，标普500指数涨0.28%报7743.98点，道指涨0.19%，纳指涨0.27%，标普实现三连涨；甲骨文大涨11%，半导体指数涨超1.7%；谷歌母公司Alphabet财报不及预期，盘后大跌10%，并拖累亚洲早盘纳指期货跌超1%。",
+      "why": "AI资本开支叙事分化",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-29T04:00",
+      "url": "https://wallstreetcn.com/livenews/3189383",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3189471",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-29/doc-iniwvwrf8960051.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "惠誉警告AI热潮与收益率上升威胁全球市场",
+      "summary": "惠誉评级警告称，进入2027年全球信用风险正在恶化，理由包括人工智能投资的不确定性、能源价格高企以及融资环境收紧；该机构预计美联储政策利率将达到4.25%并在2027年全年维持在该水平，今年预计还将加息一次。",
+      "why": "信用展望转向恶化",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-29T02:12",
+      "url": "https://wallstreetcn.com/livenews/3189337"
+    },
+    {
+      "rank": 10,
+      "title": "A股三大指数收涨，创业板指涨3.4%",
+      "summary": "10月28日收盘，上证综指涨0.91%报3681.47点，深证成指涨2.02%，创业板指涨3.4%，沪深两市成交16285亿元；纽约股市三大股指28日上涨。",
+      "why": "成交回升至1.63万亿",
+      "source": "东方财富",
+      "publishedAt": "2026-10-29T08:27",
+      "url": "http://stock.eastmoney.com/news/11134,202610293913035797.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3188041"
+      ]
+    }
+  ],
+  "watch": [
+    "欧洲央行今日利率决议",
+    "谷歌财报后美股AI板块反应",
+    "WTI在100美元上方的站稳情况",
+    "以色列组阁谈判与美伊局势"
+  ],
+  "model": "deepseek-v4.1-flash",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-20T18:18:18+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

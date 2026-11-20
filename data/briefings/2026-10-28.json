@@ -1,0 +1,155 @@
+{
+  "date": "2026-10-28",
+  "generatedAt": "2026-11-20T18:16:00+08:00",
+  "endedAt": "2026-11-20T18:16:42+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-10-27",
+    "to": "2026-10-28",
+    "fromAt": "2026-10-27T08:00:00+08:00",
+    "toAt": "2026-10-28T09:00:00+08:00",
+    "fromTs": 1793059200,
+    "toTs": 1793149200
+  },
+  "overview": "央行10月27日逆回购净投放10140亿元、操作规模创纪录，国开行与进出口银行新型政策性金融工具投放完成；31个省份三季报全部出炉。美联储议息会议进行中，市场预期按兵不动；新西兰联储今日决议，日本央行通胀指标升至3.2%。油价跌破100美元，以色列大选出口民调呈僵局。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行逆回购净投放10140亿元，单日操作规模创纪录",
+      "summary": "10月27日，央行开展4120亿元7天期逆回购操作（利率1.40%）与10000亿元隔夜逆回购操作，当日3980亿元逆回购到期，净投放10140亿元；公开市场逆回购操作规模（不含买断式逆回购）创纪录新高。",
+      "why": "短端放量对冲到期",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-27T09:22",
+      "url": "https://wallstreetcn.com/livenews/3186551",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202610273909176189.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "新型政策性金融工具投放完成，国开行3650亿、进出口银行1200亿",
+      "summary": "国家开发银行10月27日完成3650亿元新型政策性金融工具投放任务，全部用于补充项目资本金，涉及项目总投资5.5万亿元；进出口银行同日称已完成投放，支持项目超500个、投放金额1200亿元，拉动总投资逾1.7万亿元。",
+      "why": "政策性资金加速落地",
+      "source": "中新网",
+      "publishedAt": "2026-10-27T21:06",
+      "url": "https://www.chinanews.com.cn/cj/2026/10-27/10721859.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3187652",
+        "http://finance.eastmoney.com/news/1354,202610283911025567.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "31个省份三季报全部公布，12省份GDP超4万亿",
+      "summary": "31个省份前三季度GDP已全部公布，12个省份经济总量超过4万亿元；广东、江苏均超10万亿元，分别为111090.77亿元、108631.3亿元，山东以82309亿元居第三，浙江、四川、河南、湖北、福建、上海、安徽列第四至第十位。",
+      "why": "地方经济成色补齐",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-28T06:53",
+      "url": "https://wallstreetcn.com/livenews/3187957",
+      "refs": [
+        "http://finance.eastmoney.com/news/1354,202610283910662727.html",
+        "http://finance.eastmoney.com/news/1354,202610283910673314.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "美联储议息会议进行中，市场预期按兵不动",
+      "summary": "美联储官员本周进入政策会议，围绕尚无消退迹象的通胀展开辩论：能够做什么、应该做什么以及将会做什么。市场预计本次会议将维持利率不变，但沃什可能为更多加息指明方向。",
+      "why": "决议措辞决定12月路径",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-27T23:18",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-27/doc-iniwswnn6886381.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3187776",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-27/doc-iniwsmws7038501.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "新西兰联储今早决议，澳洲三季度CPI升至4.3%",
+      "summary": "新西兰联储将于北京时间9:00公布利率决策，市场预期加息25个基点至3%；稍早澳大利亚公布9月CPI同比4.3%、前值4%，三季度截尾平均CPI同比3.7%，澳洲联储官员称CPI数据与通胀上行风险相符。",
+      "why": "超级央行周率先落子",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-28T08:50",
+      "url": "https://wallstreetcn.com/livenews/3188009",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3187994",
+        "https://wallstreetcn.com/livenews/3188002",
+        "https://wallstreetcn.com/livenews/3187995"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "日本央行价格趋势指标升至3.2%，支持加息预期",
+      "summary": "日本央行周二发布的报告显示，剔除生鲜食品和特殊因素的消费者价格9月同比上涨3.2%，涨幅较前一个月的2.6%加快，为三年来最高，远高于2%目标，可能强化市场对该行近期再度加息的猜测。",
+      "why": "日银加息预期获数据支撑",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-27T14:31",
+      "url": "https://wallstreetcn.com/livenews/3186682"
+    },
+    {
+      "rank": 7,
+      "title": "以色列大选出口民调：两大阵营均未过半",
+      "summary": "以色列第26届议会选举27日22时结束投票。以媒出口民调显示，内塔尼亚胡领导的右翼阵营与埃森科特领导的反对派阵营均未获得组建政府所需的多数席位，但反对派阵营领先。",
+      "why": "组阁僵局牵动中东局势",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-28T05:38",
+      "url": "https://wallstreetcn.com/livenews/3187936",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3187901",
+        "https://wallstreetcn.com/livenews/3187993"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "油价跌破100美元，布油失守114美元",
+      "summary": "油价继续回落，交易员权衡波斯湾局势降温迹象并等待以色列大选结果；WTI 12月原油期货收跌1.86美元、跌幅1.83%报99.90美元/桶，布伦特原油结算价跌破每桶114美元，美国汽油和柴油期货下跌约3%。",
+      "why": "中东降温预期压低溢价",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-28T02:52",
+      "url": "https://wallstreetcn.com/livenews/3187882",
+      "refs": [
+        "https://finance.sina.com.cn/world/2026-10-28/doc-iniwtiac4058836.shtml",
+        "https://finance.sina.com.cn/world/2026-10-28/doc-iniwtpkh3409965.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "纳指涨1.18%，半导体指数涨3.6%，波音重挫10%",
+      "summary": "周二美股三大指数集体上涨，纳指涨1.18%，标普500指数涨0.60%，道指涨0.03%；半导体指数涨3.6%，存储与光通信板块走强，西部数据涨超6%；波音因财报不及预期重挫10%。",
+      "why": "AI硬件链继续领涨美股",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-28T04:00",
+      "url": "https://wallstreetcn.com/livenews/3187899",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3187799",
+        "http://finance.eastmoney.com/news/1354,202610283910673314.html"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "A股回购增持升温，10月新增超120家公司",
+      "summary": "10月27日晚间，沪深两市回购增持队伍进一步壮大，中科曙光、格力电器、鼎泰高科、聚飞光电等公司纷纷披露相关公告；Wind数据显示，10月以来新增超过120家公司披露回购或增持计划，多家产业链龙头出手力度较大。",
+      "why": "真金白银托底信心",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-28T06:13",
+      "url": "https://wallstreetcn.com/livenews/3187943",
+      "refs": [
+        "http://finance.eastmoney.com/news/1354,202610283911025567.html"
+      ]
+    }
+  ],
+  "watch": [
+    "新西兰联储与美联储决议措辞",
+    "以色列组阁谈判进展",
+    "WTI在100美元下方的持续性",
+    "央行隔夜逆回购投放节奏"
+  ],
+  "model": "deepseek-v4.1-flash",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-20T18:16:42+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

@@ -165,7 +165,11 @@
     {
       "day": "2026-10-31",
       "count": 681,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "央行宣布11月2日起每个工作日开展隔夜逆回购招标、操作利率1.25%，政策利率“换锚”迈出关键一步；央行、证监会党委会议同日部署宽松货币与稳市场。日本央行维持1",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T18:19:51+08:00"
     },
     {
       "day": "2026-10-30",
@@ -179,17 +183,29 @@
     {
       "day": "2026-10-29",
       "count": 1121,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "央行公布三季度贷款投向，人民币贷款余额283.44万亿元、同比增4.8%，8000亿元新型政策性金融工具全部投放完成。美联储维持利率3.75%至4.00%不变，",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T18:18:18+08:00"
     },
     {
       "day": "2026-10-28",
       "count": 1013,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "央行10月27日逆回购净投放10140亿元、操作规模创纪录，国开行与进出口银行新型政策性金融工具投放完成；31个省份三季报全部出炉。美联储议息会议进行中，市场预",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T18:16:42+08:00"
     },
     {
       "day": "2026-10-27",
       "count": 1021,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "央行10月26日宣布设立债市非银大额赎回互换便利，并缩量续作7000亿元MLF、净回笼2000亿元；今日9:30公布1-9月工业企业利润，美联储议息会议同日开启",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-20T18:14:59+08:00"
     },
     {
       "day": "2026-10-26",
