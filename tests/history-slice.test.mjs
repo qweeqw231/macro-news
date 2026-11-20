@@ -3,15 +3,19 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import {
   beijingDay,
+  briefIndexFlags,
   dayWindow,
   packItem,
   selectDayItems,
   buildDayDoc,
   buildIndex,
 } from '../scripts/news-db/history-slice.mjs';
-import { BRIEF_LINE_MAX, briefLineOf } from '../src/brief-meta.mjs';
+import { BRIEF_LINE_MAX, briefLineOf, readBriefingMeta } from '../src/brief-meta.mjs';
 
 const row = (o) =>
   ({
@@ -133,4 +137,57 @@ test('briefLineOf：折叠空白并按上限截断', () => {
   assert.equal(briefLineOf(null), '');
   const long = '一'.repeat(BRIEF_LINE_MAX + 10);
   assert.equal(briefLineOf({ overview: long }).length, BRIEF_LINE_MAX);
+});
+
+test('buildIndex：briefBackfill / briefAt 只在有早报时透传', () => {
+  const idx = buildIndex([
+    { d: '2026-06-10', n: 9, b: 100, hasBriefing: true, briefLine: '补写主线', briefBackfill: true, briefAt: '2026-11-20T22:10:00+08:00' },
+    { d: '2026-06-09', n: 8, b: 90 },
+  ], {});
+  assert.equal(idx.days[0].briefBackfill, true);
+  assert.equal(idx.days[0].briefAt, '2026-11-20T22:10:00+08:00');
+  // 没有早报的日期不写这两个字段，避免出现「无正文却有补写标签」
+  assert.equal(idx.days[1].briefBackfill, undefined);
+  assert.equal(idx.days[1].briefAt, undefined);
+});
+
+test('briefIndexFlags：补写标记与生成时刻按产物派生', () => {
+  assert.deepEqual(briefIndexFlags(null), {
+    hasBriefing: false, briefLine: '', source: '', briefBackfill: false, briefAt: '',
+  });
+  assert.deepEqual(briefIndexFlags({ briefLine: 'x', source: 'ai', backfill: true, at: '2026-11-20T22:10:00+08:00' }), {
+    hasBriefing: true, briefLine: 'x', source: 'ai', briefBackfill: true, briefAt: '2026-11-20T22:10:00+08:00',
+  });
+});
+
+test('重导出回归：补写产物的标签经重建索引后仍在', () => {
+  // 复现两个导出器的真实路径：data/briefings → readBriefingMeta → briefIndexFlags → buildIndex
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'macro-news-brief-'));
+  try {
+    fs.writeFileSync(path.join(dir, '2026-06-10.json'), JSON.stringify({
+      date: '2026-06-10', overview: ' 补写主线 ', source: 'ai',
+      backfill: { kind: 'pre-era' }, generatedAt: '2026-11-20T22:10:00+08:00', items: [],
+    }), 'utf8');
+    fs.writeFileSync(path.join(dir, '2026-06-11.json'), JSON.stringify({
+      date: '2026-06-11', overview: '自然生成', endedAt: '2026-06-11T09:02:00+08:00', items: [],
+    }), 'utf8');
+
+    const meta = readBriefingMeta(dir);
+    const rebuilt = JSON.parse(JSON.stringify(buildIndex([
+      { d: '2026-06-10', n: 9, b: 1000, ...briefIndexFlags(meta.get('2026-06-10')) },
+      { d: '2026-06-11', n: 8, b: 900, ...briefIndexFlags(meta.get('2026-06-11')) },
+    ], { generatedAt: '2026-11-20T22:20:00+08:00' })));
+
+    const backfilled = rebuilt.days.find((x) => x.d === '2026-06-10');
+    assert.equal(backfilled.hasBriefing, true);
+    assert.equal(backfilled.briefBackfill, true);
+    assert.equal(backfilled.briefAt, '2026-11-20T22:10:00+08:00');
+
+    const natural = rebuilt.days.find((x) => x.d === '2026-06-11');
+    assert.equal(natural.hasBriefing, true);
+    assert.equal(natural.briefBackfill, undefined);
+    assert.equal(natural.briefAt, '2026-06-11T09:02:00+08:00');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });

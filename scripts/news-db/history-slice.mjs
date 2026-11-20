@@ -118,6 +118,24 @@ export function buildDayDoc(day, rows, { limit = 400, summaryChars = 160, genera
 }
 
 /**
+ * 早报元信息（`readBriefingMeta` 的一项）→ 索引日条目的早报字段。
+ *
+ * 两个导出器（`export-history.mjs` / `export-history-range.mjs`）都按同一份
+ * `data/briefings` 重建索引；把字段映射收在这里，避免再出现「只搬 briefLine、
+ * 漏掉 briefBackfill / briefAt」的静默丢标记。
+ */
+export function briefIndexFlags(brief) {
+  if (!brief) return { hasBriefing: false, briefLine: '', source: '', briefBackfill: false, briefAt: '' };
+  return {
+    hasBriefing: true,
+    briefLine: brief.briefLine || '',
+    source: brief.source || '',
+    briefBackfill: !!brief.backfill,
+    briefAt: String(brief.at || ''),
+  };
+}
+
+/**
  * 索引对象。days 传 [{d, n, b}]（b = 文件字节数），按日期降序。
  */
 export function buildIndex(days, { generatedAt = '' } = {}) {
@@ -138,6 +156,12 @@ export function buildIndex(days, { generatedAt = '' } = {}) {
       if (o.hasBriefing) {
         o.source = x.source === 'rule' || x.source === 'draft' ? x.source : 'ai';
       }
+      // 2.28.3：补写来源与生成时刻必须随重建透传。
+      //   重导出是按切片目录整份重建索引的，若这里丢掉这两个字段，下一次
+      //   `export-history*.mjs` 就会把 337 天的「补写」标签静默抹掉。
+      if (o.hasBriefing && x.briefBackfill) o.briefBackfill = true;
+      const at = String(x.briefAt || '').trim();
+      if (o.hasBriefing && at) o.briefAt = at;
       return o;
     });
   const doc = { v: HISTORY_VERSION };

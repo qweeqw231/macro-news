@@ -21,12 +21,14 @@ import { DatabaseSync } from 'node:sqlite';
 import {
   addDays,
   beijingDay,
+  briefIndexFlags,
   buildDayDoc,
   buildIndex,
   dayFromFilename,
   HISTORY_VERSION,
 } from './history-slice.mjs';
 import { readBriefingMeta } from '../../src/brief-meta.mjs';
+import { sharedLockPath, withSharedLock } from '../briefing/core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -158,21 +160,20 @@ function main() {
     written++;
   }
 
-  const dayEntries = [...entries.values()].map((x) => {
-    const b = briefs.get(x.d);
-    return {
-      ...x,
-      hasBriefing: !!b,
-      briefLine: b ? b.briefLine : '',
-      source: b ? b.source : '',
-    };
-  });
+  const dayEntries = [...entries.values()].map((x) => ({
+    ...x,
+    ...briefIndexFlags(briefs.get(x.d)),
+  }));
   const index = buildIndex(dayEntries, { generatedAt: gen });
   const indexText = JSON.stringify(index, null, 2);
   if (!DRY) {
     const idxFile = path.join(OUT, 'index.json');
-    const old = fs.existsSync(idxFile) ? fs.readFileSync(idxFile, 'utf8') : '';
-    if (stripVolatile(old) !== stripVolatile(indexText)) fs.writeFileSync(idxFile, indexText, 'utf8');
+    // 2.28.3：补写线（`patchIndexFiles`）也在改这份索引。重建必须落在同一把共享锁内，
+    // 否则「整份重建」会把并发写入的日期标记覆盖掉。
+    withSharedLock(sharedLockPath(idxFile), () => {
+      const old = fs.existsSync(idxFile) ? fs.readFileSync(idxFile, 'utf8') : '';
+      if (stripVolatile(old) !== stripVolatile(indexText)) fs.writeFileSync(idxFile, indexText, 'utf8');
+    });
   }
 
   console.log(

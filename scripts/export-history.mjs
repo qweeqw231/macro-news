@@ -26,6 +26,7 @@ import { DatabaseSync } from 'node:sqlite';
 import {
   addDays,
   beijingDay,
+  briefIndexFlags,
   buildDayDoc,
   buildIndex,
   dayFromFilename,
@@ -33,6 +34,7 @@ import {
   HISTORY_VERSION,
 } from './news-db/history-slice.mjs';
 import { readBriefingMeta } from '../src/brief-meta.mjs';
+import { sharedLockPath, withSharedLock } from './briefing/core.mjs';
 import { buildSearchHistory } from './build-search-history.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -172,9 +174,7 @@ function main() {
         d,
         n: Number(doc.n) || 0,
         b: fs.statSync(file).size,
-        hasBriefing: !!b,
-        briefLine: b ? b.briefLine : '',
-        source: b ? b.source : '',
+        ...briefIndexFlags(b),
       });
     } catch (e) {
       console.error(`[history] 跳过损坏的切片 ${d}: ${e.message}`);
@@ -186,9 +186,7 @@ function main() {
       d: p.day,
       n: p.doc.n,
       b: p.bytes,
-      hasBriefing: !!b,
-      briefLine: b ? b.briefLine : '',
-      source: b ? b.source : '',
+      ...briefIndexFlags(b),
     });
   }
   const dayEntries = [...entryMap.values()];
@@ -231,10 +229,13 @@ function main() {
 
   if (!DRY) {
     const idxFile = path.join(OUT, 'index.json');
-    const oldIdx = fs.existsSync(idxFile) ? fs.readFileSync(idxFile, 'utf8') : '';
-    if (stripVolatile(oldIdx) !== stripVolatile(indexText)) {
-      fs.writeFileSync(idxFile, indexText, 'utf8');
-    }
+    // 2.28.3：与补写线（`patchIndexFiles`）共用同一把共享锁，避免整份重建覆盖并发标记
+    withSharedLock(sharedLockPath(idxFile), () => {
+      const oldIdx = fs.existsSync(idxFile) ? fs.readFileSync(idxFile, 'utf8') : '';
+      if (stripVolatile(oldIdx) !== stripVolatile(indexText)) {
+        fs.writeFileSync(idxFile, indexText, 'utf8');
+      }
+    });
   }
 
   // 2.22.0：索引写完后同步重建「按月分片」的搜索索引（data/search-history/**）。
