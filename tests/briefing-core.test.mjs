@@ -314,6 +314,15 @@ test('制度起点与归档跨度：都从真实产物/索引推导，不硬编�
   assert.equal(span.first, '2026-08-17');
   assert.equal(span.last, '2026-11-14');
   assert.equal(span.counts.has('2026-10-01'), false, '0 条不算有新闻');
+
+  // 2.23.0：薄归档日由 history 切片兜底；两边取大者，不能把切片条数覆盖成归档的 3 条
+  const span2 = archiveSpan(
+    { days: [{ day: '2026-08-17', count: 6 }, { day: '2026-11-14', count: 361 }] },
+    { days: [{ d: '2026-08-17', n: 233 }, { d: '2026-09-19', n: 188 }] }
+  );
+  assert.equal(span2.counts.get('2026-08-17'), 233, '取 archive / history 的较大值');
+  assert.equal(span2.counts.get('2026-09-19'), 188, '只有切片没有归档的日子也算有新闻');
+  assert.equal(span2.counts.get('2026-11-14'), 361);
 });
 
 test('补写守卫：不碰今天/未来、不早于归档起点、窗口方向正确', () => {

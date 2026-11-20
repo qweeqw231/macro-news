@@ -89,6 +89,13 @@ const log = (...a) => { if (!QUIET) console.log(...a); };
 const siteFile = (d) => path.join(SITE_OUT, `${d}.json`);
 const localFile = (d) => path.join(OUT, `${d}.json`);
 
+// 2.23.0：「这天有没有新闻」= archive 与 history 切片取大者。
+// 只看 archive 会把薄归档但切片完整的日子判成 no-news，补写窗口里会被整段跳过。
+const readSpan = () => archiveSpan(
+  readJson(path.join(DATA_DIR, 'index.json')).value,
+  readJson(path.join(DATA_DIR, 'history/index.json')).value
+);
+
 /** 对某天：站点产物是否完整、本地产物是否完整 */
 function checkDay(d) {
   const site = checkBriefing(siteFile(d));
@@ -233,7 +240,7 @@ function main() {
       // 手动补齐（2.19.0）：只有显式给出窗口才会跑，不参与自动调度。
       // 边界三条（见 core.guardBackfill / scanGaps）：不碰今天、不碰归档起点之前、
       // 该日必须有新闻；无新闻的日子只记 no-news，绝不生成任何产物。
-      const span = archiveSpan(readJson(path.join(DATA_DIR, 'index.json')).value);
+      const span = readSpan();
       const eraStart = briefEraStart(SITE_OUT);
       const g = guardBackfill({
         from: BACKFILL.from, to: BACKFILL.to, today: TODAY, archiveFirst: span.first,
@@ -275,7 +282,7 @@ function main() {
       });
       // 2.19.0：缺口只认「制度起点之后 + 有新闻 + 没写」的日子（见 core.scanGaps）。
       // 旧实现把无新闻的日子、制度前的日子也标 missed，首页会冒出一堆并不存在的"缺失"。
-      const span = archiveSpan(readJson(path.join(DATA_DIR, 'index.json')).value);
+      const span = readSpan();
       const eraStart = briefEraStart(SITE_OUT);
       missed = scanGaps({
         today: TODAY, eraStart, counts: span.counts, check: checkDay, days: SCAN_DAYS,

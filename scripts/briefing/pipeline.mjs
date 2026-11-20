@@ -18,7 +18,9 @@ import {
   briefWindow,
   checkBriefing,
   normalizeBriefingSource,
+  sharedLockPath,
   updateStatus,
+  withSharedLock,
 } from './core.mjs';
 import { buildCandidates } from '../news-db/brief-candidates.mjs';
 import { importArchive } from '../news-db/import-archive.mjs';
@@ -350,12 +352,16 @@ export function patchIndexFiles({ dataDir, date, briefLine, source, backfill = f
   for (const rel of ['index.json', 'history/index.json']) {
     const file = path.join(dataDir, rel);
     if (!fs.existsSync(file)) continue;
-    const r = readJson(file);
-    if (!r.ok) continue;
-    if (patchIndexDoc(r.value, { date, briefLine, source, backfill, at })) {
+    // 索引是多进程共享的读改写目标（两条补写线各写各的日期），
+    // 必须在共享锁内读改写，否则后写的一方会把先写的日期标记覆盖掉。
+    const done = withSharedLock(sharedLockPath(file), () => {
+      const r = readJson(file);
+      if (!r.ok) return false;
+      if (!patchIndexDoc(r.value, { date, briefLine, source, backfill, at })) return false;
       atomicWriteJSON(file, r.value);
-      patched++;
-    }
+      return true;
+    });
+    if (done) patched++;
   }
   return patched;
 }
@@ -372,22 +378,36 @@ export function patchIndexFiles({ dataDir, date, briefLine, source, backfill = f
  * 语义：**索引不存在 → 无从核对，不拦**（测试沙箱/极端场景）；
  *       **索引存在但当天没打上标记 → 判发布失败**，并明确提示先同步本地。
  *
- * @param {{dataDir?:string, date:string, expectLine?:string}} o
+ * 2.21.1：历史补写（pre-era/gap）的日子不在滚动窗口 `index.json` 里，改以
+ *         `history/index.json` 为准（它才是历史日的索引）；当日发布仍只看 `index.json`。
+ *
+ * @param {{dataDir?:string, date:string, expectLine?:string, backfill?:boolean}} o
  * @returns {{ok:boolean, code:string, reason:string, entry?:object}}
  */
-export function verifyIndexBriefing({ dataDir, date, expectLine = '' }) {
+export function verifyIndexBriefing({ dataDir, date, expectLine = '', backfill = false }) {
   if (!dataDir) return { ok: true, code: 'skipped', reason: '未指定 data 目录，跳过索引自检' };
   const file = path.join(dataDir, 'index.json');
   if (!fs.existsSync(file)) return { ok: true, code: 'no-index', reason: 'data/index.json 不存在，跳过索引自检' };
   const r = readJson(file);
   if (!r.ok) return { ok: false, code: 'bad-index', reason: `data/index.json 无法解析：${r.error}` };
-  const entry = (Array.isArray(r.value.days) ? r.value.days : [])
+  const pick = (doc) => (Array.isArray(doc && doc.days) ? doc.days : [])
     .find((x) => x && (x.day === date || x.d === date));
+  let entry = pick(r.value);
+  let src = 'data/index.json';
+  if (!entry && backfill) {
+    const hf = path.join(dataDir, 'history/index.json');
+    const h = fs.existsSync(hf) ? readJson(hf) : null;
+    const hit = h && h.ok ? pick(h.value) : null;
+    if (hit) {
+      entry = hit;
+      src = 'data/history/index.json';
+    }
+  }
   if (!entry) {
     return {
       ok: false,
       code: 'day-missing',
-      reason: `data/index.json 里没有 ${date} 这一行 —— 本地 checkout 落后于采集器？`
+      reason: `${src} 里没有 ${date} 这一行 —— 本地 checkout 落后于采集器？`
         + '请先 git fetch origin main && git merge --ff-only origin main 再发布',
     };
   }
@@ -395,24 +415,24 @@ export function verifyIndexBriefing({ dataDir, date, expectLine = '' }) {
     return {
       ok: false,
       code: 'not-marked',
-      reason: `data/index.json 里 ${date} 的 hasBriefing 仍是 false，早报标记没打上`,
+      reason: `${src} 里 ${date} 的 hasBriefing 仍是 false，早报标记没打上`,
     };
   }
   if (!trim(entry.briefLine)) {
-    return { ok: false, code: 'no-line', reason: `data/index.json 里 ${date} 缺少 briefLine` };
+    return { ok: false, code: 'no-line', reason: `${src} 里 ${date} 缺少 briefLine` };
   }
   if (!trim(entry.source)) {
-    return { ok: false, code: 'no-source', reason: `data/index.json 里 ${date} 缺少 source` };
+    return { ok: false, code: 'no-source', reason: `${src} 里 ${date} 缺少 source` };
   }
   const want = trim(expectLine);
   if (want && trim(entry.briefLine) !== want) {
     return {
       ok: false,
       code: 'line-mismatch',
-      reason: `data/index.json 里 ${date} 的 briefLine 与已发布产物不一致`,
+      reason: `${src} 里 ${date} 的 briefLine 与已发布产物不一致`,
     };
   }
-  return { ok: true, code: 'index-ok', reason: '', entry };
+  return { ok: true, code: src === 'data/index.json' ? 'index-ok' : 'history-index-ok', reason: '', entry };
 }
 
 function readExisting(file) {
@@ -543,7 +563,7 @@ export function publishRun({
   /** 补索引 + 立刻核对；核对不过就判失败（不吞掉） */
   const patchAndVerify = (briefLine, source, bf = false, at = '') => {
     patchIndexFiles({ dataDir, date, briefLine, source, backfill: bf, at });
-    return verifyIndexBriefing({ dataDir, date, expectLine: briefLine });
+    return verifyIndexBriefing({ dataDir, date, expectLine: briefLine, backfill: bf });
   };
   /** 产物里的实际生成时刻；索引据此判「晚到 / 跨日」（2.20.0） */
   const atOf = (doc) => String((doc && (doc.endedAt || doc.generatedAt)) || '');
@@ -561,7 +581,7 @@ export function publishRun({
     if (existingSite && existingSite.source === 'ai') {
       const reason = '已存在 AI 早报，未覆盖';
       // 文件已经在，索引也该立刻反映（不新增日期，只改已存在的那天）
-      const v = patchAndVerify(briefLineOf(existingSite.doc), 'ai', false, atOf(existingSite.doc));
+      const v = patchAndVerify(briefLineOf(existingSite.doc), 'ai', !!bfStamp, atOf(existingSite.doc));
       if (!v.ok) {
         markFailed(indexFail(v).reason);
         return { ...indexFail(v), source: 'ai', items: existingSite.items, preserved: true };
@@ -574,7 +594,7 @@ export function publishRun({
     const existingLocal = localFile ? readExisting(localFile) : null;
     if (existingLocal && existingLocal.source === 'ai') {
       atomicWriteText(siteFile, existingLocal.raw);
-      const v = patchAndVerify(briefLineOf(existingLocal.doc), 'ai', false, atOf(existingLocal.doc));
+      const v = patchAndVerify(briefLineOf(existingLocal.doc), 'ai', !!bfStamp, atOf(existingLocal.doc));
       if (!v.ok) {
         markFailed(indexFail(v).reason);
         return { ...indexFail(v), source: 'ai', items: existingLocal.items, preserved: true };

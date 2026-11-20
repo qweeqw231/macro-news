@@ -9,6 +9,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { newsDay, newsDayWindow } from '../../src/news-day.mjs';
 
 export const STATUS_VERSION = 1;
@@ -164,15 +165,25 @@ export function briefEraStart(siteOut) {
 /**
  * 2.14.0：归档跨度与逐日条数（判「这天有没有新闻可写」的唯一依据）。
  * 只认 count > 0 的日子：无新闻的日子写不出早报，那是合理空缺，不是缺失。
+ *
+ * 2.23.0：把近一年历史切片（data/history/index.json）也算进来，取两者较大值。
+ * 只看 archive 会把「归档只有 0~4 条、切片有 90~300 条」的日子（08-17~09-18 等）
+ * 判成 no-news 而跳过；页面上这些日子本来就是按切片显示的，口径要一致。
  * @param {object} indexDoc data/index.json 的文档
+ * @param {object} [historyDoc] data/history/index.json 的文档（可选）
  */
-export function archiveSpan(indexDoc) {
+export function archiveSpan(indexDoc, historyDoc) {
   const counts = new Map();
+  const put = (day, n) => {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !Number.isFinite(n) || n <= 0) return;
+    if (n > (counts.get(day) || 0)) counts.set(day, n);
+  };
   const list = Array.isArray(indexDoc && indexDoc.days) ? indexDoc.days : [];
-  for (const d of list) {
-    const day = d && String(d.day || '');
-    const n = Number(d && d.count);
-    if (/^\d{4}-\d{2}-\d{2}$/.test(day) && Number.isFinite(n) && n > 0) counts.set(day, n);
+  for (const d of list) put(String((d && d.day) || ''), Number(d && d.count));
+  const hlist = Array.isArray(historyDoc && historyDoc.days) ? historyDoc.days : [];
+  for (const d of hlist) {
+    const n = d && (d.n != null ? d.n : d.count);
+    put(String((d && (d.d || d.day)) || ''), Number(n));
   }
   const keys = [...counts.keys()].sort();
   return { first: keys[0] || '', last: keys[keys.length - 1] || '', counts };
@@ -328,23 +339,27 @@ export function readStatus(file) {
  * @param {object} patch
  */
 export function updateStatus(file, date, patch, { now = Date.now(), keepDays = STATUS_KEEP_DAYS } = {}) {
-  const doc = readStatus(file);
-  const prev = doc.days[date] || {};
-  const rec = { ...prev, date, ...patch };
-  doc.days[date] = rec;
-  const keys = Object.keys(doc.days).sort();
-  let left = keys.length;
-  for (const k of keys) {
-    if (left <= keepDays) break;
-    if (k === date) continue;
-    delete doc.days[k];
-    left--;
-  }
-  const ordered = {};
-  Object.keys(doc.days).sort().forEach((k) => { ordered[k] = doc.days[k]; });
-  const out = { v: STATUS_VERSION, updatedAt: beijingNow(now).iso, days: ordered };
-  atomicWriteJSON(file, out);
-  return rec;
+  // 状态文件是多进程共享的读改写目标（每条补写线都会写自己的那天），
+  // 读取要在锁内做，否则「读-改-写」交错会把对方刚写的日期挤掉。
+  return withSharedLock(sharedLockPath(file), () => {
+    const doc = readStatus(file);
+    const prev = doc.days[date] || {};
+    const rec = { ...prev, date, ...patch };
+    doc.days[date] = rec;
+    const keys = Object.keys(doc.days).sort();
+    let left = keys.length;
+    for (const k of keys) {
+      if (left <= keepDays) break;
+      if (k === date) continue;
+      delete doc.days[k];
+      left--;
+    }
+    const ordered = {};
+    Object.keys(doc.days).sort().forEach((k) => { ordered[k] = doc.days[k]; });
+    const out = { v: STATUS_VERSION, updatedAt: beijingNow(now).iso, days: ordered };
+    atomicWriteJSON(file, out);
+    return rec;
+  });
 }
 
 /**
@@ -375,6 +390,72 @@ export function acquireLock(
       } catch { /* ignore */ }
     },
   };
+}
+
+/**
+ * 共享写盘锁的锁文件：按目标文件绝对路径散列后放进系统临时目录。
+ * 为什么不放仓库：`data/index.json`、`data/_briefing-status.json` 是站点产物，
+ * 旁边多出 `.lock` 会污染 git 状态。
+ */
+export function sharedLockPath(file) {
+  const h = crypto.createHash('sha1').update(path.resolve(file)).digest('hex').slice(0, 12);
+  return path.join(os.tmpdir(), `macro-news-briefing-${h}.lock`);
+}
+
+/**
+ * 共享锁的原语必须是原子建文件（O_EXCL），不能用「先判存在再写」：
+ * 临界区只有几毫秒，两条进程同时判空再同时落锁的窗口很大，实测会双双拿到锁。
+ */
+function acquireSharedLock(lockFile, { staleMs = 60000 } = {}) {
+  const body = JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString(), host: os.hostname() });
+  for (;;) {
+    try {
+      const fd = fs.openSync(lockFile, 'wx');
+      try { fs.writeSync(fd, body); } finally { fs.closeSync(fd); }
+      return {
+        ok: true,
+        release() {
+          try {
+            const cur = JSON.parse(fs.readFileSync(lockFile, 'utf8'));
+            if (cur && Number(cur.pid) === Number(process.pid)) fs.rmSync(lockFile, { force: true });
+          } catch { /* ignore */ }
+        },
+      };
+    } catch (e) {
+      if (e.code !== 'EEXIST') throw e;
+      let holder = null;
+      try { holder = JSON.parse(fs.readFileSync(lockFile, 'utf8')); } catch { holder = null; }
+      const age = holder && holder.startedAt ? Date.now() - Date.parse(holder.startedAt) : Infinity;
+      const stale = !Number.isFinite(age) || age < 0 || age >= staleMs;
+      if (stale) {
+        try { fs.rmSync(lockFile, { force: true }); } catch { /* ignore */ }
+        continue;
+      }
+      return { ok: false, holder };
+    }
+  }
+}
+
+/**
+ * 在共享锁内执行一次读改写。
+ *
+ * 按日 `run.lock` 只锁各自的 run 目录，挡不住两条补写线在不同日期上并发、
+ * 却同时改写同一份 `data/index.json` / `data/_briefing-status.json` 的丢更新。
+ * 临界区只有一次 JSON 读写，锁龄毫秒级；拿不到锁说明持锁进程异常，
+ * 超时后抛错让调用方失败，而不是无锁裸写。
+ */
+export function withSharedLock(lockFile, fn, { timeoutMs = 15000, staleMs = 60000 } = {}) {
+  const deadline = Date.now() + timeoutMs;
+  for (;;) {
+    const lock = acquireSharedLock(lockFile, { staleMs });
+    if (lock.ok) {
+      try { return fn(); } finally { lock.release(); }
+    }
+    if (Date.now() >= deadline) {
+      throw new Error(`共享写盘锁占用超时（pid ${lock.holder && lock.holder.pid}，${lockFile}）`);
+    }
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5);
+  }
 }
 
 /** 从候选条目里挑 2~3 个关键词，给规则版 why 用（完整打分在 brief-candidates） */
