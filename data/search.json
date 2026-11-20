@@ -1,11 +1,147 @@
 {
-  "generatedAt": "2026-11-20T02:22:59.732Z",
+  "generatedAt": "2026-11-20T02:38:17.567Z",
   "windowDays": 62,
   "from": "2026-09-20",
   "days": 62,
   "fromHistory": 15,
-  "total": 57518,
+  "total": 57540,
   "items": [
+    {
+      "id": "1ep7n14",
+      "ts": 1795142262,
+      "time": "2026-11-20T10:37:42.000+08:00",
+      "source": "华尔街见闻",
+      "title": "机器人概念股局部异动，克来机电直线涨停，索辰科技、日发精机、大业股份、襄阳轴承、奥比中光跟涨。",
+      "url": "https://wallstreetcn.com/livenews/3202967"
+    },
+    {
+      "id": "i5gqbc",
+      "ts": 1795142162,
+      "time": "2026-11-20T10:36:02.000+08:00",
+      "source": "华尔街见闻",
+      "title": "台湾证交所加权股价指数下跌6.1%。",
+      "url": "https://wallstreetcn.com/livenews/3202966"
+    },
+    {
+      "id": "1ehej2c",
+      "ts": 1795142069,
+      "time": "2026-11-20T02:34:29.000Z",
+      "source": "中新网",
+      "title": "一颗“拼豆”的出海路",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-20/10735106.shtml"
+    },
+    {
+      "id": "q8tfod",
+      "ts": 1795142014,
+      "time": "2026-11-20T10:33:34.000+08:00",
+      "source": "新浪财经",
+      "title": "AI相关科技股下跌 新兴市场股票指数逼近技术性熊市",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizixmr0467547.shtml"
+    },
+    {
+      "id": "1k0028w",
+      "ts": 1795142000,
+      "time": "2026-11-20T10:33:20.000+08:00",
+      "source": "华尔街见闻",
+      "title": "A股大金融股局部异动，汇金科技涨超14%，建设银行刷新历史新高，银之杰、汇金股份、华林证券、赢时胜、华鑫股份等跟涨。",
+      "url": "https://wallstreetcn.com/livenews/3202965"
+    },
+    {
+      "id": "18eu05b",
+      "ts": 1795142000,
+      "time": "2026-11-20T10:33:20.000+08:00",
+      "source": "华尔街见闻",
+      "title": "大金融股局部异动，汇金科技涨超14%，建设银行刷新历史新高，银之杰、汇金股份、华林证券、赢时胜、华鑫股份等跟涨。",
+      "url": "https://wallstreetcn.com/livenews/3202964"
+    },
+    {
+      "id": "dsash5",
+      "ts": 1795141995,
+      "time": "2026-11-20T10:33:15.000+08:00",
+      "source": "华尔街见闻",
+      "title": "上海钢联发布数据显示，今日MMLC电池级碳酸锂（早盘）中间价报91450元/吨，较上日16:30价格下跌400元/吨。",
+      "url": "https://wallstreetcn.com/livenews/3202963"
+    },
+    {
+      "id": "wrahh2",
+      "ts": 1795141987,
+      "time": "2026-11-20T10:33:07.000+08:00",
+      "source": "东方财富",
+      "title": "光伏寒意未消 龙头分开作答：2027年装机需求能否迎来小幅反弹？",
+      "url": "http://stock.eastmoney.com/news/11134,202611203935939334.html"
+    },
+    {
+      "id": "h29js3",
+      "ts": 1795141892,
+      "time": "2026-11-20T10:31:32.000+08:00",
+      "source": "华尔街见闻",
+      "title": "截至早盘收盘，日经225指数跌4.5%，东证指数跌3.1%。",
+      "url": "https://wallstreetcn.com/livenews/3202962"
+    },
+    {
+      "id": "80qagn",
+      "ts": 1795141860,
+      "time": "2026-11-20T10:31:00.000+08:00",
+      "source": "华尔街见闻",
+      "title": "上海钢联发布数据显示，今日MMLC电池级碳酸锂（早盘）中间价报91450元/吨，较上日16:30价格下跌400元/吨。",
+      "url": "https://wallstreetcn.com/livenews/3202961"
+    },
+    {
+      "id": "1lp9ulq",
+      "ts": 1795141656,
+      "time": "2026-11-20T10:27:36.000+08:00",
+      "source": "华尔街见闻",
+      "title": "沪指跌幅扩大至2%，盘中最低触及3505.74点。",
+      "url": "https://wallstreetcn.com/livenews/3202960"
+    },
+    {
+      "id": "1geolgo",
+      "ts": 1795141594,
+      "time": "2026-11-20T10:26:34.000+08:00",
+      "source": "华尔街见闻",
+      "title": "沪指跌幅扩大至2%，逼近3500点关口。",
+      "url": "https://wallstreetcn.com/livenews/3202959"
+    },
+    {
+      "id": "rejyaq",
+      "ts": 1795141594,
+      "time": "2026-11-20T10:26:34.000+08:00",
+      "source": "华尔街见闻",
+      "title": "沪指跌幅扩大至2%，逼近3500点关口，深成指跌2.68%，创业板指跌2.85%，游戏传媒、家电、军工、风电等方向跌幅居前，沪深京三市下跌个股近5300只。",
+      "url": "https://wallstreetcn.com/livenews/3202958"
+    },
+    {
+      "id": "11bh7mw",
+      "ts": 1795141505,
+      "time": "2026-11-20T10:25:05.000+08:00",
+      "source": "新浪财经",
+      "title": "小摩：中金公司目标价30港元 维持“增持”评级",
+      "url": "https://finance.sina.com.cn/stock/hkstock/hkgg/2026-11-20/doc-inizixmr0462895.shtml"
+    },
+    {
+      "id": "1r33ovy",
+      "ts": 1795141497,
+      "time": "2026-11-20T10:24:57.000+08:00",
+      "source": "华尔街见闻",
+      "title": "恒指跌幅扩大至2%。",
+      "url": "https://wallstreetcn.com/livenews/3202957"
+    },
+    {
+      "id": "1nyrlid",
+      "ts": 1795141464,
+      "time": "2026-11-20T02:24:24.000Z",
+      "source": "中新网",
+      "title": "拼音成单词，文化出海再添新符号",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-20/10735097.shtml"
+    },
+    {
+      "id": "gzdaom",
+      "ts": 1795141426,
+      "time": "2026-11-20T10:23:46.000+08:00",
+      "source": "新浪财经",
+      "title": "瑞银：金价近期回落属持仓调整 下调2026年底目标价至4500美元",
+      "url": "https://finance.sina.com.cn/stock/hkstock/hkgg/2026-11-20/doc-inizixmr0461984.shtml"
+    },
     {
       "id": "mocps5",
       "ts": 1795141315,
@@ -61,6 +197,14 @@
       "source": "新浪财经",
       "title": "光大期货：11月20日能源化工日报",
       "url": "https://finance.sina.com.cn/money/future/2026-11-20/doc-inizixmk7274463.shtml"
+    },
+    {
+      "id": "1hrgmux",
+      "ts": 1795140923,
+      "time": "2026-11-20T10:15:23.000+08:00",
+      "source": "东方财富",
+      "title": "国家邮政局：前10月邮政行业业务收入累计完成15485.7亿元",
+      "url": "http://finance.eastmoney.com/news/1355,202611203935943419.html"
     },
     {
       "id": "179fa8c",
@@ -133,6 +277,14 @@
       "source": "东方财富",
       "title": "我国科学家揭开斯氏按蚊更能传播疟疾的秘密",
       "url": "http://finance.eastmoney.com/news/1350,202611203935932066.html"
+    },
+    {
+      "id": "10743lr",
+      "ts": 1795140475,
+      "time": "2026-11-20T10:07:55.000+08:00",
+      "source": "华尔街见闻",
+      "title": "A股农业股异动拉升，万向德农冲击涨停，秋乐种业、康农种业、花溪科技、神农种业、金健米业纷纷冲高。",
+      "url": "https://wallstreetcn.com/livenews/3202952"
     },
     {
       "id": "1d6sulz",
@@ -359,6 +511,14 @@
       "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-20/doc-inizixmn4016652.shtml"
     },
     {
+      "id": "mkuq49",
+      "ts": 1795139082,
+      "time": "2026-11-20T09:44:42.000+08:00",
+      "source": "华尔街见闻",
+      "title": "A股光刻机、光刻胶概念低开回升，盛剑科技4连板，光华科技涨停，晶赛科技、广立微涨超10%，格林达、鼎龙股份跟涨。",
+      "url": "https://wallstreetcn.com/livenews/3202937"
+    },
+    {
       "id": "1872ci0",
       "ts": 1795139082,
       "time": "2026-11-20T09:44:42.000+08:00",
@@ -463,6 +623,14 @@
       "url": "http://finance.eastmoney.com/news/1355,202611203935921976.html"
     },
     {
+      "id": "b99dcf",
+      "ts": 1795138258,
+      "time": "2026-11-20T09:30:58.000+08:00",
+      "source": "华尔街见闻",
+      "title": "A股算力租赁概念盘初下挫，鸿博股份、群兴玩具、中嘉博创跌停，证通电子、天亿马、华升股份跌幅居前。",
+      "url": "https://wallstreetcn.com/livenews/3202929"
+    },
+    {
       "id": "1f2mzkn",
       "ts": 1795138258,
       "time": "2026-11-20T09:30:58.000+08:00",
@@ -493,6 +661,14 @@
       "source": "华尔街见闻",
       "title": "国债期货开盘，30年期主力合约涨0.11%，10年期主力合约涨0.03%，5年期主力合约涨0.01%，2年期主力合约跌0.00%。",
       "url": "https://wallstreetcn.com/livenews/3202926"
+    },
+    {
+      "id": "gxdt3u",
+      "ts": 1795138119,
+      "time": "2026-11-20T09:28:39.000+08:00",
+      "source": "华尔街见闻",
+      "title": "A股AI漫剧概念延续调整，慈文传媒、文投控股4连跌停，金逸影视3连跌停，横店影视、幸福蓝海、华策影视等纷纷低开。",
+      "url": "https://wallstreetcn.com/livenews/3202925"
     },
     {
       "id": "1yc0n32",
