@@ -6,9 +6,25 @@
 //   · 按月切 12 片：合计 gzip 5.41 MB，单片 0.35~0.55 MB，单月 Fuse 查询 ~27 ms；
 //   · 前端只在用户显式点「在全部历史中搜索」时才拉，首屏与首搜成本为 0。
 //
+// 2.30.0（M 档）：检索拆成「热段 + 月度分片」两段。
+//   · 热段 = search.json，只留最近 HOT_WINDOW_DAYS(7) 个新闻日；
+//   · 更早的全部进月度分片，且**不含**热段那几天（互不重叠，不用下两遍）；
+//   · 分片来源 = data/history 切片 ∪ archive 中 history 未覆盖的日期
+//     （history 停在 2026-10-04，10-05 起的日期只有 archive 有）。
+//
 // 本文件是纯函数（构建脚本 + 测试共用），不读写磁盘。
 
+import { newsToday, addDays } from './news-day.mjs';
+
 export const HISTORY_SEARCH_VERSION = 1;
+
+/** 热段天数：search.json 只保留最近 N 个新闻日 */
+export const HOT_WINDOW_DAYS = 7;
+
+/** 热段起点（含）：今天 + 前 N-1 个新闻日 */
+export function hotCutoff(now = Date.now()) {
+  return addDays(newsToday(now), -(HOT_WINDOW_DAYS - 1));
+}
 
 // 单个分片 gzip 体积上限。导入期一个月约 0.35~0.55 MB；外源补录（华尔街见闻/东财）
 // 会让某个月涨到 0.9~1.5 MB，这里按实测上限留到 2.5 MB（Pages 5~30 KB/s 下约 85 秒，
@@ -28,6 +44,23 @@ export function historyItemToSearch(it) {
   };
 }
 
+/**
+ * 两种来源统一成 6 字段：history 切片（单字母键）或 archive 条目（全字段）。
+ * 构建脚本要把 archive 里 history 未覆盖的日期补进分片，必须先过这一层。
+ */
+export function toSearchItem(it) {
+  if (!it) return { id: undefined, ts: 0, time: '', source: '', title: '', url: '' };
+  if (!('ts' in it)) return historyItemToSearch(it);
+  return {
+    id: it.id,
+    ts: Number(it.ts) || 0,
+    time: it.time || '',
+    source: it.source || '',
+    title: it.title || '',
+    url: it.url || '',
+  };
+}
+
 /** 新闻日 → 月份键（YYYY-MM） */
 export function monthOf(day) {
   return String(day || '').slice(0, 7);
@@ -43,7 +76,7 @@ export function groupByMonth(dayDocs) {
     const m = monthOf(day);
     if (!/^\d{4}-\d{2}$/.test(m)) continue;
     if (!out.has(m)) out.set(m, []);
-    for (const it of items || []) out.get(m).push(historyItemToSearch(it));
+    for (const it of items || []) out.get(m).push(toSearchItem(it));
   }
   for (const k of out.keys()) out.get(k).sort((a, b) => b.ts - a.ts);
   return out;
@@ -59,7 +92,7 @@ export function buildChunk(month, items, { generatedAt } = {}) {
   };
 }
 
-export function buildManifest(chunks, { generatedAt, from, to } = {}) {
+export function buildManifest(chunks, { generatedAt, from, to, hot } = {}) {
   const months = chunks
     .map((c) => ({ m: c.m, n: c.n, b: c.bytes }))
     .sort((a, b) => (a.m < b.m ? 1 : -1));
@@ -68,6 +101,9 @@ export function buildManifest(chunks, { generatedAt, from, to } = {}) {
     ...(generatedAt ? { generatedAt } : {}),
     from: from || '',
     to: to || '',
+    // 2.30.0：热段边界。前端据此判断「最近 N 天在 search.json，更早在分片」，
+    // 也用于自检「分片里不该再出现热段那几天」。
+    ...(hot ? { hot: { days: hot.days, from: hot.from, to: hot.to } } : {}),
     months: months.length,
     total: months.reduce((a, x) => a + x.n, 0),
     chunks: months,

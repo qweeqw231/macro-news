@@ -1,30 +1,39 @@
 // scripts/build-search-history.mjs
 // 2.22.0：由 data/history/*.json 生成「按月分片」的站内搜索索引。
+// 2.30.0（M 档）：分片 = 热段以外的全部日期 —— history 切片 ∪ archive 中 history 未覆盖的日期。
+//   history 停在 2026-10-04，10-05 之后只有 archive，不补进来就会出现「热段之外搜不到」的空洞。
 //
 //   node scripts/build-search-history.mjs            # 全量重建
 //   node scripts/build-search-history.mjs --dry-run   # 只算体积，不写盘
 //   node scripts/build-search-history.mjs --check     # 校验线上文件是否与 history 一致（CI/提交前）
 //
 // 产物：data/search-history/manifest.json + data/search-history/YYYY-MM.json
-// 约束：只读 data/history，绝不写回；与前端 assets/search-history.js 共用同一套字段约定。
+// 约束：只读 data/history 与 data/archive，绝不写回；与前端 assets/search-history.js 共用同一套字段约定。
 
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
+import { addDays } from '../src/news-day.mjs';
 import {
   buildChunk,
   buildManifest,
   groupByMonth,
+  toSearchItem,
   validateChunk,
   CHUNK_MAX_GZIP,
+  HOT_WINDOW_DAYS,
+  hotCutoff,
   HISTORY_SEARCH_VERSION,
 } from '../src/search-history.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HISTORY = path.join(ROOT, 'data/history');
+const ARCHIVE = path.join(ROOT, 'data/archive');
 const OUT = path.join(ROOT, 'data/search-history');
-const BUDGET_TOTAL_GZIP = 16 * 1024 * 1024;
+// 2.30.0：热段拆出去后，分片要承接 archive 里 history 未覆盖的 40 天（+约 3 MB gzip），
+//   实测 2026-11-20 从 13.02 MB 涨到约 16 MB。预算同时上调，否则每次重建都会 exit 8。
+const BUDGET_TOTAL_GZIP = 24 * 1024 * 1024;
 
 const gz = (text) => zlib.gzipSync(Buffer.from(text), { level: 9 }).length;
 // generatedAt 每次都会变，比较内容时应剔除，否则 --check 永远报过期
@@ -49,23 +58,56 @@ function writeIfChanged(file, text) {
 
 export function buildSearchHistory({ dryRun = false, check = false, generatedAt = new Date().toISOString() } = {}) {
   const idx = readJSON(path.join(HISTORY, 'index.json'), { days: [] });
-  const days = (idx.days || []).map((x) => x.d).filter(Boolean).sort();
-  if (!days.length) {
+  const histDays = new Set((idx.days || []).map((x) => x.d).filter(Boolean));
+  if (!histDays.size) {
     console.error('[search-history] data/history/index.json 没有 days，无法构建');
     return 4;
   }
 
+  // 2.30.0：热段（最近 7 个新闻日）由 search.json 承担，分片不再重复收录。
+  const hotFrom = hotCutoff(new Date(generatedAt).getTime() || Date.now());
+  const hotTo = addDays(hotFrom, HOT_WINDOW_DAYS - 1);
+
+  const archiveDays = fs.existsSync(ARCHIVE)
+    ? fs.readdirSync(ARCHIVE).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).map((f) => f.slice(0, 10))
+    : [];
+  const allDays = [...new Set([...histDays, ...archiveDays])]
+    .filter((d) => d < hotFrom)
+    .sort();
+
   const dayDocs = [];
-  for (const day of days) {
-    const file = path.join(HISTORY, `${day}.json`);
-    if (!fs.existsSync(file)) continue;
-    const doc = readJSON(file, null);
+  const seen = new Set(); // 跨日重复 id：保留更早那天（与 search.json 构建期去重同一口径）
+  let fromHistory = 0;
+  let fromArchive = 0;
+  let dupSkipped = 0;
+  for (const day of allDays) {
+    const src = histDays.has(day) ? path.join(HISTORY, `${day}.json`) : path.join(ARCHIVE, `${day}.json`);
+    if (!fs.existsSync(src)) continue;
+    const doc = readJSON(src, null);
     if (!doc || !Array.isArray(doc.items)) {
       // 另一个会话可能正在写这个文件；宁可失败也不发布半份索引
       console.error(`[search-history] 读取失败（可能正在写入）：${day}.json`);
       return 5;
     }
-    dayDocs.push({ day, items: doc.items });
+    const items = [];
+    for (const raw of doc.items) {
+      const it = toSearchItem(raw);
+      if (!it.id) continue;
+      if (seen.has(it.id)) { dupSkipped++; continue; }
+      seen.add(it.id);
+      items.push(it);
+    }
+    if (!items.length) continue;
+    dayDocs.push({ day, items });
+    if (histDays.has(day)) fromHistory++;
+    else fromArchive++;
+  }
+
+  if (fromArchive) {
+    console.log(
+      `[search-history] 热段 ${hotFrom}~${hotTo} 由 search.json 承担；分片补入 archive ${fromArchive} 天` +
+        `（history ${fromHistory} 天，跨日重复 id 跳过 ${dupSkipped} 条）`
+    );
   }
 
   const byMonth = groupByMonth(dayDocs);
@@ -88,7 +130,12 @@ export function buildSearchHistory({ dryRun = false, check = false, generatedAt 
     texts.set(month, text);
   }
 
-  const manifest = buildManifest(chunks, { generatedAt, from: idx.from || days[0], to: idx.to || days[days.length - 1] });
+  const manifest = buildManifest(chunks, {
+    generatedAt,
+    from: idx.from || allDays[0],
+    to: allDays[allDays.length - 1] || '',
+    hot: { days: HOT_WINDOW_DAYS, from: hotFrom, to: hotTo },
+  });
   const manifestText = JSON.stringify(manifest, null, 2);
   const totalGzip = chunks.reduce((a, c) => a + c.gzip, 0);
   if (totalGzip > BUDGET_TOTAL_GZIP) {
@@ -102,7 +149,8 @@ export function buildSearchHistory({ dryRun = false, check = false, generatedAt 
   console.log(
     `[search-history] ${chunks.length} 个月 · ${manifest.total} 条 · raw ${mb(
       chunks.reduce((a, c) => a + c.bytes, 0)
-    )} · gzip ${mb(totalGzip)} · manifest ${kb(Buffer.byteLength(manifestText))}`
+    )} · gzip ${mb(totalGzip)} · manifest ${kb(Buffer.byteLength(manifestText))}` +
+      ` · 热段 ${hotFrom}~${hotTo}（${HOT_WINDOW_DAYS} 天，由 search.json 承担）`
   );
 
   const stale =
@@ -121,7 +169,7 @@ export function buildSearchHistory({ dryRun = false, check = false, generatedAt 
       );
       return 1;
     }
-    console.log('[search-history] 校验通过：分片与 data/history 一致');
+    console.log('[search-history] 校验通过：分片与 data/history + archive 一致');
     return 0;
   }
 

@@ -28,7 +28,7 @@ import { aggregateDaily, collapsePeriodDuplicates } from './aggregate.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
 import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
-import { historyItemToSearch } from './search-history.mjs';
+import { historyItemToSearch, hotCutoff, HOT_WINDOW_DAYS } from './search-history.mjs';
 import { createRequire } from 'node:module';
 
 // assets/day-source.js 是 UMD 纯函数（浏览器挂 window、Node 走 module.exports），
@@ -155,11 +155,21 @@ async function collectKlines(startedAt, onlyKeys) {
     ['spx', { '1M': 'replace' }],
     ['brent', { '1w': 'replace' }],
     ['ndx', { '1w': 'union', '1M': 'union' }],
+    // 2026-11-20：a100 的源侧历史比文件短（1d 4,977 < 5,798、1w 1,047 < 1,219、
+    //   1M 247 < 290），每次都被 decideBars 判 shorter-overlap-mismatch 整份拒收，
+    //   周/月因此停在 11-18。周/月改为自有日 K 聚合 + 保留现有历史（union）。
+    //   ⚠ a100 的 2003–2005 段是 o=h=l=0 的「仅收盘」bar，文件里带 z:1；
+    //   union 以现有文件为底、只用聚合覆盖重叠段，这些早期桶不会被抹掉。
+    ['a100', { '1w': 'union', '1M': 'union' }],
   ]);
   for (const key of keys) {
     if (!klineAvailable(key)) { klineSkip.push(key); continue; }
     const meta = klineTarget(key);
     const done = [];
+    // 2026-11-20：源侧日线在本轮内复用。1w/1M 派生（WM_FROM_DAILY）要用的就是 1d 那一份，
+    //   原先每个周期各抓一次 ⇒ 同一标的连打 3 次，东财 push2his 间歇性限流时后两次必失败，
+    //   而失败又被下面的 catch 吞掉（只见 1d 成功，周/月静默停更）。
+    let dailyBars = null;
     for (const spec of KLINE_SPEC) {
       try {
         const file = path.join(DATA, 'kline', `${key}${spec.suffix}.json`);
@@ -174,8 +184,8 @@ async function collectKlines(startedAt, onlyKeys) {
         const derive = spec.period !== '1d' ? WM_FROM_DAILY.get(key)?.[spec.period] : null;
         let incoming;
         if (derive) {
-          const daily = await fetchKline(key, '1d', 20000);
-          const agg = aggregateDaily(daily, spec.period === '1w' ? 'week' : 'month');
+          if (!dailyBars) dailyBars = await fetchKline(key, '1d', 20000);
+          const agg = aggregateDaily(dailyBars, spec.period === '1w' ? 'week' : 'month');
           if (derive === 'union') {
             const prevDoc = await readJSON(file, null);
             const merged = new Map((prevDoc?.bars || []).map((b) => [barTime(b), b]));
@@ -186,6 +196,7 @@ async function collectKlines(startedAt, onlyKeys) {
           }
         } else {
           incoming = await fetchKline(key, spec.period, spec.limit);
+          if (spec.period === '1d') dailyBars = incoming;
         }
         const lock = await acquireKlineLock(key);
         if (!lock.ok) {
@@ -253,7 +264,9 @@ async function collectKlines(startedAt, onlyKeys) {
           await releaseKlineLock(lock);
         }
       } catch (err) {
-        // 单个周期失败不影响其它周期（例如某源不支持月K）
+        // 单个周期失败不影响其它周期（例如某源不支持月K）。
+        // 2026-11-20：不再静默 —— 上周/月被限流吞掉时日志里只有 1d 成功，没人看得出来。
+        console.log(`  ⚠ ${key} ${spec.period} 取数失败：${String(err.message).slice(0, 90)}`);
       }
       // 同一轮里要打 12×3 个请求，间隔一下别把新浪/腾讯打到限流
       await new Promise((r) => setTimeout(r, 250));
@@ -492,7 +505,9 @@ async function main() {
     allItems.push(...d.items);
     if (allItems.length >= 200) break;
   }
-  const latest = allItems.sort((a, b) => b.ts - a.ts).slice(0, 200);
+  // 2.29.0：日文件内部已各自去过重，但跨日拼接后仍会有「同源同标题、ts 差十几秒」
+  //   的同一快讯（源侧 showTime 漂移），这里按同一口径再过一遍。
+  const latest = dedupeItems(allItems).sort((a, b) => b.ts - a.ts).slice(0, 200);
 
   await writeJSONIfChanged(path.join(DATA, 'latest.json'), {
     generatedAt: startedAt.toISOString(),
@@ -505,9 +520,14 @@ async function main() {
     days,
   });
 
-  // search.json：最近 62 个新闻日的精简副本（只有标题/来源/时间/链接，无摘要）
-  // 2.4.19：窗口外的 archive 日期不再进索引；220 字摘要去掉，体积约减半。
+  // search.json：2.30.0 起只装「热段」（最近 HOT_WINDOW_DAYS 个新闻日），更早的日期
+  //   由 data/search-history 的月度分片承担（构建见 scripts/build-search-history.mjs）。
+  //   为什么要拆：62 天单文件 17.4 MB raw / 4.0 MB gzip，慢网（12.5 KB/s）首搜要 5 分钟；
+  //   热段 7 天约 0.45 MB gzip，首搜 ~36 秒。
+  //   ⚠ windowDays / from / total 仍按 62 天口径统计（「全库 N 条」不能变成热段条数），
+  //     多出的只是 hotDays / hotFrom 两个字段；items 只放热段。
   const searchFrom = searchCutoff(startedAt.getTime());
+  const hotFrom = hotCutoff(startedAt.getTime());
   // 2.22.0：窗口内「归档页判定走 history」的日期，search.json 也要从 history 取条目。
   // 不这么做就会出现「卡片 260 条、搜索只命中 3 条」（09-15~10-04 实测）。
   // 判定直接复用 assets/day-source.js，保证卡片与搜索同一口径，不另写一套阈值。
@@ -536,14 +556,41 @@ async function main() {
     for (const it of d.items) searchItems.push(compactSearchItem(it));
     searchDays++;
   }
+  // 2.29.0：同一 id 只保留一次。历史 archive 里存在跨日重复（同一 url 的 showTime 漂移，
+  //   让同一 id 同时写进相邻两个新闻日，实测 315 组），逐日拼接进 search.json 后
+  //   就会搜出两条完全相同的结果。archive 不清（删哪一边都会改变已发布日期的条数），
+  //   在拼接时按 id 全局去重：迭代顺序是新→旧，后来的（更早那天）覆盖前面的，
+  //   即保留更早那天的归属；位置沿用首次出现处，排序行为不变。
+  const idxById = new Map();
+  const searchDeduped = [];
+  for (const it of searchItems) {
+    const id = it && it.id;
+    if (!id) { searchDeduped.push(it); continue; }
+    const at = idxById.get(id);
+    if (at === undefined) {
+      idxById.set(id, searchDeduped.length);
+      searchDeduped.push(it);
+    } else {
+      searchDeduped[at] = it;
+    }
+  }
+  if (searchDeduped.length !== searchItems.length) {
+    console.log(`  🧹 search.json：跨日重复 id ${searchItems.length - searchDeduped.length} 条已合并（保留更早归属）`);
+  }
+  // 热段 = 新闻日 >= hotFrom 的条目。去重时若同一 id 跨了热段边界（11-13 / 11-14），
+  // 保留的是更早那天 ⇒ 它落在分片侧，热段里不再重复出现。
+  const hotItems = searchDeduped.filter((it) => newsDay(it.time || startedAt) >= hotFrom);
   await writeJSONIfChanged(path.join(DATA, 'search.json'), {
     generatedAt: startedAt.toISOString(),
     windowDays: SEARCH_WINDOW_DAYS,
+    hotDays: HOT_WINDOW_DAYS,
     from: searchFrom,
+    hotFrom,
     days: searchDays,
     fromHistory: searchFromHistory,
-    total: searchItems.length,
-    items: searchItems,
+    total: searchDeduped.length,
+    hotTotal: hotItems.length,
+    items: hotItems,
   });
   if (quotes.length) {
     // 按 key 合并写入：保留 portfolio-collect.mjs 写入的其它 key。

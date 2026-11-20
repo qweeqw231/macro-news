@@ -12,6 +12,10 @@
 //   3. 合并时按频道具体度取舍：A股/中国 > 国内财经 > 外汇/大宗/美股 > 全球；
 //      同频道再比正文长度（长的信息更全），仍相同则保留先出现的（稳定）。
 //   4. 不同时间戳不合并（同一句话在不同时间发布可能是更新/更正）。
+//      例外（2026-11-20）：同来源 + 规范化标题**完全一致** + |Δts| ≤ 300 s ⇒ 同一条。
+//      源侧 showTime 会漂移（实测同一快讯两次抓取差 12~35 s，url/id 也不同），
+//      严格等 ts 判不出来，要闻流因此出现 13 组「同源同标题」重复。
+//      ⚠ 只放宽到「同源 + 标题完全相同」，绝不按近似标题合并。
 
 const TRACKING_PARAM = /^(utm_|spm$|from$|ref$|source$|share$)/i;
 
@@ -87,6 +91,16 @@ export function titleKey(it) {
   return `h|${it.source || ''}|${ts}|${title}`;
 }
 
+/** 同来源 + 规范化标题（不含 ts）：用于「时间戳漂移的同一快讯」判重 */
+export function nearTitleKey(it) {
+  const title = normalizeText(it && it.title);
+  if (!title) return null;
+  return `n|${it.source || ''}|${title}`;
+}
+
+/** 时间戳漂移容忍窗口（秒；条目 ts 是秒级时间戳）：源侧 showTime 两次抓取实测差 12~35 s */
+export const TS_NEAR_SEC = 300;
+
 function better(a, b) {
   const ra = channelRank(a.channel);
   const rb = channelRank(b.channel);
@@ -107,15 +121,23 @@ export function dedupeItems(items) {
   const byUrl = new Map();
   const byContent = new Map();
   const byTitle = new Map();
+  const byTitleNear = new Map();
   for (const it of items || []) {
     if (!it) continue;
     const uk = normalizeUrl(it.url);
     const ck = contentKey(it);
     const hk = titleKey(it);
+    const nk = nearTitleKey(it);
     let idx = -1;
     if (uk && byUrl.has(uk)) idx = byUrl.get(uk);
     else if (ck && byContent.has(ck)) idx = byContent.get(ck);
     else if (hk && byTitle.has(hk)) idx = byTitle.get(hk);
+    else if (nk) {
+      const ts = Number(it.ts) || 0;
+      for (const s of byTitleNear.get(nk) || []) {
+        if (Math.abs((Number(out[s].ts) || 0) - ts) <= TS_NEAR_SEC) { idx = s; break; }
+      }
+    }
     if (idx < 0) {
       idx = out.length;
       out.push(it);
@@ -126,6 +148,11 @@ export function dedupeItems(items) {
     if (uk) byUrl.set(uk, slot);
     if (ck) byContent.set(ck, slot);
     if (hk) byTitle.set(hk, slot);
+    if (nk) {
+      const list = byTitleNear.get(nk);
+      if (list) list.push(slot);
+      else byTitleNear.set(nk, [slot]);
+    }
   }
   return out;
 }

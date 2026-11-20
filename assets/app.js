@@ -29,6 +29,8 @@
     q: '',
     items: [],
     searchIdx: null,
+    searchTotal: 0,    // 62 天窗口内的去重总条数（search.json.total，非热段条数）
+    searchHotDays: 0,  // 热段天数（search.json.hotDays）
     fuse: null,
     shown: PAGE,
     archive: null,
@@ -1255,6 +1257,10 @@
       searchIdxPromise = loadSearchIndex()
         .then((d) => {
           S.searchIdx = d.items || [];
+          // 2.30.0：search.json 只装热段（最近 7 个新闻日），total 仍是 62 天窗口内的
+          //   去重总条数 ——「全库 N 条」口径不变，不能退化成热段条数（7k）。
+          S.searchTotal = Number(d.total) || S.searchIdx.length;
+          S.searchHotDays = Number(d.hotDays) || 0;
           S.fuse = new window.Fuse(S.searchIdx, {
             includeScore: true, ignoreLocation: true,
             minMatchCharLength: 2, threshold: 0.4, distance: 100,
@@ -1319,7 +1325,10 @@
     S.shown = PAGE;
     renderFilters();
     renderFeed();
-    $('#qMeta').textContent = `全库 ${S.searchIdx.length} 条中命中 ${res.length} 条`;
+    // 2.30.0：search.json 只装热段，命中数只代表「近期」；不点明范围会被读成
+    //   「58k 条里只有这 7 条」。total 仍是 62 天窗口口径，历史检索是另一段。
+    const scopeHint = S.searchHotDays ? `（当前仅搜近 ${S.searchHotDays} 天，更早请用历史检索）` : '';
+    $('#qMeta').textContent = `全库 ${S.searchTotal} 条中命中 ${res.length} 条${scopeHint}`;
     syncHistBar();
   }
 
@@ -1441,7 +1450,7 @@
       renderFilters();
       renderFeed();
       $('#qMeta').textContent =
-        `全库 ${S.searchIdx.length} 条中命中 ${(S.recentHits || []).length} 条 · 历史追加 ${added} 条（列表末尾，标「历史」）`;
+        `全库 ${S.searchTotal} 条中命中 ${(S.recentHits || []).length} 条 · 历史追加 ${added} 条（列表末尾，标「历史」）`;
     };
     const worker = async () => {
       while (queue.length) {

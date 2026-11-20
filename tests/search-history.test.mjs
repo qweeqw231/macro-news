@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import {
   HISTORY_SEARCH_VERSION,
   CHUNK_MAX_GZIP,
+  HOT_WINDOW_DAYS,
   monthOf,
   groupByMonth,
   historyItemToSearch,
@@ -18,6 +19,8 @@ import {
   monthsDesc,
   mergeResults,
   validateChunk,
+  toSearchItem,
+  hotCutoff,
 } from '../src/search-history.mjs';
 import { SEARCH_WINDOW_DAYS, searchCutoff, compactSearchItem } from '../src/search-window.mjs';
 import { addDays } from '../src/news-day.mjs';
@@ -36,6 +39,20 @@ test('historyItemToSearch：单字母键 → search.json 同构 6 字段', () =>
   assert.equal(x.time, '2026-09-15T12:00:00+08:00');
   assert.equal(x.title, '标题');
   assert.deepEqual(Object.keys(compactSearchItem({ id: 'a' })).sort(), Object.keys(x).sort());
+});
+
+test('hotCutoff：热段 = 今天 + 前 6 个新闻日（共 7 天）', () => {
+  assert.equal(HOT_WINDOW_DAYS, 7);
+  assert.equal(hotCutoff(Date.parse('2026-11-05T02:00:00Z')), '2026-10-30');
+});
+
+test('toSearchItem：history 单字母键与 archive 全字段都归一到 6 字段', () => {
+  const h = toSearchItem({ i: 'a', p: 1789444800, t: 'T', o: 'S', u: 'u' });
+  const a = toSearchItem({ id: 'b', ts: 1789444800, time: 'x', source: 'S', title: 'T', url: 'u', content: '正文' });
+  assert.deepEqual(Object.keys(h).sort(), Object.keys(a).sort());
+  assert.equal(a.id, 'b');
+  assert.equal(a.ts, 1789444800);
+  assert.equal(a.content, undefined);
 });
 
 test('groupByMonth：按月分组、月内按 ts 倒序', () => {
@@ -105,14 +122,21 @@ test('window 常量不回退：仍为 62 天，且 search.json 不混入窗口�
   assert.ok(boundary.length < 50, `边界日跨日残留 ${boundary.length} 条，超出已知范围`);
 });
 
-test('manifest 覆盖 data/history 全部月份，且分片条数自洽（过期就重建）', () => {
+test('manifest 覆盖 history 全部月份（+archive 补录），分片自洽且不含热段日期', () => {
   const man = readJSON('data/search-history/manifest.json');
   const hist = readJSON('data/history/index.json');
   const histMonths = [...new Set(hist.days.map((d) => d.d.slice(0, 7)))].sort();
-  assert.deepEqual(man.chunks.map((c) => c.m).sort(), histMonths, 'manifest 缺月份或多了月份');
-  assert.equal(man.total, hist.total, 'manifest 条数与 history 不一致：请运行 node scripts/build-search-history.mjs');
+  const months = man.chunks.map((c) => c.m).sort();
+  for (const m of histMonths) assert.ok(months.includes(m), `manifest 缺 ${m} 月分片`);
+  // 2.30.0：热段（最近 7 个新闻日）由 search.json 承担，分片从它前一天往前覆盖
+  assert.equal(man.hot.days, HOT_WINDOW_DAYS);
+  assert.equal(addDays(man.hot.to, -(HOT_WINDOW_DAYS - 1)), man.hot.from);
+  assert.ok(man.total >= hist.total, '分片条数少于 history：archive 补录没进来');
+  assert.equal(man.to, addDays(man.hot.from, -1), 'manifest.to 应为热段前一天');
 
   let sum = 0;
+  const ids = new Set();
+  let dup = 0;
   for (const c of man.chunks) {
     const doc = readJSON(`data/search-history/${c.m}.json`);
     assert.equal(validateChunk(doc), '', `${c.m} 分片校验失败`);
@@ -120,9 +144,16 @@ test('manifest 覆盖 data/history 全部月份，且分片条数自洽（过期
     assert.equal(doc.n, doc.items.length);
     const gz = zlib.gzipSync(Buffer.from(fs.readFileSync(path.join(ROOT, `data/search-history/${c.m}.json`))), { level: 9 }).length;
     assert.ok(gz <= CHUNK_MAX_GZIP, `${c.m} gzip ${gz} 超上限`);
+    for (const it of doc.items) {
+      const day = new Date(it.ts * 1000).toISOString().slice(0, 10); // 新闻日 = UTC 日期
+      assert.ok(day < man.hot.from, `${c.m} 混入热段日期 ${day}`);
+      if (ids.has(it.id)) dup++;
+      ids.add(it.id);
+    }
     sum += doc.n;
   }
   assert.equal(sum, man.total);
+  assert.equal(dup, 0, `分片之间存在 ${dup} 个重复 id`);
 });
 
 test('D：search.json 对「页面走 history」的日期取切片条目，且复用同一阈值', () => {

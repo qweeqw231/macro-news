@@ -63,11 +63,28 @@ test('同一 URL 不同标题 ⇒ 合并为一条', () => {
   assert.equal(out[0].channel, '中国');
 });
 
-test('不同正文、不同时间 ⇒ 不误合并', () => {
+test('不同正文、不同时间（超出漂移窗口）⇒ 不误合并', () => {
   const a = { id: 'a', ts: TS, source: 'S', channel: '全球', title: '甲', content: '甲文', url: 'https://x.com/1' };
-  const b = { id: 'b', ts: TS + 60, source: 'S', channel: '全球', title: '甲', content: '甲文', url: 'https://x.com/2' };
+  const b = { id: 'b', ts: TS + 600, source: 'S', channel: '全球', title: '甲', content: '甲文', url: 'https://x.com/2' };
   assert.equal(dedupeItems([a, b]).length, 2);
   const c = { id: 'c', ts: TS, source: 'S', channel: '全球', title: '乙', content: '乙文', url: 'https://x.com/3' };
+  assert.equal(dedupeItems([a, c]).length, 2);
+});
+
+test('时间戳漂移：同源 + 标题完全相同 + |Δts| ≤ 300s ⇒ 合并（2026-11-20 真实事故）', () => {
+  // 两个 id、两个 url，标题一致，showTime 差 33s（华尔街见闻 3203383 / 3203384）
+  const a = { id: 'hmnpqd', ts: TS, source: '华尔街见闻', channel: '全球', title: '多家PCB概念股涨停，上市公司回应', content: '正文', url: 'https://wallstreetcn.com/livenews/3203383' };
+  const b = { id: 'nogtws', ts: TS + 33, source: '华尔街见闻', channel: '全球', title: '多家PCB概念股涨停，上市公司回应', content: '正文', url: 'https://wallstreetcn.com/livenews/3203384' };
+  assert.equal(dedupeItems([a, b]).length, 1);
+});
+
+test('漂移窗口的两条限制：跨源同标题不合并、近似标题不合并', () => {
+  const a = { id: 'a', ts: TS, source: '华尔街见闻', channel: '全球', title: '我国成功发射卫星互联网低轨30组卫星', url: 'https://x.com/1' };
+  // 跨来源转载：标题相同但来源不同 ⇒ 不合并（口径只放宽到同源）
+  const b = { id: 'b', ts: TS + 41, source: '东方财富', channel: '全球', title: '我国成功发射卫星互联网低轨30组卫星', url: 'https://x.com/2' };
+  assert.equal(dedupeItems([a, b]).length, 2);
+  // 近似标题（多一个词）而不是完全相同 ⇒ 不合并；标点差异（！）会被归一化抹平，不算近似
+  const c = { id: 'c', ts: TS + 20, source: '华尔街见闻', channel: '全球', title: '我国成功发射卫星互联网低轨30组卫星升空', url: 'https://x.com/3' };
   assert.equal(dedupeItems([a, c]).length, 2);
 });
 
