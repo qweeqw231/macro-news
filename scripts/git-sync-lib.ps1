@@ -1,5 +1,5 @@
 ﻿# scripts/git-sync-lib.ps1
-# 2.23.0 / 2.24.1：本机同步层的共享件（由 collect-and-push.ps1 / sync-close.ps1 点源引入）。
+# 2.23.0 / 2.28.1：本机同步层的共享件（由 collect-and-push.ps1 / sync-close.ps1 点源引入）。
 #
 # 背景（2026-11-16 事故）：origin 走 ssh://git@ssh.github.com:443（insteadOf 改写），
 # 该通道会被随机 reset。推送侧早就做了 6 次重试，fetch 侧却只有一次、失败即整轮跳过；
@@ -9,7 +9,7 @@
 # 本文件里的函数都**只写 .local/**，绝不写 data/：
 #   1) Invoke-GitFetchRetry —— fetch 重试 + 退避
 #   2) Write-SyncState      —— 「本地数据是否可用」的本地哨兵
-#   3) Get-ConsumedDirtyPaths / Get-ConsumedDriftPaths —— 2.24.1 的脏判定作用域
+#   3) Get-CloseBasisDirtyPaths / Get-PmSnapshotState —— 2.28.1 的脏判定与新鲜度判据
 # 用途：即使 fetch 再失败，消费方也能从 .local/metrics/sync-state.json 一眼看出
 # 「本地不是最新」，而不是对着旧截面猜。
 
@@ -17,7 +17,7 @@ function Say-Lib($m) {
     if (Get-Command Say -ErrorAction SilentlyContinue) { Say $m } else { Write-Host $m }
 }
 
-# ---- 2.24.1：脏判定与新鲜度判定的作用域 ----
+# ---- 2.28.1：脏判定与新鲜度判定的作用域 ----
 # 旧口径是全树 `git status` + behind==0：并行开发会话的源码/测试/工作流改动、早报线持续改写的
 # data/_briefing-status.json、data/history/index.json、data/index.json 都被算脏。
 # 而云端每 15 分钟会提交「采集 6 件套」（_last-run/archive/index/latest/quotes/search），
@@ -230,8 +230,9 @@ function Invoke-GitFetchRetry {
 }
 
 # 本地对齐状态哨兵（.local/metrics/sync-state.json，已 gitignore，不入库）
-#   localFresh     = 2.24.1 起改为「被消费路径是否干净且与最近一次成功 fetch 的 origin/main 内容一致」
-#                    （旧口径：整树 behind==0；会被无关脏/无关提交打成 false）
+#   localFresh     = 2.28.1 起 =「当天收盘基准 data/snapshots/<date>_pm.json 是否可用」
+#                    （存在 + gate ok + 本地无未提交改动 + 不落后 origin/main；
+#                      旧口径依次是「整树 behind==0」「被消费路径干净」，都被无关脏/无关提交打成过 false）
 #   remoteRefStale = 本轮 fetch 是否失败（true ⇒ 本地 origin/main ref 本身也是旧的）
 #   remoteRefAt    = origin/main 这个 ref 最后一次被刷新成功的时刻（保留上一轮值）
 #   consumedDirty  = 被消费路径上的未提交改动（本地改了没提交）
@@ -303,7 +304,7 @@ function Write-SyncState {
                 inRemote = [bool]$PmInRemote
                 drift = [bool]$PmDrift
             }
-            note = '2.24.1 起 localFresh=当天收盘基准 data/snapshots/<date>_pm.json 是否可用（存在 + gate ok + 本地无未提交改动 + 不落后 origin/main）；无关路径的脏/落后不再影响它。'
+            note = '2.28.1 起 localFresh=当天收盘基准 data/snapshots/<date>_pm.json 是否可用（存在 + gate ok + 本地无未提交改动 + 不落后 origin/main）；无关路径的脏/落后不再影响它。'
         }
         $enc = New-Object System.Text.UTF8Encoding($false)
         [System.IO.File]::WriteAllText($file, (($doc | ConvertTo-Json -Compress) + "`n"), $enc)

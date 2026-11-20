@@ -49,7 +49,7 @@ $st = [ordered]@{
     pmRemoteCapturedAt = ''
     pmRemoteGate = ''
     localFresh = $false
-    # 2.24.1：被消费数据的脏/落后清单（localFresh 的唯一判据）
+    # 2.28.1：被消费数据的脏/落后清单（localFresh 的唯一判据）
     closeBasisDirty = @()
     pmDrift = $false
     dirtyBlocking = @()
@@ -99,7 +99,7 @@ function Invoke-Sync {
     $st.ahead = [int](& git rev-list --count origin/main..HEAD 2>$null)
     Say "head=$($st.headBefore) behind=$($st.behind) ahead=$($st.ahead)"
 
-    # 2.24.1：让路判据只看「收盘基准本体」data/snapshots。
+    # 2.28.1：让路判据只看「收盘基准本体」data/snapshots。
     #   旧口径是全树：并行会话的源码/测试/工作流改动、早报线的 data/index.json 等都会让 ff 失败，
     #   于是每天都写 skipped-dirty + localFresh=false，下游只能把当天标成「估（本地未同步）」。
     $st.closeBasisDirty = @(Get-CloseBasisDirtyPaths)
@@ -125,7 +125,7 @@ function Invoke-Sync {
     } else {
         $mergeOut = & git merge --ff-only origin/main 2>&1 | Out-String
         if ($LASTEXITCODE -ne 0) {
-            # 2.24.1：把**完整**阻断清单写进日志与台账（旧实现只留第一行，根本看不出被谁挡住）
+            # 2.28.1：把**完整**阻断清单写进日志与台账（旧实现只留第一行，根本看不出被谁挡住）
             $mergeLines = @($mergeOut -split "`r?`n")
             $blocking = @($mergeLines | Where-Object { $_ -match '^\s+(\S.*)$' } |
                 ForEach-Object { $_.Trim() } |
@@ -164,7 +164,7 @@ function Invoke-Sync {
 
     # ---- 3. 只读体检：今天的 pm 到没到、能不能过消费方门禁 ----
     #    不写任何文件，只把结论写进日志与台账。
-    #    2.24.1：localFresh 的口径从「整树 behind==0」改为「当天 pm 收盘基准可用」——
+    #    2.28.1：localFresh 的口径从「整树 behind==0」改为「当天 pm 收盘基准可用」——
     #    存在 + gate ok + 本地没有未提交改动 + 内容不落后 origin/main。
     #    无关脏（源码/测试/早报索引）与无关提交不再把当天打成「本地未同步」。
     $today = Get-Date -Format 'yyyy-MM-dd'

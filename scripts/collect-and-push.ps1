@@ -299,7 +299,7 @@ if ($unmerged.Count -gt 0) {
 #   现在：工作区脏就整轮跳过（不 stash、不 merge、不 pop）。
 #   未跟踪文件（`??`）不计入脏：git 拉取不会覆盖它们，`git stash`（不带 -u）也不会碰，
 #   把它们算脏会让 `.trae-html-share-packages/` 这类工具目录把本机采集永久卡死。
-# 2.24.1：脏的作用域收敛到「收盘基准真正消费的数据」（见 git-sync-lib.ps1 的 ConsumedPaths）。
+# 2.28.1：脏的作用域收敛到「收盘基准真正消费的数据」（见 git-sync-lib.ps1 的 CloseBasisPaths）。
 #   2026-11-18~20 连续事故：并行会话的源码/测试/工作流改动、早报线的 data/index.json 长期脏，
 #   而云端每 15 分钟就提交 index/latest/quotes 等同一批文件 ⇒ 每天都 skipped:dirty-worktree，
 #   17:00 消费端只能把当天标成「估（本地未同步）」。这些脏与「本地收盘截面能不能用」无关。
@@ -348,7 +348,7 @@ if ($dirty -eq 'yes') {
     Say ("sync: 被消费数据有 {0} 个文件未提交改动，脚本主动让路——本轮不 stash、不合并、不 pop、不写任何工作区文件；下一轮重试。" -f $dirtyPaths.Count)
     foreach ($p in $dirtyPaths) { Say "sync: dirty: $p" }
     # 2.23.0：脏轮不写 data/，但必须让消费方知道「本地落后多少」
-    # 2.24.1：只有 data/snapshots 脏才会走到这里；localFresh 直接 false（判据与 sync-close 一致）
+    # 2.28.1：只有 data/snapshots 脏才会走到这里；localFresh 直接 false（判据与 sync-close 一致）
     $pmDirty = Get-PmSnapshotState -Root $root -Date (Get-Date -Format 'yyyy-MM-dd')
     Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result 'skipped:dirty-worktree' `
         -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh $false `
@@ -401,7 +401,7 @@ $runStats.behind = $behindAfter
 $runStats.ahead = $aheadAfter
 Say ("sync: behind_after={0} ahead_after={1}" -f $behindAfter, $aheadAfter)
 
-# 2.24.1：localFresh 与 sync-close 用同一判据（当天 pm 收盘基准是否可用），不再用 behind==0：
+# 2.28.1：localFresh 与 sync-close 用同一判据（当天 pm 收盘基准是否可用），不再用 behind==0：
 #   无关路径脏或无关提交落后，都不该让下游把当天标成「本地未同步」。
 $todayState = Get-Date -Format 'yyyy-MM-dd'
 $pmState = Get-PmSnapshotState -Root $root -Date $todayState
