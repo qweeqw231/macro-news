@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T22:23:19.707Z",
+  "generatedAt": "2026-11-20T22:38:14.630Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -210,7 +210,7 @@
       "high": 23837.76,
       "low": 22513.01,
       "prevClose": 23879.2,
-      "volume": 10568188928,
+      "volume": 10597030656,
       "changePct": -5.28,
       "updatedAt": "2026-11-21T05:00:00+08:00",
       "source": "eastmoney"
@@ -824,7 +824,7 @@
       "high": 26429.09,
       "low": 24910.48,
       "prevClose": 26517.05,
-      "volume": 2674159440,
+      "volume": 2687727472,
       "changePct": -5.61,
       "updatedAt": "2026-11-21T05:00:00+08:00",
       "source": "eastmoney"
@@ -859,13 +859,13 @@
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 92.73,
+      "price": 92.56,
       "open": 92.38,
       "high": 93.07,
       "low": 90.06,
       "prevClose": 91.98,
-      "changePct": 0.82,
-      "updatedAt": "2026-11-21T06:22:45+08:00",
+      "changePct": 0.63,
+      "updatedAt": "2026-11-21T06:38:08+08:00",
       "note": ""
     },
     {
