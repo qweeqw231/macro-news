@@ -6,92 +6,92 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-20T05:23:18.068Z",
-  "durationMs": 13159,
+  "startedAt": "2026-11-20T05:38:15.073Z",
+  "durationMs": 19641,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 8438
+      "ms": 15163
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1314
+      "ms": 1075
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1572
+      "ms": 1902
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 369
+      "ms": 1254
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1451
+      "ms": 1473
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 742
+      "ms": 936
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1211
+      "ms": 1255
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 6017
+      "ms": 6127
     }
   ],
   "quotes": 75,
-  "added": 9,
+  "added": 16,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7670,
-    "kept": 7670,
+    "candidates": 7686,
+    "kept": 7686,
     "evicted": 0,
-    "deduped": 323,
+    "deduped": 317,
     "days": [
       {
         "day": "2026-11-20",
-        "incoming": 217,
-        "candidates": 293,
-        "kept": 293,
+        "incoming": 230,
+        "candidates": 309,
+        "kept": 309,
         "evicted": 0,
-        "deduped": 209,
-        "added": 9
+        "deduped": 214,
+        "added": 16
       },
       {
         "day": "2026-11-19",
-        "incoming": 96,
+        "incoming": 85,
         "candidates": 1343,
         "kept": 1343,
         "evicted": 0,
-        "deduped": 96,
+        "deduped": 85,
         "added": 0
       },
       {
