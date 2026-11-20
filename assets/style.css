@@ -494,11 +494,14 @@ td.num, .num { text-align: right; font-variant-numeric: tabular-nums; white-spac
 }
 
 /* ---------- K线图抽屉 ---------- */
+/* 弹窗打开时锁住背景页面：否则 320px 下手指在弹窗外/顶部继续滑动，背景列表会跟着滚。 */
+body.kline-open { overflow: hidden; }
 .kline-modal {
   position: fixed; inset: 0; z-index: 200;
   background: rgba(26,26,26,.45);
   display: flex; align-items: center; justify-content: center;
   padding: 1.5rem;
+  overscroll-behavior: contain;
 }
 .km-box {
   background: var(--surface);

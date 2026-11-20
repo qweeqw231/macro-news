@@ -445,9 +445,6 @@ class KlineChart {
     const view = this.bars.slice(start, end);
     const pad = this._pad;
     const plotW = w - pad.l - pad.r;
-    const mainH = h * 0.72;
-    const volTop = mainH + 10;
-    const volH = h - volTop - pad.b;
     const bw = plotW / n;
 
     // ---- 价格区间（含均线） ----
@@ -462,6 +459,44 @@ class KlineChart {
       arr: this._calcMA(this.bars, n).slice(start, end),
       color: MA_COLOR[n] || '#888',
     }));
+
+    // ---- 顶部图例布局：均线可换行，提示独占一行，价格区从它们下方开始 ----
+    // 旧版把图例固定画在 y=18、提示画在 y=34，320px 宽时 7 条均线会压住提示和顶部坐标。
+    const narrow = w < 420;
+    const legendFont = narrow ? '10px system-ui' : '11px system-ui';
+    const rowH = narrow ? 13 : 15;
+    const gapX = 10;
+    ctx.font = legendFont;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    const leg = mas.map(({ n, arr, color }) => {
+      const v = arr[arr.length - 1];
+      return {
+        color,
+        text: 'MA' + n + ':' + (v == null ? '--' : this._fmt(v)),
+      };
+    });
+    const availW = Math.max(80, plotW - 8);
+    const rows = [];
+    let row = [], rowW = 0;
+    leg.forEach((it) => {
+      const tw = ctx.measureText(it.text).width;
+      if (row.length && rowW + gapX + tw > availW) {
+        rows.push(row); row = []; rowW = 0;
+      }
+      rowW += (row.length ? gapX : 0) + tw;
+      row.push({ ...it, tw });
+    });
+    if (row.length) rows.push(row);
+    const legendTop = 12;
+    const hintY = legendTop + rows.length * rowH + 3;
+    pad.t = Math.round(hintY + 14);
+
+    // 主图/成交量按「顶部让出的高度」重新分配，避免图例换行后把成交量挤出画布
+    const volH = Math.max(34, h * 0.2);
+    const mainBottom = h - pad.b - volH - 10;
+    const mainH = Math.max(60, mainBottom - pad.t);
+    const volTop = mainBottom + 10;
     let lo = Infinity, hi = -Infinity;
     view.forEach((b) => {
       // 2.18.0：closeOnly bar 的 0 不参与 y 域（否则整段历史被压到顶部、看起来是水平线）
@@ -553,25 +588,29 @@ class KlineChart {
     };
     mas.forEach(({ arr, color }) => drawMA(arr, color));
 
-    // ---- 图例（只列当前开启的均线）----
+    // ---- 图例（按上面算好的行布局绘制，窄屏自动换行）----
     ctx.textAlign = 'left';
-    ctx.font = '11px system-ui';
-    const leg = mas.map(({ n, arr, color }) => ['MA' + n, arr[arr.length - 1], color]);
-    let lx = pad.l + 4;
-    leg.forEach(([name, v, col]) => {
-      const txt = name + ':' + (v == null ? '--' : this._fmt(v));
-      ctx.fillStyle = col;
-      ctx.fillText(txt, lx, pad.t + 6);
-      lx += ctx.measureText(txt).width + 10;
+    ctx.textBaseline = 'middle';
+    ctx.font = legendFont;
+    let ly = legendTop;
+    rows.forEach((r) => {
+      let lx = pad.l + 4;
+      r.forEach(({ text, color, tw }) => {
+        ctx.fillStyle = color;
+        ctx.fillText(text, lx, ly);
+        lx += tw + gapX;
+      });
+      ly += rowH;
     });
 
-    // 回看提示：触屏没有滚轮 / Ctrl，文案换成手势；字号也略大一点便于拇指屏阅读
+    // 回看提示：触屏没有滚轮 / Ctrl，文案换成手势；字号也略大一点便于拇指屏阅读。
+    // 提示单独占一行；窄屏放不下时逐级缩短，绝不压到图例或右侧价格轴。
     ctx.textAlign = 'left';
     ctx.font = (this._coarse ? '12px' : '11px') + ' system-ui';
     const canPan = this._maxOffset() > 0;
     const touch = this._coarse;
     ctx.fillStyle = this.offset > 0 ? '#8b5a2b' : '#b9b3a4';
-    const hint = this.offset > 0
+    let hint = this.offset > 0
       ? (touch
           ? `← 回看 ${this.offset} 根 · 双击回最新 · 双指缩放`
           : `← 已回看 ${this.offset} 根 · 双击回到最新`)
@@ -580,7 +619,18 @@ class KlineChart {
               ? `共 ${this.bars.length} 根 · 单指拖动 · 双指缩放`
               : `共 ${this.bars.length} 根 · 拖动/←→ 平移 · 滚轮或 Ctrl+± 缩放`)
           : `共 ${this.bars.length} 根 · 已全部显示`);
-    ctx.fillText(hint, pad.l + 4, pad.t + 22);
+    const fits = (s) => ctx.measureText(s).width <= availW;
+    if (!fits(hint)) {
+      hint = this.offset > 0
+        ? `← 回看 ${this.offset} 根 · 双击回最新`
+        : (touch
+            ? `共 ${this.bars.length} 根 · 拖动/双指缩放`
+            : `共 ${this.bars.length} 根 · 拖动平移`);
+    }
+    if (!fits(hint)) {
+      hint = this.offset > 0 ? `← 回看 ${this.offset} 根` : `共 ${this.bars.length} 根`;
+    }
+    ctx.fillText(hint, pad.l + 4, hintY);
 
     // 光标：可拖动时显示抓手，提示"这里能拖"
     cvs.style.cursor = this.dragging ? 'grabbing' : (canPan ? 'grab' : 'crosshair');
@@ -651,7 +701,7 @@ class KlineChart {
       ctx.fillRect(w - pad.r + 2, y - 8, pad.r - 4, 16);
       ctx.fillStyle = '#fff';
       ctx.textAlign = 'left';
-      ctx.fillText(this._fmt(yOfInverse(y, lo, hi, mainH)), w - pad.r + 5, y);
+      ctx.fillText(this._fmt(yOfInverse(y, lo, hi, mainH, pad.t)), w - pad.r + 5, y);
 
       // 信息浮窗：涨跌按惯例对比「上一根收盘」，不是当天开盘。
       // ⚠ view 是切片，上一根要用全量 bars 的绝对下标取，否则视图左边缘会算错；
@@ -692,8 +742,8 @@ class KlineChart {
   }
 }
 
-function yOfInverse(y, lo, hi, mainH) {
-  return hi - ((y - 12) / mainH) * (hi - lo);
+function yOfInverse(y, lo, hi, mainH, padT) {
+  return hi - ((y - (padT == null ? 12 : padT)) / mainH) * (hi - lo);
 }
 function fmtVol(v) {
   if (!v) return '—';

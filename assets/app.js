@@ -2301,12 +2301,28 @@
     if (kChart) kChart.setMAEnabled(enabledMA());
   }
 
+  /** 把当前周期 chip 滚进可视区：320px 下日K/周K 之后整块会落在屏外 */
+  function revealPeriodChip() {
+    const box = $('#kmPeriods');
+    const on = box && box.querySelector('.pchip.on');
+    if (!box || !on) return;
+    const br = on.getBoundingClientRect();
+    const cr = box.getBoundingClientRect();
+    if (!cr.width) return;
+    if (br.left < cr.left + 6) {
+      box.scrollLeft = Math.max(0, box.scrollLeft - (cr.left + 6 - br.left));
+    } else if (br.right > cr.right - 6) {
+      box.scrollLeft = Math.min(box.scrollWidth, box.scrollLeft + (br.right - (cr.right - 6)));
+    }
+  }
+
   function openKline(key, period = CFG.DEFAULT_PERIOD || '1d') {
     const q = (S.quotes || []).find((x) => x.key === key);
     // 刷新恢复时行情可能还没到：先用 sessionStorage 里存下的名称/现价把头部画对，
     // 别先显示代码或空白再跳一次（2.7.1）。
     const saved = uiState && uiState.kline && uiState.kline.key === key ? uiState.kline : null;
     $('#klineModal').hidden = false;
+    document.body.classList.add('kline-open');
     $('#kmName').textContent = q ? q.name : (saved && saved.name ? saved.name : key);
     $('#kmPrice').textContent = q ? fmtNum(q.price, decOf(key)) : (saved && saved.price ? saved.price : '');
     $('#kmPrice').className = 'km-price ' + ((q?.changePct || 0) >= 0 ? 'up' : 'down');
@@ -2360,6 +2376,7 @@
   function closeKline() {
     clearTimeout(klineTimer);
     $('#klineModal').hidden = true;
+    document.body.classList.remove('kline-open');
     saveUI();
   }
 
@@ -2409,6 +2426,8 @@
     const fetchPeriod = isYear ? '1M' : period;
     // 年K 的均线单位是「年」：只保留 5/10/20/30，且数据没到之前全部置灰
     document.querySelectorAll('.pchip').forEach((b) => b.classList.toggle('on', b.dataset.period === period));
+    // 切换周期后把当前 chip 滚进可视区（320px 下周期条是横向滚动的）
+    requestAnimationFrame(revealPeriodChip);
 
     const note = $('#kmNote');
     const meta = $('#kmMeta');
