@@ -739,7 +739,7 @@ SSH-443 会出现两种形态：限速后 90s 只下来 2~3 MB（慢但在动）
 **2.23.0 起：fetch 失败 / 落后 / 脏工作区一律不写 `data/`**（写而不提交会让工作区永久变脏，
 下一轮起每轮都被 `dirty-worktree` 判据挡下）。这些状态改写到
 `.local/metrics/sync-state.json`（已 gitignore）：
-`localFresh=false` = 本地工作树不含最近一次成功 fetch 到的 `origin/main`；
+`localFresh=false` = 本地工作树不含最近一次成功 fetch 到的 `origin/main`（**2.28.1 前的旧口径，已废弃**，现行判据见下两段）；
 `remoteRefStale=true` = 本轮 fetch 失败，`.git` 里的 `origin/main` 这个 ref 本身也是旧的，
 不能当远端现状。
 2.23.1 起该文件还带 `pm` 子对象（`date / available / capturedAt / gate / inRemote / drift`）。
@@ -775,7 +775,13 @@ SSH-443 会出现两种形态：限速后 90s 只下来 2~3 MB（慢但在动）
 | `behind` / `ahead` | 同步时与 `origin/main` 的差距 |
 | `filesWritten` / `commitCreated` | 本轮写入的数据文件数 / 是否创建提交 |
 | `dirtyStreak` | 连续因脏工作区让路的轮数（0 = 本轮不是脏跳过）；≥3 时脚本在日志打 `⚠` 并更新 `.local/metrics/alert.json`，语义是「本机兜底失效 N 轮」，站点仍由云端 Worker 每 15 分钟更新 |
-| `syncResult` | `up-to-date` / `ff-only` / `merge` / `skipped:*`（脏工作区为 `skipped:dirty-worktree`） |
+| `syncResult` | `up-to-date` / `ff-only` / `merge` / `skipped:*`（`data/snapshots` 脏为 `skipped:dirty-worktree`） |
+| `consumedDirty` | 本轮被判为「消费数据脏」的文件清单（即挡住同步的 `data/snapshots` 改动，最多 20 条）；只在脏/同步轮有内容 |
+| `dirtyPaths` | 本轮 `git status` 的全部改动文件（含与收盘无关的源码/测试/早报索引，最多 20 条），仅作诊断 |
+
+17:00 的 `scripts/sync-close.ps1` 另有自己的台账 `.local/metrics/close-sync.jsonl`，字段是 `result` 而非
+`syncResult`；快速失败时按阻断文件是否落在 `data/snapshots` 区分 `skipped-dirty` 与
+`skipped-dirty-unrelated`（后者表示只被无关脏挡住、快照本身没被改）。
 
 `-SyncOnly` 记 `mode: "sync-only"`，只做同步自检，不计入采集轮次。
 

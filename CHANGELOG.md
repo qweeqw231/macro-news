@@ -13,6 +13,37 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.28.3] - 2026-11-20
+
+### 修复：重导出历史索引会抹掉补写标记；文档口径与代码对齐
+
+静态体检发现 `data/history/index.json` 的 `briefBackfill` / `briefAt` 只由补写线写入，
+而两个导出器按切片目录**整份重建**索引时只搬 `briefLine`，下一次重导出就会静默抹掉
+337 天的「补写」标签（`assets/app.js` 的标签与「晚到/跨日」判定随之失效）。
+
+**改动**
+- `history-slice.buildIndex` 透传 `briefBackfill` / `briefAt`（仅 `hasBriefing` 为真时写）。
+- 新增 `history-slice.briefIndexFlags(brief)`，两个导出器共用同一份字段映射，
+  避免再出现「只搬一半字段」；`export-history.mjs` / `export-history-range.mjs` 均改用。
+- 两个导出器写 `data/history/index.json` 时改走 `withSharedLock`（与 `patchIndexFiles` 同一把锁），
+  整份重建不再可能覆盖并发写入的日期标记。
+- `tests/history-slice.test.mjs` 新增 3 条回归：buildIndex 透传、字段映射、以及
+  「补写产物经 `readBriefingMeta → briefIndexFlags → buildIndex` 重建后标记仍在」。
+- `collect-and-push.ps1` 的 `collect-runs.jsonl` 每轮补记 `consumedDirty` / `dirtyPaths`
+  （此前只在 `sync-state.json` 留最新一轮，逐轮回看要翻日志）。
+- `docs/runner-network-happy-eyeballs.md` 的「未落地项」与代码相反：`src/collect.mjs:306`
+  自 2.27.1 起已设置 `setDefaultAutoSelectFamilyAttemptTimeout(3000)`，按事实改为「已落地」。
+- README 中英：`localFresh` 旧定义句标注「2.28.1 前，已废弃」；台账表补
+  `skipped-dirty-unrelated` 的归属（17:00 `close-sync.jsonl`）与 `consumedDirty` / `dirtyPaths`。
+- 设计文档 §3.5 加「已被 §3.6 取代」标记，并把同文两处 `behind==0` 的旧口径同步标注。
+
+**版本号**：补丁位 —— 文档更正 + 判据守卫 + 测试补充，无用户可见新功能。
+
+### CI
+- `pages.yml` 的 `deploy-pages` 增加一次失败重跑：2026-11-20 21:23 观察到
+  「上传成功 0.33s 后查 artifact 列表返回 0 条」的竞态（约 2%），症状固定且不会随下次
+  HEAD 前进自愈。首跑 `continue-on-error`，失败后等 10s 重试一次。
+
 ## [2.28.2] - 2026-11-20
 
 ### 补写 2026-08-17 ~ 2026-10-19 的 64 天早报

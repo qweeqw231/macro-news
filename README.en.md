@@ -672,7 +672,8 @@ A successful sync is written to `localSync` in `data/_last-run.json`, and the fo
 **Since 2.23.0, a failed `fetch`, a diverged state or a dirty worktree never writes `data/`**
 (writing without committing leaves the worktree permanently dirty, and every later round is then skipped
 by the `dirty-worktree` gate). Those states go to `.local/metrics/sync-state.json` (gitignored) instead:
-`localFresh=false` means the worktree does not contain the last successfully fetched `origin/main`;
+`localFresh=false` means the worktree does not contain the last successfully fetched `origin/main`
+(**pre-2.28.1 definition, now superseded** — see the two paragraphs below for the current rule);
 `remoteRefStale=true` means this round's fetch failed, so the local `origin/main` ref itself is stale
 and must not be treated as the remote head.
 Since 2.23.1 the file also carries a `pm` object (`date / available / capturedAt / gate / inRemote / drift`).
@@ -710,7 +711,13 @@ see §2.6. It only reads the news database and writes `.local/briefings/`, **nev
 | `behind` / `ahead` | Distance from `origin/main` during sync |
 | `filesWritten` / `commitCreated` | Data files written this round / whether a commit was created |
 | `dirtyStreak` | Consecutive rounds deferred because of a dirty worktree (0 = this round was not a dirty skip); at ≥3 the script logs `⚠` and updates `.local/metrics/alert.json` — meaning "local fallback failed N rounds", while the site is still refreshed by the cloud Worker every 15 minutes |
-| `syncResult` | `up-to-date` / `ff-only` / `merge` / `skipped:*` (dirty worktree = `skipped:dirty-worktree`) |
+| `syncResult` | `up-to-date` / `ff-only` / `merge` / `skipped:*` (`data/snapshots` dirt = `skipped:dirty-worktree`) |
+| `consumedDirty` | Files judged as "consumed-data dirt" this round, i.e. the `data/snapshots` changes that blocked the sync (max 20); populated on dirty/sync rounds only |
+| `dirtyPaths` | Every file changed in `git status` this round (including source/tests/briefing indexes unrelated to the close, max 20), diagnostics only |
+
+The 17:00 `scripts/sync-close.ps1` keeps its own ledger at `.local/metrics/close-sync.jsonl`, whose field is
+`result` rather than `syncResult`; on a fast-forward failure it distinguishes `skipped-dirty` from
+`skipped-dirty-unrelated` (the latter means only unrelated dirt blocked it and the snapshot itself was untouched).
 
 `-SyncOnly` records `mode: "sync-only"`; it only runs a sync self-check and does not count as a collection round.
 

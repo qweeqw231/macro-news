@@ -66,6 +66,9 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 `localFresh = (behind -eq 0)` 与写入的 `head` 都用了同步前的值。
 `collect-and-push.ps1` 同病（合并后用旧 behind，`localFresh` 直接写 true）。
 
+> **口径更新（2.28.1 / 2026-11-20）**：本节「保持 `behind==0` 严格定义」的结论已被 §3.6 取代 ——
+> `localFresh` 现按「当天 pm 收盘基准可用」判定。下文保留为当时的推理记录，不要按它实现。
+
 判据选择（结论）：**保持 `localFresh` 的严格定义**（本地工作树是否已与最近一次成功 fetch 的
 `origin/main` 对齐，即重算后的 `behind == 0`），**不**把它改成「当天 pm 可用」。
 理由：这两件事的失效原因完全不同 ——
@@ -97,7 +100,7 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 | 分支 | 旧行为 | 新行为 |
 |---|---|---|
 | fetch 失败 | 写 `data/_last-run.json` 后 exit（留下永久脏） | **不写 `data/`**；写哨兵；日志明确「本地不是最新 + origin/main ref 停在 `<sha>(<time>)`」 |
-| `dirty-worktree` | 只写台账 | 追加哨兵（`localFresh = behind==0`） |
+| `dirty-worktree` | 只写台账 | 追加哨兵（`localFresh = behind==0`；2.28.1 起改按当天 pm 基准，见 §3.6） |
 | 其它 `skipped:*` | `Publish-LocalSync` 先写后判 | 先 fetch → at-origin → 未合并则直接不写 → 才写 → 提交 → 推送 |
 | 同步成功 | 写 `localSync` | 同左 + 哨兵 `localFresh=true`、刷新 `remoteRefAt` |
 
@@ -120,7 +123,7 @@ sync: head=56279d0c behind=unknown ahead=unknown dirty=no result=skipped:fetch-f
 | 字段 | true 的含义 |
 |---|---|
 | `remoteRefStale` | 本轮 fetch 失败，`.git/refs/remotes/origin/main` 未刷新，不能当远端现状 |
-| `localFresh=false` | 本地工作树不含（最近一次成功 fetch 到的）`origin/main`，`data/` 截面不可当收盘基准 |
+| `localFresh=false` | **2.28.1 前**：本地工作树不含（最近一次成功 fetch 到的）`origin/main`，`data/` 截面不可当收盘基准；**2.28.1 起**：当天 pm 收盘基准不可用（判据见 §3.6） |
 
 外部消费方（如 `投资组合研究/daily_update.py`）建议检查顺序：
 `data/snapshots/<date>_pm.json` 存在且 gate=ok → 用；

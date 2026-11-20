@@ -32,6 +32,11 @@ workflow 本身在 GitHub 侧用完即删，本地副本保留在 `tmp/diag-stat
 - 该结论不改变「源健康状态」的口径：运维展示层仍按实际成功/失败计数，不需要为 runner 特例开白。
 - 若后续把采集迁到自建 runner 或固定出网环境，此条不再适用，需要重新实测。
 
-## 未落地项
+## 落地情况（2026-11-19 已实现）
 
-当前 `src/` 未设置 `autoSelectFamilyAttemptTimeout`，即生产采集仍走 Node 默认 250ms。是否调大属于运行环境取舍（放宽会增加 IPv6 不可达场景的建连延迟上限），本记录只固化诊断结论与复现方式，不代为实现决策。
+`src/collect.mjs` 在采集启动时已设置 `net.setDefaultAutoSelectFamilyAttemptTimeout(3000)`
+（见 `src/collect.mjs:306`，随 2.27.1 发布，`CHANGELOG.md` 2.27.1 有记录，
+`tests/pbc-fetch.test.mjs` 做了源码锁定防止回退）。
+
+即生产采集**已不再走** Node 默认的 250ms 等待窗口，本记录不再有「待实现」项。
+若后续把采集迁到自建 runner 或固定出网环境，需要重新实测后决定是否保留这个值。
