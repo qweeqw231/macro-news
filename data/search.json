@@ -1,14 +1,70 @@
 {
-  "generatedAt": "2026-11-20T23:08:28.877Z",
+  "generatedAt": "2026-11-20T23:23:08.731Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-20",
   "hotFrom": "2026-11-14",
   "days": 62,
   "fromHistory": 15,
-  "total": 58310,
-  "hotTotal": 7775,
+  "total": 58317,
+  "hotTotal": 7782,
   "items": [
+    {
+      "id": "1npatso",
+      "ts": 1795216887,
+      "time": "2026-11-21T07:21:27.000+08:00",
+      "source": "华尔街见闻",
+      "title": "报道：加拿大向Stellantis提供备选方案以保住安大略省工厂",
+      "url": "https://wallstreetcn.com/livenews/3203620"
+    },
+    {
+      "id": "j0jl1r",
+      "ts": 1795216852,
+      "time": "2026-11-21T07:20:52.000+08:00",
+      "source": "新浪财经",
+      "title": "备忘录：美防长赫格塞斯对美加防务合作设限",
+      "url": "https://finance.sina.com.cn/world/2026-11-21/doc-inizmwas9947486.shtml"
+    },
+    {
+      "id": "1g0ek4v",
+      "ts": 1795216557,
+      "time": "2026-11-21T07:15:57.000+08:00",
+      "source": "东方财富",
+      "title": "上证50尾盘拉升收涨0.45% 多家机构发声看好A股中长期机会",
+      "url": "http://insurance.eastmoney.com/news/1217,202611213936559778.html"
+    },
+    {
+      "id": "1pdzfms",
+      "ts": 1795216449,
+      "time": "2026-11-21T07:14:09.000+08:00",
+      "source": "东方财富",
+      "title": "北交所推出创新中小债 精准对接创新型中小企业融资需求",
+      "url": "http://stock.eastmoney.com/news/11376,202611213936559067.html"
+    },
+    {
+      "id": "puyis1",
+      "ts": 1795216390,
+      "time": "2026-11-21T07:13:10.000+08:00",
+      "source": "东方财富",
+      "title": "前10个月财政收入逾19.5万亿元 个税收入规模超去年全年",
+      "url": "http://finance.eastmoney.com/news/1352,202611213936559275.html"
+    },
+    {
+      "id": "1br2fls",
+      "ts": 1795216241,
+      "time": "2026-11-21T07:10:41.000+08:00",
+      "source": "新浪财经",
+      "title": "11月21日隔夜要闻：美股全线下挫 英伟达市值跌出前三 黄金创3月份以来最大单周跌幅 避险买盘推动美债大涨",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmwaq3638651.shtml"
+    },
+    {
+      "id": "1vpqvxu",
+      "ts": 1795216168,
+      "time": "2026-11-21T07:09:28.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普：中俄美元首会晤“史无前例”“意义重大”",
+      "url": "https://finance.sina.com.cn/world/2026-11-21/doc-inizmwas9940291.shtml"
+    },
     {
       "id": "1ehdvmd",
       "ts": 1795215842,
@@ -58,11 +114,19 @@
       "url": "https://wallstreetcn.com/livenews/3203619"
     },
     {
-      "id": "16iq46l",
+      "id": "1ahlv50",
+      "ts": 1795215600,
+      "time": "2026-11-21T07:00:00.000+08:00",
+      "source": "东方财富",
+      "title": "香云纱的“APEC时刻”：一块“软黄金”丈量广货新价值",
+      "url": "http://finance.eastmoney.com/news/1355,202611213936600129.html"
+    },
+    {
+      "id": "mj61qf",
       "ts": 1795215415,
       "time": "2026-11-21T06:56:55.000+08:00",
       "source": "华尔街见闻",
-      "title": "美国商务部长霍华德·卢特尼克要求电池初创企业Pure Lithium将51%的控股权交给美国政府。",
+      "title": "报道：卢特尼克曾要求电池初创企业Pure Lithium接受美方接管，但被拒绝",
       "url": "https://wallstreetcn.com/livenews/3203618"
     },
     {
@@ -546,11 +610,11 @@
       "url": "https://wallstreetcn.com/livenews/3203583"
     },
     {
-      "id": "13ks16z",
+      "id": "ak1twr",
       "ts": 1795208669,
       "time": "2026-11-21T05:04:29.000+08:00",
       "source": "华尔街见闻",
-      "title": "加拿大股市陷入回调区间。",
+      "title": "加拿大股市陷入回调区间",
       "url": "https://wallstreetcn.com/livenews/3203582"
     },
     {
@@ -578,11 +642,11 @@
       "url": "https://wallstreetcn.com/livenews/3203579"
     },
     {
-      "id": "b6k4zj",
+      "id": "vmef4x",
       "ts": 1795208454,
       "time": "2026-11-21T05:00:54.000+08:00",
       "source": "华尔街见闻",
-      "title": "Anthropic初步收跌9.13%，报88.30美元。",
+      "title": "Anthropic收跌8.5%，报88.91美元，北京时间01:49曾跌至83.05美元，距离83美元的IPO发行价仅仅一步之遥。",
       "url": "https://wallstreetcn.com/livenews/3203578"
     },
     {
@@ -594,11 +658,11 @@
       "url": "https://wallstreetcn.com/livenews/3203576"
     },
     {
-      "id": "br7gxe",
+      "id": "1mmylw2",
       "ts": 1795208413,
       "time": "2026-11-21T05:00:13.000+08:00",
       "source": "华尔街见闻",
-      "title": "标普七连跌，与道指收盘陷入回调区间",
+      "title": "标普七连跌，与道指收盘陷入回调区间，本周纳指跌10%、半导体指数跌产后阿17%",
       "url": "https://wallstreetcn.com/livenews/3203575"
     },
     {
@@ -1216,14 +1280,6 @@
       "source": "东方财富",
       "title": "泰州中国医药城：从“泰州造”到“全球用” 大健康产业生态加速成形",
       "url": "http://finance.eastmoney.com/news/1354,202611213936558436.html"
-    },
-    {
-      "id": "puyis1",
-      "ts": 1795198510,
-      "time": "2026-11-21T02:15:10.000+08:00",
-      "source": "东方财富",
-      "title": "前10个月财政收入逾19.5万亿元 个税收入规模超去年全年",
-      "url": "http://finance.eastmoney.com/news/1352,202611213936559275.html"
     },
     {
       "id": "rcn19m",
