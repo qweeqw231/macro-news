@@ -91,4 +91,4 @@ jobs:
         #   当成 mapping（run 名称变成文件路径、作业直接解析失败）。
         # ⚠ 不能提交 2026-11-21/…：.gitignore 故意忽略根目录日期产物目录，git add 会直接失败。
         run: |
-          bash scripts/push-data.sh "data/kline/min/_overlap.json data/kline/min/_overlap-run.json" MSG_PREFIX="chore: 外汇分钟重叠核对结果"
+          bash scripts/push-data.sh data/kline/min/_overlap.json data/kline/min/_overlap-run.json MSG_PREFIX="chore: 外汇分钟重叠核对结果"
