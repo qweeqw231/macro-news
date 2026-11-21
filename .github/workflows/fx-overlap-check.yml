@@ -62,13 +62,35 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: 记录运行状态（即使核对崩溃也要留证据）
+        if: always()
+        run: |
+          mkdir -p 2026-11-21/kline-minute-audit/work
+          node -e "
+            const fs = require('fs');
+            const p = '2026-11-21/kline-minute-audit/work/overlap-run-status.json';
+            const log = fs.existsSync('overlap.log') ? fs.readFileSync('overlap.log', 'utf8').slice(-6000) : '（没有 overlap.log：脚本可能根本没启动）';
+            const hasResult = fs.existsSync('2026-11-21/kline-minute-audit/work/overlap-actions.json');
+            fs.writeFileSync(p, JSON.stringify({
+              finishedAt: new Date().toISOString(),
+              runner: process.env.RUNNER_NAME || '',
+              jobStatus: process.env.JOB_STATUS || '',
+              producedResult: hasResult,
+              log
+            }, null, 2));
+            console.log('状态已写入', p, 'producedResult=', hasResult);
+          "
+        env:
+          JOB_STATUS: ${{ job.status }}
+
       - name: 提交核对结果
+        if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add -A 2026-11-21/kline-minute-audit/work/overlap-actions.json
+          git add -A 2026-11-21/kline-minute-audit/work/
           if git diff --cached --quiet; then
             echo '无变化'
             exit 0
