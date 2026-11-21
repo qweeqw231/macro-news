@@ -1,14 +1,30 @@
 {
-  "generatedAt": "2026-11-21T14:38:18.837Z",
+  "generatedAt": "2026-11-21T15:07:57.676Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-21",
   "hotFrom": "2026-11-15",
   "days": 62,
   "fromHistory": 14,
-  "total": 57908,
-  "hotTotal": 7664,
+  "total": 57910,
+  "hotTotal": 7666,
   "items": [
+    {
+      "id": "1h3k1qv",
+      "ts": 1795273293,
+      "time": "2026-11-21T23:01:33.000+08:00",
+      "source": "新浪财经",
+      "title": "特朗普白宫记者会复盘亚洲之行 宣扬美国取得历史性胜利",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizpkcw3247451.shtml"
+    },
+    {
+      "id": "qbv2vd",
+      "ts": 1795272522,
+      "time": "2026-11-21T22:48:42.000+08:00",
+      "source": "东方财富",
+      "title": "市场监管总局：2026年前三季度全国经营主体“提质向新”",
+      "url": "http://finance.eastmoney.com/news/1352,202611213936854322.html"
+    },
     {
       "id": "51t8qq",
       "ts": 1795271438,
