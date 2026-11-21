@@ -1,0 +1,622 @@
+{
+  "generatedAt": "2026-11-21T13:45:02.386Z",
+  "pairs": [
+    {
+      "key": "eurusd",
+      "secid": "119.EURUSD",
+      "sinaSymbol": "fx_seurusd",
+      "period": "5m",
+      "klt": 5,
+      "stats": {
+        "emBars": 1000,
+        "sinaBars": 1014,
+        "common": 996,
+        "emFirst": "2026-11-17 18:45",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-11-17 17:30",
+        "sinaLast": "2026-11-21 05:55",
+        "onlyEm": 4,
+        "onlySina": 18,
+        "onlyEmSample": [
+          "2026-11-18 05:59",
+          "2026-11-19 05:59",
+          "2026-11-20 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-11-17 17:30",
+          "2026-11-17 17:35",
+          "2026-11-17 17:40"
+        ],
+        "p50": 0.00009102494083377843,
+        "p90": 0.00009121590805435464,
+        "p99": 0.00018241517694270155,
+        "max": {
+          "t": "2026-11-20 06:05",
+          "em": 1.097,
+          "sina": 1.0967,
+          "rel": 0.00027347310847763626
+        },
+        "overThreshold": 0,
+        "overThresholdPct": 0
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "eurusd",
+      "secid": "119.EURUSD",
+      "sinaSymbol": "fx_seurusd",
+      "period": "30m",
+      "klt": 30,
+      "stats": {
+        "emBars": 240,
+        "sinaBars": 980,
+        "common": 235,
+        "emFirst": "2026-11-16 06:30",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-10-23 18:00",
+        "sinaLast": "2026-11-21 05:30",
+        "onlyEm": 5,
+        "onlySina": 745,
+        "onlyEmSample": [
+          "2026-11-17 05:59",
+          "2026-11-18 05:59",
+          "2026-11-19 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-10-23 18:00",
+          "2026-10-23 18:30",
+          "2026-10-23 19:00"
+        ],
+        "p50": 0.00009095870474803438,
+        "p90": 0.00009125752874631413,
+        "p99": 0.0002732987154960071,
+        "max": {
+          "t": "2026-11-17 06:30",
+          "em": 1.0996,
+          "sina": 1.1003,
+          "rel": 0.0006365951255003138
+        },
+        "overThreshold": 1,
+        "overThresholdPct": 0.00425531914893617
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "gbpusd",
+      "secid": "119.GBPUSD",
+      "sinaSymbol": "fx_sgbpusd",
+      "period": "5m",
+      "klt": 5,
+      "stats": {
+        "emBars": 1000,
+        "sinaBars": 1000,
+        "common": 996,
+        "emFirst": "2026-11-17 18:45",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-11-17 18:40",
+        "sinaLast": "2026-11-21 05:55",
+        "onlyEm": 4,
+        "onlySina": 4,
+        "onlyEmSample": [
+          "2026-11-18 05:59",
+          "2026-11-19 05:59",
+          "2026-11-20 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-11-17 18:40",
+          "2026-11-18 06:00",
+          "2026-11-19 06:00"
+        ],
+        "p50": 0.00007634170547369187,
+        "p90": 0.0003031681067151402,
+        "p99": 0.0003057870193409953,
+        "max": {
+          "t": "2026-11-20 19:00",
+          "em": 1.3102,
+          "sina": 1.3096,
+          "rel": 0.00045794535185462824
+        },
+        "overThreshold": 0,
+        "overThresholdPct": 0
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "gbpusd",
+      "secid": "119.GBPUSD",
+      "sinaSymbol": "fx_sgbpusd",
+      "period": "30m",
+      "klt": 30,
+      "stats": {
+        "emBars": 240,
+        "sinaBars": 974,
+        "common": 235,
+        "emFirst": "2026-11-16 06:30",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-10-23 21:00",
+        "sinaLast": "2026-11-21 05:30",
+        "onlyEm": 5,
+        "onlySina": 739,
+        "onlyEmSample": [
+          "2026-11-17 05:59",
+          "2026-11-18 05:59",
+          "2026-11-19 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-10-23 21:00",
+          "2026-10-23 21:30",
+          "2026-10-23 22:00"
+        ],
+        "p50": 0.000076335877862587,
+        "p90": 0.000302984396303557,
+        "p99": 0.00037896013339392526,
+        "max": {
+          "t": "2026-11-20 19:00",
+          "em": 1.3102,
+          "sina": 1.3096,
+          "rel": 0.00045794535185462824
+        },
+        "overThreshold": 0,
+        "overThresholdPct": 0
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "usdjpy",
+      "secid": "119.USDJPY",
+      "sinaSymbol": "fx_susdjpy",
+      "period": "5m",
+      "klt": 5,
+      "stats": {
+        "emBars": 1000,
+        "sinaBars": 1002,
+        "common": 996,
+        "emFirst": "2026-11-17 18:45",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-11-17 18:30",
+        "sinaLast": "2026-11-21 05:55",
+        "onlyEm": 4,
+        "onlySina": 6,
+        "onlyEmSample": [
+          "2026-11-18 05:59",
+          "2026-11-19 05:59",
+          "2026-11-20 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-11-17 18:30",
+          "2026-11-17 18:35",
+          "2026-11-17 18:40"
+        ],
+        "p50": 0.00008189337482600953,
+        "p90": 0.0001378774394907295,
+        "p99": 0.00019979668488295587,
+        "max": {
+          "t": "2026-11-17 22:35",
+          "em": 159.3465,
+          "sina": 159.3,
+          "rel": 0.000291816889608372
+        },
+        "overThreshold": 0,
+        "overThresholdPct": 0
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "usdjpy",
+      "secid": "119.USDJPY",
+      "sinaSymbol": "fx_susdjpy",
+      "period": "30m",
+      "klt": 30,
+      "stats": {
+        "emBars": 240,
+        "sinaBars": 985,
+        "common": 235,
+        "emFirst": "2026-11-16 06:30",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-10-23 15:30",
+        "sinaLast": "2026-11-21 05:30",
+        "onlyEm": 5,
+        "onlySina": 750,
+        "onlyEmSample": [
+          "2026-11-17 05:59",
+          "2026-11-18 05:59",
+          "2026-11-19 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-10-23 15:30",
+          "2026-10-23 16:00",
+          "2026-10-23 16:30"
+        ],
+        "p50": 0.000090042269493311,
+        "p90": 0.0001411786851558955,
+        "p99": 0.00019979668488295587,
+        "max": {
+          "t": "2026-11-17 06:30",
+          "em": 159.434,
+          "sina": 159.4,
+          "rel": 0.00021325438739535992
+        },
+        "overThreshold": 0,
+        "overThresholdPct": 0
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "usdkrw",
+      "secid": "119.USDKRW",
+      "sinaSymbol": "fx_susdkrw",
+      "period": "5m",
+      "klt": 5,
+      "stats": {
+        "emBars": 1000,
+        "sinaBars": 1020,
+        "common": 996,
+        "emFirst": "2026-11-17 18:45",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-11-17 17:00",
+        "sinaLast": "2026-11-21 05:55",
+        "onlyEm": 4,
+        "onlySina": 24,
+        "onlyEmSample": [
+          "2026-11-18 05:59",
+          "2026-11-19 05:59",
+          "2026-11-20 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-11-17 17:00",
+          "2026-11-17 17:05",
+          "2026-11-17 17:10"
+        ],
+        "p50": 0.0003079951021265593,
+        "p90": 0.0006454144881603185,
+        "p99": 0.0042216792569843495,
+        "max": {
+          "t": "2026-11-20 06:15",
+          "em": 1326.1,
+          "sina": 1334.18,
+          "rel": 0.0060930548224117
+        },
+        "overThreshold": 211,
+        "overThresholdPct": 0.21184738955823293
+      },
+      "verdict": "fail"
+    },
+    {
+      "key": "usdkrw",
+      "secid": "119.USDKRW",
+      "sinaSymbol": "fx_susdkrw",
+      "period": "30m",
+      "klt": 30,
+      "stats": {
+        "emBars": 240,
+        "sinaBars": 995,
+        "common": 235,
+        "emFirst": "2026-11-16 06:30",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-10-23 10:30",
+        "sinaLast": "2026-11-21 05:30",
+        "onlyEm": 5,
+        "onlySina": 760,
+        "onlyEmSample": [
+          "2026-11-17 05:59",
+          "2026-11-18 05:59",
+          "2026-11-19 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-10-23 10:30",
+          "2026-10-23 11:00",
+          "2026-10-23 11:30"
+        ],
+        "p50": 0.0002979743367260202,
+        "p90": 0.000622600976343019,
+        "p99": 0.004199357393708355,
+        "max": {
+          "t": "2026-11-20 06:30",
+          "em": 1325.815,
+          "sina": 1333.06,
+          "rel": 0.005464563306343563
+        },
+        "overThreshold": 39,
+        "overThresholdPct": 0.16595744680851063
+      },
+      "verdict": "fail"
+    },
+    {
+      "key": "audusd",
+      "secid": "119.AUDUSD",
+      "sinaSymbol": "fx_saudusd",
+      "period": "5m",
+      "klt": 5,
+      "stats": {
+        "emBars": 1000,
+        "sinaBars": 999,
+        "common": 996,
+        "emFirst": "2026-11-17 18:45",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-11-17 18:45",
+        "sinaLast": "2026-11-21 05:55",
+        "onlyEm": 4,
+        "onlySina": 3,
+        "onlyEmSample": [
+          "2026-11-18 05:59",
+          "2026-11-19 05:59",
+          "2026-11-20 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-11-18 06:00",
+          "2026-11-19 06:00",
+          "2026-11-20 06:00"
+        ],
+        "p50": 0.0001493651979088708,
+        "p90": 0.0002990877822640616,
+        "p99": 0.000450788880540897,
+        "max": {
+          "t": "2026-11-20 10:15",
+          "em": 0.6653,
+          "sina": 0.6649,
+          "rel": 0.0006012325266796271
+        },
+        "overThreshold": 2,
+        "overThresholdPct": 0.002008032128514056
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "audusd",
+      "secid": "119.AUDUSD",
+      "sinaSymbol": "fx_saudusd",
+      "period": "30m",
+      "klt": 30,
+      "stats": {
+        "emBars": 240,
+        "sinaBars": 974,
+        "common": 235,
+        "emFirst": "2026-11-16 06:30",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-10-23 21:00",
+        "sinaLast": "2026-11-21 05:30",
+        "onlyEm": 5,
+        "onlySina": 739,
+        "onlyEmSample": [
+          "2026-11-17 05:59",
+          "2026-11-18 05:59",
+          "2026-11-19 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-10-23 21:00",
+          "2026-10-23 21:30",
+          "2026-10-23 22:00"
+        ],
+        "p50": 0.00014878738282991962,
+        "p90": 0.00029775197260678576,
+        "p99": 0.000450788880540897,
+        "max": {
+          "t": "2026-11-20 10:00",
+          "em": 0.6652,
+          "sina": 0.6649,
+          "rel": 0.0004509921828021151
+        },
+        "overThreshold": 0,
+        "overThresholdPct": 0
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "usdcad",
+      "secid": "119.USDCAD",
+      "sinaSymbol": "fx_susdcad",
+      "period": "5m",
+      "klt": 5,
+      "stats": {
+        "emBars": 1000,
+        "sinaBars": 1000,
+        "common": 996,
+        "emFirst": "2026-11-17 18:45",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-11-17 18:40",
+        "sinaLast": "2026-11-21 05:55",
+        "onlyEm": 4,
+        "onlySina": 4,
+        "onlyEmSample": [
+          "2026-11-18 05:59",
+          "2026-11-19 05:59",
+          "2026-11-20 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-11-17 18:40",
+          "2026-11-18 06:00",
+          "2026-11-19 06:00"
+        ],
+        "p50": 0.00006990562740315345,
+        "p90": 0.0001398112548061517,
+        "p99": 0.00021001050052515854,
+        "max": {
+          "t": "2026-11-18 06:05",
+          "em": 1.4278,
+          "sina": 1.4297,
+          "rel": 0.0013307185880375493
+        },
+        "overThreshold": 1,
+        "overThresholdPct": 0.001004016064257028
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "usdcad",
+      "secid": "119.USDCAD",
+      "sinaSymbol": "fx_susdcad",
+      "period": "30m",
+      "klt": 30,
+      "stats": {
+        "emBars": 240,
+        "sinaBars": 980,
+        "common": 235,
+        "emFirst": "2026-11-16 06:30",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-10-23 18:00",
+        "sinaLast": "2026-11-21 05:30",
+        "onlyEm": 5,
+        "onlySina": 745,
+        "onlyEmSample": [
+          "2026-11-17 05:59",
+          "2026-11-18 05:59",
+          "2026-11-19 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-10-23 18:00",
+          "2026-10-23 18:30",
+          "2026-10-23 19:00"
+        ],
+        "p50": 0.00006998880179170561,
+        "p90": 0.00013993842709206407,
+        "p99": 0.00020983423095752044,
+        "max": {
+          "t": "2026-11-16 21:30",
+          "em": 1.4287,
+          "sina": 1.4284,
+          "rel": 0.00020998110170097922
+        },
+        "overThreshold": 0,
+        "overThresholdPct": 0
+      },
+      "verdict": "pass"
+    },
+    {
+      "key": "usdchf",
+      "secid": "119.USDCHF",
+      "sinaSymbol": "fx_susdchf",
+      "period": "5m",
+      "klt": 5,
+      "stats": {
+        "emBars": 1000,
+        "sinaBars": 1002,
+        "common": 996,
+        "emFirst": "2026-11-17 18:45",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-11-17 18:30",
+        "sinaLast": "2026-11-21 05:55",
+        "onlyEm": 4,
+        "onlySina": 6,
+        "onlyEmSample": [
+          "2026-11-18 05:59",
+          "2026-11-19 05:59",
+          "2026-11-20 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-11-17 18:30",
+          "2026-11-17 18:35",
+          "2026-11-17 18:40"
+        ],
+        "p50": 0.00023702299123012322,
+        "p90": 0.00035599857600565675,
+        "p99": 0.0005934013766912603,
+        "max": {
+          "t": "2026-11-19 06:10",
+          "em": 0.8429,
+          "sina": 0.8421,
+          "rel": 0.0009491042828331035
+        },
+        "overThreshold": 14,
+        "overThresholdPct": 0.014056224899598393
+      },
+      "verdict": "fail"
+    },
+    {
+      "key": "usdchf",
+      "secid": "119.USDCHF",
+      "sinaSymbol": "fx_susdchf",
+      "period": "30m",
+      "klt": 30,
+      "stats": {
+        "emBars": 240,
+        "sinaBars": 993,
+        "common": 235,
+        "emFirst": "2026-11-16 06:30",
+        "emLast": "2026-11-21 05:59",
+        "sinaFirst": "2026-10-23 11:30",
+        "sinaLast": "2026-11-21 05:30",
+        "onlyEm": 5,
+        "onlySina": 758,
+        "onlyEmSample": [
+          "2026-11-17 05:59",
+          "2026-11-18 05:59",
+          "2026-11-19 05:59"
+        ],
+        "onlySinaSample": [
+          "2026-10-23 11:30",
+          "2026-10-23 12:00",
+          "2026-10-23 12:30"
+        ],
+        "p50": 0.0002369949046095248,
+        "p90": 0.00035587188612095727,
+        "p99": 0.000592487261523812,
+        "max": {
+          "t": "2026-11-19 06:30",
+          "em": 0.8427,
+          "sina": 0.842,
+          "rel": 0.0008306633440133309
+        },
+        "overThreshold": 3,
+        "overThresholdPct": 0.01276595744680851
+      },
+      "verdict": "fail"
+    }
+  ],
+  "crossProbe": [
+    {
+      "secid": "119.EURCNY",
+      "dailyBars": 0,
+      "dailyLast": null,
+      "minBars": 0,
+      "minLast": null
+    },
+    {
+      "secid": "119.GBPCNY",
+      "dailyBars": 0,
+      "dailyLast": null,
+      "minBars": 0,
+      "minLast": null
+    },
+    {
+      "secid": "119.JPYCNY",
+      "dailyBars": 0,
+      "dailyLast": null,
+      "minBars": 0,
+      "minLast": null
+    },
+    {
+      "secid": "119.KRWCNY",
+      "dailyBars": 0,
+      "dailyLast": null,
+      "minBars": 0,
+      "minLast": null
+    },
+    {
+      "secid": "119.AUDCNY",
+      "dailyBars": 0,
+      "dailyLast": null,
+      "minBars": 0,
+      "minLast": null
+    },
+    {
+      "secid": "133.EURCNH",
+      "dailyBars": 5,
+      "dailyLast": {
+        "t": "2026-11-20",
+        "c": 7.3208
+      },
+      "minBars": 100,
+      "minLast": {
+        "t": "2026-11-21 05:59",
+        "c": 7.3208
+      }
+    }
+  ],
+  "summary": {
+    "pass": 10,
+    "fail": 4,
+    "other": 0,
+    "thresholdPct": 0.0005,
+    "minCommon": 200
+  }
+}
