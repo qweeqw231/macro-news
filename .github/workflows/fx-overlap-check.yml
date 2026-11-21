@@ -1,0 +1,83 @@
+name: 外汇分钟重叠核对（一次性）
+
+# 目的：回答「美元对分钟能不能从东财切到新浪」。
+#   · 东财 push2his 对**本机的非浏览器客户端**是 socket 级拒绝 ⇒ 本地拿不到东财那一半；
+#   · 只有 Actions（美国节点）能同时抓到东财与新浪 ⇒ 核对必须在这里跑。
+#
+# 产物：2026-11-21/kline-minute-audit/work/overlap-actions.json（提交回仓库，匿名可读）
+# 判定口径写在 scripts/check-fx-minute-overlap.mjs 顶部（p99 ≤ 0.05%、公共键 ≥ 200）。
+#
+# ⚠ 这是一次性核对，核对完由人工删除本文件与脚本，不并入日常调度。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'check = 7 个美元对逐根比对；probe-cross = 探测交叉盘的东财代码'
+        required: false
+        default: 'check'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/check-fx-minute-overlap.mjs'
+      - '.github/workflows/fx-overlap-check.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: macro-news-fx-overlap
+  cancel-in-progress: false
+
+jobs:
+  overlap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 跑核对
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          MODE='${{ github.event.inputs.mode }}'
+          if [ "$MODE" = "probe-cross" ]; then
+            node scripts/check-fx-minute-overlap.mjs --probe-cross 2>&1 | tee overlap.log
+          else
+            node scripts/check-fx-minute-overlap.mjs 2>&1 | tee overlap.log
+          fi
+          {
+            echo "### 外汇分钟重叠核对 · $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M')（北京）"
+            echo ""
+            echo '```'
+            tail -n 60 overlap.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 提交核对结果
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A 2026-11-21/kline-minute-audit/work/overlap-actions.json
+          if git diff --cached --quiet; then
+            echo '无变化'
+            exit 0
+          fi
+          git commit -m 'chore: 外汇分钟重叠核对结果（一次性）'
+          for i in 1 2 3; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo 'push ok'; exit 0
+            fi
+            sleep 5
+          done
+          echo 'push failed'; exit 1
