@@ -1,14 +1,30 @@
 {
-  "generatedAt": "2026-11-21T02:38:00.512Z",
+  "generatedAt": "2026-11-21T02:53:20.300Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-21",
   "hotFrom": "2026-11-15",
   "days": 62,
   "fromHistory": 14,
-  "total": 57708,
-  "hotTotal": 7464,
+  "total": 57711,
+  "hotTotal": 7467,
   "items": [
+    {
+      "id": "jvwfrc",
+      "ts": 1795228938,
+      "time": "2026-11-21T10:42:18.000+08:00",
+      "source": "东方财富",
+      "title": "人民日报：唱空中国经济者终会落空",
+      "url": "http://finance.eastmoney.com/news/1350,202611213936792690.html"
+    },
+    {
+      "id": "z9dt07",
+      "ts": 1795228782,
+      "time": "2026-11-21T10:39:42.000+08:00",
+      "source": "新浪财经",
+      "title": "软银孙正义被曝曾考虑1万亿美元收购SK海力士",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-iniznhsf5015629.shtml"
+    },
     {
       "id": "1dn0rqi",
       "ts": 1795228517,
@@ -128,6 +144,14 @@
       "source": "中新网",
       "title": "不要小看中国经济“稳”的分量",
       "url": "https://www.chinanews.com.cn/cj/2026/11-21/10735641.shtml"
+    },
+    {
+      "id": "1tyse4g",
+      "ts": 1795225653,
+      "time": "2026-11-21T09:47:33.000+08:00",
+      "source": "中国人民银行",
+      "title": "中国人民银行召开党的二十届五中全会精神宣讲报告会",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026112109473354413/index.html"
     },
     {
       "id": "vwy1yf",
