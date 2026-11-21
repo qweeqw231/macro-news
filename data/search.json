@@ -1,14 +1,22 @@
 {
-  "generatedAt": "2026-11-21T17:08:34.036Z",
+  "generatedAt": "2026-11-21T17:53:16.906Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-21",
   "hotFrom": "2026-11-15",
   "days": 62,
   "fromHistory": 14,
-  "total": 57920,
-  "hotTotal": 7676,
+  "total": 57921,
+  "hotTotal": 7677,
   "items": [
+    {
+      "id": "153pful",
+      "ts": 1795282423,
+      "time": "2026-11-22T01:33:43.000+08:00",
+      "source": "新浪财经",
+      "title": "亚马逊接近以75亿美元收购AI初创企业Decart",
+      "url": "https://finance.sina.com.cn/7x24/2026-11-22/doc-inizpqms6400684.shtml"
+    },
     {
       "id": "d4bjud",
       "ts": 1795280753,
