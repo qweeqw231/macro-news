@@ -1,0 +1,180 @@
+{
+  "date": "2026-11-21",
+  "generatedAt": "2026-11-21T09:09:14+08:00",
+  "endedAt": "2026-11-21T09:10:17+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-20",
+    "to": "2026-11-21",
+    "fromAt": "2026-11-20T08:00:00+08:00",
+    "toAt": "2026-11-21T09:00:00+08:00",
+    "fromTs": 1795132800,
+    "toTs": 1795222800
+  },
+  "overview": "隔夜风险资产急跌与利率市场反向定价并行：美联储理事库克警告行动迟缓将被迫更快更高加息，但避险买盘推动10年期美债收益率跌至4.9438%，OIS显示12月加息溢价仅23个基点；AI交易瓦解拖累标普500创2020年以来最长七连跌、纳指跌5.28%，黄金跌向3500美元。国内方面，11月LPR在政策利率换锚后首次报价仍连续18个月不变，回购增持再贷款升级为1%的长期制度安排。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "11月LPR连续18个月不变，政策利率换锚后首次报价仍按兵不动",
+      "summary": "央行公布11月LPR：1年期3.0%、5年期以上3.5%，连续第18个月不变，也是主要政策利率切换为隔夜逆回购利率后的首次报价。东方金诚团队认为短期内LPR下调可能性不大；报道把这轮稳态视为市场化报价机制下形成的均衡结果，业内解读同时提到LPR已降至历史低位、商业银行净息差偏低使银行缺乏下调动力。",
+      "why": "政策利率换锚后首次报价的定价锚点",
+      "source": "东方财富",
+      "publishedAt": "2026-11-21T07:40",
+      "url": "http://bank.eastmoney.com/news/1174,202611213936596570.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3203011",
+        "http://finance.eastmoney.com/news/1352,202611203936037911.html",
+        "http://forex.eastmoney.com/news/1131,202611203936000533.html",
+        "http://finance.eastmoney.com/news/1352,202611203936073413.html",
+        "http://forex.eastmoney.com/news/1131,202611203936111071.html",
+        "http://finance.eastmoney.com/news/1352,202611203935925839.html",
+        "http://finance.eastmoney.com/news/1344,202611203935907656.html",
+        "http://finance.eastmoney.com/news/1350,202611203935780929.html",
+        "https://wallstreetcn.com/livenews/3202908",
+        "https://wallstreetcn.com/livenews/3202906",
+        "https://finance.sina.com.cn/money/bond/market/2026-11-20/doc-inizitcm5749647.shtml",
+        "http://finance.eastmoney.com/news/1352,202611203935923276.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "股票回购增持再贷款升级扩围落地，利率降至1%、支持26家银行",
+      "summary": "股票回购增持再贷款政策加码落地半个月，银行端投放热情升温。11月2日央行会同金融监管总局、证监会等召开座谈会，宣布加力实施并“升级扩围”；11月4日政策正式落地，再贷款利率下调0.25个百分点至1%，工具由阶段性安排转为长期制度性安排，支持对象扩至21家全国性银行和5家系统重要性城商行。",
+      "why": "回购增持资金供给转为长期制度安排",
+      "source": "东方财富",
+      "publishedAt": "2026-11-21T08:01",
+      "url": "http://forex.eastmoney.com/news/1131,202611203936464050.html"
+    },
+    {
+      "rank": 3,
+      "title": "财政部：1-10月一般公共预算收入19.57万亿元，同比增长4.9%",
+      "summary": "财政部公布，1-10月全国一般公共预算收入19.57万亿元，同比增长4.9%；其中税收收入16.26万亿元，增长6%。同期财政部发行2年期国债1200亿元，发行利率1.2021%、投标倍数3.27倍，边际利率1.2195%。财政收入与税收增速同步回升，叠加债券供给放量，年末财政空间与政策接续力度值得关注。",
+      "why": "税收增速回升与债券供给的财政信号",
+      "source": "东方财富",
+      "publishedAt": "2026-11-20T20:47",
+      "url": "http://finance.eastmoney.com/news/1352,202611203936498289.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3202997"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "财政部在香港发行20亿美元3年期主权债，利率4.821%、认购36倍",
+      "summary": "据财政部网站，11月19日中华人民共和国财政部代表中央政府在香港特别行政区成功发行20亿美元主权债券，发行期限为3年期，发行利率为4.821%。国际投资者认购踊跃，总认购金额723亿美元，是发行金额的36倍。这是香港市场美元主权债发行的高倍数认购案例，为离岸主权债定价提供参考样本。",
+      "why": "离岸主权债定价与人民币国际化观察",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-20T09:51",
+      "url": "https://wallstreetcn.com/livenews/3202940"
+    },
+    {
+      "rank": 5,
+      "title": "央行：10月人民币衍生品成交7.5万亿元，同比增73.4%",
+      "summary": "央行发布2026年10月金融市场运行情况：银行间市场人民币衍生品市场成交额7.5万亿元，同比增加73.4%；10月末1年期FR007互换利率收盘价（均值）为1.38%，环比下降5个基点。同期政府债券净融资11835.2亿元，同比增加6983.4亿元；企业债券净融资3445.6亿元；债券市场托管余额212.8万亿元。",
+      "why": "衍生品放量与政府债供给同步扩张",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-20T18:04",
+      "url": "https://wallstreetcn.com/livenews/3203247",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3203246"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "库克称遏制通胀扩散愈发紧迫，行动迟缓将被迫更高更快加息",
+      "summary": "美联储理事库克表示，抑制通胀扩散的行动愈发紧迫，“几乎没有证据表明通胀正在回落”，若行动迟缓，未来可能不得不以更高、更快的幅度加息。费城联储行长保尔森主张以“审慎”步伐加息，但愿意考虑连续行动。特朗普则重申美国应拥有全球最低的利率，并称美联储带有政治性。",
+      "why": "鹰鸽表态分裂下的加息节奏",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-21T01:15",
+      "url": "https://wallstreetcn.com/livenews/3203495",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmmns6980079.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmrup5221234.shtml",
+        "https://wallstreetcn.com/livenews/3203532",
+        "https://wallstreetcn.com/livenews/3203505",
+        "https://wallstreetcn.com/livenews/3203455",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmfez0178117.shtml",
+        "https://finance.sina.com.cn/money/forex/whqqscgd/2026-11-20/doc-inizkize7155895.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "避险买盘推动美债大涨，10年期收益率跌10.24个基点至4.9438%",
+      "summary": "纽约尾盘10年期基准国债收益率下跌10.24个基点，报4.9438%，连续五个交易日回撤，本周累计下跌19.14个基点；2年期当日跌超10个基点、本周累跌超19个基点，30年期跌10个基点至5.30%。与官员鹰派表态相反，与美联储会议挂钩的OIS显示12月政策会议加息溢价仅23个基点，交易员不再充分消化12月加息情景。",
+      "why": "债市替市场重估加息路径",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-21T06:33",
+      "url": "https://wallstreetcn.com/livenews/3203611",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmruv0015975.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmruq6928996.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizkctf5602337.shtml",
+        "https://wallstreetcn.com/livenews/3203548",
+        "https://wallstreetcn.com/livenews/3203552",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizkyww7123096.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "现货黄金跌向3500美元，较1月历史高点回撤超37%",
+      "summary": "现货黄金周五再跌2.40%，报3538.49美元/盎司，亚太早盘北京时间02:45曾跌至3502.98美元，较1月29日历史最高位5595.47美元累计回撤超37.39%，本周累计下跌8.91%，为3月以来最大单周跌幅；COMEX黄金期货累跌8.94%，报3539美元。国内积存金随之跌入“7字头”，工银积存金报769元/克、当日跌3.5%，工行、建行、招行等提示贵金属波动风险。",
+      "why": "黄金与美债同跌的定价矛盾",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-21T06:41",
+      "url": "https://wallstreetcn.com/livenews/3203621",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3203570",
+        "https://wallstreetcn.com/livenews/3203628",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmwan6852758.shtml",
+        "https://finance.sina.com.cn/world/2026-11-20/doc-inizkcth7231536.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitcm5740669.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizkizh3971414.shtml",
+        "https://wallstreetcn.com/livenews/3203531",
+        "https://wallstreetcn.com/livenews/3202884"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "A股三大指数调整，超5200股飘绿，上证50尾盘拉升翻红",
+      "summary": "A股全天低开震荡、三大指数延续调整：沪指跌1.22%、深成指跌3.09%、创业板指跌3.54%，沪深京三市超5200股飘绿，成交逾1.43万亿元。上证50尾盘拉升翻红涨0.45%，建设银行、工商银行、中国银行等红利股创历史新高；华夏上证50ETF放量成交243.4亿元，约为前一日的近十倍，为该ETF历史第二大单日成交额。",
+      "why": "指数下跌中仍有大额场内增量资金",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-20T15:02",
+      "url": "https://wallstreetcn.com/livenews/3203056",
+      "refs": [
+        "http://insurance.eastmoney.com/news/1217,202611213936559778.html",
+        "http://finance.eastmoney.com/news/1350,202611203936104132.html",
+        "http://insurance.eastmoney.com/news/1217,202611213936560246.html",
+        "http://stock.eastmoney.com/news/11215,202611203936058522.html",
+        "https://wallstreetcn.com/livenews/3203037",
+        "http://finance.eastmoney.com/news/1354,202611203936464112.html"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "标普收跌3.70%创2020年以来最长七连跌，纳指跌5.28%",
+      "summary": "AI交易瓦解担忧席卷华尔街：标普500收跌265.44点、跌幅3.70%，报6910.39点，连续第七个交易日下跌、创2020年以来最长连跌，本周累计下跌8.61%；道指跌1.93%报48147.33点，纳指跌5.28%报22617.733点，纳指100跌5.61%、市值蒸发2.1万亿美元，较10月收盘历史高位回撤19.8%。VIX盘中一度触及40，英伟达跌14%。",
+      "why": "AI叙事瓦解引发美股整体重定价",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-21T05:00",
+      "url": "https://wallstreetcn.com/livenews/3203574",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3203575",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmruv0035217.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmwaq3618932.shtml",
+        "https://www.chinanews.com.cn/cj/2026/11-21/10735615.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmwaq3611409.shtml",
+        "https://wallstreetcn.com/livenews/3203617",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-inizmwaq3638651.shtml",
+        "https://wallstreetcn.com/livenews/3203433"
+      ]
+    }
+  ],
+  "watch": [
+    "12月FOMC前OIS定价：23个基点的12月加息溢价是否继续收敛",
+    "现货黄金3500美元/盎司与COMEX 3539美元的支撑能否守住",
+    "标普500回调下沿6910点与10年期美债4.9438%的走势是否继续背离",
+    "华夏上证50ETF 243.4亿元放量后能否延续，沪指能否止跌"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
