@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T19:24:59.215Z",
+  "generatedAt": "2026-11-21T19:54:41.683Z",
   "ok": 36,
   "failed": 32,
   "throttleHit": true,
@@ -7,10 +7,8 @@
   "emFailures": 5,
   "fallbackCount": 0,
   "fallbacks": [],
-  "sourceSwitches": 1,
-  "sourceSwitchList": [
-    "audusd/15m: 东财 → 新浪"
-  ],
+  "sourceSwitches": 0,
+  "sourceSwitchList": [],
   "failures": [
     "n225/5m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
     "kospi/5m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
@@ -425,7 +423,7 @@
     "audusd/15m": {
       "status": "ok",
       "bars": 595,
-      "changed": true,
+      "unchanged": true,
       "lastOkAt": 1795289095213
     }
   }
