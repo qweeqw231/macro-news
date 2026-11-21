@@ -65,12 +65,11 @@ jobs:
       - name: 记录运行状态（即使核对崩溃也要留证据）
         if: always()
         run: |
-          mkdir -p 2026-11-21/kline-minute-audit/work
           node -e "
             const fs = require('fs');
-            const p = '2026-11-21/kline-minute-audit/work/overlap-run-status.json';
+            const p = 'data/kline/min/_overlap-run.json';
             const log = fs.existsSync('overlap.log') ? fs.readFileSync('overlap.log', 'utf8').slice(-6000) : '（没有 overlap.log：脚本可能根本没启动）';
-            const hasResult = fs.existsSync('2026-11-21/kline-minute-audit/work/overlap-actions.json');
+            const hasResult = fs.existsSync('data/kline/min/_overlap.json');
             fs.writeFileSync(p, JSON.stringify({
               finishedAt: new Date().toISOString(),
               runner: process.env.RUNNER_NAME || '',
@@ -87,9 +86,9 @@ jobs:
         if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # 复用仓库统一的推送脚本：SSH-443 推送会被随机 reset（实测连续 4 次失败很常见），
-        # 手写的「3 次 pull+push」在这里就是不够 —— 第一版正是卡在这一步（run 44907939875）。
+        # 复用仓库统一的推送脚本：SSH-443 推送会被随机 reset（实测连续 4 次失败很常见）。
         # ⚠ 必须用块标量：MSG_PREFIX 的值里有「chore: 」，写成单行 plain scalar 会被 YAML
         #   当成 mapping（run 名称变成文件路径、作业直接解析失败）。
+        # ⚠ 不能提交 2026-11-21/…：.gitignore 故意忽略根目录日期产物目录，git add 会直接失败。
         run: |
-          bash scripts/push-data.sh "2026-11-21/kline-minute-audit/work" MSG_PREFIX="chore: 外汇分钟重叠核对结果"
+          bash scripts/push-data.sh "data/kline/min/_overlap.json data/kline/min/_overlap-run.json" MSG_PREFIX="chore: 外汇分钟重叠核对结果"

@@ -12,7 +12,9 @@
 //   · 价格：公共时间键上 |c_sina - c_em| / c_em 的 p99 ≤ 0.05%（5e-4）；
 //   · 样本：公共键 ≥ 200 根，否则判「样本不足」，不下结论。
 //
-// 输出：2026-11-21/kline-minute-audit/work/overlap-actions.json（由 workflow 提交回仓库）
+// 输出：data/kline/min/_overlap.json（由 workflow 提交回仓库）
+//   ⚠ 不能写到 2026-11-21/... 下：`.gitignore` 根目录的日期产物目录是**故意忽略**的
+//   （一次性产物不参与版本控制），第一版写在那里导致 workflow 的 git add 直接失败。
 //
 // 用法：node scripts/check-fx-minute-overlap.mjs
 //       node scripts/check-fx-minute-overlap.mjs --probe-cross   # 只探测交叉盘的东财代码
@@ -25,7 +27,7 @@ import { sinaFxMinute } from '../src/sources.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const OUT_FILE = path.join(ROOT, '2026-11-21', 'kline-minute-audit', 'work', 'overlap-actions.json');
+const OUT_FILE = path.join(ROOT, 'data', 'kline', 'min', '_overlap.json');
 
 const KL_FIELDS = 'fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58';
 const PAIRS = [
