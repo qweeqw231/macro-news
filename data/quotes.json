@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T00:08:21.862Z",
+  "generatedAt": "2026-11-21T05:08:10.777Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -194,12 +194,8 @@
       "prevClose": 49097.06,
       "volume": 1167163264,
       "changePct": -1.93,
-      "updatedAt": "2026-11-21T05:00:00+08:00",
-      "source": "eastmoney",
-      "asOf": "2026-11-21T05:00:00+08:00",
-      "priceSource": "dailyK",
-      "closeDate": "2026-11-20",
-      "note": "close-daily"
+      "updatedAt": "2026-11-21T04:59:44+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "ixic",
@@ -226,12 +222,8 @@
       "prevClose": 7175.83,
       "volume": 4723867648,
       "changePct": -3.7,
-      "updatedAt": "2026-11-21T05:00:00+08:00",
-      "source": "eastmoney",
-      "asOf": "2026-11-21T05:00:00+08:00",
-      "priceSource": "dailyK",
-      "closeDate": "2026-11-20",
-      "note": "close-daily"
+      "updatedAt": "2026-11-21T04:59:44+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "n225",
