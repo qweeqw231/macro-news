@@ -47,11 +47,12 @@
 //
 // 退出码：0 = 至少写成功一个（或全部已是最新）；1 = 一个都没成功
 
-import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchKline, getKlineSource, klineTarget } from '../src/sources.mjs';
+import { emStats } from '../src/em.mjs';
 import { upsertBars } from '../src/kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 
@@ -77,14 +78,25 @@ const ROTATE_PERIODS = ['60m', '15m', '1m'];
 const AUTO_PERIODS = [...ALWAYS_PERIODS, ROTATE_PERIODS[new Date().getUTCHours() % ROTATE_PERIODS.length]];
 
 // 客户端没有别的分钟源 ⇒ 必须由服务端兜底
+//
 // 2.16.0：新增 12 个外汇标的（5 个人民币交叉盘 + 7 个美元对）。
-//   · 交叉盘走**新浪外汇** getMinKLine（与日线/报价同源），不占东财 IP 额度；
-//   · 美元对走**东财 119.***（与报价同日线同源）。
-//   ⚠ 请求预算：存量 9 个标的（全部东财）× 3 周期 = 27 次/轮；
-//     新增后 16 个东财标的 × 3 = 48 次/轮，**超过实测会被限流的 ~35 次/轮**。
-//     ⇒ 分批：美元对只刷 5m + 30m（每轮 14 次，东财合计 41 次），
-//       60m/15m/1m 不预生成（浏览器可直连东财，与 dxy/usdcny 现状一致）。
-//       若 Actions 仍出现限流，把 NO_ROTATE_KEYS 扩大到全部外汇、或把 30m 改成隔轮。
+// 2026-11-21（分钟K缺失排查后的整改）：
+//   · 美元对里**重叠核对通过的 5 个**（eurusd/gbpusd/usdjpy/audusd/usdcad）改走新浪外汇
+//     getMinKLine，不再是东财 119.*。理由不是「新浪更好」，而是**两端一致**：
+//     浏览器连不上东财（socket 级拒绝），只能走新浪 JSONP；若服务端仍以东财为主，
+//     就会出现「直连成功看新浪、失败看东财快照」，同一张图两个口径。
+//     交叉盘本来就是两端新浪，这 5 个照同一套走才自洽。
+//   · usdkrw / usdchf **核对未通过，留在东财**，且仍只刷 5m/30m（见 MINUTE_HOLD_KEYS）。
+//   · **dxy / usdcny 补进来**：这两个此前只靠浏览器直连东财 ⇒ 东财不可达时全站无分钟图。
+//     dxy 只有东财一个源（新浪/腾讯均无 DXY 分钟）；usdcny 东财优先、新浪 fx_susdcnh 兜底。
+//
+// ⚠ 请求预算（每轮只跑 5m + 30m + 1 个轮换周期）：
+//     东财：11 个标的 × 3 + usdkrw/usdchf × 2 = 37 次/轮（历史限流阈值约 35 ⇒ 已越线）
+//     新浪：10 个外汇 × 3 = 30 次/轮（无已知 IP 级限流）
+//   ⚠ 37 > 35：这是**实测基线**，不靠估算。若持续限流，M4 会把它降级成
+//     「本周期剩余标的跳过、下一轮优先补」，不会整轮归零；真扛不住再把 dxy/usdcny 砍回 5m/30m。
+//   NO_ROTATE_KEYS 已删除 —— 它当初是为了压东财额度才砍掉美元对的 1m/15m/60m，
+//   核对通过的 5 个不再占东财额度，砍掉的理由不存在了。
 const TARGET_KEYS = [
   'n225',        // 日经225      100.N225
   'dax',         // 德国DAX30    100.GDAXI
@@ -101,12 +113,37 @@ const TARGET_KEYS = [
   'jpycny',      // fx_sjpycny（×100）
   'krwcny',      // fx_skrwcny（×100）
   'audcny',      // fx_saudcny
-  // ---- 外汇：美元对各主要货币（东财 119.*）----
-  'eurusd', 'gbpusd', 'usdjpy', 'usdkrw', 'audusd', 'usdcad', 'usdchf',
+  // ---- 外汇：美元对各主要货币（新浪 getMinKLine；东财 119.* 为服务端兜底）----
+  'eurusd',      // fx_seurusd
+  'gbpusd',      // fx_sgbpusd
+  'usdjpy',      // fx_susdjpy
+  'usdkrw',      // fx_susdkrw
+  'audusd',      // fx_saudusd
+  'usdcad',      // fx_susdcad
+  'usdchf',      // fx_susdchf
+  // ---- 汇率指数 / 离岸人民币：只有东财有分钟（新浪无 DXY；CNH 走 fx_susdcnh 兜底）----
+  'dxy',         // 100.UDI
+  'usdcny',      // 133.USDCNH
 ];
 
-// 这些标的只刷「每轮必刷」的两个周期（5m/30m），60m/15m/1m 不预生成 —— 为了压住东财单轮请求数。
-const NO_ROTATE_KEYS = new Set(['eurusd', 'gbpusd', 'usdjpy', 'usdkrw', 'audusd', 'usdcad', 'usdchf']);
+// 2026-11-21 重叠核对**未通过**的标的：分钟仍只走东财，且只刷 5m/30m（与整改前完全一致）。
+// 核对方式：拿仓库里现存东财快照与新浪同时间键逐根比收盘（work/overlap-local.mjs）。
+//   usdkrw 5m : p99 0.42% / 21% 的公共键超 0.05% / 极值 0.61%  ⇒ 明确不是同一口径
+// 产品决定：不混源 ⇒ usdkrw 维持「只走东财、只刷 5m/30m」，1m/15m/60m 是**已知缺口**。
+//   （usdchf 曾经也在这里，核对擦边 0.059%；产品决定接新浪并保留兜底标记 ⇒ 已移出本表。）
+const MINUTE_HOLD_KEYS = new Set(['usdkrw']);
+
+// 分钟「应以新浪为准」的标的（5 个交叉盘 + 5 个美元对 + usdchf）。
+// 本轮若实际由东财供数 ⇒ 新浪在这个周期失败了，必须可区分、可计数（产品要求）。
+// "同一文件长期两源交替" 就是 filename 在 新浪/东财 之间来回 —— 一旦出现要停下来报告。
+const SINA_PRIMARY_KEYS = new Set([
+  'eurcny', 'gbpcny', 'jpycny', 'krwcny', 'audcny',
+  'eurusd', 'gbpusd', 'usdjpy', 'audusd', 'usdcad', 'usdchf',
+]);
+let fallbackCount = 0;
+const fallbacks = [];
+let sourceSwitches = 0;
+const sourceSwitchList = [];
 
 // 周期 → 根数上限 + 抓取顺序。
 // ⚠ 顺序按**重要度**：5m 最常用，排最前（被打断时最新鲜的是它）；
@@ -189,15 +226,57 @@ const isThrottle = (msg) => /限流|熔断|连续\s*\d+\s*次连接失败/.test(
 //   理由：Actions 的 runner IP 共享、经常处于东财限流边缘，一轮打到一半被限流是常态。
 //   若按标的遍历，被限流时只有前 2 个标的拿到了 3 个周期、其余 5 个标的一个周期都没有；
 //   按周期遍历则至少保证「5m 对所有标的」是齐的（5m 才是最常用的那个）。
+//
+// ── 2026-11-21 更正：限流不再「整轮终止」────────────────────────────────
+//   实测 2026-11-21 11:50Z 那一轮 ok=16 / failed=1，唯一失败是 usdjpy/5m，
+//   而它正好是 5m 这一遍的第 17 个标的 ⇒ 原来的 break outer 让 30m 与轮换周期
+//   这一轮**一次请求都没发**（提交记录里只有 _heartbeat.json 变了）。
+//   ⇒ 现在：命中限流只做一次冷却，然后**继续跑剩下的标的**。东财那组主机熔断后，
+//     后续东财调用是零 HTTP 的秒失败；排在后面的新浪标的（外汇）不受影响。
+//     不做「连续 N 个周期就整轮收手」——2026-11-21 本机实测证明那会让整轮 0 个更新。
+const THROTTLE_COOLDOWN_MS = 30000;
 let throttleHit = false;
+let throttleCooled = false;
 
-outer: for (const period of periodList) {
-  for (const key of keys) {
-    // 美元对不刷轮换周期（见 TARGET_KEYS 上方的请求预算说明）
-    if ((PERIOD_SPEC[period]?.order ?? 0) >= 3 && NO_ROTATE_KEYS.has(key)) continue;
+// 某标的某周期「上一次成功写入的时间」（文件里的 generatedAt）。
+// 读不到（文件不存在/损坏）返回 0 ⇒ 排最前，优先补。
+async function lastOkMs(key, period) {
+  const file = path.join(OUT_DIR, `${key}_${period}.json`);
+  try {
+    const doc = JSON.parse(await readFile(file, 'utf8'));
+    const t = Date.parse(doc.generatedAt || '');
+    return Number.isFinite(t) ? t : 0;
+  } catch {
+    return 0;
+  }
+}
+
+// 每个周期内按「最久没成功」升序排 —— 限流时被落下的标的，下一轮先跑。
+// 没有这一条时，限流总是发生在固定位置（5m 这一遍的第 17 个），
+// 排在它后面的标的会**永远**轮不到。
+async function orderByStaleness(period, list) {
+  const pairs = await Promise.all(list.map(async (k) => [k, await lastOkMs(k, period)]));
+  pairs.sort((a, b) => a[1] - b[1]);
+  return pairs.map((p) => p[0]);
+}
+
+// 每个标的 × 周期的本轮结果，写进 _status.json。
+// 目的：让「某个标的某个周期连续几天没刷新」在仓库里**一眼可见**，
+// 而不是只能靠人工去翻 84 个文件的 generatedAt。
+const perTarget = {};
+const mark = (key, period, status, extra = {}) => {
+  perTarget[`${key}/${period}`] = { status, ...extra };
+};
+
+for (const period of periodList) {
+  const periodKeys = await orderByStaleness(period, keys);
+  for (const key of periodKeys) {
+    // 重叠核对未通过的标的：只刷每轮必刷的 5m/30m，不进入轮换周期（见 MINUTE_HOLD_KEYS 注释）
+    if ((PERIOD_SPEC[period]?.order ?? 0) >= 3 && MINUTE_HOLD_KEYS.has(key)) continue;
     const meta = klineTarget(key);
     if (!meta) {
       failures.push(`${key}: 未知标的`);
+      mark(key, period, 'error', { reason: '未知标的' });
       continue;
     }
     const spec = PERIOD_SPEC[period] || { limit: 1000 };
@@ -226,12 +305,20 @@ outer: for (const period of periodList) {
       const why = String(lastErr?.message || lastErr).slice(0, 100);
       failures.push(`${key}/${period}: ${why}`);
       console.log(`  ⚠ ${key.padEnd(9)} ${period.padEnd(3)} 失败：${why}`);
-      // 命中限流/熔断 ⇒ **立刻收手**：后端此时已把整组主机熔断，
-      // 再打下去只会全部秒失败，还可能让这个 IP 被封得更久 ⇒ 剩下的留给下一轮。
+      mark(key, period, 'fail', { reason: why, lastOkAt: await lastOkMs(key, period) });
+      // 命中限流/熔断 ⇒ 东财那组主机已经/即将进入熔断：**后续东财调用是零 HTTP 的秒失败**，
+      // 所以不中断循环 —— 否则按周期优先遍历时，排在后面的新浪标的（外汇）会被一起饿死，
+      // 这就是 2026-11-21 本机实测到的问题（dxy 打头，东财一挂，整轮 0 个更新）。
+      // 只在第一次命中时冷却一次，避免对「未熔断但返回限流文案」的情况连续猛打。
       if (isThrottle(why)) {
         throttleHit = true;
-        console.log('  ⛔ 命中东财限流/熔断，本轮到此为止（剩下的下一轮再补）');
-        break outer;
+        mark(key, period, 'skip', { reason: why, lastOkAt: await lastOkMs(key, period) });
+        if (!throttleCooled) {
+          throttleCooled = true;
+          console.log(`  ⛔ 东财限流/熔断：冷却 ${THROTTLE_COOLDOWN_MS / 1000}s 后继续跑其余标的（东财标的会秒失败，新浪标的照常）`);
+          await sleep(THROTTLE_COOLDOWN_MS);
+        }
+        continue;
       }
       await sleep(GAP_MS);
       continue;
@@ -239,6 +326,7 @@ outer: for (const period of periodList) {
     if (bars.length < MIN_BARS) {
       failures.push(`${key}/${period}: 只取到 ${bars.length} 根`);
       console.log(`  ⚠ ${key.padEnd(9)} ${period.padEnd(3)} 只取到 ${bars.length} 根，不足 ${MIN_BARS} 根，不写`);
+      mark(key, period, 'short', { bars: bars.length, lastOkAt: await lastOkMs(key, period) });
       await sleep(GAP_MS);
       continue;
     }
@@ -248,6 +336,7 @@ outer: for (const period of periodList) {
     if (!lock.ok) {
       locked++;
       console.log(`  ${lockSkipText(key, lock)}`);
+      mark(key, period, 'locked', { lastOkAt: await lastOkMs(key, period) });
       await sleep(GAP_MS);
       continue;
     }
@@ -268,13 +357,52 @@ outer: for (const period of periodList) {
         outBars = merged.length > keep ? merged.slice(merged.length - keep) : merged;
       }
 
+      const servedBy = getKlineSource() || '未知';
+      // 兜底识别（2026-11-21 产品要求）：这些标的的分钟**应以新浪为准**，
+      // 若本轮实际由东财供数，说明新浪在这个周期失败了 ⇒ 记一次 fallback，
+      // 并和文件里上一次的取数源比对，判断是否出现「同一文件两源交替」。
+      const isSinaServed = /新浪/.test(servedBy);
+      const providerOf = (s) => {
+        const t = String(s || '');
+        if (/新浪/.test(t)) return '新浪';
+        if (/东财|东方财富/.test(t)) return '东财';
+        if (/腾讯/.test(t)) return '腾讯';
+        if (/上金所/.test(t)) return '上金所';
+        return '';
+      };
+      let fallbackInfo = null;
+      if (!DRY && SINA_PRIMARY_KEYS.has(key) && !isSinaServed) {
+        const prevProvider = providerOf(oldDoc?.source);
+        fallbackInfo = {
+          fallback: servedBy,
+          prevSource: prevProvider || '未知',
+          // 上一轮已经是新浪、这一轮退回东财 ⇒ 真正的「两源交替」（不是首次切换）
+          alternated: prevProvider === '新浪',
+        };
+        fallbackCount++;
+        fallbacks.push(`${key}/${period}: 新浪失败，本轮由${servedBy}兜底` + (fallbackInfo.alternated ? '（与上一轮源不同，出现交替）' : ''));
+        console.log(`  ⚠ ${key.padEnd(9)} ${period.padEnd(3)} 本轮用${servedBy}兜底（应走新浪）` + (fallbackInfo.alternated ? '，且与上一轮源不一致' : ''));
+      }
+      // 任何标的只要「本轮取数源 ≠ 上一轮文件的取数源」，都记一次切换。
+      // 分钟文件是 upsert 合并，换源会让同一文件前后半段来自不同后端（接缝），
+      // 所以这个数字必须可见 —— usdcny / usdchf 是仅有的双源标的。
+      if (!DRY && oldDoc) {
+        const prevProvider = providerOf(oldDoc.source);
+        const nowProvider = providerOf(servedBy);
+        if (prevProvider && nowProvider && prevProvider !== nowProvider) {
+          sourceSwitches++;
+          sourceSwitchList.push(`${key}/${period}: ${prevProvider} → ${nowProvider}`);
+          console.log(`  ℹ ${key.padEnd(9)} ${period.padEnd(3)} 取数源变化：${prevProvider} → ${nowProvider}`);
+        }
+      }
+
       const payload = {
         key,
         name: meta.name,
         market: meta.market,
         period,
         generatedAt: new Date().toISOString(),
-        source: `服务端预生成的分钟K（limit=${spec.limit}）· 取数源：${getKlineSource() || '未知'}`,
+        source: `服务端预生成的分钟K（limit=${spec.limit}）· 取数源：${servedBy}`,
         caliber: meta.klineNote || '',
         // 紧凑数组行：[t,o,c,h,l,v]
         bars: outBars,
@@ -292,6 +420,13 @@ outer: for (const period of periodList) {
         console.log(
           `  ${key.padEnd(9)} ${period.padEnd(3)} ${String(payload.bars.length).padStart(4)} 根  内容未变，跳过`
         );
+        mark(key, period, 'ok', {
+          bars: payload.bars.length,
+          unchanged: true,
+          // 没重写文件 ⇒ 「最后一次成功」仍是旧文件里的时间
+          lastOkAt: Date.parse(oldDoc?.generatedAt || '') || 0,
+          ...(fallbackInfo || {}),
+        });
       } else {
         if (!DRY) {
           await mkdir(OUT_DIR, { recursive: true });
@@ -302,6 +437,12 @@ outer: for (const period of periodList) {
           `  ${key.padEnd(9)} ${period.padEnd(3)} ${String(payload.bars.length).padStart(4)} 根  ` +
           `${payload.bars[0][0]} → ${payload.bars[payload.bars.length - 1][0]}  [${getKlineSource() || '未知源'}]${DRY ? '（dry-run）' : ''}`
         );
+        mark(key, period, 'ok', {
+          bars: payload.bars.length,
+          changed: true,
+          lastOkAt: Date.parse(payload.generatedAt) || 0,
+          ...(fallbackInfo || {}),
+        });
       }
       results.push({ key, period, bars: payload.bars.length, from: payload.bars[0][0], to: payload.bars[payload.bars.length - 1][0] });
     } finally {
@@ -314,36 +455,66 @@ outer: for (const period of periodList) {
 // ── 失败时把原因落到仓库里 ──────────────────────────────────────────────
 //   Actions 的作业日志要鉴权才看得到 ⇒ 写一个 _status.json（进仓库），
 //   匿名也能通过 commits API 看到「哪几个标的没抓到、为什么」。
-//   全成功时不写这个文件（避免每次跑都产生一个只改时间戳的提交）。
+//
+//   2026-11-21：**每轮都写**（含全成功），并带上 perTarget。
+//   原因：旧逻辑「全成功就 rm」导致健康时反而没有任何可观测数据，
+//   而真正的问题恰恰不是「全成功/全失败」，是「某个标的某个周期长期没刷新」——
+//   那种状态在旧文件里完全看不出来，只能人工去翻每个文件的 generatedAt。
 if (!DRY) {
   await mkdir(OUT_DIR, { recursive: true });
-  if (failures.length || rejected.length) {
-    await writeFile(
-      STATUS_FILE,
-      JSON.stringify(
-        {
-          generatedAt: new Date().toISOString(),
-          ok: results.length,
-          failed: failures.length,
-          failures,
-          rejected,
-        },
-        null,
-        2
-      ),
-      'utf8'
-    );
-    console.log(`  ⚠ 失败/拒绝明细已写入 ${path.relative(ROOT, STATUS_FILE)}（失败 ${failures.length} / 拒绝 ${rejected.length}）`);
-  } else if (existsSync(STATUS_FILE)) {
-    await rm(STATUS_FILE, { force: true });
-    console.log('  ✓ 全部成功，删除上一轮的失败状态文件');
-  }
+  await writeFile(
+    STATUS_FILE,
+    JSON.stringify(
+      {
+        generatedAt: new Date().toISOString(),
+        ok: results.length,
+        failed: failures.length,
+        throttleHit,
+        // 东财实际发出的 HTTP 请求数（含重试，不含缓存命中/熔断拒绝）。
+        // 分钟K整改的预算是 33 次/轮，这个数字用来验证「估算」而不是继续拍脑袋。
+        emRequests: emStats.requests,
+        emFailures: emStats.failures,
+        // 本轮「本应走新浪却由东财兜底」的次数（usdchf 是唯一允许兜底的标的）；
+        // 一旦同一文件两源交替，alternated=true，需要人工判断，不要自行放宽。
+        fallbackCount,
+        fallbacks,
+        // 任意标的「本轮取数源 ≠ 上一轮文件取数源」的次数（换源会在文件里留接缝）
+        sourceSwitches,
+        sourceSwitchList,
+        failures,
+        rejected,
+        periodList,
+        // 本轮每个 标的/周期 的结果：ok | fail | skip | short | locked | error
+        // lastOkAt = 该文件里 generatedAt 的毫秒值（0 = 从来没有过）
+        perTarget,
+      },
+      null,
+      2
+    ),
+    'utf8'
+  );
+  const stale = Object.entries(perTarget)
+    .filter(([, v]) => v.status !== 'ok' && v.status !== 'locked')
+    .map(([k]) => k);
+  console.log(
+    `  ℹ 状态已写入 ${path.relative(ROOT, STATUS_FILE)}` +
+    `（非 ok ${stale.length} 项：失败 ${failures.length} / 拒绝 ${rejected.length}）`
+  );
 }
 
 console.log(
   `[update-kline-minute] 更新 ${changed} 个 / 无变化 ${same} 个 / 锁占用 ${locked} 个 / 拒绝 ${rejected.length} 个（短覆盖） / 失败 ${failures.length} 个` +
-  (throttleHit ? '（本轮因东财限流提前收手）' : '')
+  (throttleHit ? '（本轮有限流：部分周期被跳过，明细见 _status.json）' : '')
 );
+// 实测的东财请求数（含重试）——预算 37 次/轮，用来验证而不是估算
+console.log(`[update-kline-minute] 东财实际请求 ${emStats.requests} 次（失败 ${emStats.failures} 次）`);
+if (fallbackCount) {
+  console.log(`[update-kline-minute] ⚠ 新浪兜底 ${fallbackCount} 次：`);
+  fallbacks.forEach((f) => console.log('  - ' + f));
+  if (fallbacks.some((f) => f.includes('交替'))) {
+    console.log('  ⛔ 出现「同一文件两源交替」——按约定应停下并人工判断，不要自行放宽。');
+  }
+}
 if (rejected.length) {
   console.log('拒绝明细：');
   rejected.forEach((f) => console.log('  - ' + f));

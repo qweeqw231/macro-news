@@ -585,7 +585,11 @@ export const INDICES = [
   //   · usdcny = 133.USDCNH（美元兑离岸人民币，4 位小数）——卡片名是「离岸人民币」，
   //     与官方中间价（usdcny_mid，中国货币网、只有当日值）是两张卡、两个价格。
   { key: 'dxy',       name: '美元指数',   market: 'FX', secid: '100.UDI',   sina: null, tx: null, fixedName: true },
-  { key: 'usdcny',    name: '离岸人民币', market: 'FX', secid: '133.USDCNH', sina: null, tx: null, fixedName: true },
+  // usdcny：东财 133.USDCNH 仍是第一源（与报价/日线同源），
+  //   2026-11-21 起加新浪 fx_susdcnh 作**分钟兜底**（东财不可达时至少还有一条腿）。
+  //   ⚠ 必须是 CNH，不能写 fx_susdcny —— 那是在岸 CNY，夜盘时间与价格都不同。
+  { key: 'usdcny',    name: '离岸人民币', market: 'FX', secid: '133.USDCNH', sina: null, tx: null, fixedName: true,
+    sinaFx: 'fx_susdcnh' },
   // 美元兑各主要货币（2.16.0）：报价与 K 线**同一 secid 同源**（东财 119.*），4 位小数。
   //   实测（2026-11-13）：日 K 7252~9728 根（1989/1992/1999 起）；
   //   1m/5m/15m/30m/60m 全部可用（1m 只当日、5m ~5 个交易日、60m ~5 个交易日）。
@@ -593,13 +597,30 @@ export const INDICES = [
   //     不要换成 USD/EUR（2953 根 / 2013 起）、USD/GBP、USD/AUD（各 1999 根 / 2019 起）——
   //     这三个反方向历史短一个数量级，是硬伤。
   //   组内顺序按关注优先级：欧元 → 英镑 → 日元 → 韩元 → 澳元 → 加元 → 瑞郎。
-  { key: 'eurusd',    name: '欧元/美元', market: 'FX', secid: '119.EURUSD', sina: null, tx: null, fixedName: true },
-  { key: 'gbpusd',    name: '英镑/美元', market: 'FX', secid: '119.GBPUSD', sina: null, tx: null, fixedName: true },
-  { key: 'usdjpy',    name: '美元/日元', market: 'FX', secid: '119.USDJPY', sina: null, tx: null, fixedName: true },
+  //
+  //   2026-11-21：加 sinaFx。**分钟周期以新浪为第一源**（东财兜底），日/周/月仍是东财第一源。
+  //   原因见 klineProviders()：浏览器连不上东财，只能走新浪 JSONP；
+  //   服务端若仍以东财为主，同一张图会出现「直连看新浪、本地看东财」两套口径。
+  //   日线不动 —— 东财 119.* 有 7000+ 根历史，新浪日线短得多，换源等于砍历史。
+  { key: 'eurusd',    name: '欧元/美元', market: 'FX', secid: '119.EURUSD', sina: null, tx: null, fixedName: true,
+    sinaFx: 'fx_seurusd' },
+  { key: 'gbpusd',    name: '英镑/美元', market: 'FX', secid: '119.GBPUSD', sina: null, tx: null, fixedName: true,
+    sinaFx: 'fx_sgbpusd' },
+  { key: 'usdjpy',    name: '美元/日元', market: 'FX', secid: '119.USDJPY', sina: null, tx: null, fixedName: true,
+    sinaFx: 'fx_susdjpy' },
   { key: 'usdkrw',    name: '美元/韩元', market: 'FX', secid: '119.USDKRW', sina: null, tx: null, fixedName: true },
-  { key: 'audusd',    name: '澳元/美元', market: 'FX', secid: '119.AUDUSD', sina: null, tx: null, fixedName: true },
-  { key: 'usdcad',    name: '美元/加元', market: 'FX', secid: '119.USDCAD', sina: null, tx: null, fixedName: true },
-  { key: 'usdchf',    name: '美元/瑞郎', market: 'FX', secid: '119.USDCHF', sina: null, tx: null, fixedName: true },
+  { key: 'audusd',    name: '澳元/美元', market: 'FX', secid: '119.AUDUSD', sina: null, tx: null, fixedName: true,
+    sinaFx: 'fx_saudusd' },
+  { key: 'usdcad',    name: '美元/加元', market: 'FX', secid: '119.USDCAD', sina: null, tx: null, fixedName: true,
+    sinaFx: 'fx_susdcad' },
+  // ⚠ usdkrw 没有 sinaFx：2026-11-21 逐根重叠核对**未通过**（5m p99 0.42%，
+  //   21% 的公共键超 0.05%，极值 0.61%）—— 两源报价体系不同，产品决定不混源，
+  //   分钟继续只取东财、只刷 5m/30m，1m/15m/60m 保持已知缺口。
+  //   usdchf：核对擦边（5m p99 0.059% / 1.4% 超阈值 / 极值 0.095%），产品决定**接新浪**，
+  //   但要求「每个周期文件只认一个源」：新浪优先，东财仅在该周期新浪失败时兜底，
+  //   兜底必须在 _status.json 的 perTarget 里留下 fallback 标记并计数（见 update-kline-minute.mjs）。
+  { key: 'usdchf',    name: '美元/瑞郎', market: 'FX', secid: '119.USDCHF', sina: null, tx: null, fixedName: true,
+    sinaFx: 'fx_susdchf' },
 ];
 
 // ── 组合标的的 K 线（纳指100 / 伦敦金 / 伦敦银 / 布伦特 / 上海金 / 人民币交叉盘）──
@@ -1071,7 +1092,23 @@ function klineProviders(idx, period, limit) {
     if (!(idx.emMinuteOnly && dailyPeriod)) pushEm();
   }
   else if (idx.sge) { pushEm(); pushSge(); }
-  else if (idx.sinaFx) { pushSinaFx(); }
+  else if (idx.sinaFx) {
+    // ⚠ 顺序按周期分开，不能一刀切（2026-11-21）：
+    //   · **分钟**：新浪第一、东财兜底。浏览器连不上东财（socket 级拒绝），
+    //     只能走新浪 JSONP；服务端若拿东财当第一源，同一张图会出现
+    //     「直连成功看新浪、直连失败看东财快照」两套口径。
+    //   · **日/周/月**：东财第一、新浪兜底。东财 119.* 有 7000+ 根历史，
+    //     新浪日线短得多 —— 把日线换成新浪等于把历史砍掉一半。
+    //   · 人民币交叉盘（secid=null）只走新浪，pushEm 会直接抛「东财无该标的」，所以判空跳过。
+    const isDailyPeriod = period === '1d' || period === '1w' || period === '1M';
+    if (isDailyPeriod) {
+      if (idx.secid) pushEm();
+      pushSinaFx();
+    } else {
+      pushSinaFx();
+      if (idx.secid) pushEm();
+    }
+  }
   else { pushEm(); pushSina(); pushTx(); }
   return P;
 }

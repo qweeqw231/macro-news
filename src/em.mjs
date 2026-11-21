@@ -36,6 +36,11 @@ const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
   '(KHTML, like Gecko) Chrome/122.0 Safari/537.36';
 
+// 进程级请求计数（2026-11-21）：东财额度是这套系统的硬约束，
+// 但此前只有「估算」，没有实测数字 —— 分钟K整改要验证「33 次/轮到底是多少」。
+// 只在 emGetJSON 真正发出 HTTP 时 +1（重试算多次），熔断/缓存命中不计。
+export const emStats = { requests: 0, failures: 0 };
+
 export const QUOTE_HOSTS = [
   'https://push2.eastmoney.com',
   'https://1.push2.eastmoney.com',
@@ -153,6 +158,7 @@ export async function emGetJSON(pathnameWithQuery, opts = {}) {
   for (let attempt = 0; attempt < retries; attempt++) {
     const host = hosts[attempt % hosts.length];
     await pace();
+    emStats.requests++;
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), timeout);
     try {
@@ -167,6 +173,7 @@ export async function emGetJSON(pathnameWithQuery, opts = {}) {
       return data;
     } catch (err) {
       lastErr = err;
+      emStats.failures++;
       if (isSocketErr(err)) {
         breaker.fails++;
         if (breaker.fails >= BREAK_THRESHOLD) {

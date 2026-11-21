@@ -657,9 +657,16 @@
   //   · 不带 Referer 也返回 200（开头是一段**被注释掉**的跳转脚本，无副作用）；
   //   · 回调名可自定义 ⇒ 与 CN 指数共用 sinaJsonp（固定 `_data` 会串台）；
   //   · 字段序是 **date,open,low,high,close**（不是 date,o,h,l,c —— 写错会把影线画反）。
+  // 2026-11-21：补 7 个美元对。此前只有交叉盘，美元对的分钟周期在浏览器里
+  //   只剩「东财直连」一条腿，而东财对客户端是 socket 级拒绝 ⇒ 1m/15m/60m 必然空。
+  //   新浪外汇 getMinKLine 对 7 个美元对实测 5 个周期全有数据（与交叉盘同一接口）。
   const SINA_FX_CODE = {
     eurcny: 'fx_seurcny', gbpcny: 'fx_sgbpcny', jpycny: 'fx_sjpycny',
     krwcny: 'fx_skrwcny', audcny: 'fx_saudcny',
+    eurusd: 'fx_seurusd', gbpusd: 'fx_sgbpusd', usdjpy: 'fx_susdjpy',
+    audusd: 'fx_saudusd', usdcad: 'fx_susdcad', usdchf: 'fx_susdchf',
+    // ⚠ usdkrw 故意不登记：2026-11-21 逐根重叠核对未通过（5m p99 0.42%，
+    //   21% 的 bar 差到 0.6%），两源报价体系不同，不接受混源。
   };
 
   // 新浪外汇分钟（getMinKLine）：1/5/15/30/60 全可用，单次硬上限 1000 根。
