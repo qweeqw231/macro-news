@@ -25,6 +25,11 @@ tmp/
 # 浏览器实测/调试截图
 .screenshots/
 
+# 检索索引：部署期由 data/archive + data/history 现算，不进 git
+# （scripts/build-search.mjs；回滚与本地预览见 docs/search-index-build.md）
+data/search.json
+data/search-history/
+
 # 一次性日期产物目录（如 2026-11-15/ 的容量分析、归档低产审计）
 # 只匹配仓库根下的 YYYY-MM-DD/ 目录；产物按需留在磁盘，不参与版本控制
 /20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/

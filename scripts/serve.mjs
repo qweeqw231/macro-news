@@ -6,10 +6,19 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = parseInt(process.env.PORT || '8848', 10);
+
+// 检索索引自 2.33.1 起不进 git；本地预览前若不存在就先现算一次，
+// 否则搜索框与历史检索会 404（`node src/collect.mjs` 也会写这份文件）。
+const HOT_INDEX = path.join(ROOT, 'data', 'search.json');
+if (!fs.existsSync(HOT_INDEX)) {
+  console.log('检索索引不存在，先生成 data/search.json 与 data/search-history/* …');
+  execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'build-search.mjs')], { stdio: 'inherit' });
+}
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',

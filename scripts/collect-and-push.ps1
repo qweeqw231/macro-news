@@ -547,14 +547,16 @@ if ($MinuteKline) {
 #   现在只提交本任务真正会写的文件：
 #     · data/archive/<今天|昨天>.json（按需新建；其余日期由云端采集提交）
 #     · data/kline/**（已跟踪文件的更新；新标的文件由云端 kline-full.yml 提交）
-#     · latest / index / search / quotes / _last-run
+#     · latest / index / quotes / _last-run
 #     · _briefing-status.json（早报兜底状态，单文件、低频；页脚要读它才看得见）
+#   search.json 自 2.33.1 起不进 git（部署期由 scripts/build-search.mjs 现算），
+#   这里也一并移除；search-history/ 同理。
 #   briefings 只放行「今天/昨天」的单个已存在文件（2.4.2：publish 漏推时兜底）；
 #   **绝不整目录 add data/briefings**；history / snapshots / macro 不归本任务。
 $today = Get-Date -Format 'yyyy-MM-dd'
 $yesterday = (Get-Date).AddDays(-1).ToString('yyyy-MM-dd')
 $fixed = @(
-    'data/latest.json', 'data/index.json', 'data/search.json',
+    'data/latest.json', 'data/index.json',
     'data/quotes.json', 'data/_last-run.json', 'data/_briefing-status.json'
 )
 # -u 只暂存「已跟踪文件」的修改，不会把未跟踪的意外新增文件扫进来

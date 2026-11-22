@@ -28,9 +28,7 @@ import {
 } from '../src/search-history.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const HISTORY = path.join(ROOT, 'data/history');
-const ARCHIVE = path.join(ROOT, 'data/archive');
-const OUT = path.join(ROOT, 'data/search-history');
+const DEFAULT_DATA = path.join(ROOT, 'data');
 // 2.30.0：热段拆出去后，分片要承接 archive 里 history 未覆盖的 40 天（+约 3 MB gzip），
 //   实测 2026-11-20 从 13.02 MB 涨到约 16 MB。预算同时上调，否则每次重建都会 exit 8。
 const BUDGET_TOTAL_GZIP = 24 * 1024 * 1024;
@@ -56,7 +54,10 @@ function writeIfChanged(file, text) {
   return true;
 }
 
-export function buildSearchHistory({ dryRun = false, check = false, generatedAt = new Date().toISOString() } = {}) {
+export function buildSearchHistory({ dryRun = false, check = false, generatedAt = new Date().toISOString(), dataDir = DEFAULT_DATA, outDir = path.join(dataDir, 'search-history') } = {}) {
+  const HISTORY = path.join(dataDir, 'history');
+  const ARCHIVE = path.join(dataDir, 'archive');
+  const OUT = outDir;
   const idx = readJSON(path.join(HISTORY, 'index.json'), { days: [] });
   const histDays = new Set((idx.days || []).map((x) => x.d).filter(Boolean));
   if (!histDays.size) {

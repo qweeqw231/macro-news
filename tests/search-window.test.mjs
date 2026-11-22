@@ -33,13 +33,16 @@ test('compactSearchItem 只留 6 个字段，不含 summary/channel', () => {
   assert.equal(out.channel, undefined);
 });
 
-test('collect 按窗口取日，并使用 compactSearchItem', () => {
-  const src = read('src/collect.mjs');
-  assert.match(src, /searchCutoff\(startedAt\.getTime\(\)\)/);
+test('检索索引按窗口取日，并使用 compactSearchItem', () => {
+  // 2.33.1：热段构建从 collect.mjs 抽到 src/search-index.mjs（采集与部署共用）
+  const src = read('src/search-index.mjs');
+  assert.match(src, /searchCutoff\(now\)/);
   // 2.22.0：日期集合改为 archive ∪ history 后按 searchFrom 过滤（不再 break 循环）
   assert.match(src, /\.filter\(\(d\) => d >= searchFrom\)/);
   assert.match(src, /compactSearchItem\(it\)/);
   assert.match(src, /windowDays: SEARCH_WINDOW_DAYS/);
+  // 采集侧改为调用同一函数，不再自己拼一份
+  assert.match(read('src/collect.mjs'), /buildHotSearchDoc\(/);
 });
 
 test('前端 Fuse 不再索引 summary/channel', () => {

@@ -89,6 +89,12 @@ jobs:
           # 部署只需要工作树，不需要历史（历史 129 MB，白拉）
           fetch-depth: 1
 
+      - name: 生成检索索引（不进 git，只进 artifact）
+        # search.json 与 search-history/* 自 2.33.1 起不再提交到仓库，由这里用
+        # data/archive + data/history 现算。失败必须让整次部署失败：
+        # 宁可站点停在上一版，也不发布「页面正常但搜索空白」的版本。
+        run: node scripts/build-search.mjs
+
       - name: 打包站点
         uses: actions/upload-pages-artifact@v3
         with:

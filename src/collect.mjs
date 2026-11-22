@@ -27,14 +27,7 @@ import { decideBars, markCloseOnlyBars, barTime } from './kline-guard.mjs';
 import { aggregateDaily, collapsePeriodDuplicates } from './aggregate.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 import { newsDay } from './news-day.mjs';
-import { searchCutoff, compactSearchItem, SEARCH_WINDOW_DAYS } from './search-window.mjs';
-import { historyItemToSearch, hotCutoff, HOT_WINDOW_DAYS } from './search-history.mjs';
-import { createRequire } from 'node:module';
-
-// assets/day-source.js 是 UMD 纯函数（浏览器挂 window、Node 走 module.exports），
-// 这里直接复用，避免搜索索引与归档卡片各写一套「用 archive 还是 history」的阈值。
-const requireCjs = createRequire(import.meta.url);
-const { decideDaySource } = requireCjs('../assets/day-source.js');
+import { buildHotSearchDoc } from './search-index.mjs';
 import { selectDayItems, OFFICIAL_RECENT_DAYS, isRecent, DAY_TOTAL, capState } from './quota.mjs';
 import { describeSourceError } from './source-error.mjs';
 
@@ -521,77 +514,19 @@ async function main() {
   });
 
   // search.json：2.30.0 起只装「热段」（最近 HOT_WINDOW_DAYS 个新闻日），更早的日期
-  //   由 data/search-history 的月度分片承担（构建见 scripts/build-search-history.mjs）。
-  //   为什么要拆：62 天单文件 17.4 MB raw / 4.0 MB gzip，慢网（12.5 KB/s）首搜要 5 分钟；
-  //   热段 7 天约 0.45 MB gzip，首搜 ~36 秒。
-  //   ⚠ windowDays / from / total 仍按 62 天口径统计（「全库 N 条」不能变成热段条数），
-  //     多出的只是 hotDays / hotFrom 两个字段；items 只放热段。
-  const searchFrom = searchCutoff(startedAt.getTime());
-  const hotFrom = hotCutoff(startedAt.getTime());
-  // 2.22.0：窗口内「归档页判定走 history」的日期，search.json 也要从 history 取条目。
-  // 不这么做就会出现「卡片 260 条、搜索只命中 3 条」（09-15~10-04 实测）。
-  // 判定直接复用 assets/day-source.js，保证卡片与搜索同一口径，不另写一套阈值。
-  const histIdx = await readJSON(path.join(DATA, 'history', 'index.json'), { days: [] });
-  const histCount = new Map((histIdx.days || []).map((x) => [x.d, Number(x.n) || 0]));
-  const searchItems = [];
-  let searchDays = 0;
-  let searchFromHistory = 0;
-  // 日期集合取「archive ∪ history」：09-19 这类只有 history 切片、没有 archive 文件的日期
-  // 以前根本不会进循环，等于整天空白。
-  const archiveDays = files.map((f) => f.replace('.json', '')).filter((d) => d >= searchFrom);
-  const historyOnly = [...histCount.keys()].filter((d) => d >= searchFrom && !archiveDays.includes(d));
-  for (const day of [...archiveDays, ...historyOnly].sort().reverse()) {
-    const d = await readJSON(path.join(ARCHIVE, `${day}.json`), { items: [] });
-    const h = histCount.get(day) || 0;
-    const dec = decideDaySource({ archiveCount: d.items.length, historyCount: h });
-    if (dec.kind === 'history') {
-      const hist = await readJSON(path.join(DATA, 'history', `${day}.json`), null);
-      if (hist && Array.isArray(hist.items)) {
-        for (const it of hist.items) searchItems.push(historyItemToSearch(it));
-        searchDays++;
-        searchFromHistory++;
-        continue;
-      }
-    }
-    for (const it of d.items) searchItems.push(compactSearchItem(it));
-    searchDays++;
-  }
-  // 2.29.0：同一 id 只保留一次。历史 archive 里存在跨日重复（同一 url 的 showTime 漂移，
-  //   让同一 id 同时写进相邻两个新闻日，实测 315 组），逐日拼接进 search.json 后
-  //   就会搜出两条完全相同的结果。archive 不清（删哪一边都会改变已发布日期的条数），
-  //   在拼接时按 id 全局去重：迭代顺序是新→旧，后来的（更早那天）覆盖前面的，
-  //   即保留更早那天的归属；位置沿用首次出现处，排序行为不变。
-  const idxById = new Map();
-  const searchDeduped = [];
-  for (const it of searchItems) {
-    const id = it && it.id;
-    if (!id) { searchDeduped.push(it); continue; }
-    const at = idxById.get(id);
-    if (at === undefined) {
-      idxById.set(id, searchDeduped.length);
-      searchDeduped.push(it);
-    } else {
-      searchDeduped[at] = it;
-    }
-  }
-  if (searchDeduped.length !== searchItems.length) {
-    console.log(`  🧹 search.json：跨日重复 id ${searchItems.length - searchDeduped.length} 条已合并（保留更早归属）`);
-  }
-  // 热段 = 新闻日 >= hotFrom 的条目。去重时若同一 id 跨了热段边界（11-13 / 11-14），
-  // 保留的是更早那天 ⇒ 它落在分片侧，热段里不再重复出现。
-  const hotItems = searchDeduped.filter((it) => newsDay(it.time || startedAt) >= hotFrom);
-  await writeJSONIfChanged(path.join(DATA, 'search.json'), {
+  //   由 data/search-history 的月度分片承担。
+  //   2.33.1 起这两个路径都不再进 git：Pages 部署时由 scripts/build-search.mjs 用同一套
+  //   函数现算（src/search-index.mjs）。这里仍写一份到本地，保证 `node src/collect.mjs`
+  //   之后本地静态预览能直接搜索。
+  const { doc: searchDoc, stats: searchStats } = buildHotSearchDoc({
+    dataDir: DATA,
+    now: startedAt.getTime(),
     generatedAt: startedAt.toISOString(),
-    windowDays: SEARCH_WINDOW_DAYS,
-    hotDays: HOT_WINDOW_DAYS,
-    from: searchFrom,
-    hotFrom,
-    days: searchDays,
-    fromHistory: searchFromHistory,
-    total: searchDeduped.length,
-    hotTotal: hotItems.length,
-    items: hotItems,
   });
+  if (searchStats.dupMerged) {
+    console.log(`  🧹 search.json：跨日重复 id ${searchStats.dupMerged} 条已合并（保留更早归属）`);
+  }
+  await writeJSONIfChanged(path.join(DATA, 'search.json'), searchDoc);
   if (quotes.length) {
     // 按 key 合并写入：保留 portfolio-collect.mjs 写入的其它 key。
     // 本任务负责 INDICES 里的 23 个指数 + 32 只 ETF + 纳指100（ndx 在 15 分钟级别单独刷新，
