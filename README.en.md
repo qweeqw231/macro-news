@@ -157,7 +157,18 @@ both return the name "上证50" (verified 2026-11-02; see CHANGELOG).
   - `scripts/update-kline-full.mjs`: full daily K for 36 instruments (26 indices + 10 portfolio) (`_full.json`)
   - `node src/collect.mjs --kline-only`: 36 instruments × daily/weekly/monthly (`<key>.json` / `_1w` / `_1M`)
 - **Minutes + last bar** (`kline-minute.yml`, hourly at :17):
-  - `scripts/update-kline-minute.mjs`: 9 instruments × 5 minute periods (`min/`)
+  - `scripts/update-kline-minute.mjs`: 23 instruments × minute periods (`min/`)
+    - **5m + 30m every round**; 60m/15m/1m rotate by hour (one extra period per hour), so an individual file is not rewritten every round.
+    - **Eastmoney only**: `n225/dax/cac40/ukx/kospi/sge_au9999/xag/xau/sox` and `dxy`
+      (no Sina/Tencent minute feed; `dxy` has Eastmoney as its only source).
+    - **Sina only**: the 5 CNY crosses (no matching Eastmoney `119.*` code, hence no second source).
+    - **Sina first, Eastmoney fallback**: `eurusd/gbpusd/usdjpy/audusd/usdcad/usdchf` (each period file comes from a single source),
+      plus `usdcny` (`fx_susdcnh` first, `133.USDCNH` fallback; it must be CNH — `fx_susdcny` is the onshore rate).
+    - **`usdkrw` is not mixed**: bar-by-bar overlap checking gave 5m p99 **0.42%** and 21% of common keys off by >0.05%;
+      the two feeds use different quote regimes ⇒ Eastmoney only, 5m/30m only; 1m/15m/60m remain known gaps.
+    - **Request budget**: Eastmoney measured at **34–35 requests/round** (including retries), right at the historical
+      throttle threshold (~35/round). A throttle hit only cools down for 30 s, then continues with the remaining instruments
+      instead of aborting the round (M4). Full coverage matrix and backoff rules: [`docs/minute-kline.md`](docs/minute-kline.md).
   - `scripts/update-kline-last.mjs`: upserts only the last daily K of instruments **currently in session**
   - **Short-sequence guard (2.4.10)**: every script writing `data/kline/` goes through `src/kline-guard.mjs`.
     New result starts later and is shorter → reject and record (`rejected: shorter`); same length but newer last bar / longer → accept;
@@ -494,7 +505,7 @@ What must hold is that it **updates with collection**:
 | `data/index.json` | By-day archive index (with `hasBriefing` / `briefLine` / `source`) | Pipeline ① |
 | `data/kline/<key>.json` / `_1w` / `_1M` | 36 instruments × daily/weekly/monthly | Pipeline ② |
 | `data/kline/<key>_full.json` | Full daily K for 36 instruments (26 indices + 10 portfolio) (compact arrays `[t,o,c,h,l,v]`) | Pipeline ② |
-| `data/kline/min/<key>_<period>.json` | 9 instruments × 5 minute periods (including London gold and PHLX Semiconductor) | Pipeline ② |
+| `data/kline/min/<key>_<period>.json` | 23 instruments × minute periods (including London gold, PHLX Semiconductor and DXY; source split in 2.2) | Pipeline ② |
 | `data/macro/daily.json` | Daily series for 5 macro indicators | Pipeline ④ |
 | `data/_last-run.json` | Run status per pipeline (fields coexist, read-modify-write) | All pipelines |
 | `data/_briefing-status.json` | Briefing generation status (last 14 days, read by the footer) | `scripts/briefing/*` |

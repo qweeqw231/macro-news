@@ -176,10 +176,18 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
   - `scripts/update-kline-full.mjs`：43 个标的（33 指数 + 10 组合）的全量日 K（`_full.json`）
   - `node src/collect.mjs --kline-only`：43 个标的 × 日/周/月（`<key>.json` / `_1w` / `_1M`）
 - **分钟 + 最后一根**（`kline-minute.yml`，每小时 :17）：
-  - `scripts/update-kline-minute.mjs`：21 个标的 × 分钟周期（`min/`；存量 9 个全周期，5 个人民币交叉盘全周期，7 个美元对 5m/30m）
-    - 人民币交叉盘走**新浪 `getMinKLine`**（与日线/报价同源，1/5/15/30/60 全可用，单次硬上限 1000 根）；
-    - 美元对走**东财分钟**，只预生成 5m/30m：东财单轮 41 次已接近历史限流阈值（约 35 次），
-      60m/15m/1m 由浏览器直连（与 `dxy`/`usdcny` 现状一致）。降级方案见 `docs/fx-day-cut.md`。
+  - `scripts/update-kline-minute.mjs`：23 个标的 × 分钟周期（`min/`）
+    - **每轮必刷 5m + 30m**，其余 60m/15m/1m 按小时轮换（每小时再刷 1 个）⇒ 单个文件不是每轮都更新；
+    - **只走东财**：`n225/dax/cac40/ukx/kospi/sge_au9999/xag/xau/sox` 与 `dxy`
+      （新浪/腾讯均无对应分钟；`dxy` 只有东财一个源）；
+    - **只走新浪**：5 个人民币交叉盘（东财没有对应 `119.*` 代码，无第二源）；
+    - **新浪优先、东财兜底**：`eurusd/gbpusd/usdjpy/audusd/usdcad/usdchf`（每个周期文件只认一个源），
+      以及 `usdcny`（`fx_susdcnh` 优先、`133.USDCNH` 兜底；必须是 CNH，`fx_susdcny` 是在岸价）；
+    - **`usdkrw` 不混源**：逐根重叠核对 5m p99 **0.42%**、21% 的公共键差 >0.05%，两源报价体系不同
+      ⇒ 只走东财、只刷 5m/30m，1m/15m/60m 是已知缺口；
+    - **请求预算**：东财实测 **34~35 次/轮**（含失败重试），贴着历史限流事故阈值（约 35 次/轮）；
+      命中限流只冷却 30s 后继续跑剩余标的，不再整轮终止（M4）。
+      完整覆盖矩阵与退避规则见 [`docs/minute-kline.md`](docs/minute-kline.md)。
   - `scripts/update-kline-last.mjs`：只 upsert **当前处于交易时段**品种的最后一根日 K
   - **短覆盖守卫（2.4.10）**：所有写 `data/kline/` 的脚本统一走 `src/kline-guard.mjs`。
     新结果首根更晚且更短 → 拒绝并记录（`rejected: shorter`）；等长但末根更新 / 更长 → 接受；
@@ -540,7 +548,7 @@ K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三�
 | `data/index.json` | 按天归档索引（含 `hasBriefing` / `briefLine` / `source`） | 链路 ① |
 | `data/kline/<key>.json` / `_1w` / `_1M` | 43 个标的 × 日/周/月 | 链路 ② |
 | `data/kline/<key>_full.json` | 43 个标的（33 指数 + 10 组合）的全量日 K（紧凑数组 `[t,o,c,h,l,v]`，仅收盘行多一位 `1`） | 链路 ② |
-| `data/kline/min/<key>_<period>.json` | 21 个标的 × 分钟周期（含伦敦金、费城半导体；外汇见 2.2） | 链路 ② |
+| `data/kline/min/<key>_<period>.json` | 23 个标的 × 分钟周期（含伦敦金、费城半导体、美元指数；外汇源分工见 2.2） | 链路 ② |
 | `data/macro/daily.json` | 5 个宏观指标日频序列 | 链路 ④ |
 | `data/_last-run.json` | 各链路运行状态（字段并存，读改写） | 所有链路 |
 | `data/_briefing-status.json` | 早报生成状态（最近 14 天，页脚读取） | `scripts/briefing/*` |
