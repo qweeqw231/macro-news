@@ -580,17 +580,18 @@ export const INDICES = [
   //   两者新浪 / 腾讯都没有代码，sina / tx 一律 null，只能走东财（与 n225/dax/ukx 同）。
   { key: 'sensex',    name: '印度SENSEX', market: 'IN', secid: '100.SENSEX',  sina: null, tx: null },
   { key: 'vnindex',   name: '越南VN指数', market: 'VN', secid: '100.VNINDEX', sina: null, tx: null },
-  // 外汇（2.15.0）：这两个的**报价与 K 线都走东财**，所以放进指数批量表。
+  // 外汇（2.15.0）：这两个的**报价与日/周/月 K** 都走东财，所以放进指数批量表。
   //   · dxy = 100.UDI（ICE 美元指数，2 位小数），日/周/月/分钟 K 实测全可用；
   //   · usdcny = 133.USDCNH（美元兑离岸人民币，4 位小数）——卡片名是「离岸人民币」，
   //     与官方中间价（usdcny_mid，中国货币网、只有当日值）是两张卡、两个价格。
   { key: 'dxy',       name: '美元指数',   market: 'FX', secid: '100.UDI',   sina: null, tx: null, fixedName: true },
-  // usdcny：东财 133.USDCNH 仍是第一源（与报价/日线同源），
-  //   2026-11-21 起加新浪 fx_susdcnh 作**分钟兜底**（东财不可达时至少还有一条腿）。
+  // usdcny：分钟**新浪 fx_susdcnh 第一源、东财 133.USDCNH 兜底**（见 klineProviders 的分钟分支）；
+  //   日/周/月仍是东财第一源（与报价同 secid，历史更长）。
   //   ⚠ 必须是 CNH，不能写 fx_susdcny —— 那是在岸 CNY，夜盘时间与价格都不同。
   { key: 'usdcny',    name: '离岸人民币', market: 'FX', secid: '133.USDCNH', sina: null, tx: null, fixedName: true,
     sinaFx: 'fx_susdcnh' },
-  // 美元兑各主要货币（2.16.0）：报价与 K 线**同一 secid 同源**（东财 119.*），4 位小数。
+  // 美元兑各主要货币（2.16.0）：报价与**日/周/月 K** 同 secid 同源（东财 119.*），4 位小数；
+  //   分钟自 2026-11-21 起改为新浪第一源（见下）。
   //   实测（2026-11-13）：日 K 7252~9728 根（1989/1992/1999 起）；
   //   1m/5m/15m/30m/60m 全部可用（1m 只当日、5m ~5 个交易日、60m ~5 个交易日）。
   //   ⚠ 一律用**市场惯例方向**（EUR/USD、GBP/USD、AUD/USD）。
@@ -680,7 +681,7 @@ export const PORTFOLIO_KLINE = [
     key: 'brent', name: '布伦特原油', market: 'CMDTY', secid: null, sina: null,
     tx: null, sinaGlobal: 'OIL', klineNote: '',
   },
-  // 2.15.0：usdcny 已移到 INDICES（报价与 K 线同走东财 133.USDCNH），这里不再重复登记 ——
+  // 2.15.0：usdcny 已移到 INDICES（报价与日/周/月 K 走东财 133.USDCNH；分钟新浪优先），这里不再重复登记 ——
   //   否则 collect 会把同一个标的抓两遍（日志里也会出现两条）。
   // 人民币交叉盘（2.15.0）：报价与日线都走**新浪外汇** fx_s*。
   //   实测（2026-11-12）：日线 2008-09 / 2014-11 起，根数 3,710~5,178。
@@ -783,7 +784,7 @@ const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
 export function klineAvailable(key) {
   // 东财按 secid 能取到全部指数（含恒生科技 / 日经 / DAX / 富时 / KOSPI / 费城半导体 / 外汇 119.*）；
-  // 组合标的中 xau **没有**东财 secid（东财无现货伦敦金），走新浪外盘；
+  // xau 的东财 secid 只用于分钟（122.XAU），日/周/月走新浪外盘（emMinuteOnly）；
   // sge_au9999 有东财 secid 也有上金所官网。
   const t = klineTarget(key);
   if (!t) return false;

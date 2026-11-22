@@ -86,15 +86,19 @@ const AUTO_PERIODS = [...ALWAYS_PERIODS, ROTATE_PERIODS[new Date().getUTCHours()
 //     浏览器连不上东财（socket 级拒绝），只能走新浪 JSONP；若服务端仍以东财为主，
 //     就会出现「直连成功看新浪、失败看东财快照」，同一张图两个口径。
 //     交叉盘本来就是两端新浪，这 5 个照同一套走才自洽。
-//   · usdkrw / usdchf **核对未通过，留在东财**，且仍只刷 5m/30m（见 MINUTE_HOLD_KEYS）。
+//   · usdkrw **核对未通过，留在东财**，且仍只刷 5m/30m（见 MINUTE_HOLD_KEYS）；
+//     usdchf 核对擦边（5m p99 0.0593%），产品接受 ⇒ 接新浪，东财仅在该周期新浪失败时兜底。
 //   · **dxy / usdcny 补进来**：这两个此前只靠浏览器直连东财 ⇒ 东财不可达时全站无分钟图。
-//     dxy 只有东财一个源（新浪/腾讯均无 DXY 分钟）；usdcny 东财优先、新浪 fx_susdcnh 兜底。
+//     dxy 只有东财一个源（新浪/腾讯均无 DXY 分钟）；
+//     usdcny 分钟新浪 fx_susdcnh 优先、东财 133.USDCNH 兜底（日/周/月仍东财优先）。
 //
 // ⚠ 请求预算（每轮只跑 5m + 30m + 1 个轮换周期）：
-//     东财：11 个标的 × 3 + usdkrw/usdchf × 2 = 37 次/轮（历史限流阈值约 35 ⇒ 已越线）
-//     新浪：10 个外汇 × 3 = 30 次/轮（无已知 IP 级限流）
-//   ⚠ 37 > 35：这是**实测基线**，不靠估算。若持续限流，M4 会把它降级成
-//     「本周期剩余标的跳过、下一轮优先补」，不会整轮归零；真扛不住再把 dxy/usdcny 砍回 5m/30m。
+//     东财：10 个只走东财的标的 × 3 + usdkrw × 2 = 32 次/轮（配置基线）；
+//           实测 **34~35 次/轮**（含失败重试，emStats 只在真正发 HTTP 时计数）——
+//           会随东财可达性浮动，不是固定值。
+//     新浪：12 个外汇 × 3 = 36 次/轮（无已知 IP 级限流）
+//   ⚠ 实测 34~35 贴着历史限流阈值（约 35 次/轮）。若持续限流，M4 会把它降级成
+//     「本周期剩余标的跳过、下一轮优先补」，不会整轮归零；真扛不住再把 dxy 砍回 5m/30m。
 //   NO_ROTATE_KEYS 已删除 —— 它当初是为了压东财额度才砍掉美元对的 1m/15m/60m，
 //   核对通过的 5 个不再占东财额度，砍掉的理由不存在了。
 const TARGET_KEYS = [
@@ -113,15 +117,16 @@ const TARGET_KEYS = [
   'jpycny',      // fx_sjpycny（×100）
   'krwcny',      // fx_skrwcny（×100）
   'audcny',      // fx_saudcny
-  // ---- 外汇：美元对各主要货币（新浪 getMinKLine；东财 119.* 为服务端兜底）----
+  // ---- 外汇：美元对各主要货币（6 个走新浪 getMinKLine，东财 119.* 兜底；usdkrw 只走东财）----
   'eurusd',      // fx_seurusd
   'gbpusd',      // fx_sgbpusd
   'usdjpy',      // fx_susdjpy
-  'usdkrw',      // fx_susdkrw
+  'usdkrw',      // 东财 119.USDKRW（新浪分钟不接，不混源）
   'audusd',      // fx_saudusd
   'usdcad',      // fx_susdcad
   'usdchf',      // fx_susdchf
-  // ---- 汇率指数 / 离岸人民币：只有东财有分钟（新浪无 DXY；CNH 走 fx_susdcnh 兜底）----
+  // ---- 汇率指数 / 离岸人民币：dxy 只有东财有分钟（新浪无 DXY）；
+  //      usdcny 分钟新浪 fx_susdcnh 优先、东财 133.USDCNH 兜底 ----
   'dxy',         // 100.UDI
   'usdcny',      // 133.USDCNH
 ];
@@ -133,7 +138,7 @@ const TARGET_KEYS = [
 //   （usdchf 曾经也在这里，核对擦边 0.059%；产品决定接新浪并保留兜底标记 ⇒ 已移出本表。）
 const MINUTE_HOLD_KEYS = new Set(['usdkrw']);
 
-// 分钟「应以新浪为准」的标的（5 个交叉盘 + 5 个美元对 + usdchf）。
+// 兜底识别用的「新浪优先」集合（5 个交叉盘 + 5 个美元对 + usdchf，共 11 个）。
 // 本轮若实际由东财供数 ⇒ 新浪在这个周期失败了，必须可区分、可计数（产品要求）。
 // "同一文件长期两源交替" 就是 filename 在 新浪/东财 之间来回 —— 一旦出现要停下来报告。
 const SINA_PRIMARY_KEYS = new Set([
@@ -224,7 +229,7 @@ const isThrottle = (msg) => /限流|熔断|连续\s*\d+\s*次连接失败/.test(
 
 // ⚠⚠ **按「周期」优先遍历，不是按标的**：先把 5m 的**全部标的**刷完，再刷 30m。
 //   理由：Actions 的 runner IP 共享、经常处于东财限流边缘，一轮打到一半被限流是常态。
-//   若按标的遍历，被限流时只有前 2 个标的拿到了 3 个周期、其余 5 个标的一个周期都没有；
+//   若按标的遍历，被限流时只有前面少数标的拿到了 3 个周期、其余标的一个周期都没有；
 //   按周期遍历则至少保证「5m 对所有标的」是齐的（5m 才是最常用的那个）。
 //
 // ── 2026-11-21 更正：限流不再「整轮终止」────────────────────────────────
@@ -385,7 +390,7 @@ for (const period of periodList) {
       }
       // 任何标的只要「本轮取数源 ≠ 上一轮文件的取数源」，都记一次切换。
       // 分钟文件是 upsert 合并，换源会让同一文件前后半段来自不同后端（接缝），
-      // 所以这个数字必须可见 —— usdcny / usdchf 是仅有的双源标的。
+      // 所以这个数字必须可见 —— 6 个美元对 + usdcny 是双源标的（usdkrw 与交叉盘为单源）。
       if (!DRY && oldDoc) {
         const prevProvider = providerOf(oldDoc.source);
         const nowProvider = providerOf(servedBy);
@@ -471,10 +476,11 @@ if (!DRY) {
         failed: failures.length,
         throttleHit,
         // 东财实际发出的 HTTP 请求数（含重试，不含缓存命中/熔断拒绝）。
-        // 分钟K整改的预算是 33 次/轮，这个数字用来验证「估算」而不是继续拍脑袋。
+        // 实测 34~35 次/轮（含重试，随东财可达性浮动）；配置基线 32 次/轮。
         emRequests: emStats.requests,
         emFailures: emStats.failures,
-        // 本轮「本应走新浪却由东财兜底」的次数（usdchf 是唯一允许兜底的标的）；
+        // 本轮 SINA_PRIMARY_KEYS 里「本应走新浪却由东财兜底」的次数
+        // （5 个交叉盘无东财代码、无法兜底；6 个美元对可兜底）。
         // 一旦同一文件两源交替，alternated=true，需要人工判断，不要自行放宽。
         fallbackCount,
         fallbacks,
@@ -506,7 +512,7 @@ console.log(
   `[update-kline-minute] 更新 ${changed} 个 / 无变化 ${same} 个 / 锁占用 ${locked} 个 / 拒绝 ${rejected.length} 个（短覆盖） / 失败 ${failures.length} 个` +
   (throttleHit ? '（本轮有限流：部分周期被跳过，明细见 _status.json）' : '')
 );
-// 实测的东财请求数（含重试）——预算 37 次/轮，用来验证而不是估算
+// 实测的东财请求数（含重试）——多轮实测 34~35 次/轮，随东财可达性浮动
 console.log(`[update-kline-minute] 东财实际请求 ${emStats.requests} 次（失败 ${emStats.failures} 次）`);
 if (fallbackCount) {
   console.log(`[update-kline-minute] ⚠ 新浪兜底 ${fallbackCount} 次：`);
