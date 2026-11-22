@@ -66,7 +66,11 @@ const LIMITS = {
   repo_mib: { amber: 500, red: 700, hard: 1024, label: '仓库体积(API)' },
   site_mb: { amber: 500, red: 700, hard: 1024, label: '站点发布体积' },
   pack_mib: { amber: 150, red: 250, hard: null, label: 'clone 包' },
-  builds_per_hour_6h: { amber: 8, red: 10, hard: null, label: '构建次数/小时(近6h峰值)' },
+  // 2026-11-22：站点已改用自定义 Actions 部署（build_type: workflow），GitHub Pages
+  // 「分支构建 10 次/小时」的软上限不再适用（官方：custom workflow 不受该限制）。
+  // 这里的阈值改为「重复部署/触发风暴」监测：15 分钟定时节奏 = 4 次/h，
+  // 黄 24（6×）、红 36（9×）只用于发现异常重复，不再代表配额。
+  builds_per_hour_6h: { amber: 24, red: 36, hard: null, label: '构建次数/小时(近6h峰值)' },
   worker_req_day: { amber: 50000, red: 80000, hard: 100000, label: 'Worker 请求/天' },
   search_gz_mib: { amber: 4.5, red: 6, hard: null, label: 'search.json(gzip)' },
 };
@@ -268,6 +272,8 @@ async function collect() {
     pack_mib: 'clone 包（rev-list --objects | pack-objects，与主报告同口径）',
     search_mib: 'search.json 原始体积（优先工作区生成产物）',
     search_gz_mib: 'search.json gzip 体积（前端实际传输）',
+    builds_per_hour_6h: '自定义 Actions 部署不受 Pages 分支构建 10 次/h 软限制；黄 24 / 红 36 次/h 仅用于发现重复部署/触发风暴（15 分钟定时节奏为 4 次/h）',
+    deploy_dupe_24h: '近 24h 同一 head_sha 被部署多次的统计；extra_runs 为可省的重复构建',
   };
 
   // 4) clone 包
@@ -328,6 +334,31 @@ async function collect() {
       m.builds_per_hour_mean = byHour.size ? round(pagesRuns.length / byHour.size) : null;
       m.builds_per_day = byDay.size ? round(pagesRuns.length / byDay.size) : null;
       m.builds_sampled_hours = byHour.size;
+
+      // 重复部署：同一 head_sha 在近 24h 被跑多次。guard 只比对「最近一次已完成的部署」，
+      // push 与 schedule / workflow_dispatch 在几分钟内抢同一 SHA 时会双双放行（实测 3 组）。
+      // 这些是可直接省掉的构建，单独计数，供判断构建量是否真的偏高。
+      const sinceDup = NOW().getTime() - 24 * 3600 * 1000;
+      const recent24 = pagesRuns.filter((r) => new Date(r.created_at).getTime() >= sinceDup);
+      const bySha = new Map();
+      for (const r of recent24) bySha.set(r.head_sha, (bySha.get(r.head_sha) || 0) + 1);
+      const ev24 = {};
+      for (const r of recent24) ev24[r.event || 'unknown'] = (ev24[r.event || 'unknown'] || 0) + 1;
+      m.deploy_dupe_24h = {
+        runs: recent24.length,
+        distinct_commits: bySha.size,
+        dup_commits: [...bySha.values()].filter((n) => n > 1).length,
+        extra_runs: recent24.length - bySha.size,
+        ratio: recent24.length ? round((recent24.length - bySha.size) / recent24.length) : null,
+        by_event: ev24,
+      };
+      if (m.deploy_dupe_24h.extra_runs > 0) {
+        m.notes.push(
+          `近24h 同提交重复部署 ${m.deploy_dupe_24h.extra_runs} 次`
+            + `（${(m.deploy_dupe_24h.ratio * 100).toFixed(1)}%），多为 push 与 schedule/dispatch 抢同一 SHA；`
+            + `触发构成 ${Object.entries(ev24).map(([k, v]) => `${k} ${v}`).join(' / ')}`
+        );
+      }
 
       // 部署健康：最近一次 pages 运行的结论与耗时
       const last = pagesRuns.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''))[0];
@@ -470,12 +501,19 @@ function printTable(m, rows) {
   line('site_mb', m.site_mb, 'MiB', m.trend?.site_mb_per_month != null ? `+${m.trend.site_mb_per_month}/月` : '');
   line('pack_mib', m.pack_mib, 'MiB', m.trend?.pack_mib_per_month != null ? `+${m.trend.pack_mib_per_month}/月` : '');
   line('builds_per_hour_6h', m.builds_per_hour_6h, '次/h', `24h峰 ${m.builds_per_hour ?? '-'}`);
+  if (m.deploy_dupe_24h) {
+    const d = m.deploy_dupe_24h;
+    console.log(`${pad('重复部署(24h)', 22)}${pad(`${d.extra_runs} 次`, 12)}${pad('-', 14)}`
+      + `${pad(`${d.runs} 跑 / ${d.distinct_commits} 提交`, 10)}${d.extra_runs > 0 ? '可省' : 'OK'}`);
+  }
   console.log(`${pad('构建失败(24h)', 22)}${pad(`${m.builds_fail_24h ?? '-'} 次`, 12)}${pad('-', 14)}${pad('', 10)}${(m.builds_fail_24h || 0) > 0 ? '需关注' : 'OK'}`);
   line('worker_req_day', m.worker_req_day, '次/天', '');
   line('search_gz_mib', m.search_gz_mib, 'MiB', `${m.search_entries ?? '-'} 条`);
   console.log('-'.repeat(92));
   console.log(`分项  data ${m.data_mb} MiB（kline ${m.kline_mb}，其中分钟线 ${m.kline_min_mb}；`
     + `history ${m.history_mb}；archive ${m.archive_mb}；snapshots ${m.snapshots_mb}）`);
+  console.log('口径  构建次数：自定义 Actions 部署不受 10 次/h 软限制；'
+    + '黄 24 / 红 36 次/h 仅用于发现重复部署/触发风暴（定时节奏 4 次/h）');
   if (m.site_generated_mib != null) {
     console.log(`口径  site_mb = HEAD ${m.site_tracked_mib} + 生成索引 ${m.site_generated_mib} MiB`
       + `（artifact 展开；data = ${m.data_tracked_mb} + ${m.site_generated_mib}；`
