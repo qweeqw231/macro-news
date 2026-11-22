@@ -9,9 +9,14 @@ name: Pages 部署（自定义 Actions）
 #
 # 与另外四条写数据 workflow 的关系：
 #   · 本 workflow **只读仓库、只发 Pages 部署**，不写分支，不参与 data 的推送竞争；
-#   · concurrency 组独立（group: pages），且 cancel-in-progress: false
+#   · 部署并发组独立（group: pages），且 cancel-in-progress: false
 #     ⇒ 连续提交不会互相取消部署，最坏只是排队；这与仓库既有的
 #     「四条写分支 workflow 各自独立 concurrency、不连环取消」是同一个原则。
+#   · ⚠ 2026-11-22 起并发组挂在 deploy **作业**上，不再挂在 workflow 级：
+#     挂 workflow 级时，整个运行（含只读的 guard）都占住 pages 组，同一 SHA 的第二次
+#     触发只能等第一次跑完才轮到 guard ⇒ guard 的「进行中」判据永远看不到对方，
+#     实际只剩「已完成部署」这一条判据。移到作业级后 guard 立即并行执行（只读、约 5 秒），
+#     deploy 仍然严格串行，两层机制不再互相遮蔽。
 #
 # ⚠ 两个体积相关的坑：
 #   1) 站点约 131 MB，每次部署都要打包上传一次。upload-pages-artifact 打包时
@@ -45,23 +50,24 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
   # 避免「同一 SHA 重复部署」，两层判据：
   #   1) 已完成的部署：github-pages 环境最近一次 deployment 的 SHA 与本轮相同 ⇒ 跳过；
-  #   2) 进行中的部署：同一 head_sha 已有 queued / in_progress / waiting / pending / requested
-  #      的 pages.yml 运行 ⇒ 跳过（push 与 schedule / dispatch 在几分钟内抢同一 SHA 时，
-  #      旧逻辑只看「已完成」，两边都会放行，实测近 24h 多出 3~5 次重复构建）。
+  #   2) 未完成的部署：同一 head_sha 已有 queued / in_progress / waiting / pending / requested
+  #      的 pages.yml 运行 ⇒ 先等它（最多 120 秒），再按部署记录决定；仍没完成就交给它。
+  # 为什么需要 2)：push 与 schedule / dispatch 可能在几十秒内抢同一 SHA。此时第一条
+  #   已经过了 guard、正在部署，但 github-pages 的 deployment 记录还没出现 ⇒ 只看 1)
+  #   会漏判。2026-11-21 21:23 的 schedule/dispatch 同 SHA 对就是这种重叠。
+  # 为什么只认「更早的运行」（run_id 更小）：两条运行同时起跑时，如果互相把对方算作
+  #   「进行中」就会**互相跳过**，这个 SHA 反而没人部署。用 run_id 做确定性排序
+  #   （GitHub 的 run_id 单调递增），只把更早的那条当作「将要部署的人」，后到者让路。
   # 陈旧判定：以运行 created_at 计时，超过 15 分钟仍未完成的一律忽略。
-  #   依据：deploy 作业 timeout-minutes: 15，且正常一次部署约 40 秒；15 分钟后仍未完成的
-  #   只可能是失败/被取消的残留，不能让它永久挡住后续部署。
-  # 与 concurrency 的分工：guard 在独立作业里跑、不占 pages 组，只负责「同 SHA 去重」；
-  #   deploy 作业才进 group: pages（cancel-in-progress: false），负责「不同 SHA 串行」。
-  #   两层不重叠：即使 API 列表有秒级延迟导致漏判，concurrency 也只会让两次部署排队，
-  #   不会并发部署。
+  #   依据：deploy 作业 timeout-minutes: 15，且正常一次部署实测 41~47 秒；超过 15 分钟
+  #   仍处于 queued / in_progress 的只可能是平台侧卡单或记录滞后，不能让它永久挡住后续部署。
+  # 与 concurrency 的分工（不重叠）：
+  #   · guard：只读、不占 pages 组，负责「同一 SHA 去重」；
+  #   · deploy 作业的 group: pages（cancel-in-progress: false）：负责「不同 SHA 串行」，
+  #     只保证排队、不互相取消。即使 guard 因 API 延迟漏判，deploy 也只会排队，不会并发部署。
   guard:
     runs-on: ubuntu-latest
     permissions:
@@ -71,7 +77,7 @@ jobs:
     outputs:
       need: ${{ steps.check.outputs.need }}
     steps:
-      - name: 判断是否已有同 SHA 的部署或进行中的运行
+      - name: 判断是否已有同 SHA 的部署或更早的未完成运行
         id: check
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -79,23 +85,48 @@ jobs:
           SHA: ${{ github.sha }}
           RUN_ID: ${{ github.run_id }}
         run: |
-          LAST=$(gh api "repos/$REPO/deployments?environment=github-pages&per_page=1" \
-                  --jq '.[0].sha' 2>/dev/null || echo "")
-          # 同一 SHA 的未完成运行数（排除本轮自身；超过 15 分钟的视为陈旧，不算）
-          ACTIVE=$(gh api "repos/$REPO/actions/workflows/pages.yml/runs?head_sha=$SHA&per_page=30" \
-                  --jq "[.workflow_runs[]
-                         | select(.id != ${RUN_ID})
-                         | select(.status == \"queued\" or .status == \"in_progress\"
-                                  or .status == \"waiting\" or .status == \"pending\"
-                                  or .status == \"requested\")
-                         | select((now - (.created_at | fromdateiso8601)) < 900)] | length" \
-                  2>/dev/null || echo "0")
-          echo "HEAD=$SHA LAST=$LAST ACTIVE=${ACTIVE:-0}"
+          last_sha() {
+            gh api "repos/$REPO/deployments?environment=github-pages&per_page=1" \
+              --jq '.[0].sha' 2>/dev/null || echo ""
+          }
+          # 同一 SHA、run_id 更小（更早创建）、尚未完成且未超过 15 分钟的运行数
+          active_earlier() {
+            gh api "repos/$REPO/actions/workflows/pages.yml/runs?head_sha=$SHA&per_page=30" \
+              --jq "[.workflow_runs[]
+                     | select(.id < ${RUN_ID})
+                     | select(.status == \"queued\" or .status == \"in_progress\"
+                              or .status == \"waiting\" or .status == \"pending\"
+                              or .status == \"requested\")
+                     | select((now - (.created_at | fromdateiso8601)) < 900)] | length" \
+              2>/dev/null || echo "0"
+          }
+
+          LAST=$(last_sha)
+          ACTIVE=$(active_earlier)
           if [ -n "$LAST" ] && [ "$LAST" = "$SHA" ]; then
+            echo "HEAD=$SHA LAST=$LAST ACTIVE=${ACTIVE:-0}"
             echo "同一 SHA 已完成部署，跳过"
             echo "need=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "${ACTIVE:-0}" -gt 0 ]; then
+            echo "同一 SHA 还有 $ACTIVE 个更早的未完成运行，最多等 120 秒看它是否完成部署"
+            for _ in $(seq 1 12); do
+              sleep 10
+              ACTIVE=$(active_earlier)
+              [ "${ACTIVE:-0}" -eq 0 ] && break
+            done
+            # 等待期间对方可能已经部署完成，重新读一次部署记录
+            LAST=$(last_sha)
+          fi
+
+          echo "HEAD=$SHA LAST=$LAST ACTIVE=${ACTIVE:-0}"
+          if [ -n "$LAST" ] && [ "$LAST" = "$SHA" ]; then
+            echo "同一 SHA 已完成部署（等待期间完成），跳过"
+            echo "need=false" >> "$GITHUB_OUTPUT"
           elif [ "${ACTIVE:-0}" -gt 0 ]; then
-            echo "同一 SHA 已有进行中的部署（$ACTIVE 个），跳过"
+            echo "同一 SHA 仍有 $ACTIVE 个更早的未完成运行，交给它部署，跳过"
             echo "need=false" >> "$GITHUB_OUTPUT"
           else
             echo "need=true" >> "$GITHUB_OUTPUT"
@@ -106,6 +137,10 @@ jobs:
     if: needs.guard.outputs.need == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # 只有 deploy 进 pages 组：不同 SHA 串行部署、互不取消；guard 不占组，可并行去重。
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       # 首次部署失败（artifact 列表竞态）时 page_url 为空，回退到重试步骤的输出
