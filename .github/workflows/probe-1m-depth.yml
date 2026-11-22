@@ -1,0 +1,44 @@
+name: 1m 深度实测（一次性）
+
+# 目的：量出各源 1m 的真实上限，再决定是否抬高落盘/抓取上限。
+#   东财 push2his 对**本机的非浏览器客户端**是 socket 级拒绝（Node / curl 都失败），
+#   只有 Actions（美国节点）能稳定连上 ⇒ 探测必须在这里跑。
+# 产物：data/kline/min/_probe-1m.json（小 JSON，人工出表后可删）
+# ⚠ 一次性任务，不并入日常调度。
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/probe-1m-depth.mjs'
+      - '.github/workflows/probe-1m-depth.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: macro-news-probe-1m
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 跑探测
+        run: node scripts/probe-1m-depth.mjs 2>&1 | tee probe.log
+
+      - name: 提交结果
+        # 不注入 GITHUB_TOKEN ⇒ push-data.sh 跳过 Pages dispatch（探测结果不需要发布）
+        run: bash scripts/push-data.sh data/kline/min/_probe-1m.json MSG_PREFIX="chore: 1m 深度实测结果"
