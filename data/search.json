@@ -1,14 +1,30 @@
 {
-  "generatedAt": "2026-11-22T06:52:55.436Z",
+  "generatedAt": "2026-11-22T07:08:12.705Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-22",
   "hotFrom": "2026-11-16",
   "days": 62,
   "fromHistory": 13,
-  "total": 57018,
-  "hotTotal": 7418,
+  "total": 57020,
+  "hotTotal": 7420,
   "items": [
+    {
+      "id": "190khhj",
+      "ts": 1795331084,
+      "time": "2026-11-22T15:04:44.000+08:00",
+      "source": "华尔街见闻",
+      "title": "瑞士联邦副主席兼外长卡西斯将访华",
+      "url": "https://wallstreetcn.com/livenews/3203718"
+    },
+    {
+      "id": "m6s8d0",
+      "ts": 1795330753,
+      "time": "2026-11-22T14:59:13.000+08:00",
+      "source": "新浪财经",
+      "title": "巴林称民用工业设施遭伊朗袭击并起火",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-22/doc-inizqwfa6049277.shtml"
+    },
     {
       "id": "f0zph5",
       "ts": 1795330347,
