@@ -13,6 +13,35 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.33.2] - 2026-11-22
+
+### 修复：容量周报低估站点体积，并停止把一次性台阶年化成 ETA
+
+**问题一**：`scripts/capacity.mjs` 的 `site_mb` 只统计 HEAD 树。2.33.1 把
+`search.json` / `search-history/*` 改为部署期生成后，这两个路径不在 HEAD 里，
+站点发布体积被低估 **55.57 MiB**（实测 182.41 → 真实 237.98），且与上一期
+235.07 的快照出现假的「下降」。
+
+**问题二**：11-15 → 11-22 的 7 天窗口里含 history 导入与分片落地等一次性台阶，
+脚本直接年化得到 352.83 MB/月，再算出「站点距 1 GB 只剩 2.23 个月」，与稳态
+33 MiB/月矛盾（`docs/capacity-metrics.md` §0 已论证 343/2.3 不成立）。
+
+**改动**
+- `site_mb = site_tracked_mib（HEAD 树）+ site_generated_mib（data/search.json +
+  data/search-history/*，取工作区实际产物）`，与 artifact 展开体积一致；
+  `data_mb` 同步为「HEAD 中的 data + 生成索引」，并新增 `data_tracked_mb`。
+- `search_mib` / `search_gz_mib` / `search_entries` 与分片统计优先读生成产物，
+  缺失时回落到 HEAD，并记录 `search_source` / `shards_source`。
+- 快照新增 `definitions` 字段，逐项写明每个数字的口径；终端输出增加「口径」一行。
+- 一次性台阶识别：站点体积较上次快照跳增 **>50%** 时判为台阶，本期不出
+  `site/repo/data` 月化与 `months_to_hard`，备注写明原因。
+- 缺失生成索引时不再静默：备注提示「site_mb 低估约 55 MiB，先跑 build-search.mjs」。
+
+**实测（2026-11-22 15:32，同一时点）**
+- 旧算法：`site_mb`（仅 HEAD）**182.41 MiB**，较上一期 235.07 假降 52.66。
+- 新算法：`182.41 + 55.57 = 237.98 MiB`，与 artifact 展开体积一致（artifact zip 63.97 MiB）。
+- 台阶识别生效：窗口跳增 55%，本期 ETA 留空，备注「判为一次性台阶」。
+
 ## [2.33.1] - 2026-11-22
 
 ### 构建：检索索引改为 Pages 部署期生成，不再进 git

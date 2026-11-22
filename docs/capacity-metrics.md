@@ -13,6 +13,8 @@
 - **真正最近的一条线是 clone 包**：实测 **143.75 MiB**，黄线 150（约 3 天）、红线 250（约 1.8 个月）。
   这是 clone 体验/预案阈值，不是 GitHub 硬配额。
 - 站点 1 GB 按稳态还要 **约 23.6 个月**；仓库 1 GB 约 **14.5 个月**。都不是「几个月内」。
+- **2026-11-22 15:32 复核（B1 迁移后）**：`site_mb = HEAD 182.41 + 部署期生成索引 55.57 = 237.98 MiB`；
+  clone 包 145.8 MiB；`capacity.mjs` 已改为按此口径统计，并识别一次性台阶（不再输出 2.3 个月）。
 
 ## 1. 四个体积的定义与实测
 
@@ -21,7 +23,7 @@
 | 本地 `.git` | `.git/` 下全部文件 | **183.44 MiB**（`size-pack` 176.14 + loose 4.73 + 其他） |
 | clone 包 | `git rev-list --objects HEAD \| git pack-objects --stdout \| wc -c`，等价一次 clone 的下载量 | **143.75 MiB** |
 | 仓库体积（API） | `GET /repos/qweeqw231/macro-news → size`，服务端口径，含元数据 | **186.9 MiB** |
-| 站点发布（展开） | HEAD 全部 blob 字节和，`capacity.mjs` 的 `site_mb`（实际按 MiB 计算） | **235.06 MiB**（1378 文件，约 246.5 MB 十进制） |
+| 站点发布（展开） | 发布产物展开体积：**HEAD 全部 blob + 部署期生成的检索索引**（2.33.1 起 search.json / search-history 不再进 git） | 06:3x 时 **235.06 MiB**（1378 文件）；15:32 时 **237.98 MiB**（HEAD 182.41 + 生成 55.57） |
 | Pages artifact | 最近一次 `pages.yml` 的 `github-pages` artifact `size_in_bytes` | **66,448,575 B = 63.37 MiB**（zip，保留 1 天） |
 
 注意：
@@ -74,13 +76,16 @@ runbook 在 `data-growth-limits.md` §2 已经踩过同一个坑：30 天口径 
   原因是 history 导入与 search 分片落地，属于 runbook 自己定义的「台阶」。
 - 因此 runbook §5 的时间表需要重算：原文「clone 150 → 2027-01」失效，按新基线约 **3 天**；
   「站点 1 GB → 2029-02」按新基线约 **2028-11**，仍同一量级。
-- `capacity.mjs` 的 `months_to_hard` 直接拿 7 天速率算，没有剔除台阶（runbook §6.2 只要求
-  与 28 天前同名快照比，未要求剔除回补），所以输出 2.3 个月。**脚本未改**，本次只修正文档口径。
+- `capacity.mjs` 原先直接拿 7 天速率算 `months_to_hard`，没有剔除台阶（输出 2.3 个月）。
+  **2.33.2 已修**：站点/仓库体积一周跳增 >50% 时判为一次性台阶，本期不出月化与 ETA，
+  并在备注里写明原因；同时 `site_mb` 改为「HEAD + 部署期生成索引」，与 artifact 展开体积一致。
 
 ## 5. 该怎么用这份数字
 
 - 现在该启动的是 runbook 的 **B1（检索数据出 git）**，触发依据是 **clone 150 黄线已到**，
   而不是「站点 1 GB 还剩 2.3 个月」。B1 的对象应包含 `data/search.json` 与
   `data/search-history/`（合计约 55.4 MiB），否则压不下 clone 包。
-- 容量周报里的「2.3 个月」先忽略；等脚本能识别一次性台阶后再看 ETA。
+- 容量周报里的 ETA 现在只在没有一次性台阶时给出；出现台阶会打备注并留空，不要手算年化。
+- 站点体积的定义以 `capacity.mjs` 输出为准：`site_mb = site_tracked_mib + site_generated_mib`，
+  快照里的 `definitions` 字段逐项写明口径。
 - 站点 1 GB、仓库 1 GB 都还有一年以上，不需要现在动。
