@@ -2555,6 +2555,32 @@
       `<span class="km-meta-short">${esc(m.short)}</span>`;
   }
 
+  // 分钟K 的实际覆盖起点：同一周期，不同标的的源端历史上限差很多
+  // （dxy 60m 只有 120 根≈5 天，eurcny 60m 有 1102 根≈64 天）。
+  // 只做提示、不做拦截，也不标警告色 —— 覆盖短是正常的源端上限，不是数据丢失。
+  // 放在图下方说明区：320px 下不挤占标题、周期条与价格轴。
+  function renderKlineCoverage(bars, period) {
+    const box = $('#kmCoverage');
+    if (!box) return;
+    const isMinute = (window.MarketData.MINUTE_PERIODS || []).includes(period);
+    if (!isMinute || !bars || !bars.length) {
+      box.hidden = true;
+      box.textContent = '';
+      return;
+    }
+    const first = String(bars[0] && bars[0].t || '').slice(0, 16);
+    if (!first) {
+      box.hidden = true;
+      box.textContent = '';
+      return;
+    }
+    const n = bars.length;
+    // 根数很少时点明根数，避免「覆盖短」被误读成数据丢了
+    const countText = n < 200 ? `仅 ${n} 根` : `共 ${n} 根`;
+    box.textContent = `覆盖自 ${first.slice(5)} · ${countText}`;
+    box.hidden = false;
+  }
+
   async function loadKline(key, period) {
     const myId = ++klineReqId;          // 请求令牌：过期响应一律丢弃
     klineKey = key;
@@ -2570,7 +2596,9 @@
 
     const note = $('#kmNote');
     const meta = $('#kmMeta');
+    const cov = $('#kmCoverage');
     note.textContent = '';
+    if (cov) { cov.hidden = true; cov.textContent = ''; }
     if (meta) meta.textContent = '加载中…';
     // 画布与顶部必须同步：取数期间画布也写「加载中…」，不能先写「暂无数据」
     if (kChart.setEmptyText) kChart.setEmptyText('加载中…');
@@ -2616,6 +2644,7 @@
       shownRank = rank;
       shownLast = last;
       kChart.setData(bars, period);
+      renderKlineCoverage(bars, period);
       // 2.4.12：首帧落图后恢复刷新前的缩放与视窗位置（只恢复一次）
       if (pendingKlineView && pendingKlineView.key === key && pendingKlineView.period === period) {
         const v = pendingKlineView;
@@ -2688,6 +2717,8 @@
 
     if (myId === klineReqId && shown === 0) {
       const metaBox = $('#kmMeta');
+      const covBox = $('#kmCoverage');
+      if (covBox) { covBox.hidden = true; covBox.textContent = ''; }
       if (metaBox) metaBox.textContent = '无数据';
       if (kChart.setEmptyText) kChart.setEmptyText('暂无数据');
       // 分钟级若是「全网本来就没有同口径的分钟源」，要说清楚**为什么**，
@@ -2735,6 +2766,7 @@
             // ⚠ 只在「根数不减少」时覆盖：直连只给 1000 根时，不能把本地全量的 8752 根降级
             if (next.length >= kChart.bars.length) {
               kChart.setData(next, klinePeriod);
+              renderKlineCoverage(next, klinePeriod);
               maBars = next.length;
               renderMA();
             }
