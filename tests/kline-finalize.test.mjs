@@ -6,6 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   lastClosedBarDate, dropUnclosedBars, writePlan, inOpenRefreshWindow, openRefreshAllowed,
+  minuteRoundDue,
 } from '../src/kline-finalize.mjs';
 
 const BJ = (s) => Date.parse(s + '+08:00');
@@ -27,6 +28,14 @@ test('日K末根盘中节流：窗口内也要距上次写入 ≥5 小时', () =
   assert.equal(openRefreshAllowed(now, ''), true, '没有 generatedAt → 放行');
   // 窗口外即使很久没写也不放行（收盘定稿另走 finalize，不受此限）
   assert.equal(openRefreshAllowed(BJ('2026-11-23T15:30:00'), '2026-11-23T08:00:00+08:00'), false);
+});
+
+test('分钟K 1 轮/小时：距上轮不足 50 分钟时跳过', () => {
+  const now = BJ('2026-11-23T14:30:00');
+  assert.equal(minuteRoundDue('2026-11-23T13:50:00+08:00', now), false, '40 分钟 → 跳过');
+  assert.equal(minuteRoundDue('2026-11-23T13:40:00+08:00', now), true, '50 分钟 → 放行');
+  assert.equal(minuteRoundDue('2026-11-23T13:35:00+08:00', now), true, '55 分钟 → 放行');
+  assert.equal(minuteRoundDue('', now), true, '没有状态文件 → 放行');
 });
 
 test('港股：12:18 生成全量时，当天 bar 还不能入库', () => {

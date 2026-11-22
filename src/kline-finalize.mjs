@@ -97,6 +97,22 @@ export function openRefreshAllowed(nowMs, generatedAt) {
 }
 
 /**
+ * 分钟 K 的一轮最小间隔（2026-11-22）。
+ *
+ * CF 每小时会触发 :17 / :47 两次，GitHub 兜底还有 :02。以前每个触发都完整跑一轮，
+ * 实测约 2 轮/小时、47 次提交/天。现在在脚本入口统一节流到 **1 轮/小时**：
+ * 距离上轮 `_status.json.generatedAt` 不足 50 分钟就直接退出（`--force` / `--dry-run` 除外）。
+ * 50 分钟 = 1 小时减掉 10 分钟运行余量，保证正常一轮 6 分钟时下一小时的 :17 能放行。
+ */
+export const MINUTE_ROUND_MIN_GAP_MS = 50 * 60 * 1000;
+
+export function minuteRoundDue(lastGeneratedAt, nowMs = Date.now()) {
+  const t = Date.parse(lastGeneratedAt || '');
+  if (!Number.isFinite(t)) return true;
+  return nowMs - t >= MINUTE_ROUND_MIN_GAP_MS;
+}
+
+/**
  * 无时段市场「最近一根已经收完的 bar 日期」。
  * 与 lastClosedBarDate 的区别：只处理 FX / CMDTY，不查 MARKET_SESSIONS。
  */

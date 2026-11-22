@@ -75,7 +75,11 @@ jobs:
         continue-on-error: true
         run: |
           set -o pipefail
-          node scripts/update-kline-minute.mjs 2>&1 | tee minutes.log
+          # 2026-11-22：入口节流到 1 轮/小时（CF :17/:47 + GH :02 只会有一轮真正执行）。
+          # 代码 push 触发时用 --force 立即验证，不等待 50 分钟窗口。
+          FORCE=""
+          if [ '${{ github.event_name }}' = "push" ]; then FORCE="--force"; fi
+          node scripts/update-kline-minute.mjs $FORCE 2>&1 | tee minutes.log
           {
             echo "### 分钟K刷新 · $(date -u '+%Y-%m-%d %H:%M UTC')"
             echo ""

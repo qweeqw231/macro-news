@@ -1,5 +1,6 @@
 // scripts/update-kline-minute.mjs
 // 生成「服务端预生成的分钟K」：data/kline/min/<key>_<period>.json
+// （2026-11-22 起入口节流到 1 轮/小时：CF :17/:47 与 GH :02 的重复触发会被自动跳过）
 //
 // ── 为什么必须有它（2026-10-30 实测）────────────────────────────────────
 //   用户反馈：「所有非 A/非 H/非美指数 + 上海金都没有分钟级别K线」。
@@ -41,7 +42,8 @@
 //
 // 用法：
 //   node scripts/update-kline-minute.mjs              # 全部目标 × 全部周期
-//   node scripts/update-kline-minute.mjs --dry-run    # 只抓不写
+//   node scripts/update-kline-minute.mjs --dry-run    # 只抓不写（不参与 1 轮/小时节流）
+//   node scripts/update-kline-minute.mjs --force      # 绕过 1 轮/小时节流
 //   node scripts/update-kline-minute.mjs --only cac40
 //   node scripts/update-kline-minute.mjs --periods 5m,15m
 //
@@ -55,17 +57,20 @@ import { fetchKline, getKlineSource, klineTarget } from '../src/sources.mjs';
 import { emStats } from '../src/em.mjs';
 import { upsertBars } from '../src/kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
+import { minuteRoundDue } from '../src/kline-finalize.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'data', 'kline', 'min');
 const STATUS_FILE = path.join(OUT_DIR, '_status.json');
+const START_MS = Date.now();
 
 const arg = (name, dflt) => {
   const i = process.argv.indexOf('--' + name);
   return i >= 0 && process.argv[i + 1] ? process.argv[i + 1] : dflt;
 };
 const DRY = process.argv.includes('--dry-run');
+const FORCE = process.argv.includes('--force');
 const ONLY = arg('only', '');
 const PERIODS_ARG = arg('periods', '');
 
@@ -230,6 +235,23 @@ const periodList = (PERIODS_ARG.length
   .sort((a, b) => (PERIOD_SPEC[a]?.order ?? 99) - (PERIOD_SPEC[b]?.order ?? 99));
 
 const keys = ONLY ? TARGET_KEYS.filter((k) => k === ONLY) : TARGET_KEYS;
+
+// ── 1 轮/小时节流（2026-11-22）───────────────────────────────────────────
+//   CF 的 :17 / :47 与 GitHub 兜底 :02 都会触发本脚本。以前每个触发都完整跑一轮，
+//   实测约 2 轮/小时。现在入口统一限到 50 分钟：同一次「上轮结束后 50 分钟内」直接退出。
+//   · --force：代码 push（workflow 的 push 触发）或人工排查时绕过；
+//   · --dry-run：只抓不写，不参与节流，方便测量。
+if (!DRY && !FORCE) {
+  let last = '';
+  try {
+    last = JSON.parse(await readFile(STATUS_FILE, 'utf8')).generatedAt || '';
+  } catch { /* 没有状态文件 = 从没跑过，放行 */ }
+  if (!minuteRoundDue(last)) {
+    const min = Math.round((Date.now() - Date.parse(last)) / 60000);
+    console.log(`[update-kline-minute] 距上轮 ${min} 分钟（<50）→ 跳过本轮，保持 1 轮/小时`);
+    process.exit(0);
+  }
+}
 
 console.log(
   `[update-kline-minute] 目标 ${keys.length} 个标的 × 周期 ${periodList.join('/')} ` +
@@ -491,6 +513,7 @@ if (!DRY) {
     JSON.stringify(
       {
         generatedAt: new Date().toISOString(),
+        durationMs: Date.now() - START_MS,
         ok: results.length,
         failed: failures.length,
         throttleHit,

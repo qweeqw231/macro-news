@@ -175,7 +175,8 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 - **全量**（`kline-full.yml`，UTC 04:23 = 北京 12:23）：
   - `scripts/update-kline-full.mjs`：43 个标的（33 指数 + 10 组合）的全量日 K（`_full.json`）
   - `node src/collect.mjs --kline-only`：43 个标的 × 日/周/月（`<key>.json` / `_1w` / `_1M`）
-- **分钟 + 最后一根**（`kline-minute.yml`，每小时 :17）：
+- **分钟 + 最后一根**（`kline-minute.yml`，每轮 :17）：入口节流到 **1 轮/小时**
+  （CF 的 :17/:47 与 GH 兜底 :02 只有一轮真正执行；`--force` 仅用于代码 push / 人工排查）：
   - `scripts/update-kline-minute.mjs`：23 个标的 × 分钟周期（`min/`）
     - **每轮必刷 5m + 30m**，其余 60m/15m/1m 按小时轮换（每小时再刷 1 个）⇒ 单个文件不是每轮都更新；
     - **1m 深度**：抓取上限 **1,500**，源端单次实际只给约 1 个交易日（东财 1,439；新浪 1,361~1,411），
@@ -674,7 +675,7 @@ GitHub 自带 `schedule` 实测只兑现约 3%，所以触发搬到仓库外：
 |---|---|
 | `7,22,37,52 * * * *` | `collect.yml` |
 | `13,43 * * * *` | `snapshot.yml` |
-| `17,47 * * * *` | `kline-minute.yml`（UTC 04:17 那轮附带 `kline-full.yml`） |
+| `17,47 * * * *` | `kline-minute.yml`（UTC 04:17 那轮附带 `kline-full.yml`；脚本入口节流到 1 轮/小时） |
 
 **GitHub `schedule` 只做错峰兜底**（主触发是上面的 Cloudflare cron）：
 

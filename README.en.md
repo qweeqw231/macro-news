@@ -156,7 +156,8 @@ both return the name "上证50" (verified 2026-11-02; see CHANGELOG).
 - **Full run** (`kline-full.yml`, UTC 04:23 = 12:23 Beijing):
   - `scripts/update-kline-full.mjs`: full daily K for 36 instruments (26 indices + 10 portfolio) (`_full.json`)
   - `node src/collect.mjs --kline-only`: 36 instruments × daily/weekly/monthly (`<key>.json` / `_1w` / `_1M`)
-- **Minutes + last bar** (`kline-minute.yml`, hourly at :17):
+- **Minutes + last bar** (`kline-minute.yml`, one round per hour): the script throttles duplicate triggers
+  (CF :17/:47 + GH :02) to **1 effective round/hour**; `--force` is only for code pushes / manual debugging.
   - `scripts/update-kline-minute.mjs`: 23 instruments × minute periods (`min/`)
     - **5m + 30m every round**; 60m/15m/1m rotate by hour (one extra period per hour), so an individual file is not rewritten every round.
     - **1m depth**: fetch limit **1,500**; each source only returns about one trading day (Eastmoney 1,439; Sina 1,361–1,411),
@@ -628,7 +629,7 @@ GitHub's built-in `schedule` only fires about 3% of the time in practice, so tri
 |---|---|
 | `7,22,37,52 * * * *` | `collect.yml` |
 | `13,43 * * * *` | `snapshot.yml` |
-| `17,47 * * * *` | `kline-minute.yml` (the UTC 04:17 round also runs `kline-full.yml`) |
+| `17,47 * * * *` | `kline-minute.yml` (the UTC 04:17 round also runs `kline-full.yml`; the script throttles to 1 round/hour) |
 
 **GitHub `schedule` is only a staggered fallback** (the primary trigger is the Cloudflare cron above):
 
