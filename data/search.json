@@ -1,14 +1,22 @@
 {
-  "generatedAt": "2026-11-22T02:08:21.987Z",
+  "generatedAt": "2026-11-22T02:22:57.721Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-22",
   "hotFrom": "2026-11-16",
   "days": 62,
   "fromHistory": 13,
-  "total": 56930,
-  "hotTotal": 7330,
+  "total": 56932,
+  "hotTotal": 7332,
   "items": [
+    {
+      "id": "1ihf2ju",
+      "ts": 1795313467,
+      "time": "2026-11-22T10:11:07.000+08:00",
+      "source": "新浪财经",
+      "title": "美情报主管收到警告：若不解释乌克兰星盾限速问题，国会将冻结SpaceX相关资金",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-22/doc-inizqmrk2910177.shtml"
+    },
     {
       "id": "tjjl24",
       "ts": 1795313271,
@@ -96,6 +104,14 @@
       "source": "新浪财经",
       "title": "朝聚眼科于11月20日斥资11.3万港元回购4.85万股",
       "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-22/doc-inizqmrh6117182.shtml"
+    },
+    {
+      "id": "vi4835",
+      "ts": 1795311749,
+      "time": "2026-11-22T09:42:29.000+08:00",
+      "source": "新浪财经",
+      "title": "中方坚决反对！敦促美方立即撤销→",
+      "url": "https://finance.sina.com.cn/china/2026-11-22/doc-inizqmrh6125537.shtml"
     },
     {
       "id": "154yht",
