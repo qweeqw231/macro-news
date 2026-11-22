@@ -6,84 +6,84 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-22T22:23:06.437Z",
-  "durationMs": 12229,
+  "startedAt": "2026-11-22T22:38:09.857Z",
+  "durationMs": 19220,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 7052
+      "ms": 5838
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1271
+      "ms": 1233
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 2636
+      "ms": 1618
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 897
+      "ms": 589
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 2113
+      "ms": 1787
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 1479
+      "ms": 849
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 2056
+      "ms": 1172
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 6690
+      "ms": 6150
     }
   ],
-  "quotes": 73,
-  "added": 8,
+  "quotes": 56,
+  "added": 7,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7614,
-    "kept": 7614,
+    "candidates": 7621,
+    "kept": 7621,
     "evicted": 0,
-    "deduped": 216,
+    "deduped": 219,
     "days": [
       {
         "day": "2026-11-22",
-        "incoming": 201,
-        "candidates": 321,
-        "kept": 321,
+        "incoming": 203,
+        "candidates": 328,
+        "kept": 328,
         "evicted": 0,
-        "deduped": 193,
-        "added": 8
+        "deduped": 196,
+        "added": 7
       },
       {
         "day": "2026-11-21",
@@ -141,5 +141,5 @@
       }
     ]
   },
-  "quoteError": "1/66 失败：批量端点返回无效价(f2=-)"
+  "quoteError": "18/66 失败：东财批量失败：HTTP 502"
 }
