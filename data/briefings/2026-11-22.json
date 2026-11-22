@@ -1,0 +1,152 @@
+{
+  "date": "2026-11-22",
+  "generatedAt": "2026-11-22T09:03:22+08:00",
+  "endedAt": "2026-11-22T09:03:36+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-21",
+    "to": "2026-11-22",
+    "fromAt": "2026-11-21T08:00:00+08:00",
+    "toAt": "2026-11-22T09:00:00+08:00",
+    "fromTs": 1795219200,
+    "toTs": 1795309200
+  },
+  "overview": "今日主线是地缘风险与资产重估同时发生：霍尔木兹海峡油轮接连遇袭，伊朗称击落美军F-16，避险与通胀交易同时压向油价。国内政策面以稳投资、扩开放为主线，发改委督促政府投资资金支付使用，央行释放扩大金融市场双向开放信号。风险资产继续出清，AI板块本周蒸发4万亿美元，英伟达距高点跌47%，比特币跌破56000美元创两年多新低。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家发改委：加快推动政府投资项目建设和资金支付",
+      "summary": "国家发展改革委11月20日召开政府投资资金支付使用和项目储备工作视频会议，委党组成员、副主任岳修虎出席并讲话，通报各地政府投资资金支付使用和重大项目储备情况，浙江、河南、广东等6省发展改革委负责人交流发言。同期报道显示，发改委要求加快推动政府投资项目建设和资金支付。",
+      "why": "政府投资资金落地速度的观察窗口",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-21T11:47",
+      "url": "https://wallstreetcn.com/livenews/3203640",
+      "refs": [
+        "http://finance.eastmoney.com/news/1352,202611213936821276.html",
+        "http://finance.eastmoney.com/news/1352,202611213936800946.html",
+        "http://finance.eastmoney.com/news/1352,202611213936800846.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行召开外资金融机构座谈会，稳步扩大金融市场双向开放",
+      "summary": "中国人民银行召开外资金融机构座谈会，听取外资金融机构意见建议，研究进一步优化营商环境、推动金融业高水平对外开放有关工作。座谈会释放清晰信号：中国将继续推动金融高水平开放，持续完善政策供给，稳步扩大金融市场双向开放，不断优化跨境支付服务，更加便利人民币国际使用。",
+      "why": "外资准入与人民币国际化的政策信号",
+      "source": "东方财富",
+      "publishedAt": "2026-11-22T05:46",
+      "url": "http://finance.eastmoney.com/news/1352,202611223936860314.html"
+    },
+    {
+      "rank": 3,
+      "title": "亚投行将在香港设立办公室，蓝佛安代表中方签署协定",
+      "summary": "11月21日，亚投行香港办公室协定签署仪式在香港举行，财政部部长蓝佛安代表中国政府与亚投行行长邹加怡共同签署协定，约定亚投行于香港设立办公室。蓝佛安指出，亚投行开业十年来坚持国际性、规范性、高标准运营，已成为国际多边开发体系中一支新的重要力量。",
+      "why": "香港多边金融平台与跨境融资通道",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-21T16:19",
+      "url": "https://wallstreetcn.com/livenews/3203652",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202611213936853323.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "工信部：前三季度数字产业收入超32万亿元，同比增长14.8%",
+      "summary": "11月20日工信部发布数据，前三季度我国数字产业整体延续向优向好发展态势，收入增速加快，盈利水平持续提升，电子产品对外出口延续强劲增势，人工智能创新迭代提速，智能终端产品密集发布，产业新动能加速积蓄，为稳定经济增长、培育发展新质生产力、赋能千行百业数智转型提供有力支撑。",
+      "why": "新质生产力的量化刻度",
+      "source": "东方财富",
+      "publishedAt": "2026-11-21T10:19",
+      "url": "http://finance.eastmoney.com/news/1352,202611213936790919.html"
+    },
+    {
+      "rank": 5,
+      "title": "霍尔木兹海峡油轮接连遇袭，布伦特原油暗盘站上90美元",
+      "summary": "英国海上贸易行动办公室通报，11月21日两艘油轮接连在驶出霍尔木兹海峡时被不明抛射物击中，一起发生在阿曼海塞卜以北水域，另一起在其以东。伊朗革命卫队称美军动用了空中加油机、F-16等力量为油轮通过提供掩护，期间发生多起油轮爆炸起火。布伦特原油暗盘一度涨近0.2%、站上90美元/桶。",
+      "why": "海峡供给风险向油价传导",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-21T19:44",
+      "url": "https://wallstreetcn.com/livenews/3203668",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3203658",
+        "https://wallstreetcn.com/livenews/3203665",
+        "https://finance.sina.com.cn/world/gjcj/2026-11-22/doc-inizqfik6192912.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-22/doc-inizqfis1471516.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "伊朗称防空导弹击中美军F-16，击落第58架死神无人机",
+      "summary": "伊朗军方称其防空导弹在波斯湾上空击中一架美军F-16战斗机，迫使其紧急降落。伊朗革命卫队另称，一架美军MQ-9型死神无人机当天在霍尔木兹海峡上空被新型防空系统拦截并击落，这是伊方击落的第58架该型无人机，单机造价3000万至5000万美元。当日革命卫队总司令瓦希迪视察地下导弹基地。",
+      "why": "美伊从代理对抗走向直接交锋",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-21T21:33",
+      "url": "https://wallstreetcn.com/livenews/3203684",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3203639",
+        "https://wallstreetcn.com/livenews/3203660",
+        "https://wallstreetcn.com/livenews/3203667"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "欧盟拟再削减2028-34年预算并开征数字税",
+      "summary": "欧盟领导人峰会主席科斯塔提议进一步削减2028-2034年预算草案，并建议开辟新收入来源、包括征收数字税。该方案使七年期预算总额较爱尔兰轮值主席国10月提案减少400亿欧元，降至1.582万亿欧元；与欧盟委员会最初提案相比减少1806亿欧元。法国总统办公室称最新提案非常让人失望，并非达成协议的基础。",
+      "why": "欧盟财政空间与数字税可行性",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-21T21:25",
+      "url": "https://wallstreetcn.com/livenews/3203683",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3203666"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "比特币跌破56000美元创两年多新低，投机性押注退潮",
+      "summary": "比特币跌至两年多来最低水平，从特朗普再次当选后备受追捧的资产，转变为更广泛投机性押注退潮的受害者，周五在美国下跌6%。自2025年10月超过126000美元峰值以来已跌逾一半，币安10月底遭黑客攻击令市场震荡，美国中期选举结果也令加密行业争取友好监管的努力失去动力，ETF净流出已超30亿美元。",
+      "why": "投机性押注退潮的高频读数",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-21T13:01",
+      "url": "https://finance.sina.com.cn/world/2026-11-21/doc-iniznnyh3473939.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-22/doc-inizpqmu3159375.shtml",
+        "http://finance.eastmoney.com/news/1350,202611213936814534.html",
+        "https://wallstreetcn.com/livenews/3203641",
+        "https://wallstreetcn.com/livenews/3203644"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "英伟达距纪录高点累跌47%，市值已跌出一个亚马逊",
+      "summary": "英伟达周五收跌14%，跌至2025年5月以来最低水平，自10月6日创纪录高点以来累计跌幅达到47%，目前市值3.03万亿美元，位列美股第四，排在苹果之后。一个多月内其市值已相当于损失一个亚马逊。美国财政部长贝森特表示，随临时管理层调查推进，将看该公司是否在某种程度上滥售。",
+      "why": "AI龙头从溢价到折价的定价转折",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-21T08:14",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-iniznakk6772708.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-22/doc-inizpqmw9384620.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-iniznnyc4994741.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "AI板块本周蒸发4万亿美元，周五盘后科技股集体反弹",
+      "summary": "自2022年末ChatGPT问世以来，本周投资者第一次没有把这轮抛售看作AI璀璨前路中一次短暂颠簸，AI板块合计蒸发4万亿美元市值，Anthropic创纪录IPO未能提振市场。周五恐慌性抛售后情绪修复，美股盘后AI硬件与大型科技股集体反弹，英伟达、英特尔等回升。有策略师认为抛售潮接近尾声，也有观点认为该IPO标志AI热潮终结。",
+      "why": "AI叙事见顶还是短暂调整的分水岭",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-21T13:57",
+      "url": "https://finance.sina.com.cn/world/2026-11-21/doc-iniznnyh3504257.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-21/doc-iniznnyc4994741.shtml",
+        "https://wallstreetcn.com/livenews/3203690",
+        "https://wallstreetcn.com/livenews/3203688"
+      ]
+    }
+  ],
+  "watch": [
+    "下一个交易日布伦特原油能否站稳90美元/桶，霍尔木兹海峡是否再有油轮遇袭通报",
+    "下一个交易日美股能否延续周五盘后的AI硬件反弹，标普500能否收复6910点",
+    "比特币能否守住56000美元这一两年多低点",
+    "英伟达临时管理层调查与潜在会计问题调查的后续通报"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}

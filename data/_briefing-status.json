@@ -1,28 +1,7 @@
 {
   "v": 1,
-  "updatedAt": "2026-11-21T09:10:26+08:00",
+  "updatedAt": "2026-11-22T09:03:36+08:00",
   "days": {
-    "2026-11-07": {
-      "date": "2026-11-07",
-      "status": "done",
-      "stage": "publish",
-      "startedAt": "2026-11-07T09:02:36+08:00",
-      "endedAt": "2026-11-07T09:02:36+08:00",
-      "exitCode": 0,
-      "candidates": 120,
-      "items": 10,
-      "source": "ai",
-      "reason": "",
-      "durationMs": 11,
-      "generator": "llm-v1",
-      "attempt": 1,
-      "pushed": true,
-      "pushError": "",
-      "pushAt": "2026-11-07T09:02:45+08:00",
-      "pushErrorKind": "",
-      "statusCommit": null,
-      "statusError": ""
-    },
     "2026-11-08": {
       "date": "2026-11-08",
       "status": "done",
@@ -311,6 +290,27 @@
       "pushErrorKind": "",
       "statusCommit": null,
       "statusError": ""
+    },
+    "2026-11-22": {
+      "date": "2026-11-22",
+      "status": "done",
+      "stage": "publish",
+      "startedAt": "2026-11-22T09:03:36+08:00",
+      "endedAt": "2026-11-22T09:03:36+08:00",
+      "exitCode": 0,
+      "candidates": 120,
+      "items": 10,
+      "source": "ai",
+      "reason": "",
+      "durationMs": 19,
+      "generator": "llm-v1",
+      "attempt": 1,
+      "backfill": false,
+      "backfillKind": "",
+      "backfilledAt": "",
+      "pushed": null,
+      "pushError": "",
+      "pushAt": ""
     }
   }
 }
