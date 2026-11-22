@@ -1,14 +1,38 @@
 {
-  "generatedAt": "2026-11-22T04:53:12.314Z",
+  "generatedAt": "2026-11-22T05:08:08.847Z",
   "windowDays": 62,
   "hotDays": 7,
   "from": "2026-09-22",
   "hotFrom": "2026-11-16",
   "days": 62,
   "fromHistory": 13,
-  "total": 56982,
-  "hotTotal": 7382,
+  "total": 56985,
+  "hotTotal": 7385,
   "items": [
+    {
+      "id": "u4ff9m",
+      "ts": 1795323432,
+      "time": "2026-11-22T12:57:12.000+08:00",
+      "source": "东方财富",
+      "title": "10月份工业经济总体平稳 发展质量持续提升",
+      "url": "http://finance.eastmoney.com/news/1352,202611223936884980.html"
+    },
+    {
+      "id": "1qfgiui",
+      "ts": 1795323361,
+      "time": "2026-11-22T12:56:01.000+08:00",
+      "source": "新浪财经",
+      "title": "马斯克最新警告：人工智能行业明年可能面临严重的资金短缺 可能需要数千亿美元额外资金投入",
+      "url": "https://finance.sina.com.cn/roll/2026-11-22/doc-inizqrxk9062900.shtml"
+    },
+    {
+      "id": "1k6nxjb",
+      "ts": 1795323047,
+      "time": "2026-11-22T12:50:47.000+08:00",
+      "source": "东方财富",
+      "title": "药闻 | 为2000万中国患者开好“药方”，罕见病药物研发迈向3.0阶段",
+      "url": "http://hk.eastmoney.com/news/11362,202611223936884323.html"
+    },
     {
       "id": "na68bs",
       "ts": 1795322765,
@@ -16,6 +40,14 @@
       "source": "中新网",
       "title": "10月份工业经济总体平稳 发展质量持续提升",
       "url": "https://www.chinanews.com.cn/cj/2026/11-22/10736013.shtml"
+    },
+    {
+      "id": "e836tz",
+      "ts": 1795322512,
+      "time": "2026-11-22T12:41:52.000+08:00",
+      "source": "东方财富",
+      "title": "多地证监局披露罚单：中信证券分公司月内再被“点名”",
+      "url": "http://stock.eastmoney.com/news/11215,202611223936884223.html"
     },
     {
       "id": "1grpmq8",
@@ -58,14 +90,6 @@
       "url": "https://finance.sina.com.cn/tob/2026-11-22/doc-inizqrxh2855474.shtml"
     },
     {
-      "id": "uihtnj",
-      "ts": 1795320291,
-      "time": "2026-11-22T12:04:51.000+08:00",
-      "source": "东方财富",
-      "title": "我国首批可信数据空间创新发展试点取得阶段性进展",
-      "url": "http://finance.eastmoney.com/news/1355,202611223936882849.html"
-    },
-    {
       "id": "173l0ig",
       "ts": 1795320266,
       "time": "2026-11-22T04:04:26.000Z",
@@ -74,11 +98,11 @@
       "url": "https://www.chinanews.com.cn/cj/2026/11-22/10736004.shtml"
     },
     {
-      "id": "dpuvdo",
+      "id": "1eaehiu",
       "ts": 1795320127,
       "time": "2026-11-22T12:02:07.000+08:00",
       "source": "东方财富",
-      "title": "什么是可信数据空间？新数据基础设施正在为生活提供便利→",
+      "title": "我国首批可信数据空间创新发展试点取得阶段性进展",
       "url": "http://finance.eastmoney.com/news/1360,202611223936882958.html"
     },
     {
