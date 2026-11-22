@@ -160,6 +160,60 @@ body { overflow-wrap: break-word; }
 .q-time.state-warn { color: var(--warm); }
 .q-time.state-local { color: var(--ink-faint); }
 
+/* ---------- 宏观指标（2.36.0） ---------- */
+.macro-sub {
+  font-family: var(--sans); font-size: 0.76rem; color: var(--ink-mute);
+  margin: -0.35rem 0 0.9rem;
+}
+.macro-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.7rem;
+}
+.macro-card {
+  display: block; width: 100%; text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.65rem 0.8rem;
+  font-family: inherit; color: var(--ink);
+  cursor: pointer;
+  transition: border-color .15s, transform .15s;
+}
+.macro-card:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-1px); }
+.macro-card:disabled { opacity: .55; cursor: default; }
+.mc-hd { display: flex; align-items: center; justify-content: space-between; gap: .4rem; }
+.mc-name { font-family: var(--sans); font-size: .82rem; color: var(--ink-mute); }
+.mc-freq {
+  font-family: var(--sans); font-size: .62rem; font-weight: 600;
+  padding: .05rem .38rem; border-radius: 999px;
+  background: #ece9df; color: var(--ink-mute);
+}
+.mc-freq.day { background: #e8f0f8; color: #2c5e8e; }
+.mc-value {
+  font-size: 1.28rem; font-weight: 700; font-variant-numeric: tabular-nums;
+  margin-top: .18rem;
+}
+.mc-chg {
+  font-family: var(--sans); font-size: .74rem; margin-top: .1rem;
+  font-variant-numeric: tabular-nums;
+}
+.mc-chg.up { color: var(--up); }
+.mc-chg.down { color: var(--down); }
+.mc-chg.flat { color: var(--ink-mute); }
+.mc-ft {
+  display: flex; justify-content: space-between; gap: .4rem;
+  margin-top: .32rem; font-family: var(--sans); font-size: .66rem;
+  color: var(--ink-faint);
+}
+.mc-more { color: var(--accent); white-space: nowrap; }
+.mc-src {
+  margin-top: .15rem; font-family: var(--sans); font-size: .62rem;
+  color: var(--ink-faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pchip:disabled { opacity: .35; cursor: not-allowed; }
+.pchip:disabled:hover { border-color: var(--rule); color: var(--ink-soft); }
+
 .skeleton { color: var(--ink-faint); font-size: 0.9rem; padding: 1rem; }
 
 /* ---------- 搜索 ---------- */

@@ -23,6 +23,7 @@ import { fileURLToPath } from 'node:url';
 import { fetchMacroIndicators, fetchCgbCurveOneY } from './portfolio.mjs';
 import { aggregateDaily } from './aggregate.mjs';
 import { markCloseOnlyBars } from './kline-guard.mjs';
+import { syncMacroSeries } from './macro-series.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from './kline-lock.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -209,6 +210,21 @@ async function main() {
   const trimmed = list.slice(0, 400);
   const macroChanged = await writeJSONIfChanged(macroFile, trimmed);
   console.log(`  macro/daily.json：${trimmed.length} 天${macroChanged ? '' : ' · 内容未变，跳过写盘'}`);
+
+  // ---- 2.36.0：把每日快照沉淀进「一指标一文件」的历史序列 ----
+  // 前端「宏观」视图读的是 data/macro/<key>.json（与 K 线同构），daily.json 继续给 AI 用。
+  // 只有序列真的变化才写盘（内部逐文件比对），因此每天最多产生 1~5 个小文件变更。
+  try {
+    const synced = await syncMacroSeries(path.join(DATA, 'macro'), trimmed, {
+      dryRun: DRY_RUN,
+      log: (m) => console.log(`  macro/series ${m}`),
+    });
+    if (!synced.changed.length && !synced.indexChanged) {
+      console.log('  macro/series：序列无变化，跳过写盘');
+    }
+  } catch (e) {
+    console.log(`  ⚠ macro/series 更新失败（不影响 daily.json）：${e.message}`);
+  }
 
   // ---- §6 运行日志写入 data/_last-run.json ----
   // 读改写：保留 collect.mjs 写的字段（前端「来源」页依赖 sources/startedAt/...），

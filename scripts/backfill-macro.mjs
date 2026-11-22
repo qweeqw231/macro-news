@@ -20,6 +20,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchMargin, fetchUs10y, fetchCgbCurveOneY } from '../src/portfolio.mjs';
 import { mergeLatestDaily } from '../src/macro-refresh.mjs';
+import { syncMacroSeries } from '../src/macro-series.mjs';
 import { aggregateDaily } from '../src/aggregate.mjs';
 import { mergeBars } from '../src/kline-guard.mjs';
 import { acquireKlineLock, releaseKlineLock, lockSkipText } from '../src/kline-lock.mjs';
@@ -249,6 +250,21 @@ async function main() {
   if ((filled || toppedUp) && !DRY) {
     list.sort((a, b) => String(b.date).localeCompare(String(a.date)));
     writeJSON(MACRO_FILE, list.slice(0, 400));
+  }
+
+  // ---- 2.36.0：回补后的记录同样沉淀进历史序列 ----
+  // 两融是 T+1（次日才发布）、10Y 美债要等美股收盘，最新点只会在这里出现；
+  // 不同步的话「宏观」视图的末根会永远停在 17:13 那次。
+  try {
+    const synced = await syncMacroSeries(path.join(ROOT, 'data', 'macro'), list, {
+      dryRun: DRY,
+      log: detail,
+    });
+    if (!DRY && (synced.changed.length || synced.indexChanged)) {
+      detail(`宏观序列已更新：${synced.changed.join(',') || 'index'}`);
+    }
+  } catch (e) {
+    console.log(`  ⚠ 宏观序列同步失败（不影响 daily.json）：${e.message}`);
   }
   if (cgbChanged && !DRY) {
     const lock = await acquireKlineLock('cgb_1y');

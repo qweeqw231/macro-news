@@ -68,6 +68,7 @@
       const list = S.visible || S.items;
       const it = readerOpen && readerIdx >= 0 ? list[readerIdx] : null;
       const klineOpen = $('#klineModal') && !$('#klineModal').hidden;
+      const macroOpen = $('#macroModal') && !$('#macroModal').hidden;
       // 归档页早报折叠块的展开状态：并入同一份 sessionStorage，刷新后还在
       const briefOpen = (() => {
         try {
@@ -100,6 +101,8 @@
             ? { barsShown: pendingKlineView.barsShown, offset: pendingKlineView.offset }
             : (kChart && kChart.getView ? kChart.getView() : {})),
         } : null,
+        // 2.36.0：宏观图抽屉（key + 区间），刷新后原样恢复
+        macro: macroOpen && macroKey ? { key: macroKey, range: macroRange } : null,
         // 2.4.12：归档页打开的某一天（刷新后仍在原位，不回到最新要闻流）
         day: S.view === 'feed' && openedDay ? { day: openedDay.day, kind: openedDay.kind } : null,
         briefOpen,
@@ -1496,7 +1499,7 @@
   // 视图与 URL 的 hash 一一对应（#view-feed / #view-market / #view-archive / #view-sources）：
   //   · 页签是真链接，点一下 URL 就变 —— 有即时反馈，也能收藏/分享某个视图；
   //   · 即使 app.js 还没加载完，点下去也会跳到对应区块，而不是毫无反应。
-  const VIEWS = ['feed', 'market', 'archive', 'sources'];
+  const VIEWS = ['feed', 'market', 'macro', 'archive', 'sources'];
 
   // ---------- 视图切换后的视口对齐 ----------
   //
@@ -1545,7 +1548,7 @@
   }
 
   function viewFromHash() {
-    const m = String(location.hash || '').match(/^#view-(feed|market|archive|sources)$/);
+    const m = String(location.hash || '').match(/^#view-(feed|market|macro|archive|sources)$/);
     return m ? m[1] : null;
   }
 
@@ -1572,6 +1575,7 @@
     // 需要数据的视图在切过去时才去取（懒加载）
     if (v === 'archive') renderArchive();
     if (v === 'sources') renderSources();
+    if (v === 'macro') renderMacroList();
   }
 
   // ---------- 归档 ----------
@@ -2532,6 +2536,212 @@
     saveUI();
   }
 
+  // ---------- 宏观视图（2.36.0） ----------
+  // 列表读 index.json（最新值/环比/所属期），点开才读 <key>.json（历史序列）——
+  // 与「行情卡 → K 线」同一套分层，避免首屏把 780 KB 的 5 条序列全拉下来。
+  let macroIndex = null;
+  let macroKey = '';
+  let macroRange = '5y';
+  let mmChart = null;
+  let macroReqId = 0;
+
+  function macroCard(item) {
+    const MD = window.MacroData;
+    const card = el('button', 'macro-card' + (item.latest ? '' : ' is-empty'));
+    card.type = 'button';
+    card.dataset.key = item.key;
+    if (!item.latest) {
+      card.disabled = true;
+      card.setAttribute('aria-disabled', 'true');
+    }
+    const hd = el('div', 'mc-hd');
+    hd.appendChild(el('span', 'mc-name', item.name));
+    hd.appendChild(el('span', 'mc-freq ' + (item.freq === 'D' ? 'day' : 'month'),
+      item.freq === 'D' ? '日' : '月'));
+    card.appendChild(hd);
+    card.appendChild(el('div', 'mc-value',
+      item.latest ? MD.fmtValue(item.latest.v, item) : '暂无数据'));
+    const chg = MD.fmtChange(item);
+    if (chg) card.appendChild(el('div', 'mc-chg ' + chg.dir, chg.text));
+    const ft = el('div', 'mc-ft');
+    ft.appendChild(el('span', 'mc-period',
+      item.latest ? `所属期 ${MD.fmtPeriod(item.latest.t, item.freq)}` : ''));
+    ft.appendChild(el('span', 'mc-more', item.latest ? '图表 ›' : ''));
+    card.appendChild(ft);
+    card.appendChild(el('div', 'mc-src', item.source || ''));
+    return card;
+  }
+
+  async function renderMacroList(force) {
+    const box = $('#macroList');
+    if (!box || !window.MacroData) {
+      if (box) box.innerHTML = '<div class="empty">宏观数据模块未加载。</div>';
+      return;
+    }
+    try {
+      const doc = await window.MacroData.loadIndex(force);
+      macroIndex = doc;
+      const items = Array.isArray(doc.items) ? doc.items : [];
+      box.innerHTML = '';
+      if (!items.length) {
+        box.innerHTML = '<div class="empty">宏观数据尚未生成。</div>';
+        return;
+      }
+      const grid = el('div', 'macro-grid');
+      items.forEach((it) => grid.appendChild(macroCard(it)));
+      box.appendChild(grid);
+      const t = $('#macroTime');
+      if (t) t.textContent = doc.generatedAt ? `数据更新于 ${fmtTime(doc.generatedAt)}` : '';
+    } catch (e) {
+      box.innerHTML = '<div class="empty">宏观数据载入失败：请稍后刷新重试。</div>';
+    }
+  }
+
+  /** 历史跨度不足 5 年时默认「全部」，否则 5 年 */
+  function macroDefaultRange(bars) {
+    const MD = window.MacroData;
+    if (!bars || bars.length < 2) return 'all';
+    const years = (MD.tMs(bars[bars.length - 1].t) - MD.tMs(bars[0].t)) / 31557600000;
+    return years >= 5 ? '5y' : 'all';
+  }
+
+  function renderMacroRanges(bars, item, cur) {
+    const MD = window.MacroData;
+    const box = $('#mmRanges');
+    if (!box) return;
+    box.innerHTML = '';
+    MD.RANGES.forEach((r) => {
+      const usable = bars && bars.length > 1 && MD.rangeUsable(bars, r.id);
+      const b = el('button', 'pchip' + (r.id === cur ? ' on' : ''), r.label);
+      b.type = 'button';
+      b.dataset.range = r.id;
+      if (!usable) b.disabled = true;
+      b.onclick = () => {
+        if (!usable) return;
+        macroRange = r.id;
+        renderMacroRanges(bars, item, r.id);
+        drawMacro(bars, item, r.id);
+        saveUI();
+      };
+      box.appendChild(b);
+    });
+  }
+
+  function drawMacro(bars, item, range) {
+    const MD = window.MacroData;
+    if (!mmChart) return;
+    const slice = MD.sliceRange(bars, range);
+    if (slice.length < 2) {
+      mmChart.setEmptyText('该区间数据不足');
+      mmChart.setData({ bars: [], mode: 'line' });
+      return;
+    }
+    mmChart.setEmptyText('暂无数据');
+    mmChart.setData({
+      bars: slice,
+      mode: item.key === 'social_financing' ? 'bar' : 'line',
+      unit: item.unit,
+      decimals: item.decimals,
+      freq: item.freq,
+      name: item.name,
+    });
+    const note = $('#mmNote');
+    if (note) {
+      const span = range === 'all'
+        ? `全部 ${slice.length} 个点`
+        : `${MD.RANGES.find((r) => r.id === range).label}内 ${slice.length} 个点`;
+      note.textContent = `${item.source || ''} · ${MD.noteOf(item)} · ${span}`;
+    }
+  }
+
+  async function loadMacroSeries(key, range) {
+    const MD = window.MacroData;
+    const myId = ++macroReqId;
+    const idxItem = (macroIndex && macroIndex.items || []).find((x) => x.key === key) || null;
+    const note = $('#mmNote');
+    if (note) note.textContent = '';
+    if (mmChart) {
+      mmChart.setEmptyText('加载中…');
+      mmChart.setData({ bars: [], mode: key === 'social_financing' ? 'bar' : 'line' });
+    }
+    try {
+      const doc = await MD.loadSeries(key);
+      if (myId !== macroReqId) return;
+      const item = {
+        ...(idxItem || {}),
+        key,
+        name: (idxItem && idxItem.name) || doc.name || key,
+        unit: doc.unit || (idxItem && idxItem.unit) || '',
+        decimals: Number.isFinite(doc.decimals) ? doc.decimals : (idxItem && idxItem.decimals) || 2,
+        freq: doc.freq || (idxItem && idxItem.freq) || 'D',
+        source: doc.source || (idxItem && idxItem.source) || '',
+      };
+      const bars = Array.isArray(doc.bars) ? doc.bars : [];
+      $('#mmName').textContent = item.name;
+      const last = bars[bars.length - 1];
+      $('#mmValue').textContent = last ? MD.fmtValue(last.v, item) : '';
+      $('#mmAsOf').textContent = last ? `所属期 ${MD.fmtPeriod(last.t, item.freq)}` : '';
+      if (bars.length < 2) {
+        if (mmChart) {
+          mmChart.setEmptyText('暂无数据');
+          mmChart.setData({ bars: [] });
+        }
+        if (note) note.textContent = `${item.source || ''} · ${MD.noteOf(item)}`;
+        return;
+      }
+      const use = (range && MD.rangeUsable(bars, range)) ? range : macroDefaultRange(bars);
+      macroRange = use;
+      renderMacroRanges(bars, item, use);
+      drawMacro(bars, item, use);
+    } catch (e) {
+      if (myId !== macroReqId) return;
+      if (mmChart) {
+        mmChart.setEmptyText('暂无数据');
+        mmChart.setData({ bars: [] });
+      }
+      if (note) note.textContent = '宏观数据由每日 16:30 采集生成，当前文件暂不可用。';
+    }
+  }
+
+  function openMacro(key, range) {
+    if (!window.MacroData || !window.MacroChart) return;
+    const idxItem = (macroIndex && macroIndex.items || []).find((x) => x.key === key) || null;
+    macroKey = key;
+    $('#macroModal').hidden = false;
+    document.body.classList.add('kline-open');
+    $('#mmName').textContent = idxItem ? idxItem.name : key;
+    $('#mmValue').textContent = idxItem && idxItem.latest
+      ? window.MacroData.fmtValue(idxItem.latest.v, idxItem) : '';
+    $('#mmAsOf').textContent = idxItem && idxItem.latest
+      ? `所属期 ${window.MacroData.fmtPeriod(idxItem.latest.t, idxItem.freq)}` : '';
+    $('#mmNote').textContent = '';
+    $('#mmRanges').innerHTML = '';
+    const box = $('#mmCanvas');
+    if (!mmChart) mmChart = new window.MacroChart(box);
+    loadMacroSeries(key, range || macroRange);
+    saveUI();
+  }
+
+  function closeMacro() {
+    $('#macroModal').hidden = true;
+    document.body.classList.remove('kline-open');
+    saveUI();
+  }
+
+  function bindMacro() {
+    $('#mmClose').onclick = closeMacro;
+    $('#macroList').addEventListener('click', (e) => {
+      const card = e.target.closest('.macro-card');
+      if (card && card.dataset.key) openMacro(card.dataset.key);
+    });
+    document.addEventListener('keydown', (e) => {
+      if ($('#macroModal').hidden) return;
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+      if (e.key === 'Escape') closeMacro();
+    });
+  }
+
+
   // ---- K线取数根数（按周期给到「源侧真实上限」，而不是一刀切 1000）----
   //   日K/周K/月K/年K → **20000**：东财 `lmt` **没有上限**，给多少给多少；新浪 `datalen` 同理。
   //   分钟级 → 2000：
@@ -2884,6 +3094,12 @@
     openKline(uiState.kline.key, uiState.kline.period || (CFG.DEFAULT_PERIOD || '1d'));
   }
 
+  function restoreMacroUI() {
+    if (!uiState || !uiState.macro || S.view !== 'macro') return;
+    if (!$('#macroModal').hidden) return;
+    openMacro(uiState.macro.key, uiState.macro.range || '5y');
+  }
+
   async function boot() {
     // file:// 下浏览器会拦截 fetch()，页面必然空白。
     // 与其让用户对着白屏发呆，不如直接说明原因和解决办法。
@@ -2904,6 +3120,7 @@
     }
 
     bindKline();
+    bindMacro();
     bindReader();
 
     // 常驻的视口对齐观察器（必须在第一次 showView 之前装好）
@@ -3000,6 +3217,7 @@
     //   新数据回来时由 patchQuotes 只改数值/状态文案，结构一点不动。
     paintQuotesFromCache();
     restoreKlineUI();
+    restoreMacroUI();
     renderQuotes().then(startQuotePolling).catch(() => {}).then(() => renderFoot());
     try {
       const d = await jget('latest.json');

@@ -22,6 +22,7 @@
            而不是毫无反应；JS 就绪后由 app.js 接管为 hash 路由。 -->
       <a class="tab active" href="#view-feed" data-view="feed">要闻流</a>
       <a class="tab" href="#view-market" data-view="market">行情</a>
+      <a class="tab" href="#view-macro" data-view="macro">宏观</a>
       <a class="tab" href="#view-archive" data-view="archive">归档</a>
       <a class="tab" href="#view-sources" data-view="sources">来源</a>
     </nav>
@@ -80,6 +81,21 @@
     </section>
   </section>
 
+  <!-- ============ 宏观指标 ============ -->
+  <!-- 与「行情」同构：这里是列表（最新值），点卡片打开全屏折线/柱状图。
+       数据来自 data/macro/index.json（列表）与 data/macro/<key>.json（历史），
+       由每日 16:30 的宏观采集写入。 -->
+  <section class="view" id="view-macro" hidden>
+    <section class="board" aria-label="宏观指标">
+      <div class="board-hd">
+        <h1>宏观指标</h1>
+        <span class="board-time" id="macroTime"></span>
+      </div>
+      <p class="macro-sub">日频：两融余额、10Y美债；月频：社融、CPI、PMI · 每交易日 16:30 更新</p>
+      <div class="macro-list" id="macroList"><div class="skeleton">宏观数据载入中…</div></div>
+    </section>
+  </section>
+
   <!-- ============ 归档 ============ -->
   <section class="view" id="view-archive" hidden>
     <!-- 近一年历史入口 + 日期跳转：面板只在 history/index.json 存在时显示（导出了才出现） -->
@@ -117,6 +133,7 @@
   <nav class="mnav" aria-label="底部导航">
     <a class="mnav-item active" href="#view-feed" data-view="feed">要闻</a>
     <a class="mnav-item" href="#view-market" data-view="market">行情</a>
+    <a class="mnav-item" href="#view-macro" data-view="macro">宏观</a>
     <a class="mnav-item" href="#view-archive" data-view="archive">归档</a>
     <a class="mnav-item" href="#view-sources" data-view="sources">来源</a>
   </nav>
@@ -164,6 +181,23 @@
     </div>
   </div>
 
+  <!-- ============ 宏观图抽屉 ============ -->
+  <div class="kline-modal" id="macroModal" hidden>
+    <div class="km-box">
+      <div class="km-hd">
+        <div class="km-title">
+          <strong id="mmName">—</strong>
+          <span class="km-price" id="mmValue"></span>
+          <span class="km-meta" id="mmAsOf"></span>
+        </div>
+        <button class="km-close" id="mmClose" type="button" aria-label="关闭">×</button>
+      </div>
+      <div class="km-periods" id="mmRanges"></div>
+      <div class="km-canvas" id="mmCanvas"></div>
+      <div class="km-note" id="mmNote"></div>
+    </div>
+  </div>
+
   <!-- ============ 站内阅读器 ============ -->
   <div class="reader-modal" id="readerModal" hidden>
     <div class="rd-box" role="dialog" aria-modal="true" aria-labelledby="rdTitle">
@@ -204,6 +238,8 @@
 <script src="assets/fuse.min.js?v=20261113c"></script>
 <script src="assets/market.js?v=20261122c"></script>
 <script src="assets/kline.js?v=20261120c"></script>
+<script src="assets/macro.js?v=20261122a"></script>
+<script src="assets/macro-chart.js?v=20261122a"></script>
 <script src="assets/search-history.js?v=20261122b"></script>
 <script src="assets/app.js?v=20261122b"></script>
 </body>

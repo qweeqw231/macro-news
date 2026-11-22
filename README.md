@@ -56,7 +56,7 @@
 | ① | **新闻 + 行情** | GitHub Actions `collect.yml`（Cloudflare Worker 外部触发） | 15 分钟 | `data/archive/`、`latest.json`、`search.json`、`quotes.json` |
 | ② | **K 线** | Actions `kline-full.yml` / `kline-minute.yml` | 全量每天 12:23；最后一根盘中 4 次/天 | `data/kline/` |
 | ③ | **时点快照** | Actions `snapshot.yml`（Worker 每 30 分钟触发，回补 5 天） | 30 分钟 | `data/snapshots/` |
-| ④ | **宏观指标** | Actions `snapshot.yml`（17:00 后幂等补当天；每轮用源侧最新值补最新记录的两融/美债） | 每个交易日 | `data/macro/daily.json`、`kline/cgb_1y*` |
+| ④ | **宏观指标** | Actions `snapshot.yml`（17:00 后幂等补当天；每轮用源侧最新值补最新记录的两融/美债） | 每个交易日 | `data/macro/daily.json`、`data/macro/<key>.json`、`kline/cgb_1y*` |
 | ⑤ | **本机回退 / 同步** | Windows 计划任务 `MacroNews-Collect` / `MacroNews-Pull` | 120 分钟 / 4 小时 | 本地 `data/`（回退采集、拉回远端） |
 
 ```
@@ -556,13 +556,16 @@ K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三�
 | `data/kline/<key>.json` / `_1w` / `_1M` | 43 个标的 × 日/周/月 | 链路 ② |
 | `data/kline/<key>_full.json` | 43 个标的（33 指数 + 10 组合）的全量日 K（紧凑数组 `[t,o,c,h,l,v]`，仅收盘行多一位 `1`） | 链路 ② |
 | `data/kline/min/<key>_<period>.json` | 23 个标的 × 分钟周期（含伦敦金、费城半导体、美元指数；外汇源分工见 2.2） | 链路 ② |
-| `data/macro/daily.json` | 5 个宏观指标日频序列 | 链路 ④ |
+| `data/macro/daily.json` | 5 个宏观指标日频序列（每日快照，AI/月度分析用） | 链路 ④ |
+| `data/macro/index.json` | 宏观列表卡片（最新值/上期值/所属期/来源/根数） | 链路 ④ |
+| `data/macro/<key>.json` | 单指标历史序列（`bars:[{t,v}]`；日频 `YYYY-MM-DD`、月频 `YYYY-MM`） | 链路 ④ |
 | `data/_last-run.json` | 各链路运行状态（字段并存，读改写） | 所有链路 |
 | `data/_briefing-status.json` | 早报生成状态（最近 14 天，页脚读取） | `scripts/briefing/*` |
 
 **给 AI / 脚本的读取规则**
 
-- 要**行情 / 宏观** → 读 `quotes.json` + `macro/daily.json`，不要自己抓接口。
+- 要**行情 / 宏观** → 读 `quotes.json` + `macro/daily.json`；要宏观历史曲线读 `macro/<key>.json`，
+  不要自己抓接口。
 - 要**某天收盘价** → 读 `snapshots/`；`quotes.json` 里的 A股是实时价，不等于收盘价。
 - 要**新闻全文** → 读 `archive/` 的 `items[].content`；`search.json` 没有正文。
 - 要**近一年历史** → 读 `history/<day>.json`（以标题/来源/时间/链接为主，少量带摘要）；同一天若 `archive/` 也有，以 archive 为准。
