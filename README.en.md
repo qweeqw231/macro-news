@@ -159,6 +159,9 @@ both return the name "上证50" (verified 2026-11-02; see CHANGELOG).
 - **Minutes + last bar** (`kline-minute.yml`, hourly at :17):
   - `scripts/update-kline-minute.mjs`: 23 instruments × minute periods (`min/`)
     - **5m + 30m every round**; 60m/15m/1m rotate by hour (one extra period per hour), so an individual file is not rewritten every round.
+    - **1m depth**: fetch limit **1,500**; each source only returns about one trading day (Eastmoney 1,439; Sina 1,361–1,411),
+      and the on-disk window is capped at **1,440** bars. Two trading days would need 2,880 — deferred because of repo growth
+      (see section 5 of `docs/minute-kline.md`).
     - **Eastmoney only**: `n225/dax/cac40/ukx/kospi/sge_au9999/xag/xau/sox` and `dxy`
       (no Sina/Tencent minute feed; `dxy` has Eastmoney as its only source).
     - **Sina only**: the 5 CNY crosses (no matching Eastmoney `119.*` code, hence no second source).
