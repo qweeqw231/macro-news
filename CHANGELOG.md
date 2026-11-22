@@ -13,6 +13,36 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.33.1] - 2026-11-22
+
+### 构建：检索索引改为 Pages 部署期生成，不再进 git
+
+**背景**：`data/search.json` 每个采集轮都会重写（约 96 次/天、累计 2,339 次提交），
+单独打包占 clone 包 **18.88 MiB**；`data/search-history/*` 边际 15.86 MiB。
+两者完全由 `data/archive/` 与 `data/history/` 派生，进版本库只带来增速。
+
+**改动**
+- 新增 `src/search-index.mjs`：把热段构建从 `collect.mjs` 抽成共用函数，
+  采集与部署共用同一套 `total` / `fromHistory` / 去重口径。
+- 新增 `scripts/build-search.mjs`：部署期生成 `data/search.json` 与 `data/search-history/*`，
+  打印耗时与条数；任一步失败即非 0 退出。
+- `pages.yml`：checkout 之后、upload-pages-artifact 之前执行生成；
+  **生成失败 = 部署失败**，不静默发布「搜索空白」的版本。
+- `data/search.json`、`data/search-history/` 加入 `.gitignore` 并从索引移除；
+  采集白名单同步去掉 `search.json`。
+- 本地能力保留：`node src/collect.mjs` 仍写 `search.json`；
+  `node scripts/serve.mjs` 在文件缺失时先自动生成；`start.cmd` 预览照常可搜。
+- 测试改为调用构建函数 / 临时目录，不再依赖这两个路径存在于 git。
+
+**校验（2026-11-22，本地实测）**
+- 全量重建 **4.6 秒**：热段 7,410 条（窗口 57,010 条 / 62 天，history 13 天）+ 分片 13 个月 208,500 条。
+- 生成结果与迁移前逐项一致（`total` / `hotTotal` / `fromHistory` 相同，条目新增/消失 0）。
+- 本地服务：搜索「美联储」命中 149 条，历史追加 1,032 条。
+- Pages artifact 本地打包 **63.35 MiB**，与线上 63.37 MiB 一致（未膨胀）。
+- 连续两轮 collect（各约 63 秒）后 clone 包保持 **144.61 MiB**，`git status` 不再出现检索索引文件。
+
+**回滚**：见 `docs/search-index-build.md` §5（约 5 分钟操作 + 1~2 分钟部署，退回从 git 读取）。
+
 ## [2.33.0] - 2026-11-22
 
 ### 增强：1m 抓取深度抬到源端上限（24h 品种约 1 个交易日）
