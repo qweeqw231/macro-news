@@ -685,19 +685,19 @@ export const PORTFOLIO_KLINE = [
   //   否则 collect 会把同一个标的抓两遍（日志里也会出现两条）。
   // 人民币交叉盘（2.15.0）：报价与日线都走**新浪外汇** fx_s*。
   //   实测（2026-11-12）：日线 2008-09 / 2014-11 起，根数 3,710~5,178。
-  //   2.16.0 更正：分钟**有**（getMinKLine，5 个周期全可用，硬上限 1000 根）——
-  //   此前「只有日线、无分钟级数据」的结论是错的，见 sinaFxMinute 的实测注释。
+  //   2.16.0 更正：分钟**有**（getMinKLine，5 个周期全可用）；1m 实测约 1,361~1,411 根
+  //   （≈1 个交易日，2026-11-22 复测），不是早期注释写的 1000 根硬顶。
   //   ⚠ 日元/韩元按 **100 单位**报价（与官方中间价「100 日元 / 100 韩元」口径一致），
   //     K 线 OHLC 同步 ×100（fxUnit），与卡片口径一致。
   {
     key: 'eurcny', name: '欧元/人民币', market: 'FX', secid: null, sina: null, tx: null,
     sinaFx: 'fx_seurcny', fxUnit: 1,
-    klineNote: '新浪外汇即期 EUR/CNY（2008-09 起）；分钟 K 同源（5 个周期，最多 1000 根）',
+    klineNote: '新浪外汇即期 EUR/CNY（2008-09 起）；分钟 K 同源（5 个周期）',
   },
   {
     key: 'gbpcny', name: '英镑/人民币', market: 'FX', secid: null, sina: null, tx: null,
     sinaFx: 'fx_sgbpcny', fxUnit: 1,
-    klineNote: '新浪外汇即期 GBP/CNY（2014-11 起）；分钟 K 同源（5 个周期，最多 1000 根）',
+    klineNote: '新浪外汇即期 GBP/CNY（2014-11 起）；分钟 K 同源（5 个周期）',
   },
   {
     key: 'jpycny', name: '100日元/人民币', market: 'FX', secid: null, sina: null, tx: null,
@@ -712,7 +712,7 @@ export const PORTFOLIO_KLINE = [
   {
     key: 'audcny', name: '澳元/人民币', market: 'FX', secid: null, sina: null, tx: null,
     sinaFx: 'fx_saudcny', fxUnit: 1,
-    klineNote: '新浪外汇即期 AUD/CNY（2014-11 起）；分钟 K 同源（5 个周期，最多 1000 根）',
+    klineNote: '新浪外汇即期 AUD/CNY（2014-11 起）；分钟 K 同源（5 个周期）',
   },
 ];
 
@@ -916,10 +916,11 @@ export async function sinaFxDaily(symbol, unit = 1) {
  * 实测（2026-11-13，逐个货币对 × 1/5/15/30/60 分钟都打过）：
  *   · 5 个人民币交叉盘与 7 个美元对全部有数据，5 个周期全部可用；
  *   · 字段序 **date,open,low,high,close**（与日线同序，**没有成交量**）；
- *   · 单次硬上限 **1000 根**：datalen 传 2000/5000/20000 都只回 1002 根；
- *   · 回溯深度（本项目抓取上限，2026-11-22 实测）：1m 300 根≈0.2 天
- *     （交叉盘累积到 1000 根≈0.7 天）、5m 1000 根≈3.5~4.5 天、15m 600 根≈6~9 天、
- *     30m 1000 根≈21~29 天、60m 1000 根≈41~58 天；周末休市，覆盖自然日略多；
+ *   · 1m 单次上限（2026-11-22 实测）：24 小时美元对 1,361~1,411 根（≈1 个交易日），
+ *     datalen 从 2000 加到 20000 不再增加；4 个交叉盘源端只回 669 根（11-20 20:49 后冻结）。
+ *     5m 及以上本项目仍按各自 limit 取，没有借这次实测放宽；
+ *   · 回溯深度（本项目抓取上限，2026-11-22 实测）：5m 1000 根≈3.5~4.5 天、
+ *     15m 600 根≈6~9 天、30m 1000 根≈21~29 天、60m 1000 根≈41~58 天；周末休市，覆盖自然日略多；
  *   · 带/不带 Referer 都返回 200，但**没有 CORS 头**（JSONP 包装）⇒ 浏览器只能 <script> 加载，
  *     站点统一走服务端预生成 + 本地文件兜底（与日线一致）；
  *   · 末根可能是**未完成 bar**（19:30 时 60m 已出现 20:00 那根），交给前端按现有时点逻辑处理。
@@ -929,11 +930,11 @@ export async function sinaFxDaily(symbol, unit = 1) {
  *
  * @param {string} symbol 新浪代码（fx_seurcny / fx_seurusd …）
  * @param {number} scale  1 / 5 / 15 / 30 / 60
- * @param {number} limit  期望根数（>1000 会被源端截断）
+ * @param {number} limit  期望根数（1m 实测源端上限约 1,361~1,411；本函数最多夹到 2000）
  * @param {number} unit   报价单位倍数（日元/韩元 = 100）
  */
 export async function sinaFxMinute(symbol, scale, limit = 1000, unit = 1) {
-  const n = Math.max(1, Math.min(Number(limit) || 1000, 1000));
+  const n = Math.max(1, Math.min(Number(limit) || 1000, 2000));
   const url = 'https://vip.stock.finance.sina.com.cn/forex/api/jsonp.php/var%20_data=/' +
     `NewForexService.getMinKLine?symbol=${symbol}&scale=${scale}&datalen=${n}`;
   const txt = await get(url, { timeout: 20000 });

@@ -141,19 +141,19 @@
     //   ⚠ 一律市场惯例方向（EUR/USD、GBP/USD、AUD/USD）；反方向 USD/EUR 等历史只有 2013/2019 起，刻意不接。
     //   ⚠ 卡片名必须写清「谁兑谁」：美元/日元与「100日元/人民币」单位口径不同，并排时最容易误读。
     { key: 'eurusd',     secid: '119.EURUSD', klineSecid: '119.EURUSD', market: 'FX', name: '欧元/美元', decimals: 4,
-      klineNote: '东财 119.EURUSD：报价与日/周/月、分钟 K 同源；1 欧元兑美元' },
+      klineNote: '东财 119.EURUSD：报价与日/周/月走东财，分钟新浪优先、东财兜底；1 欧元兑美元' },
     { key: 'gbpusd',     secid: '119.GBPUSD', klineSecid: '119.GBPUSD', market: 'FX', name: '英镑/美元', decimals: 4,
-      klineNote: '东财 119.GBPUSD：报价与日/周/月、分钟 K 同源；1 英镑兑美元' },
+      klineNote: '东财 119.GBPUSD：报价与日/周/月走东财，分钟新浪优先、东财兜底；1 英镑兑美元' },
     { key: 'usdjpy',     secid: '119.USDJPY', klineSecid: '119.USDJPY', market: 'FX', name: '美元/日元', decimals: 4,
-      klineNote: '东财 119.USDJPY：报价与日/周/月、分钟 K 同源；1 美元兑日元（与右侧「100日元/人民币」单位不同，不可直接比较）' },
+      klineNote: '东财 119.USDJPY：报价与日/周/月走东财，分钟新浪优先、东财兜底；1 美元兑日元（与右侧「100日元/人民币」单位不同，不可直接比较）' },
     { key: 'usdkrw',     secid: '119.USDKRW', klineSecid: '119.USDKRW', market: 'FX', name: '美元/韩元', decimals: 4,
       klineNote: '东财 119.USDKRW：报价与日/周/月、分钟 K 同源；1 美元兑韩元' },
     { key: 'audusd',     secid: '119.AUDUSD', klineSecid: '119.AUDUSD', market: 'FX', name: '澳元/美元', decimals: 4,
-      klineNote: '东财 119.AUDUSD：报价与日/周/月、分钟 K 同源；1 澳元兑美元' },
+      klineNote: '东财 119.AUDUSD：报价与日/周/月走东财，分钟新浪优先、东财兜底；1 澳元兑美元' },
     { key: 'usdcad',     secid: '119.USDCAD', klineSecid: '119.USDCAD', market: 'FX', name: '美元/加元', decimals: 4,
-      klineNote: '东财 119.USDCAD：报价与日/周/月、分钟 K 同源；1 美元兑加元' },
+      klineNote: '东财 119.USDCAD：报价与日/周/月走东财，分钟新浪优先、东财兜底；1 美元兑加元' },
     { key: 'usdchf',     secid: '119.USDCHF', klineSecid: '119.USDCHF', market: 'FX', name: '美元/瑞郎', decimals: 4,
-      klineNote: '东财 119.USDCHF：报价与日/周/月、分钟 K 同源；1 美元兑瑞郎' },
+      klineNote: '东财 119.USDCHF：报价与日/周/月走东财，分钟新浪优先、东财兜底；1 美元兑瑞郎' },
     // 美元指数：东财 100.UDI（2 位小数），日/周/月/分钟 K 实测全可用
     { key: 'dxy',        secid: '100.UDI', klineSecid: '100.UDI', market: 'FX', name: '美元指数', decimals: 2,
       klineNote: 'ICE 美元指数（东财 100.UDI），2 位小数；日/周/月与分钟 K 同源' },
@@ -682,9 +682,11 @@
     const cb = '_kline_' + (++sinaCbSeq);
     const scale = SINA_FX_MIN_SCALE[period];
     if (scale) {
+      // 1m 源端能给约 1 个交易日（实测 1,361~1,411 根）；5m 及以上维持原有 1000，不借机放宽。
+      const n = scale === 1 ? 2000 : 1000;
       const url =
         'https://vip.stock.finance.sina.com.cn/forex/api/jsonp.php/var%20' + cb + '=' +
-        `/NewForexService.getMinKLine?symbol=${symbol}&scale=${scale}&datalen=1000`;
+        `/NewForexService.getMinKLine?symbol=${symbol}&scale=${scale}&datalen=${n}`;
       const rows = await sinaJsonp(url, cb, 15000, 'array');
       const bars = rows.map((b) => ({
         t: String(b.d).slice(0, 16), o: s(b.o), l: s(b.l), h: s(b.h), c: s(b.c), v: 0,
