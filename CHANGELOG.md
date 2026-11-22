@@ -13,6 +13,30 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.33.4] - 2026-11-22
+
+### 变更：Pages 部署 guard 纳入「进行中」的同 SHA 运行，并发组下移到 deploy 作业
+
+**背景**：容量周报里「近 24h 重复部署 5/181（3.0%）」实际是按 `head_sha` 数**运行**；
+其中第二次运行的 `deploy` 作业是 `skipped`，并没有重复部署一遍。
+
+**改动**
+- `guard` 增加第二条判据：同一 `head_sha` 存在**更早创建、尚未完成**的 pages.yml 运行
+  （queued / in_progress / waiting / pending / requested）时，最多等 120 秒；仍未完成就让路。
+  只认 run_id 更小的运行，避免两条同时起跑时互相跳过。
+- 陈旧窗口 15 分钟（`created_at` 起算）：依据是 `deploy` 作业 `timeout-minutes: 15`，
+  正常部署实测 41~47 秒；超过 15 分钟仍未完成的一律忽略，避免永久挡住后续部署。
+- `concurrency` 从 workflow 级移到 `deploy` 作业（`group: pages`、`cancel-in-progress: false`），
+  guard 不再被串行化、能真正并行判断；deploy 仍然串行、互不取消。
+- 新增 `docs/pages-deploy-guard.md`：两条判据、与 concurrency 的分工、实测记录与已知边界。
+
+**实测（北京时间 2026-11-22）**
+- 连续两次 dispatch 同一 SHA（`e2ae953e`）：push 部署 1 次，两次 dispatch 的 guard 分别打印
+  `LAST=本 SHA ACTIVE=1` / `ACTIVE=2` → 跳过，`deploy` skipped；3 条运行、1 次部署。
+- 正常 push（`d4ba5572`，本次配置变更本身）：`ACTIVE=0` → `need=true`，部署成功（47 秒）。
+- 修改前近 300 次运行中有 7 个 `head_sha` 重复运行，逐一核对 deploy 作业均为 skipped/取消；
+  近 100 次 github-pages deployment 无同一 SHA 重复 ⇒ 真实重复部署为 0。
+
 ## [2.33.3] - 2026-11-22
 
 ### 修复：容量周报的构建次数假红，并统计可省的重复部署
