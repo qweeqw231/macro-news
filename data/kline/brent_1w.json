@@ -3,12 +3,12 @@
   "name": "布伦特原油",
   "market": "CMDTY",
   "period": "1w",
-  "generatedAt": "2026-11-21T04:54:41.782Z",
+  "generatedAt": "2026-11-22T04:54:47.462Z",
   "source": "自有日 K 重聚合（src/aggregate.mjs）",
   "bars": [
     {
       "t": "2016-11-25",
-      "o": 49.04,
+      "o": 49.25,
       "c": 47.12,
       "h": 49.96,
       "l": 46.85,
