@@ -50,24 +50,52 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 定时触发时避免「内容没变也重新部署」：对比最近一次 github-pages 部署的 SHA
+  # 避免「同一 SHA 重复部署」，两层判据：
+  #   1) 已完成的部署：github-pages 环境最近一次 deployment 的 SHA 与本轮相同 ⇒ 跳过；
+  #   2) 进行中的部署：同一 head_sha 已有 queued / in_progress / waiting / pending / requested
+  #      的 pages.yml 运行 ⇒ 跳过（push 与 schedule / dispatch 在几分钟内抢同一 SHA 时，
+  #      旧逻辑只看「已完成」，两边都会放行，实测近 24h 多出 3~5 次重复构建）。
+  # 陈旧判定：以运行 created_at 计时，超过 15 分钟仍未完成的一律忽略。
+  #   依据：deploy 作业 timeout-minutes: 15，且正常一次部署约 40 秒；15 分钟后仍未完成的
+  #   只可能是失败/被取消的残留，不能让它永久挡住后续部署。
+  # 与 concurrency 的分工：guard 在独立作业里跑、不占 pages 组，只负责「同 SHA 去重」；
+  #   deploy 作业才进 group: pages（cancel-in-progress: false），负责「不同 SHA 串行」。
+  #   两层不重叠：即使 API 列表有秒级延迟导致漏判，concurrency 也只会让两次部署排队，
+  #   不会并发部署。
   guard:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       deployments: read
+      actions: read
     outputs:
       need: ${{ steps.check.outputs.need }}
     steps:
-      - name: 判断是否已有同 SHA 的部署
+      - name: 判断是否已有同 SHA 的部署或进行中的运行
         id: check
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
         run: |
-          LAST=$(gh api "repos/${{ github.repository }}/deployments?environment=github-pages&per_page=1" \
+          LAST=$(gh api "repos/$REPO/deployments?environment=github-pages&per_page=1" \
                   --jq '.[0].sha' 2>/dev/null || echo "")
-          echo "HEAD=$GITHUB_SHA LAST=$LAST"
-          if [ -n "$LAST" ] && [ "$LAST" = "$GITHUB_SHA" ]; then
+          # 同一 SHA 的未完成运行数（排除本轮自身；超过 15 分钟的视为陈旧，不算）
+          ACTIVE=$(gh api "repos/$REPO/actions/workflows/pages.yml/runs?head_sha=$SHA&per_page=30" \
+                  --jq "[.workflow_runs[]
+                         | select(.id != ${RUN_ID})
+                         | select(.status == \"queued\" or .status == \"in_progress\"
+                                  or .status == \"waiting\" or .status == \"pending\"
+                                  or .status == \"requested\")
+                         | select((now - (.created_at | fromdateiso8601)) < 900)] | length" \
+                  2>/dev/null || echo "0")
+          echo "HEAD=$SHA LAST=$LAST ACTIVE=${ACTIVE:-0}"
+          if [ -n "$LAST" ] && [ "$LAST" = "$SHA" ]; then
+            echo "同一 SHA 已完成部署，跳过"
+            echo "need=false" >> "$GITHUB_OUTPUT"
+          elif [ "${ACTIVE:-0}" -gt 0 ]; then
+            echo "同一 SHA 已有进行中的部署（$ACTIVE 个），跳过"
             echo "need=false" >> "$GITHUB_OUTPUT"
           else
             echo "need=true" >> "$GITHUB_OUTPUT"
