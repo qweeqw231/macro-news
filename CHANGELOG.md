@@ -39,8 +39,10 @@
 - **M6 `perTarget` 观测**：`_status.json` 每轮都写，含 23 标的 × 周期的
   `ok|fail|skip|short|locked|error`、`emRequests`、`emFailures`、`fallbackCount`、`fallbacks`、
   `sourceSwitches`、`sourceSwitchList`、`periodList`。
-- **兜底标记**：`SINA_PRIMARY_KEYS` 登记的 11 个标的，本应走新浪却由东财供数时写
+- **兜底标记**：`SINA_PRIMARY_KEYS` 登记的 12 个标的，本应走新浪却由东财供数时写
   `fallback` / `prevSource` / `alternated`；`alternated=true` 表示与上一轮源不同（真正的两源交替），需人工判断，不自行放宽。
+  `usdcny` 自 **2026-11-22（北京）** 起纳入统计；此前它已是新浪优先，但兜底未计数，
+  历史次数无法回溯，`fallbackCount` 从纳入当轮起算。
 
 **实测（2026-11-22，最近一轮）**
 - 23 个标的 × 分钟：`ok=68 / failed=0`；东财 HTTP **34 次**（含 2 次失败重试），`throttleHit=false`。

@@ -42,13 +42,16 @@
 | `ok` / `failed` | 本轮写入成功 / 失败数 |
 | `emRequests` / `emFailures` | 东财实际 HTTP 次数（含重试）/ 失败次数 |
 | `throttleHit` | 本轮是否命中限流（不是「整轮失败」的同义词） |
-| `fallbackCount` / `fallbacks` | `SINA_PRIMARY_KEYS` 登记的 11 个标的中，本应走新浪却由东财供数的次数与明细 |
+| `fallbackCount` / `fallbacks` | `SINA_PRIMARY_KEYS` 登记的 12 个标的中，本应走新浪却由东财供数的次数与明细 |
 | `sourceSwitches` / `sourceSwitchList` | 本轮取数源与上一轮文件不同的次数与明细 |
 | `periodList` | 本轮实际跑的周期 |
 | `perTarget` | 每个 `标的/周期` 的 `ok|fail|skip|short|locked|error` + `lastOkAt` |
 
 兜底明细里的 `alternated=true` 表示与上一轮源不同（真正的两源交替）。同一文件若长期交替，
 停下报告，不自行放宽阈值。
+
+> `usdcny` 自 **2026-11-22（北京）** 起纳入兜底统计；此前它分钟已是新浪优先，但东财兜底
+> 未被计数，历史次数无法回溯 —— `fallbackCount` / `fallbacks` 从纳入当轮起算。
 
 ## 5. 已知缺口
 
