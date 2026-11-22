@@ -1,0 +1,105 @@
+{
+  "generatedAt": "2026-11-22T13:20:52.257Z",
+  "items": [
+    {
+      "key": "margin",
+      "name": "两融余额",
+      "unit": "亿元",
+      "freq": "D",
+      "decimals": 2,
+      "source": "东方财富（三市两融）",
+      "latest": {
+        "t": "2026-11-19",
+        "v": 22222.85
+      },
+      "prev": {
+        "t": "2026-11-18",
+        "v": 22378.3
+      },
+      "first": "2010-03-31",
+      "last": "2026-11-19",
+      "count": 4041,
+      "series": "margin.json"
+    },
+    {
+      "key": "us10y",
+      "name": "10Y美债",
+      "unit": "%",
+      "freq": "D",
+      "decimals": 2,
+      "source": "东方财富（中美国债收益率）",
+      "latest": {
+        "t": "2026-11-20",
+        "v": 4.92
+      },
+      "prev": {
+        "t": "2026-11-19",
+        "v": 5.04
+      },
+      "first": "1990-12-19",
+      "last": "2026-11-20",
+      "count": 9393,
+      "series": "us10y.json"
+    },
+    {
+      "key": "social_financing",
+      "name": "社融增量",
+      "unit": "亿元",
+      "freq": "M",
+      "decimals": 0,
+      "source": "人民银行 / 商务部数据中心",
+      "latest": {
+        "t": "2026-10",
+        "v": 11429
+      },
+      "prev": {
+        "t": "2026-09",
+        "v": 35547
+      },
+      "first": "2015-01",
+      "last": "2026-10",
+      "count": 142,
+      "series": "social_financing.json"
+    },
+    {
+      "key": "cpi",
+      "name": "CPI同比",
+      "unit": "%",
+      "freq": "M",
+      "decimals": 2,
+      "source": "国家统计局（东方财富）",
+      "latest": {
+        "t": "2026-10",
+        "v": 0.7
+      },
+      "prev": {
+        "t": "2026-09",
+        "v": 0.9
+      },
+      "first": "2008-01",
+      "last": "2026-10",
+      "count": 226,
+      "series": "cpi.json"
+    },
+    {
+      "key": "pmi",
+      "name": "制造业PMI",
+      "unit": "",
+      "freq": "M",
+      "decimals": 1,
+      "source": "国家统计局（东方财富）",
+      "latest": {
+        "t": "2026-10",
+        "v": 49.3
+      },
+      "prev": {
+        "t": "2026-09",
+        "v": 50.1
+      },
+      "first": "2008-01",
+      "last": "2026-10",
+      "count": 226,
+      "series": "pmi.json"
+    }
+  ]
+}
