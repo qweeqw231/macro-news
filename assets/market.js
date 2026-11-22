@@ -503,9 +503,12 @@
       (j) => (j && j.data && j.data.klines && j.data.klines.length ? j.data.klines : null)
     );
     // 东财字段顺序：日期, 开, 收, 高, 低, 量, 额
+    // 2026-11-22：A 股指数（market=CN）东财的「量」是**手**，统一换算成「股」，
+    //   与本地文件（新浪口径）及新浪直连一致；否则同一张图会在直连/本地之间差 100 倍。
+    const lot = m.market === 'CN' ? 100 : 1;
     return kl.map((row) => {
       const p = String(row).split(',');
-      return { t: p[0], o: +p[1], c: +p[2], h: +p[3], l: +p[4], v: +p[5] };
+      return { t: p[0], o: +p[1], c: +p[2], h: +p[3], l: +p[4], v: +p[5] * lot };
     });
   }
 
@@ -730,7 +733,9 @@
     const arr = d && (d[p] || d['qfq' + p]);
     if (!Array.isArray(arr) || !arr.length) throw new Error('腾讯返回空数据');
     // 腾讯字段顺序：日期, 开, 收, 高, 低, 量
-    return arr.map((b) => ({ t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5] }));
+    // 2026-11-22：A 股指数腾讯的「量」同样是**手**，按全站唯一口径换算成股。
+    const lot = (byKey.get(key) || {}).market === 'CN' ? 100 : 1;
+    return arr.map((b) => ({ t: b[0], o: +b[1], c: +b[2], h: +b[3], l: +b[4], v: +b[5] * lot }));
   }
 
   // ---- K线备源 B：腾讯分时（分钟周期兜底，仅当日） ----
@@ -757,13 +762,15 @@
     if (rows.length < 5) throw new Error(`腾讯分时只有 ${rows.length} 点，判定无分时序列`);
 
     // 每行："HHMM 价 累计量 累计额"，量需做差分
+    // A 股指数（CN）腾讯给的是「手」，按全站口径先 ×100 再差分，得到「股」。
+    const lot = (byKey.get(key) || {}).market === 'CN' ? 100 : 1;
     const pts = [];
     let prevVol = 0;
     for (const row of rows) {
       const p = String(row).trim().split(/\s+/);
       if (p.length < 3) continue;
       const price = +p[1];
-      const cum = +p[2];
+      const cum = +p[2] * lot;
       if (!Number.isFinite(price)) continue;
       pts.push({ hm: p[0], price, v: Number.isFinite(cum) ? Math.max(0, cum - prevVol) : 0 });
       if (Number.isFinite(cum)) prevVol = cum;

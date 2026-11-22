@@ -782,6 +782,29 @@ const SINA_SCALE = { '1d': 240, '1w': 1200, '1M': 7200, '1m': 1, '5m': 5, '15m':
 // 周期 → 腾讯 period
 const TX_PERIOD = { '1d': 'day', '1w': 'week', '1M': 'month' };
 
+// ── 成交量唯一口径：A 股指数统一为「股」（2026-11-22）──
+//
+// 同一张 A 股指数日 K，三个源的成交量单位并不一样（2026-11-22 实测 sh000001）：
+//   · 新浪财经 CN_MarketData.volume = 49,971,172,700  → **股**
+//   · 东方财富 f56                 =   499,711,727  → **手**（1 手 = 100 股）
+//   · 腾讯 day[5]                  =   499,711,727  → **手**
+// 两条写盘链路（每小时末根 upsert 与每天全量刷新）命中不同源时，同一文件会把
+// 8,000+ 根历史在「股 ↔ 手」之间整段翻转 —— 15 天实测 100 次、5.04 MiB。
+//
+// 口径**写死为「股」**，理由：
+//   · 新浪（历史最长、现有文件多数）给的就是股；
+//   · 股是物理量，手只是 A 股的交易单位（港股/美股没有这个换算）；
+//   · 前端量能柱按「每张图自己的最大值」归一，改名不改图形，只改浮窗数字。
+// 任何源进来都先声明自己的单位（volUnit='lot' 表示手），由 fetchKline 唯一出口换算。
+export const KLINE_VOLUME_UNIT = '股';
+const SHARES_PER_LOT = 100;
+
+/** 把源侧的「手」归一为「股」；volUnit 不是 lot 的原样返回 */
+function normalizeVolume(bars, volUnit) {
+  if (volUnit !== 'lot') return bars;
+  return bars.map((b) => (b.v > 0 ? { ...b, v: b.v * SHARES_PER_LOT } : b));
+}
+
 export function klineAvailable(key) {
   // 东财按 secid 能取到全部指数（含恒生科技 / 日经 / DAX / 富时 / KOSPI / 费城半导体 / 外汇 119.*）；
   // xau 的东财 secid 只用于分钟（122.XAU），日/周/月走新浪外盘（emMinuteOnly）；
@@ -982,6 +1005,8 @@ async function sgeDaily(instid) {
 function klineProviders(idx, period, limit) {
   const P = [];
   const klt = EM_KLT[period];
+  // 东财 / 腾讯对 A 股指数给的是「手」，其余市场（港股/美股/外汇…）本来就是股或无成交量
+  const volUnit = idx.market === 'CN' ? 'lot' : 'share';
 
   const pushSinaGlobal = () => P.push({
     name: '新浪外盘',
@@ -1026,6 +1051,7 @@ function klineProviders(idx, period, limit) {
 
   const pushEm = () => P.push({
     name: '东方财富',
+    volUnit,
     run: async () => {
       if (!idx.secid) throw new Error('东财无该标的');
       if (!klt) throw new Error(`东财不支持周期 ${period}`);
@@ -1062,6 +1088,7 @@ function klineProviders(idx, period, limit) {
 
   const pushTx = () => P.push({
     name: '腾讯行情',
+    volUnit,
     run: async () => {
       // ⚠ idx.tx 可能为 null（组合标的里没腾讯代码的）⇒ 必须先判空，
       //   否则 `idx.tx.startsWith` 会抛 TypeError，把真正的失败原因盖掉。
@@ -1139,8 +1166,9 @@ export async function fetchKline(key, period = '1d', limit = 250, opts = {}) {
     let best = null;
     settled.forEach((r, i) => {
       if (r.status !== 'fulfilled' || !r.value || !r.value.length) return;
-      if (!best || r.value.length > best.bars.length) {
-        best = { name: providers[i].name, bars: r.value };
+      const bars = normalizeVolume(r.value, providers[i].volUnit);
+      if (!best || bars.length > best.bars.length) {
+        best = { name: providers[i].name, bars };
       }
     });
     if (!best) {
@@ -1156,7 +1184,7 @@ export async function fetchKline(key, period = '1d', limit = 250, opts = {}) {
   const errors = [];
   for (const p of providers) {
     try {
-      const bars = await p.run();
+      const bars = normalizeVolume(await p.run(), p.volUnit);
       if (!bars || !bars.length) throw new Error('返回空');
       klineSource = p.name;
       return bars;
