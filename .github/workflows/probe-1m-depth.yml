@@ -41,4 +41,7 @@ jobs:
 
       - name: 提交结果
         # 不注入 GITHUB_TOKEN ⇒ push-data.sh 跳过 Pages dispatch（探测结果不需要发布）
-        run: bash scripts/push-data.sh data/kline/min/_probe-1m.json MSG_PREFIX="chore: 1m 深度实测结果"
+        # ⚠ 必须用块标量：MSG_PREFIX 的值里有「chore: 」，写成单行 plain scalar 会被
+        #   YAML 当成 mapping，作业直接解析失败（本文件第一版就是这么挂的）。
+        run: |
+          bash scripts/push-data.sh data/kline/min/_probe-1m.json MSG_PREFIX="chore: 1m 深度实测结果"
