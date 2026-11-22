@@ -138,12 +138,15 @@ const TARGET_KEYS = [
 //   （usdchf 曾经也在这里，核对擦边 0.059%；产品决定接新浪并保留兜底标记 ⇒ 已移出本表。）
 const MINUTE_HOLD_KEYS = new Set(['usdkrw']);
 
-// 兜底识别用的「新浪优先」集合（5 个交叉盘 + 5 个美元对 + usdchf，共 11 个）。
+// 兜底识别用的「新浪优先」集合（5 个交叉盘 + 5 个美元对 + usdchf + usdcny，共 12 个）。
 // 本轮若实际由东财供数 ⇒ 新浪在这个周期失败了，必须可区分、可计数（产品要求）。
 // "同一文件长期两源交替" 就是 filename 在 新浪/东财 之间来回 —— 一旦出现要停下来报告。
+// ⚠ usdcny 自 2026-11-22（北京）起纳入统计：此前它分钟已是新浪优先，但兜底未计数，
+//   历史次数无法回溯，`fallbackCount` / `fallbacks` 从纳入当轮起算。
 const SINA_PRIMARY_KEYS = new Set([
   'eurcny', 'gbpcny', 'jpycny', 'krwcny', 'audcny',
   'eurusd', 'gbpusd', 'usdjpy', 'audusd', 'usdcad', 'usdchf',
+  'usdcny',
 ]);
 let fallbackCount = 0;
 const fallbacks = [];
@@ -153,12 +156,22 @@ const sourceSwitchList = [];
 // 周期 → 根数上限 + 抓取顺序。
 // ⚠ 顺序按**重要度**：5m 最常用，排最前（被打断时最新鲜的是它）；
 //   60m/30m 的历史变化慢、1m 一天就多几百根，根数可以少给。
+//
+// ⚠ 各组的真实跨度差一个量级，不强行合成一个数。下面是 2026-11-22 拿
+//   data/kline/min/ 现有分钟文件反推（按「首末根差 / 覆盖自然日」）：
+//     · 外汇：1000 根 5m ≈3.5~4.5 天 / 5；30m ≈21~29 天 / 25~30；60m ≈41~58 天 / 50~60；
+//       600 根 15m ≈6~9 天 / 8~9；300 根 1m ≈0.2 天 / 0.6~1。
+//     · 股票：1000 根 5m ≈14~21 天 / 15~22；30m ≈79~131 天 / 83~133；60m ≈150~239 天 / 157~243；
+//       600 根 15m ≈24~39 天 / 25~40；300 根 1m ≈0.4~0.6 天 / 1~5
+//       （n225 的 1m 稀疏：1000 根跨 15 天，折算约 4.5 天/1000 根）。
+//     · 商品：1000 根 5m ≈9~11 天 / 10~12；30m ≈28~52 天 / 30~56；60m ≈56~110 天 / 58~115；
+//       600 根 15m ≈8~16 天 / 9~17；300 根 1m ≈0.2~0.35 天 / 0.6~0.9。
 const PERIOD_SPEC = {
-  '5m':  { limit: 1000, order: 1 },   // ≈ 13 个交易日
-  '30m': { limit: 1000, order: 2 },   // ≈ 80 个交易日
-  '60m': { limit: 1000, order: 3 },   // ≈ 160 个交易日
-  '15m': { limit: 600,  order: 4 },   // ≈ 24 个交易日
-  '1m':  { limit: 300,  order: 5 },   // ≈ 1.2 个交易日
+  '5m':  { limit: 1000, order: 1 },
+  '30m': { limit: 1000, order: 2 },
+  '60m': { limit: 1000, order: 3 },
+  '15m': { limit: 600,  order: 4 },
+  '1m':  { limit: 300,  order: 5 },
 };
 
 /**
@@ -480,7 +493,7 @@ if (!DRY) {
         emRequests: emStats.requests,
         emFailures: emStats.failures,
         // 本轮 SINA_PRIMARY_KEYS 里「本应走新浪却由东财兜底」的次数
-        // （5 个交叉盘无东财代码、无法兜底；6 个美元对可兜底）。
+        // （5 个交叉盘无东财代码、无法兜底；6 个美元对 + usdcny 可兜底）。
         // 一旦同一文件两源交替，alternated=true，需要人工判断，不要自行放宽。
         fallbackCount,
         fallbacks,
