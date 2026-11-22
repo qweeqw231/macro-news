@@ -23,6 +23,9 @@ class KlineChart {
     this.period = '1d';       // 周期：决定横轴刻度格式与年份标记
     // 2.15.0：价格显示精度（按标的源精度分级，默认 2 位；外汇/中间价/国债为 4 位）
     this.decimals = 2;
+    // 2.35.0：量能单位后缀。成交量副图没有坐标轴，浮窗只给裸数字时
+    //   分不清「股」还是「港元成交额」⇒ A 股/港股由 app.js 设为「股」。
+    this.volumeUnit = '';
     // 空画布文案：加载中 / 暂无数据 / 无该周期。由 app.js 在取数前后切换，
     // 避免出现「顶部加载中、画布却说暂无数据」的自相矛盾。
     this.emptyText = '暂无数据';
@@ -71,6 +74,14 @@ class KlineChart {
   setMAEnabled(list) {
     this.maEnabled = new Set((list || []).filter((n) => n >= 2));
     this.render();
+  }
+
+  /** 设置量能单位后缀（如「股」；空串 = 不标）——浮窗里显示为「145.65亿股」 */
+  setVolumeUnit(unit) {
+    const next = unit || '';
+    if (this.volumeUnit === next) return;
+    this.volumeUnit = next;
+    if (this.bars.length) this.render();
   }
 
   /** 设置空画布文案（无数据时绘制）；只在当前确实没有 bar 时触发重绘 */
@@ -718,7 +729,7 @@ class KlineChart {
         b.z ? '开 —   高 —' : `开 ${this._fmt(b.o)}   高 ${this._fmt(b.h)}`,
         b.z ? `低 —   收 ${this._fmt(b.c)}` : `低 ${this._fmt(b.l)}   收 ${this._fmt(b.c)}`,
         `涨跌 ${chg >= 0 ? '+' : ''}${this._fmt(chg)} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`,
-        `量 ${b.z ? '—' : fmtVol(b.v)}`,
+        `量 ${b.z ? '—' : fmtVol(b.v) + this.volumeUnit}`,
       ];
       // 口径必须写在浮窗里：这根 bar 只有收盘，开高低与量在源侧就没有数据
       if (b.z) lines.push('仅收盘价（开高低/成交量无数据）');

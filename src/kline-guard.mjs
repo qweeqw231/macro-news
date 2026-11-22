@@ -121,6 +121,60 @@ export function upsertBars(existing, incoming) {
 }
 
 /**
+ * 港股量级自检（2026-11-22）：同一天的两份成交量相差 8~80 倍 ⇒ 判为「混了口径」而拒写。
+ *
+ * 为什么是 8~80 而不是固定倍数：
+ *   港股东财 f56 是**成交量（股）**，腾讯 day[5] 是**成交额（港元）**。
+ *   两者的比值 = 成交额 ÷ 成交量 = 当日**每股均价**（港元/股），随行情逐日变化，
+ *   不存在手/股那种固定 100 倍换算 —— 所以只能用「均价」的合理区间来判别。
+ *   2026-11-20 实测：恒生指数 270,299,646,695 / 14,565,080,064 = 18.56；
+ *   恒生科技 72,568,092,053 / 2,080,262,608 = 34.88；
+ *   历史区间大致恒指 13~20、恒生科技 32~48（港股指数成分股均价 10~50 港元量级）。
+ *   ⇒ 取 8~80 作为「明显是均价、而不是同口径波动」的外包络：
+ *     正常同口径的日间波动（通常 <2 倍）远在区间内，成交额/成交量则必然落在其中。
+ *   反向（新值只有旧值的 1/8~1/80）同样拒绝：谁被写成成交额并不确定，
+ *   可能是旧文件、也可能是这次的新结果。
+ *
+ * 只比较**双方都已收盘定稿**的同一天：
+ *   最新一根（新旧序列里时间最大的那一天）在盘中更新时还没走完，
+ *   09:35 的成交量可能只有全天的 1/20 —— 拿它比会误杀正常更新，故跳过。
+ *
+ * @returns {{t:string, oldV:number, newV:number, ratio:number}|null}
+ *   命中返回首个异常日的明细（ratio = newV/oldV），否则 null。
+ */
+export const HK_VOLUME_RATIO_MIN = 8;
+export const HK_VOLUME_RATIO_MAX = 80;
+
+export function hkVolumeScaleVerdict(existing, incoming) {
+  const old = Array.isArray(existing) ? existing : [];
+  const inc = Array.isArray(incoming) ? incoming : [];
+  if (!old.length || !inc.length) return null;
+  const oldMap = new Map(old.map((b) => [barTime(b), b]));
+  // 新旧序列里时间最大的那一天可能仍在走，不参与比较
+  const lastOld = barTime(old[old.length - 1]);
+  const lastNew = barTime(inc[inc.length - 1]);
+  const skipKey = lastOld > lastNew ? lastOld : lastNew;
+  for (let i = inc.length - 1; i >= 0; i--) {
+    const b = inc[i];
+    const k = barTime(b);
+    if (k === skipKey) continue;
+    const o = oldMap.get(k);
+    if (!o) continue;
+    const newV = barVolume(b);
+    const oldV = barVolume(o);
+    if (!(newV > 0) || !(oldV > 0)) continue;
+    const ratio = newV / oldV;
+    if (
+      (ratio >= HK_VOLUME_RATIO_MIN && ratio <= HK_VOLUME_RATIO_MAX) ||
+      (ratio >= 1 / HK_VOLUME_RATIO_MAX && ratio <= 1 / HK_VOLUME_RATIO_MIN)
+    ) {
+      return { t: k, oldV, newV, ratio };
+    }
+  }
+  return null;
+}
+
+/**
  * 2.14.1：左端缺失（源侧历史起点后移）的并集合并判据。
  *
  * 背景：新浪外盘日线的起点从 2006-11-10 后移到 2006-11-13，聚合出的 xau_1w

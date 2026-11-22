@@ -7,7 +7,8 @@
 // 稳健性：东财镜像主机**会间歇性不可达**（同一时刻有的通、有的断）。
 // 因此：
 //   行情 = 东财批量接口（多主机，缓存优先）→ 腾讯批量接口 → 调用方回退本地快照
-//   K线  = 东财（全 17 指数，含分钟，多主机）→ 腾讯（仅日/周/月，覆盖 CN/HK/US）
+//   K线  = 东财（全 17 指数，含分钟，多主机）→ 腾讯（仅日/周/月，覆盖 CN/US；**港股不接**，
+//          腾讯给的是成交额而非成交量，与东财不同口径）
 (function () {
   'use strict';
 
@@ -864,10 +865,17 @@
     if (SINA_FX_CODE[key]) {
       add('新浪外汇（日线全量 / 分钟 1000 根）', () => fetchKlineSinaFx(key, period));
     }
-    add('腾讯兜底', () =>
-      TX_PERIOD[period]
-        ? fetchKlineTX(key, period, limit)
-        : fetchKlineTXMinute(key, period));
+    // 港股只走东财：腾讯 hkHSI/hkHSTECH 的 day[5] 是**成交额（港元）**，与东财的
+    // **成交量（股）**差一个「当日每股均价」（2026-11-20 实测 18.56 / 34.88 倍），
+    // 无法用固定系数换算。放进赛马会先画出 1000 根成交额、再被东财整张换成股
+    // （或反过来），量能柱肉眼可见地跳变 ⇒ 港股不注册腾讯（分钟分时同理）。
+    // 东财不可达时这里直接 reject，由 app.js 回退本地快照（同口径）或提示「暂无数据」。
+    if (!(meta && meta.market === 'HK')) {
+      add('腾讯兜底', () =>
+        TX_PERIOD[period]
+          ? fetchKlineTX(key, period, limit)
+          : fetchKlineTXMinute(key, period));
+    }
 
     // 首个成功即返回；其余源**继续在跑**，到货会通过 onData 追加更全的数据
     let left = jobs.length;

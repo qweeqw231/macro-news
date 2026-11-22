@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 import {
   INDICES, PORTFOLIO_KLINE, fetchKline, klineAvailable, klineTarget, getKlineSource,
 } from '../src/sources.mjs';
-import { upsertBars, markCloseOnlyBars } from '../src/kline-guard.mjs';
+import { upsertBars, markCloseOnlyBars, hkVolumeScaleVerdict } from '../src/kline-guard.mjs';
 import { withKlineLock, lockSkipText } from '../src/kline-lock.mjs';
 import { writePlan, barDate, CAL, NO_SESSION_CLOSE, openRefreshAllowed, inOpenRefreshWindow } from '../src/kline-finalize.mjs';
 
@@ -105,6 +105,14 @@ async function main() {
       }
       const res = await withKlineLock(key, async () => {
         const old = JSON.parse(await readFile(file, 'utf8'));
+        // 2.35.0：港股写盘前做同口径自检。
+        //   东财 f56=成交量（股）、腾讯 day[5]=成交额（港元），比值即「每股均价」（实测 13~48）。
+        //   同一日的量级差 8~80 倍说明新旧序列混了两种口径 —— 拒绝写入并留日志，
+        //   绝不让「股 ↔ 港元」整段翻转落盘（详见 src/kline-guard.mjs 的阈值注释）。
+        if ((old.market || meta?.market) === 'HK') {
+          const bad = hkVolumeScaleVerdict(old.bars, latest);
+          if (bad) return { rejected: 'volume-scale', detail: bad };
+        }
         // 2.4.12 补丁位：按时间键 upsert，并保留非零成交量。
         //   上金所官网兜底没有 volume（全部 0），以前这里用 Map 直接覆盖，
         //   一次 SGE 源切换就把最近 5 根的东财成交量抹成 0（2026-11-04 14:28 UTC 实测）。
@@ -130,6 +138,16 @@ async function main() {
         locked++;
         console.log(`  ${lockSkipText(key, res)}`);
         await new Promise((r) => setTimeout(r, 400));
+        continue;
+      }
+      if (res.value.rejected === 'volume-scale') {
+        const d = res.value.detail;
+        skipped++;
+        console.log(
+          `  ⛔ ${key}：成交量量级异常，拒绝写入 —— ${d.t} 新值 ${d.newV} / 旧值 ${d.oldV}` +
+            ` = ${d.ratio.toFixed(2)} 倍（落在 8~80 或 1/80~1/8 ⇒ 判定混了口径：` +
+            `股 vs 成交额）。旧数据保持不变。`
+        );
         continue;
       }
       if (!res.value.changed) { skipped++; continue; }

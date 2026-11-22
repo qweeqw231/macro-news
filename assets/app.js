@@ -305,6 +305,14 @@
     return M && M.getDecimals ? M.getDecimals(key) : 2;
   };
 
+  // 2.35.0：量能单位按标的市场走。A 股与港股采集侧都统一为「股」，
+  // 浮窗里必须带后缀 —— 成交量副图没有坐标轴，裸数字分不清股数还是金额。
+  const volUnitOf = (key) => {
+    const M = window.MarketData;
+    const meta = M && M.META ? M.META.find((x) => x.key === key) : null;
+    return meta && (meta.market === 'CN' || meta.market === 'HK') ? '股' : '';
+  };
+
   function fmtNum(v, d = 2) {
     if (v === null || v === undefined || isNaN(v)) return '—';
     return Number(v).toLocaleString('zh-CN', { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -2511,6 +2519,7 @@
     else kChart.reset();              // ← 清掉上一个标的的图（残留 bug）
     // 精度按标的走：轴标签 / 十字线 OHLC / 均线图例都读这个值
     kChart.setDecimals(decOf(key));
+    if (kChart.setVolumeUnit) kChart.setVolumeUnit(volUnitOf(key));
     renderMA();
     loadKline(key, period);
     scheduleKlineRefresh();

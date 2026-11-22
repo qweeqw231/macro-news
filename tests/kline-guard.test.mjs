@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { decideBars, mergeBars, barTime, barVolume, upsertBars } from '../src/kline-guard.mjs';
+import { decideBars, mergeBars, barTime, barVolume, upsertBars, hkVolumeScaleVerdict } from '../src/kline-guard.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
@@ -186,10 +186,84 @@ test('写 K 线的脚本都接入共享守卫', () => {
 
 test('只刷新最后一根的脚本也必须经过守卫（2.4.11 漏网点）', () => {
   const src = read('scripts/update-kline-last.mjs');
-  assert.match(src, /import \{ upsertBars, markCloseOnlyBars \} from '\.\.\/src\/kline-guard\.mjs'/);
+  assert.match(src, /import \{ upsertBars, markCloseOnlyBars, hkVolumeScaleVerdict \} from '\.\.\/src\/kline-guard\.mjs'/);
   assert.match(src, /markCloseOnlyBars\(upsertBars\(old\.bars, latest\)\)/);
+  // 2.35.0：港股写盘前必须有量级自检，且拒绝时要打日志
+  assert.match(src, /hkVolumeScaleVerdict\(old\.bars, latest\)/);
+  assert.match(src, /成交量量级异常，拒绝写入/);
   // 不能再回到「Map 直接覆盖」：上金所官网无 volume，会抹掉东财成交量
   assert.doesNotMatch(src, /new Map\(\(old\.bars/);
+});
+
+// ── 2.35.0：港股量级自检（成交量「股」vs 成交额「港元」）──
+
+const volBar = (t, v) => ({ t, o: 100, h: 100, l: 100, c: 100, v });
+
+test('港股量级自检：同一日相差 18.56 倍（成交额/成交量）⇒ 拒绝', () => {
+  // 2026-11-20 恒指真实形态：旧文件是股、新结果是成交额
+  const old = [volBar('2026-11-18', 14_000_000_000), volBar('2026-11-19', 15_000_000_000), volBar('2026-11-20', 14_565_080_064)];
+  const next = [volBar('2026-11-19', 278_000_000_000), volBar('2026-11-20', 270_299_646_695)];
+  const bad = hkVolumeScaleVerdict(old, next);
+  assert.ok(bad, '18~19 倍必须命中');
+  assert.equal(bad.t, '2026-11-19');
+  assert.ok(bad.ratio > 18 && bad.ratio < 19, `ratio=${bad.ratio}`);
+});
+
+test('港股量级自检：反过来（旧成交额、新股）也拒绝', () => {
+  const old = [volBar('2026-11-19', 278_000_000_000), volBar('2026-11-20', 270_299_646_695)];
+  const next = [volBar('2026-11-19', 15_000_000_000), volBar('2026-11-20', 14_565_080_064)];
+  const bad = hkVolumeScaleVerdict(old, next);
+  assert.ok(bad, '1/18.5 必须命中反向区间');
+  assert.ok(bad.ratio < 1 / 8 && bad.ratio > 1 / 80, `ratio=${bad.ratio}`);
+});
+
+test('港股量级自检：正常日间波动（0.5~2 倍）放行', () => {
+  const old = [volBar('2026-11-18', 14_000_000_000), volBar('2026-11-19', 15_000_000_000), volBar('2026-11-20', 14_565_080_064)];
+  const next = [volBar('2026-11-19', 16_100_000_000), volBar('2026-11-20', 9_800_000_000), volBar('2026-11-21', 12_000_000_000)];
+  assert.equal(hkVolumeScaleVerdict(old, next), null);
+});
+
+test('港股量级自检：跳过盘中未走完的最后一根（不能误杀正常更新）', () => {
+  // 旧文件今天这根是 09:35 的 1/20 量；新结果是 15:00 的全天量 —— 差 20 倍但合法
+  const old = [volBar('2026-11-19', 15_000_000_000), volBar('2026-11-20', 700_000_000)];
+  const next = [volBar('2026-11-19', 15_000_000_000), volBar('2026-11-20', 14_565_080_064)];
+  assert.equal(hkVolumeScaleVerdict(old, next), null, '最新一根（双方同一天）应跳过');
+});
+
+test('港股量级自检：成交量缺失（0）的 bar 不参与比较', () => {
+  const old = [volBar('2026-11-19', 0), volBar('2026-11-20', 0)];
+  const next = [volBar('2026-11-19', 15_000_000_000), volBar('2026-11-20', 14_565_080_064)];
+  assert.equal(hkVolumeScaleVerdict(old, next), null);
+});
+
+test('港股量级自检：同一日的量级比值只认均价区间，不做手/股换算', () => {
+  // 8 与 80 是闭区间边界；7.9 / 80.1 不拦（价格假想值，仅验证阈值语义）
+  const base = [volBar('2026-11-19', 1_000), volBar('2026-11-20', 1_000)];
+  assert.ok(hkVolumeScaleVerdict(base, [volBar('2026-11-19', 8_000), volBar('2026-11-20', 1_000)]));
+  assert.ok(hkVolumeScaleVerdict(base, [volBar('2026-11-19', 80_000), volBar('2026-11-20', 1_000)]));
+  assert.equal(hkVolumeScaleVerdict(base, [volBar('2026-11-19', 7_900), volBar('2026-11-20', 1_000)]), null);
+  assert.equal(hkVolumeScaleVerdict(base, [volBar('2026-11-19', 81_000), volBar('2026-11-20', 1_000)]), null);
+});
+
+test('港股不接腾讯兜底：服务端与前端都要排除', () => {
+  const src = read('src/sources.mjs');
+  assert.match(src, /else if \(idx\.market === 'HK'\) \{[\s\S]*?pushEm\(\);/, '港股分支没有只留东财');
+  assert.doesNotMatch(src, /if \(idx\.market !== 'HK'\) pushTx\(\);/, '仍保留旧的腾讯注册写法');
+  // 单源失败必须抛错（上层据此「不写」），不能返回空数组冒充成功
+  assert.match(src, /if \(!bars \|\| !bars\.length\) throw new Error\('返回空'\)/);
+  assert.match(src, /throw new Error\(`K线不可得：\$\{errors\.join/);
+  const market = read('assets/market.js');
+  assert.match(market, /if \(!\(meta && meta\.market === 'HK'\)\) \{[\s\S]*?add\('腾讯兜底'/,
+    '前端直连赛马仍对港股注册腾讯');
+});
+
+test('量能浮窗带单位：A 股/港股显示「股」', () => {
+  const chart = read('assets/kline.js');
+  assert.match(chart, /fmtVol\(b\.v\) \+ this\.volumeUnit/, '浮窗量能没有拼单位');
+  assert.match(chart, /setVolumeUnit\(unit\)/);
+  const app = read('assets/app.js');
+  assert.match(app, /kChart\.setVolumeUnit\(volUnitOf\(key\)\)/);
+  assert.match(app, /\(meta\.market === 'CN' \|\| meta\.market === 'HK'\) \? '股'/);
 });
 
 // ── 2026-11-18：只放宽「最后一桶」与「价格精度」，不拆守卫 ──
