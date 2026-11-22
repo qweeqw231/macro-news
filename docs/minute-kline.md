@@ -42,7 +42,7 @@
 | `ok` / `failed` | 本轮写入成功 / 失败数 |
 | `emRequests` / `emFailures` | 东财实际 HTTP 次数（含重试）/ 失败次数 |
 | `throttleHit` | 本轮是否命中限流（不是「整轮失败」的同义词） |
-| `fallbackCount` / `fallbacks` | 本应走新浪却由东财供数的次数与明细 |
+| `fallbackCount` / `fallbacks` | `SINA_PRIMARY_KEYS` 登记的 11 个标的中，本应走新浪却由东财供数的次数与明细 |
 | `sourceSwitches` / `sourceSwitchList` | 本轮取数源与上一轮文件不同的次数与明细 |
 | `periodList` | 本轮实际跑的周期 |
 | `perTarget` | 每个 `标的/周期` 的 `ok|fail|skip|short|locked|error` + `lastOkAt` |
