@@ -99,6 +99,31 @@ function blobBuffer(relPath) {
   return out.status === 0 ? out.stdout : null;
 }
 
+/**
+ * 部署期生成、不在 HEAD 的检索索引（2.33.1 起 search.json / search-history 不进 git）。
+ * 这些文件由 scripts/build-search.mjs 在 Pages 部署时现算并打进 artifact，
+ * 所以「站点发布体积」必须把它们算进去，否则会低估约 55 MiB。
+ */
+function generatedIndexFiles() {
+  const hotPath = path.join(ROOT, 'data', 'search.json');
+  let hot = null;
+  try {
+    const st = fs.statSync(hotPath);
+    if (st.isFile()) hot = { path: 'data/search.json', size: st.size };
+  } catch { /* 还没生成 */ }
+
+  const shardDir = path.join(ROOT, 'data', 'search-history');
+  let shards = [];
+  try {
+    shards = fs.readdirSync(shardDir)
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => ({ path: `data/search-history/${f}`, size: fs.statSync(path.join(shardDir, f)).size }));
+  } catch { /* 还没生成 */ }
+
+  const files = [...(hot ? [hot] : []), ...shards];
+  return { hot, shards, files, bytes: files.reduce((a, r) => a + r.size, 0) };
+}
+
 /** HEAD 全量文件清单：[{ path, size }] */
 function treeFiles() {
   const out = git(['ls-tree', '-r', '-l', 'HEAD']);
@@ -179,35 +204,71 @@ async function gh(pathname) {
 async function collect() {
   const m = { at: NOW().toISOString(), week: isoWeek(), notes: [] };
 
-  // 1) 仓库与站点体积（全部读 HEAD，避免工作区被并发会话改写导致抖动）
+  // 1) 站点发布体积 = HEAD 里的发布文件 + 部署期生成的检索索引（不进 git）
+  //    2.33.1 起 search.json / search-history 只在 Pages 部署时现算并打进 artifact，
+  //    只数 HEAD 会低估约 55 MiB。这里按「artifact 展开后」的真实体积统计。
   const files = treeFiles();
-  const siteBytes = files.reduce((a, r) => a + r.size, 0);
-  m.site_mb = round(siteBytes / MIB);
-  m.data_mb = round(sumWhere(files, (r) => r.path.startsWith('data/')) / MIB);
+  const trackedBytes = files.reduce((a, r) => a + r.size, 0);
+  const trackedDataBytes = sumWhere(files, (r) => r.path.startsWith('data/'));
+  const gen = generatedIndexFiles();
+
+  m.site_tracked_mib = round(trackedBytes / MIB);
+  m.site_generated_mib = gen.files.length ? round(gen.bytes / MIB) : null;
+  m.site_mb = round((trackedBytes + gen.bytes) / MIB);
+  m.data_tracked_mb = round(trackedDataBytes / MIB);
+  m.data_mb = round((trackedDataBytes + gen.bytes) / MIB);
   m.kline_mb = round(sumWhere(files, (r) => r.path.startsWith('data/kline/')) / MIB);
   m.kline_min_mb = round(sumWhere(files, (r) => r.path.startsWith('data/kline/min/')) / MIB);
   m.history_mb = round(sumWhere(files, (r) => r.path.startsWith('data/history/')) / MIB);
   m.archive_mb = round(sumWhere(files, (r) => r.path.startsWith('data/archive/')) / MIB);
   m.snapshots_mb = round(sumWhere(files, (r) => r.path.startsWith('data/snapshots/')) / MIB);
-  m.files = files.length;
+  m.files_tracked = files.length;
+  m.files_generated = gen.files.length;
+  m.files = files.length + gen.files.length;
+  if (!gen.files.length) {
+    m.notes.push('检索索引未生成：site_mb 只含 git 树，低估约 55 MiB；先跑 node scripts/build-search.mjs');
+  }
 
   // 2) search.json：原始 + gzip（体积代价在 gzip，前端拿到的就是它）
-  const sj = blobBuffer('data/search.json');
+  //    优先读工作区里的生成产物（部署时打进去的那份），没有再回落到 HEAD。
+  let sj = gen.hot ? fs.readFileSync(path.join(ROOT, 'data', 'search.json')) : null;
+  let sjSource = gen.hot ? 'generated' : null;
+  if (!sj) {
+    sj = blobBuffer('data/search.json');
+    if (sj) sjSource = 'git';
+  }
   if (sj) {
+    m.search_source = sjSource;
     m.search_mib = round(sj.length / MIB);
     m.search_gz_mib = round(zlib.gzipSync(sj, { level: 6 }).length / MIB);
     try { m.search_entries = JSON.parse(sj.toString('utf8')).items?.length ?? null; } catch { m.search_entries = null; }
   } else {
-    m.notes.push('data/search.json 不存在（可能已按预案移出 git）');
+    m.notes.push('data/search.json 既不在工作区也不在 git（检索索引未生成）');
   }
 
-  // 3) 历史检索分片（2.22.0）：如果存在，单独看总量与单片刻度
-  const shardFiles = files.filter((r) => r.path.startsWith('data/search-history/') && r.path.endsWith('.json'));
-  if (shardFiles.length) {
-    m.shards = shardFiles.length;
-    m.shards_mb = round(shardFiles.reduce((a, r) => a + r.size, 0) / MIB);
-    m.shard_max_mb = round(Math.max(...shardFiles.map((r) => r.size)) / MIB);
+  // 3) 历史检索分片（2.22.0，2.33.1 起部署期生成）：同样优先工作区产物
+  const shardRows = gen.shards.length
+    ? gen.shards
+    : files.filter((r) => r.path.startsWith('data/search-history/') && r.path.endsWith('.json'));
+  if (shardRows.length) {
+    m.shards = shardRows.length;
+    m.shards_source = gen.shards.length ? 'generated' : 'git';
+    m.shards_mb = round(shardRows.reduce((a, r) => a + r.size, 0) / MIB);
+    m.shard_max_mb = round(Math.max(...shardRows.map((r) => r.size)) / MIB);
   }
+
+  // 各项数字的口径，随快照一起落盘，避免下一个人再把 site_mb 当成「git 树体积」
+  m.definitions = {
+    site_mb: 'HEAD 发布文件 + 部署期生成的检索索引（artifact 展开体积，MiB）',
+    site_tracked_mib: 'HEAD 树里的发布文件（git 跟踪部分）',
+    site_generated_mib: 'data/search.json + data/search-history/*，部署时生成、不进 git',
+    data_mb: 'data/ 发布体积（HEAD 中的 data + 生成的检索索引）',
+    data_tracked_mb: 'HEAD 中 data/ 的体积（不含生成索引）',
+    repo_mib: 'GitHub API 仓库 size（含全部历史）',
+    pack_mib: 'clone 包（rev-list --objects | pack-objects，与主报告同口径）',
+    search_mib: 'search.json 原始体积（优先工作区生成产物）',
+    search_gz_mib: 'search.json gzip 体积（前端实际传输）',
+  };
 
   // 4) clone 包
   if (FAST) {
@@ -351,14 +412,23 @@ function withTrend(cur, prev) {
   // 间隔不足 7 天时不给「月化」：一次性回补（新增标的、历史补齐）会让单日增量
   // 被放大成荒谬的月速率（实测把一次性 73 MB 回补算成 +2485/月）。
   const trustworthy = days >= 7;
+  // 一周内站点体积跳增 >50% 基本只可能是一次性台阶（历史回补、分片重建、新增数据目录），
+  // 直接年化会把 7 天窗口放大成荒谬的月速（2026-11-22 实测：+84 MiB/7.1 天 → 353/月，
+  // 再算出「距 1 GB 只剩 2.2 个月」，与实际稳态 33 MiB/月 矛盾）。这种情况不出月化与 ETA。
+  const siteJump = prev.site_mb > 0 ? (cur.site_mb - prev.site_mb) / prev.site_mb : 0;
+  const stepSuspected = Number.isFinite(siteJump) && siteJump > 0.5;
   cur.trend = {
     since: prev.at, days: round(days), trustworthy,
-    repo_mib_per_month: trustworthy ? perMonth('repo_mib') : null,
-    site_mb_per_month: trustworthy ? perMonth('site_mb') : null,
+    repo_mib_per_month: trustworthy && !stepSuspected ? perMonth('repo_mib') : null,
+    site_mb_per_month: trustworthy && !stepSuspected ? perMonth('site_mb') : null,
     // clone 包只在与上次同为「pack-objects 实测」时才比较，避免 --fast 的 size-pack 混入
     pack_mib_per_month: trustworthy && prev.pack_note === cur.pack_note ? perMonth('pack_mib') : null,
-    data_mb_per_month: trustworthy ? perMonth('data_mb') : null,
+    data_mb_per_month: trustworthy && !stepSuspected ? perMonth('data_mb') : null,
+    one_time_suspected: stepSuspected || undefined,
   };
+  if (stepSuspected) {
+    cur.notes.push(`站点体积较上次跳增 ${(siteJump * 100).toFixed(0)}%，判为一次性台阶；本期不出月化与 ETA`);
+  }
   if (!trustworthy) {
     cur.notes.push(`上次快照仅 ${cur.trend.days} 天前，间隔不足 7 天，本期不出月化速率`);
   }
@@ -397,15 +467,22 @@ function printTable(m, rows) {
     console.log(`${pad(r?.label || LIMITS[key]?.label || key, 22)}${pad(`${value ?? '-'} ${unit}`, 12)}${pad(th, 14)}${pad(extra, 10)}${mark}`);
   };
   line('repo_mib', m.repo_mib, 'MiB', m.trend?.repo_mib_per_month != null ? `+${m.trend.repo_mib_per_month}/月` : '');
-  line('site_mb', m.site_mb, 'MB', m.trend?.site_mb_per_month != null ? `+${m.trend.site_mb_per_month}/月` : '');
+  line('site_mb', m.site_mb, 'MiB', m.trend?.site_mb_per_month != null ? `+${m.trend.site_mb_per_month}/月` : '');
   line('pack_mib', m.pack_mib, 'MiB', m.trend?.pack_mib_per_month != null ? `+${m.trend.pack_mib_per_month}/月` : '');
   line('builds_per_hour_6h', m.builds_per_hour_6h, '次/h', `24h峰 ${m.builds_per_hour ?? '-'}`);
   console.log(`${pad('构建失败(24h)', 22)}${pad(`${m.builds_fail_24h ?? '-'} 次`, 12)}${pad('-', 14)}${pad('', 10)}${(m.builds_fail_24h || 0) > 0 ? '需关注' : 'OK'}`);
   line('worker_req_day', m.worker_req_day, '次/天', '');
   line('search_gz_mib', m.search_gz_mib, 'MiB', `${m.search_entries ?? '-'} 条`);
   console.log('-'.repeat(92));
-  console.log(`分项  data ${m.data_mb} MB（kline ${m.kline_mb}，其中分钟线 ${m.kline_min_mb}；`
+  console.log(`分项  data ${m.data_mb} MiB（kline ${m.kline_mb}，其中分钟线 ${m.kline_min_mb}；`
     + `history ${m.history_mb}；archive ${m.archive_mb}；snapshots ${m.snapshots_mb}）`);
+  if (m.site_generated_mib != null) {
+    console.log(`口径  site_mb = HEAD ${m.site_tracked_mib} + 生成索引 ${m.site_generated_mib} MiB`
+      + `（artifact 展开；data = ${m.data_tracked_mb} + ${m.site_generated_mib}；`
+      + `search 来源 ${m.search_source || '-'}，分片来源 ${m.shards_source || '-'}）`);
+  } else {
+    console.log('口径  site_mb 仅含 HEAD：检索索引未生成，低估约 55 MiB');
+  }
   if (m.shards) console.log(`分片  search-history ${m.shards} 片 / ${m.shards_mb} MB，最大单片 ${m.shard_max_mb} MB`);
   if (m.last_deploy) {
     console.log(`部署  最近一次「${m.last_deploy.name}」${m.last_deploy.conclusion}，`
