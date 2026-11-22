@@ -1,17 +1,15 @@
 {
-  "generatedAt": "2026-11-22T01:24:16.199Z",
+  "generatedAt": "2026-11-22T01:54:06.554Z",
   "ok": 68,
   "failed": 0,
   "throttleHit": false,
-  "emRequests": 33,
+  "emRequests": 32,
   "emFailures": 0,
-  "fallbackCount": 1,
-  "fallbacks": [
-    "usdchf/5m: 新浪失败，本轮由东方财富兜底（与上一轮源不同，出现交替）"
-  ],
+  "fallbackCount": 0,
+  "fallbacks": [],
   "sourceSwitches": 1,
   "sourceSwitchList": [
-    "usdchf/5m: 新浪 → 东财"
+    "usdchf/5m: 东财 → 新浪"
   ],
   "failures": [],
   "rejected": [],
@@ -147,20 +145,17 @@
       "unchanged": true,
       "lastOkAt": 1795266023119
     },
-    "usdchf/5m": {
-      "status": "ok",
-      "bars": 2000,
-      "changed": true,
-      "lastOkAt": 1795310414463,
-      "fallback": "东方财富",
-      "prevSource": "新浪",
-      "alternated": true
-    },
     "dxy/5m": {
       "status": "ok",
       "bars": 1000,
       "unchanged": true,
       "lastOkAt": 1795268911435
+    },
+    "usdchf/5m": {
+      "status": "ok",
+      "bars": 2000,
+      "changed": true,
+      "lastOkAt": 1795312218098
     },
     "n225/30m": {
       "status": "ok",
