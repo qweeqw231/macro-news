@@ -765,6 +765,14 @@
       var rel = relativeAge(sourceTime, now, { daily: true, date: bt.date });
       var dateText = isYear ? bt.year : bt.date.slice(5);
       var clockText = isYear ? dateText : dateText;
+      // 2026-11-22：日 K 末根改为盘中 4 轮（北京 02/08/14/20）。
+      //   本地文件必须显示**上一轮实际写入时刻**，不能再出现「实时」或让人以为是分钟级刷新。
+      var genMs = fromLocal ? Date.parse(opts.dataAt || '') : NaN;
+      var genText = '';
+      if (Number.isFinite(genMs)) {
+        var gp = bjParts(genMs);
+        genText = ' · 更新于 ' + gp.hh + ':' + gp.mm;
+      }
       // 2.9.0：当日 bar 不一定是收盘价。
       //   · 该市场还在盘中（open/lunch/pre）→ 这根 bar 只是盘中值；
       //   · 来自「本地全量」（服务端每天 12:18 生成）且日期是今天 → 一定是午盘值
@@ -797,7 +805,7 @@
       if (partial) {
         return {
           state: 'delayed',
-          full: src + ' · ' + clockText + ' · 盘中值·未定稿',
+          full: src + ' · ' + clockText + ' · 盘中值·未定稿' + genText,
           short: src + ' ' + clockText + ' · 盘中值',
           partial: true,
         };
@@ -815,14 +823,14 @@
       if (bt.date === mktToday && phase && phase.phase === 'post') {
         return {
           state: 'closed',
-          full: src + ' · ' + clockText + ' · ' + periodLabel,
+          full: src + ' · ' + clockText + ' · ' + periodLabel + genText,
           short: src + ' ' + clockText + ' · ' + periodLabel,
           closed: true,
         };
       }
       return {
         state: state,
-        full: src + ' · ' + clockText + ' · ' + rel + ' · ' + STATE_LABEL[state],
+        full: src + ' · ' + clockText + ' · ' + rel + ' · ' + STATE_LABEL[state] + genText,
         short: src + ' ' + clockText + ' · ' + rel + ' · ' + STATE_LABEL[state],
       };
     }

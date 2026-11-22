@@ -2160,13 +2160,17 @@
       //   心跳由 K 线 workflow 在推送前写入、与数据同一笔提交 ⇒ 推不上去就不会前进。
       //   阈值默认 90 分钟（心跳文件可覆盖）：cron 每 30 分钟一轮、单轮约 6 分钟，
       //   正常最长约 36 分钟；丢一轮约 66 分钟；90 分钟留出一轮完整余量。
+      // 2026-11-22：日 K 末根盘中更新改为每天 4 轮（北京 02/08/14/20），但本哨兵衡量的是
+      //   **K 线 workflow 还活着**（分钟 K 仍每小时跑），所以阈值保持 90 分钟、文案改叫
+      //   「K线任务」——不能让它看起来像「日 K 数据 20 分钟前更新过」。
+      //   日 K 本身的新鲜度由 K 线抽屉的「收盘 / 盘中值·未定稿 / 本地快照」标注表达。
       const KL = window.MacroQuoteStatus || {};
       const kf = typeof KL.klineFreshness === 'function'
         ? KL.klineFreshness(hb, Date.now())
         : { level: 'none', ageMin: null, thresholdMin: 90 };
       if (kf.level === 'bad') {
         level = 'bad';
-        state = `K线停摆 ${agoText(kf.ageMin)}`;
+        state = `K线任务停摆 ${agoText(kf.ageMin)}`;
       }
 
       const bits = [];
@@ -2178,7 +2182,7 @@
       if (srcs.length) bits.push(`源 ${srcs.length - srcBad.length}/${srcs.length}`);
       if (capped) bits.push(`归档上限 ${newsMeta.cap || '?'}`);
       if (newsMin != null) bits.push('最新新闻 ' + agoText(newsMin));
-      if (kf.level !== 'none') bits.push(`K线 ${agoText(kf.ageMin)}`);
+      if (kf.level !== 'none') bits.push(`K线任务 ${agoText(kf.ageMin)}`);
       // 与 #quoteTime 共用同一段三态文案，避免一处实时一处快照
       bits.push(S.quoteStatusText || '行情 未记录');
       if (macroOk.length || macroFail.length) bits.push(`宏观 ${macroOk.length}/${macroOk.length + macroFail.length}`);

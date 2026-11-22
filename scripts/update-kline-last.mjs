@@ -5,7 +5,8 @@
 //   日/周/月 K 由 kline-full.yml 每天 12:23 刷一次就够「收盘价」，
 //   但上海金这类有夜盘的品种，周五夜盘归属**下一交易日**：那根「未来蜡烛」在周六看是对的，
 //   并且从周日晚 / 周一日盘开始会持续变化。每天只刷一次的话，页面上那根 bar 会停在旧值。
-//   这个脚本每小时只动**最后一根**（按 t upsert），不做全历史重写，代价很小。
+//   这个脚本**盘中每天只动 4 轮**（北京 02/08/14/20），且只 upsert 最后一根（按 t 合并），
+//   不做全历史重写；收盘定稿仍在收盘后第一轮执行。
 //
 // 用法：node scripts/update-kline-last.mjs [--dry-run]
 // 只处理「当前处于交易时段」的品种（CN/HK/JP/KR/EU/UK/US/SGE），其余跳过。
@@ -19,7 +20,7 @@ import {
 } from '../src/sources.mjs';
 import { upsertBars, markCloseOnlyBars } from '../src/kline-guard.mjs';
 import { withKlineLock, lockSkipText } from '../src/kline-lock.mjs';
-import { writePlan, barDate, CAL, NO_SESSION_CLOSE } from '../src/kline-finalize.mjs';
+import { writePlan, barDate, CAL, NO_SESSION_CLOSE, openRefreshAllowed, inOpenRefreshWindow } from '../src/kline-finalize.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -29,7 +30,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 async function main() {
   const nowMs = Date.now();
   const keys = [...INDICES, ...PORTFOLIO_KLINE].map((x) => x.key);
-  let updated = 0, finalized = 0, skipped = 0, failed = 0, locked = 0;
+  let updated = 0, finalized = 0, skipped = 0, failed = 0, locked = 0, throttled = 0;
 
   for (const key of keys) {
     if (!klineAvailable(key)) { skipped++; continue; }
@@ -71,6 +72,19 @@ async function main() {
     }
     const plan = writePlan(market, nowMs, state, CAL);
     if (plan.action === 'skip') { skipped++; continue; }
+
+    // 2026-11-22：盘中更新压到每天 4 轮（北京 02/08/14/20）。
+    //   · 窗口外只放行 finalize —— 收盘定稿仍在收盘后第一轮执行（最坏滞后约 1 小时）；
+    //   · 同一窗口内 :02 与 :17 两次触发，用 5 小时节流挡住第二次，避免当天写出 8 版。
+    if (plan.action === 'open') {
+      if (!openRefreshAllowed(nowMs, state.generatedAt)) {
+        throttled++;
+        console.log(
+          `  ⏸ ${key}：盘中更新跳过（${inOpenRefreshWindow(nowMs) ? '距上次写入不足 5 小时' : '不在北京 02/08/14/20 窗口'}）`
+        );
+        continue;
+      }
+    }
 
     try {
       // 只取最近 5 根：够覆盖「今天 + 上一交易日」，不会把全量历史拖下来
@@ -136,7 +150,7 @@ async function main() {
 
   console.log(
     `[kline-last] 更新 ${updated} 个（收盘定稿 ${finalized}）· 跳过 ${skipped} 个 · ` +
-      `锁占用 ${locked} 个 · 失败 ${failed} 个`
+      `窗口外/节流 ${throttled} 个 · 锁占用 ${locked} 个 · 失败 ${failed} 个`
   );
 }
 

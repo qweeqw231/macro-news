@@ -5,10 +5,29 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  lastClosedBarDate, dropUnclosedBars, writePlan,
+  lastClosedBarDate, dropUnclosedBars, writePlan, inOpenRefreshWindow, openRefreshAllowed,
 } from '../src/kline-finalize.mjs';
 
 const BJ = (s) => Date.parse(s + '+08:00');
+
+test('日K末根盘中窗口：北京 02/08/14/20，其余小时不更新', () => {
+  for (const h of ['02', '08', '14', '20']) {
+    assert.equal(inOpenRefreshWindow(BJ(`2026-11-23T${h}:00:00`)), true, `${h} 点应开窗`);
+    assert.equal(inOpenRefreshWindow(BJ(`2026-11-23T${h}:59:00`)), true, `${h}:59 仍属窗口`);
+  }
+  for (const h of ['00', '01', '03', '07', '09', '13', '15', '19', '21', '23']) {
+    assert.equal(inOpenRefreshWindow(BJ(`2026-11-23T${h}:30:00`)), false, `${h} 点不应开窗`);
+  }
+});
+
+test('日K末根盘中节流：窗口内也要距上次写入 ≥5 小时', () => {
+  const now = BJ('2026-11-23T14:30:00');
+  assert.equal(openRefreshAllowed(now, '2026-11-23T08:00:00+08:00'), true, '6.5 小时前写过 → 放行');
+  assert.equal(openRefreshAllowed(now, '2026-11-23T14:17:00+08:00'), false, '13 分钟前写过 → 节流');
+  assert.equal(openRefreshAllowed(now, ''), true, '没有 generatedAt → 放行');
+  // 窗口外即使很久没写也不放行（收盘定稿另走 finalize，不受此限）
+  assert.equal(openRefreshAllowed(BJ('2026-11-23T15:30:00'), '2026-11-23T08:00:00+08:00'), false);
+});
 
 test('港股：12:18 生成全量时，当天 bar 还不能入库', () => {
   const now = BJ('2026-11-06T12:18:00');

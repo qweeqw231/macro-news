@@ -54,6 +54,8 @@ test('页脚哨兵：读心跳、按阈值把总灯染红、并显示相对时�
   const src = read('assets/app.js');
   assert.match(src, /kline\/_heartbeat\.json/);
   assert.match(src, /klineFreshness\(hb, Date\.now\(\)\)/);
-  assert.match(src, /state = `K线停摆 \$\{agoText\(kf\.ageMin\)\}`/);
-  assert.match(src, /bits\.push\(`K线 \$\{agoText\(kf\.ageMin\)\}`\)/);
+  assert.match(src, /state = `K线任务停摆 \$\{agoText\(kf\.ageMin\)\}`/);
+  assert.match(src, /bits\.push\(`K线任务 \$\{agoText\(kf\.ageMin\)\}`\)/);
+  // 日K末根改为 4 次/天，但哨兵衡量的是 workflow 存活，阈值保持 90 分钟
+  assert.match(src, /阈值保持 90 分钟/);
 });

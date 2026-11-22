@@ -159,6 +159,16 @@ test('K线本地预生成：来源与三态必须写本地快照', () => {
   assert.ok(local.short.includes('本地快照'));
 });
 
+test('K线本地预生成：标明上一轮实际写入时刻，不冒充实时', () => {
+  const now = Date.parse('2026-11-03T17:30:00+08:00');
+  const r = QS.klineMarker({
+    src: '本地预生成', bars: [{ t: '2026-11-03' }], period: '1d', now,
+    market: 'CN', calendar: CAL, dataAt: '2026-11-03T14:20:00+08:00',
+  });
+  assert.equal(r.partial, true);
+  assert.match(r.full, /盘中值·未定稿 · 更新于 14:20/);
+});
+
 // 2026-11-18：CMDTY 原先没有连续时段配置 ⇒ sessionAt 返回 known:false ⇒
 //   分组标题降级判成「休市」，而卡片时间是新鲜的。补一段与 05:00 定稿对齐的窗口。
 test('CMDTY：盘中 open，05:00-06:00 与周末为休市', () => {

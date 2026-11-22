@@ -68,6 +68,35 @@ export const NO_SESSION_CLOSE = {
 };
 
 /**
+ * 日 K 末根「盘中更新」的固定窗口（北京小时，2026-11-22）。
+ *
+ * 为什么不是每个小时都写：末根每轮重写整个文件，实测 38 个日 K 文件每天 5~13 次
+ * 重写，占 data/kline 对象体积的 57%。把**盘中更新**压到每天 4 轮后，末根最多滞后
+ * 约 6 小时；而**收盘定稿**不受此窗口限制（仍在收盘后第一轮执行，最坏滞后约 1 小时），
+ * 所以收盘价不会晚 6 小时。
+ */
+export const OPEN_REFRESH_BJ_HOURS = [2, 8, 14, 20];
+
+/** now 是否落在盘中更新窗口内（北京时间整点小时） */
+export function inOpenRefreshWindow(nowMs = Date.now()) {
+  return OPEN_REFRESH_BJ_HOURS.includes(Math.floor(bjNow(nowMs).minutes / 60));
+}
+
+/** 同一窗口内 :02 / :17 两次触发的最小间隔；挡住第二次，避免一天写出 8 版 */
+export const OPEN_REFRESH_MIN_GAP_MS = 5 * 3600 * 1000;
+
+/**
+ * 盘中更新是否放行：既要在 4 个窗口内，又要距上次写入 ≥5 小时。
+ * 收盘定稿不走这里（不受窗口与间隔限制）。
+ */
+export function openRefreshAllowed(nowMs, generatedAt) {
+  if (!inOpenRefreshWindow(nowMs)) return false;
+  const t = Date.parse(generatedAt || '');
+  if (Number.isFinite(t) && nowMs - t < OPEN_REFRESH_MIN_GAP_MS) return false;
+  return true;
+}
+
+/**
  * 无时段市场「最近一根已经收完的 bar 日期」。
  * 与 lastClosedBarDate 的区别：只处理 FX / CMDTY，不查 MARKET_SESSIONS。
  */

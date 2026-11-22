@@ -54,7 +54,7 @@
 | # | 链路 | 谁在跑 | 频率 | 写什么 |
 |---|---|---|---|---|
 | ① | **新闻 + 行情** | GitHub Actions `collect.yml`（Cloudflare Worker 外部触发） | 15 分钟 | `data/archive/`、`latest.json`、`search.json`、`quotes.json` |
-| ② | **K 线** | Actions `kline-full.yml` / `kline-minute.yml` | 全量每天 12:23；最后一根每小时 | `data/kline/` |
+| ② | **K 线** | Actions `kline-full.yml` / `kline-minute.yml` | 全量每天 12:23；最后一根盘中 4 次/天 | `data/kline/` |
 | ③ | **时点快照** | Actions `snapshot.yml`（Worker 每 30 分钟触发，回补 5 天） | 30 分钟 | `data/snapshots/` |
 | ④ | **宏观指标** | Actions `snapshot.yml`（17:00 后幂等补当天；每轮用源侧最新值补最新记录的两融/美债） | 每个交易日 | `data/macro/daily.json`、`kline/cgb_1y*` |
 | ⑤ | **本机回退 / 同步** | Windows 计划任务 `MacroNews-Collect` / `MacroNews-Pull` | 120 分钟 / 4 小时 | 本地 `data/`（回退采集、拉回远端） |
@@ -66,7 +66,7 @@ Cloudflare Worker ──> │ collect.yml → collect.mjs                       
                       └──────────────────────────────────────────────────┘
                       ┌──────────────── 链路 ② K 线 ─────────────────────┐
                       │ kline-full.yml   每天 12:23 全量日/周/月K          │
-                      │ kline-minute.yml 每小时分钟K + 当前时段最后一根日K │──> commit/push
+                      │ kline-minute.yml 每小时分钟K + 日K末根（盘中 4 次/天）│──> commit/push
                       └──────────────────────────────────────────────────┘
                       ┌──────────── 链路 ③ 快照 + ④ 宏观 ───────────────┐
 GitHub Actions ──────>│ snapshot.yml（快照兜底 + 回补 5 天）              │
@@ -170,7 +170,7 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
 > 日/周/月只有一个源（东财）：新浪 `gb_sox` 有实时价但**没有日 K**，腾讯无此代码。
 > 分钟 K 由服务端预生成（`data/kline/min/sox_*.json`），口径与 `dji/ixic/spx` 相同。
 
-### 2.2 链路 ②：K 线（每天全量 + 每小时最后一根）
+### 2.2 链路 ②：K 线（每天全量 + 盘中 4 次最后一根）
 
 - **全量**（`kline-full.yml`，UTC 04:23 = 北京 12:23）：
   - `scripts/update-kline-full.mjs`：43 个标的（33 指数 + 10 组合）的全量日 K（`_full.json`）
@@ -190,7 +190,10 @@ Cloudflare Worker ──> │ 17:00 后：collect-macro-if-due.mjs（幂等补�
     - **请求预算**：东财实测 **34~35 次/轮**（含失败重试），贴着历史限流事故阈值（约 35 次/轮）；
       命中限流只冷却 30s 后继续跑剩余标的，不再整轮终止（M4）。
       完整覆盖矩阵与退避规则见 [`docs/minute-kline.md`](docs/minute-kline.md)。
-  - `scripts/update-kline-last.mjs`：只 upsert **当前处于交易时段**品种的最后一根日 K
+  - `scripts/update-kline-last.mjs`：只 upsert **当前处于交易时段**品种的最后一根日 K。
+    **盘中更新每天 4 轮**（北京 02/08/14/20，`inOpenRefreshWindow()`）；同一窗口的第二次
+    触发由 5 小时节流挡住。**收盘定稿不受窗口限制**，仍在收盘后第一轮执行（最坏滞后约 1 小时），
+    所以收盘价不会晚 6 小时。末根最多滞后约 6 小时，页面上以「盘中值·未定稿」如实标注。
   - **短覆盖守卫（2.4.10）**：所有写 `data/kline/` 的脚本统一走 `src/kline-guard.mjs`。
     新结果首根更晚且更短 → 拒绝并记录（`rejected: shorter`）；等长但末根更新 / 更长 → 接受；
     更长但中间有缺口 → 按时间键 union 合并。绝不静默用短序列覆盖长历史。
@@ -524,7 +527,8 @@ K 线抽屉头部 `#kmMeta` 显示 `来源 · 日期 时间 · 陈旧度 · 三�
 要保证的是它**随采集更新**：
 - 图表层：`isTrading` 含 SGE 时段（日盘 + 夜盘，周六凌晨仍算周五夜盘），
   打开 K 线时每 20 秒重绘最后一根；
-- 采集层：`update-kline-last.mjs` 每小时 upsert 当前交易时段品种的最后一根日 K。
+- 采集层：`update-kline-last.mjs` 盘中每天 4 轮（北京 02/08/14/20）upsert 当前交易时段
+  品种的最后一根日 K；收盘定稿仍在收盘后第一轮执行。
 
 ### 3.6 幂等与推送
 
@@ -682,7 +686,8 @@ GitHub 自带 `schedule` 实测只兑现约 3%，所以触发搬到仓库外：
 | `kline-full.yml` | `8 5 * * *`（05:08） | +51 分钟（全量单轮最长 30 分钟，避免并发写 `_full.json`） |
 
 日K / 周K / 月K 的每日刷新由 `kline-minute.yml` 在 UTC 04 点执行（CF 04:47 / GH 04:02），
-`kline-full.yml` 只写 `<key>_full.json`。
+`kline-full.yml` 只写 `<key>_full.json`。日 K **末根**的盘中更新另按北京 02/08/14/20 四轮执行
+（`update-kline-last.mjs` 内部窗口判断），收盘定稿仍逐轮执行。
 
 ```bash
 # 1) GitHub → Developer settings → Fine-grained tokens
@@ -828,7 +833,7 @@ node scripts/ops-stats.mjs --no-network    # 只看本机台账
 | 行情卡片停在上一交易日 | 美股/贵金属在 16:30 组合采集时还没收盘 | 组合行情并入 15 分钟链路（2026-10-31） |
 | 快照收盘价不对（例如 csi300 差 0.4%） | 采集早于收盘，把盘中日 K 当收盘价 | `readyAt` 守卫 + §3.1「已收完」表 |
 | 港股 am 昨收差十几点 | 5 分钟 K 只到 15:35，没有 16:00 bar | 港股昨收改走日 K |
-| 上海金多出一根「未来」日 K | 夜盘归属下一交易日 | **保留**，靠每小时 `update-kline-last` 动态更新 |
+| 上海金多出一根「未来」日 K | 夜盘归属下一交易日 | **保留**，靠 `update-kline-last`（盘中 4 次/天）动态更新 |
 | 点东财 K 线要等好几秒 | 串行 fallback 先等东财超时 | 三源并发赛马，谁先回谁出图 |
 | 腾讯兜底 K 线静默失效 | DNS 解析不了 `web.ifzq.gtimg.cn` | 改用 `ifzq.gtimg.cn` |
 | 一个源挂了，备用源也跟着挂 | 熔断是全局计数 | 熔断按主机组隔离 |
