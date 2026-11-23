@@ -20,7 +20,10 @@ import {
 } from '../src/sources.mjs';
 import { upsertBars, markCloseOnlyBars, hkVolumeScaleVerdict } from '../src/kline-guard.mjs';
 import { withKlineLock, lockSkipText } from '../src/kline-lock.mjs';
-import { writePlan, barDate, CAL, NO_SESSION_CLOSE, openRefreshAllowed, inOpenRefreshWindow } from '../src/kline-finalize.mjs';
+import {
+  writePlan, barDate, CAL, NO_SESSION_CLOSE, openRefreshAllowed, openRefreshBaseline,
+  inOpenRefreshWindow,
+} from '../src/kline-finalize.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -51,6 +54,11 @@ async function main() {
       const bars = Array.isArray(doc.bars) ? doc.bars : [];
       state = {
         generatedAt: doc.generatedAt,
+        // 3.1.0：盘中轮次的节流基线单独记，收盘定稿的写入不算「盘中已经写过」。
+        //   2026-11-23 事故：上海金 16:18 收盘定稿把 generatedAt 推到 16:18，
+        //   20:18 的夜盘盘中轮只隔 4 小时就被 5 小时节流挡掉 ⇒ 整段夜盘没有一次写入，
+        //   源端 11-24 的未来蜡烛进不了文件（详见 src/kline-finalize.mjs 的 openRefreshAllowed）。
+        openRefreshedAt: doc.openRefreshedAt || '',
         lastBar: bars.length ? barDate(bars[bars.length - 1]) : '',
       };
     } catch {
@@ -77,7 +85,9 @@ async function main() {
     //   · 窗口外只放行 finalize —— 收盘定稿仍在收盘后第一轮执行（最坏滞后约 1 小时）；
     //   · 同一窗口内 :02 与 :17 两次触发，用 5 小时节流挡住第二次，避免当天写出 8 版。
     if (plan.action === 'open') {
-      if (!openRefreshAllowed(nowMs, state.generatedAt)) {
+      // 基线只认「上一次盘中轮」，不认收盘定稿：定稿发生在两窗之间（上海金 15:30 收盘 →
+      // 16:18 写入），若拿它当基线，紧邻的 20 点窗口会被误判成「刚写过」。
+      if (!openRefreshAllowed(nowMs, openRefreshBaseline(state))) {
         throttled++;
         console.log(
           `  ⏸ ${key}：盘中更新跳过（${inOpenRefreshWindow(nowMs) ? '距上次写入不足 5 小时' : '不在北京 02/08/14/20 窗口'}）`
@@ -131,6 +141,8 @@ async function main() {
           source: getKlineSource() || old.source || '',
           bars,
         };
+        // 只有盘中轮写基线；收盘定稿沿用旧值（见上面 state.openRefreshedAt 的注释）
+        if (plan.action === 'open') doc.openRefreshedAt = doc.generatedAt;
         if (!DRY_RUN) await writeFile(file, JSON.stringify(doc, null, 2), 'utf8');
         return { changed: true, last: latest[latest.length - 1] };
       });

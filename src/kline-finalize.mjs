@@ -97,6 +97,18 @@ export function openRefreshAllowed(nowMs, generatedAt) {
 }
 
 /**
+ * 盘中节流的时间基线（2026-11-23）。
+ *
+ * 基线必须是「上一次**盘中轮**写盘的时刻」。用 generatedAt 会把**收盘定稿**也算进去：
+ * 上海金 15:30 收盘 → 16:18 定稿写入 → 20:18 的夜盘盘中轮只隔 4 小时被挡 ⇒ 整段夜盘
+ * 一次都不写，源端在夜盘期间发布的「下一交易日未来蜡烛」进不了文件。
+ * ⇒ 盘中轮在写盘时记 `openRefreshedAt`，这里优先用它；老文件没有该字段才退回 generatedAt。
+ */
+export function openRefreshBaseline(state = {}) {
+  return (state && (state.openRefreshedAt || state.generatedAt)) || '';
+}
+
+/**
  * 分钟 K 的一轮最小间隔（2026-11-22）。
  *
  * CF 每小时会触发 :17 / :47 两次，GitHub 兜底还有 :02。以前每个触发都完整跑一轮，

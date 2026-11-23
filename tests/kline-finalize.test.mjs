@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   lastClosedBarDate, dropUnclosedBars, writePlan, inOpenRefreshWindow, openRefreshAllowed,
-  minuteRoundDue,
+  openRefreshBaseline, minuteRoundDue,
 } from '../src/kline-finalize.mjs';
 
 const BJ = (s) => Date.parse(s + '+08:00');
@@ -28,6 +28,19 @@ test('日K末根盘中节流：窗口内也要距上次写入 ≥5 小时', () =
   assert.equal(openRefreshAllowed(now, ''), true, '没有 generatedAt → 放行');
   // 窗口外即使很久没写也不放行（收盘定稿另走 finalize，不受此限）
   assert.equal(openRefreshAllowed(BJ('2026-11-23T15:30:00'), '2026-11-23T08:00:00+08:00'), false);
+});
+
+test('2026-11-23：收盘定稿不算盘中轮，夜盘窗口必须放行（上海金次日未来蜡烛）', () => {
+  // 14:18 盘中轮（openRefreshedAt）→ 16:18 收盘定稿（generatedAt）→ 20:18 夜盘轮
+  const now = BJ('2026-11-23T20:18:00');
+  const st = { generatedAt: '2026-11-23T08:18:31Z', openRefreshedAt: '2026-11-23T06:18:38Z' };
+  assert.equal(openRefreshAllowed(now, st.generatedAt), false, '拿定稿时刻当基线 → 只剩 4 小时，误判');
+  assert.equal(openRefreshAllowed(now, openRefreshBaseline(st)), true, '基线取上一次盘中轮 → 6 小时，放行');
+  // 老文件没有 openRefreshedAt ⇒ 退回 generatedAt（不改变既有行为）
+  assert.equal(openRefreshBaseline({ generatedAt: '2026-11-23T08:18:31Z' }), '2026-11-23T08:18:31Z');
+  assert.equal(openRefreshBaseline({}), '');
+  // 同一窗口内第二次触发（29 分钟）仍然挡住
+  assert.equal(openRefreshAllowed(BJ('2026-11-23T20:47:00'), '2026-11-23T20:18:00+08:00'), false);
 });
 
 test('分钟K 1 轮/小时：距上轮不足 50 分钟时跳过', () => {

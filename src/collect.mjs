@@ -247,6 +247,9 @@ async function collectKlines(startedAt, onlyKeys) {
             market: meta?.market || '',
             period: spec.period,
             generatedAt: startedAt.toISOString(),
+            // 3.1.0：盘中节流基线由 update-kline-last 维护，全量重写不能把它抹掉
+            //   （抹掉后基线退回 generatedAt=本轮时刻，紧邻的盘中窗口会被误判成「刚写过」）
+            ...(prev && prev.openRefreshedAt ? { openRefreshedAt: prev.openRefreshedAt } : {}),
             // 取数源写进文件：离线快照必须能自证是哪来的（东财 / 新浪 / 新浪外盘 / 上金所 / 腾讯）
             source: derive ? '自有日 K 重聚合（src/aggregate.mjs）' : (getKlineSource() || ''),
             bars,
