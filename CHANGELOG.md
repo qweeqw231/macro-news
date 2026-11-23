@@ -13,6 +13,32 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [2.37.0] - 2026-11-23
+
+### 新增：归档页周期报告（周报 / 月报 / 年报）
+
+**版本理由**：新增用户可见功能（归档页新板块 + 新数据契约），按仓库规则 2.36.1 → **2.37.0**。
+
+**产物契约**（详见 `docs/periodic-report.md`）
+- 正文 `data/periodic/<date>.json`，索引 `data/periodic/index.json`。
+- 与日报**同构**，只是时间粒度不同：沿用 `overview / items[] / watch / window`，
+  条目仍是 `rank/title/summary/why/source/publishedAt/url/refs`，不另设 `sections/points`。
+- 键：周报 `2026-W47`（ISO 周，周一~周日）、月报 `2026-11`、年报 `2026`；
+  `window` 用新闻日键，`fromAt` 08:00、`toAt` 次日 08:00（+08:00）。
+- 周期报告额外字段只有 `type` 与 `coverage{archiveDays,newsItems,missingDays}`。
+
+**前端**
+- 归档页顶部新增「周期报告」区块，位于按日归档之前，三类分组
+  `periodic-week / periodic-month / periodic-year`，顶部提供有数据的类型入口。
+- 条目直接复用日报 `renderBriefItems`；展开状态并入 sessionStorage（`periodicOpen`），
+  刷新后与早报一起恢复，滚动位置对齐仍在正文落位之后。
+- 降级：索引 404 / 为空 ⇒ 整块隐藏；单条索引坏 ⇒ 跳过；正文 404 ⇒ 卡片内提示 + 重试；
+  某类为空 ⇒ 该分组不出现。均不影响按日归档。
+- 既有行为不变：`loadIndex` 仍是 60s TTL + `no-cache` 条件请求。
+
+**数据**
+- `data/periodic/index.json` 先落空索引（`count: 0`），历史周报/月报/年报由外部写作方补写。
+
 ## [2.36.1] - 2026-11-23
 
 ### 修复：10Y 美债在美股休市日扎到 0 造成的折线断点

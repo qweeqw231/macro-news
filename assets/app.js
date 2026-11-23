@@ -35,6 +35,7 @@
     shown: PAGE,
     archive: null,
     hist: null,       // 近一年历史切片索引（归档页打开时才加载）
+    periodic: null,   // 周期报告索引（周报/月报/年报，归档页打开时才加载）
     total: 0,        // 库内总条数（用于标注当前列表的母集）
   };
 
@@ -77,6 +78,14 @@
             .filter(Boolean);
         } catch { return []; }
       })();
+      // 2.37.0：周期报告（周报/月报/年报）的展开状态，按 `type=id` 记录
+      const periodicOpen = (() => {
+        try {
+          return [...document.querySelectorAll('#periodicList details[open]')]
+            .map((x) => x.dataset.key)
+            .filter(Boolean);
+        } catch { return []; }
+      })();
       sessionStorage.setItem(UI_KEY, JSON.stringify({
         v: 1,
         view: S.view,
@@ -106,6 +115,7 @@
         // 2.4.12：归档页打开的某一天（刷新后仍在原位，不回到最新要闻流）
         day: S.view === 'feed' && openedDay ? { day: openedDay.day, kind: openedDay.kind } : null,
         briefOpen,
+        periodicOpen,
       }));
     } catch { /* 隐私模式/配额满：不影响页面 */ }
   }
@@ -1614,6 +1624,25 @@
     return histPromise;
   }
 
+  // 2.37.0：周期报告索引（周报 / 月报 / 年报）。缺失或损坏时返回空列表、**不缓存失败**，
+  //   这样报告刚发布、下一次进归档页就能看到；页面本身不受影响（区块隐藏）。
+  let periodicPromise = null;
+  function loadPeriodicIndex() {
+    if (S.periodic) return Promise.resolve(S.periodic);
+    if (!periodicPromise) {
+      periodicPromise = jget('periodic/index.json', 'default')
+        .then((d) => {
+          S.periodic = d && Array.isArray(d.reports) ? d : { reports: [] };
+          return S.periodic;
+        })
+        .catch(() => {
+          periodicPromise = null;
+          return { reports: [] };
+        });
+    }
+    return periodicPromise;
+  }
+
   // 日期跳转用：day → {day, count, kind, hasBriefing}
   let dayIndex = new Map();
   // 2.19.0：早报制度起点 = 最早一份早报的日子（由索引推导，与服务端 briefEraStart 同口径）。
@@ -1642,6 +1671,250 @@
     }
     const hint = $('#histHint');
     if (hint) hint.textContent = '';
+  }
+
+  // ---------- 周期报告（周报 / 月报 / 年报） ----------
+  // 2.37.0：与日报**同构**，只是时间粒度不同。正文沿用日报字段：
+  //   overview / items[]（rank,title,summary,why,source,publishedAt,url,refs）/ watch，
+  //   条目直接复用 renderBriefItems，不另设一套条目结构或文体。
+  //   契约见 docs/periodic-report.md；缺索引/坏条目/缺正文都不允许拖垮归档页。
+  const PERIODIC_LABEL = { week: '周报', month: '月报', year: '年报' };
+  const PERIODIC_NOTE = { week: 'ISO 周 · 周一至周日', month: '自然月', year: '自然年' };
+  const PERIODIC_ID_RE = {
+    week: /^\d{4}-W\d{2}$/,
+    month: /^\d{4}-\d{2}$/,
+    year: /^\d{4}$/,
+  };
+  const PERIODIC_GROUPS = ['week', 'month', 'year'];
+  // 三类共用一套 key：`week=2026-W47` / `month=2026-11` / `year=2026`
+  const periodicKey = (r) => `${r.type}=${r.id}`;
+  let periodicById = new Map();
+
+  // 补写时间兼容三种写法：索引布尔 + backfillAt、日报式 backfill:{kind,at,note}、字符串
+  function periodicBackfill(rep) {
+    const bf = rep && rep.backfill;
+    if (bf && typeof bf === 'object') return { on: true, at: bf.at || '' };
+    if (bf === true) return { on: true, at: (rep && rep.backfillAt) || '' };
+    if (typeof bf === 'string') return { on: true, at: bf };
+    return { on: false, at: '' };
+  }
+
+  function normPeriodic(rep) {
+    if (!rep || typeof rep !== 'object') return null;
+    const type = rep.type;
+    if (!PERIODIC_LABEL[type] || !PERIODIC_ID_RE[type].test(String(rep.id || ''))) return null;
+    const w = rep.window || {};
+    const start = /^\d{4}-\d{2}-\d{2}$/.test(w.from || '') ? w.from : '';
+    const end = /^\d{4}-\d{2}-\d{2}$/.test(w.to || '') ? w.to : '';
+    if (!start || !end || start > end) return null;
+    let days = Number(w.days) > 0 ? Math.floor(Number(w.days)) : 0;
+    if (!days) {
+      days = Math.round(
+        (Date.parse(end + 'T00:00:00Z') - Date.parse(start + 'T00:00:00Z')) / 86400000
+      ) + 1;
+    }
+    if (!(days > 0)) return null;
+    const bf = periodicBackfill(rep);
+    return {
+      type,
+      id: String(rep.id),
+      title: String(rep.title || `${PERIODIC_LABEL[type]} ${rep.id}`),
+      summary: String(rep.summary || ''),
+      window: {
+        start, end, days,
+        startAt: typeof w.fromAt === 'string' ? w.fromAt : '',
+        endAt: typeof w.toAt === 'string' ? w.toAt : '',
+      },
+      generatedAt: rep.generatedAt || '',
+      backfill: bf.on,
+      backfillAt: bf.at,
+    };
+  }
+
+  // 北京墙钟「YYYY-MM-DD HH:MM」。复用时区工具，避免跟着读者本地时区漂。
+  const bjFull = (iso) => {
+    const w = window.MacroBriefTiming && window.MacroBriefTiming.bjWall
+      ? window.MacroBriefTiming.bjWall(iso)
+      : null;
+    return w ? `${w.day} ${w.hm}` : '';
+  };
+  function periodicWindowText(w) {
+    if (w.fromAt && w.toAt) {
+      const a = bjFull(w.fromAt);
+      const z = bjFull(w.toAt);
+      if (a && z) return `${a} – ${z}`;
+    }
+    return `${w.from} 08:00 – ${w.to} 次日 08:00`;
+  }
+
+  function renderPeriodicPanel(idx) {
+    const panel = $('#periodicPanel');
+    const listBox = $('#periodicList');
+    if (!panel || !listBox) return;
+    const reps = (idx && Array.isArray(idx.reports) ? idx.reports : [])
+      .map(normPeriodic)
+      .filter(Boolean)
+      .sort((a, b) => {
+        if (a.window.end !== b.window.end) return a.window.end < b.window.end ? 1 : -1;
+        return a.id < b.id ? 1 : a.id > b.id ? -1 : 0;
+      });
+    periodicById = new Map(reps.map((r) => [periodicKey(r), r]));
+    listBox.innerHTML = '';
+    // 三类都空：整块隐藏；部分为空：该类型分组不出现；三类齐全：三组依次排列
+    panel.hidden = reps.length === 0;
+    if (!reps.length) return;
+    PERIODIC_GROUPS.forEach((type) => {
+      const group = reps.filter((r) => r.type === type);
+      if (!group.length) return;
+      const sec = el('section', 'pr-group');
+      sec.id = `periodic-${type}`;
+      sec.dataset.type = type;
+      const hd = el('div', 'pr-group-hd');
+      hd.appendChild(el('span', 'pr-type', PERIODIC_LABEL[type]));
+      hd.appendChild(el('span', 'pr-group-n', `${group.length} 期`));
+      hd.appendChild(el('span', 'pr-group-note', PERIODIC_NOTE[type]));
+      sec.appendChild(hd);
+      const wrap = el('div', 'pr-group-list');
+      group.forEach((r) => wrap.appendChild(periodicCard(r)));
+      sec.appendChild(wrap);
+      listBox.appendChild(sec);
+    });
+    // 顶部入口只列有数据的类型；三类都空时整块已隐藏，不会出现空入口
+    const jumps = $('#periodicJumps');
+    if (jumps) {
+      jumps.innerHTML = '';
+      PERIODIC_GROUPS.forEach((type) => {
+        const n = reps.filter((r) => r.type === type).length;
+        if (!n) return;
+        const a = el('a', 'fchip', `${PERIODIC_LABEL[type]} ${n}`);
+        a.href = `#periodic-${type}`;
+        jumps.appendChild(a);
+      });
+      jumps.hidden = !jumps.children.length;
+    }
+  }
+
+  function periodicCard(r) {
+    const det = el('details', 'pr-card');
+    det.dataset.key = periodicKey(r);
+    det.dataset.id = r.id;
+    det.dataset.type = r.type;
+    const sum = el('summary', 'pr-head');
+    sum.appendChild(el('span', 'pr-type', PERIODIC_LABEL[r.type]));
+    sum.appendChild(el('span', 'pr-title', r.title));
+    sum.appendChild(el('span', 'pr-range',
+      `${r.window.start} ~ ${r.window.end} · 覆盖 ${r.window.days} 天`));
+    const tags = el('span', 'pr-tags');
+    if (r.backfill) tags.appendChild(el('span', 'day-tag backfill', '补写'));
+    sum.appendChild(tags);
+    const caret = el('span', 'pr-caret', '展开');
+    sum.appendChild(caret);
+    det.appendChild(sum);
+
+    const body = el('div', 'pr-body');
+    det.appendChild(body);
+    det.addEventListener('toggle', () => {
+      caret.textContent = det.open ? '收起' : '展开';
+      if (det.open) loadPeriodicReport(r, body);
+      saveUI();
+    });
+    return det;
+  }
+
+  // 报告正文只在展开时取；同一 id 缓存一次（周期结束后内容稳定，纠错另发补写版）
+  const periodicCache = new Map();
+  const periodicInflight = new Map();
+  function getPeriodicReport(id) {
+    if (periodicCache.has(id)) return Promise.resolve(periodicCache.get(id));
+    if (!periodicInflight.has(id)) {
+      const p = jget(`periodic/${id}.json`, 'default')
+        .then((d) => { periodicCache.set(id, d); periodicInflight.delete(id); return d; })
+        .catch((e) => { periodicInflight.delete(id); throw e; });
+      periodicInflight.set(id, p);
+    }
+    return periodicInflight.get(id);
+  }
+
+  function renderPeriodicBody(body, d, r) {
+    body.innerHTML = '';
+    // 正文 window 用日报字段名 from/to/fromAt/toAt；索引侧已归一成 start/end/startAt/endAt
+    const raw = (d && d.window) || {};
+    const w = {
+      from: raw.from || r.window.start,
+      to: raw.to || r.window.end,
+      fromAt: raw.fromAt || r.window.startAt,
+      toAt: raw.toAt || r.window.endAt,
+      days: raw.days || r.window.days,
+    };
+    const bits = [`覆盖 ${periodicWindowText(w)}（${w.days} 天）`];
+    const gen = bjFull(d && d.generatedAt) || bjFull(r.generatedAt);
+    if (gen) bits.push(`生成 ${gen}`);
+    const bfAt = periodicBackfill(d).at || r.backfillAt;
+    if (bfAt) bits.push(`补写于 ${bjFull(bfAt) || bfAt}`);
+    body.appendChild(el('div', 'pr-meta-full', bits.join(' · ')));
+
+    if (d && d.overview) body.appendChild(el('p', 'brief-overview', d.overview));
+    // 与日报完全同一套条目渲染（标题 / 概述 / 为什么重要 / 来源 / 时间 / refs）
+    const items = (Array.isArray(d && d.items) ? d.items.filter(Boolean) : [])
+      .map((it) => ({
+        ...it,
+        // 契约时间带 +08:00；展示沿用北京墙钟，避免把 ISO 偏移直接铺在卡片上
+        publishedAt: bjFull(it.publishedAt) || it.publishedAt,
+      }));
+    if (items.length) renderBriefItems(body, items);
+    else if (d && d.overview) body.appendChild(el('p', 'pr-note', '本期无重点条目'));
+    const watch = Array.isArray(d && d.watch) ? d.watch.filter(Boolean) : [];
+    if (watch.length) {
+      body.appendChild(el('div', 'brief-watch-hd', '下期观察'));
+      const ul = el('ul', 'brief-watch');
+      watch.forEach((t) => ul.appendChild(el('li', null, String(t))));
+      body.appendChild(ul);
+    }
+    if (!d || (!d.overview && !items.length)) {
+      body.appendChild(el('p', 'brief-overview', '该报告正文缺失（只有标题与摘要）'));
+      if (r.summary) body.appendChild(el('p', 'brief-overview', r.summary));
+    }
+  }
+
+  async function loadPeriodicReport(r, body) {
+    if (!body || body.dataset.loaded || body.dataset.loading) return;
+    body.dataset.loading = '1';
+    body.innerHTML = '<div class="skeleton">报告载入中…</div>';
+    try {
+      const d = await getPeriodicReport(r.id);
+      renderPeriodicBody(body, d, r);
+      body.dataset.loaded = '1';
+    } catch (e) {
+      delete body.dataset.loaded;
+      body.innerHTML = '';
+      body.appendChild(el('div', 'skeleton',
+        `报告正文载入失败：${e && e.message ? e.message : e}`));
+      const retry = el('button', 'mchip', '重试');
+      retry.type = 'button';
+      retry.onclick = () => {
+        delete body.dataset.loaded;
+        loadPeriodicReport(r, body);
+      };
+      body.appendChild(retry);
+    } finally {
+      delete body.dataset.loading;
+    }
+  }
+
+  // 刷新后恢复展开的周期报告（与早报分开记录，避免两套 id 混在一起）
+  function restorePeriodicOpen() {
+    const open = uiState && Array.isArray(uiState.periodicOpen) ? uiState.periodicOpen : [];
+    if (!open.length) return Promise.resolve();
+    const jobs = [];
+    document.querySelectorAll('#periodicList details.pr-card').forEach((det) => {
+      if (!open.includes(det.dataset.key)) return;
+      det.open = true;
+      const caret = det.querySelector('.pr-caret');
+      if (caret) caret.textContent = '收起';
+      const r = periodicById.get(det.dataset.key);
+      if (r) jobs.push(loadPeriodicReport(r, det.querySelector('.pr-body')));
+    });
+    return Promise.all(jobs);
   }
 
   function dayCard(d) {
@@ -1901,8 +2174,8 @@
     const box = $('#days');
     box.innerHTML = '<div class="skeleton">载入中…</div>';
     try {
-      // 两个索引并行取：archive（带全文）+ history（归档前缺口，仅标题/来源/时间）
-      const [idx, hist] = await Promise.all([loadIndex(), loadHistoryIndex()]);
+      // 三个索引并行取：archive（带全文）+ history（归档前缺口）+ periodic（周报/月报/年报）
+      const [idx, hist, per] = await Promise.all([loadIndex(), loadHistoryIndex(), loadPeriodicIndex()]);
       const map = new Map();
       const archMap = new Map((idx.days || []).map((d) => [d.day, d]));
       const histMap = new Map((hist.days || []).filter((d) => d && d.d).map((d) => [d.d, d]));
@@ -1959,13 +2232,16 @@
       //   10-30 一补，起点就落到 10-30，10-31 立刻变成假的「制度后缺失」（实测已发生）。
       briefEraDay = list.filter((x) => x.hasBriefing && !x.briefBackfill).map((x) => x.day).sort()[0] || '';
       dayIndex = map;
+      // 周期报告渲染失败不能拖垮按日归档：单独兜住
+      try { renderPeriodicPanel(per); } catch { /* 保持区块隐藏 */ }
       renderHistPanel(hist, list);
       box.innerHTML = '';
-      if (!list.length) { box.appendChild(el('div', 'empty', '暂无归档')); return; }
+      if (!list.length) box.appendChild(el('div', 'empty', '暂无归档'));
       const frag = document.createDocumentFragment();
       list.forEach((d) => frag.appendChild(dayCard(d)));
       box.appendChild(frag);
-      restoreBriefOpen().then(restoreArchiveScroll, restoreArchiveScroll);
+      Promise.all([restoreBriefOpen(), restorePeriodicOpen()])
+        .then(restoreArchiveScroll, restoreArchiveScroll);
     } catch (e) {
       box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
     }

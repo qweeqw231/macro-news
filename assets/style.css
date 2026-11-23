@@ -414,6 +414,46 @@ body { overflow-wrap: break-word; }
 .hist-jump button:hover { border-color: var(--accent); color: var(--accent); }
 .hist-hint { font-size: 0.8rem; color: var(--warm); }
 
+/* ---------- 归档页：周期报告（周报 / 月报 / 年报，2.37.0） ---------- */
+/* 与按日归档并列但不混排：独立面板 + 独立分组，卡片不进 #days 网格。 */
+.periodic {
+  border: 1px solid var(--rule); background: var(--surface); border-radius: 6px;
+  padding: 1rem 1.15rem; margin: 0 0 1.1rem;
+}
+.periodic-hd h2 { font-size: 1.05rem; margin: 0 0 0.3rem; display: flex; align-items: center; gap: 0.45rem; }
+.periodic-sub { margin: 0; color: var(--ink-mute); font-size: 0.82rem; line-height: 1.65; }
+.periodic-list { display: grid; gap: 0.9rem; margin-top: 0.85rem; }
+.pr-jumps { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+.pr-group { display: grid; gap: 0.45rem; scroll-margin-top: 72px; }
+.pr-group + .pr-group { border-top: 1px dashed var(--rule); padding-top: 0.8rem; }
+.pr-group-hd { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+.pr-group-n { font-family: var(--sans); font-size: 0.76rem; color: var(--ink-mute); }
+.pr-group-note { font-family: var(--sans); font-size: 0.72rem; color: var(--ink-faint); }
+.pr-group-list { display: grid; gap: 0.45rem; }
+.pr-type {
+  display: inline-block; padding: 0.05rem 0.38rem; border-radius: 3px;
+  background: var(--accent-soft); color: var(--accent);
+  font-family: var(--sans); font-size: 0.68rem; font-weight: 600; white-space: nowrap;
+}
+.pr-card { border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); }
+.pr-card[open] { background: var(--surface); border-color: var(--rule-strong); }
+.pr-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.5rem;
+  padding: 0.6rem 0.8rem; cursor: pointer; list-style: none;
+}
+.pr-head::-webkit-details-marker { display: none; }
+.pr-head:hover { background: var(--code-bg); }
+.pr-title { flex: 1 1 12rem; min-width: 0; font-size: 0.92rem; font-weight: 600; color: var(--ink); }
+.pr-range {
+  margin-left: auto; font-family: var(--sans); font-size: 0.74rem;
+  color: var(--ink-mute); white-space: nowrap;
+}
+.pr-tags { display: inline-flex; gap: 0.25rem; }
+.pr-caret { font-family: var(--sans); font-size: 0.72rem; color: var(--accent); white-space: nowrap; }
+.pr-body { border-top: 1px dashed var(--rule); padding: 0.7rem 0.9rem 0.85rem; }
+.pr-meta-full { margin-bottom: 0.35rem; color: var(--ink-faint); font: 0.72rem/1.5 var(--sans); }
+.pr-note { margin: 0.2rem 0 0; color: var(--ink-mute); font-size: 0.85rem; }
+
 /* 有早报的当日卡片：折叠块（默认一行主线摘要，展开看观察项） */
 .day.has-brief { padding: 0; text-align: left; }
 .day.has-brief.expanded { grid-column: 1 / -1; }
