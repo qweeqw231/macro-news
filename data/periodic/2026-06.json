@@ -1,0 +1,180 @@
+{
+  "date": "2026-06",
+  "type": "month",
+  "generatedAt": "2026-11-23T12:41:12+08:00",
+  "endedAt": "2026-11-23T12:41:12+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2026 年 6 月宏观月报：陆家嘴论坛推六大政策，海外央行转向加息",
+  "window": {
+    "from": "2026-06-01",
+    "to": "2026-06-30",
+    "fromAt": "2026-06-01T08:00:00+08:00",
+    "toAt": "2026-07-01T08:00:00+08:00",
+    "days": 30
+  },
+  "overview": "2026年6月，陆家嘴论坛宣布央行六大增量政策，利率走廊区间收窄至50个基点，并推出境外央行类机构回购工具。数据端，5月CPI同比上涨1.2%，核心CPI上涨1.1%，PPI同比上涨3.9%；5月末社融存量同比增长7.7%，M2增长8.6%；1—5月社零206031亿元、增长1.4%，服务零售额增长5.4%，而5月单月社零同比下降0.6%；前5个月货物贸易进出口总值20.68万亿元、增长15.3%。海外方面，美国5月非农超预期后交易员完全定价年内加息，美联储第四次维持利率不变，点阵图上调2026至2028年利率预期；日本央行加息至1995年以来最高；欧洲央行6月首次加息并下调增长预期。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "陆家嘴论坛宣布六大增量政策 利率走廊收窄至50个基点",
+      "summary": "2026陆家嘴论坛开幕，人民银行行长潘功胜宣布六大增量政策，核心是完善短端利率调控机制：利率走廊区间收窄至50个基点，临时隔夜正逆回购操作利率上下限调整为7天期逆回购利率加减25个基点，同时推出境外央行类机构回购工具。",
+      "why": "利率走廊收窄标志货币政策框架向价格型转型",
+      "source": "东方财富",
+      "publishedAt": "2026-06-17T11:06:00+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202606173774273922.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1346,202606173774494251.html",
+        "http://finance.eastmoney.com/news/1350,202606173774530093.html",
+        "http://finance.eastmoney.com/news/1346,202606183775054061.html",
+        "http://finance.eastmoney.com/news/1350,202606173774395755.html",
+        "http://finance.eastmoney.com/news/1350,202606173774529196.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "5月金融数据：社融存量增长7.7% M2增长8.6%",
+      "summary": "人民银行发布5月金融统计数据：5月末社会融资规模存量458.81万亿元，同比增长7.7%；广义货币M2余额同比增长8.6%，人民币各项贷款余额同比增长5.5%。社融与M2均保持合理增长，债券融资占比提升、贷款投向结构优化，信贷增速继续放缓但结构总体向好。",
+      "why": "社融与M2增速决定实体融资松紧",
+      "source": "东方财富",
+      "publishedAt": "2026-06-12T17:03:04+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202606123770487595.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202606133770294151.html",
+        "http://finance.eastmoney.com/news/1350,202606133770489964.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "5月CPI同比上涨1.2% 核心CPI上涨1.1% PPI上涨3.9%",
+      "summary": "国家统计局发布5月物价数据：CPI环比下降0.1%、同比上涨1.2%，核心CPI同比上涨1.1%，涨幅与上月相同；PPI环比上涨0.5%、同比上涨3.9%。工业消费品价格上涨3.9%，涨幅比上月扩大0.4个百分点，影响CPI同比上涨约1.18个百分点。",
+      "why": "物价回升既显需求修复也压缩政策空间",
+      "source": "东方财富",
+      "publishedAt": "2026-06-11T05:28:31+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202606113767142166.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202606103766434522.html",
+        "http://finance.eastmoney.com/news/1350,202606103766150839.html",
+        "http://finance.eastmoney.com/news/1350,202606103766620994.html",
+        "http://finance.eastmoney.com/news/1350,202606103766143223.html",
+        "http://finance.eastmoney.com/news/1350,202606103766204273.html",
+        "http://finance.eastmoney.com/news/1350,202606113767148943.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "1—5月社零增长1.4% 服务零售额增长5.4%",
+      "summary": "国家统计局公布5月国民经济运行情况：1—5月份社会消费品零售总额206031亿元，同比增长1.4%；首次发布的社会消费商品和服务零售总额增长2.8%，其中服务零售额增长5.4%、商品零售额增长1.2%。5月单月社零总额41090亿元，同比下降0.6%，除汽车以外增长1.1%。",
+      "why": "消费偏弱与外需高增形成明显反差",
+      "source": "东方财富",
+      "publishedAt": "2026-06-16T15:59:00+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202606163773042946.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202606163772852885.html",
+        "https://wallstreetcn.com/livenews/3119989",
+        "http://finance.eastmoney.com/news/1350,202606163773129837.html",
+        "http://finance.eastmoney.com/news/1350,202606163773117668.html"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "前5个月货物贸易进出口增长15.3%",
+      "summary": "海关总署数据显示，前5个月我国货物贸易进出口总值20.68万亿元，同比增长15.3%；其中出口11.91万亿元、增长11.8%，进口8.77万亿元、增长20.5%。5月当月进出口4.45万亿元，连续3个月超过4万亿元，同比增速扩大至16.9%。以美元计，5月出口增长19.4%。",
+      "why": "外需是二季度增长最扎实的支撑",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-06-09T10:45:05+08:00",
+      "url": "https://wallstreetcn.com/livenews/3116492",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202606113768703559.html",
+        "http://finance.eastmoney.com/news/1350,202606093765422895.html",
+        "http://finance.eastmoney.com/news/1350,202606093764843135.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "5月末外储站稳3.4万亿美元上方 央行连续19个月增持黄金",
+      "summary": "央行与国家外汇管理局同步发布5月官方储备资产数据：截至5月末黄金储备为7496万盎司，较4月末增加32万盎司，央行已连续19个月增持黄金；外汇储备规模回升，连续两个月处于3.4万亿美元上方。储备资产双双走强，反映跨境资金流动与官方资产配置的变化。",
+      "why": "官方储备变化反映跨境资金与配置行为",
+      "source": "东方财富",
+      "publishedAt": "2026-06-07T18:48:00+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202606073762723912.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202606073762648047.html",
+        "http://pmetal.eastmoney.com/news/11793,202606083763958212.html"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "美国5月非农超预期 交易员完全定价年内加息",
+      "summary": "美国5月就业增长超出所有预期，推动交易员将美联储年底前加息完全计入价格：定价12月前加息25个基点，10月加息概率约60%。利率期货显示12月加息概率从48%上升至63%。数据公布后美国十年期国债收益率上涨5.74个基点，两年期涨超10个基点。",
+      "why": "非农超预期改变美联储加息定价",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-06-05T20:44:30+08:00",
+      "url": "https://wallstreetcn.com/livenews/3115148",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3115302",
+        "https://wallstreetcn.com/livenews/3115365",
+        "https://wallstreetcn.com/livenews/3115141"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "日本央行加息25个基点 利率升至1995年以来最高",
+      "summary": "日本央行加息25个基点，利率升至31年新高，为1995年以来最高水平，并表示将根据经济活动、物价和金融状况的发展继续提高政策利率。行长植田和男因病首次缺席利率决议会议，由副行长代班。",
+      "why": "日银加息压缩全球宽松空间",
+      "source": "中新网",
+      "publishedAt": "2026-06-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2026/06-16/10641673.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3120035",
+        "https://wallstreetcn.com/livenews/3120471",
+        "https://wallstreetcn.com/livenews/3120102"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "欧洲央行6月首次加息25个基点 下调增长预期",
+      "summary": "欧洲央行宣布加息25个基点，主要再融资利率升至2.4%，存款便利利率2.25%，边际贷款利率2.65%，均为预期值。欧洲央行同时下调2026年和2027年经济增长预期，上调通胀预期。官员考虑7月暂停行动，布伦特原油价格需重新飙升至每桶100美元以上才可能触发再次加息。",
+      "why": "欧央行转向牵动全球利率与汇率定价",
+      "source": "中新网",
+      "publishedAt": "2026-06-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2026/06-11/10638719.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3118168",
+        "https://wallstreetcn.com/livenews/3118170",
+        "https://wallstreetcn.com/livenews/3118279"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储连续第四次维持利率不变 点阵图上调利率预期",
+      "summary": "美联储宣布继续将联邦基金利率目标区间维持在3.5%至3.75%不变，这是今年连续第四次按兵不动，符合市场普遍预期。经济预期概要显示2026年联邦基金利率目标中位数由3.4%上调至3.8%，2027年与2028年预期分别由3.1%上调至3.6%和3.4%，长期利率预期维持在3.1%不变。",
+      "why": "点阵图鹰派转向改写年内加息路径",
+      "source": "东方财富",
+      "publishedAt": "2026-06-18T07:01:00+08:00",
+      "url": "http://finance.eastmoney.com/news/1354,202606183775080286.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3121326",
+        "https://wallstreetcn.com/livenews/3121321",
+        "https://wallstreetcn.com/livenews/3121183"
+      ]
+    }
+  ],
+  "watch": [
+    "陆家嘴论坛六项政策的落地节奏与利率走廊收窄后的货币市场反应",
+    "美联储年内是否加息、点阵图后续修正与全球利率路径再定价",
+    "日本央行继续加息对日元与全球套息交易的影响",
+    "社零增速与核心CPI的组合变化，消费政策是否再加力",
+    "前5个月外贸高增长之后的回落风险与外需持续性"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-23T12:41:12+08:00",
+    "note": "全量补写"
+  },
+  "coverage": {
+    "archiveDays": 30,
+    "newsItems": 27108,
+    "missingDays": []
+  }
+}

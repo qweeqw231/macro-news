@@ -1,0 +1,184 @@
+{
+  "date": "2026-05",
+  "type": "month",
+  "generatedAt": "2026-11-23T12:15:44+08:00",
+  "endedAt": "2026-11-23T12:15:44+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2026 年 5 月宏观月报：物价温和回升，内需偏弱，海外央行转向加息",
+  "window": {
+    "from": "2026-05-01",
+    "to": "2026-05-31",
+    "fromAt": "2026-05-01T08:00:00+08:00",
+    "toAt": "2026-06-01T08:00:00+08:00",
+    "days": 31
+  },
+  "overview": "2026年5月，中国经济呈现生产稳、内需弱、价格回升的组合。4月CPI同比上涨1.2%、PPI涨幅扩大至2.8%；前4个月规模以上工业增加值增长5.6%、社零增长1.9%、房地产开发投资23969亿元，货物贸易进出口总值同比增长14.9%；4月末M2同比增长8.6%、社融存量增长7.8%。政策端，LPR连续12个月不变，央行5月25日重启6000亿元MLF加量续作，人民币兑美元创三年新高。海外方面，欧洲央行6月加息几成定局，美联储理事沃勒称因劳动力与通胀数据改变了利率立场。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "4月CPI温和回升 PPI同比涨幅扩大至2.8%",
+      "summary": "国家统计局发布4月物价数据：居民消费价格同比上涨1.2%，CPI温和回升；工业生产者出厂价格同比上涨2.8%，PPI涨幅扩大。两项指标同向走阔，反映需求端价格与工业品价格同步回暖，企业成本端压力有所抬头，后续需关注物价回升对货币政策空间的约束。",
+      "why": "物价回升既是需求修复信号，也是政策空间约束",
+      "source": "中新网",
+      "publishedAt": "2026-05-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2026/05-11/10618841.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/05-11/10619135.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-11/10618853.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-11/10619096.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-11/10618855.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "1—4月工业增5.6% 社零增1.9% 房地产投资23969亿元",
+      "summary": "国家统计局发布前4个月国民经济数据：规模以上工业增加值增长5.6%，社会消费品零售总额同比增长1.9%，全国固定资产投资141293亿元，全国房地产开发投资23969亿元。官方快评称前4个月经济数据稳的基调没有变。工业生产快于消费与投资，内需和房地产仍是需要补的短板。",
+      "why": "生产强于消费投资，短板决定后续政策着力点",
+      "source": "中新网",
+      "publishedAt": "2026-05-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2026/05-18/10623150.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/05-18/10623164.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-18/10623178.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-18/10623174.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-18/10623186.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-18/10623814.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "4月末M2同比增长8.6% 社融存量同比增长7.8%",
+      "summary": "4月末中国M2余额同比增长8.6%，社会融资规模存量同比增长7.8%，两项金融数据增速均保持在较高水平，构成观察货币政策传导和实体融资松紧的直接读数。中新报道随后就4月金融数据释放哪些信号给出专家解读，货币供应与信用扩张的配合成为解读重点。",
+      "why": "货币与社融增速决定实体融资的松紧程度",
+      "source": "中新网",
+      "publishedAt": "2026-05-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2026/05-14/10621209.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/05-14/10621210.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-15/10621547.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-15/10621695.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "前4个月货物贸易进出口总值同比增长14.9%",
+      "summary": "商务部数据显示，前4个月我国货物贸易进出口总值同比增长14.9%，中新报道以相同口径确认这一数字。该指标是衡量外需强弱与贸易环境变化的月度核心读数，也是观察上半年增长动能的重要依据。外贸在消费与投资偏慢的背景下保持两位数增长，对整体增长的支撑作用更为凸显。",
+      "why": "外需是上半年增长最扎实的支撑项",
+      "source": "中新网",
+      "publishedAt": "2026-05-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2026/05-14/10621094.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/05-09/10617957.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-09/10618234.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "前4月财政收入同比增3.5% 支出进度近五年同期最快",
+      "summary": "财政部发布1—4月财政收支数据：前4个月全国财政收入同比增长3.5%，总量超8万亿元；PPI涨幅扩大带动增值税增长5.9%，1—4月证券交易印花税收入935亿元、同比增长74.8%。财政支出进度为近五年同期最快，收入回升与支出提速同步推进，税收对工业景气和资产交易的敏感度明显提高。",
+      "why": "收入回升与支出提速决定下半年政策空间",
+      "source": "东方财富",
+      "publishedAt": "2026-05-20T17:29:00+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202605203743596211.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202605213743940759.html",
+        "http://finance.eastmoney.com/news/1350,202605213743934057.html",
+        "http://finance.eastmoney.com/news/1350,202605203743888684.html",
+        "http://finance.eastmoney.com/news/1350,202605203743557087.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "LPR连续12个月不变 货政报告释放定价转型信号",
+      "summary": "5月贷款市场报价利率连续12个月按兵不动，1年期报3%、5年期以上报3.5%，与上月持平。央行一季度货币政策执行报告同期释放贷款定价未来转型信号，专家提出贷款定价可能向参考国债利率等多元化方向改革。市场分析认为政策灵活调整仍留空间，年内降准降息可能性依然存在。",
+      "why": "利率按兵不动但改革信号增多，政策在等窗口",
+      "source": "东方财富",
+      "publishedAt": "2026-05-20T12:12:32+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202605203743247636.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202605203743184657.html",
+        "https://wallstreetcn.com/livenews/3106335",
+        "https://wallstreetcn.com/livenews/3106332",
+        "https://wallstreetcn.com/livenews/3106331",
+        "http://bank.eastmoney.com/news/11787,202605203743303582.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026051118520164705/index.html"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "央行5月25日开展6000亿元MLF 重启加量续作",
+      "summary": "中国人民银行公告，将于5月25日以固定数量、利率招标、多重价位中标方式开展6000亿元、期限1年的MLF操作，以保持银行体系流动性充裕。相关报道显示本月MLF净投放1000亿元，恢复加量续作，中期流动性呈现收短放长的特征，央行灵活精准调控流动性的取向更为清晰。",
+      "why": "MLF由缩量转加量，指向稳流动性加力",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-05-22T17:52:54+08:00",
+      "url": "https://wallstreetcn.com/livenews/3107964",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202605253747898283.html",
+        "http://finance.eastmoney.com/news/1350,202605223747351127.html",
+        "http://finance.eastmoney.com/news/1350,202605223747213562.html",
+        "http://finance.eastmoney.com/news/1350,202605263748570044.html"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "人民币兑美元创三年新高 中间价报6.8176",
+      "summary": "5月29日在岸、离岸人民币兑美元汇率盘中续创逾三年新高，人民币对美元中间价报6.8176、上调64个基点，创2023年2月14日以来新高。整个5月人民币对美元即期汇率累计升值0.95%，月内汇率单向走强特征明显，中间价与即期价同步创逾三年新高。",
+      "why": "人民币走强牵动资产定价与跨境资金流向",
+      "source": "东方财富",
+      "publishedAt": "2026-05-29T18:16:00+08:00",
+      "url": "http://forex.eastmoney.com/news/11786,202605293754835165.html",
+      "refs": [
+        "http://forex.eastmoney.com/news/11786,202605293754500738.html",
+        "https://www.chinanews.com.cn/cj/2026/05-29/10630624.shtml",
+        "https://wallstreetcn.com/livenews/3111029"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "欧洲央行6月加息几成定局 官员密集表态支持",
+      "summary": "报道称欧洲央行6月加息几成定局，但7月政策走向完全敞开。官员Wunsch表示若伊朗冲突不结束，6月加息的可能性很大；管委Muller称鉴于能源价格飙涨，6月加息可能性很高；执委Schnabel称6月需要加息，对通胀激增视而不见已不再是选项。伊朗战事与能源价格成为决策核心变量。",
+      "why": "欧央行转向影响全球利率与汇率定价",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-05-20T22:47:23+08:00",
+      "url": "https://wallstreetcn.com/livenews/3106813",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3109209",
+        "https://wallstreetcn.com/livenews/3108144",
+        "https://wallstreetcn.com/livenews/3108366",
+        "https://wallstreetcn.com/livenews/3106663"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "五一假期消费相关行业销售收入同比增长14.3%",
+      "summary": "税收发票数据显示，五一假期消费相关行业销售收入同比增长14.3%，为假日经济提供了税收口径的量化读数。中新报道评论称，从五一假期消费看中国经济向新向优，指出绿色智能消费、县域游、赛事游等成为新亮点，假期消费市场活力足，是观察服务消费与文旅需求修复的直接窗口。",
+      "why": "假日消费是内需修复最直接的读数",
+      "source": "中新网",
+      "publishedAt": "2026-05-06T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2026/05-06/10616374.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/05-06/10616514.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-08/10617595.shtml",
+        "https://www.chinanews.com.cn/cj/2026/05-08/10617259.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "欧洲央行6月议息会议能否兑现加息预期，伊朗冲突与能源价格是否带来第二轮通胀效应",
+    "6月LPR报价与降准降息窗口，MLF加量续作力度能否延续",
+    "人民币升破6.80关口后的升值节奏，外向型企业汇兑压力如何变化",
+    "消费与房地产投资能否企稳，决定内需短板能否收敛",
+    "美联储主席沃什宣誓就职后的政策取向，美债收益率与美元如何联动"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-23T12:15:44+08:00",
+    "note": "全量补写"
+  },
+  "coverage": {
+    "archiveDays": 31,
+    "newsItems": 14518,
+    "missingDays": []
+  }
+}
