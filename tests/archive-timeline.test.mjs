@@ -30,6 +30,8 @@ test('页面骨架：时间尺、分层容器、相关报告带都在归档视�
 test('hash 是唯一状态源：层级路由可解析、可写回，旧 #view-archive 仍有效', () => {
   assert.ok(APP.includes('const AT = window.MacroArchiveTime;'), '未接入 archive-time 纯函数');
   assert.ok(APP.includes('AT.parseArchiveHash(location.hash)'), 'hashchange 未解析层级');
+  assert.match(APP, /if \(!r \|\| r\.level === 'default'\) \{ renderArchive\(null\); return; \}/,
+    '旧的 #view-archive / 裸 #archive 应回到默认月并规范化 URL');
   assert.ok(APP.includes("history.replaceState(null, '', h)"), '层级未写回 URL');
   // 旧的视图级链接继续被识别为归档视图
   assert.match(APP, /#view-\(feed\|market\|macro\|archive\|sources\)/);

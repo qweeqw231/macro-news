@@ -3971,7 +3971,9 @@
       // 已在归档页：只切层级，不重建阅读器；同一层不重复渲染。
       if (v === 'archive') {
         const r = AT.parseArchiveHash(location.hash);
-        if (r && r.level !== 'default' && AT.routeKey(r) !== archKey(archRoute)) renderArchive(r);
+        // 旧链接 #view-archive / 裸 #archive 视为「默认月」，同时把 URL 规范成 #archive/YYYY/MM
+        if (!r || r.level === 'default') { renderArchive(null); return; }
+        if (AT.routeKey(r) !== archKey(archRoute)) renderArchive(r);
       }
     });
     // 带着 #view-xxx 打开时直接进对应视图（instant：首帧不要看到平滑滚动）
