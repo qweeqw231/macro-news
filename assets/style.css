@@ -414,7 +414,7 @@ body { overflow-wrap: break-word; }
 .hist-jump button:hover { border-color: var(--accent); color: var(--accent); }
 .hist-hint { font-size: 0.8rem; color: var(--warm); }
 
-/* ---------- 归档页：周期报告（周报 / 月报 / 年报，2.37.0） ---------- */
+/* ---------- 归档页：周期报告（周报 / 月报 / 年报，3.0.0） ---------- */
 /* 与按日归档并列但不混排：独立面板 + 独立分组，卡片不进 #days 网格。 */
 .periodic {
   border: 1px solid var(--rule); background: var(--surface); border-radius: 6px;
@@ -800,4 +800,150 @@ body.kline-open { overflow: hidden; }
   }
   .km-periods::-webkit-scrollbar, .km-ma::-webkit-scrollbar { display: none; }
   .pchip, .mchip { flex: 0 0 auto; }
+}
+
+
+/* ============================================================
+   归档页：时间轴缩放（3.0.0）
+   年 → 月 → 周 → 日四层钻取；时间尺 sticky 在顶栏下方，
+   首屏只渲染当前月（约 30 张日卡 + 4~5 个周组）。
+   ============================================================ */
+
+/* ---------- 时间尺：面包屑 / 年份 / 最近入口 ---------- */
+.arch-bar {
+  position: sticky; top: 56px; z-index: 90;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.5rem 0 0.45rem;
+  margin: 0 0 0.9rem;
+  display: flex; flex-direction: column; gap: 0.35rem;
+}
+.arch-crumb {
+  display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap;
+  font-family: var(--sans); font-size: 0.85rem; min-height: 24px;
+}
+.arch-crumb .ac-link { color: var(--accent); text-decoration: none; }
+.arch-crumb .ac-link:hover { text-decoration: underline; }
+.arch-crumb .ac-cur { color: var(--ink); font-weight: 600; }
+.arch-crumb .ac-sep { color: var(--ink-faint); }
+.arch-years { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.arch-years .yr {
+  font-family: var(--sans); font-size: 0.78rem; line-height: 1.6;
+  padding: 0.05rem 0.5rem; border: 1px solid var(--rule); border-radius: 999px;
+  color: var(--ink-soft); text-decoration: none;
+}
+.arch-years .yr:hover { border-color: var(--accent); color: var(--accent); }
+.arch-years .yr.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.arch-quick { display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: center; }
+.arch-quick .fchip { text-decoration: none; }
+.arch-quick .all-dates { margin-left: auto; }
+
+/* ---------- 层头 ---------- */
+.arch-layer-hd {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 0.6rem 1rem; flex-wrap: wrap;
+  border-bottom: 2px solid var(--rule-strong);
+  padding-bottom: 0.35rem; margin: 0.3rem 0 0.9rem;
+}
+.al-title { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+.al-title h2 { font-size: 1.22rem; margin: 0; font-weight: 700; }
+.al-meta { font-family: var(--sans); font-size: 0.78rem; color: var(--ink-mute); }
+.al-nav { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.al-nav .fchip { text-decoration: none; }
+
+/* ---------- 月层：周组 ---------- */
+.arch-week { margin: 0 0 1.25rem; scroll-margin-top: 136px; }
+.aw-hd {
+  display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+  margin-bottom: 0.45rem; padding-bottom: 0.28rem;
+  border-bottom: 1px dashed var(--rule);
+}
+.aw-title {
+  font-family: var(--sans); font-size: 0.95rem; font-weight: 700;
+  color: var(--ink); text-decoration: none;
+}
+.aw-title:hover { color: var(--accent); }
+.aw-range, .aw-meta { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-mute); }
+.aw-rep {
+  margin-left: auto; font-family: var(--sans); font-size: 0.7rem;
+  color: var(--accent); text-decoration: none;
+  border: 1px solid var(--rule-strong); border-radius: 3px; padding: 0.04rem 0.35rem;
+}
+.aw-rep:hover { border-color: var(--accent); }
+.aw-rep.off { color: var(--ink-faint); border-style: dashed; }
+
+/* ---------- 层内报告卡 / 待生成占位 ---------- */
+.arch-report { margin: 0 0 0.9rem; }
+.arch-empty-rep {
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+  font-family: var(--sans); font-size: 0.8rem; color: var(--ink-faint);
+  border: 1px dashed var(--rule); border-radius: 6px;
+  padding: 0.55rem 0.8rem; margin: 0 0 0.9rem;
+}
+
+/* ---------- 年层 / 全部日期：月块 ---------- */
+.arch-months { display: grid; gap: 0.45rem; }
+.arch-month {
+  border: 1px solid var(--rule); border-radius: 6px;
+  background: var(--surface); padding: 0.7rem 0.9rem;
+  scroll-margin-top: 136px;
+}
+.arch-month + .arch-month { margin-top: 0; }
+.am-hd { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.45rem; }
+.am-title {
+  font-family: var(--sans); font-size: 0.95rem; font-weight: 700;
+  color: var(--ink); text-decoration: none;
+}
+.am-title:hover { color: var(--accent); }
+.am-meta { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-mute); }
+.am-rep {
+  margin-left: auto; font-family: var(--sans); font-size: 0.7rem;
+  color: var(--accent); text-decoration: none;
+  border: 1px solid var(--rule-strong); border-radius: 3px; padding: 0.04rem 0.35rem;
+}
+.am-rep.off { color: var(--ink-faint); border-style: dashed; }
+.am-weeks { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.wk-chip {
+  font-family: var(--sans); font-size: 0.72rem; color: var(--ink-soft);
+  text-decoration: none; border: 1px solid var(--rule); border-radius: 3px;
+  padding: 0.04rem 0.4rem;
+}
+.wk-chip:hover { border-color: var(--accent); color: var(--accent); }
+.am-none { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-faint); }
+
+/* 全部日期：月块内的日卡网格留一点上间距，和月标题分开 */
+.arch-month > .days { margin-top: 0.2rem; }
+
+/* ---------- 日层 ---------- */
+.days-one { grid-template-columns: minmax(0, 1fr); }
+.days-one .day { max-width: 460px; }
+.arch-day-acts { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
+.arch-day-note { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-faint); }
+
+/* ---------- 口径说明（移到底部） ---------- */
+.arch-hd-foot { margin: 1.6rem 0 0; border-top: 1px dashed var(--rule); padding-top: 0.8rem; }
+
+/* ---------- 搜索结果：相关报告带 ---------- */
+.rel-reports {
+  border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+  background: var(--surface); border-radius: 0 5px 5px 0;
+  padding: 0.55rem 0.9rem; margin: 0 0 1rem;
+}
+.rr-hd {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 700;
+  color: var(--accent); letter-spacing: 0.06em; margin-bottom: 0.25rem;
+}
+.rr-row { display: flex; align-items: baseline; gap: 0.45rem; flex-wrap: wrap; padding: 0.12rem 0; }
+.rr-type {
+  font-family: var(--sans); font-size: 0.66rem; color: var(--accent);
+  background: var(--accent-soft); border-radius: 3px; padding: 0.03rem 0.3rem;
+}
+.rr-item { font-family: var(--sans); font-size: 0.82rem; color: var(--ink); text-decoration: none; }
+.rr-item:hover { color: var(--accent); text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .arch-bar { top: 48px; padding: 0.4rem 0 0.35rem; }
+  .arch-quick .all-dates { margin-left: 0; }
+  .al-title h2 { font-size: 1.08rem; }
+  .arch-week, .arch-month { scroll-margin-top: 150px; }
 }

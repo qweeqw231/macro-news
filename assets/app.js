@@ -62,8 +62,24 @@
   let uiState = null;
   try { uiState = JSON.parse(sessionStorage.getItem(UI_KEY) || 'null'); } catch { uiState = null; }
 
+  // ---------- 归档时间轴（3.0.0） ----------
+  // 纯函数在 assets/archive-time.js（ISO 周 / 月 / 路由语法），这里只放页面状态。
+  const AT = window.MacroArchiveTime;
+  let archRoute = null;       // 当前归档层路由（year / month / week / day / all）
+  let archCtx = null;         // 归档数据分组（天 / 月 / 周 / 年 + 报告）
+  let archRendered = false;
+  let archAllShown = 3;       // 「全部日期」已展开的月数（按月分页，不一次渲染 387 张）
+  let archToken = 0;          // 异步渲染令牌：连续改 hash 时丢弃旧结果
+  let archRestoring = false;  // 归档层正在渲染/恢复：此期间的 saveUI 不得覆盖已存的滚动位置
+  // 3.0.0：刷新恢复从「单一滚动位置」扩展为「按路由保存」，旧 key（y/briefOpen/periodicOpen）保留兼容。
+  let routeStates = (uiState && uiState.routes && typeof uiState.routes === 'object') ? uiState.routes : {};
+  const archKey = (r) => (r ? AT.routeKey(r) : '');
+
   function saveUI() {
     try {
+      // 归档层渲染/恢复途中，报告卡自动展开会派发 toggle → 这里的 scrollY 还是 0，
+      // 写回去会把刷新前存的滚动位置覆盖掉。等 restoreArchiveState 落位后再存。
+      if (archRestoring) return;
       const readerOpen = $('#readerModal') && !$('#readerModal').hidden;
       const rdBox = $('#readerModal')?.querySelector('.rd-box');
       const list = S.visible || S.items;
@@ -73,25 +89,39 @@
       // 归档页早报折叠块的展开状态：并入同一份 sessionStorage，刷新后还在
       const briefOpen = (() => {
         try {
-          return [...document.querySelectorAll('#days .day.has-brief.expanded')]
+          return [...document.querySelectorAll('#view-archive .day.has-brief.expanded')]
             .map((x) => x.dataset.day)
             .filter(Boolean);
         } catch { return []; }
       })();
-      // 2.37.0：周期报告（周报/月报/年报）的展开状态，按 `type=id` 记录
+      // 3.0.0：周期报告（周报/月报/年报）的展开状态，按 `type=id` 记录。
+      //   报告卡可能同时出现在顶部入口与本层，用 Set 去重。
       const periodicOpen = (() => {
         try {
-          return [...document.querySelectorAll('#periodicList details[open]')]
-            .map((x) => x.dataset.key)
-            .filter(Boolean);
+          return [...new Set(
+            [...document.querySelectorAll('#view-archive details.pr-card[open]')]
+              .map((x) => x.dataset.key)
+              .filter(Boolean)
+          )];
         } catch { return []; }
       })();
+      const scrollY = window.scrollY || 0;
+      // 3.0.0：按路由存滚动与展开；旧 key 仍写一份，混用版本时不至于报错。
+      if (S.view === 'archive' && archRoute) {
+        const key = archKey(archRoute);
+        if (key) {
+          routeStates[key] = { y: scrollY, briefOpen: briefOpen.slice(), periodicOpen: periodicOpen.slice() };
+          const keys = Object.keys(routeStates);
+          if (keys.length > 24) delete routeStates[keys[0]];
+        }
+      }
       sessionStorage.setItem(UI_KEY, JSON.stringify({
         v: 1,
         view: S.view,
         filter: S.filter,
         shown: S.shown,
-        y: window.scrollY || 0,
+        y: scrollY,
+        routes: routeStates,
         reader: it ? {
           id: it.id || '',
           url: it.url || '',
@@ -1311,6 +1341,7 @@
       S.shown = PAGE;
       S.recentHits = null;
       $('#qHist').hidden = true;
+      hideRelatedReports();
       renderFilters();
       renderFeed();
       $('#qMeta').textContent = feedMetaText();
@@ -1334,6 +1365,56 @@
     }
   }
 
+  // ---------- 搜索结果：相关报告带（3.0.0） ----------
+  // 搜索结果仍是条目级排序；这里只在列表顶部加一条「相关报告」，
+  // 命中词在报告标题/摘要里出现时才显示，按周报/月报/年报各列最多 3 条。
+  // 数据直接读 data/periodic/index.json（很小），不新增索引，也不改 search.json 口径。
+  function periodicRoute(r) {
+    if (r.type === 'week') {
+      const m = /^(\d{4})-W(\d{2})$/.exec(r.id);
+      return m ? { level: 'week', year: m[1], week: m[2] } : null;
+    }
+    if (r.type === 'month') {
+      const m = /^(\d{4})-(\d{2})$/.exec(r.id);
+      return m ? { level: 'month', year: m[1], month: m[2] } : null;
+    }
+    if (r.type === 'year') return { level: 'year', year: r.id };
+    return null;
+  }
+
+  function hideRelatedReports() {
+    const box = $('#relReports');
+    if (!box) return;
+    box.hidden = true;
+    box.innerHTML = '';
+  }
+
+  async function renderRelatedReports(q) {
+    const box = $('#relReports');
+    if (!box) return;
+    if (!q) { hideRelatedReports(); return; }
+    let idx;
+    try { idx = await loadPeriodicIndex(); } catch { return; }
+    if (S.q !== q) return;   // 关键词已变，丢弃旧结果
+    const reps = (idx && Array.isArray(idx.reports) ? idx.reports : []).map(normPeriodic).filter(Boolean);
+    const groups = AT.relatedReports(reps, q, 3);
+    box.innerHTML = '';
+    if (!groups.length) { box.hidden = true; return; }
+    box.appendChild(el('div', 'rr-hd', '相关报告'));
+    groups.forEach((g) => {
+      const row = el('div', 'rr-row');
+      row.appendChild(el('span', 'rr-type', PERIODIC_LABEL[g.type]));
+      g.list.forEach((r) => {
+        const route = periodicRoute(r);
+        const a = el('a', 'rr-item', r.title);
+        if (route) a.href = AT.archiveHash(route);
+        row.appendChild(a);
+      });
+      box.appendChild(row);
+    });
+    box.hidden = false;
+  }
+
   function doSearch() {
     if (!S.fuse) return;
     closeReader();
@@ -1350,6 +1431,7 @@
     //   「58k 条里只有这 7 条」。total 仍是 62 天窗口口径，历史检索是另一段。
     const scopeHint = S.searchHotDays ? `（当前仅搜近 ${S.searchHotDays} 天，更早请用历史检索）` : '';
     $('#qMeta').textContent = `全库 ${S.searchTotal} 条中命中 ${res.length} 条${scopeHint}`;
+    renderRelatedReports(S.q);
     syncHistBar();
   }
 
@@ -1559,10 +1641,14 @@
 
   function viewFromHash() {
     const m = String(location.hash || '').match(/^#view-(feed|market|macro|archive|sources)$/);
-    return m ? m[1] : null;
+    if (m) return m[1];
+    // 3.0.0：归档层级 hash（#archive/2026/11 等）同样属于「归档」视图
+    if (/^#archive(\/|$)/.test(String(location.hash || ''))) return 'archive';
+    return null;
   }
 
   function showView(v, instant) {
+    const was = S.view;
     S.view = v;
     if (v === 'feed') openedDay = null;   // 切回要闻流才清；openDay 在 showView 之后重新设置
     closeReader();
@@ -1580,10 +1666,16 @@
     //   滚回顶部 ⇒ 切换后画面还是仪表盘 ⇒ 用户看到「四个页签一模一样」、
     //   「点了没反应」。这里滚到区块顶部（避开 sticky 顶栏高度）。
     alignToView(v, instant);
+    // 归档视图的 URL 由层级路由接管（renderArchive 会写 #archive/...）：
+    //   已在归档页时再点「归档」页签 = 回默认月。
+    if (v === 'archive') {
+      const fromHash = was === v ? null : AT.parseArchiveHash(location.hash);
+      renderArchive(fromHash && fromHash.level !== 'default' ? fromHash : null, { instant });
+      return;
+    }
     // URL 与视图保持同步（replaceState 不会触发 hashchange，不会造成循环）
     if (viewFromHash() !== v) history.replaceState(null, '', '#view-' + v);
     // 需要数据的视图在切过去时才去取（懒加载）
-    if (v === 'archive') renderArchive();
     if (v === 'sources') renderSources();
     if (v === 'macro') renderMacroList();
   }
@@ -1624,7 +1716,7 @@
     return histPromise;
   }
 
-  // 2.37.0：周期报告索引（周报 / 月报 / 年报）。缺失或损坏时返回空列表、**不缓存失败**，
+  // 3.0.0：周期报告索引（周报 / 月报 / 年报）。缺失或损坏时返回空列表、**不缓存失败**，
   //   这样报告刚发布、下一次进归档页就能看到；页面本身不受影响（区块隐藏）。
   let periodicPromise = null;
   function loadPeriodicIndex() {
@@ -1674,7 +1766,7 @@
   }
 
   // ---------- 周期报告（周报 / 月报 / 年报） ----------
-  // 2.37.0：与日报**同构**，只是时间粒度不同。正文沿用日报字段：
+  // 3.0.0：与日报**同构**，只是时间粒度不同。正文沿用日报字段：
   //   overview / items[]（rank,title,summary,why,source,publishedAt,url,refs）/ watch，
   //   条目直接复用 renderBriefItems，不另设一套条目结构或文体。
   //   契约见 docs/periodic-report.md；缺索引/坏条目/缺正文都不允许拖垮归档页。
@@ -1902,11 +1994,13 @@
   }
 
   // 刷新后恢复展开的周期报告（与早报分开记录，避免两套 id 混在一起）
+  //   3.0.0：报告卡可能同时出现在顶部入口与本层，同名 key 的实例都要展开。
   function restorePeriodicOpen() {
-    const open = uiState && Array.isArray(uiState.periodicOpen) ? uiState.periodicOpen : [];
+    const st = archiveRouteState();
+    const open = st && Array.isArray(st.periodicOpen) ? st.periodicOpen : [];
     if (!open.length) return Promise.resolve();
     const jobs = [];
-    document.querySelectorAll('#periodicList details.pr-card').forEach((det) => {
+    document.querySelectorAll('#view-archive details.pr-card').forEach((det) => {
       if (!open.includes(det.dataset.key)) return;
       det.open = true;
       const caret = det.querySelector('.pr-caret');
@@ -2144,10 +2238,11 @@
   }
 
   function restoreBriefOpen() {
-    const open = uiState && Array.isArray(uiState.briefOpen) ? uiState.briefOpen : [];
+    const st = archiveRouteState();
+    const open = st && Array.isArray(st.briefOpen) ? st.briefOpen : [];
     if (!open.length) return Promise.resolve();
     const jobs = [];
-    document.querySelectorAll('#days .day.has-brief').forEach((box) => {
+    document.querySelectorAll('#view-archive .day.has-brief').forEach((box) => {
       if (!open.includes(box.dataset.day)) return;
       const det = box.querySelector('details');
       if (!det) return;
@@ -2159,91 +2254,535 @@
     return Promise.all(jobs);
   }
 
-  // 2.4.12：归档页刷新后停在原位。早报正文是异步到达的，页面会先矮后高，
-  // 所以等 brief 全部落位后再对齐（只做一次，之后用户自己滚动不受干扰）。
-  let archiveScrollDone = false;
-  function restoreArchiveScroll() {
-    if (archiveScrollDone || !uiState || uiState.view !== 'archive') return;
-    if (!Number.isFinite(uiState.y)) return;
-    archiveScrollDone = true;
-    if (alignState) alignState.userMoved = true;   // 别让 ResizeObserver 把页面拽回区块顶部
-    window.scrollTo({ top: uiState.y, behavior: 'auto' });
+  // 3.0.0：刷新恢复从「单一滚动位置」扩展为「按路由保存」。
+  //   routeStates['archive/2026/11'] = { y, briefOpen, periodicOpen }
+  //   旧版本只写顶层 y / briefOpen / periodicOpen：仅当本会话还没有任何按路由记录时兜底使用。
+  let legacyScrollUsed = false;
+  function archiveRouteState(route) {
+    const key = archKey(route || archRoute);
+    if (key && routeStates[key]) return routeStates[key];
+    if (!Object.keys(routeStates).length && uiState && uiState.view === 'archive') {
+      return { y: uiState.y, briefOpen: uiState.briefOpen, periodicOpen: uiState.periodicOpen };
+    }
+    return null;
   }
 
-  async function renderArchive() {
+  // 早报 / 报告正文是异步到达的，页面会先矮后高：等全部落位后再对齐一次。
+  function restoreArchiveState(route) {
+    if (!archRendered) return;
+    const st = archiveRouteState(route);
+    let y = st && Number.isFinite(st.y) ? st.y : null;
+    if (y == null && !legacyScrollUsed && uiState && uiState.view === 'archive' && Number.isFinite(uiState.y)) {
+      y = uiState.y;
+      legacyScrollUsed = true;
+    }
+    if (y != null) {
+      if (alignState) alignState.userMoved = true;   // 别让 ResizeObserver 把页面拽回区块顶部
+      window.scrollTo({ top: y, behavior: 'auto' });
+    } else {
+      alignToView('archive', true);
+    }
+  }
+
+  // ---------- 归档：数据分组（天 → 月 / ISO 周 / 年） ----------
+  // 2.4.10：同一天用 archive 还是 history，由显式规则决定（assets/day-source.js）。
+  function collectArchiveDays(idx, hist) {
+    const map = new Map();
+    const archMap = new Map((idx.days || []).map((d) => [d.day, d]));
+    const histMap = new Map((hist.days || []).filter((d) => d && d.d).map((d) => [d.d, d]));
+    const allDays = new Set([...archMap.keys(), ...histMap.keys()]);
+
+    const decide = (a, h) => {
+      if (window.MacroDaySource) {
+        return window.MacroDaySource.decideDaySource({ archiveCount: a, historyCount: h });
+      }
+      if (a <= 0 && h <= 0) return { kind: 'none', count: 0, reason: '该日无归档与历史数据' };
+      // 2.21.0：与 assets/day-source.js 保持同一顺序——切片更全时优先切片
+      if (h > a) return {
+        kind: 'history', count: h,
+        reason: a < 20
+          ? `该日归档仅 ${a} 条，已改用历史切片 ${h} 条（仅标题/来源/时间，正文请点原文）`
+          : `该日归档 ${a} 条，少于历史切片 ${h} 条，已改用历史切片（仅标题/来源/时间，正文请点原文）`,
+      };
+      if (a >= 20) return { kind: 'archive', count: a, reason: '归档全文' };
+      if (h > 0) return {
+        kind: 'history', count: h,
+        reason: `该日归档仅 ${a} 条，已改用历史切片 ${h} 条（仅标题/来源/时间，正文请点原文）`,
+      };
+      return { kind: 'archive', count: a, reason: '归档全文（该日无历史切片可补）' };
+    };
+
+    for (const day of allDays) {
+      const a = archMap.get(day);
+      const h = histMap.get(day);
+      const dec = decide(a ? a.count || 0 : 0, h ? h.n || 0 : 0);
+      if (dec.kind === 'none') continue;
+      // 2.20.0：条数可以取历史切片，但早报元数据一律以主索引 data/index.json 为准。
+      //   history/index.json 里的 hasBriefing/briefLine 是 export-history 导出那一刻的快照
+      //   （见 scripts/export-history.mjs），而 publish/补写只更新主索引。归档条数 < 20 的天
+      //   会走 history 分支，若沿用旧快照，补写出来的早报会整块隐形（卡片既无摘要也无展开）。
+      const bm = a || h;
+      map.set(day, {
+        day,
+        count: dec.count,
+        kind: dec.kind === 'history' ? 'hist' : 'live',
+        reason: dec.reason,
+        hasBriefing: !!bm.hasBriefing,
+        briefLine: bm.briefLine || '',
+        // 2.19.0：补写来源（服务端 publish 时写入索引），卡片据此打标签
+        briefBackfill: !!bm.briefBackfill,
+        // 2.20.0：实际生成时刻（索引派生字段），卡片据此判「晚到 / 跨日」
+        briefAt: bm.briefAt || '',
+        source: bm.hasBriefing ? (bm.source === 'rule' || bm.source === 'draft' ? bm.source : 'ai') : '',
+      });
+    }
+    const list = [...map.values()].sort((a, b) => (a.day < b.day ? 1 : -1));
+    // 2.20.0：制度起点只看**未补写**的最早一份。补写是事后追认，若把它算作起点，
+    //   10-30 一补，起点就落到 10-30，10-31 立刻变成假的「制度后缺失」（实测已发生）。
+    briefEraDay = list.filter((x) => x.hasBriefing && !x.briefBackfill).map((x) => x.day).sort()[0] || '';
+    dayIndex = map;
+    return list;
+  }
+
+  function sumCount(days) {
+    return days.reduce((n, d) => n + (d.count || 0), 0);
+  }
+
+  function buildArchiveCtx(list) {
+    const byDay = new Map();
+    const byMonth = new Map();
+    const byWeek = new Map();
+    list.forEach((d) => {
+      byDay.set(d.day, d);
+      const m = AT.monthKeyOf(d.day);
+      if (!byMonth.has(m)) byMonth.set(m, []);
+      byMonth.get(m).push(d);
+      const w = AT.isoWeek(d.day);
+      if (!w) return;
+      if (!byWeek.has(w.key)) {
+        const r = AT.weekRange(w.year, w.week);
+        byWeek.set(w.key, { key: w.key, year: w.year, week: w.week, start: r.start, end: r.end, days: [] });
+      }
+      byWeek.get(w.key).days.push(d);
+    });
+    const months = [...byMonth.keys()].sort().reverse();
+    const weeks = [...byWeek.values()].sort((a, b) => (a.start < b.start ? 1 : -1));
+    const years = [...new Set(months.map((m) => m.slice(0, 4)))].sort().reverse();
+    return {
+      days: list, byDay, byMonth, byWeek, months, weeks, years,
+      weekKeys: weeks.map((w) => w.key),
+      reports: [],
+    };
+  }
+
+  function groupDaysByWeek(days) {
+    const map = new Map();
+    days.forEach((d) => {
+      const w = AT.isoWeek(d.day);
+      if (!w) return;
+      if (!map.has(w.key)) {
+        const r = AT.weekRange(w.year, w.week);
+        map.set(w.key, { key: w.key, year: w.year, week: w.week, start: r.start, end: r.end, days: [] });
+      }
+      map.get(w.key).days.push(d);
+    });
+    return [...map.values()].sort((a, b) => (a.start < b.start ? 1 : -1));
+  }
+
+  const monthRoute = (key) => ({ level: 'month', year: key.slice(0, 4), month: key.slice(5, 7) });
+  const weekRoute = (key) => {
+    const p = String(key).split('-W');
+    return { level: 'week', year: p[0], week: p[1] };
+  };
+  const dayRoute = (day) => ({
+    level: 'day', year: day.slice(0, 4), month: day.slice(5, 7), day: day.slice(8, 10),
+  });
+
+  // 倒序列表里「严格小于 / 严格大于」目标的前后项。
+  function prevInDesc(listDesc, key) {
+    for (const k of listDesc) if (k < key) return k;
+    return '';
+  }
+  function nextInDesc(listDesc, key) {
+    for (let i = listDesc.length - 1; i >= 0; i--) if (listDesc[i] > key) return listDesc[i];
+    return '';
+  }
+
+  function reportFor(type, id) {
+    if (!archCtx) return null;
+    return (archCtx.reports || []).find((r) => r.type === type && r.id === id) || null;
+  }
+
+  // ---------- 归档：时间尺（面包屑 / 年份 / 最近入口） ----------
+  function isRoute(a, b) {
+    return !!a && !!b && AT.routeKey(a) === AT.routeKey(b);
+  }
+
+  function renderArchiveChrome() {
+    const crumb = $('#archCrumb');
+    const years = $('#archYears');
+    const quick = $('#archQuick');
+    if (!crumb || !archCtx) return;
+
+    crumb.innerHTML = '';
+    const sep = () => crumb.appendChild(el('span', 'ac-sep', '›'));
+    const link = (text, route) => {
+      const a = el('a', 'ac-link', text);
+      a.href = AT.archiveHash(route);
+      crumb.appendChild(a);
+    };
+    const cur = (text) => crumb.appendChild(el('span', 'ac-cur', text));
+
+    const r = archRoute;
+    // 面包屑：归档 › 2026 年 › 11 月 › 第 47 周 › 11-22（祖先都可点）
+    const root = () => {
+      const a = el('a', 'ac-link', '归档');
+      a.href = AT.archiveHash(monthRoute(AT.pickDefaultMonth(archCtx.months, newsDay())));
+      crumb.appendChild(a);
+    };
+    if (r.level === 'all') {
+      root();
+      sep();
+      cur('全部日期');
+    } else if (r.level === 'year') {
+      root();
+      sep();
+      cur(r.year + ' 年');
+    } else if (r.level === 'month') {
+      root();
+      sep();
+      link(r.year + ' 年', { level: 'year', year: r.year });
+      sep();
+      cur(Number(r.month) + ' 月');
+    } else if (r.level === 'week') {
+      const mk = AT.weekMidMonth(r.year, r.week);
+      root();
+      sep();
+      link(mk.slice(0, 4) + ' 年', { level: 'year', year: mk.slice(0, 4) });
+      sep();
+      link(Number(mk.slice(5, 7)) + ' 月', monthRoute(mk));
+      sep();
+      cur('第 ' + Number(r.week) + ' 周');
+    } else if (r.level === 'day') {
+      const w = AT.isoWeek(r.year + '-' + r.month + '-' + r.day);
+      root();
+      sep();
+      link(r.year + ' 年', { level: 'year', year: r.year });
+      sep();
+      link(Number(r.month) + ' 月', monthRoute(r.year + '-' + r.month));
+      if (w) {
+        sep();
+        link('第 ' + Number(w.week) + ' 周', weekRoute(w.key));
+      }
+      sep();
+      cur(r.month + '-' + r.day);
+    }
+
+    if (years) {
+      years.innerHTML = '';
+      (archCtx.years || []).forEach((y) => {
+        const a = el('a', 'yr' + (r.year === y ? ' on' : ''), y);
+        a.href = AT.archiveHash({ level: 'year', year: y });
+        years.appendChild(a);
+      });
+      years.hidden = !archCtx.years.length;
+    }
+
+    if (quick) {
+      quick.innerHTML = '';
+      const today = newsDay();
+      const month = AT.monthKeyOf(today);
+      const thisWeek = AT.isoWeek(today);
+      const lastWeek = AT.isoWeek(AT.addDays(AT.weekStart(today), -7));
+      const picks = [
+        ['本周', AT.nearestWeek(archCtx.weekKeys, thisWeek && thisWeek.key), weekRoute],
+        ['上周', AT.nearestWeek(archCtx.weekKeys, lastWeek && lastWeek.key), weekRoute],
+        ['本月', AT.nearestMonth(archCtx.months, month), monthRoute],
+        ['上月', AT.nearestMonth(archCtx.months, AT.addMonths(month, -1)), monthRoute],
+        ['今年', AT.nearestYear(archCtx.years, today.slice(0, 4)), (y) => ({ level: 'year', year: y })],
+      ];
+      picks.forEach(([label, key, make]) => {
+        if (!key) return;
+        const route = make(key);
+        const a = el('a', 'fchip' + (isRoute(route, r) ? ' on' : ''), label);
+        a.href = AT.archiveHash(route);
+        quick.appendChild(a);
+      });
+      const all = el('a', 'fchip all-dates' + (r.level === 'all' ? ' on' : ''), '全部日期');
+      all.href = '#archive/all';
+      quick.appendChild(all);
+    }
+  }
+
+  // ---------- 归档：逐层渲染 ----------
+  function layerHead(box, title, meta, actions) {
+    const hd = el('div', 'arch-layer-hd');
+    const t = el('div', 'al-title');
+    t.appendChild(el('h2', null, title));
+    if (meta) t.appendChild(el('span', 'al-meta', meta));
+    hd.appendChild(t);
+    if (actions && actions.length) {
+      const nav = el('div', 'al-nav');
+      actions.forEach((a) => nav.appendChild(a));
+      hd.appendChild(nav);
+    }
+    box.appendChild(hd);
+  }
+
+  function navLink(text, route) {
+    const a = el('a', 'fchip', text);
+    a.href = AT.archiveHash(route);
+    return a;
+  }
+
+  // 报告卡：有就原位展开，没有就给出「待生成」占位（不伪造正文）。
+  function periodicBlock(box, type, id, openNow) {
+    const r = reportFor(type, id);
+    if (!r) {
+      const ph = el('div', 'arch-empty-rep');
+      ph.appendChild(el('span', 'pr-type', PERIODIC_LABEL[type]));
+      ph.appendChild(el('span', null, `${id} 待生成`));
+      box.appendChild(ph);
+      return;
+    }
+    const wrap = el('div', 'arch-report');
+    const card = periodicCard(r);
+    wrap.appendChild(card);
+    box.appendChild(wrap);
+    if (openNow) {
+      card.open = true;
+      const caret = card.querySelector('.pr-caret');
+      if (caret) caret.textContent = '收起';
+      loadPeriodicReport(r, card.querySelector('.pr-body'));
+    }
+  }
+
+  function dayGrid(days) {
+    const grid = el('div', 'days');
+    days.forEach((d) => grid.appendChild(dayCard(d)));
+    return grid;
+  }
+
+  function renderMonthLayer(box, route) {
+    const key = route.year + '-' + route.month;
+    const days = archCtx.byMonth.get(key) || [];
+    const prev = prevInDesc(archCtx.months, key);
+    const next = nextInDesc(archCtx.months, key);
+    const acts = [];
+    if (prev) acts.push(navLink('← 上一月', monthRoute(prev)));
+    if (next) acts.push(navLink('下一月 →', monthRoute(next)));
+    layerHead(box, AT.monthLabel(key), `${days.length} 天 · ${sumCount(days).toLocaleString('zh-CN')} 条`, acts);
+    periodicBlock(box, 'month', key, true);
+    if (!days.length) {
+      box.appendChild(el('div', 'empty', '本月暂无归档'));
+      return;
+    }
+    groupDaysByWeek(days).forEach((g) => {
+      const sec = el('section', 'arch-week');
+      const hd = el('div', 'aw-hd');
+      const a = el('a', 'aw-title', '第 ' + Number(g.week) + ' 周');
+      a.href = AT.archiveHash(weekRoute(g.key));
+      hd.appendChild(a);
+      hd.appendChild(el('span', 'aw-range', `${g.start.slice(5)} ~ ${g.end.slice(5)}`));
+      hd.appendChild(el('span', 'aw-meta', `${g.days.length} 天 · ${sumCount(g.days).toLocaleString('zh-CN')} 条`));
+      if (reportFor('week', g.key)) {
+        const chip = el('a', 'aw-rep', '周报');
+        chip.href = AT.archiveHash(weekRoute(g.key));
+        hd.appendChild(chip);
+      } else {
+        hd.appendChild(el('span', 'aw-rep off', '周报待生成'));
+      }
+      sec.appendChild(hd);
+      sec.appendChild(dayGrid(g.days));
+      box.appendChild(sec);
+    });
+  }
+
+  function renderWeekLayer(box, route) {
+    const key = route.year + '-W' + route.week;
+    const g = archCtx.byWeek.get(key) || (() => {
+      const r = AT.weekRange(route.year, route.week);
+      return { key, year: route.year, week: route.week, start: r.start, end: r.end, days: [] };
+    })();
+    const mk = AT.weekMidMonth(g.year, g.week);
+    const prevW = AT.isoWeek(AT.addDays(g.start, -7));
+    const nextW = AT.isoWeek(AT.addDays(g.start, 7));
+    const acts = [navLink('← 返回 ' + AT.monthLabel(mk), monthRoute(mk))];
+    if (prevW) acts.push(navLink('← 上一周', weekRoute(prevW.key)));
+    if (nextW) acts.push(navLink('下一周 →', weekRoute(nextW.key)));
+    layerHead(box, '第 ' + Number(g.week) + ' 周',
+      `${g.start} ~ ${g.end} · ${g.days.length} 天 · ${sumCount(g.days).toLocaleString('zh-CN')} 条`, acts);
+    periodicBlock(box, 'week', key, true);
+    if (!g.days.length) {
+      box.appendChild(el('div', 'empty', '本周暂无归档'));
+      return;
+    }
+    box.appendChild(dayGrid(g.days));
+  }
+
+  function renderDayLayer(box, route) {
+    const day = route.year + '-' + route.month + '-' + route.day;
+    const d = archCtx.byDay.get(day);
+    const w = AT.isoWeek(day);
+    const acts = [];
+    if (w) acts.push(navLink('← 返回第 ' + Number(w.week) + ' 周', weekRoute(w.key)));
+    acts.push(navLink('← 前一天', dayRoute(AT.addDays(day, -1))));
+    acts.push(navLink('后一天 →', dayRoute(AT.addDays(day, 1))));
+    layerHead(box, route.month + '-' + route.day + ' 新闻日',
+      d ? `${d.count} 条` : '该日暂无归档', acts);
+    if (!d) {
+      box.appendChild(el('div', 'empty', '该日暂无归档'));
+      return;
+    }
+    const grid = el('div', 'days days-one');
+    grid.appendChild(dayCard(d));
+    box.appendChild(grid);
+    const acts2 = el('div', 'arch-day-acts');
+    const go = el('button', 'fchip on', '打开当日要闻流');
+    go.type = 'button';
+    go.onclick = () => openDay(d.day, d.kind);
+    acts2.appendChild(go);
+    acts2.appendChild(el('span', 'arch-day-note', '日层第一阶段不在归档内铺开条目：点日卡或按钮进入要闻流。'));
+    box.appendChild(acts2);
+  }
+
+  function renderYearLayer(box, route) {
+    const y = route.year;
+    const months = archCtx.months.filter((m) => m.slice(0, 4) === y);
+    const allDays = months.reduce((acc, m) => acc.concat(archCtx.byMonth.get(m) || []), []);
+    const prev = prevInDesc(archCtx.years, y);
+    const next = nextInDesc(archCtx.years, y);
+    const acts = [];
+    if (prev) acts.push(navLink('← ' + prev + ' 年', { level: 'year', year: prev }));
+    if (next) acts.push(navLink(next + ' 年 →', { level: 'year', year: next }));
+    layerHead(box, y + ' 年',
+      `${months.length} 个月 · ${allDays.length} 天 · ${sumCount(allDays).toLocaleString('zh-CN')} 条`, acts);
+    periodicBlock(box, 'year', y, true);
+    if (!months.length) {
+      box.appendChild(el('div', 'empty', '该年暂无归档'));
+      return;
+    }
+    const wrap = el('div', 'arch-months');
+    months.forEach((m) => {
+      const days = archCtx.byMonth.get(m) || [];
+      const sec = el('section', 'arch-month');
+      const hd = el('div', 'am-hd');
+      const a = el('a', 'am-title', AT.monthLabel(m));
+      a.href = AT.archiveHash(monthRoute(m));
+      hd.appendChild(a);
+      hd.appendChild(el('span', 'am-meta', `${days.length} 天 · ${sumCount(days).toLocaleString('zh-CN')} 条`));
+      if (reportFor('month', m)) {
+        const chip = el('a', 'am-rep', '月报');
+        chip.href = AT.archiveHash(monthRoute(m));
+        hd.appendChild(chip);
+      } else {
+        hd.appendChild(el('span', 'am-rep off', '月报待生成'));
+      }
+      sec.appendChild(hd);
+      const weeks = el('div', 'am-weeks');
+      const groups = groupDaysByWeek(days);
+      groups.forEach((g) => {
+        const c = el('a', 'wk-chip', '第 ' + Number(g.week) + ' 周');
+        c.href = AT.archiveHash(weekRoute(g.key));
+        c.title = `${g.start} ~ ${g.end} · ${g.days.length} 天`;
+        weeks.appendChild(c);
+      });
+      if (!groups.length) weeks.appendChild(el('span', 'am-none', '无归档'));
+      sec.appendChild(weeks);
+      wrap.appendChild(sec);
+    });
+    box.appendChild(wrap);
+  }
+
+  // 迁移期兜底入口：仍可平铺全部日期，但按月分页（3 个月/页），不一次画 387 张。
+  function renderAllLayer(box) {
+    const months = archCtx.months;
+    layerHead(box, '全部日期', `按自然月分页 · 共 ${months.length} 个月`);
+    if (!months.length) {
+      box.appendChild(el('div', 'empty', '暂无归档'));
+      return;
+    }
+    months.slice(0, archAllShown).forEach((m) => {
+      const days = archCtx.byMonth.get(m) || [];
+      const sec = el('section', 'arch-month');
+      const hd = el('div', 'am-hd');
+      const a = el('a', 'am-title', AT.monthLabel(m));
+      a.href = AT.archiveHash(monthRoute(m));
+      hd.appendChild(a);
+      hd.appendChild(el('span', 'am-meta', `${days.length} 天 · ${sumCount(days).toLocaleString('zh-CN')} 条`));
+      sec.appendChild(hd);
+      sec.appendChild(dayGrid(days));
+      box.appendChild(sec);
+    });
+    if (months.length > archAllShown) {
+      const b = el('button', 'more', `加载更早的 3 个月（还有 ${months.length - archAllShown} 个月）`);
+      b.type = 'button';
+      b.onclick = () => {
+        archAllShown += 3;
+        archRestoring = true;
+        renderArchiveLayer(archRoute);
+        const done = () => { archRestoring = false; };
+        Promise.all([restoreBriefOpen(), restorePeriodicOpen()]).then(done, done);
+      };
+      box.appendChild(b);
+    }
+  }
+
+  function renderArchiveLayer(route) {
     const box = $('#days');
-    box.innerHTML = '<div class="skeleton">载入中…</div>';
+    if (!box) return;
+    box.innerHTML = '';
+    if (route.level === 'year') return renderYearLayer(box, route);
+    if (route.level === 'week') return renderWeekLayer(box, route);
+    if (route.level === 'day') return renderDayLayer(box, route);
+    if (route.level === 'all') return renderAllLayer(box);
+    return renderMonthLayer(box, route);
+  }
+
+  // 默认落层只决定「没指定层级」时去哪：当前月 → 无数据则最近有数据的月。
+  function resolveArchiveRoute(route) {
+    if (route && route.level && route.level !== 'default') return route;
+    const mk = AT.pickDefaultMonth(archCtx.months, newsDay());
+    return monthRoute(mk);
+  }
+
+  function setArchHash(route) {
+    const h = AT.archiveHash(route);
+    if (location.hash !== h) history.replaceState(null, '', h);
+  }
+
+  async function renderArchive(route, opts) {
+    opts = opts || {};
+    const token = ++archToken;
+    const box = $('#days');
+    if (!archCtx && box) box.innerHTML = '<div class="skeleton">载入中…</div>';
     try {
       // 三个索引并行取：archive（带全文）+ history（归档前缺口）+ periodic（周报/月报/年报）
       const [idx, hist, per] = await Promise.all([loadIndex(), loadHistoryIndex(), loadPeriodicIndex()]);
-      const map = new Map();
-      const archMap = new Map((idx.days || []).map((d) => [d.day, d]));
-      const histMap = new Map((hist.days || []).filter((d) => d && d.d).map((d) => [d.d, d]));
-      const allDays = new Set([...archMap.keys(), ...histMap.keys()]);
-
-      // 2.4.10：同一天用 archive 还是 history，由显式规则决定（assets/day-source.js）
-      const decide = (a, h) => {
-        if (window.MacroDaySource) {
-          return window.MacroDaySource.decideDaySource({ archiveCount: a, historyCount: h });
-        }
-        if (a <= 0 && h <= 0) return { kind: 'none', count: 0, reason: '该日无归档与历史数据' };
-        // 2.21.0：与 assets/day-source.js 保持同一顺序——切片更全时优先切片
-        if (h > a) return {
-          kind: 'history', count: h,
-          reason: a < 20
-            ? `该日归档仅 ${a} 条，已改用历史切片 ${h} 条（仅标题/来源/时间，正文请点原文）`
-            : `该日归档 ${a} 条，少于历史切片 ${h} 条，已改用历史切片（仅标题/来源/时间，正文请点原文）`,
-        };
-        if (a >= 20) return { kind: 'archive', count: a, reason: '归档全文' };
-        if (h > 0) return {
-          kind: 'history', count: h,
-          reason: `该日归档仅 ${a} 条，已改用历史切片 ${h} 条（仅标题/来源/时间，正文请点原文）`,
-        };
-        return { kind: 'archive', count: a, reason: '归档全文（该日无历史切片可补）' };
-      };
-
-      for (const day of allDays) {
-        const a = archMap.get(day);
-        const h = histMap.get(day);
-        const dec = decide(a ? a.count || 0 : 0, h ? h.n || 0 : 0);
-        if (dec.kind === 'none') continue;
-        const base = dec.kind === 'history' ? h : a;
-        // 2.20.0：条数可以取历史切片，但早报元数据一律以主索引 data/index.json 为准。
-        //   history/index.json 里的 hasBriefing/briefLine 是 export-history 导出那一刻的快照
-        //   （见 scripts/export-history.mjs），而 publish/补写只更新主索引。归档条数 < 20 的天
-        //   会走 history 分支，若沿用旧快照，补写出来的早报会整块隐形（卡片既无摘要也无展开）。
-        const bm = a || h;
-        map.set(day, {
-          day,
-          count: dec.count,
-          kind: dec.kind === 'history' ? 'hist' : 'live',
-          reason: dec.reason,
-          hasBriefing: !!bm.hasBriefing,
-          briefLine: bm.briefLine || '',
-          // 2.19.0：补写来源（服务端 publish 时写入索引），卡片据此打标签
-          briefBackfill: !!bm.briefBackfill,
-          // 2.20.0：实际生成时刻（索引派生字段），卡片据此判「晚到 / 跨日」
-          briefAt: bm.briefAt || '',
-          source: bm.hasBriefing ? (bm.source === 'rule' || bm.source === 'draft' ? bm.source : 'ai') : '',
-        });
-      }
-      const list = [...map.values()].sort((a, b) => (a.day < b.day ? 1 : -1));
-      // 2.20.0：制度起点只看**未补写**的最早一份。补写是事后追认，若把它算作起点，
-      //   10-30 一补，起点就落到 10-30，10-31 立刻变成假的「制度后缺失」（实测已发生）。
-      briefEraDay = list.filter((x) => x.hasBriefing && !x.briefBackfill).map((x) => x.day).sort()[0] || '';
-      dayIndex = map;
+      if (token !== archToken) return;
+      const list = collectArchiveDays(idx, hist);
+      archCtx = buildArchiveCtx(list);
       // 周期报告渲染失败不能拖垮按日归档：单独兜住
       try { renderPeriodicPanel(per); } catch { /* 保持区块隐藏 */ }
+      archCtx.reports = periodicById ? [...periodicById.values()] : [];
       renderHistPanel(hist, list);
-      box.innerHTML = '';
-      if (!list.length) box.appendChild(el('div', 'empty', '暂无归档'));
-      const frag = document.createDocumentFragment();
-      list.forEach((d) => frag.appendChild(dayCard(d)));
-      box.appendChild(frag);
-      Promise.all([restoreBriefOpen(), restorePeriodicOpen()])
-        .then(restoreArchiveScroll, restoreArchiveScroll);
+
+      const prevLevel = archRoute ? archRoute.level : '';
+      const r = resolveArchiveRoute(route);
+      if (r.level === 'all' && prevLevel !== 'all') archAllShown = 3;
+      archRoute = r;
+      archRendered = true;
+      setArchHash(r);
+      renderArchiveChrome();
+      // 渲染 + 恢复期间先别让 toggle 触发的 saveUI 写回（见 saveUI 顶部注释）
+      archRestoring = true;
+      renderArchiveLayer(r);
+      const done = () => { archRestoring = false; restoreArchiveState(r); };
+      Promise.all([restoreBriefOpen(), restorePeriodicOpen()]).then(done, done);
     } catch (e) {
-      box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
+      archRestoring = false;
+      if (token !== archToken) return;
+      if (box) box.innerHTML = `<div class="skeleton">载入失败：${esc(e.message)}</div>`;
     }
   }
 
@@ -2262,6 +2801,7 @@
       $('#qClear').hidden = true;
       S.shown = PAGE;
       openedDay = { day, kind };   // 2.4.12：刷新后仍停在这一天
+      hideRelatedReports();
       renderFilters();
       renderFeed();
       const info = dayIndex.get(day);
@@ -3426,7 +3966,13 @@
     // 手动改 hash / 前进后退时也要跟着切视图
     window.addEventListener('hashchange', () => {
       const v = viewFromHash();
-      if (v && v !== S.view) showView(v);
+      if (!v) return;
+      if (v !== S.view) { showView(v); return; }
+      // 已在归档页：只切层级，不重建阅读器；同一层不重复渲染。
+      if (v === 'archive') {
+        const r = AT.parseArchiveHash(location.hash);
+        if (r && r.level !== 'default' && AT.routeKey(r) !== archKey(archRoute)) renderArchive(r);
+      }
     });
     // 带着 #view-xxx 打开时直接进对应视图（instant：首帧不要看到平滑滚动）
     // 没有 hash 时退回刷新前保存的视图；hash 优先，避免分享链接被本地状态覆盖。

@@ -1,5 +1,5 @@
 // tests/periodic-report.test.mjs
-// 2.37.0：周期报告（周报 / 月报 / 年报）——契约与归档页接入的静态校验。
+// 3.0.0：周期报告（周报 / 月报 / 年报）——契约与归档页接入的静态校验。
 // 前端是浏览器 IIFE，node 侧没有 DOM；这里锁定契约字段、降级分支与渲染复用，
 // 防止以后又给周期报告另造一套条目结构，或把缺数据变成报错/空白。
 
@@ -68,7 +68,7 @@ test('渲染：条目复用日报 renderBriefItems，展开状态独立保存', 
   assert.ok(APP.includes('`${r.type}=${r.id}`'), '展开 key 必须带 week=/month=/year= 前缀');
   assert.ok(APP.includes('periodicOpen'), '刷新恢复缺少周期报告展开状态');
   assert.ok(APP.includes('restorePeriodicOpen()'), 'renderArchive 未恢复周期报告展开状态');
-  assert.ok(HTML.includes('assets/app.js?v=20261123b'), 'app.js 版本号未更新');
+  assert.ok(HTML.includes('assets/app.js?v=20261123c'), 'app.js 版本号未更新');
 });
 
 test('既有行为：归档索引仍是 60s TTL + no-cache 条件请求', () => {

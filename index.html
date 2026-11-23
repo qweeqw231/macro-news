@@ -6,7 +6,7 @@
 <title>宏观资讯台 · 全球利率 / 汇率 / 政策 / 大宗</title>
 <meta name="description" content="全球宏观资讯自动采集台：央行政策、利率、汇率、大宗商品行情与要闻归档。" />
 <link rel="icon" type="image/svg+xml" href="assets/icon.svg?v=20261113c" />
-<link rel="stylesheet" href="assets/style.css?v=20261123a" />
+<link rel="stylesheet" href="assets/style.css?v=20261123c" />
 </head>
 <body>
 
@@ -52,6 +52,10 @@
       </div>
     </section>
 
+    <!-- 3.0.0：搜索结果顶部的「相关报告」带（周报/月报/年报各最多 3 条）。
+         条目级搜索结果本身保持原排序，不被分组。 -->
+    <div class="rel-reports" id="relReports" hidden></div>
+
     <div class="filters" id="filters"><div class="skeleton">载入中…</div></div>
     <div class="list" id="feed"><div class="skeleton">要闻载入中…</div></div>
     <button class="more" id="moreBtn" hidden>加载更早的条目</button>
@@ -96,16 +100,22 @@
     </section>
   </section>
 
-  <!-- ============ 归档 ============ -->
+  <!-- ============ 归档（3.0.0：时间轴缩放 年 → 月 → 周 → 日） ============ -->
   <section class="view" id="view-archive" hidden>
-    <!-- 周期报告（周报 / 月报 / 年报）：与按日归档并列但不混排。
-         数据来自 data/periodic/index.json；索引缺失或为空时整块隐藏（见 app.js renderPeriodicPanel），
-         不会影响下方按日归档。 -->
+    <!-- 时间尺：年份选择 + 面包屑 + 最近入口。层级同时写进 hash（#archive/2026/11 等），
+         可分享、可刷新、可前进后退；层级与渲染逻辑见 assets/app.js。 -->
+    <div class="arch-bar" id="archBar">
+      <div class="arch-crumb" id="archCrumb" aria-label="归档层级"></div>
+      <div class="arch-years" id="archYears" aria-label="年份"></div>
+      <nav class="arch-quick" id="archQuick" aria-label="最近周期"></nav>
+    </div>
+    <!-- 周期报告（周报 / 月报 / 年报）：三组入口保留；卡片本身在各层原位展开。
+         数据来自 data/periodic/index.json；索引缺失或为空时整块隐藏（见 app.js renderPeriodicPanel）。 -->
     <section class="periodic" id="periodicPanel" hidden>
       <div class="periodic-hd">
         <h2>周期报告 <span class="arch-tag">周报 / 月报 / 年报</span></h2>
         <p class="periodic-sub">
-          按周期聚合，与下方「新闻日」归档分开阅读。周报覆盖 ISO 周的周一至周日，时间均为北京时间。
+          按周期聚合，与「新闻日」归档分开阅读。周报覆盖 ISO 周的周一至周日，时间均为北京时间。
         </p>
         <!-- 三类入口：只列出本期有数据的类型（周报 / 月报 / 年报），点击跳到对应分组 -->
         <div class="pr-jumps" id="periodicJumps" hidden></div>
@@ -125,17 +135,18 @@
         <span class="hist-hint" id="histHint" role="status"></span>
       </form>
     </section>
+    <!-- 当前层容器：年 / 月 / 周 / 日 / 全部日期都由 app.js 渲染到这里 -->
+    <div class="arch-layer" id="days"></div>
     <!-- 2.12.0：归档口径说明。归档键是「新闻日」（北京 08:00 起算），不是自然日；
          卡片上的「N 条」必须按这个区间理解，否则会误读成 00:00–24:00 的量。 -->
-    <div class="arch-hd">
-      <h2>归档 <span class="arch-tag">新闻日</span></h2>
+    <div class="arch-hd arch-hd-foot">
+      <h2>归档口径 <span class="arch-tag">新闻日</span></h2>
       <p class="arch-note">
         按<strong>新闻日</strong>分组：<code>11-10</code> 这一天 = <strong>北京时间 11-10 08:00 ~ 11-11 08:00</strong>，
         不是自然日的 00:00–24:00。卡片上的「N 条」是该新闻日的归档总量；早报与归档共用同一把日期键——
         <code>11-10</code> 的早报覆盖 <strong>11-09 08:00 – 11-10 09:00</strong>（刚走完的完整新闻日 + 当日已过去的一小时）。
       </p>
     </div>
-    <div class="days" id="days"></div>
   </section>
 
   <!-- ============ 来源 ============ -->
@@ -154,10 +165,13 @@
 
   <!-- 首帧就应用 URL 里的视图：否则带着 #view-market 刷新时，页面会先按 HTML 默认显示
        「要闻流」，等 app.js 加载完再切回行情 —— 用户看到一次无意义的闪烁。
+       3.0.0：归档层级 hash（#archive/2026/11 等）同样直接显示归档视图。
        这段内联脚本在视图区块之后、业务脚本之前执行，早于首帧绘制。 -->
   <script>
     (function () {
-      var m = String(location.hash || '').match(/^#view-(feed|market|archive|sources)$/);
+      var hash = String(location.hash || '');
+      var m = hash.match(/^#view-(feed|market|macro|archive|sources)$/);
+      if (!m && /^#archive(\/|$)/.test(hash)) m = [hash, 'archive'];
       if (!m) return;
       var v = m[1];
       document.querySelectorAll('.tab, .mnav-item').forEach(function (t) {
@@ -166,7 +180,7 @@
         if (on) t.setAttribute('aria-current', 'page');
         else t.removeAttribute('aria-current');
       });
-      ['feed', 'market', 'archive', 'sources'].forEach(function (k) {
+      ['feed', 'market', 'macro', 'archive', 'sources'].forEach(function (k) {
         var s = document.getElementById('view-' + k);
         if (s) s.hidden = k !== v;
       });
@@ -249,12 +263,13 @@
 <script src="assets/history-summary.js?v=20261113c"></script>
 <script src="assets/day-source.js?v=20261115f"></script>
 <script src="assets/brief-timing.js?v=20261115c"></script>
+<script src="assets/archive-time.js?v=20261123c"></script>
 <script src="assets/fuse.min.js?v=20261113c"></script>
 <script src="assets/market.js?v=20261122c"></script>
 <script src="assets/kline.js?v=20261120c"></script>
 <script src="assets/macro.js?v=20261122a"></script>
 <script src="assets/macro-chart.js?v=20261123b"></script>
-<script src="assets/search-history.js?v=20261122b"></script>
-<script src="assets/app.js?v=20261123b"></script>
+<script src="assets/search-history.js?v=20261123c"></script>
+<script src="assets/app.js?v=20261123c"></script>
 </body>
 </html>
