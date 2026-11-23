@@ -6,84 +6,84 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-23T18:53:21.572Z",
-  "durationMs": 19809,
+  "startedAt": "2026-11-23T19:08:18.975Z",
+  "durationMs": 11728,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 6337
+      "ms": 6603
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1622
+      "ms": 1316
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1722
+      "ms": 1595
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 794
+      "ms": 445
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1577
+      "ms": 1601
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 817
+      "ms": 777
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1221
+      "ms": 1021
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 7004
+      "ms": 5519
     }
   ],
-  "quotes": 56,
-  "added": 4,
+  "quotes": 74,
+  "added": 2,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7426,
-    "kept": 7426,
+    "candidates": 7428,
+    "kept": 7428,
     "evicted": 0,
-    "deduped": 286,
+    "deduped": 288,
     "days": [
       {
         "day": "2026-11-23",
         "incoming": 273,
-        "candidates": 1175,
-        "kept": 1175,
+        "candidates": 1177,
+        "kept": 1177,
         "evicted": 0,
-        "deduped": 269,
-        "added": 4
+        "deduped": 271,
+        "added": 2
       },
       {
         "day": "2026-11-22",
@@ -140,6 +140,5 @@
         "added": 0
       }
     ]
-  },
-  "quoteError": "18/66 失败：东财批量失败：HTTP 502"
+  }
 }
