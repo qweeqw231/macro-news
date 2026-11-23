@@ -1,0 +1,177 @@
+{
+  "date": "2026-W33",
+  "type": "week",
+  "generatedAt": "2026-11-23T11:02:48+08:00",
+  "endedAt": "2026-11-23T11:02:48+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2026 年第 33 周宏观周报：央行7月金融数据与二季度货政报告",
+  "window": {
+    "from": "2026-08-10",
+    "to": "2026-08-16",
+    "fromAt": "2026-08-10T08:00:00+08:00",
+    "toAt": "2026-08-17T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周央行密集释放数据与政策信号。7月金融数据显示，前7个月社会融资规模增量累计22.25万亿元，人民币贷款增加10.38万亿元，7月末M2余额355.51万亿元、同比增长7.7%，社融存量463.27万亿元、同比增长7.4%。二季度货币政策执行报告提出继续实施好适度宽松的货币政策，逐步增加隔夜逆回购操作频率，及时谋划出台务实管用的增量政策，并预计本轮主要经济体货币政策调整相对温和。央行还开展1万亿元买断式逆回购，部署“十五五”五大任务。海外方面，日本央行释放9月加息信号并引发美方加入汇市干预，韩国央行二季度进行13年来首次黄金投资。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行7月金融数据：M2同比增7.7%",
+      "summary": "央行发布7月金融统计数据：前7个月社会融资规模增量累计22.25万亿元，人民币贷款增加10.38万亿元、存款增加17.79万亿元；7月末M2余额355.51万亿元，同比增长7.7%，社会融资规模存量463.27万亿元，同比增长7.4%。总量与增速同步披露，是观察下半年政策传导的基础读数。",
+      "why": "金融总量是政策传导的读数",
+      "source": "东方财富",
+      "publishedAt": "2026-08-14T16:33:17+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202608143841778964.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202608143841781010.html",
+        "http://finance.eastmoney.com/news/1350,202608143842091324.html",
+        "http://finance.eastmoney.com/news/1350,202608143842386914.html",
+        "https://wallstreetcn.com/livenews/3149623",
+        "http://finance.eastmoney.com/news/1345,202608143841758688.html",
+        "https://wallstreetcn.com/livenews/3149622",
+        "https://wallstreetcn.com/livenews/3149621",
+        "http://finance.eastmoney.com/news/1350,202608143842111363.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行二季度货币政策执行报告出炉",
+      "summary": "报告提出继续实施好适度宽松的货币政策，逐步增加隔夜逆回购操作频率以畅通政策利率传导，及时谋划出台务实管用的增量政策；预计本轮主要经济体央行货币政策调整相对温和、冲击可能小于以往，并提示防范汇率超调风险与输入型通胀压力。",
+      "why": "明确增量政策的方向与节奏",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-08-12T18:27:51+08:00",
+      "url": "https://wallstreetcn.com/livenews/3148580",
+      "refs": [
+        "http://finance.eastmoney.com/news/1346,202608133840483911.html",
+        "http://finance.eastmoney.com/news/1350,202608123839429565.html",
+        "https://wallstreetcn.com/livenews/3148594",
+        "http://finance.eastmoney.com/news/1350,202608153842354594.html",
+        "http://finance.eastmoney.com/news/1354,202608133839540068.html",
+        "http://finance.eastmoney.com/news/1350,202608133839532293.html",
+        "http://finance.eastmoney.com/news/1350,202608123839484490.html",
+        "http://finance.eastmoney.com/news/1350,202608133839567693.html",
+        "http://finance.eastmoney.com/news/1350,202608123839439486.html",
+        "https://wallstreetcn.com/livenews/3148591"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行开展1万亿元买断式逆回购操作",
+      "summary": "央行8月14日以固定数量、利率招标、多重价位中标方式开展10000亿元买断式逆回购操作，期限6个月，属于等量续作，被解读为稳健偏松的货币政策取向，目标是削峰填谷稳流动性。",
+      "why": "大额操作显示流动性取向",
+      "source": "东方财富",
+      "publishedAt": "2026-08-14T12:28:28+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202608143841605439.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3149073",
+        "http://finance.eastmoney.com/news/1350,202608133840643134.html",
+        "http://finance.eastmoney.com/news/1350,202608133840733632.html",
+        "http://finance.eastmoney.com/news/1350,202608133840730895.html",
+        "https://wallstreetcn.com/livenews/3149072"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "央行部署十五五五大任务与双支柱框架",
+      "summary": "央行印发《中国人民银行“十五五”改革发展规划》，部署五大重点任务，包括完善双支柱调控框架、健全金融政策体系、健全中国特色现代货币政策框架与完善基础货币投放机制，并提出稳妥推进金融高水平对外开放。这是中期金融政策的纲领性文件。",
+      "why": "中期调控框架的方向性表述",
+      "source": "东方财富",
+      "publishedAt": "2026-08-11T19:18:00+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202608113838035831.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202608113837024084.html",
+        "http://finance.eastmoney.com/news/1350,202608113836991285.html",
+        "http://finance.eastmoney.com/news/1350,202608103836877153.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026081018132329141/index.html",
+        "http://finance.eastmoney.com/news/1350,202608103836776626.html",
+        "http://finance.eastmoney.com/news/1350,202608113836995772.html"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "日本央行释放9月加息信号引发美方干预",
+      "summary": "报道称日本央行释放9月加息信号，促使美国加入汇市干预，美元兑日元短线下跌约40点，日元兑美元随后快速拉升20多点。日本政府支持日本央行更快加息，另有分析指美联储并未出资参与美方的干预行动。",
+      "why": "汇率干预倒逼加息节奏",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-08-10T20:07:46+08:00",
+      "url": "https://wallstreetcn.com/livenews/3147516",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3148914",
+        "https://wallstreetcn.com/livenews/3147693",
+        "https://wallstreetcn.com/livenews/3148915",
+        "https://wallstreetcn.com/livenews/3149379"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "7月经常项跨境人民币结算1.75万亿元",
+      "summary": "央行披露，7月份经常项下跨境人民币结算金额为1.75万亿元，直接投资跨境人民币结算金额为0.63万亿元。两项数据反映贸易与直接投资背景下的本币结算规模，是人民币跨境使用与汇率预期的量化支撑。",
+      "why": "本币结算规模支撑人民币预期",
+      "source": "东方财富",
+      "publishedAt": "2026-08-14T16:43:24+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202608143841782319.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202608143841764975.html"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "两部门推广跨国公司本外币跨境资金集中运营",
+      "summary": "央行等两部门决定在全国范围内推广跨国公司本外币跨境资金集中运营业务，为跨国企业提供本外币一体化的资金池安排。政策把跨境资金池的适用范围由试点推向全国，属于贸易投资便利化的制度性推进。",
+      "why": "跨境资金池由试点转向全国",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-08-14T17:07:16+08:00",
+      "url": "https://wallstreetcn.com/livenews/3149652",
+      "refs": []
+    },
+    {
+      "rank": 8,
+      "title": "德意志银行获授权任法兰克福人民币清算行",
+      "summary": "根据中国人民银行与德意志联邦银行备忘录，央行决定授权德意志银行担任法兰克福人民币清算行。离岸人民币清算行数量增加，扩展了人民币在欧元区的清算覆盖，支撑跨境人民币使用的基础设施继续扩容。",
+      "why": "离岸清算网络继续扩容",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-08-10T17:07:55+08:00",
+      "url": "https://wallstreetcn.com/livenews/3147404",
+      "refs": []
+    },
+    {
+      "rank": 9,
+      "title": "廖岷出席2026年首次金砖国家财长会议",
+      "summary": "财政部副部长廖岷出席2026年首次金砖国家财长和央行行长会议，中国人民银行副行长邹澜同样出席。金砖财金合作机制持续运转，为新兴经济体之间的财政与货币政策协调提供常态化平台。",
+      "why": "金砖财金协调机制常态化",
+      "source": "东方财富",
+      "publishedAt": "2026-08-13T18:17:29+08:00",
+      "url": "http://finance.eastmoney.com/news/1350,202608133840578598.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026081410062044799/index.html"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "韩国央行二季度进行13年来首次黄金投资",
+      "summary": "韩国央行在二季度进行了13年来的首次黄金相关投资。在全球央行配置多元化与增持黄金的背景下，这是亚洲央行资产结构变化的一个可观察信号，指向储备资产结构调整的更大范围讨论。",
+      "why": "亚洲央行储备结构调整信号",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-08-13T08:51:24+08:00",
+      "url": "https://wallstreetcn.com/livenews/3148811",
+      "refs": []
+    }
+  ],
+  "watch": [
+    "增量货币政策工具的落地形式",
+    "M2与社融增速对名义增长的领先关系",
+    "日元干预与日本央行加息节奏",
+    "跨境人民币清算与结算扩容"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-23T11:02:48+08:00",
+    "note": "全量补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 5294,
+    "missingDays": []
+  }
+}

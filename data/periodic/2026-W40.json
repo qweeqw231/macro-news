@@ -1,0 +1,153 @@
+{
+  "date": "2026-W40",
+  "type": "week",
+  "generatedAt": "2026-11-23T11:02:48+08:00",
+  "endedAt": "2026-11-23T11:02:48+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2026 年第 40 周宏观周报：9月PMI重返扩张，美国非农远逊预期",
+  "window": {
+    "from": "2026-09-28",
+    "to": "2026-10-04",
+    "fromAt": "2026-09-28T08:00:00+08:00",
+    "toAt": "2026-10-05T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周是假期扰动下的数据密集周。国内方面，国家统计局数据显示9月份制造业采购经理指数为50.1%、比上月上升0.3个百分点重返扩张区间，非制造业商务活动指数为50.2%；财政部、人民银行、金融监管总局联合印发实施居民购房贷款贴息政策；1—8月规模以上工业企业利润52719.8亿元、增长15.7%，前8月高技术产品出口额增长37.1%。国际方面，美国9月非农新增就业仅2.9万人、远低于9万预期，失业率升至4.2%，市场大幅下调美联储10月加息概率；G7决定释放多达1亿桶紧急石油和柴油储备，油价重挫；G20贸易部长会议在密尔沃基举行，仅就粮食议题达成联合声明；欧洲债市利差急剧扩大。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "9月制造业PMI为50.1%重返扩张",
+      "summary": "国家统计局数据显示，9月份制造业采购经理指数为50.1%，比上月上升0.3个百分点，升至扩张区间；大型企业PMI为50.6%持平，中、小型企业分别为49.7%和48.9%。非制造业商务活动指数为50.2%，制造业与非制造业双双回到扩张区间，是景气修复的初步信号。",
+      "why": "景气度重回扩张区间",
+      "source": "国家统计局",
+      "publishedAt": "2026-09-30T09:30:01+08:00",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202609/t20260930_1965449.html",
+      "refs": [
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173206"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "三部门实施居民购房贷款贴息政策",
+      "summary": "财政部、人民银行、金融监管总局联合印发通知并就政策答记者问，明确实施居民购房贷款贴息。经济日报评论指出，政策并非普惠式大水漫灌，而是通过对房屋总价、房屋面积、贷款类别等作出界定，把红利定向输送到刚需自住群体，目标在于精准滴灌。",
+      "why": "贴息定向支持刚需与改善",
+      "source": "中国人民银行",
+      "publishedAt": "2026-09-29T17:05:14+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026092917051440583/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026092917153548424/index.html",
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3174005"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "1—8月工业企业利润增长15.7%",
+      "summary": "国家统计局数据显示，1—8月份全国规模以上工业企业实现利润总额52719.8亿元，同比增长15.7%；其中国有控股企业实现利润16759.9亿元、增长10.3%，股份制企业40714.6亿元、增长20.4%。利润增速明显高于同期工业增加值增速，制造业盈利修复是主要贡献。",
+      "why": "盈利修复快于工业产出",
+      "source": "国家统计局",
+      "publishedAt": "2026-09-28T09:30:01+08:00",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202609/t20260928_1965425.html",
+      "refs": []
+    },
+    {
+      "rank": 4,
+      "title": "前8月高技术产品出口额增长37.1%",
+      "summary": "今年前8个月我国高技术产品出口额同比增长37.1%，以锂电池、电动汽车为代表的产品出口继续保持快速增长。技术、供应链、服务等能力加速走向全球，中国企业开始从卖产品转向建生态，实现从产品出海、产业出海到生态出海的进阶。",
+      "why": "出口从产品向生态升级",
+      "source": "东方财富",
+      "publishedAt": "2026-10-05T05:46:42+08:00",
+      "url": "http://finance.eastmoney.com/news/1355,202610053888578747.html",
+      "refs": []
+    },
+    {
+      "rank": 5,
+      "title": "韩国产业银行发行30亿元点心债",
+      "summary": "中国银行作为联席主承销商及账簿管理人，协助韩国产业银行发行3年期30亿元离岸人民币债券，票面利率1.69%，创下该行最大规模离岸人民币公募债券发行纪录。境外机构对人民币债券的融资需求保持旺盛，点心债市场规模继续扩张。",
+      "why": "点心债需求保持旺盛",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-04T11:29:34+08:00",
+      "url": "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173918",
+      "refs": []
+    },
+    {
+      "rank": 6,
+      "title": "G20贸易部长会议在密尔沃基举行",
+      "summary": "9月30日至10月1日，二十国集团贸易部长会议在美国密尔沃基举行，成员围绕反对粮食武器化、应对产能过剩、消除强迫劳动、调整最惠国待遇原则等议题交换意见，就粮食议题达成联合声明，未就其他议题形成成果文件。中方贸易谈判代表李成钢出席会议并发言。",
+      "why": "多边贸易议题推进受阻",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-02T23:43:27+08:00",
+      "url": "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173738",
+      "refs": [
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173923"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "G7决定释放多达1亿桶紧急油储",
+      "summary": "法国总统马克龙表示，七国集团决定释放多达1亿桶的紧急石油和柴油储备，法国总统府称将在最初20天内释放大量柴油储备。协调抛储直接冲击原油供给预期，油价应声跳水、美油盘中跌超5%，高油价对通胀的传导压力阶段性缓解。",
+      "why": "抛储缓解油价通胀压力",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-02T21:58:36+08:00",
+      "url": "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173708",
+      "refs": [
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173716",
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173719",
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173714"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "美国9月非农新增就业仅2.9万人",
+      "summary": "美国9月非农就业人口变动2.9万人，远低于预期的9万人和前值16.2万人，失业率小幅升至4.2%。就业降温削弱了市场对美联储10月加息的押注，利率掉期计入的10月加息概率由29%降至17%；劳工统计局同时将7月、8月新增就业合计下修6万人。",
+      "why": "加息预期被大幅削减",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-02T20:30:03+08:00",
+      "url": "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173671",
+      "refs": [
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173679",
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173676",
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173696",
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173677"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "美联储鲍曼称年内无迫切调整需要",
+      "summary": "美联储负责监管事务的副主席鲍曼表示，目前没有看到采取进一步行动的迫切需要，需要更好地理解整体数据但也要保持对风险的关注，释放出有意在10月政策会议上维持利率不变的信号。在9月加息之后，这番表态使市场进一步下调近期加息概率。",
+      "why": "联储内部转向观望",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-02T03:52:44+08:00",
+      "url": "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173482",
+      "refs": []
+    },
+    {
+      "rank": 10,
+      "title": "欧洲债市重燃传染风险",
+      "summary": "欧洲主权债券利差急剧扩大后，摩根士丹利投资管理公司固定收益联席主管称开始看到传染的初步迹象，担心金融压力蔓延引发混乱的价格波动并迫使央行干预。交易员据此大幅削减对欧洲央行加息幅度的押注，外围国家债务负担重新成为货币政策约束。",
+      "why": "欧债风险约束加息路径",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-05T02:35:08+08:00",
+      "url": "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173978",
+      "refs": [
+        "https://wallstreetcn.comhttps://wallstreetcn.com/livenews/3173653"
+      ]
+    }
+  ],
+  "watch": [
+    "PMI重返扩张后的政策加力",
+    "购房贷款贴息政策的落地规模",
+    "美联储加息路径重新定价",
+    "G7抛储后的油价与通胀路径"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-23T11:02:48+08:00",
+    "note": "全量补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 284,
+    "missingDays": []
+  }
+}
