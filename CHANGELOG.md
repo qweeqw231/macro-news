@@ -45,6 +45,7 @@
 - 键：周报 `2026-W47`（ISO 周，周一~周日）、月报 `2026-11`、年报 `2026`；
   `window` 用新闻日键，`fromAt` 08:00、`toAt` 次日 08:00（+08:00）。
 - 周期报告额外字段只有 `type` 与 `coverage{archiveDays,newsItems,missingDays}`。
+- `data/periodic/index.json` 先落空索引（`count: 0`），历史周报 / 月报 / 年报由外部写作方补写。
 - 归档页保留「周期报告」三组入口（`periodic-week / periodic-month / periodic-year`）；
   报告卡在所属层原位展开，条目复用日报 `renderBriefItems`，展开状态并入 sessionStorage。
 - 降级：索引 404 / 为空 ⇒ 整块隐藏；单条索引坏 ⇒ 跳过；正文 404 ⇒ 卡片内提示 + 重试；
