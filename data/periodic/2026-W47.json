@@ -1,0 +1,182 @@
+{
+  "date": "2026-W47",
+  "type": "week",
+  "generatedAt": "2026-11-23T11:14:22+08:00",
+  "endedAt": "2026-11-23T11:14:22+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2026 年第 47 周宏观周报：中国10月经济数据落地，美联储纪要全员看加息",
+  "window": {
+    "from": "2026-11-16",
+    "to": "2026-11-22",
+    "fromAt": "2026-11-16T08:00:00+08:00",
+    "toAt": "2026-11-23T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周国内10月经济数据与11月LPR报价同时落地，海外加息预期继续强化。国内方面，10月规模以上工业增加值同比增长4.8%，1—10月固定资产投资同比下降8.1%、房地产开发投资下降21.6%，10月社会消费品零售总额增长0.4%，城镇调查失业率降至5.1%；11月1年期和5年期以上LPR分别维持在3.0%和3.5%，连续18个月不变；央行与加拿大方面签署《中加金融工作组工作规范》。海外方面，日本10月CPI同比上涨2.3%创11个月新高，英国10月CPI升至3.6%的一年高位，美国10月零售销售环比增长0.2%，美联储10月会议纪要显示几乎所有官员预计未来数月将继续加息。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "10月工业增4.8% 固投累计降8.1%",
+      "summary": "国家统计局11月16日发布10月数据：10月规模以上工业增加值同比增长4.8%，服务业生产指数增长4.6%，1—10月工业增加值增长5.3%；1—10月固定资产投资同比下降8.1%，房地产开发投资下降21.6%；10月社会消费品零售总额增长0.4%，城镇调查失业率降至5.1%。",
+      "why": "投资与消费同步回落",
+      "source": "东方财富",
+      "publishedAt": "2026-11-19T07:32:51+08:00",
+      "url": "http://finance.eastmoney.com/news/1352,202611193934550867.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1346,202611163931683373.html",
+        "http://finance.eastmoney.com/news/1352,202611173932216697.html",
+        "http://finance.eastmoney.com/news/1352,202611163931624751.html",
+        "http://money.eastmoney.com/news/11261,202611163931617334.html",
+        "http://finance.eastmoney.com/news/1352,202611163931617144.html",
+        "https://wallstreetcn.com/livenews/3200337"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "11月LPR连续18个月保持不变",
+      "summary": "11月20日，央行授权全国银行间同业拆借中心公布，1年期贷款市场报价利率为3.0%，5年期以上为3.5%，自2025年5月调整后连续18个月保持不变。市场人士认为，稳增长压力可控、银行业息差约束仍强是维持现状的主因，短期下调可能性不大。",
+      "why": "贷款定价锚短期维持稳定",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-20T09:00:23+08:00",
+      "url": "https://wallstreetcn.com/livenews/3202906",
+      "refs": [
+        "http://finance.eastmoney.com/news/1352,202611203935923276.html",
+        "http://forex.eastmoney.com/news/1131,202611203935947246.html",
+        "https://wallstreetcn.com/livenews/3203011",
+        "http://forex.eastmoney.com/news/1131,202611203936000533.html",
+        "https://finance.sina.com.cn/money/bond/market/2026-11-20/doc-inizitcm5749647.shtml",
+        "http://finance.eastmoney.com/news/1352,202611203936073413.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行与加拿大签署中加金融工作组规范",
+      "summary": "近期中国人民银行行长潘功胜与加拿大财政部长商鹏飞、加拿大央行行长麦克勒姆共同签署《中加金融工作组工作规范》。中加金融工作组将在金融与货币政策、监管政策、金融市场与稳定、金融科技、反洗钱、跨境资金流动、全球金融治理等领域加强交流。",
+      "why": "货币与监管合作框架落地",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T10:20:46+08:00",
+      "url": "https://wallstreetcn.com/livenews/3201660",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/11-18/10734122.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026111809190698994/index.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "日本10月CPI上涨2.3%创11个月新高",
+      "summary": "日本总务省数据显示，10月消费者价格指数同比上涨2.3%，较9月的2.1%加快，创11个月新高，主要受生鲜食品价格上涨和能源价格回升推动；核心CPI涨幅创年内最高，进一步强化日本央行12月加息的预期，市场对12月加息的定价概率升至72%。",
+      "why": "物价走高支撑日银继续加息",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-20T15:24:55+08:00",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizkizh3995544.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitcn7281362.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizitct0478473.shtml",
+        "https://finance.sina.com.cn/money/forex/hbfx/2026-11-20/doc-inizixmk7245735.shtml",
+        "https://finance.sina.com.cn/money/forex/whqqscgd/2026-11-20/doc-inizixmr0433446.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "英国10月CPI升至3.6%创一年高位",
+      "summary": "英国国家统计局数据显示，10月消费者价格同比上涨3.6%，符合预期但高于9月的3.5%，为连续第四个月上涨，主要由能源账单和汽车燃油成本上涨推动。数据公布后英镑跌幅扩大，交易员削减对英国央行的加息押注，至2027年底的加息定价降至90个基点。",
+      "why": "能源冲击推高通胀与利率",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T16:45:36+08:00",
+      "url": "https://wallstreetcn.com/livenews/3201869",
+      "refs": [
+        "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-18/doc-inizcvvf1662717.shtml",
+        "https://wallstreetcn.com/livenews/3202031",
+        "https://wallstreetcn.com/livenews/3200521",
+        "https://wallstreetcn.com/livenews/3202770"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "美联储纪要：几乎所有官员预计再加息",
+      "summary": "美联储10月27日至28日会议纪要显示，几乎所有与会者认为，在其对通胀和劳动力市场预测的基础上，未来几个月进一步上调联邦基金利率目标区间可能是适当的，以确保通胀及时回到2%；两名政策制定者表示，若后续通胀数据不利，12月加息超过25个基点可能是合理的。",
+      "why": "决策层加息倾向高度一致",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-19T03:00:50+08:00",
+      "url": "https://wallstreetcn.com/livenews/3202123",
+      "refs": [
+        "https://finance.sina.com.cn/money/forex/forexroll/2026-11-19/doc-inizfiwm4344691.shtml",
+        "https://wallstreetcn.com/livenews/3202122",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizfcqp4429949.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "欧央行官员密集释放12月加息信号",
+      "summary": "欧洲央行副行长武伊契奇表示就目前情况来看12月加息看起来非常有可能，市场计入明年再次加息并非不合理；管委纳格尔称12月加息将发出控制通胀的明确信号、必须采取行动，并预计德国今年GDP增长1.3%；管委帕内塔强调不能让通胀在经济中扎根。",
+      "why": "欧央行12月加息几成定局",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T20:00:48+08:00",
+      "url": "https://wallstreetcn.com/livenews/3201945",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200623",
+        "https://wallstreetcn.com/livenews/3203402",
+        "https://wallstreetcn.com/livenews/3202609",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-20/doc-inizkywv5490989.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-19/doc-inizhrsf0928929.shtml",
+        "https://wallstreetcn.com/livenews/3202744"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "美国10月零售销售增长0.2%",
+      "summary": "美国10月零售销售环比增长0.2%，高于预期的0.1%，但较9月受汽油销售推动的0.8%明显放缓；剔除汽车和汽油后零售销售增长0.5%，13个类别中有7个录得增长，无店铺零售商、健康和个护商店、加油站以及建材商支出增加，家具、汽车和爱好用品销售下降。",
+      "why": "消费放缓但仍有韧性",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-17T21:42:46+08:00",
+      "url": "https://wallstreetcn.com/livenews/3201339",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzswc5436675.shtml",
+        "https://wallstreetcn.com/livenews/3201502"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "澳洲联储纪要：多数理事认为紧缩不足",
+      "summary": "澳洲联储公布11月货币政策会议纪要，委员们指出通胀率仍然过高、预计这一状况还将持续一年，经济中的过剩需求预计持续至2027年中，最新通胀预测面临的风险仍偏向上行；多数理事认为本月有必要进行今年以来的第五次加息，当前金融环境具有限制性但紧缩力度可能不足。",
+      "why": "澳洲紧缩周期可能继续延长",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-17T08:30:59+08:00",
+      "url": "https://wallstreetcn.com/livenews/3200910",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-17/doc-iniyzhhm7706912.shtml",
+        "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-11-17/doc-iniyyzyp7774597.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "金价跌破3800美元创2025年9月以来新低",
+      "summary": "金价跌破每盎司3800美元，为2025年9月以来首次，自2月下旬美伊战争爆发以来已下跌超过四分之一，主因能源成本推高通胀促使各国央行收紧货币政策；铜价同步大幅下挫，自由港麦克莫兰、纽蒙特矿业和巴里克矿业等矿业股集体重挫，纽约期金一度失守3730美元。",
+      "why": "紧缩交易压制避险资产",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-18T23:40:34+08:00",
+      "url": "https://wallstreetcn.com/livenews/3202051",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3200471",
+        "http://forex.eastmoney.com/news/1131,202611203935478291.html"
+      ]
+    }
+  ],
+  "watch": [
+    "美联储12月是否加息超过25个基点",
+    "日本央行12月加息概率与日元走势",
+    "欧洲央行12月加息的最终决议与幅度",
+    "国内投资与地产的进一步修复节奏"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-23T11:14:22+08:00",
+    "note": "全量补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 7728,
+    "missingDays": []
+  }
+}

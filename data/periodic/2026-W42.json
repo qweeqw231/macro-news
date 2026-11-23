@@ -1,0 +1,174 @@
+{
+  "date": "2026-W42",
+  "type": "week",
+  "generatedAt": "2026-11-23T11:14:22+08:00",
+  "endedAt": "2026-11-23T11:14:22+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2026 年第 42 周宏观周报：前三季度外贸增18.8%，PPI同比涨5%",
+  "window": {
+    "from": "2026-10-12",
+    "to": "2026-10-18",
+    "fromAt": "2026-10-12T08:00:00+08:00",
+    "toAt": "2026-10-19T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周中国数据密集发布。前三季度货物贸易进出口总值39.94万亿元、同比增长18.8%，增速为近五年同期最快，出口23.2万亿元增长16.4%、进口16.74万亿元增长22.3%。物价方面，9月CPI同比上涨0.9%、核心CPI持平于1.0%，9月PPI同比上涨5.0%、环比上涨1.2%。金融方面，9月新增社融3.55万亿元、人民币贷款增加1.08万亿元，前三季度社融增量超27万亿元。政策方面，G20曼谷会议上潘功胜表示全球失衡不能依靠汇率调节、央行将继续实施好适度宽松的货币政策。海外方面，美国9月CPI同比3.7%全面超预期，日银倾向10月按兵不动，IMF预计欧央行年内至少再加息25个基点。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "9月居民消费价格同比上涨0.9%",
+      "summary": "国家统计局数据显示，9月份全国居民消费价格同比上涨0.9%、环比上涨0.2%，城市上涨0.9%、农村上涨0.8%；食品价格下降1.7%、非食品价格上涨1.5%，消费品上涨1.0%、服务上涨0.8%；扣除食品和能源的核心CPI同比上涨1.0%，与上月持平。",
+      "why": "核心价格修复仍显温和",
+      "source": "国家统计局",
+      "publishedAt": "2026-10-14T09:30:02+08:00",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261014_1965477.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/10-14/10714169.shtml",
+        "http://fund.eastmoney.com/news/11383,202610153895869925.html",
+        "https://wallstreetcn.com/livenews/3178302",
+        "https://wallstreetcn.com/livenews/3178298",
+        "https://wallstreetcn.com/livenews/3178288",
+        "https://www.chinanews.com.cn/cj/2026/10-14/10714161.shtml",
+        "https://wallstreetcn.com/livenews/3178301"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "9月工业生产者出厂价格同比涨5.0%",
+      "summary": "国家统计局数据显示，9月份全国工业生产者出厂价格同比上涨5.0%、环比上涨1.2%，工业生产者购进价格同比上涨6.9%、环比上涨1.2%；1—9月平均出厂价格上涨2.3%。生产资料价格同比上涨6.5%，上游成本向中下游的传导压力重新抬升。",
+      "why": "上游成本压力再度抬升",
+      "source": "国家统计局",
+      "publishedAt": "2026-10-14T09:30:01+08:00",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261014_1965476.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3178289",
+        "https://www.chinanews.com.cn/cj/2026/10-14/10714164.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "前三季度货物贸易进出口增长18.8%",
+      "summary": "海关总署数据显示，前三季度我国货物贸易进出口总值39.94万亿元，同比增长18.8%，增速为近五年同期最快；其中出口23.2万亿元、增长16.4%，进口16.74万亿元、增长22.3%，进口增速快于出口5.9个百分点，三季度出口首次突破8万亿元。",
+      "why": "外贸增速为五年同期最快",
+      "source": "中新网",
+      "publishedAt": "2026-10-14T12:19:22+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2026/10-14/10714285.shtml",
+      "refs": [
+        "http://finance.eastmoney.com/news/1346,202610153895917314.html",
+        "http://finance.eastmoney.com/news/1352,202610153895955956.html",
+        "http://finance.eastmoney.com/news/1352,202610153895892834.html",
+        "http://finance.eastmoney.com/news/1346,202610153895870318.html",
+        "http://finance.eastmoney.com/news/1352,202610143895746338.html",
+        "https://www.chinanews.com.cn/cj/2026/10-14/10714235.shtml",
+        "https://www.chinanews.com.cn/cj/2026/10-15/10715042.shtml",
+        "https://www.chinanews.com.cn/cj/2026/10-15/10714885.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "9月新增社融3.55万亿元超预期",
+      "summary": "央行数据显示，2026年9月人民币贷款增加1.08万亿元，新增社会融资规模3.55万亿元，好于市场预期；9月末广义货币M2同比增长7.2%，社融存量468.17万亿元、同比增长7.1%，对实体经济发放的人民币贷款余额279.9万亿元、增长4.8%，前三季度社融增量超27万亿元。",
+      "why": "直接融资占比抬升",
+      "source": "东方财富",
+      "publishedAt": "2026-10-17T16:37:13+08:00",
+      "url": "http://bond.eastmoney.com/news/1326,202610173899062582.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202610153895865879.html",
+        "http://bond.eastmoney.com/news/1332,202610153895864754.html",
+        "http://finance.eastmoney.com/news/1378,202610143895780088.html"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "G20曼谷会议潘功胜谈汇率与货币政策",
+      "summary": "10月15日G20财长和央行行长会议在泰国曼谷召开，央行行长潘功胜表示地缘政治冲突加剧仍是全球经济的最大不确定性，全球失衡不能依靠汇率调节，逆差国与顺差国应共同努力实现动态平衡，央行将继续实施好适度宽松的货币政策。",
+      "why": "明确汇率调节的边界",
+      "source": "东方财富",
+      "publishedAt": "2026-10-16T14:37:24+08:00",
+      "url": "http://finance.eastmoney.com/news/1352,202610163898336059.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1352,202610163897335847.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "美国9月CPI同比3.7%全面超预期",
+      "summary": "美国9月消费者价格指数多数指标高于市场预期，同比上涨3.7%、核心CPI同比上涨2.6%，9月PPI同比上涨6.3%、核心涨幅扩大至5%，9月零售销售环比增长0.8%。通胀全面走热加剧了市场对美联储后续利率政策的担忧，美股三大股指期货集体转跌。",
+      "why": "通胀走热强化加息定价",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-14T21:16:11+08:00",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-14/doc-inivfftc8292195.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3178915",
+        "https://wallstreetcn.com/livenews/3178730",
+        "https://wallstreetcn.com/livenews/3179510"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "日本央行倾向10月不连续加息",
+      "summary": "知情人士称，日本央行官员倾向于本月不再加息，以避免罕见的连续加息；在没有迹象显示通胀上行风险突然加剧的情况下，官员认为没有必要连续加息，将转而仔细评估经济数据，判断是否有必要最早在12月会议上再次行动。",
+      "why": "日银加息节奏放缓",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-13T16:47:40+08:00",
+      "url": "https://wallstreetcn.com/livenews/3177815",
+      "refs": []
+    },
+    {
+      "rank": 8,
+      "title": "植田和男：将继续上调政策利率",
+      "summary": "日本央行行长植田和男表示将继续调整宽松程度，把通胀稳定在2%水平正变得愈发重要，不能容忍潜在通胀进一步高于2%，并将关注汇率、人工智能及中东局势对物价趋势的影响；副行长代读的讲话稿称将根据经济、物价和金融形势继续上调政策利率。",
+      "why": "日银政策转向信号明确",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-16T19:52:15+08:00",
+      "url": "https://wallstreetcn.com/livenews/3180261",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3179946"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "IMF预计欧央行年内至少再加息25个基点",
+      "summary": "IMF在最新欧洲经济展望报告中表示，为遏制持续高企的通胀，欧洲央行2026年可能至少还需加息25个基点，2027年或需进一步收紧。欧洲央行管委Wunsch称可能将不得不再次加息，Simkus则表示不能排除10月行动的可能性。",
+      "why": "欧央行紧缩幅度预期上修",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-16T18:23:49+08:00",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-16/doc-inivmiip8461371.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3178329",
+        "https://wallstreetcn.com/livenews/3178698",
+        "https://wallstreetcn.com/livenews/3180545"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "工业机器人等产品拉动外贸11.3个百分点",
+      "summary": "海关总署表示，前三季度工业机器人、电子元件、电脑零部件、电工器材等产品进出口合计超10万亿元，增长58.9%，拉动整体进出口增长11.3个百分点。先进制造业做大做强，机电与高技术产品成为外贸增长的主引擎。",
+      "why": "先进制造成为外贸主引擎",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-14T11:01:43+08:00",
+      "url": "https://wallstreetcn.com/livenews/3178363",
+      "refs": [
+        "http://finance.eastmoney.com/news/1348,202610153895897496.html",
+        "http://finance.eastmoney.com/news/1352,202610143895296336.html"
+      ]
+    }
+  ],
+  "watch": [
+    "PPI上行对中下游利润的传导",
+    "四季度增量政策的落地节奏",
+    "美联储11月议息前的通胀演变",
+    "日本央行12月再加息的可能性"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-23T11:14:22+08:00",
+    "note": "全量补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 6023,
+    "missingDays": []
+  }
+}

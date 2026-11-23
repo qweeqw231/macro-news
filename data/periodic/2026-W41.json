@@ -1,0 +1,170 @@
+{
+  "date": "2026-W41",
+  "type": "week",
+  "generatedAt": "2026-11-23T11:14:22+08:00",
+  "endedAt": "2026-11-23T11:14:22+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2026 年第 41 周宏观周报：央行阐明汇率立场，美联储纪要全员支持加息",
+  "window": {
+    "from": "2026-10-05",
+    "to": "2026-10-11",
+    "fromAt": "2026-10-05T08:00:00+08:00",
+    "toAt": "2026-10-12T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周人民币汇率与海外货币政策是两条主线。人民银行发布《关于人民币汇率的政策立场》，重申让市场在汇率形成中发挥决定性作用，明确没有必要也无意通过汇率贬值获取贸易竞争优势，并指出2005年汇改以来人民币对美元累计升值23%。美联储9月会议纪要显示所有与会者均支持加息25个基点，多数人认为年底前可能还需再加一次，圣路易斯联储主席称未来6至9个月应加息；欧洲央行纪要则主张政策应对保持适度。数据与资金面方面，9月末外储34003亿美元、较8月末下降1.11%，新型政策性金融工具9月以来累计投放超1000亿元，央行加量续作1.2万亿元3个月期买断式逆回购、净投放2000亿元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行阐明人民币汇率政策立场",
+      "summary": "中国人民银行发布《关于人民币汇率的政策立场》，重申中国实施以市场供求为基础、参考一篮子货币进行调节、有管理的浮动汇率制度，坚持让市场在汇率形成中发挥决定性作用；指出贸易发展根源于产业国际竞争力提升，没有必要也无意通过汇率贬值获取竞争优势，从不搞竞争性货币贬值。",
+      "why": "为汇率争议给出官方口径",
+      "source": "东方财富",
+      "publishedAt": "2026-10-08T20:02:06+08:00",
+      "url": "http://forex.eastmoney.com/news/11142,202610083889932670.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/10-08/10709327.shtml",
+        "https://www.chinanews.com.cn/cj/2026/10-08/10709309.shtml",
+        "http://forex.eastmoney.com/news/11142,202610093890056091.html",
+        "https://www.chinanews.com.cn/cj/2026/10-08/10709302.shtml",
+        "https://finance.sina.com.cn/roll/2026-10-09/doc-iniurwae1027215.shtml",
+        "https://finance.sina.com.cn/jjxw/2026-10-09/doc-iniuqiym7329996.shtml",
+        "https://wallstreetcn.com/livenews/3176004",
+        "https://www.chinanews.com.cn/cj/2026/10-09/10709554.shtml",
+        "https://www.chinanews.com.cn/cj/2026/10-08/10709333.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "美联储纪要全体支持9月加息",
+      "summary": "美联储9月会议纪要显示，所有与会者均支持加息25个基点，多数人认为年底前可能还需再次加息；几乎所有与会者认为通胀风险偏向上行、就业市场风险大致均衡，部分人认为人工智能基础设施建设可能推升中期总需求。纪要同时披露7月干预日元系财政部行动，未动用美联储资金。",
+      "why": "加息路径与分歧一并落地",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-08T02:02:04+08:00",
+      "url": "https://wallstreetcn.com/livenews/3174947",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3174868",
+        "https://wallstreetcn.com/livenews/3175052",
+        "https://finance.sina.com.cn/world/2026-10-08/doc-iniumumt4641179.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "9月末外储回落至34003亿美元",
+      "summary": "外汇局数据显示，9月末我国外汇储备规模为34003亿美元，较8月末下降381亿美元、降幅1.11%，此前已连续5个月保持在3.4万亿美元之上。外汇局指出，主要原因是美元指数上涨、全球主要金融资产价格总体下跌带来的汇率折算与资产价格变化。",
+      "why": "外储由升转降的转折信号",
+      "source": "东方财富",
+      "publishedAt": "2026-10-07T10:47:42+08:00",
+      "url": "http://forex.eastmoney.com/news/11142,202610073888858665.html",
+      "refs": [
+        "http://forex.eastmoney.com/news/11142,202610083889072266.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "印度央行四年来首次加息至5.5%",
+      "summary": "印度央行货币政策委员会一致投票将基准利率上调25个基点至5.5%，为2023年以来首次加息，理由是通胀走高与本币贬值。印度与亚洲其他央行一道转向收紧货币政策，全球紧缩阵营进一步扩大，亚洲央行的政策分化加剧。",
+      "why": "亚洲紧缩阵营继续扩大",
+      "source": "新浪财经",
+      "publishedAt": "2026-10-07T12:44:17+08:00",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-10-07/doc-iniuknsf8243640.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-07/doc-iniuknsp4834294.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-07/doc-iniukxfz8114375.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "新型政策性金融工具累计投放超千亿",
+      "summary": "9月以来新型政策性金融工具已累计投放超1000亿元专家认为多路资金加快落地并形成实物工作量，将有力拉动基建投资增速；同期央行下调抵押补充贷款（PSL）利率并扩大支持领域，降低政策性银行负债成本，推动重点项目资本金与配套融资落实。",
+      "why": "政策性资金加速形成实物工作量",
+      "source": "东方财富",
+      "publishedAt": "2026-10-08T07:51:09+08:00",
+      "url": "http://bank.eastmoney.com/news/1174,202610083889037733.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3175029",
+        "http://fund.eastmoney.com/news/1623,202610083889073338.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "央行加量续作1.2万亿买断式逆回购",
+      "summary": "10月8日央行以固定数量、利率招标、多重价位中标方式开展12000亿元3个月期买断式逆回购操作，期限89天，到期日为2027年1月5日。因当月有10000亿元同期限操作到期，本月为加量续作、净投放2000亿元，以保持银行体系流动性充裕。",
+      "why": "跨月资金面加量呵护",
+      "source": "东方财富",
+      "publishedAt": "2026-10-08T12:53:53+08:00",
+      "url": "http://finance.eastmoney.com/news/1346,202610083889470685.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3176784"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "注资特别国债首期1500亿票面1.37%",
+      "summary": "财政部发行2026年中央金融机构注资特别国债首期1500亿元，期限5年，票面利率1.37%，加权中标收益率1.37%，全场倍数2.25。该债券对应向中央金融企业补充核心一级资本的注资安排，是本轮特别国债注资方案的落地环节。",
+      "why": "金融央企资本补充落地",
+      "source": "东方财富",
+      "publishedAt": "2026-10-11T19:58:57+08:00",
+      "url": "http://bond.eastmoney.com/news/1332,202610113892098944.html",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3175022"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "欧洲央行纪要主张政策保持适度",
+      "summary": "欧洲央行9月会议纪要显示政策应对应保持适度，所有成员认为通胀前景风险偏向上行，同时强调应避免就未来利率路径给出任何指引、承认高度不确定性是明智之举。首席经济学家Lane称中期通胀未出现明显上行转变，货币政策仍处中间路径。",
+      "why": "欧央行不急于加码",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-08T19:32:06+08:00",
+      "url": "https://wallstreetcn.com/livenews/3175592",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3174072"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "圣路易斯联储主席称6至9个月内应加息",
+      "summary": "美国圣路易斯联储主席Musalem表示，当前通胀水平要求美联储考虑加息，未来6至9个月应当上调利率，遏制通胀所需的政策见效周期大约为18个月；并称强劲的资本需求可能使利率长期高于过往水平。他尚未对10月28日的利率决定作出预判。",
+      "why": "联储内部要求继续收紧",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-09T01:45:46+08:00",
+      "url": "https://wallstreetcn.com/livenews/3175797",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-10-09/doc-iniuqcsp7352807.shtml",
+        "https://wallstreetcn.com/livenews/3175805"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中欧贸易投资磋商机制第二次例会",
+      "summary": "10月8日至9日，商务部部长王文涛在北京与欧委会贸易和经济安全委员谢夫乔维奇共同主持召开中欧贸易投资磋商机制第二次例会并发表联合声明，双方盘点贸易和投资平衡、出口管制、知识产权、世贸组织改革四个板块的磋商进展。",
+      "why": "中欧经贸沟通机制常态化",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-10-09T21:30:34+08:00",
+      "url": "https://wallstreetcn.com/livenews/3176263",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3176514",
+        "https://wallstreetcn.com/livenews/3176262",
+        "http://finance.eastmoney.com/news/1350,202610093891504519.html"
+      ]
+    }
+  ],
+  "watch": [
+    "人民币汇率立场文件后的市场解读",
+    "美联储10月议息前的通胀与就业数据",
+    "买断式逆回购加量续作与资金面",
+    "新型政策性金融工具形成实物工作量的节奏"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-23T11:14:22+08:00",
+    "note": "全量补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 4430,
+    "missingDays": []
+  }
+}
