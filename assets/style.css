@@ -679,6 +679,20 @@ body.kline-open { overflow: hidden; }
   margin-top: .6rem; font-size: .8rem; color: var(--ink-mute);
   font-family: var(--sans);
 }
+/* 3.1.1：末根状态 + 两个涨跌幅并列（今日涨跌 / 末两根日 K） */
+.km-last {
+  margin-top: .55rem; display: grid; gap: .22rem;
+  font-family: var(--sans); font-size: .75rem; line-height: 1.45;
+  color: var(--ink-mute);
+}
+.km-last .kl-state { color: var(--ink-soft); }
+.km-last .kl-state.is-live { color: var(--warm); }
+.km-last .kl-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .45rem; }
+.km-last .kl-k { min-width: 5.6em; color: var(--ink-soft); }
+.km-last .kl-v { font-weight: 700; font-variant-numeric: tabular-nums; }
+.km-last .kl-v.up { color: var(--up); }
+.km-last .kl-v.down { color: var(--down); }
+.km-last .kl-b { color: var(--ink-faint); }
 @media (max-width: 640px) {
   .kline-modal { padding: 0; align-items: flex-end; }
   .km-box {

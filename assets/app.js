@@ -3310,6 +3310,7 @@
       periods.hidden = true;
       maBox.hidden = true;
       canvasBox.style.display = 'none';
+      clearKlineLast();
       $('#kmMeta').textContent = '';
       $('#kmNote').textContent = window.MarketData.getKlineNote
         ? window.MarketData.getKlineNote(key)
@@ -3607,6 +3608,87 @@
       `<span class="km-meta-short">${esc(m.short)}</span>`;
   }
 
+  // 3.1.1：末根状态 + 两个涨跌幅并列展示。
+  // 为什么必须并列：缩略的「今日涨跌」= 实时价 vs 上一交易日收盘；
+  // K 线图上的「末两根」= 最近两根**已发布**日 K 的收盘之差。两者的基准日不同，
+  // 5 个人民币交叉盘（新浪只发布已收盘的 bar）还会整整差一个交易日，不能互相加减。
+  const CNY_CROSS_KEYS = ['eurcny', 'gbpcny', 'jpycny', 'krwcny', 'audcny'];
+  const bjHm = (v) => {
+    const t = typeof v === 'number' ? v : Date.parse(v || '');
+    if (!Number.isFinite(t)) return '';
+    const d = new Date(t + 8 * 3600 * 1000);
+    return String(d.getUTCHours()).padStart(2, '0') + ':' + String(d.getUTCMinutes()).padStart(2, '0');
+  };
+  function clearKlineLast() {
+    const box = $('#kmLast');
+    if (!box) return;
+    box.hidden = true;
+    box.innerHTML = '';
+  }
+  function renderKlineLast(bars, period, key, src, fetchedAt) {
+    const box = $('#kmLast');
+    if (!box) return;
+    if (period !== '1d' || !bars || bars.length < 2) return clearKlineLast();
+    const last = bars[bars.length - 1];
+    const prev = bars[bars.length - 2];
+    const tLast = String(last.t || '').slice(0, 10);
+    const tPrev = String(prev.t || '').slice(0, 10);
+    const cLast = Number(last.c);
+    const cPrev = Number(prev.c);
+    const dec = decOf(key);
+    const q = (S.quotes || []).find((x) => x.key === key);
+    const QS = window.MacroQuoteStatus;
+    const mk = QS && QS.klineMarker ? QS.klineMarker({
+      src, bars, period, now: Date.now(),
+      market: q ? (q.calendarMarket || q.market) : '',
+      calendar: MARKET_CAL,
+      dataAt: bars.__generatedAt,
+    }) : null;
+    const live = !!(mk && mk.partial);          // 在途·未定稿
+    const closed = !!(mk && mk.closed);         // 已定稿的收盘根
+    // 「这一根的取数时点」：本地文件 = 文件写入时刻；直连 = 本轮取数时刻
+    const snapAt = bars.__generatedAt ? bjHm(bars.__generatedAt) : bjHm(fetchedAt || Date.now());
+    const written = bars.__generatedAt ? bjHm(bars.__generatedAt) : '';
+    let state;
+    if (live) {
+      state = `末根 ${tLast} · 在途·未定稿（快照 ${snapAt}，不是收盘价）`;
+    } else if (closed) {
+      state = `末根 ${tLast} · 收盘（日线）${written ? '· 数据写入 ' + written : ''}`;
+    } else if (CNY_CROSS_KEYS.includes(key)) {
+      state = `末根 ${tLast} = 上一交易日收盘（新浪只发布已收盘的日 K，当日那根要等次日 06:00 切日后才出现）`;
+    } else {
+      state = `末根 ${tLast} · 收盘${written ? '（快照 ' + written + '）' : ''}，源端尚无更新的 bar`;
+    }
+
+    const rows = [];
+    const pctCell = (pct) => {
+      const txt = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+      return `<span class="kl-v ${pct >= 0 ? 'up' : 'down'}">${txt}</span>`;
+    };
+    // ① 今日涨跌 = 行情缩略口径：实时价 vs 上一交易日收盘
+    if (q && Number.isFinite(q.price) && Number.isFinite(q.prevClose) && q.prevClose > 0) {
+      const pct = (q.price / q.prevClose - 1) * 100;
+      const at = q.updatedAt ? bjHm(q.updatedAt) : snapAt;
+      rows.push(
+        '<div class="kl-row"><span class="kl-k">今日涨跌</span>' + pctCell(pct) +
+        `<span class="kl-b">实时 ${fmtNum(q.price, dec)} vs 上一交易日收盘 ${fmtNum(q.prevClose, dec)}` +
+        `${at ? '（行情 ' + at + '）' : ''} · 与右侧缩略同口径</span></div>`
+      );
+    }
+    // ② 末两根日 K = 最近两根已发布日 K 的收盘之差
+    if (Number.isFinite(cLast) && Number.isFinite(cPrev) && cPrev > 0) {
+      const pct = (cLast / cPrev - 1) * 100;
+      rows.push(
+        '<div class="kl-row"><span class="kl-k">末两根日K</span>' + pctCell(pct) +
+        `<span class="kl-b">${tPrev} 收盘 ${fmtNum(cPrev, dec)} → ${tLast} 收盘 ${fmtNum(cLast, dec)}` +
+        `${live ? '（末根在途，下一轮刷新后会变）' : ''}</span></div>`
+      );
+    }
+    box.innerHTML =
+      `<div class="kl-state${live ? ' is-live' : ''}">${esc(state)}</div>` + rows.join('');
+    box.hidden = false;
+  }
+
   // 分钟K 的实际覆盖起点：同一周期，不同标的的源端历史上限差很多
   // （dxy 60m 只有 120 根≈5 天，eurcny 60m 有 1102 根≈64 天）。
   // 只做提示、不做拦截，也不标警告色 —— 覆盖短是正常的源端上限，不是数据丢失。
@@ -3635,6 +3717,7 @@
 
   async function loadKline(key, period) {
     const myId = ++klineReqId;          // 请求令牌：过期响应一律丢弃
+    const reqAt = Date.now();           // 本轮取数时刻（直连数据的「快照时间」）
     klineKey = key;
     klinePeriod = period;
     saveUI();                            // 刷新前记住当前标的与周期
@@ -3651,6 +3734,7 @@
     const cov = $('#kmCoverage');
     note.textContent = '';
     if (cov) { cov.hidden = true; cov.textContent = ''; }
+    clearKlineLast();                    // 换标的/换周期 ⇒ 末根说明立即作废，避免张冠李戴
     if (meta) meta.textContent = '加载中…';
     // 画布与顶部必须同步：取数期间画布也写「加载中…」，不能先写「暂无数据」
     if (kChart.setEmptyText) kChart.setEmptyText('加载中…');
@@ -3711,6 +3795,7 @@
       const caliber = window.MarketData.getKlineNote ? window.MarketData.getKlineNote(key) : '';
       note.textContent = caliber || '';
       renderKlineMeta(bars, src, period, key);
+      renderKlineLast(bars, period, key, src, reqAt);
       notifyUpgrade();
       return true;
     };

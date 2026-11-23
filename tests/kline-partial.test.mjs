@@ -86,6 +86,33 @@ test('行情卡：源时间已到收盘之后 → 正常已收盘', () => {
   assert.equal(r.partial, undefined);
 });
 
+test('K线：上海金夜盘（20:00 后）当日日盘那根已定稿 → 不标盘中值', () => {
+  // 3.1.1：夜盘属于**下一交易日**，但 11-23 这根在 15:30 就收完了，
+  //   不能因为「此刻 phase=open」把它继续标成盘中值。
+  const b = [{ t: '2026-11-21', o: 1, c: 2, h: 3, l: 1, v: 1 },
+    { t: '2026-11-23', o: 770.5, c: 781.4, h: 783, l: 755.01, v: 895980 }];
+  const m = QS.klineMarker({
+    src: '本地预生成（近 4 年）', bars: b, period: '1d',
+    now: BJ('2026-11-23T22:40:00'), market: 'SGE', calendar: CAL,
+    dataAt: '2026-11-23T08:18:31Z',       // 16:18 北京，收盘后写入
+  });
+  assert.equal(m.partial, undefined);
+  assert.equal(m.closed, true);
+  assert.ok(m.full.includes('收盘（日线）'));
+});
+
+test('K线：上海金夜盘的下一交易日未来蜡烛 → 盘中值·未定稿', () => {
+  const b = [{ t: '2026-11-23', o: 770.5, c: 781.4, h: 783, l: 755.01, v: 895980 },
+    { t: '2026-11-24', o: 779.9, c: 780.2, h: 780.9, l: 779.5, v: 1200 }];
+  const m = QS.klineMarker({
+    src: '本地预生成（近 4 年）', bars: b, period: '1d',
+    now: BJ('2026-11-23T22:40:00'), market: 'SGE', calendar: CAL,
+    dataAt: '2026-11-23T14:18:31Z',       // 22:18 北京，夜盘中写入
+  });
+  assert.equal(m.partial, true);
+  assert.ok(m.full.includes('盘中值·未定稿'));
+});
+
 test('K线：半日市提前收盘后 → 收盘（日线）', () => {
   const half = [{ t: '2026-12-24', o: 1, c: 2, h: 3, l: 1, v: 1 }];
   const m = QS.klineMarker({

@@ -782,6 +782,13 @@
       var partial = false;
       var cfg = opts.market && cfgFor(opts.market);
       var mktToday = cfg ? tzParts(Number(now), cfg.tz).date : today;
+      // 3.1.1：该市场「日线已经收完的那一天」。有交易时段的市场才有这个概念；
+      //   FX / CMDTY 是 24h 连续、日切靠窗口，不走这里（保持原逻辑）。
+      //   ⚠ 上海金夜盘 20:00 属于**下一交易日**，所以此刻 phase 是 open，但今天（11-23）
+      //     那根日盘 bar 早已在 15:30 收完 ⇒ 不能因为 phase=open 就把它标成「盘中值」。
+      var closedDaily = cfg && MARKET_SESSIONS[opts.market]
+        ? lastClosedDailyDate(opts.market, Number(now), opts.calendar)
+        : null;
       // 24h 连续市场（FX）在切日时刻之前，「今天这根」还属于昨天那一根 ⇒ 仍算盘中
       if (cfg && cfg.openWeekday != null) {
         var fxP = tzParts(Number(now), cfg.tz);
@@ -791,9 +798,14 @@
         ? sessionAt(opts.market, Number(now), opts.calendar)
         : null;
       var isFullLocal = fromLocal && /全量/.test(String(opts.src || ''));
-      if (bt.date === mktToday) {
+      // 3.1.1：未来蜡烛（bt.date 晚于「日盘已收完那天」）= 夜盘刚开出的下一交易日 bar，
+      //   它一定在途；这类 bar 的日期不等于日历今天，必须单独放行，否则会被当成「延迟」。
+      var isFutureBar = !!(closedDaily && bt.date > closedDaily);
+      if (bt.date === mktToday || isFutureBar) {
         if (phase && (phase.phase === 'open' || phase.phase === 'lunch' || phase.phase === 'pre')) {
-          partial = true;
+          // 3.1.1：日盘已收完（closedDaily == 今天）时，夜盘只是下一交易日的开始，
+          //   今天这根已定稿；只有「未来蜡烛」（bt.date > closedDaily）才算在途。
+          if (!closedDaily || bt.date > closedDaily) partial = true;
         }
         if (isFullLocal) partial = true;
         if (!partial && phase && phase.phase === 'post' && fromLocal) {
@@ -821,6 +833,15 @@
       }
       // 2.9.2：该市场当日已收盘（含半日市、跨时区市场的本地日期）→ 收盘（日线/周线/月线）
       if (bt.date === mktToday && phase && phase.phase === 'post') {
+        return {
+          state: 'closed',
+          full: src + ' · ' + clockText + ' · ' + periodLabel + genText,
+          short: src + ' ' + clockText + ' · ' + periodLabel,
+          closed: true,
+        };
+      }
+      // 3.1.1：日盘已收完（例如上海金 15:30 后、夜盘时段）⇒ 这根是定稿收盘，回到正常展示
+      if (closedDaily && bt.date === closedDaily) {
         return {
           state: 'closed',
           full: src + ' · ' + clockText + ' · ' + periodLabel + genText,
