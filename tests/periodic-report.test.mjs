@@ -68,7 +68,7 @@ test('渲染：条目复用日报 renderBriefItems，展开状态独立保存', 
   assert.ok(APP.includes('`${r.type}=${r.id}`'), '展开 key 必须带 week=/month=/year= 前缀');
   assert.ok(APP.includes('periodicOpen'), '刷新恢复缺少周期报告展开状态');
   assert.ok(APP.includes('restorePeriodicOpen()'), 'renderArchive 未恢复周期报告展开状态');
-  assert.ok(HTML.includes('assets/app.js?v=20261123a'), 'app.js 版本号未更新');
+  assert.ok(HTML.includes('assets/app.js?v=20261123b'), 'app.js 版本号未更新');
 });
 
 test('既有行为：归档索引仍是 60s TTL + no-cache 条件请求', () => {

@@ -2993,7 +2993,9 @@
     $('#mmNote').textContent = '';
     $('#mmRanges').innerHTML = '';
     const box = $('#mmCanvas');
+    // 与 K 线换标的一致：换指标先复位视图，避免把上一个指标的缩放/回看带过来
     if (!mmChart) mmChart = new window.MacroChart(box);
+    else mmChart.reset();
     loadMacroSeries(key, range || macroRange);
     saveUI();
   }
@@ -3013,7 +3015,18 @@
     document.addEventListener('keydown', (e) => {
       if ($('#macroModal').hidden) return;
       if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
-      if (e.key === 'Escape') closeMacro();
+      if (e.key === 'Escape') { closeMacro(); return; }
+      // 2.36.2：键盘平移/缩放与 K 线同一套按键与幅度
+      if (!mmChart) return;
+      if (e.key === 'ArrowLeft') { mmChart.panBy(15); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { mmChart.panBy(-15); e.preventDefault(); }
+      else if (e.key === '+' || e.key === '=') {
+        mmChart.zoomBy(1 / 1.2, mmChart.offset === 0 ? 1 : 0.5);
+        e.preventDefault();
+      } else if (e.key === '-' || e.key === '_') {
+        mmChart.zoomBy(1.2, mmChart.offset === 0 ? 1 : 0.5);
+        e.preventDefault();
+      }
     });
   }
 
