@@ -37,6 +37,7 @@ test('量级护栏：明显不属于该指标的值被丢弃', () => {
   assert.equal(validMacroValue('margin', 22222.85), true);
   assert.equal(validMacroValue('margin', 2.2), false);        // 把「亿元」写成「万亿元」
   assert.equal(validMacroValue('us10y', 4.92), true);
+  assert.equal(validMacroValue('us10y', 0), false);           // 休市日的空值占位，不是真实收益率
   assert.equal(validMacroValue('pmi', 49.3), true);
   assert.equal(validMacroValue('pmi', 493), false);
   const pts = pointsFromItems([
@@ -156,6 +157,17 @@ test('前端默认 5 年；社融用柱状、其余折线', () => {
   assert.match(mj, /id: '5y', label: '5年'/);
   assert.match(mj, /function fmtValue\(v, item\)/);
   assert.match(mj, /function fmtChange\(item\)/);
+});
+
+test('数据文件：10Y 美债没有 0 值占位根（休市日断点会让折线扎到 0）', () => {
+  const file = path.join(ROOT, 'data', 'macro', 'us10y.json');
+  if (!fs.existsSync(file)) return; // 未回补时跳过
+  const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const bad = doc.bars.filter((b) => !(Number(b.v) > 0));
+  assert.equal(
+    bad.length, 0,
+    `us10y 仍有非正值：${bad.slice(0, 5).map((b) => `${b.t}=${b.v}`).join(', ')}`
+  );
 });
 
 test('数据文件：index.json 的 5 项与序列文件一致、时间升序', () => {

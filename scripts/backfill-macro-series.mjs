@@ -117,7 +117,9 @@ async function loadUs10y() {
   for (const r of rows) {
     const t = String(r.SOLAR_DATE || '').slice(0, 10);
     const v = n(r.EMG00001310);
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(t) || v === null) continue;
+    // 休市日东财会发 null（偶尔是 0）：10Y 收益率不可能为 0，跳过而不是写成 0，
+    // 否则折线会在缺口处扎到 0（2.36.1）。
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(t) || v === null || v <= 0) continue;
     out.push({ t, v: Number(v.toFixed(2)) });
   }
   return out;
