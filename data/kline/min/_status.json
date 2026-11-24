@@ -1,54 +1,21 @@
 {
-  "generatedAt": "2026-11-24T02:55:01.620Z",
-  "durationMs": 408374,
-  "ok": 39,
-  "failed": 29,
-  "throttleHit": true,
-  "emRequests": 8,
-  "emFailures": 5,
+  "generatedAt": "2026-11-24T03:54:31.751Z",
+  "durationMs": 357326,
+  "ok": 68,
+  "failed": 0,
+  "throttleHit": false,
+  "emRequests": 32,
+  "emFailures": 0,
   "fallbackCount": 0,
   "fallbacks": [],
-  "sourceSwitches": 2,
-  "sourceSwitchList": [
-    "audusd/30m: 东财 → 新浪",
-    "usdchf/30m: 东财 → 新浪"
-  ],
-  "failures": [
-    "sox/5m: K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "kospi/5m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "sge_au9999/5m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；上金所官网失败(上金所不支持周期 5m)",
-    "usdkrw/5m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "dxy/5m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "xag/5m: K线不可得：新浪外盘失败(新浪外盘不支持周期 5m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-    "xau/5m: K线不可得：新浪外盘失败(fetch failed)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-    "n225/5m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "cac40/30m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "dax/30m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "ukx/30m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "sox/30m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "n225/30m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "kospi/30m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "sge_au9999/30m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；上金所官网失败(上金所不支持周期 30m)",
-    "xag/30m: K线不可得：新浪外盘失败(新浪外盘不支持周期 30m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-    "xau/30m: K线不可得：新浪外盘失败(新浪外盘不支持周期 30m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-    "usdkrw/30m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "dxy/30m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "n225/1m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "kospi/1m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "dax/1m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "cac40/1m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "sge_au9999/1m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；上金所官网失败(上金所不支持周期 1m)",
-    "ukx/1m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "sox/1m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-    "xag/1m: K线不可得：新浪外盘失败(新浪外盘不支持周期 1m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-    "xau/1m: K线不可得：新浪外盘失败(新浪外盘不支持周期 1m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-    "dxy/1m: K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)"
-  ],
+  "sourceSwitches": 0,
+  "sourceSwitchList": [],
+  "failures": [],
   "rejected": [],
   "periodList": [
     "5m",
     "30m",
-    "1m"
+    "60m"
   ],
   "perTarget": {
     "dax/5m": {
@@ -70,365 +37,394 @@
       "lastOkAt": 1795470523975
     },
     "sox/5m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机连续 5 次连接失败（fetch failed），判定被限流，本组中止)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
+      "status": "ok",
+      "bars": 1858,
+      "unchanged": true,
       "lastOkAt": 1795470543536
     },
     "kospi/5m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795484917745
+      "status": "ok",
+      "bars": 2000,
+      "changed": true,
+      "lastOkAt": 1795492136816
+    },
+    "sge_au9999/5m": {
+      "status": "ok",
+      "bars": 2000,
+      "changed": true,
+      "lastOkAt": 1795492141719
+    },
+    "usdkrw/5m": {
+      "status": "ok",
+      "bars": 2000,
+      "changed": true,
+      "lastOkAt": 1795492146571
+    },
+    "dxy/5m": {
+      "status": "ok",
+      "bars": 1358,
+      "changed": true,
+      "lastOkAt": 1795492152301
+    },
+    "xag/5m": {
+      "status": "ok",
+      "bars": 2000,
+      "changed": true,
+      "lastOkAt": 1795492159580
+    },
+    "xau/5m": {
+      "status": "ok",
+      "bars": 2000,
+      "changed": true,
+      "lastOkAt": 1795492165959
+    },
+    "n225/5m": {
+      "status": "ok",
+      "bars": 1826,
+      "changed": true,
+      "lastOkAt": 1795492170815
     },
     "jpycny/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488569616
+      "lastOkAt": 1795492176001
     },
     "audcny/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488574536
+      "lastOkAt": 1795492181575
     },
     "gbpcny/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488579388
+      "lastOkAt": 1795492186632
     },
     "krwcny/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488584587
-    },
-    "sge_au9999/5m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；上金所官网失败(上金所不支持周期 5m)",
-      "lastOkAt": 1795484954149
-    },
-    "usdkrw/5m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795484969245
-    },
-    "dxy/5m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795484976487
-    },
-    "xag/5m": {
-      "status": "skip",
-      "reason": "K线不可得：新浪外盘失败(新浪外盘不支持周期 5m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-      "lastOkAt": 1795484984732
-    },
-    "xau/5m": {
-      "status": "skip",
-      "reason": "K线不可得：新浪外盘失败(fetch failed)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-      "lastOkAt": 1795484992796
-    },
-    "n225/5m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795484997969
+      "lastOkAt": 1795492192370
     },
     "eurcny/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488631548
+      "lastOkAt": 1795492197227
     },
     "usdcny/5m": {
       "status": "ok",
-      "bars": 1346,
+      "bars": 1357,
       "changed": true,
-      "lastOkAt": 1795488637166
+      "lastOkAt": 1795492202932
     },
     "eurusd/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488641917
+      "lastOkAt": 1795492207782
     },
     "usdjpy/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488647363
+      "lastOkAt": 1795492212593
     },
     "audusd/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488652842
+      "lastOkAt": 1795492218082
     },
     "usdcad/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488657484
+      "lastOkAt": 1795492222931
     },
     "usdchf/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488662988
+      "lastOkAt": 1795492227696
     },
     "gbpusd/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795488668047
+      "lastOkAt": 1795492232469
     },
     "cac40/30m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
+      "status": "ok",
+      "bars": 475,
+      "unchanged": true,
       "lastOkAt": 1795452686826
     },
     "dax/30m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
+      "status": "ok",
+      "bars": 475,
+      "unchanged": true,
       "lastOkAt": 1795456252942
     },
     "ukx/30m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
+      "status": "ok",
+      "bars": 475,
+      "unchanged": true,
       "lastOkAt": 1795470653202
     },
     "sox/30m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
+      "status": "ok",
+      "bars": 406,
+      "unchanged": true,
       "lastOkAt": 1795470671995
     },
     "n225/30m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795485054328
+      "status": "ok",
+      "bars": 391,
+      "changed": true,
+      "lastOkAt": 1795492255341
     },
     "kospi/30m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795485064115
+      "status": "ok",
+      "bars": 448,
+      "changed": true,
+      "lastOkAt": 1795492259859
+    },
+    "sge_au9999/30m": {
+      "status": "ok",
+      "bars": 591,
+      "changed": true,
+      "lastOkAt": 1795492264382
+    },
+    "xag/30m": {
+      "status": "ok",
+      "bars": 901,
+      "changed": true,
+      "lastOkAt": 1795492271634
+    },
+    "xau/30m": {
+      "status": "ok",
+      "bars": 901,
+      "changed": true,
+      "lastOkAt": 1795492277546
+    },
+    "usdkrw/30m": {
+      "status": "ok",
+      "bars": 540,
+      "changed": true,
+      "lastOkAt": 1795492282066
+    },
+    "dxy/30m": {
+      "status": "ok",
+      "bars": 300,
+      "changed": true,
+      "lastOkAt": 1795492286597
     },
     "gbpcny/30m": {
       "status": "ok",
-      "bars": 1293,
+      "bars": 1295,
       "changed": true,
-      "lastOkAt": 1795488697299
+      "lastOkAt": 1795492292481
     },
     "jpycny/30m": {
       "status": "ok",
-      "bars": 1302,
+      "bars": 1304,
       "changed": true,
-      "lastOkAt": 1795488703048
+      "lastOkAt": 1795492297635
     },
     "krwcny/30m": {
       "status": "ok",
-      "bars": 1314,
+      "bars": 1316,
       "changed": true,
-      "lastOkAt": 1795488708777
+      "lastOkAt": 1795492303581
     },
     "audcny/30m": {
       "status": "ok",
-      "bars": 1292,
+      "bars": 1294,
       "changed": true,
-      "lastOkAt": 1795488713674
-    },
-    "sge_au9999/30m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；上金所官网失败(上金所不支持周期 30m)",
-      "lastOkAt": 1795485102154
-    },
-    "xag/30m": {
-      "status": "skip",
-      "reason": "K线不可得：新浪外盘失败(新浪外盘不支持周期 30m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-      "lastOkAt": 1795485121663
-    },
-    "xau/30m": {
-      "status": "skip",
-      "reason": "K线不可得：新浪外盘失败(新浪外盘不支持周期 30m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-      "lastOkAt": 1795485128911
-    },
-    "usdkrw/30m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795485133842
-    },
-    "dxy/30m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795485138759
+      "lastOkAt": 1795492308654
     },
     "eurcny/30m": {
       "status": "ok",
-      "bars": 1298,
+      "bars": 1300,
       "changed": true,
-      "lastOkAt": 1795488746076
+      "lastOkAt": 1795492313419
     },
     "usdcny/30m": {
       "status": "ok",
-      "bars": 1041,
+      "bars": 1043,
       "changed": true,
-      "lastOkAt": 1795488750811
+      "lastOkAt": 1795492318354
     },
     "eurusd/30m": {
       "status": "ok",
-      "bars": 1048,
+      "bars": 1050,
       "changed": true,
-      "lastOkAt": 1795488755612
+      "lastOkAt": 1795492323116
     },
     "gbpusd/30m": {
       "status": "ok",
-      "bars": 1042,
+      "bars": 1044,
       "changed": true,
-      "lastOkAt": 1795488762812
+      "lastOkAt": 1795492328066
     },
     "audusd/30m": {
       "status": "ok",
-      "bars": 1043,
+      "bars": 1045,
       "changed": true,
-      "lastOkAt": 1795488767576
+      "lastOkAt": 1795492335253
     },
     "usdcad/30m": {
       "status": "ok",
-      "bars": 1048,
+      "bars": 1050,
       "changed": true,
-      "lastOkAt": 1795488772312
+      "lastOkAt": 1795492340020
     },
     "usdchf/30m": {
       "status": "ok",
-      "bars": 1062,
+      "bars": 1064,
       "changed": true,
-      "lastOkAt": 1795488777084
+      "lastOkAt": 1795492344667
     },
     "usdjpy/30m": {
       "status": "ok",
-      "bars": 1053,
+      "bars": 1055,
       "changed": true,
-      "lastOkAt": 1795488781889
+      "lastOkAt": 1795492349434
     },
-    "n225/1m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795162934250
-    },
-    "kospi/1m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795423959564
-    },
-    "gbpcny/1m": {
+    "n225/60m": {
       "status": "ok",
-      "bars": 1440,
+      "bars": 213,
       "changed": true,
-      "lastOkAt": 1795488797361
+      "lastOkAt": 1795492354406
     },
-    "jpycny/1m": {
+    "kospi/60m": {
       "status": "ok",
-      "bars": 1440,
+      "bars": 240,
       "changed": true,
-      "lastOkAt": 1795488802103
+      "lastOkAt": 1795492359083
     },
-    "krwcny/1m": {
+    "gbpcny/60m": {
       "status": "ok",
-      "bars": 1440,
+      "bars": 1128,
       "changed": true,
-      "lastOkAt": 1795488807074
+      "lastOkAt": 1795492365575
     },
-    "audcny/1m": {
+    "jpycny/60m": {
       "status": "ok",
-      "bars": 1440,
+      "bars": 1138,
       "changed": true,
-      "lastOkAt": 1795488811990
+      "lastOkAt": 1795492371247
     },
-    "dax/1m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795456337767
-    },
-    "cac40/1m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795456342425
-    },
-    "sge_au9999/1m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；上金所官网失败(上金所不支持周期 1m)",
-      "lastOkAt": 1795467218553
-    },
-    "ukx/1m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795477977363
-    },
-    "sox/1m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795477982044
-    },
-    "xag/1m": {
-      "status": "skip",
-      "reason": "K线不可得：新浪外盘失败(新浪外盘不支持周期 1m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-      "lastOkAt": 1795477992634
-    },
-    "xau/1m": {
-      "status": "skip",
-      "reason": "K线不可得：新浪外盘失败(新浪外盘不支持周期 1m)；东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)",
-      "lastOkAt": 1795477998919
-    },
-    "dxy/1m": {
-      "status": "skip",
-      "reason": "K线不可得：东方财富失败(东财主机处于熔断状态（本组已连续失败过多），本轮不再请求)；新浪财经失败(新浪无该标的)；腾讯行情失败(腾讯无该标的)",
-      "lastOkAt": 1795478003676
-    },
-    "eurcny/1m": {
+    "krwcny/60m": {
       "status": "ok",
-      "bars": 1440,
+      "bars": 1147,
       "changed": true,
-      "lastOkAt": 1795488858965
+      "lastOkAt": 1795492376518
     },
-    "eurusd/1m": {
+    "audcny/60m": {
       "status": "ok",
-      "bars": 1440,
+      "bars": 1128,
       "changed": true,
-      "lastOkAt": 1795488864520
+      "lastOkAt": 1795492381562
     },
-    "gbpusd/1m": {
+    "dax/60m": {
       "status": "ok",
-      "bars": 1440,
-      "changed": true,
-      "lastOkAt": 1795488870030
+      "bars": 251,
+      "unchanged": true,
+      "lastOkAt": 1795459964072
     },
-    "usdjpy/1m": {
+    "cac40/60m": {
       "status": "ok",
-      "bars": 1440,
-      "changed": true,
-      "lastOkAt": 1795488874931
+      "bars": 251,
+      "unchanged": true,
+      "lastOkAt": 1795459968735
     },
-    "audusd/1m": {
+    "sge_au9999/60m": {
       "status": "ok",
-      "bars": 1440,
+      "bars": 302,
       "changed": true,
-      "lastOkAt": 1795488880303
+      "lastOkAt": 1795492395595
     },
-    "usdcad/1m": {
+    "sox/60m": {
       "status": "ok",
-      "bars": 1440,
-      "changed": true,
-      "lastOkAt": 1795488885137
+      "bars": 217,
+      "unchanged": true,
+      "lastOkAt": 1795470793366
     },
-    "usdchf/1m": {
+    "ukx/60m": {
       "status": "ok",
-      "bars": 1440,
-      "changed": true,
-      "lastOkAt": 1795488892103
+      "bars": 251,
+      "unchanged": true,
+      "lastOkAt": 1795470812346
     },
-    "usdcny/1m": {
+    "xag/60m": {
       "status": "ok",
-      "bars": 1440,
+      "bars": 460,
       "changed": true,
-      "lastOkAt": 1795488897617
+      "lastOkAt": 1795492412653
+    },
+    "xau/60m": {
+      "status": "ok",
+      "bars": 387,
+      "changed": true,
+      "lastOkAt": 1795492419716
+    },
+    "dxy/60m": {
+      "status": "ok",
+      "bars": 150,
+      "changed": true,
+      "lastOkAt": 1795492424381
+    },
+    "eurcny/60m": {
+      "status": "ok",
+      "bars": 1132,
+      "changed": true,
+      "lastOkAt": 1795492433240
+    },
+    "eurusd/60m": {
+      "status": "ok",
+      "bars": 1003,
+      "changed": true,
+      "lastOkAt": 1795492438008
+    },
+    "gbpusd/60m": {
+      "status": "ok",
+      "bars": 998,
+      "changed": true,
+      "lastOkAt": 1795492442942
+    },
+    "usdjpy/60m": {
+      "status": "ok",
+      "bars": 1009,
+      "changed": true,
+      "lastOkAt": 1795492447870
+    },
+    "audusd/60m": {
+      "status": "ok",
+      "bars": 997,
+      "changed": true,
+      "lastOkAt": 1795492452809
+    },
+    "usdcad/60m": {
+      "status": "ok",
+      "bars": 1001,
+      "changed": true,
+      "lastOkAt": 1795492457810
+    },
+    "usdchf/60m": {
+      "status": "ok",
+      "bars": 1014,
+      "changed": true,
+      "lastOkAt": 1795492462812
+    },
+    "usdcny/60m": {
+      "status": "ok",
+      "bars": 1014,
+      "changed": true,
+      "lastOkAt": 1795492467749
     }
   }
 }
