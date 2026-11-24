@@ -6,84 +6,84 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-24T13:38:13.152Z",
-  "durationMs": 19157,
+  "startedAt": "2026-11-24T13:53:02.133Z",
+  "durationMs": 48442,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 2719
+      "ms": 3761
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 922
+      "ms": 1198
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1489
+      "ms": 1431
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 957
+      "ms": 1007
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1532
+      "ms": 2214
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 668
+      "ms": 895
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1540
+      "ms": 1606
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 7695
+      "ms": 7662
     }
   ],
-  "quotes": 75,
-  "added": 17,
+  "quotes": 57,
+  "added": 24,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 8124,
-    "kept": 8124,
+    "candidates": 8147,
+    "kept": 8147,
     "evicted": 0,
-    "deduped": 314,
+    "deduped": 308,
     "days": [
       {
         "day": "2026-11-24",
         "incoming": 293,
-        "candidates": 942,
-        "kept": 942,
+        "candidates": 965,
+        "kept": 965,
         "evicted": 0,
-        "deduped": 276,
-        "added": 17
+        "deduped": 270,
+        "added": 24
       },
       {
         "day": "2026-11-23",
@@ -140,5 +140,6 @@
         "added": 0
       }
     ]
-  }
+  },
+  "quoteError": "18/66 失败：东财批量失败：fetch failed"
 }
