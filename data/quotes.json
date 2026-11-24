@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T21:38:23.508Z",
+  "generatedAt": "2026-11-24T21:53:17.961Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -210,7 +210,7 @@
       "high": 23884.74,
       "low": 23455.84,
       "prevClose": 24089.56,
-      "volume": 8009116416,
+      "volume": 8044725248,
       "changePct": -1.48,
       "updatedAt": "2026-11-25T05:00:00+08:00",
       "source": "eastmoney"
@@ -284,7 +284,7 @@
       "high": 10508.14,
       "low": 10436.22,
       "prevClose": 10480.82,
-      "volume": 656269728,
+      "volume": 703442080,
       "changePct": -0.13,
       "updatedAt": "2026-11-25T00:35:30+08:00",
       "source": "eastmoney"
@@ -824,7 +824,7 @@
       "high": 26433.6,
       "low": 25935.47,
       "prevClose": 26746.1,
-      "volume": 1723593584,
+      "volume": 1724784608,
       "changePct": -1.99,
       "updatedAt": "2026-11-25T05:00:00+08:00",
       "source": "eastmoney"
@@ -833,39 +833,39 @@
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 3552.65,
+      "price": 3554.43,
       "open": 3630.52,
       "high": 3678.1,
       "low": 3546.65,
       "prevClose": 3635.23,
-      "changePct": -2.27,
-      "updatedAt": "2026-11-25T05:37:00+08:00",
+      "changePct": -2.22,
+      "updatedAt": "2026-11-25T05:52:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 40.8,
+      "price": 40.87,
       "open": 43.07,
       "high": 43.98,
       "low": 40.66,
       "prevClose": 43.15,
-      "changePct": -5.45,
-      "updatedAt": "2026-11-25T05:37:00+08:00",
+      "changePct": -5.28,
+      "updatedAt": "2026-11-25T05:52:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 88.44,
+      "price": 88.52,
       "open": 86.88,
       "high": 88.87,
       "low": 85.63,
       "prevClose": 86.68,
-      "changePct": 2.03,
-      "updatedAt": "2026-11-25T05:38:00+08:00",
+      "changePct": 2.12,
+      "updatedAt": "2026-11-25T05:52:22+08:00",
       "note": ""
     },
     {
@@ -891,7 +891,7 @@
       "prevClose": 6.6663,
       "volume": 0,
       "changePct": -0.02,
-      "updatedAt": "2026-11-25T05:38:29+08:00",
+      "updatedAt": "2026-11-25T05:53:26+08:00",
       "source": "eastmoney"
     },
     {
@@ -905,49 +905,49 @@
       "prevClose": 1.0903,
       "volume": 0,
       "changePct": 0.57,
-      "updatedAt": "2026-11-25T05:38:29+08:00",
+      "updatedAt": "2026-11-25T05:53:26+08:00",
       "source": "eastmoney"
     },
     {
       "key": "gbpusd",
       "name": "英镑/美元",
       "market": "FX",
-      "price": 1.3116,
+      "price": 1.3115,
       "open": 1.3029,
       "high": 1.3124,
       "low": 1.3026,
       "prevClose": 1.3031,
       "volume": 0,
-      "changePct": 0.65,
-      "updatedAt": "2026-11-25T05:38:29+08:00",
+      "changePct": 0.64,
+      "updatedAt": "2026-11-25T05:53:26+08:00",
       "source": "eastmoney"
     },
     {
       "key": "usdjpy",
       "name": "美元/日元",
       "market": "FX",
-      "price": 159.2325,
+      "price": 159.2463,
       "open": 158.9793,
       "high": 159.5845,
       "low": 158.7525,
       "prevClose": 158.9898,
       "volume": 0,
-      "changePct": 0.15,
-      "updatedAt": "2026-11-25T05:38:29+08:00",
+      "changePct": 0.16,
+      "updatedAt": "2026-11-25T05:53:25+08:00",
       "source": "eastmoney"
     },
     {
       "key": "usdkrw",
       "name": "美元/韩元",
       "market": "FX",
-      "price": 1340.6625,
+      "price": 1340.955,
       "open": 1340.0425,
       "high": 1348.4325,
       "low": 1338.365,
       "prevClose": 1340.775,
       "volume": 0,
-      "changePct": -0.01,
-      "updatedAt": "2026-11-25T05:38:27+08:00",
+      "changePct": 0.01,
+      "updatedAt": "2026-11-25T05:53:20+08:00",
       "source": "eastmoney"
     },
     {
@@ -961,7 +961,7 @@
       "prevClose": 0.6628,
       "volume": 0,
       "changePct": 0.2,
-      "updatedAt": "2026-11-25T05:38:28+08:00",
+      "updatedAt": "2026-11-25T05:53:26+08:00",
       "source": "eastmoney"
     },
     {
@@ -975,7 +975,7 @@
       "prevClose": 1.4363,
       "volume": 0,
       "changePct": -0.65,
-      "updatedAt": "2026-11-25T05:38:28+08:00",
+      "updatedAt": "2026-11-25T05:53:26+08:00",
       "source": "eastmoney"
     },
     {
@@ -989,7 +989,7 @@
       "prevClose": 0.8415,
       "volume": 0,
       "changePct": -0.7,
-      "updatedAt": "2026-11-25T05:38:29+08:00",
+      "updatedAt": "2026-11-25T05:53:25+08:00",
       "source": "eastmoney"
     },
     {
@@ -1048,14 +1048,14 @@
       "key": "dxy",
       "name": "美元指数",
       "market": "FX",
-      "price": 103.82,
+      "price": 103.83,
       "open": 104.33,
       "high": 104.41,
       "low": 103.75,
       "prevClose": 104.34,
       "volume": 0,
-      "changePct": -0.5,
-      "updatedAt": "2026-11-25T05:38:28+08:00",
+      "changePct": -0.49,
+      "updatedAt": "2026-11-25T05:52:39+08:00",
       "source": "eastmoney"
     },
     {
@@ -1072,13 +1072,13 @@
       "key": "eurcny",
       "name": "欧元/人民币",
       "market": "FX",
-      "price": 7.312,
+      "price": 7.3011,
       "prevClose": 7.2648,
-      "changePct": 0.65,
+      "changePct": 0.5,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-25T05:38:18+08:00",
+      "updatedAt": "2026-11-25T05:52:41+08:00",
       "note": ""
     },
     {
@@ -1091,33 +1091,33 @@
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-25T05:37:48+08:00",
+      "updatedAt": "2026-11-25T05:52:57+08:00",
       "note": ""
     },
     {
       "key": "jpycny",
       "name": "100日元/人民币",
       "market": "FX",
-      "price": 4.185764,
+      "price": 4.185501,
       "prevClose": 4.191818,
-      "changePct": -0.1444,
+      "changePct": -0.1507,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-25T05:37:28+08:00",
+      "updatedAt": "2026-11-25T05:52:39+08:00",
       "note": ""
     },
     {
       "key": "krwcny",
       "name": "100韩元/人民币",
       "market": "FX",
-      "price": 0.497117,
+      "price": 0.497141,
       "prevClose": 0.49687,
-      "changePct": -0.0199,
+      "changePct": -0.0149,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-25T05:37:53+08:00",
+      "updatedAt": "2026-11-25T05:52:52+08:00",
       "note": ""
     },
     {
@@ -1130,7 +1130,7 @@
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-25T05:37:47+08:00",
+      "updatedAt": "2026-11-25T05:52:48+08:00",
       "note": ""
     }
   ]
