@@ -222,6 +222,12 @@ const pick = (obj, keys, fallback = '') => {
 // ---------- 适配器 ----------
 
 // 华尔街见闻 · 全球财经快讯（已实测 5 个频道全部可用）
+//
+// 2026-11-24：入口域名 api-one.wallstcn.com 在公网 DNS 上已无记录
+//   （本机与 8.8.8.8 均返回 Non-existent domain，云端 runner 记 ENOTFOUND，
+//   自 11-24 13:38 起整源归零）。同一 API 路径在 api-one-wscn.awtmt.com 上
+//   仍返回 200 且字段一致（id/title/content_text/display_time/uri），改用该域名。
+const WSCN_API_BASE = 'https://api-one-wscn.awtmt.com';
 const WALLSTREET_CHANNELS = [
   ['global-channel', '全球'],
   ['forex-channel', '外汇'],
@@ -233,9 +239,11 @@ const WALLSTREET_CHANNELS = [
 async function wallstreetcn() {
   const out = [];
   for (const [ch, label] of WALLSTREET_CHANNELS) {
+    // retries：该源历史上多次因单轮 CONNECT_TIMEOUT 整源归零（一次失败会中断
+    //   整个频道循环），给 1 次重试即可覆盖瞬时抖动，又不拉长整轮采集。
     const j = await get(
-      `https://api-one.wallstcn.com/apiv1/content/lives?channel=${ch}&limit=50`,
-      { json: true }
+      `${WSCN_API_BASE}/apiv1/content/lives?channel=${ch}&limit=50`,
+      { json: true, retries: 1 }
     );
     for (const it of j?.data?.items || []) {
       const text = stripTags(pick(it, ['content_text', 'content', 'body']));

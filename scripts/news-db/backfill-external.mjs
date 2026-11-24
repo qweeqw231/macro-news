@@ -127,7 +127,8 @@ const WSCN_CH = [
 
 function wscnUrl(ch, cursor) {
   return (
-    'https://api-one.wallstcn.com/apiv1/content/lives' +
+    // 2026-11-24：api-one.wallstcn.com 已从 DNS 消失，改用同一路径的现行域名
+    'https://api-one-wscn.awtmt.com/apiv1/content/lives' +
     `?channel=${ch}&limit=100&cursor=${cursor}`
   );
 }
