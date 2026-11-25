@@ -1,6 +1,6 @@
 {
   "v": 1,
-  "updatedAt": "2026-11-25T09:04:56+08:00",
+  "updatedAt": "2026-11-25T09:05:06+08:00",
   "days": {
     "2026-11-11": {
       "date": "2026-11-11",
@@ -317,9 +317,12 @@
       "backfill": false,
       "backfillKind": "",
       "backfilledAt": "",
-      "pushed": null,
+      "pushed": true,
       "pushError": "",
-      "pushAt": ""
+      "pushAt": "2026-11-25T09:05:06+08:00",
+      "pushErrorKind": "",
+      "statusCommit": null,
+      "statusError": ""
     }
   }
 }
