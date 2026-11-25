@@ -30,6 +30,21 @@ function Say($m) {
 # 2.23.0：fetch 重试 + 本地对齐哨兵（只写 .local/）
 . (Join-Path $PSScriptRoot 'git-sync-lib.ps1')
 
+# 3.2.0：休眠唤醒时 Windows 会把错过的 16:18/16:33/16:48 三轮一起补跑
+# （2026-11-25 实测三份日志在同一秒开始），并发 fetch 只会互相拖慢。
+# 用命名互斥量保证同一时刻只有一个实例在跑，其余直接让路。
+$mutex = New-Object System.Threading.Mutex($false, 'MacroNews-SyncClose')
+$lockHeld = $false
+try {
+    $lockHeld = $mutex.WaitOne(0)
+} catch [System.Threading.AbandonedMutexException] {
+    $lockHeld = $true   # 上一个实例被强杀，互斥量已归本进程
+}
+if (-not $lockHeld) {
+    Say '另一个 sync-close 实例正在执行，本轮让路（并发 fetch 无收益）'
+    exit 0
+}
+
 $runStart = Get-Date
 $ledgerDir = Join-Path $root '.local\metrics'
 $ledgerFile = Join-Path $ledgerDir 'close-sync.jsonl'
@@ -53,6 +68,8 @@ $st = [ordered]@{
     closeBasisDirty = @()
     pmDrift = $false
     dirtyBlocking = @()
+    # 3.2.0：当天收盘基准的确定性档位（五档，见 git-sync-lib.ps1 的 Resolve-CloseBasis）
+    closeBasis = $null
     originMainHead = ''
     fetchAttempts = 0
     syncError = ''
@@ -78,6 +95,47 @@ function Write-Ledger {
 
 Say '=== 收盘前同步（只读：fetch + ff-only）==='
 
+# 3.2.0：体检 + 裁决当天收盘基准（五档），写进 $st 与日志。
+#   FetchOk=false 时本地 origin/main ref 不可信，Resolve-CloseBasis 会优先走 HTTPS 反通道。
+function Resolve-AndLogBasis {
+    param([string]$Date, [bool]$FetchOk)
+    $st.originMainHead = [string](& git rev-parse --short origin/main 2>$null | Select-Object -First 1)
+    $pm = Get-PmSnapshotState -Root $root -Date $Date
+    $st.pmExists = $pm.exists
+    $st.pmCapturedAt = $pm.capturedAt
+    $st.pmGate = $pm.gate
+    $st.pmInRemote = $pm.inRemote
+    $st.pmRemoteCapturedAt = $pm.remoteCapturedAt
+    $st.pmRemoteGate = $pm.remoteGate
+    $st.pmDrift = $pm.drift
+    $st.closeBasis = Resolve-CloseBasis -Root $root -Date $Date -FetchOk $FetchOk -PmState $pm
+    $st.localFresh = ($st.closeBasis.tier -eq 'local-pm')
+
+    $pmRel = "data/snapshots/${Date}_pm.json"
+    if ($pm.exists -and $pm.gate -eq 'ok') {
+        Say "pm：$Date 已到本地 · capturedAt=$($pm.capturedAt) · gate=ok · localFresh=$($st.localFresh)"
+        if ($pm.dirty) { Say "  localFresh=false · pm 有未提交改动：$pmRel" }
+        if ($pm.drift) { Say "  localFresh=false · pm 落后 origin/main：$pmRel（origin 版 capturedAt=$($pm.remoteCapturedAt)）" }
+    } elseif ($pm.exists) {
+        Say "pm：文件存在但未过门禁 · capturedAt=$($pm.capturedAt) · gate=$($pm.gate)"
+    } elseif ($pm.inRemote) {
+        $st.pmGate = 'missing-local'
+        Say "pm：$Date 在 origin/main 已存在（capturedAt=$($pm.remoteCapturedAt) · gate=$($pm.remoteGate)），本地没有"
+    } else {
+        $st.pmGate = 'missing'
+        Say "pm：$Date 本地与 origin/main（$($st.originMainHead)）都没有（云端尚未生成或尚未提交）"
+    }
+
+    $cb = $st.closeBasis
+    Say ("closeBasis: tier={0} usable={1} partial={2} stale={3} capturedAt={4}" -f `
+        $cb.tier, $cb.usable, $cb.partial, $cb.stale, $cb.capturedAt)
+    if ($cb.source) { Say "  basis source: $($cb.source)" }
+    if ($cb.path) { Say "  basis path: $($cb.path)" }
+    if ($cb.ref) { Say "  basis ref: $($cb.ref)（refAt=$($cb.refAt) refHead=$($cb.refHead)）" }
+    if ($cb.fetchedAt) { Say "  basis fetchedAt: $($cb.fetchedAt)" }
+    if ($cb.reason) { Say "  basis reason: $($cb.reason)" }
+}
+
 function Invoke-Sync {
     $st.headBefore = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
     if (-not $st.headBefore) { $st.headBefore = 'unknown' }
@@ -90,7 +148,10 @@ function Invoke-Sync {
         $st.result = 'fetch-failed'
         $st.syncError = $f.error
         Say "git fetch 失败（已重试 $($f.attempts) 次）：$($f.error)"
-        Say "⚠ 本地不是最新，且本地 origin/main ref 也是旧的：请勿把本地 data/ 的截面当收盘基准"
+        Say "⚠ 本地工作树与本地 origin/main ref 都不是远端最新；本轮按五档降级裁决当天收盘基准"
+        # 3.2.0：fetch 失败不再直接放弃——先走 HTTPS 反通道把当天 pm 取回来，
+        #   取不到再标 stale / 退 quotes，让下游拿到确定的档位而不是一句「未同步」。
+        Resolve-AndLogBasis -Date (Get-Date -Format 'yyyy-MM-dd') -FetchOk $false
         return 1
     }
 
@@ -162,38 +223,12 @@ function Invoke-Sync {
     $st.headAfter = [string](& git rev-parse --short HEAD 2>$null | Select-Object -First 1)
     Say "同步后：head=$($st.headAfter) behind=$($st.behind) ahead=$($st.ahead)"
 
-    # ---- 3. 只读体检：今天的 pm 到没到、能不能过消费方门禁 ----
-    #    不写任何文件，只把结论写进日志与台账。
-    #    2.28.1：localFresh 的口径从「整树 behind==0」改为「当天 pm 收盘基准可用」——
-    #    存在 + gate ok + 本地没有未提交改动 + 内容不落后 origin/main。
-    #    无关脏（源码/测试/早报索引）与无关提交不再把当天打成「本地未同步」。
+    # ---- 3. 只读体检 + 收盘基准裁决 ----
+    #    不写工作区，只把结论写进日志、台账与 .local/metrics/sync-state.json。
+    #    3.2.0：localFresh 只在 tier=local-pm 时为 true；其余档位由 closeBasis 显式给出，
+    #    下游据 usable/partial/stale 判断能用到多准，而不是笼统地「未同步」。
     $today = Get-Date -Format 'yyyy-MM-dd'
-    $pmRel = "data/snapshots/${today}_pm.json"
-    $st.originMainHead = [string](& git rev-parse --short origin/main 2>$null | Select-Object -First 1)
-    $pm = Get-PmSnapshotState -Root $root -Date $today
-    $st.pmExists = $pm.exists
-    $st.pmCapturedAt = $pm.capturedAt
-    $st.pmGate = $pm.gate
-    $st.pmInRemote = $pm.inRemote
-    $st.pmRemoteCapturedAt = $pm.remoteCapturedAt
-    $st.pmRemoteGate = $pm.remoteGate
-    $st.pmDrift = $pm.drift
-    $st.localFresh = ($pm.exists -and ($pm.gate -eq 'ok') -and (-not $pm.dirty) -and (-not $pm.drift))
-
-    if ($pm.exists -and $pm.gate -eq 'ok') {
-        Say "pm：$today 已到本地 · capturedAt=$($pm.capturedAt) · gate=ok · localFresh=$($st.localFresh)"
-        if ($pm.dirty) { Say "  localFresh=false · pm 有未提交改动：$pmRel" }
-        if ($pm.drift) { Say "  localFresh=false · pm 落后 origin/main：$pmRel（origin 版 capturedAt=$($pm.remoteCapturedAt)）" }
-    } elseif ($pm.exists) {
-        Say "pm：文件存在但未过门禁 · capturedAt=$($pm.capturedAt) · gate=$($pm.gate)"
-    } elseif ($pm.inRemote) {
-        $st.pmGate = 'missing-local'
-        Say "pm：$today 在 origin/main 已存在（capturedAt=$($pm.remoteCapturedAt) · gate=$($pm.remoteGate)），本地没有"
-        Say "⚠ 本地不是最新（behind=$($st.behind) ahead=$($st.ahead) result=$($st.result)）：不要把本地 data/quotes.json 当收盘基准；可直接 git show origin/main:$pmRel"
-    } else {
-        $st.pmGate = 'missing'
-        Say "pm：$today 本地与 origin/main（$($st.originMainHead)）都没有（云端尚未生成或尚未提交，等下一次 16:33 / 16:48）"
-    }
+    Resolve-AndLogBasis -Date $today -FetchOk $true
     return 0
 }
 
@@ -213,7 +248,12 @@ try {
         -DirtyPaths @(Get-GitDirtyPaths) `
         -PmDate (Get-Date -Format 'yyyy-MM-dd') `
         -PmAvailable ($st.pmExists -and $st.pmGate -eq 'ok') `
-        -PmCapturedAt $st.pmCapturedAt -PmGate $st.pmGate -PmInRemote $st.pmInRemote
+        -PmCapturedAt $st.pmCapturedAt -PmGate $st.pmGate -PmInRemote $st.pmInRemote `
+        -CloseBasis $st.closeBasis
+    if ($lockHeld) {
+        try { $mutex.ReleaseMutex() } catch { }
+        try { $mutex.Dispose() } catch { }
+    }
 }
 
 exit $code

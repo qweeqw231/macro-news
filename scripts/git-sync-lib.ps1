@@ -229,6 +229,209 @@ function Invoke-GitFetchRetry {
     return $res
 }
 
+# ---- 3.2.0：收盘基准的确定性降级阶梯 ----
+# 2026-11-25 事故：本机休眠错过 16:18/16:33/16:48 三轮同步，唤醒补跑时 SSH-443 连接阶段被掐断，
+# 而云端 16:14 早就生成并提交了当天 pm。结果 17:00 消费端只看到 localFresh=false，退回 15:08 的
+# quotes（港股 16:00、上海金 15:30 两腿是盘中值）。之后验证 raw.githubusercontent.com 1.2s 就能取到
+# 同一份 pm（28 KB），说明「拿不到 git」不等于「拿不到当天收盘」。
+#
+# 因此把降级顺序固定成五档，由 Resolve-CloseBasis 统一裁决，写进 sync-state 的 closeBasis：
+#   local-pm          本地工作树里的当天 pm（门禁通过 + 无未提交改动 + 不落后 origin/main）  最可信
+#   origin-main       fetch 成功，本地缺 pm（例如快照目录脏挡住 ff），读 origin/main 的 blob
+#   http-raw          fetch 失败，改用 raw.githubusercontent.com 取当天 pm 并缓存到 .local/cache
+#   origin-main-stale fetch 与反通道都失败，只能用本地 ref 的 blob；标 stale + refAt，让下游自行打折
+#   quotes            当天 pm 完全拿不到，退回 data/quotes.json；标 partial（港股/黄金腿可能未收盘）
+# 判据不放宽：pm 缺失、日期不符、capturedAt < 16:10、快照有未提交改动，都不会返回 local-pm。
+$script:RemoteRepoSlug = 'qweeqw231/macro-news'
+$script:RawSnapshotBase = 'https://raw.githubusercontent.com/' + $script:RemoteRepoSlug + '/main'
+
+# 文件级反通道：直接 HTTP GET 当天 pm（不经过 git/SSH），成功后缓存到 .local/cache/snapshots/
+# 返回 [ordered]@{ ok; url; fetchedAt; capturedAt; gate; path; sha256; bytes; error }
+function Get-RemotePmViaHttp {
+    param(
+        [Parameter(Mandatory)][string]$Root,
+        [Parameter(Mandatory)][string]$Date,
+        [int]$TimeoutSec = 20
+    )
+    $rel = "data/snapshots/${Date}_pm.json"
+    $url = "$script:RawSnapshotBase/$rel"
+    $res = [ordered]@{ ok = $false; url = $url; fetchedAt = ''; capturedAt = ''; gate = ''; path = ''; sha256 = ''; bytes = 0; error = '' }
+    try {
+        try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch { }
+        $r = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec $TimeoutSec
+        if ($r.StatusCode -ne 200) { throw "HTTP $($r.StatusCode)" }
+        $doc = ConvertFrom-Json $r.Content
+        if ([string]$doc.date -ne $Date) { throw "date 不匹配：$($doc.date)" }
+        $cap = [datetimeoffset]::Parse([string]$doc.capturedAt)
+        $capMin = $cap.Hour * 60 + $cap.Minute
+        $gate = 'pending'
+        if (($doc.isTradingDay -eq $true) -and ($capMin -ge (16 * 60 + 10))) { $gate = 'ok' }
+
+        $cacheDir = Join-Path $Root '.local\cache\snapshots'
+        if (-not (Test-Path $cacheDir)) { New-Item -ItemType Directory -Path $cacheDir -Force | Out-Null }
+        $cacheFile = Join-Path $cacheDir "${Date}_pm.json"
+        $metaFile = Join-Path $cacheDir "${Date}_pm.meta.json"
+        $enc = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText($cacheFile, $r.Content, $enc)
+        $meta = [ordered]@{
+            date = $Date
+            url = $url
+            fetchedAt = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+            capturedAt = [string]$doc.capturedAt
+            gate = $gate
+            bytes = [int]$r.RawContentLength
+            sha256 = (Get-FileHash $cacheFile -Algorithm SHA256).Hash.ToLower()
+        }
+        [System.IO.File]::WriteAllText($metaFile, (($meta | ConvertTo-Json -Compress) + "`n"), $enc)
+
+        $res.fetchedAt = [string]$meta.fetchedAt
+        $res.capturedAt = [string]$doc.capturedAt
+        $res.gate = $gate
+        $res.sha256 = [string]$meta.sha256
+        $res.bytes = [int]$meta.bytes
+        if ($gate -eq 'ok') {
+            $res.ok = $true
+            $res.path = $cacheFile
+        } else {
+            $res.error = "取到了当天 pm 但门禁未过（gate=$gate）"
+        }
+    } catch {
+        $res.error = $_.Exception.Message
+    }
+    return $res
+}
+
+# 把 pm 内容落到 .local/cache/snapshots/ 下，供下游按统一 path 读取（不写 data/）
+function Save-PmTextToCache {
+    param(
+        [Parameter(Mandatory)][string]$Root,
+        [Parameter(Mandatory)][string]$Date,
+        [Parameter(Mandatory)][string]$Text,
+        [string]$Source = '',
+        [string]$RefHead = '',
+        [string]$RefAt = ''
+    )
+    $dir = Join-Path $Root '.local\cache\snapshots'
+    if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
+    $file = Join-Path $dir "${Date}_pm.json"
+    $enc = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($file, $Text, $enc)
+    $meta = [ordered]@{
+        date = $Date
+        source = $Source
+        refHead = $RefHead
+        refAt = $RefAt
+        cachedAt = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+        sha256 = (Get-FileHash $file -Algorithm SHA256).Hash.ToLower()
+    }
+    [System.IO.File]::WriteAllText((Join-Path $dir "${Date}_pm.meta.json"), (($meta | ConvertTo-Json -Compress) + "`n"), $enc)
+    return $file
+}
+
+# 统一的收盘基准裁决（五档）。PmState 可传入以避免重复 git 调用。
+# 返回 [ordered]@{ date; tier; usable; partial; stale; source; path; ref; capturedAt; gate; fetchedAt; refAt; refHead; quotesGeneratedAt; reason }
+function Resolve-CloseBasis {
+    param(
+        [Parameter(Mandatory)][string]$Root,
+        [Parameter(Mandatory)][string]$Date,
+        [bool]$FetchOk = $true,
+        [object]$PmState = $null
+    )
+    $pm = $PmState
+    if ($null -eq $pm) { $pm = Get-PmSnapshotState -Root $Root -Date $Date }
+
+    $res = [ordered]@{
+        date = $Date
+        tier = 'unavailable'
+        usable = $false
+        partial = $false
+        stale = $false
+        source = ''
+        path = ''
+        ref = ''
+        capturedAt = ''
+        gate = ''
+        fetchedAt = ''
+        refAt = ''
+        refHead = ''
+        quotesGeneratedAt = ''
+        reason = ''
+    }
+    if ($pm.inRemote) {
+        $res.refHead = [string](& git rev-parse --short origin/main 2>$null | Select-Object -First 1)
+        $res.refAt = [string](& git log -1 --format=%cI origin/main 2>$null | Select-Object -First 1)
+    }
+
+    # 1) 本地工作树：最可信
+    if ($pm.exists -and $pm.gate -eq 'ok' -and (-not $pm.dirty) -and (-not $pm.drift)) {
+        $res.tier = 'local-pm'; $res.usable = $true; $res.source = 'worktree'
+        $res.path = (Join-Path $Root ($pm.path -replace '/', '\'))
+        $res.capturedAt = $pm.capturedAt; $res.gate = $pm.gate
+        $res.reason = '本地 pm 存在、门禁通过、无未提交改动、不落后 origin/main'
+        return $res
+    }
+
+    # 2) 本轮 fetch 成功：origin/main 可信，本地缺 pm 时读 ref 里的 blob
+    if ($FetchOk -and $pm.inRemote -and $pm.remoteGate -eq 'ok') {
+        $res.tier = 'origin-main'; $res.usable = $true; $res.source = 'ref:origin/main'
+        $res.ref = 'origin/main:' + $pm.path
+        $res.capturedAt = $pm.remoteCapturedAt; $res.gate = $pm.remoteGate
+        # 把 blob 落到 .local/cache，下游统一按 path 读，不必自己 git show
+        try {
+            $raw = & git --no-pager cat-file blob $res.ref 2>$null | Out-String
+            if ($raw.Trim()) {
+                $res.path = Save-PmTextToCache -Root $Root -Date $Date -Text $raw `
+                    -Source 'ref:origin/main' -RefHead $res.refHead -RefAt $res.refAt
+            }
+        } catch { }
+        $res.reason = 'fetch 成功但本地没有可用 pm；改用 origin/main 的 blob'
+        return $res
+    }
+
+    # 3) fetch 失败：本地 ref 可能旧，先走文件级 HTTPS 反通道
+    $http = Get-RemotePmViaHttp -Root $Root -Date $Date
+    if ($http.ok) {
+        $res.tier = 'http-raw'; $res.usable = $true; $res.source = 'https:raw.githubusercontent.com'
+        $res.path = $http.path; $res.capturedAt = $http.capturedAt; $res.gate = $http.gate
+        $res.fetchedAt = $http.fetchedAt
+        $res.reason = 'git fetch 失败；用 raw.githubusercontent.com 直接取当天 pm（已缓存到 .local/cache）'
+        return $res
+    }
+
+    # 4) 反通道也不通：只能退回本地 ref 的 blob，明确标 stale
+    if ($pm.inRemote -and $pm.remoteGate -eq 'ok') {
+        $res.tier = 'origin-main-stale'; $res.usable = $true; $res.stale = $true
+        $res.source = 'ref:origin/main'
+        $res.ref = 'origin/main:' + $pm.path
+        $res.capturedAt = $pm.remoteCapturedAt; $res.gate = $pm.remoteGate
+        try {
+            $raw = & git --no-pager cat-file blob $res.ref 2>$null | Out-String
+            if ($raw.Trim()) {
+                $res.path = Save-PmTextToCache -Root $Root -Date $Date -Text $raw `
+                    -Source 'ref:origin/main(stale)' -RefHead $res.refHead -RefAt $res.refAt
+            }
+        } catch { }
+        $res.reason = "git fetch 与 HTTPS 反通道都失败；退回本地 ref 的 pm blob（ref 可能滞后，见 refAt；反通道错误：$($http.error)）"
+        return $res
+    }
+
+    # 5) 当天 pm 完全拿不到：退回 quotes，并标明可能含盘中腿
+    $quotesFull = Join-Path $Root 'data\quotes.json'
+    if (Test-Path $quotesFull) {
+        try {
+            $q = ConvertFrom-Json (Get-Content $quotesFull -Raw -Encoding UTF8)
+            $res.quotesGeneratedAt = [string]$q.generatedAt
+            $res.source = 'worktree:data/quotes.json'
+            $res.path = $quotesFull
+        } catch { }
+        $res.tier = 'quotes'; $res.partial = $true
+        $res.reason = "当天 pm 本地/ref/反通道都不可用（反通道错误：$($http.error)）；退回 quotes，港股与上海金腿可能是盘中值"
+    } else {
+        $res.reason = "当天 pm 与 data/quotes.json 都不可用（反通道错误：$($http.error)）"
+    }
+    return $res
+}
+
 # 本地对齐状态哨兵（.local/metrics/sync-state.json，已 gitignore，不入库）
 #   localFresh     = 2.28.1 起 =「当天收盘基准 data/snapshots/<date>_pm.json 是否可用」
 #                    （存在 + gate ok + 本地无未提交改动 + 不落后 origin/main；
@@ -259,7 +462,8 @@ function Write-SyncState {
         [bool]$PmAvailable = $false,
         [string]$PmCapturedAt = '',
         [string]$PmGate = '',
-        [bool]$PmInRemote = $false
+        [bool]$PmInRemote = $false,
+        [object]$CloseBasis = $null
     )
     try {
         $dir = Join-Path $Root '.local\metrics'
@@ -304,7 +508,10 @@ function Write-SyncState {
                 inRemote = [bool]$PmInRemote
                 drift = [bool]$PmDrift
             }
-            note = '2.28.1 起 localFresh=当天收盘基准 data/snapshots/<date>_pm.json 是否可用（存在 + gate ok + 本地无未提交改动 + 不落后 origin/main）；无关路径的脏/落后不再影响它。'
+            # 3.2.0：把「今天到底该用哪一档收盘基准」显式写出来，下游不必自己推断
+            #   tier/usable/partial/stale/source/path/ref/capturedAt/fetchedAt/refAt/reason
+            closeBasis = $CloseBasis
+            note = '3.2.0 起 closeBasis 给出收盘基准的确定性档位（local-pm > origin-main > http-raw > origin-main-stale > quotes）；localFresh 仅在 local-pm 时为 true。'
         }
         $enc = New-Object System.Text.UTF8Encoding($false)
         [System.IO.File]::WriteAllText($file, (($doc | ConvertTo-Json -Compress) + "`n"), $enc)

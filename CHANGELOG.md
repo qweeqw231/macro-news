@@ -13,6 +13,49 @@
 中版本从 2.9 到 2.10 是正常递增，不是大版本。
 **判断顺序**：① 用户能看到新东西吗？→ ② 有没有用户可见的错误数据或数据丢失？→ ③ 都不是 ⇒ 补丁位。
 
+## [3.2.0] - 2026-11-25
+
+### 修复：把「拿不到 git」与「拿不到当天收盘」分开——新增 `closeBasis` 五档降级与单实例锁
+
+**版本理由**：新增对下游可见的数据来源档位（`closeBasis`）和一个真正可用的文件级反通道 ⇒ 中版本。
+
+**事故（2026-11-25）**：本机 16:18 / 16:33 / 16:48 三轮收盘同步因机器休眠没有按时执行，唤醒补跑时
+`ssh.github.com:443` 在**连接阶段**被 abort（`Software caused connection abort`）；而云端 16:14 已生成并
+提交了 `2026-11-25_pm.json`。17:00 消费端只看到 `localFresh=false`，退回 15:08 的 `quotes.json`
+（A 股 15:00 已收盘，港股 16:00 / 上海金 15:30 两腿是盘中值）。
+
+**归因（两条独立故障）**：
+- 通道：失败发生在 TCP 连接阶段，没有认证 / `known_hosts` / keepalive 报错，本机也没有配置代理；
+  同机 HTTPS git 同样被 reset，而 `raw.githubusercontent.com` 1.25s 就能取到同一份 pm（28,385 B）
+  ⇒ 不是 SSH 连接数或 keepalive 问题，是到 GitHub 该出口不稳；文件级 HTTPS 比 git 协议更可靠。
+- 采集：远端 16:14:34（`28644ff1`）确实提交了当天 pm，本地缺失不是云端采集失败，而是本机休眠 +
+  fetch 失败导致没落地。11-25 的 15:54 / 17:54 / 19:54 三轮本地采集日志整段缺失，三个同步任务的
+  Last Run Time 全是 21:34:19（睡眠唤醒后补跑）可佐证。
+
+**改动**：
+- `git-sync-lib.ps1` 新增 `Resolve-CloseBasis`，把当天收盘基准固定成五档并写入哨兵 `closeBasis`：
+  `local-pm` → `origin-main` → `http-raw` → `origin-main-stale` → `quotes`。每档带
+  `usable / partial / stale / source / path / ref / capturedAt / gate / fetchedAt / refAt / refHead / reason`。
+- 新增 `Get-RemotePmViaHttp`：`git fetch` 失败时直接 GET
+  `https://raw.githubusercontent.com/qweeqw231/macro-news/main/data/snapshots/<date>_pm.json`，
+  校验 `date / isTradingDay / capturedAt >= 16:10` 后缓存到 `.local/cache/snapshots/`（**不写 `data/`**）。
+- `localFresh` 语义再收敛：**仅当 `closeBasis.tier == 'local-pm'` 时为 true**；fetch 失败但本地当天 pm
+  已就绪（按日固化的文件，远端不可能有不同内容）不再误报 false。
+- `sync-close.ps1` 增加命名互斥量 `MacroNews-SyncClose`：休眠后 Windows 会把错过的三轮一起补跑，
+  现在只有第一个实例执行，其余立即让路（`exit 0`）。
+- fetch 失败分支不再直接放弃：先裁决 `closeBasis` 再返回，日志里直接标出用的是哪一档。
+
+**不放宽核心保证**：pm 缺失、日期不符、`capturedAt` 早于 16:10、快照有未提交改动、内容落后
+`origin/main`——任意一条都不返回 `local-pm`；`data/snapshots` 脏时 `sync-close` 仍然 `skipped-dirty` 让路。
+
+**下游如何消费**（口径变更，需知会 17:00 任务）：优先看
+`closeBasis.date == 今天 && closeBasis.usable`，并按 `tier` 标注来源；`quotes` 档必须标 `partial`。
+仍可继续看 `localFresh`，但它现在严格等价于 `tier == 'local-pm'`。
+
+**验证**：`2026-11-25/sync-gate-recurrence/verify-close-basis.ps1` 六场景全 PASS
+（`local-pm` / `http-raw` / `origin-main` / `origin-main-stale` / `quotes` / 本地 pm 被改动时不得 `local-pm`）；
+`node --test tests/*.test.mjs`：523 pass / 0 fail。
+
 ## [3.1.1] - 2026-11-23
 
 ### 修复：K 线弹窗补「末根状态」与两个涨跌幅并列（只动展示，不改数据口径）

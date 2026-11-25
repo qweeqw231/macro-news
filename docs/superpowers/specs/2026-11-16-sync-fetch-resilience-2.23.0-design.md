@@ -220,3 +220,67 @@ localFresh = pm.exists && pm.gate == 'ok' && !pm.dirty && !pm.drift
 | 本地提交改写 pm（drift） | `skipped-local-ahead` | 0 | false | true |
 | origin 不可达 | `fetch-failed` | null | false | — |
 | 真仓库（改完后） | `synced` | 0 | true | true |
+
+## 3.7 补丁 3.2.0：把「拿不到 git」与「拿不到当天收盘」分开
+
+### 根因（2026-11-25）
+
+两个独立故障叠加：
+
+1. **本机休眠错过收盘同步窗口。** 11-24 的采集按 01:54…23:54 每 2 小时运行；11-25 的 15:54 / 17:54 /
+   19:54 三轮日志整段缺失，三个 `MacroNews-Sync-1618/1633/1648` 任务的 Last Run Time 全部是
+   21:34:19、Last Result=1 —— 睡眠唤醒后 Windows 把错过的任务一起补跑，且并发执行。
+2. **SSH over 443 在连接阶段被掐断。** 补跑时 `ssh: connect to host ssh.github.com port 443:
+   Connection timed out` → `Software caused connection abort`；同机 push 对同一 IP
+   `20.205.243.160:443` 也报 `Connection reset`（重试后成功）。没有认证 / keepalive / 连接数报错，
+   也没有代理配置 ⇒ 属出口到 GitHub 的通道抖动，不是本地 SSH 配置问题。
+
+云端 16:14:26 已生成 `2026-11-25_pm.json` 并提交（`28644ff1`，16:14:34），77 项覆盖 76/76。
+所以「16:1x 采集没成功」是误判：云端采集成功，失败的是**本地落地**。事后验证
+`https://raw.githubusercontent.com/qweeqw231/macro-news/main/data/snapshots/2026-11-25_pm.json`
+1.25s / 28,385 B 可取到，与本地 pm 的 `capturedAt`、`coverage` 完全一致。
+
+### 判据：五档降级（`closeBasis`）
+
+| tier | 触发 | usable | 标注 |
+|---|---|---|---|
+| `local-pm` | 本地 pm 存在 + gate ok + 无未提交改动 + 不落后 `origin/main` | true | — |
+| `origin-main` | 本轮 fetch 成功，但本地没有可用 pm（例如快照目录脏挡住 ff） | true | `ref` |
+| `http-raw` | fetch 失败，`raw.githubusercontent.com` 取到当天 pm 且过门禁 | true | `fetchedAt / path` |
+| `origin-main-stale` | fetch 与反通道都失败，只能用本地 ref 的 blob | true | `stale=true / refAt` |
+| `quotes` | 当天 pm 本地 / ref / 反通道都不可得 | false | `partial=true / quotesGeneratedAt` |
+
+`localFresh` 现在严格等价于 `tier == 'local-pm'`。
+
+### 为什么不算放宽
+
+- 五档里只有 `local-pm` 会给出 `localFresh=true`；其余档位即使 `usable=true`，也必然带
+  `stale` 或 `partial` 或来源标注，下游无法把它误当成「本地就是最新」。
+- pm 是**按日固化**的文件：只要当天 pm 存在、过门禁、无本地改动，它就等于远端那份内容；
+  fetch 失败时它的可用性与本地 ref 新旧无关。旧实现把这两件事绑在一起，才产生假告警。
+- `http-raw` 取回的内容仍要过与本地相同的门禁（日期、`isTradingDay`、`capturedAt>=16:10`），
+  且只缓存到 `.local/cache/snapshots/`，不写 `data/`、不产生未提交改动。
+- `data/snapshots` 脏时 `sync-close` 仍走 `skipped-dirty`，该保证未动。
+
+### 实现
+
+- `git-sync-lib.ps1`：`Resolve-CloseBasis`、`Get-RemotePmViaHttp`；`Write-SyncState` 新增 `closeBasis`。
+- `sync-close.ps1`：`Resolve-AndLogBasis` 统一体检 + 裁决；fetch 失败分支先裁决再返回；
+  命名互斥量 `MacroNews-SyncClose` 防并发补跑。
+- `collect-and-push.ps1`：四处写哨兵全部带 `closeBasis`，`localFresh` 同源判定。
+- 下游契约：改用 `closeBasis.date == 今天 && closeBasis.usable`，按 `tier` 标注来源；
+  `quotes` 档必须标 `partial`。
+
+### 验收
+
+| 场景 | 期望 tier | 实测 |
+|---|---|---|
+| 本地 pm 合规 | `local-pm` | PASS |
+| fetch 失败 + 本地缺 pm | `http-raw` | PASS（28,385 B，`fetchedAt` 写入缓存 meta） |
+| fetch 成功 + 本地缺 pm | `origin-main` | PASS |
+| fetch 失败 + 反通道不通 | `origin-main-stale` | PASS（带 `refAt / refHead`） |
+| 当天 pm 完全不可得 | `quotes` | PASS（`partial=true`） |
+| 本地 pm 有未提交改动 | ≠ `local-pm` | PASS（落到 `origin-main`） |
+| 另一实例持锁 | 立即让路 | PASS（`exit 0`） |
+
+复现：`2026-11-25/sync-gate-recurrence/verify-close-basis.ps1`。

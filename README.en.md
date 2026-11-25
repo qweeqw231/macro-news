@@ -699,6 +699,15 @@ same way (only `data/snapshots` dirt blocks a round); dirty sources, tests or br
 in `dirtyPaths` only and no longer mark the day as "local not synced". Use `behind / ahead` for repo lag
 and `pm.available / pm.gate` for whether today's pm can be consumed.
 
+**Since 3.2.0 the sentinel also carries `closeBasis`**, a deterministic tier for today's close basis:
+`local-pm` → `origin-main` → `http-raw` → `origin-main-stale` → `quotes`, with
+`usable / partial / stale / path / ref / capturedAt / fetchedAt / refAt / reason`. `localFresh` is now
+exactly `tier == 'local-pm'`. When `git fetch` fails, the sync gate fetches today's pm straight from
+`raw.githubusercontent.com` (validated, cached under `.local/cache/snapshots/`, never written to `data/`).
+Downstream should gate on `closeBasis.date == today && closeBasis.usable`, label the source by `tier`,
+and mark the `quotes` tier as `partial`. `sync-close.ps1` also takes a single-instance mutex so wake-up
+catch-up runs no longer fetch concurrently.
+
 `MacroNews-Collect` / `MacroNews-Pull` both start with zero windows via `wscript + run-hidden.vbs`;
 `-StartWhenAvailable` allows catch-up after sleep/shutdown.
 

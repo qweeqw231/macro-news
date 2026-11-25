@@ -767,6 +767,13 @@ SSH-443 会出现两种形态：限速后 90s 只下来 2~3 MB（慢但在动）
 让路判据同样收敛到 `data/snapshots`：源码/测试/早报索引的脏只记 `dirtyPaths`，不再把当天标成
 「本地未同步」。整仓落后看 `behind / ahead`，当天能否用 pm 看 `pm.available / pm.gate`。
 
+**3.2.0 起新增 `closeBasis`（当天收盘基准的确定性档位）**：`local-pm` → `origin-main` → `http-raw` →
+`origin-main-stale` → `quotes`，每档带 `usable / partial / stale / path / ref / capturedAt / fetchedAt /
+refAt / reason`；`localFresh` 现在严格等于「`tier == local-pm`」。`git fetch` 失败时会直接向
+`raw.githubusercontent.com` 取当天 pm（校验日期与 `capturedAt>=16:10` 后缓存到 `.local/cache/snapshots/`，
+**不写 `data/`**）。下游应优先按 `closeBasis.date == 今天 && closeBasis.usable` 判定能否用 pm，
+并按 `tier` 标注来源；`quotes` 档必须标 `partial`。`sync-close.ps1` 另加单实例锁，休眠唤醒后的补跑不再并发 fetch。
+
 `MacroNews-Collect` / `MacroNews-Pull` 均用 `wscript + run-hidden.vbs` 零窗口启动，
 `-StartWhenAvailable` 允许睡眠/关机后补跑。
 

@@ -140,7 +140,7 @@ test('收盘同步：pm 缺失时看 origin/main，不得断言「云端可能�
   assert.match(LIB, /cat-file blob/);
   assert.doesNotMatch(LIB, /git show \("origin\/main:"/, 'git show 可能走分页器导致空输出');
   assert.match(CLOSE, /pmInRemote/);
-  assert.match(CLOSE, /本地不是最新/);
+  assert.match(CLOSE, /都不是远端最新/);
   assert.doesNotMatch(CLOSE, /云端可能尚未生成/);
 });
 
@@ -148,9 +148,11 @@ test('2.23.1：behind/ahead 必须在同步之后重算，localFresh 不得用�
   // 收盘同步：ff 之后重新计数，且 localFresh 的赋值排在重算之后
   const mergeAt = CLOSE.indexOf('git merge --ff-only');
   const recalcAt = CLOSE.indexOf('同步后：head=');
-  const freshAt = CLOSE.indexOf('$st.localFresh = ($pm.exists');
+  const freshAt = CLOSE.indexOf('$st.localFresh = ($st.closeBasis.tier');
+  const basisCallAt = CLOSE.indexOf('Resolve-AndLogBasis -Date $today -FetchOk $true');
   assert.ok(mergeAt > 0 && recalcAt > mergeAt, 'ff 之后必须重算 behind/ahead');
-  assert.ok(freshAt > recalcAt, 'localFresh 必须在同步后按当时的真实状态判定');
+  assert.ok(freshAt > 0, 'localFresh 必须来自 closeBasis 裁决');
+  assert.ok(basisCallAt > recalcAt, '收盘基准必须在同步后按当时的真实状态裁决');
   // 写入的 head 必须是同步后的值
   assert.match(CLOSE, /\$stateHead = \$st\.headAfter/);
 
@@ -182,9 +184,42 @@ test('2.28.1：脏判定收敛到 data/snapshots，无关脏不再让路', () =>
   assert.match(CLOSE, /skipped-dirty-unrelated/);
   // 新鲜度只看当天 pm：存在 + gate ok + 无本地改动 + 不落后
   assert.match(LIB, /function Get-PmSnapshotState/);
-  assert.match(CLOSE, /\$st\.localFresh = \(\$pm\.exists -and \(\$pm\.gate -eq 'ok'\) -and \(-not \$pm\.dirty\) -and \(-not \$pm\.drift\)\)/);
-  assert.match(SCRIPT, /\$localFreshAfter = \(\$pmState\.exists -and \$pmState\.gate -eq 'ok'/);
+  // 3.2.0：localFresh 收敛为「裁决结果是否为 local-pm」
+  assert.match(LIB, /function Resolve-CloseBasis/);
+  assert.match(CLOSE, /\$st\.localFresh = \(\$st\.closeBasis\.tier -eq 'local-pm'\)/);
+  assert.match(SCRIPT, /\$localFreshAfter = \(\$basisAfter\.tier -eq 'local-pm'\)/);
   // 哨兵要把判据一起写出去，便于下游区分「无关脏」与「快照脏」
   assert.match(LIB, /consumedDirty = @\(\$CloseBasisDirty\)/);
   assert.match(LIB, /drift = \[bool\]\$PmDrift/);
+});
+
+test('3.2.0：收盘基准五档降级 + 文件级反通道（fetch 失败不再直接放弃）', () => {
+  assert.match(LIB, /function Resolve-CloseBasis/);
+  for (const tier of ['local-pm', 'origin-main', 'http-raw', 'origin-main-stale', 'quotes']) {
+    assert.match(LIB, new RegExp(`'${tier}'`), `缺少档位 ${tier}`);
+  }
+  // 反通道：raw.githubusercontent + 缓存到 .local（绝不写 data/）
+  assert.match(LIB, /function Get-RemotePmViaHttp/);
+  assert.match(LIB, /raw\.githubusercontent\.com/);
+  assert.match(LIB, /\.local\\cache\\snapshots/);
+  assert.doesNotMatch(LIB, /WriteAllText[^\n]*data[\\/]snapshots/, 'pm 缓存不得写进 data/');
+  // 哨兵必须把档位写出去
+  assert.match(LIB, /closeBasis = \$CloseBasis/);
+  assert.match(CLOSE, /-CloseBasis \$st\.closeBasis/);
+  assert.match(SCRIPT, /-CloseBasis \$basisFail/);
+  assert.match(SCRIPT, /-CloseBasis \$basisAfter/);
+  // fetch 失败分支：先裁决档位，再返回
+  const failAt = CLOSE.indexOf("result = 'fetch-failed'");
+  const basisAt = CLOSE.indexOf('Resolve-AndLogBasis -Date (Get-Date -Format', failAt);
+  assert.ok(failAt > 0 && basisAt > failAt, 'fetch 失败时也必须先裁决 closeBasis');
+  const scriptFailAt = SCRIPT.indexOf("skipReason = 'fetch-failed'");
+  const scriptBasisAt = SCRIPT.indexOf('Resolve-CloseBasis -Root $root', scriptFailAt);
+  assert.ok(scriptBasisAt > scriptFailAt, '采集侧 fetch 失败时也必须裁决 closeBasis');
+});
+
+test('3.2.0：sync-close 单实例锁，休眠补跑不并发 fetch', () => {
+  assert.match(CLOSE, /System\.Threading\.Mutex/);
+  assert.match(CLOSE, /MacroNews-SyncClose/);
+  assert.match(CLOSE, /另一个 sync-close 实例正在执行/);
+  assert.match(CLOSE, /ReleaseMutex/);
 });

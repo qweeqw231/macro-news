@@ -332,8 +332,13 @@ if (-not $fetchOk) {
     Say "sync: head=$headBefore behind=unknown ahead=unknown dirty=$dirty result=skipped:fetch-failed head_after=$headBefore stash=none（重试 $($fetchRetry.attempts) 次：$first）"
     Say "⚠ 本轮 fetch 失败：本地工作树＝上次成功同步的截面，**不是远端最新**；本地 origin/main ref 停在 $refSha（$refAt），也不能代表远端现状。"
     Say "本轮不采集、不提交，也不写 data/（写而不提交会把工作区永久弄脏，导致后续每轮全部让路）；状态只写 .local/metrics/sync-state.json，下一轮重试。"
+    # 3.2.0：fetch 失败也裁决当天收盘基准——先走 HTTPS 反通道取当天 pm，取不到再标 stale / 退 quotes
+    $basisFail = Resolve-CloseBasis -Root $root -Date (Get-Date -Format 'yyyy-MM-dd') -FetchOk $false
+    Say ("closeBasis: tier={0} usable={1} stale={2} partial={3} source={4}" -f `
+        $basisFail.tier, $basisFail.usable, $basisFail.stale, $basisFail.partial, $basisFail.source)
     Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result 'skipped:fetch-failed' `
-        -Error $first -FetchAttempts $fetchRetry.attempts -Head $headBefore -FetchOk $false -LocalFresh $false
+        -Error $first -FetchAttempts $fetchRetry.attempts -Head $headBefore -FetchOk $false `
+        -LocalFresh ($basisFail.tier -eq 'local-pm') -CloseBasis $basisFail
     exit 0
 }
 
@@ -356,10 +361,11 @@ if ($dirty -eq 'yes') {
     # 2.23.0：脏轮不写 data/，但必须让消费方知道「本地落后多少」
     # 2.28.1：只有 data/snapshots 脏才会走到这里；localFresh 直接 false（判据与 sync-close 一致）
     $pmDirty = Get-PmSnapshotState -Root $root -Date (Get-Date -Format 'yyyy-MM-dd')
+    $basisDirty = Resolve-CloseBasis -Root $root -Date $pmDirty.date -FetchOk $true -PmState $pmDirty
     Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result 'skipped:dirty-worktree' `
-        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh $false `
+        -Head $headBefore -Behind $behind -Ahead $ahead -FetchOk $true -LocalFresh ($basisDirty.tier -eq 'local-pm') `
         -CloseBasisDirty $dirtyPaths -PmDrift $pmDirty.drift -DirtyPaths $allDirtyPaths `
-        -FetchAttempts $fetchRetry.attempts `
+        -FetchAttempts $fetchRetry.attempts -CloseBasis $basisDirty `
         -PmDate $pmDirty.date -PmAvailable ($pmDirty.exists -and $pmDirty.gate -eq 'ok') `
         -PmCapturedAt $pmDirty.capturedAt -PmGate $pmDirty.gate -PmInRemote $pmDirty.inRemote
     exit 0
@@ -411,7 +417,9 @@ Say ("sync: behind_after={0} ahead_after={1}" -f $behindAfter, $aheadAfter)
 #   无关路径脏或无关提交落后，都不该让下游把当天标成「本地未同步」。
 $todayState = Get-Date -Format 'yyyy-MM-dd'
 $pmState = Get-PmSnapshotState -Root $root -Date $todayState
-$localFreshAfter = ($pmState.exists -and $pmState.gate -eq 'ok' -and (-not $pmState.dirty) -and (-not $pmState.drift))
+# 3.2.0：同一套五档裁决，localFresh 只在 tier=local-pm 时为 true
+$basisAfter = Resolve-CloseBasis -Root $root -Date $todayState -FetchOk $true -PmState $pmState
+$localFreshAfter = ($basisAfter.tier -eq 'local-pm')
 $allDirtyAfter = @(Get-GitDirtyPaths)
 
 if ($syncResult -like 'skipped:*') {
@@ -421,7 +429,7 @@ if ($syncResult -like 'skipped:*') {
     Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result $syncResult `
         -Head $headAfter -Behind $behindAfter -Ahead $aheadAfter -FetchOk $true `
         -LocalFresh $localFreshAfter -CloseBasisDirty $dirtyPaths -PmDrift $pmState.drift `
-        -DirtyPaths $allDirtyAfter -FetchAttempts $fetchRetry.attempts `
+        -DirtyPaths $allDirtyAfter -FetchAttempts $fetchRetry.attempts -CloseBasis $basisAfter `
         -PmDate $todayState -PmAvailable ($pmState.exists -and $pmState.gate -eq 'ok') `
         -PmCapturedAt $pmState.capturedAt -PmGate $pmState.gate -PmInRemote $pmState.inRemote
     Say "同步未完成（$syncResult），本轮不采集、不提交；下一轮重试。"
@@ -435,7 +443,7 @@ if (-not $SyncOnly) {
 Write-SyncState -Root $root -Source 'collect-and-push.ps1' -Result $syncResult `
     -Head $headAfter -Behind $behindAfter -Ahead $aheadAfter -FetchOk $true `
     -LocalFresh $localFreshAfter -CloseBasisDirty $dirtyPaths -PmDrift $pmState.drift `
-    -DirtyPaths $allDirtyAfter -FetchAttempts $fetchRetry.attempts `
+    -DirtyPaths $allDirtyAfter -FetchAttempts $fetchRetry.attempts -CloseBasis $basisAfter `
     -PmDate $todayState -PmAvailable ($pmState.exists -and $pmState.gate -eq 'ok') `
     -PmCapturedAt $pmState.capturedAt -PmGate $pmState.gate -PmInRemote $pmState.inRemote
 
