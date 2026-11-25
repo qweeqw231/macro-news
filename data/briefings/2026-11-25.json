@@ -1,0 +1,152 @@
+{
+  "date": "2026-11-25",
+  "generatedAt": "2026-11-25T09:03:53+08:00",
+  "endedAt": "2026-11-25T09:04:11+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-24",
+    "to": "2026-11-25",
+    "fromAt": "2026-11-24T08:00:00+08:00",
+    "toAt": "2026-11-25T09:00:00+08:00",
+    "fromTs": 1795478400,
+    "toTs": 1795568400
+  },
+  "overview": "主线是全球紧缩预期再起：美联储贴现利率会议纪要显示12家地方联储中8家建议上调贴现率，威廉姆斯暗示仍需进一步加息，加拿大央行行长警告通胀粘性。霍尔木兹海峡风险推升油价，WTI涨2.35%，纳指跌1.48%，现货黄金跌2.23%。国内方面，央行今日开展8000亿元MLF缩量续作与5000亿元7天逆回购，对冲1万亿元MLF到期压力。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行11月25日开展8000亿元MLF与5000亿元7天逆回购",
+      "summary": "中国人民银行11月24日公告，25日将以固定数量、利率招标、多重价位中标方式开展5000亿元7天期逆回购和8000亿元1年期MLF操作。11月25日是银行缴准日、当周政府债净缴款高点，还面临1万亿元MLF与800亿元国库现金定存同日到期，资金面压力集中；央行启用7天期逆回购，有助于平抑资金跨月波动。",
+      "why": "8000亿对1万亿到期为缩量续作，叠加缴准日考验资金面",
+      "source": "东方财富",
+      "publishedAt": "2026-11-25T02:14",
+      "url": "http://forex.eastmoney.com/news/1131,202611253938860086.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/11-24/10737160.shtml",
+        "https://wallstreetcn.com/livenews/3204853",
+        "https://finance.sina.com.cn/china/2026-11-24/doc-inizvqth9034299.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "商务部暂停对美两用物项出口管制第二款实施",
+      "summary": "中国商务部表示，经批准，自2026年11月28日起至2027年1月27日，商务部公告2024年第46号《关于加强相关两用物项对美国出口管制的公告》第二款暂停实施。该公告原本针对相关两用物项对美出口加强管制，本次暂停自11月28日生效，至2027年1月27日结束，为期约三个月。",
+      "why": "两用物项对美管制暂停，直接影响相关出口链与后续政策预期",
+      "source": "东方财富",
+      "publishedAt": "2026-11-25T07:00",
+      "url": "http://forex.eastmoney.com/news/1131,202611253938899080.html"
+    },
+    {
+      "rank": 3,
+      "title": "离岸人民币连续三天反弹，中间价报6.7111",
+      "summary": "周二纽约尾盘，离岸人民币兑美元报6.6648元，较周一纽约尾盘涨17点，日内交投于6.6698—6.6601元区间，为连续第三个交易日反弹。11月24日人民币兑美元中间价报6.7111元，上调9个基点；在岸人民币北京时间03:00收报6.6653元，较上一交易日夜盘收盘涨14点。",
+      "why": "汇率是外部压力与跨境资金流向的高频观察窗，连续三日反弹值得跟踪",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-25T06:05",
+      "url": "https://wallstreetcn.com/livenews/3205247",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2026/11-24/10736774.shtml",
+        "https://wallstreetcn.com/livenews/3204611",
+        "https://wallstreetcn.com/livenews/3205193"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "美联储威廉姆斯暗示未来或需进一步加息",
+      "summary": "纽约联邦储备银行行长威廉姆斯周一表示，决策者在控制通胀方面仍有更多工作要做，同时暗示随着经济继续保持增长，进一步的政策行动可以随着时间推移逐步展开。作为纽约联储行长，他的表态直接影响市场对美联储后续利率路径的定价。",
+      "why": "纪要偏鹰之后，联储官员表态继续加固12月加息路径",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-25T06:42",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-25/doc-inizwwnr1882973.shtml"
+    },
+    {
+      "rank": 5,
+      "title": "美联储贴现利率会议纪要：8家地方联储建议上调至4.25%",
+      "summary": "美联储当地时间周二公布的贴现利率会议纪要显示，在10月FOMC会议前，12家地方联储中有8家董事会曾建议将贴现率从4%上调至4.25%，涉及波士顿、克利夫兰、芝加哥等地方联储；其中数家最初支持维持利率不变，10月22日转而支持加息。美联储理事会最终两度批准维持贴现率在4%。",
+      "why": "贴现利率是加息意愿的高频信号，8家上调建议显示分歧转向",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-25T04:09",
+      "url": "https://wallstreetcn.com/livenews/3205202"
+    },
+    {
+      "rank": 6,
+      "title": "加拿大央行行长警告油价传导，12月加息概率升至80%",
+      "summary": "加拿大央行行长麦克勒姆警告称，随着经济表现好于官员预期，更高的石油成本将转嫁给消费者；政策制定者依然确信加拿大人最终将承担这些成本，并援引历史滞后效应，表明未来一年将有更多成本传导至消费价格。利率市场数据显示，加拿大央行12月加息概率由行长讲话前的65%升至80%。",
+      "why": "油价上涨正把加拿大通胀粘性推高，央行被迫更快转向",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-25T01:25",
+      "url": "https://wallstreetcn.com/livenews/3205156",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3205158",
+        "https://wallstreetcn.com/livenews/3205164"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "欧洲央行管委接连表态，今晚20:30公布10月会议纪要",
+      "summary": "欧洲央行多位管委在10月会议后接连表态：Sleijpen称利率的短期方向是清晰的，Kaasik认为市场预期利率将上升是合理的，Simkus表示若通胀持续，2027年需要进一步收紧政策。欧洲央行将于今晚20:30公布10月28—29日货币政策会议纪要文件，官员表态与纪要内容将共同影响市场对12月利率路径的判断。",
+      "why": "纪要叠加官员表态，是判断欧洲央行12月是否再加息的关键窗口",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-25T06:30",
+      "url": "https://wallstreetcn.com/livenews/3205259",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3205100",
+        "https://wallstreetcn.com/livenews/3204977",
+        "https://wallstreetcn.com/livenews/3204814"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "霍尔木兹海峡风险升温，国际油价大幅反弹",
+      "summary": "期货日报早报称，霍尔木兹海峡突发，伊朗表示将收紧封锁，昨夜今晨科技股与算力金属重挫，国际油价大幅反弹。WTI 1月原油期货收涨1.88美元，涨幅2.35%，报82.05美元/桶；上期所原油期货2701合约夜盘收涨2.25%，报582.90元/桶。",
+      "why": "霍尔木兹是全球原油咽喉，封锁收紧同时推高油价与通胀预期",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-25T07:24",
+      "url": "https://finance.sina.com.cn/money/future/fmnews/2026-11-25/doc-inizwwnp9686626.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3205197",
+        "https://wallstreetcn.com/livenews/3205181",
+        "https://wallstreetcn.com/livenews/3205180"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "金价冲高回落，现货黄金收跌报3553.67美元",
+      "summary": "伦敦现货黄金在创下阶段新低3502美元/盎司后一度反弹逼近3700美元，随后再度承压，纽约尾盘现货黄金收跌2.23%，报3553.67美元/盎司；此前该品种最高触及3689.67美元/盎司。业内人士认为宏观层面的压制并未实质消除，法国外贸银行则示警明年1月金价或跌至3340美元。",
+      "why": "金价是实际利率与美联储路径的定价，续跌指向紧缩预期仍强",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-24T15:12",
+      "url": "https://wallstreetcn.com/livenews/3204763",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3205243",
+        "https://finance.sina.com.cn/money/nmetal/gjshz/2026-11-24/doc-inizvqth9010914.shtml",
+        "https://finance.sina.com.cn/money/nmetal/gjshz/2026-11-24/doc-inizvecm2298669.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-24/doc-inizvkmk8980020.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美股科技股重挫，纳指跌1.48%、半导体指数跌约7.9%",
+      "summary": "周二美股收盘分化：标普500指数收跌0.50%，报7201.09点，道琼斯指数收涨0.85%，报50018.70点，纳斯达克综合指数跌1.48%，纳斯达克100指数跌1.99%，纳斯达克科技指数收跌近2.7%，半导体指数跌约7.9%，生物科技指数涨超5.3%。英伟达跌近6%、AMD跌近9%、美光跌11%，Anthropic盘中跌破83美元发行价。",
+      "why": "AI交易与加息预期共振，是风险资产定价切换的关键信号",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-25T05:00",
+      "url": "https://wallstreetcn.com/livenews/3205218",
+      "refs": [
+        "http://forex.eastmoney.com/news/1131,202611253938884129.html",
+        "https://wallstreetcn.com/livenews/3205081",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-24/doc-inizwfqv9860942.shtml",
+        "https://wallstreetcn.com/livenews/3204987",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-25/doc-inizwwnp9645305.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "今晚20:30欧洲央行公布10月28—29日议息会议纪要，看是否确认12月再加息路径",
+    "今晚21:30美国三季度GDP修正值与10月PCE、个人收入、耐用品订单初值，验证12月加息定价",
+    "央行今日8000亿元MLF与5000亿元7天逆回购中标利率，以及缴准日资金面松紧",
+    "周末OPEC+产量目标会议，伊拉克不认可外部产能评估，关注油价与通胀预期反应"
+  ],
+  "model": "MiniMax-M3.1-Flash"
+}
