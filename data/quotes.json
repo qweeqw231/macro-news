@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T16:53:17.300Z",
+  "generatedAt": "2026-11-25T17:08:01.093Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -12,8 +12,8 @@
       "prevClose": 3548.37,
       "volume": 472561427,
       "changePct": -2.03,
-      "updatedAt": "2026-11-25T16:14:27+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:57+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "sz_comp",
@@ -26,8 +26,8 @@
       "prevClose": 10423.6,
       "volume": 557518977,
       "changePct": -3.24,
-      "updatedAt": "2026-11-25T16:14:48+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:27+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "chinext",
@@ -38,10 +38,10 @@
       "high": 2274.18,
       "low": 2183.58,
       "prevClose": 2278.99,
-      "volume": 160652775,
+      "volume": 170366194,
       "changePct": -4.19,
-      "updatedAt": "2026-11-25T16:14:03+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:54+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "star50",
@@ -54,8 +54,8 @@
       "prevClose": 1250.09,
       "volume": 9532084,
       "changePct": -5.12,
-      "updatedAt": "2026-11-25T16:14:09+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:39+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "bse50",
@@ -69,7 +69,7 @@
       "volume": 5786531,
       "changePct": -4.75,
       "updatedAt": "2026-11-25T15:33:38+08:00",
-      "source": "tencent"
+      "source": "eastmoney"
     },
     {
       "key": "csi300",
@@ -82,8 +82,8 @@
       "prevClose": 3963.82,
       "volume": 181773487,
       "changePct": -1.65,
-      "updatedAt": "2026-11-25T16:14:09+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:39+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "sse50",
@@ -96,8 +96,8 @@
       "prevClose": 2774.49,
       "volume": 49153699,
       "changePct": -0.82,
-      "updatedAt": "2026-11-25T16:14:27+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:57+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "a500",
@@ -110,8 +110,8 @@
       "prevClose": 4719.98,
       "volume": 232320788,
       "changePct": -2.15,
-      "updatedAt": "2026-11-25T16:14:21+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:51+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "a100",
@@ -124,8 +124,8 @@
       "prevClose": 3797.22,
       "volume": 74331991,
       "changePct": -1.72,
-      "updatedAt": "2026-11-25T16:14:09+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:39+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "csi500",
@@ -138,8 +138,8 @@
       "prevClose": 6112.43,
       "volume": 127467389,
       "changePct": -3.63,
-      "updatedAt": "2026-11-25T16:14:09+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:39+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "csi1000",
@@ -152,8 +152,8 @@
       "prevClose": 5799.01,
       "volume": 183916299,
       "changePct": -4.44,
-      "updatedAt": "2026-11-25T16:14:27+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:57+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "hsi",
@@ -164,66 +164,66 @@
       "high": 22507.83,
       "low": 21915.88,
       "prevClose": 22219.65,
-      "volume": 22997632.6169,
+      "volume": 14769914112,
       "changePct": -1.14,
-      "updatedAt": "2026-11-25T18:31:03+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:08:28+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "hs_tech",
-      "name": "恒生科技",
+      "name": "恒生科技指数",
       "market": "HK",
       "price": 3378.26,
       "open": 3452.73,
       "high": 3554.36,
       "low": 3367.15,
       "prevClose": 3466.87,
-      "volume": 6533430.3647,
+      "volume": 1957554624,
       "changePct": -2.56,
       "updatedAt": "2026-11-25T16:08:28+08:00",
-      "source": "tencent"
+      "source": "eastmoney"
     },
     {
       "key": "dji",
       "name": "道琼斯",
       "market": "US",
-      "price": 49295.31,
+      "price": 49678.34,
       "open": 49469.86,
-      "high": 49469.86,
+      "high": 49678.52,
       "low": 48913.74,
       "prevClose": 50018.7,
-      "volume": 307132427,
-      "changePct": -1.45,
-      "updatedAt": "2026-11-26T00:53:19+08:00",
-      "source": "tencent"
+      "volume": 326510400,
+      "changePct": -0.68,
+      "updatedAt": "2026-11-26T01:07:46+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "ixic",
       "name": "纳斯达克",
       "market": "US",
-      "price": 22794.47,
+      "price": 23054.91,
       "open": 22948.48,
-      "high": 23043.79,
+      "high": 23057.12,
       "low": 22632.4,
       "prevClose": 23733.54,
-      "volume": 5405067375,
-      "changePct": -3.96,
-      "updatedAt": "2026-11-26T00:53:19+08:00",
-      "source": "tencent"
+      "volume": 5656818944,
+      "changePct": -2.86,
+      "updatedAt": "2026-11-26T01:08:08+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "spx",
       "name": "标普500",
       "market": "US",
-      "price": 7005.1,
+      "price": 7069.48,
       "open": 7060.33,
-      "high": 7063.54,
+      "high": 7069.48,
       "low": 6970.11,
       "prevClose": 7201.09,
-      "volume": 1228780124,
-      "changePct": -2.72,
-      "updatedAt": "2026-11-26T00:53:19+08:00",
-      "source": "tencent"
+      "volume": 1326703904,
+      "changePct": -1.83,
+      "updatedAt": "2026-11-26T01:07:46+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "n225",
@@ -243,37 +243,29 @@
       "key": "dax",
       "name": "德国DAX30",
       "market": "EU",
-      "price": 24748.76,
+      "price": 24733.22,
       "open": 25083.98,
       "high": 25151.42,
       "low": 24698.22,
       "prevClose": 25017.81,
       "volume": 0,
-      "changePct": -1.0754,
-      "updatedAt": "2026-11-26T00:30:00+08:00",
-      "source": "eastmoney",
-      "asOf": "2026-11-26T00:30:00+08:00",
-      "priceSource": "dailyK",
-      "closeDate": "2026-11-25",
-      "note": "close-daily"
+      "changePct": -1.14,
+      "updatedAt": "2026-11-26T00:35:31+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "cac40",
       "name": "法国CAC40",
       "market": "EU",
-      "price": 7997.4,
+      "price": 7980.57,
       "open": 8095.13,
       "high": 8146.26,
-      "low": 7985.69,
+      "low": 7980.57,
       "prevClose": 8040.49,
       "volume": 0,
-      "changePct": -0.5359,
-      "updatedAt": "2026-11-26T00:30:00+08:00",
-      "source": "eastmoney",
-      "asOf": "2026-11-26T00:30:00+08:00",
-      "priceSource": "dailyK",
-      "closeDate": "2026-11-25",
-      "note": "close-daily"
+      "changePct": -0.75,
+      "updatedAt": "2026-11-26T00:53:00+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "ukx",
@@ -298,14 +290,14 @@
       "high": 4823.36,
       "low": 4672.55,
       "prevClose": 5006.03,
-      "volume": 181523,
+      "volume": 205391,
       "changePct": -6.16,
       "updatedAt": "2026-11-25T14:29:59+08:00",
       "source": "eastmoney"
     },
     {
       "key": "etf_563360",
-      "name": "中证A500ETF",
+      "name": "A500ETF华泰柏瑞",
       "market": "ETF",
       "theme": "宽基",
       "region": "CN",
@@ -316,12 +308,12 @@
       "prevClose": 1.067,
       "volume": 48323537,
       "changePct": -1.97,
-      "updatedAt": "2026-11-25T16:15:00+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:12:00+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159819",
-      "name": "人工智能ETF",
+      "name": "人工智能ETF易方达",
       "market": "ETF",
       "theme": "科技AI",
       "region": "CN",
@@ -332,12 +324,12 @@
       "prevClose": 1.282,
       "volume": 2551549,
       "changePct": -4.13,
-      "updatedAt": "2026-11-25T16:14:45+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:15+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159530",
-      "name": "机器人ETF",
+      "name": "机器人ETF易方达",
       "market": "ETF",
       "theme": "科技AI",
       "region": "CN",
@@ -348,12 +340,12 @@
       "prevClose": 1.226,
       "volume": 11881398,
       "changePct": -6.28,
-      "updatedAt": "2026-11-25T16:14:30+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:06+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_588200",
-      "name": "科创芯片ETF",
+      "name": "科创芯片ETF嘉实",
       "market": "ETF",
       "theme": "科技AI",
       "region": "CN",
@@ -364,12 +356,12 @@
       "prevClose": 0.839,
       "volume": 44965718,
       "changePct": -6.56,
-      "updatedAt": "2026-11-25T16:15:00+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:12:00+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159516",
-      "name": "半导体设备ETF",
+      "name": "半导体设备ETF国泰",
       "market": "ETF",
       "theme": "科技AI",
       "region": "CN",
@@ -380,12 +372,12 @@
       "prevClose": 0.515,
       "volume": 67407084,
       "changePct": -8.74,
-      "updatedAt": "2026-11-25T16:14:30+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:18+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_158050",
-      "name": "创业板算力ETF",
+      "name": "创业板算力ETF易方达",
       "market": "ETF",
       "theme": "科技AI",
       "region": "CN",
@@ -396,12 +388,12 @@
       "prevClose": 0.614,
       "volume": 8613111,
       "changePct": -5.05,
-      "updatedAt": "2026-11-25T16:15:00+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:00+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159732",
-      "name": "消费电子ETF",
+      "name": "消费电子ETF华夏",
       "market": "ETF",
       "theme": "科技AI",
       "region": "CN",
@@ -412,12 +404,12 @@
       "prevClose": 0.953,
       "volume": 1788085,
       "changePct": -4.3,
-      "updatedAt": "2026-11-25T16:14:33+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:33+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_513050",
-      "name": "中概互联网ETF",
+      "name": "中概互联网ETF易方达",
       "market": "ETF",
       "theme": "互联网",
       "region": "US",
@@ -428,12 +420,12 @@
       "prevClose": 0.849,
       "volume": 30483469,
       "changePct": -0.35,
-      "updatedAt": "2026-11-25T16:14:59+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:56+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159792",
-      "name": "港股通互联网ETF",
+      "name": "港股通互联网ETF富国",
       "market": "ETF",
       "theme": "互联网",
       "region": "HK",
@@ -444,12 +436,12 @@
       "prevClose": 0.444,
       "volume": 40810188,
       "changePct": -0.45,
-      "updatedAt": "2026-11-25T16:15:00+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:00+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_513530",
-      "name": "港股通红利ETF",
+      "name": "港股通红利ETF华泰柏瑞",
       "market": "ETF",
       "theme": "港股",
       "region": "HK",
@@ -460,12 +452,12 @@
       "prevClose": 1.472,
       "volume": 3176685,
       "changePct": -1.09,
-      "updatedAt": "2026-11-25T16:14:43+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:36+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_513120",
-      "name": "港股创新药ETF",
+      "name": "港股创新药ETF广发",
       "market": "ETF",
       "theme": "港股",
       "region": "HK",
@@ -476,12 +468,12 @@
       "prevClose": 1.102,
       "volume": 53688649,
       "changePct": -0.64,
-      "updatedAt": "2026-11-25T16:14:57+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:57+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_512170",
-      "name": "医疗ETF",
+      "name": "医疗ETF华宝",
       "market": "ETF",
       "theme": "医药",
       "region": "CN",
@@ -492,12 +484,12 @@
       "prevClose": 0.325,
       "volume": 8661221,
       "changePct": -1.23,
-      "updatedAt": "2026-11-25T16:14:44+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:35+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159992",
-      "name": "创新药ETF",
+      "name": "创新药ETF银华",
       "market": "ETF",
       "theme": "医药",
       "region": "CN",
@@ -508,12 +500,12 @@
       "prevClose": 0.764,
       "volume": 4346219,
       "changePct": -0.65,
-      "updatedAt": "2026-11-25T16:14:12+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:12+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_512690",
-      "name": "酒ETF",
+      "name": "酒ETF鹏华",
       "market": "ETF",
       "theme": "消费",
       "region": "CN",
@@ -524,12 +516,12 @@
       "prevClose": 0.431,
       "volume": 11714818,
       "changePct": 0.93,
-      "updatedAt": "2026-11-25T16:14:49+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:49+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159766",
-      "name": "旅游ETF",
+      "name": "旅游ETF富国",
       "market": "ETF",
       "theme": "消费",
       "region": "CN",
@@ -540,12 +532,12 @@
       "prevClose": 0.522,
       "volume": 1309603,
       "changePct": -0.19,
-      "updatedAt": "2026-11-25T16:14:45+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:45+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_512880",
-      "name": "证券ETF",
+      "name": "证券ETF国泰",
       "market": "ETF",
       "theme": "金融",
       "region": "CN",
@@ -556,12 +548,12 @@
       "prevClose": 0.969,
       "volume": 12549631,
       "changePct": -1.44,
-      "updatedAt": "2026-11-25T16:14:49+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:49+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_512800",
-      "name": "银行ETF",
+      "name": "银行ETF华宝",
       "market": "ETF",
       "theme": "金融",
       "region": "CN",
@@ -572,12 +564,12 @@
       "prevClose": 0.923,
       "volume": 11410306,
       "changePct": -0.22,
-      "updatedAt": "2026-11-25T16:14:50+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:50+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_515220",
-      "name": "煤炭ETF",
+      "name": "煤炭ETF国泰",
       "market": "ETF",
       "theme": "资源",
       "region": "CN",
@@ -588,12 +580,12 @@
       "prevClose": 1.133,
       "volume": 2767688,
       "changePct": -0.35,
-      "updatedAt": "2026-11-25T16:14:57+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:55+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_512400",
-      "name": "有色金属ETF",
+      "name": "有色金属ETF南方",
       "market": "ETF",
       "theme": "资源",
       "region": "CN",
@@ -604,12 +596,12 @@
       "prevClose": 1.246,
       "volume": 2931259,
       "changePct": -2.65,
-      "updatedAt": "2026-11-25T16:14:50+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:38+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_516150",
-      "name": "稀土ETF",
+      "name": "稀土ETF嘉实",
       "market": "ETF",
       "theme": "资源",
       "region": "CN",
@@ -620,12 +612,12 @@
       "prevClose": 1.282,
       "volume": 628995,
       "changePct": -3.67,
-      "updatedAt": "2026-11-25T16:14:55+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:54+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_512660",
-      "name": "军工ETF",
+      "name": "军工ETF国泰",
       "market": "ETF",
       "theme": "军工制造",
       "region": "CN",
@@ -636,12 +628,12 @@
       "prevClose": 0.922,
       "volume": 2398203,
       "changePct": -3.47,
-      "updatedAt": "2026-11-25T16:14:54+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:43+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_560280",
-      "name": "工程机械ETF",
+      "name": "工程机械ETF广发",
       "market": "ETF",
       "theme": "军工制造",
       "region": "CN",
@@ -652,12 +644,12 @@
       "prevClose": 1.29,
       "volume": 318487,
       "changePct": -2.95,
-      "updatedAt": "2026-11-25T16:14:53+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:43+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159755",
-      "name": "电池ETF",
+      "name": "电池ETF广发",
       "market": "ETF",
       "theme": "新能源",
       "region": "CN",
@@ -668,12 +660,12 @@
       "prevClose": 0.698,
       "volume": 4088582,
       "changePct": -5.44,
-      "updatedAt": "2026-11-25T16:14:48+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:48+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_515790",
-      "name": "光伏ETF",
+      "name": "光伏ETF华泰柏瑞",
       "market": "ETF",
       "theme": "新能源",
       "region": "CN",
@@ -684,12 +676,12 @@
       "prevClose": 0.643,
       "volume": 2814015,
       "changePct": -2.95,
-      "updatedAt": "2026-11-25T16:14:53+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:45+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159611",
-      "name": "电力ETF",
+      "name": "电力ETF广发",
       "market": "ETF",
       "theme": "公用农业地产",
       "region": "CN",
@@ -700,12 +692,12 @@
       "prevClose": 1.028,
       "volume": 2568655,
       "changePct": -0.97,
-      "updatedAt": "2026-11-25T16:15:00+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:00+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159865",
-      "name": "养殖ETF",
+      "name": "养殖ETF国泰",
       "market": "ETF",
       "theme": "公用农业地产",
       "region": "CN",
@@ -716,12 +708,12 @@
       "prevClose": 0.538,
       "volume": 3960559,
       "changePct": -2.04,
-      "updatedAt": "2026-11-25T16:14:57+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:57+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_512200",
-      "name": "房地产ETF",
+      "name": "房地产ETF南方",
       "market": "ETF",
       "theme": "公用农业地产",
       "region": "CN",
@@ -732,12 +724,12 @@
       "prevClose": 1.006,
       "volume": 1297855,
       "changePct": -2.19,
-      "updatedAt": "2026-11-25T16:15:00+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:12:00+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159869",
-      "name": "游戏ETF",
+      "name": "游戏ETF华夏",
       "market": "ETF",
       "theme": "传媒",
       "region": "CN",
@@ -748,12 +740,12 @@
       "prevClose": 0.903,
       "volume": 4177365,
       "changePct": -2.77,
-      "updatedAt": "2026-11-25T16:14:33+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:33+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_512890",
-      "name": "红利低波ETF",
+      "name": "红利低波ETF华泰柏瑞",
       "market": "ETF",
       "theme": "红利风格",
       "region": "CN",
@@ -764,12 +756,12 @@
       "prevClose": 1.255,
       "volume": 6217414,
       "changePct": 0,
-      "updatedAt": "2026-11-25T16:14:48+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:48+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_159201",
-      "name": "自由现金流ETF",
+      "name": "自由现金流ETF华夏",
       "market": "ETF",
       "theme": "红利风格",
       "region": "CN",
@@ -780,12 +772,12 @@
       "prevClose": 1.115,
       "volume": 2435005,
       "changePct": -0.27,
-      "updatedAt": "2026-11-25T16:14:36+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T15:34:36+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_518880",
-      "name": "黄金ETF",
+      "name": "黄金ETF华安",
       "market": "ETF",
       "theme": "跨资产",
       "region": "CN",
@@ -796,8 +788,8 @@
       "prevClose": 7.391,
       "volume": 5280801,
       "changePct": -3,
-      "updatedAt": "2026-11-25T16:14:36+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:34+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "etf_511990",
@@ -812,185 +804,184 @@
       "prevClose": 100.001,
       "volume": 1237084,
       "changePct": 0.01,
-      "updatedAt": "2026-11-25T16:14:52+08:00",
-      "source": "tencent"
+      "updatedAt": "2026-11-25T16:11:32+08:00",
+      "source": "eastmoney"
     },
     {
       "key": "ndx",
       "name": "纳斯达克100",
       "market": "US",
-      "price": 25043.88,
+      "price": 25400.63,
       "open": 25309.61,
       "high": 25439.32,
       "low": 24970.66,
       "prevClose": 26214.17,
-      "volume": 758875904,
-      "changePct": -4.46,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "volume": 862920240,
+      "changePct": -3.1,
+      "updatedAt": "2026-11-26T01:08:08+08:00",
       "source": "eastmoney"
     },
     {
       "key": "xau",
       "name": "伦敦金",
       "market": "CMDTY",
-      "price": 3450.48,
+      "price": 3485.53,
       "open": 3558.41,
       "high": 3574.84,
       "low": 3426.64,
       "prevClose": 3555.83,
-      "changePct": -2.96,
-      "updatedAt": "2026-11-26T00:52:00+08:00",
+      "changePct": -1.98,
+      "updatedAt": "2026-11-26T01:07:00+08:00",
       "note": ""
     },
     {
       "key": "xag",
       "name": "伦敦银",
       "market": "CMDTY",
-      "price": 38.55,
+      "price": 39.29,
       "open": 40.95,
       "high": 41.45,
       "low": 38.18,
       "prevClose": 40.89,
-      "changePct": -5.72,
-      "updatedAt": "2026-11-26T00:52:00+08:00",
+      "changePct": -3.91,
+      "updatedAt": "2026-11-26T01:07:00+08:00",
       "note": ""
     },
     {
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 89.79,
+      "price": 89.94,
       "open": 88.47,
       "high": 90.39,
       "low": 86.95,
       "prevClose": 88.78,
-      "changePct": 1.14,
-      "updatedAt": "2026-11-26T00:53:05+08:00",
+      "changePct": 1.31,
+      "updatedAt": "2026-11-26T01:08:04+08:00",
       "note": ""
     },
     {
       "key": "sge_au9999",
       "name": "上海金Au99.99",
       "market": "SGE",
-      "price": 757.35,
-      "open": 780,
-      "high": 784,
-      "low": 755,
-      "prevClose": 777.72,
-      "changePct": -2.62,
-      "updatedAt": "2026-11-25T15:30:00+08:00",
-      "note": ""
+      "price": 741.99,
+      "open": 757.8,
+      "high": 760,
+      "low": 736.51,
+      "prevClose": 757.35,
+      "changePct": -2.03,
+      "updatedAt": "2026-11-26T01:08:07+08:00"
     },
     {
       "key": "usdcny",
       "name": "离岸人民币",
       "market": "FX",
-      "price": 6.6711,
+      "price": 6.667,
       "open": 6.6652,
       "high": 6.6784,
       "low": 6.6584,
       "prevClose": 6.6649,
       "volume": 0,
-      "changePct": 0.09,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "changePct": 0.03,
+      "updatedAt": "2026-11-26T01:08:08+08:00",
       "source": "eastmoney"
     },
     {
       "key": "eurusd",
       "name": "欧元/美元",
       "market": "FX",
-      "price": 1.0953,
+      "price": 1.0982,
       "open": 1.0966,
-      "high": 1.097,
+      "high": 1.0983,
       "low": 1.0931,
       "prevClose": 1.0965,
       "volume": 0,
-      "changePct": -0.11,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "changePct": 0.16,
+      "updatedAt": "2026-11-26T01:08:08+08:00",
       "source": "eastmoney"
     },
     {
       "key": "gbpusd",
       "name": "英镑/美元",
       "market": "FX",
-      "price": 1.3078,
+      "price": 1.3109,
       "open": 1.3114,
       "high": 1.3119,
       "low": 1.3048,
       "prevClose": 1.3115,
       "volume": 0,
-      "changePct": -0.28,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "changePct": -0.05,
+      "updatedAt": "2026-11-26T01:08:07+08:00",
       "source": "eastmoney"
     },
     {
       "key": "usdjpy",
       "name": "美元/日元",
       "market": "FX",
-      "price": 158.947,
+      "price": 158.8488,
       "open": 159.245,
       "high": 159.4973,
-      "low": 158.9445,
+      "low": 158.6648,
       "prevClose": 159.2538,
       "volume": 0,
-      "changePct": -0.19,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "changePct": -0.25,
+      "updatedAt": "2026-11-26T01:08:07+08:00",
       "source": "eastmoney"
     },
     {
       "key": "usdkrw",
       "name": "美元/韩元",
       "market": "FX",
-      "price": 1348.5125,
+      "price": 1345.875,
       "open": 1341.1475,
       "high": 1349.165,
       "low": 1332.2975,
       "prevClose": 1340.255,
       "volume": 0,
-      "changePct": 0.62,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "changePct": 0.42,
+      "updatedAt": "2026-11-26T01:08:08+08:00",
       "source": "eastmoney"
     },
     {
       "key": "audusd",
       "name": "澳元/美元",
       "market": "FX",
-      "price": 0.6583,
+      "price": 0.6607,
       "open": 0.6637,
       "high": 0.6665,
       "low": 0.6559,
       "prevClose": 0.6641,
       "volume": 0,
-      "changePct": -0.87,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "changePct": -0.51,
+      "updatedAt": "2026-11-26T01:08:08+08:00",
       "source": "eastmoney"
     },
     {
       "key": "usdcad",
       "name": "美元/加元",
       "market": "FX",
-      "price": 1.4231,
+      "price": 1.4206,
       "open": 1.4274,
       "high": 1.4294,
-      "low": 1.4224,
+      "low": 1.4205,
       "prevClose": 1.427,
       "volume": 0,
-      "changePct": -0.27,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "changePct": -0.45,
+      "updatedAt": "2026-11-26T01:08:08+08:00",
       "source": "eastmoney"
     },
     {
       "key": "usdchf",
       "name": "美元/瑞郎",
       "market": "FX",
-      "price": 0.8313,
+      "price": 0.83,
       "open": 0.8357,
       "high": 0.8383,
       "low": 0.8286,
       "prevClose": 0.8356,
       "volume": 0,
-      "changePct": -0.51,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "changePct": -0.67,
+      "updatedAt": "2026-11-26T01:08:07+08:00",
       "source": "eastmoney"
     },
     {
@@ -1039,28 +1030,28 @@
       "key": "sox",
       "name": "费城半导体指数",
       "market": "US",
-      "price": 8162.82,
+      "price": 8324.49,
       "open": 8302.93,
       "high": 8413.08,
-      "low": 8150.84,
+      "low": 8129.23,
       "prevClose": 8832.5,
       "volume": 0,
-      "changePct": -7.58,
-      "updatedAt": "2026-11-26T00:38:31+08:00",
+      "changePct": -5.75,
+      "updatedAt": "2026-11-26T01:08:08+08:00",
       "source": "eastmoney"
     },
     {
       "key": "dxy",
       "name": "美元指数",
       "market": "FX",
-      "price": 103.87,
+      "price": 103.64,
       "open": 103.83,
       "high": 104.1,
-      "low": 103.8,
+      "low": 103.62,
       "prevClose": 103.83,
       "volume": 0,
-      "changePct": 0.04,
-      "updatedAt": "2026-11-26T00:38:23+08:00",
+      "changePct": -0.18,
+      "updatedAt": "2026-11-26T01:08:06+08:00",
       "source": "eastmoney"
     },
     {
@@ -1077,65 +1068,65 @@
       "key": "eurcny",
       "name": "欧元/人民币",
       "market": "FX",
-      "price": 7.322,
+      "price": 7.33,
       "prevClose": 7.3064,
-      "changePct": 0.21,
+      "changePct": 0.33,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-26T00:53:26+08:00",
+      "updatedAt": "2026-11-26T01:08:03+08:00",
       "note": ""
     },
     {
       "key": "gbpcny",
       "name": "英镑/人民币",
       "market": "FX",
-      "price": 8.742023,
+      "price": 8.748906,
       "prevClose": 8.742023,
-      "changePct": 0,
+      "changePct": 0.0787,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-26T00:52:55+08:00",
+      "updatedAt": "2026-11-26T01:07:57+08:00",
       "note": ""
     },
     {
       "key": "jpycny",
       "name": "100日元/人民币",
       "market": "FX",
-      "price": 4.207072,
+      "price": 4.203358,
       "prevClose": 4.185239,
-      "changePct": 0.5217,
+      "changePct": 0.4329,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-26T00:52:55+08:00",
+      "updatedAt": "2026-11-26T01:07:58+08:00",
       "note": ""
     },
     {
       "key": "krwcny",
       "name": "100韩元/人民币",
       "market": "FX",
-      "price": 0.495417,
+      "price": 0.49581,
       "prevClose": 0.497216,
-      "changePct": -0.3716,
+      "changePct": -0.2925,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-26T00:52:46+08:00",
+      "updatedAt": "2026-11-26T01:07:57+08:00",
       "note": ""
     },
     {
       "key": "audcny",
       "name": "澳元/人民币",
       "market": "FX",
-      "price": 4.399472,
+      "price": 4.413063,
       "prevClose": 4.426737,
-      "changePct": -0.6159,
+      "changePct": -0.3089,
       "open": null,
       "high": null,
       "low": null,
-      "updatedAt": "2026-11-26T00:52:55+08:00",
+      "updatedAt": "2026-11-26T01:07:58+08:00",
       "note": ""
     }
   ]
