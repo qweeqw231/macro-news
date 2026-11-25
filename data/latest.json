@@ -1,7 +1,49 @@
 {
-  "generatedAt": "2026-11-25T19:52:59.566Z",
-  "total": 51826,
+  "generatedAt": "2026-11-25T20:08:10.495Z",
+  "total": 51829,
   "items": [
+    {
+      "id": "nlzfx2",
+      "ts": 1795636878,
+      "time": "2026-11-26T04:01:18.000+08:00",
+      "source": "华尔街见闻",
+      "channel": "全球",
+      "title": "芝加哥小麦、大豆至少涨1%，豆粕涨约2.4%",
+      "summary": "周三（11月25日）纽约尾盘，彭博谷物分类指数涨0.66%，报29.6210点，全天呈现出长尾V形反转，亚太早盘低开低走，北京时间17:23刷新日低至29.0737点，之后持续上扬。 CBOT玉米期货涨1.33%，CBOT小麦期货跌0.47%。 CBOT大豆期货涨1%，豆粕期货涨2.37%——亚太早盘以来大致持稳、美股开盘后持续走高，豆油期货涨0.1%。",
+      "content": "周三（11月25日）纽约尾盘，彭博谷物分类指数涨0.66%，报29.6210点，全天呈现出长尾V形反转，亚太早盘低开低走，北京时间17:23刷新日低至29.0737点，之后持续上扬。 CBOT玉米期货涨1.33%，CBOT小麦期货跌0.47%。 CBOT大豆期货涨1%，豆粕期货涨2.37%——亚太早盘以来大致持稳、美股开盘后持续走高，豆油期货涨0.1%。",
+      "url": "https://wallstreetcn.com/livenews/3205913",
+      "kind": "news"
+    },
+    {
+      "id": "b1ah4h",
+      "ts": 1795636800,
+      "time": "2026-11-25T20:00:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+      "summary": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+      "content": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125b.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    },
+    {
+      "id": "192xi1o",
+      "ts": 1795636800,
+      "time": "2026-11-25T20:00:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+      "summary": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+      "content": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125a.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    },
     {
       "id": "1rexjp7",
       "ts": 1795635818,
@@ -958,7 +1000,7 @@
       "ts": 1795625292,
       "time": "2026-11-26T00:48:12.000+08:00",
       "source": "华尔街见闻",
-      "channel": "全球",
+      "channel": "美股",
       "title": "明晟公司MSCI北欧国家指数跌0.8%，报389.20点。",
       "summary": "",
       "content": "明晟公司MSCI北欧国家指数跌0.8%，报389.20点。 在十个板块中，北欧金融板块跌幅最大。 诺基亚跌5.1%，在一众北欧个股里表现最差。",
@@ -2376,42 +2418,6 @@
       "summary": "10 月通胀进一步偏离美联储目标，市场愈发预期 12 月将再度加息，同时也引发疑问：2027 年央行还需要出台多大力度的紧缩举措。",
       "content": "10 月通胀进一步偏离美联储目标，市场愈发预期 12 月将再度加息，同时也引发疑问：2027 年央行还需要出台多大力度的紧缩举措。",
       "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-25/doc-inizykqc4129319.shtml",
-      "kind": "news"
-    },
-    {
-      "id": "be07a8",
-      "ts": 1795614723,
-      "time": "2026-11-25T21:52:03.000+08:00",
-      "source": "华尔街见闻",
-      "channel": "外汇",
-      "title": "据美国纽约联储数据，上个交易日（11月24日）担保隔夜融资利率（SOFR）报3.94%，之前一天报3.92%。",
-      "summary": "",
-      "content": "据美国纽约联储数据，上个交易日（11月24日）担保隔夜融资利率（SOFR）报3.94%，之前一天报3.92%。 上个交易日有效的联邦基金利率报3.88%，之前一天报3.88%。",
-      "url": "https://wallstreetcn.com/livenews/3205774",
-      "kind": "news"
-    },
-    {
-      "id": "17hbggt",
-      "ts": 1795614556,
-      "time": "2026-11-25T21:49:16.000+08:00",
-      "source": "华尔街见闻",
-      "channel": "外汇",
-      "title": "美国贸易代表格里尔：英伟达具有“结构性重要”地位。",
-      "summary": "",
-      "content": "美国贸易代表格里尔：英伟达具有“结构性重要”地位。 在G20峰会前夕，特朗普与卡尼有沟通的选项。 美国上周与加拿大方面就贸易问题举行了会晤。 汽车、钢铁和铝是与加拿大的症结所在。 （提到针对墨西哥产能过剩的301条款调查）墨西哥面临产能过剩的挑战。 已与墨西哥进行了非常好的对话。",
-      "url": "https://wallstreetcn.com/livenews/3205773",
-      "kind": "news"
-    },
-    {
-      "id": "1pknayw",
-      "ts": 1795614316,
-      "time": "2026-11-25T21:45:16.000+08:00",
-      "source": "新浪财经",
-      "channel": "国内财经",
-      "title": "俄罗斯原油出口高企助推供应过剩 或主导明年油市格局",
-      "summary": "俄罗斯原油出口维持高位，加剧供应过剩，这一局面或将成为明年乃至更长时间内石油市场的主线。 油轮数据显示，今年迄今为止，俄罗斯原油出口日均365万桶...",
-      "content": "俄罗斯原油出口维持高位，加剧供应过剩，这一局面或将成为明年乃至更长时间内石油市场的主线。 油轮数据显示，今年迄今为止，俄罗斯原油出口日均365万桶...",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-25/doc-inizykqc4125705.shtml",
       "kind": "news"
     }
   ]

@@ -2,6 +2,48 @@
   "day": "2026-11-25",
   "items": [
     {
+      "id": "nlzfx2",
+      "ts": 1795636878,
+      "time": "2026-11-26T04:01:18.000+08:00",
+      "source": "华尔街见闻",
+      "channel": "全球",
+      "title": "芝加哥小麦、大豆至少涨1%，豆粕涨约2.4%",
+      "summary": "周三（11月25日）纽约尾盘，彭博谷物分类指数涨0.66%，报29.6210点，全天呈现出长尾V形反转，亚太早盘低开低走，北京时间17:23刷新日低至29.0737点，之后持续上扬。 CBOT玉米期货涨1.33%，CBOT小麦期货跌0.47%。 CBOT大豆期货涨1%，豆粕期货涨2.37%——亚太早盘以来大致持稳、美股开盘后持续走高，豆油期货涨0.1%。",
+      "content": "周三（11月25日）纽约尾盘，彭博谷物分类指数涨0.66%，报29.6210点，全天呈现出长尾V形反转，亚太早盘低开低走，北京时间17:23刷新日低至29.0737点，之后持续上扬。 CBOT玉米期货涨1.33%，CBOT小麦期货跌0.47%。 CBOT大豆期货涨1%，豆粕期货涨2.37%——亚太早盘以来大致持稳、美股开盘后持续走高，豆油期货涨0.1%。",
+      "url": "https://wallstreetcn.com/livenews/3205913",
+      "kind": "news"
+    },
+    {
+      "id": "b1ah4h",
+      "ts": 1795636800,
+      "time": "2026-11-25T20:00:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+      "summary": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+      "content": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125b.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    },
+    {
+      "id": "192xi1o",
+      "ts": 1795636800,
+      "time": "2026-11-25T20:00:00.000Z",
+      "source": "美联储",
+      "channel": "政策/利率",
+      "title": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+      "summary": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+      "content": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125a.htm",
+      "kind": "official",
+      "tags": [
+        "央行"
+      ]
+    },
+    {
       "id": "1rexjp7",
       "ts": 1795635818,
       "time": "2026-11-26T03:43:38.000+08:00",
@@ -957,7 +999,7 @@
       "ts": 1795625292,
       "time": "2026-11-26T00:48:12.000+08:00",
       "source": "华尔街见闻",
-      "channel": "全球",
+      "channel": "美股",
       "title": "明晟公司MSCI北欧国家指数跌0.8%，报389.20点。",
       "summary": "",
       "content": "明晟公司MSCI北欧国家指数跌0.8%，报389.20点。 在十个板块中，北欧金融板块跌幅最大。 诺基亚跌5.1%，在一众北欧个股里表现最差。",
