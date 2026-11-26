@@ -6,92 +6,92 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-26T06:08:14.783Z",
-  "durationMs": 22605,
+  "startedAt": "2026-11-26T06:23:11.657Z",
+  "durationMs": 9528,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 6923
+      "ms": 5865
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1678
+      "ms": 964
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 3531
+      "ms": 1723
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 538
+      "ms": 752
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1540
+      "ms": 1220
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 798
+      "ms": 736
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1022
+      "ms": 1392
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 9258
+      "ms": 5129
     }
   ],
-  "quotes": 57,
-  "added": 23,
+  "quotes": 75,
+  "added": 20,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7491,
-    "kept": 7491,
+    "candidates": 7511,
+    "kept": 7511,
     "evicted": 0,
-    "deduped": 317,
+    "deduped": 318,
     "days": [
       {
         "day": "2026-11-26",
-        "incoming": 247,
-        "candidates": 411,
-        "kept": 411,
+        "incoming": 250,
+        "candidates": 431,
+        "kept": 431,
         "evicted": 0,
-        "deduped": 225,
-        "added": 23
+        "deduped": 230,
+        "added": 20
       },
       {
         "day": "2026-11-25",
-        "incoming": 78,
+        "incoming": 74,
         "candidates": 1284,
         "kept": 1284,
         "evicted": 0,
-        "deduped": 78,
+        "deduped": 74,
         "added": 0
       },
       {
@@ -140,6 +140,5 @@
         "added": 0
       }
     ]
-  },
-  "quoteError": "18/66 失败：东财批量失败：HTTP 502"
+  }
 }
