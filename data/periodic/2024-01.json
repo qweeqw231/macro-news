@@ -1,0 +1,183 @@
+{
+  "date": "2024-01",
+  "type": "month",
+  "generatedAt": "2026-11-26T19:50:31+08:00",
+  "endedAt": "2026-11-26T19:50:31+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年 1 月宏观月报：降准落地与稳增长开局",
+  "window": {
+    "from": "2024-01-01",
+    "to": "2024-01-31",
+    "fromAt": "2024-01-01T08:00:00+08:00",
+    "toAt": "2024-02-01T08:00:00+08:00",
+    "days": 31
+  },
+  "overview": "2024年1月，开年政策转暖。央行工作会议部署全年工作，宣布下调金融机构存款准备金率0.5个百分点、下调支农支小再贷款和再贴现利率并设立信贷市场司；1月MLF超额续做、中标利率连续5个月不变，1月LPR报价1年期3.45%、5年期以上4.2%亦连续5个月不变。数据上，2023年GDP超126万亿元、同比增长5.2%，全年CPI同比上涨0.2%、PPI降幅收窄，货物贸易进出口41.76万亿元、增长0.2%，全年社融增量35.59万亿元；1月制造业PMI回升至49.2%。资本市场，证监会明确把好IPO入口关、加大回购与分红监管；两部门建立城市房地产融资协调机制，首批名单与白名单贷款陆续落地。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行降准0.5个百分点 下调支农支小再贷款再贴现利率",
+      "summary": "中国人民银行宣布下调金融机构存款准备金率0.5个百分点，同时下调支农支小再贷款、再贴现利率，并将设立信贷市场司，预计全年信贷投放节奏更加均衡。",
+      "why": "开年政策组合拳落地，决定全年流动性与信贷投放基调",
+      "source": "中国人民银行",
+      "publishedAt": "2024-01-24T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553729065/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553757433/index.html",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152282.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151994.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151937.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行工作会议部署2024年工作 稳慎推进人民币国际化",
+      "summary": "中国人民银行工作会议在京召开，部署2024年工作，提出稳慎扎实推进人民币国际化；相关报道关注人民币汇率保持稳定有坚实基础，以及2024年是否还有降息空间。",
+      "why": "央行年度定调，是全年货币政策取向与降准降息节奏的起点",
+      "source": "中国人民银行",
+      "publishedAt": "2024-01-05T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553646503/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10141391.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140905.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140834.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "2023年社融增量35.59万亿元 存量378.09万亿元",
+      "summary": "央行发布2023年社会融资规模增量与存量统计报告，全年社会融资规模增量累计35.59万亿元，年末社会融资规模存量378.09万亿元，社会融资增量比上年多3.41万亿元。",
+      "why": "信用扩张的年度读数，决定开年信贷投放与政策空间判断",
+      "source": "中国人民银行",
+      "publishedAt": "2024-01-12T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553671877/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553698651/index.html",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145161.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145160.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145344.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "1月LPR报价维持不变 1年期3.45% 5年期以上4.2%",
+      "summary": "1月LPR报价出炉，1年期LPR为3.45%，5年期以上LPR为4.2%，已连续5个月不变；LPR报价行扩至20家，报道认为后续仍可能下调但空间收窄。",
+      "why": "贷款定价基准是否变动，直接影响居民房贷与实体融资成本",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-22/10150348.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150505.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150511.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-21/10150212.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "证监会时隔两年多开新闻发布会 把好IPO入口关",
+      "summary": "证监会时隔两年多召开新闻发布会，明确继续把好IPO入口关，2023年A股上市公司现金分红总额2.13万亿元创历史新高，并将加大回购监管、引入市场中长期资金。",
+      "why": "IPO节奏与分红回购监管定调，决定资本市场供给与回报机制",
+      "source": "中新网",
+      "publishedAt": "2024-01-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-12/10145359.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145321.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145279.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145379.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145382.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "2023年GDP超126万亿元 同比增长5.2%",
+      "summary": "国家统计局发布，2023年国内生产总值1260582亿元、同比增长5.2%；12月规模以上工业增加值增长6.8%，社会消费品零售总额增长7.4%。",
+      "why": "全年经济增速与月度数据组合，标定开年稳增长的起点",
+      "source": "中新网",
+      "publishedAt": "2024-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-17/10147513.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/01-17/10147637.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147625.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147545.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147571.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "1月制造业PMI回升至49.2% 较上月上升0.2个百分点",
+      "summary": "国家统计局发布，1月制造业采购经理指数为49.2%，较上月上升0.2个百分点，景气水平有所改善；1月中国非制造业商务活动指数稳中有升。",
+      "why": "PMI是开年景气的高频读数，指向政策加码后的实体修复",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10155863.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155888.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156067.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156062.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "2023年12月CPI同比涨0.2% PPI同比降幅收窄",
+      "summary": "国家统计局发布，2023年全年CPI同比上涨0.2%，12月CPI环比小幅上涨、同比降幅收窄，PPI同比降幅同样收窄，报道称物价平稳运行有基础。",
+      "why": "物价读数是判断通缩压力与宽松必要性的直接依据",
+      "source": "中新网",
+      "publishedAt": "2024-01-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-12/10144803.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145004.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145047.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145069.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10144943.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "2023年货物贸易进出口41.76万亿元 增长0.2%",
+      "summary": "海关总署发布，2023年我国货物贸易进出口总值41.76万亿元、同比增长0.2%；对RCEP其他成员国合计进出口12.6万亿元，民营企业连续5年稳居第一大外贸经营主体。",
+      "why": "外需是经济增长的重要支撑，外贸读数决定政策空间判断",
+      "source": "中新网",
+      "publishedAt": "2024-01-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-12/10144833.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-12/10144810.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10144868.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145006.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-12/10144910.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "两部门建立城市房地产融资协调机制 白名单加快落地",
+      "summary": "两部门建立城市房地产融资协调机制，金融监管总局称将加快推进机制落地见效，住建部部署首批房地产项目名单月底前落地，全国首笔白名单贷款已在广西落地。",
+      "why": "融资协调机制是本轮地产支持的核心通道，决定项目端资金可得性",
+      "source": "中新网",
+      "publishedAt": "2024-01-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-12/10145206.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-12/10145295.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-25/10152681.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-26/10153460.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156373.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "降准落地后货币市场利率与信贷投放节奏，以及全年降准降息空间",
+    "1月LPR连续5个月未变后的报价行扩容与后续定价机制调整",
+    "1月制造业PMI回升后，2月生产与新订单能否延续改善",
+    "房地产融资协调机制首批名单落地进度与白名单贷款规模",
+    "美联储褐皮书与海外通胀路径对人民币汇率和国内政策空间的影响"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:50:31+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 31,
+    "newsItems": 4002,
+    "missingDays": []
+  }
+}

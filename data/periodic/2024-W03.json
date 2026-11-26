@@ -1,0 +1,173 @@
+{
+  "date": "2024-W03",
+  "type": "week",
+  "generatedAt": "2026-11-26T19:46:13+08:00",
+  "endedAt": "2026-11-26T19:46:13+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 3 周宏观周报：数据超预期 宽松待落地",
+  "window": {
+    "from": "2024-01-15",
+    "to": "2024-01-21",
+    "fromAt": "2024-01-15T08:00:00+08:00",
+    "toAt": "2024-01-22T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是年度经济数据落地与货币宽松节奏的拉锯。国家统计局公布2023年国内生产总值1260582亿元、同比增长5.2%，12月规模以上工业增加值增长6.8%、社会消费品零售总额增长7.4%，全年房地产开发投资110913亿元。货币方面，央行1月超额续做MLF，中标利率连续5个月不变，并连续三个月注入较多流动性，降准降息预期后移。开放与财政端，北交所公司（企业）债券市场开市，新增减税降费及退税缓费超2.2万亿元，全国吸收外资1.1万亿元，2023年银行结售汇呈逆差但外汇市场韧性较强。海外方面，美国去年12月份CPI涨幅超预期，美联储发布经济状况“褐皮书”。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "1月MLF超额续做 中标利率连续5个月不变",
+      "summary": "中国人民银行1月继续超额续做MLF，额度上升但利率未变，中标利率连续5个月不变，市场讨论一季度降准降息可能性。",
+      "why": "MLF利率与额度体现央行流动性管理取向，是判断降准降息时点的观察窗口",
+      "source": "中新网",
+      "publishedAt": "2024-01-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-15/10146262.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-15/10146294.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-16/10146658.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-16/10146823.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "2023年银行结售汇呈逆差 外汇市场韧性较强",
+      "summary": "中国2023年银行结售汇呈逆差，外汇市场韧性较强；国家外汇管理局表示，2023年银行累计结汇155336亿元人民币。",
+      "why": "结售汇与结汇规模反映跨境资金流向和人民币汇率的供求基础",
+      "source": "中新网",
+      "publishedAt": "2024-01-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-15/10146525.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-15/10146423.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-15/10146424.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-16/10146885.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "北交所公司（企业）债券市场正式开市",
+      "summary": "北京证券交易所公司（企业）债券市场正式开市，证监会表示将扎实推进北京证券交易所债券市场建设，拓宽企业直接融资渠道。",
+      "why": "交易所债券市场扩容直接提升企业直接融资工具供给",
+      "source": "中新网",
+      "publishedAt": "2024-01-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-15/10146435.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-15/10146131.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-15/10146549.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "2023年GDP 1260582亿元 同比增长5.2%",
+      "summary": "国家统计局公布，2023年我国国内生产总值1260582亿元，同比增长5.2%，全年经济预期目标圆满实现，高质量发展扎实推进。",
+      "why": "GDP是判断经济基本盘与政策力度取向的核心总量指标",
+      "source": "中新网",
+      "publishedAt": "2024-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/01-17/10147637.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147513.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147539.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147958.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147644.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "2023年12月规模以上工业增加值增长6.8%",
+      "summary": "国家统计局数据显示，2023年12月份规模以上工业增加值增长6.8%，2023年全年规模以上工业增加值同比增长4.6%，工业经济运行亮点纷呈。",
+      "why": "工业增加值反映生产端修复力度，与价格配合共同检验增长成色",
+      "source": "中新网",
+      "publishedAt": "2024-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-17/10147545.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-20/10149598.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147557.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-20/10149617.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "2023年12月社会消费品零售总额增长7.4%",
+      "summary": "国家统计局数据显示，2023年12月份社会消费品零售总额增长7.4%；统计局对2024年消费走势保持乐观，消费市场恢复向好。",
+      "why": "消费是内需修复的核心变量，社零增速体现政策发力效果",
+      "source": "中新网",
+      "publishedAt": "2024-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-17/10147571.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147684.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147781.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "2023年全国房地产开发投资110913亿元",
+      "summary": "国家统计局数据显示，2023年全国房地产开发投资110913亿元；2023年12月各线城市商品住宅销售价格环比下降，房地产市场出现积极变化。",
+      "why": "地产投资与房价是信用扩张和地方财政的重要先行变量",
+      "source": "中新网",
+      "publishedAt": "2024-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-17/10147563.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147502.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147833.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-17/10147685.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-18/10148397.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "2023年中国新增减税降费及退税缓费超2.2万亿元",
+      "summary": "2023年中国新增减税降费及退税缓费超2.2万亿元，多项税收数据显示我国经济高质量发展扎实推进，税收大数据折射经济运行。",
+      "why": "减税降费规模直接决定企业可支配现金流与财政发力强度",
+      "source": "中新网",
+      "publishedAt": "2024-01-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-18/10148647.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-19/10148974.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-19/10148912.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "2023年全国吸收外资1.1万亿元人民币",
+      "summary": "商务部表示，2023年全国吸收外资1.1万亿元人民币；2023年12月外商直接投资资本金净流入超百亿美元，实际使用外资规模保持高位。",
+      "why": "外资流入是衡量开放型经济吸引力和跨境资本信心的指标",
+      "source": "中新网",
+      "publishedAt": "2024-01-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-19/10149287.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-15/10146523.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-18/10148764.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储发布经济状况“褐皮书”",
+      "summary": "美联储发布经济状况“褐皮书”；美国去年12月份CPI涨幅超预期，民众对自己的财务状况焦虑不安，全球通胀能否恢复正常受关注。",
+      "why": "海外通胀与美联储动向影响全球资产定价和我国汇率预期",
+      "source": "中新网",
+      "publishedAt": "2024-01-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/01-18/10148159.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/01-16/10146739.shtml",
+        "https://www.chinanews.com.cn/gj/2024/01-18/10148149.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行降准降息的时点选择，以及MLF利率是否延续持平、后续流动性投放力度",
+    "新一期LPR报价结果与报价行扩容后的银行息差变化",
+    "全年经济数据落地后工业、消费与地产修复的持续性",
+    "房地产政策落地效果与城中村改造、保障性住房建设推进节奏",
+    "美联储政策转向与全球通胀路径对我国汇率和跨境资金的影响"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:46:13+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 1068,
+    "missingDays": []
+  }
+}
