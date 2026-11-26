@@ -136,10 +136,12 @@ const esc = (s) => String(s == null ? '' : s).replace(/[\t\r\n]+/g, ' ').trim();
 
 function main() {
   const issues = buildIssues(RANGES);
+  const targetIds = new Set(issues.map((x) => x.id));
   fs.mkdirSync(OUT, { recursive: true });
-  // 清掉上一轮留下的同名派生文件，避免过期期次残留
+  // 只清理本轮要重写的期次文件，保留先前批次（如 2024 两个窗口）的素材不动
   for (const f of fs.readdirSync(OUT)) {
-    if (/\.part\d+\.tsv$/.test(f) || /\.meta\.json$/.test(f) || f === 'manifest.json') {
+    const id = f.replace(/\.part\d+\.tsv$/, '').replace(/\.meta\.json$/, '');
+    if (id !== f && targetIds.has(id) && f !== 'manifest.json') {
       fs.unlinkSync(path.join(OUT, f));
     }
   }
@@ -227,16 +229,31 @@ function main() {
     );
   }
 
+  // 与已有 manifest 合并：同 id 覆盖，其余批次保留
+  const manifestFile = path.join(OUT, 'manifest.json');
+  let prev = [];
+  let prevRanges = [];
+  try {
+    const old = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
+    prev = Array.isArray(old.issues) ? old.issues : [];
+    prevRanges = Array.isArray(old.ranges) ? old.ranges : [];
+  } catch { /* 首次生成 */ }
+  const merged = new Map(prev.map((x) => [x.id, x]));
+  for (const m of manifest) merged.set(m.id, m);
+  const all = [...merged.values()].sort((a, b) => (a.window.to < b.window.to ? 1 : a.window.to > b.window.to ? -1 : 0));
+
   const doc = {
     schema: 'macro-news/periodic-inputs@1',
     generatedAt: new Date().toISOString(),
-    ranges: RANGES,
-    count: manifest.length,
-    issues: manifest,
+    ranges: [...new Set([...prevRanges, ...RANGES])],
+    count: all.length,
+    issues: all,
   };
-  fs.writeFileSync(path.join(OUT, 'manifest.json'), JSON.stringify(doc, null, 2) + '\n', 'utf8');
+  fs.writeFileSync(manifestFile, JSON.stringify(doc, null, 2) + '\n', 'utf8');
   const bytes = manifest.reduce((a, m) => a + m.parts.length, 0);
-  console.log(`\n共 ${manifest.length} 期 / ${bytes} 个输入文件 → ${path.relative(ROOT, OUT)}`);
+  console.log(
+    `\n本轮 ${manifest.length} 期 / ${bytes} 个输入文件；manifest 合计 ${all.length} 期 → ${path.relative(ROOT, OUT)}`
+  );
   return 0;
 }
 
