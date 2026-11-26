@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-26T15:54:10.134Z",
-  "durationMs": 353879,
+  "generatedAt": "2026-11-26T16:54:05.885Z",
+  "durationMs": 339111,
   "ok": 68,
   "failed": 0,
   "throttleHit": false,
-  "emRequests": 34,
-  "emFailures": 2,
+  "emRequests": 32,
+  "emFailures": 0,
   "fallbackCount": 0,
   "fallbacks": [],
   "sourceSwitches": 0,
@@ -15,7 +15,7 @@
   "periodList": [
     "5m",
     "30m",
-    "60m"
+    "15m"
   ],
   "perTarget": {
     "sox/5m": {
@@ -64,97 +64,97 @@
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708132555
+      "lastOkAt": 1795711744155
     },
     "xag/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708138598
+      "lastOkAt": 1795711750498
     },
     "xau/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708144283
+      "lastOkAt": 1795711756568
     },
     "usdkrw/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708149043
+      "lastOkAt": 1795711762187
     },
     "dxy/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708153607
+      "lastOkAt": 1795711767032
     },
     "cac40/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708158562
+      "lastOkAt": 1795711771804
     },
     "dax/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708163358
+      "lastOkAt": 1795711776607
     },
     "ukx/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708168162
+      "lastOkAt": 1795711781417
     },
     "eurcny/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708172983
+      "lastOkAt": 1795711786751
     },
     "usdcny/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708177659
+      "lastOkAt": 1795711791915
     },
     "eurusd/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708182345
+      "lastOkAt": 1795711797091
     },
     "usdjpy/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708187483
+      "lastOkAt": 1795711801618
     },
     "audusd/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708192161
+      "lastOkAt": 1795711806279
     },
     "usdcad/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708196661
+      "lastOkAt": 1795711810919
     },
     "usdchf/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708201337
+      "lastOkAt": 1795711816067
     },
     "gbpusd/5m": {
       "status": "ok",
       "bars": 2000,
       "changed": true,
-      "lastOkAt": 1795708205859
+      "lastOkAt": 1795711820601
     },
     "sox/30m": {
       "status": "ok",
@@ -200,231 +200,231 @@
     },
     "sge_au9999/30m": {
       "status": "ok",
-      "bars": 658,
+      "bars": 660,
       "changed": true,
-      "lastOkAt": 1795708249484
+      "lastOkAt": 1795711859318
     },
     "cac40/30m": {
       "status": "ok",
-      "bars": 525,
+      "bars": 526,
       "changed": true,
-      "lastOkAt": 1795708254057
+      "lastOkAt": 1795711863734
     },
     "dax/30m": {
       "status": "ok",
-      "bars": 525,
+      "bars": 526,
       "changed": true,
-      "lastOkAt": 1795708258603
+      "lastOkAt": 1795711868156
     },
     "ukx/30m": {
       "status": "ok",
-      "bars": 525,
+      "bars": 526,
       "changed": true,
-      "lastOkAt": 1795708263186
+      "lastOkAt": 1795711872575
     },
     "xag/30m": {
       "status": "ok",
-      "bars": 1019,
+      "bars": 1021,
       "changed": true,
-      "lastOkAt": 1795708269268
+      "lastOkAt": 1795711878864
     },
     "xau/30m": {
       "status": "ok",
-      "bars": 1019,
+      "bars": 1021,
       "changed": true,
-      "lastOkAt": 1795708277603
+      "lastOkAt": 1795711884210
     },
     "usdkrw/30m": {
       "status": "ok",
-      "bars": 660,
+      "bars": 662,
       "changed": true,
-      "lastOkAt": 1795708283335
+      "lastOkAt": 1795711888635
     },
     "dxy/30m": {
       "status": "ok",
-      "bars": 420,
+      "bars": 422,
       "changed": true,
-      "lastOkAt": 1795708288229
+      "lastOkAt": 1795711893508
     },
     "eurcny/30m": {
       "status": "ok",
-      "bars": 1420,
+      "bars": 1422,
       "changed": true,
-      "lastOkAt": 1795708293026
+      "lastOkAt": 1795711898295
     },
     "usdcny/30m": {
       "status": "ok",
-      "bars": 1163,
+      "bars": 1165,
       "changed": true,
-      "lastOkAt": 1795708298154
+      "lastOkAt": 1795711902932
     },
     "eurusd/30m": {
       "status": "ok",
-      "bars": 1170,
+      "bars": 1172,
       "changed": true,
-      "lastOkAt": 1795708302698
+      "lastOkAt": 1795711907654
     },
     "gbpusd/30m": {
       "status": "ok",
-      "bars": 1164,
+      "bars": 1166,
       "changed": true,
-      "lastOkAt": 1795708307324
+      "lastOkAt": 1795711912696
     },
     "audusd/30m": {
       "status": "ok",
-      "bars": 1165,
+      "bars": 1167,
       "changed": true,
-      "lastOkAt": 1795708312478
+      "lastOkAt": 1795711917314
     },
     "usdcad/30m": {
       "status": "ok",
-      "bars": 1170,
+      "bars": 1172,
       "changed": true,
-      "lastOkAt": 1795708318120
+      "lastOkAt": 1795711922557
     },
     "usdchf/30m": {
       "status": "ok",
-      "bars": 1184,
+      "bars": 1186,
       "changed": true,
-      "lastOkAt": 1795708322915
+      "lastOkAt": 1795711928083
     },
     "usdjpy/30m": {
       "status": "ok",
-      "bars": 1175,
+      "bars": 1177,
       "changed": true,
-      "lastOkAt": 1795708328192
+      "lastOkAt": 1795711933311
     },
-    "dax/60m": {
+    "kospi/15m": {
       "status": "ok",
-      "bars": 277,
-      "changed": true,
-      "lastOkAt": 1795708333806
-    },
-    "cac40/60m": {
-      "status": "ok",
-      "bars": 277,
-      "changed": true,
-      "lastOkAt": 1795708338702
-    },
-    "sge_au9999/60m": {
-      "status": "ok",
-      "bars": 341,
-      "changed": true,
-      "lastOkAt": 1795708344391
-    },
-    "sox/60m": {
-      "status": "ok",
-      "bars": 231,
-      "changed": true,
-      "lastOkAt": 1795708350789
-    },
-    "n225/60m": {
-      "status": "ok",
-      "bars": 228,
-      "changed": true,
-      "lastOkAt": 1795708356329
-    },
-    "kospi/60m": {
-      "status": "ok",
-      "bars": 257,
-      "changed": true,
-      "lastOkAt": 1795708361192
-    },
-    "ukx/60m": {
-      "status": "ok",
-      "bars": 277,
-      "changed": true,
-      "lastOkAt": 1795708365744
-    },
-    "xag/60m": {
-      "status": "ok",
-      "bars": 520,
-      "changed": true,
-      "lastOkAt": 1795708371998
-    },
-    "xau/60m": {
-      "status": "ok",
-      "bars": 447,
-      "changed": true,
-      "lastOkAt": 1795708379446
-    },
-    "dxy/60m": {
-      "status": "ok",
-      "bars": 210,
-      "changed": true,
-      "lastOkAt": 1795708384559
-    },
-    "audcny/60m": {
-      "status": "ok",
-      "bars": 1182,
+      "bars": 958,
       "unchanged": true,
-      "lastOkAt": 1795686823087
+      "lastOkAt": 1795679566297
     },
-    "gbpcny/60m": {
+    "n225/15m": {
       "status": "ok",
-      "bars": 1182,
+      "bars": 836,
       "unchanged": true,
-      "lastOkAt": 1795686828900
+      "lastOkAt": 1795679570788
     },
-    "jpycny/60m": {
+    "sox/15m": {
       "status": "ok",
-      "bars": 1192,
+      "bars": 865,
       "unchanged": true,
-      "lastOkAt": 1795697655017
+      "lastOkAt": 1795690375996
     },
-    "krwcny/60m": {
+    "gbpcny/15m": {
       "status": "ok",
       "bars": 1200,
       "unchanged": true,
-      "lastOkAt": 1795697660082
+      "lastOkAt": 1795690412940
     },
-    "eurcny/60m": {
+    "jpycny/15m": {
       "status": "ok",
-      "bars": 1192,
-      "changed": true,
-      "lastOkAt": 1795708411859
+      "bars": 1200,
+      "unchanged": true,
+      "lastOkAt": 1795690418373
     },
-    "eurusd/60m": {
+    "krwcny/15m": {
       "status": "ok",
-      "bars": 1063,
-      "changed": true,
-      "lastOkAt": 1795708416491
+      "bars": 1200,
+      "unchanged": true,
+      "lastOkAt": 1795690423120
     },
-    "gbpusd/60m": {
+    "audcny/15m": {
       "status": "ok",
-      "bars": 1058,
-      "changed": true,
-      "lastOkAt": 1795708422162
+      "bars": 1200,
+      "unchanged": true,
+      "lastOkAt": 1795690429845
     },
-    "usdjpy/60m": {
+    "cac40/15m": {
       "status": "ok",
-      "bars": 1069,
+      "bars": 1051,
       "changed": true,
-      "lastOkAt": 1795708427055
+      "lastOkAt": 1795711971721
     },
-    "audusd/60m": {
+    "dax/15m": {
       "status": "ok",
-      "bars": 1057,
+      "bars": 1051,
       "changed": true,
-      "lastOkAt": 1795708431840
+      "lastOkAt": 1795711976262
     },
-    "usdcad/60m": {
+    "sge_au9999/15m": {
       "status": "ok",
-      "bars": 1061,
+      "bars": 1200,
       "changed": true,
-      "lastOkAt": 1795708436472
+      "lastOkAt": 1795711981383
     },
-    "usdchf/60m": {
+    "ukx/15m": {
       "status": "ok",
-      "bars": 1074,
+      "bars": 1051,
       "changed": true,
-      "lastOkAt": 1795708441267
+      "lastOkAt": 1795711986083
     },
-    "usdcny/60m": {
+    "xag/15m": {
       "status": "ok",
-      "bars": 1074,
+      "bars": 1200,
       "changed": true,
-      "lastOkAt": 1795708446133
+      "lastOkAt": 1795711992004
+    },
+    "xau/15m": {
+      "status": "ok",
+      "bars": 1200,
+      "changed": true,
+      "lastOkAt": 1795711997774
+    },
+    "dxy/15m": {
+      "status": "ok",
+      "bars": 844,
+      "changed": true,
+      "lastOkAt": 1795712002310
+    },
+    "eurcny/15m": {
+      "status": "ok",
+      "bars": 1200,
+      "changed": true,
+      "lastOkAt": 1795712007612
+    },
+    "eurusd/15m": {
+      "status": "ok",
+      "bars": 960,
+      "changed": true,
+      "lastOkAt": 1795712012750
+    },
+    "gbpusd/15m": {
+      "status": "ok",
+      "bars": 957,
+      "changed": true,
+      "lastOkAt": 1795712017901
+    },
+    "usdjpy/15m": {
+      "status": "ok",
+      "bars": 959,
+      "changed": true,
+      "lastOkAt": 1795712022410
+    },
+    "usdcad/15m": {
+      "status": "ok",
+      "bars": 960,
+      "changed": true,
+      "lastOkAt": 1795712027114
+    },
+    "usdchf/15m": {
+      "status": "ok",
+      "bars": 960,
+      "changed": true,
+      "lastOkAt": 1795712032600
+    },
+    "usdcny/15m": {
+      "status": "ok",
+      "bars": 959,
+      "changed": true,
+      "lastOkAt": 1795712037256
+    },
+    "audusd/15m": {
+      "status": "ok",
+      "bars": 959,
+      "changed": true,
+      "lastOkAt": 1795712041883
     }
   }
 }
