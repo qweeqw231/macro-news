@@ -1,0 +1,176 @@
+{
+  "date": "2024-W37",
+  "type": "week",
+  "generatedAt": "2026-11-26T19:41:31+08:00",
+  "endedAt": "2026-11-26T19:41:31+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 37 周宏观周报：数据落地增量政策待加",
+  "window": {
+    "from": "2024-09-09",
+    "to": "2024-09-15",
+    "fromAt": "2024-09-09T08:00:00+08:00",
+    "toAt": "2024-09-16T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观格局由密集落地的8月数据与政策信号主导。价格端，8月CPI同比涨幅扩大至0.4%，PPI环比同比均下降。增长端，8月规模以上工业增加值增长4.5%，社会消费品零售总额增长2.1%，1—8月固定资产投资增长3.4%，前8个月货物贸易进出口同比增长6%。货币端，8月末M2同比增长6.3%，社融存量同比增长8.1%，央行表态将着手推出一些增量政策举措，并连续开展7天期逆回购操作，单日规模在915亿元至2362亿元之间。监管端，证监会对普华永道罚没3.25亿元。外部，美国8月CPI同比上涨2.5%连续5个月下降，美方提高部分对华301关税最终措施。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "8月金融数据：M2同比增6.3% 社融存量增8.1%",
+      "summary": "8月金融数据出炉：中国8月末M2同比增长6.3%，社融存量同比增长8.1%，广义货币余额305.05万亿元，前8个月人民币贷款增加14.43万亿元。",
+      "why": "货币与社融增速是宽松力度与信用扩张的读数",
+      "source": "中新网",
+      "publishedAt": "2024-09-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-13/10285936.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-13/10285819.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554298652/index.html",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10285954.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行将着手推出一些增量政策举措",
+      "summary": "央行表示将着手推出一些增量政策举措，8月金融数据公布后的货币政策取向与后续操作安排受到关注。",
+      "why": "增量政策表态是稳增长加力与政策放松的信号",
+      "source": "中新网",
+      "publishedAt": "2024-09-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-13/10285932.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-13/10285938.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行本周连续开展7天期逆回购操作",
+      "summary": "央行连续开展7天期逆回购操作，单日操作规模在915亿元至2362亿元之间，公开市场流动性投放节奏受到关注。",
+      "why": "公开市场投放节奏是观察短期流动性松紧的窗口",
+      "source": "中新网",
+      "publishedAt": "2024-09-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-13/10285270.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-09/10282633.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-10/10283222.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-11/10283917.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-12/10284564.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "证监会与财政部对普华永道作出顶格处罚",
+      "summary": "证监会对普华永道罚没3.25亿元，财政部亦对普华永道作出行政处罚决定并开出顶格罚单，普华永道为恒大地产审计机构。",
+      "why": "中介机构重罚指向信息披露与审计监管收紧",
+      "source": "中新网",
+      "publishedAt": "2024-09-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-13/10285683.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-13/10285601.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-13/10285580.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-13/10285594.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286427.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "8月CPI同比涨幅扩大至0.4% PPI下降",
+      "summary": "国家统计局公布，2024年8月份CPI继续回升，同比涨幅扩大至0.4%，PPI环比同比均下降；统计局表示下阶段CPI有望温和回升。",
+      "why": "CPI与PPI的分化决定货币政策取向与盈利修复",
+      "source": "中新网",
+      "publishedAt": "2024-09-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-09/10282623.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-09/10282884.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-09/10282933.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286125.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "8月工业增加值增4.5% 社零增2.1%",
+      "summary": "国家统计局数据显示，8月份规模以上工业增加值同比增长4.5%，社会消费品零售总额增长2.1%，1—8月份全国固定资产投资增长3.4%。",
+      "why": "生产、消费与投资同向回落，反映稳增长成色",
+      "source": "中新网",
+      "publishedAt": "2024-09-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-14/10286085.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286305.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286088.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286089.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286498.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "1—8月房地产市场基本情况发布 70城房价跌幅略有扩大",
+      "summary": "国家统计局发布2024年1—8月份全国房地产市场基本情况，8月中国70城房价同比跌幅略有扩大，前8月房地产部分指标降幅边际收窄。",
+      "why": "地产量价与投资降幅是信用和地方财政的关键变量",
+      "source": "中新网",
+      "publishedAt": "2024-09-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-14/10286096.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286228.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286334.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286140.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "前8个月货物贸易进出口同比增长6%",
+      "summary": "海关总署数据显示，今年前8个月我国货物贸易进出口同比增长6%，有进出口实绩的外贸经营主体达63万家，外资企业进出口回升向好。",
+      "why": "外贸总量与经营主体活跃度决定增长动能",
+      "source": "中新网",
+      "publishedAt": "2024-09-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/09-10/10283272.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-10/10283329.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-10/10283775.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-10/10283333.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "美提高部分对华301关税 商务部回应",
+      "summary": "美国发布提高部分对华301关税最终措施，商务部新闻发言人就此发表谈话，中方同时就美国大选拿中国说事的关税言论作出回应。",
+      "why": "关税是外部冲击变量，直接影响出口预期",
+      "source": "中新网",
+      "publishedAt": "2024-09-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-14/10286499.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286582.shtml",
+        "https://www.chinanews.com.cn/gn/2024/09-11/10284118.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美国8月CPI同比上涨2.5% 连续5个月下降",
+      "summary": "美国8月CPI同比上涨2.5%，连续5个月下降；美国8月就业数据低于预期，加剧外界对其经济的担忧，美国30年期贷款利率降至6.2%。",
+      "why": "海外通胀与利率路径影响全球风险资产与汇率",
+      "source": "中新网",
+      "publishedAt": "2024-09-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/09-12/10284473.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/09-14/10286008.shtml",
+        "https://www.chinanews.com.cn/gj/2024/09-14/10285955.shtml",
+        "https://www.chinanews.com.cn/gj/2024/09-13/10285188.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行增量政策的具体工具与时点，以及公开市场操作规模的后续变化",
+    "9月金融数据中社融、M2增速与中长期贷款需求的变化",
+    "9月经济数据中工业、消费、投资的修复持续性",
+    "70城房价与房地产投资降幅能否收窄，存量商品房收购扩围的落地进度",
+    "美国通胀与就业数据后续走势，以及美方301关税最终措施对我国出口的影响"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:41:31+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 835,
+    "missingDays": []
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "date": "2024-09",
+  "type": "month",
+  "generatedAt": "2026-11-26T19:42:42+08:00",
+  "endedAt": "2026-11-26T19:42:42+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年 9 月宏观月报：降准降息与楼市松绑",
+  "window": {
+    "from": "2024-09-01",
+    "to": "2024-09-30",
+    "fromAt": "2024-09-01T08:00:00+08:00",
+    "toAt": "2024-10-01T08:00:00+08:00",
+    "days": 30
+  },
+  "overview": "2024年9月，国内宏观主线是增量政策集中转向。央行宣布降准降息，存款准备金率下调0.5个百分点，存量房贷利率平均降幅约0.5个百分点、预计惠及1.5亿人，并创设新的货币政策工具支持股票市场；7天期逆回购操作利率由1.70%调整为1.50%。政治局会议分析研究当前经济形势和经济工作，中长期资金入市指导意见发布。数据方面，8月CPI同比涨幅扩大至0.4%、PPI继续下降，规上工业增加值增长4.5%、社零增长2.1%、1—8月固定资产投资增长3.4%，8月末社融存量同比增长8.1%、M2增长6.3%，9月制造业PMI为49.8%。人民币汇率涨破7，A股暴涨收官；美联储四年来首次降息50个基点。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行宣布降准降息 并创设支持股票市场新工具",
+      "summary": "央行宣布降准降息，下调存款准备金率0.5个百分点；存量房贷利率平均降幅约0.5个百分点，预计惠及1.5亿人；并创设新的货币政策工具支持股票市场。",
+      "why": "降准降息叠加资本市场新工具，标志政策取向转向稳增长",
+      "source": "中新网",
+      "publishedAt": "2024-09-24T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-24/10291183.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-24/10291086.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-24/10291269.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-24/10291177.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-24/10291268.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "降准0.5个百分点落地 7天逆回购利率降至1.50%",
+      "summary": "央行下调金融机构存款准备金率0.5个百分点；同时公开市场7天期逆回购操作利率由此前的1.70%调整为1.50%，政策利率同步下调。",
+      "why": "降准与政策利率同步落地，是本月宽松组合的执行环节",
+      "source": "中新网",
+      "publishedAt": "2024-09-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-27/10293229.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-27/10293237.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554238383/index.html",
+        "https://www.chinanews.com.cn/cj/2024/09-27/10293358.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "中央政治局会议分析研究当前经济形势和经济工作",
+      "summary": "中共中央政治局召开会议，分析研究当前经济形势和经济工作，部署扎实做好下一步经济工作；市场关注会议对资本市场和房地产的定调。",
+      "why": "最高层对经济形势的定调，决定四季度政策工具与力度",
+      "source": "中新网",
+      "publishedAt": "2024-09-26T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/09-26/10292684.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-26/10293045.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-26/10293050.shtml",
+        "https://www.chinanews.com.cn/gn/2024/09-27/10293241.shtml",
+        "https://www.chinanews.com.cn/gn/2024/09-28/10294083.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "中央金融办、证监会印发推动中长期资金入市指导意见",
+      "summary": "中央金融办、中国证监会联合印发《关于推动中长期资金入市的指导意见》，推动中长期资金入市，夯实资本市场基础。",
+      "why": "长钱入市是资本市场资金结构改革的关键制度安排",
+      "source": "中新网",
+      "publishedAt": "2024-09-26T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-26/10293010.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-26/10293139.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-27/10293976.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-27/10293913.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-24/10291165.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "8月末社融存量同比增8.1% M2同比增长6.3%",
+      "summary": "央行金融统计数据显示，8月末M2同比增长6.3%，社会融资规模存量同比增长8.1%，广义货币余额305.05万亿元。",
+      "why": "社融与货币增速是判断流动性松紧和融资扩张的核心读数",
+      "source": "中新网",
+      "publishedAt": "2024-09-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-13/10285936.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-13/10285819.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554212585/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554298652/index.html",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10285954.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "8月工业增加值增4.5% 社零增2.1% 投资增3.4%",
+      "summary": "国家统计局数据显示，8月份规模以上工业增加值同比增长4.5%，社会消费品零售总额增长2.1%，1—8月份全国固定资产投资增长3.4%。",
+      "why": "生产、消费与投资月度读数，标定增量政策加力的起点",
+      "source": "中新网",
+      "publishedAt": "2024-09-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-14/10286085.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286088.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286089.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286079.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "8月CPI同比涨幅扩大至0.4% PPI继续下降",
+      "summary": "国家统计局数据显示，8月份CPI同比涨幅扩大至0.4%，PPI环比、同比均下降，物价回升与工业品价格下行并存。",
+      "why": "物价读数是观察需求修复与工业品通缩压力的先行指标",
+      "source": "中新网",
+      "publishedAt": "2024-09-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-09/10282884.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-09/10282933.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-09/10282623.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "9月制造业PMI为49.8% 经济景气水平总体回升",
+      "summary": "国家统计局公布，9月份制造业采购经理指数为49.8%，PMI指数、服务业商务活动指数等总体景气水平有望逐步回升。",
+      "why": "月末景气读数，检验增量政策落地前的经济底色",
+      "source": "中新网",
+      "publishedAt": "2024-09-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-30/10295227.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295290.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295233.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-14/10286150.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "四项金融支持房地产政策发布 最低首付比例下调",
+      "summary": "央行与金融监管总局发文优化个人住房贷款最低首付款比例、延长部分房地产金融政策期限；广东20城首套、二套住房贷款最低首付款比例统一为15%，沪广深同日放宽限购。",
+      "why": "首付比例与限购同步松绑，地产支持进入实操阶段",
+      "source": "中国人民银行",
+      "publishedAt": "2024-09-29T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554216285/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554250225/index.html",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295677.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295573.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295119.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储四年来首次降息 幅度达50个基点",
+      "summary": "美联储四年来首次降息，幅度达50个基点，以防止经济“硬着陆”；降息后美元进入下行趋势，中国A股走强。",
+      "why": "海外货币政策转向改变全球流动性与汇率环境",
+      "source": "中新网",
+      "publishedAt": "2024-09-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/09-19/10288608.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/09-19/10288262.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-19/10288786.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-19/10288695.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "四季度增量财政工具的规模、节奏与货币政策的配合取向",
+    "10月LPR报价及存量房贷利率批量调整后的居民信贷需求变化",
+    "首付比例与限购松绑后楼市成交能否企稳，以及房地产融资协调机制落地情况",
+    "9月制造业PMI回升后，10月物价与工业生产数据能否延续改善",
+    "美联储后续降息路径对人民币汇率与国内政策空间的约束"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:42:42+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 30,
+    "newsItems": 3284,
+    "missingDays": []
+  }
+}
