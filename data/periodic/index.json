@@ -1,6 +1,6 @@
 {
   "schema": "macro-news/periodic-index@1",
-  "generatedAt": "2026-11-26T19:34:18+08:00",
+  "generatedAt": "2026-11-26T19:38:31+08:00",
   "count": 73,
   "reports": [
     {
@@ -1221,9 +1221,9 @@
         "toAt": "2024-11-04T08:00:00+08:00",
         "days": 7
       },
-      "generatedAt": "2026-11-26T19:22:17+08:00",
+      "generatedAt": "2026-11-26T19:38:24+08:00",
       "backfill": true,
-      "backfillAt": "2026-11-26T19:22:17+08:00",
+      "backfillAt": "2026-11-26T19:38:24+08:00",
       "itemCount": 10,
       "file": "periodic/2024-W44.json"
     },
@@ -1239,9 +1239,9 @@
         "toAt": "2024-11-01T08:00:00+08:00",
         "days": 31
       },
-      "generatedAt": "2026-11-26T19:24:49+08:00",
+      "generatedAt": "2026-11-26T19:38:24+08:00",
       "backfill": true,
-      "backfillAt": "2026-11-26T19:24:49+08:00",
+      "backfillAt": "2026-11-26T19:38:24+08:00",
       "itemCount": 10,
       "file": "periodic/2024-10.json"
     },
