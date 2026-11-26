@@ -1,0 +1,168 @@
+{
+  "date": "2024-W40",
+  "type": "week",
+  "generatedAt": "2026-11-26T19:31:38+08:00",
+  "endedAt": "2026-11-26T19:31:38+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 40 周宏观周报：政策加码股市大涨",
+  "window": {
+    "from": "2024-09-30",
+    "to": "2024-10-06",
+    "fromAt": "2024-09-30T08:00:00+08:00",
+    "toAt": "2024-10-07T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是增量政策密集落地与资产价格重估。9月制造业PMI回升至49.8%，经济景气水平总体回升；央行9月净买入国债2000亿元，9月30日开展2121亿元7天期逆回购操作；A股9月暴涨收官，沪指涨逾8%重返3300点，全天成交超2.6万亿元创历史新高。四项金融支持房地产政策发布，存量房贷利率将于10月31日前批量下调，沪广深同日放宽住房限购。国庆假期首日全社会跨区域人员流动量超3.3亿人次，环比增长48.1%，汽车以旧换新补贴申请已超113万份。8月全国发行新增债券9474亿元。外部方面，欧盟电动汽车反补贴案终裁草案引发业界反对，美国9月新增就业人数高于预期、失业率小幅下降。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行加大流动性投放 净买入国债2000亿元",
+      "summary": "中国央行9月净买入国债2000亿元；9月30日央行开展2121亿元7天期逆回购操作，公开市场操作与债券市场操作同步加力。",
+      "why": "央行投放力度体现稳增长取向与市场流动性预期",
+      "source": "中新网",
+      "publishedAt": "2024-10-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-01/10295892.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295197.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "A股9月暴涨 沪指涨逾8%重返3300点",
+      "summary": "中国A股9月暴涨收官，沪指涨逾8%重返3300点；A股全天成交超2.6万亿元创历史新高，多项纪录被刷新。",
+      "why": "指数与成交反映政策预期和风险偏好，是宏观预期的价格读数",
+      "source": "中新网",
+      "publishedAt": "2024-09-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-30/10295501.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295381.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295382.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295707.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "9月制造业PMI为49.8% 景气水平回升",
+      "summary": "国家统计局数据显示，9月份制造业采购经理指数(PMI)为49.8%，9月中国制造业PMI升至49.8%、企业生产加快，非制造业经营活动运行平稳，我国经济景气水平总体回升。",
+      "why": "PMI反映生产与需求景气，是判断政策力度的同步指标",
+      "source": "中新网",
+      "publishedAt": "2024-09-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-30/10295227.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295290.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295291.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295233.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "国庆假期首日跨区域人员流动量超3.3亿人次",
+      "summary": "国庆假期首日全社会跨区域人员流动量超3.3亿人次，环比增长48.1%；假期第二天跨区域人员流动量超2.8亿人次，各地接待游客数量显著增长。",
+      "why": "出行与客流是内需修复的高频读数，验证假日经济成色",
+      "source": "中新网",
+      "publishedAt": "2024-10-02T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-02/10296519.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-03/10296672.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-03/10296766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-02/10296391.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "汽车以旧换新补贴申请已超113万份",
+      "summary": "“两新”政策成效显现，汽车以旧换新补贴申请已超113万份；山东“以旧换新”激发汽车消费热潮超20万辆，假期“以旧换新”带热家电消费。",
+      "why": "补贴申请与销量是扩内需政策传导到终端需求的直接证据",
+      "source": "中新网",
+      "publishedAt": "2024-10-05T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-05/10297193.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-03/10296583.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-04/10296871.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-02/10296520.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "四项金融支持房地产政策落地 存量房贷批量下调",
+      "summary": "四项金融支持房地产政策重磅发布，存量房贷利率10月31日前批量下调；国有六大行拟于10月12日发布存量房贷利率调整操作细则。",
+      "why": "存量房贷利率下调直接降低居民利息负担，影响消费与购房",
+      "source": "中新网",
+      "publishedAt": "2024-09-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-30/10295158.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295119.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295171.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295161.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "沪广深同日放宽住房限购 多城政策优化",
+      "summary": "利好集中释放，沪广深同日放宽住房限购政策；广州全面取消住房限购政策，深圳优化分区限购，50多个城市出台本地房地产市场优化政策，多地商品房销量增长。",
+      "why": "行政松绑与销售回升是地产政策传导到成交端的读数",
+      "source": "中新网",
+      "publishedAt": "2024-09-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-30/10295573.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295123.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295309.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-05/10297268.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "8月全国发行新增债券9474亿元",
+      "summary": "财政部数据显示，2024年8月全国发行新增债券9474亿元；8月中国发行地方政府债券12091亿元。",
+      "why": "债券发行进度反映财政扩张力度与稳增长资金落地节奏",
+      "source": "中新网",
+      "publishedAt": "2024-09-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-30/10295239.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-30/10295347.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "商务部坚决反对欧盟电动汽车反补贴案终裁草案",
+      "summary": "商务部表示坚决反对欧盟电动汽车反补贴案终裁草案，坚决反对欧方对中国的电动汽车加征反补贴税；欧盟称该案已获得成员国“必要支持”。",
+      "why": "贸易壁垒升级影响出口与产业预期，是外部冲击观察点",
+      "source": "中新网",
+      "publishedAt": "2024-10-04T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-04/10297087.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-04/10297044.shtml",
+        "https://www.chinanews.com.cn/gj/2024/10-04/10297118.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-05/10297205.shtml",
+        "https://www.chinanews.com.cn/gj/2024/10-03/10296806.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美国9月新增就业人数高于预期 失业率小幅下降",
+      "summary": "美国9月新增就业人数高于预期，失业率小幅下降，海外劳动力市场表现成为观察海外货币政策节奏的重要参考。",
+      "why": "海外就业数据影响美联储政策路径与全球风险资产定价",
+      "source": "中新网",
+      "publishedAt": "2024-10-05T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/10-05/10297138.shtml"
+    }
+  ],
+  "watch": [
+    "9月金融与物价数据（社融、CPI/PPI）公布，以及9月PMI回升的持续性",
+    "存量房贷利率10月31日前批量下调后，银行息差与居民信贷需求的变化",
+    "A股成交高位能否延续，央行买债与公开市场逆回购操作的节奏",
+    "国庆假期后的消费延续性，以及以旧换新补贴申请规模与销量的后续变化",
+    "欧盟电动汽车反补贴案终裁结果，及其对出口与外部贸易摩擦的影响"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:31:38+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 341,
+    "missingDays": []
+  }
+}

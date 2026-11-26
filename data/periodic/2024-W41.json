@@ -1,0 +1,174 @@
+{
+  "date": "2024-W41",
+  "type": "week",
+  "generatedAt": "2026-11-26T19:34:14+08:00",
+  "endedAt": "2026-11-26T19:34:14+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 41 周宏观周报：增量政策密集落地",
+  "window": {
+    "from": "2024-10-07",
+    "to": "2024-10-13",
+    "fromAt": "2024-10-07T08:00:00+08:00",
+    "toAt": "2024-10-14T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周主线是增量政策集中落地与资产价格剧烈重估。10月8日国家发改委推出一揽子增量政策，央行与财政部联合工作组召开首次正式会议；10月10日央行决定创设证券、基金、保险公司互换便利，规模5000亿元；10月12日财政部表示拟一次性增加较大规模债务限额置换地方政府存量隐性债务，并将发特别国债支持国有大型商业银行补充核心一级资本，2024年安排财政赤字4.06万亿元、新增专项债券3.9万亿元。数据面上，9月CPI同比上涨0.4%、PPI同比降幅扩大，9月末外汇储备33164亿美元。A股节后首日沪指涨超10%、站上3400点创年内新高，随后回调失守3300点。欧盟对华电动汽车加征关税引多方反对。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行创设5000亿元互换便利支持资本市场",
+      "summary": "中国人民银行决定创设证券、基金、保险公司互换便利，规模5000亿元，只能用于投资股票市场，成为我国首个支持资本市场的货币政策工具。",
+      "why": "首个直接支持资本市场的货币政策工具，观察其后续操作安排与流动性传导",
+      "source": "中新网",
+      "publishedAt": "2024-10-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-10/10298896.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-10/10299246.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-10/10299022.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300163.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行与财政部联合工作组召开首次正式会议",
+      "summary": "中国人民银行与财政部联合工作组召开首次正式会议，货币政策与财政政策协同推进的机制安排受到关注。",
+      "why": "货币与财政协同是增量政策落地的组织保障，观察后续协作机制",
+      "source": "中国人民银行",
+      "publishedAt": "2024-10-09T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554385309/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-10/10299362.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "财政部拟一次性增加较大规模债务限额置换地方政府存量隐性债务",
+      "summary": "财政部拟一次性增加较大规模债务限额置换地方政府存量隐性债务，并将发特别国债支持国有大型商业银行补充核心一级资本；2024年安排财政赤字4.06万亿元、新增专项债券3.9万亿元。",
+      "why": "近年力度最大的财政增量，关系地方债务化解与国有大行资本补充",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-12/10300167.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300166.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300335.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300174.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300277.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "A股节后首周剧烈波动 沪指站上3400点后回调",
+      "summary": "节后首日A股开盘大涨，沪指涨超10%、创业板指涨超18%，收盘沪指站上3400点再创年内新高；周三沪指回调跌逾6%失守3300点，周五守住3200点。",
+      "why": "增量政策预期引发资产价格重估，波动放大反映资金情绪变化",
+      "source": "中新网",
+      "publishedAt": "2024-10-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-08/10298141.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-08/10297982.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-08/10298278.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-09/10298726.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-11/10299871.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "9月CPI同比上涨0.4% PPI同比降幅扩大",
+      "summary": "国家统计局数据显示，9月CPI同比上涨0.4%、环比持平，PPI同比降幅扩大、环比降幅收窄；9月工业生产者出厂价格同比降幅扩大、环比降幅收窄。",
+      "why": "价格是观察需求与工业企业盈利的月度读数，低通胀影响政策取向",
+      "source": "中新网",
+      "publishedAt": "2024-10-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-13/10300831.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-13/10300702.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-13/10300704.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-13/10300858.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-13/10300703.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "9月末外汇储备规模达33164亿美元",
+      "summary": "国家外汇管理局表示，截至9月末我国外汇储备规模为33164亿美元；9月外储达33164亿美元，为年内新高水平。",
+      "why": "外储规模反映跨境资金流动与汇率预期的边际变化",
+      "source": "中新网",
+      "publishedAt": "2024-10-07T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-07/10297670.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-07/10297820.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-08/10297941.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "前三季度税收数据出炉 经济稳中有进",
+      "summary": "前三季度税收数据出炉，相关报道显示我国经济稳中有进，“两新”势头发展良好，经济运行的有利条件未变。",
+      "why": "税收是经济运行的综合读数，可观察以旧换新等政策见效情况",
+      "source": "中新网",
+      "publishedAt": "2024-10-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-13/10300901.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-13/10300859.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-13/10300916.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-13/10300814.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "一揽子利好政策落地 楼市“银十”开局回暖",
+      "summary": "一揽子利好政策落地后楼市“银十”开局回暖，多地密集上新房地产利好政策，国庆假期楼市成交大幅提升，部分房企官宣涨价或收回折扣。",
+      "why": "成交与政策是地产止跌回稳的直接读数，关系投资与信用扩张",
+      "source": "中新网",
+      "publishedAt": "2024-10-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-11/10299486.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-11/10299510.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-13/10300724.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-09/10298470.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "国办转发加强监管防范风险促进期货市场高质量发展的意见",
+      "summary": "国务院办公厅转发中国证监会等部门《关于加强监管防范风险促进期货市场高质量发展的意见》，期货市场高质量发展迎来政策部署。",
+      "why": "期货市场定位与监管框架调整，影响套期保值与风险防范功能发挥",
+      "source": "中新网",
+      "publishedAt": "2024-10-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-11/10299816.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-11/10299817.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "欧盟对华电动汽车加征关税引多方反对",
+      "summary": "欧盟对华电动汽车加征关税引发多方反对，中方表示欧方应当清醒认识到加征关税解决不了任何问题，商务部就欧盟电动汽车反补贴案中欧磋商情况答记者问。",
+      "why": "中欧贸易摩擦升级，影响出口订单与外部需求环境",
+      "source": "中新网",
+      "publishedAt": "2024-10-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/10-10/10298912.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/10-11/10299740.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-11/10299546.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300434.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "互换便利后续操作安排与参与机构情况，及其对市场流动性的持续影响",
+    "财政部一次性增加债务限额的规模与发行安排，地方政府隐性债务化解进度",
+    "特别国债补充国有大型商业银行核心一级资本的规模与推进节奏",
+    "10月物价与经济数据走势，以及楼市成交回暖能否延续",
+    "A股节后大幅波动后的资金情绪，欧盟电动汽车关税磋商进展"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:34:14+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 688,
+    "missingDays": []
+  }
+}

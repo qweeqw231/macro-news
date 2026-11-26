@@ -1,0 +1,178 @@
+{
+  "date": "2024-10",
+  "type": "month",
+  "generatedAt": "2026-11-26T19:24:49+08:00",
+  "endedAt": "2026-11-26T19:24:49+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年 10 月宏观月报：增量政策落地与三季报",
+  "window": {
+    "from": "2024-10-01",
+    "to": "2024-10-31",
+    "fromAt": "2024-10-01T08:00:00+08:00",
+    "toAt": "2024-11-01T08:00:00+08:00",
+    "days": 31
+  },
+  "overview": "2024年10月，增量政策落地、三季度数据发布。发改委推出一揽子增量政策五方面内容；财政部明确拟一次性增加较大规模债务限额置换地方政府存量隐性债务；央行启动证券、基金、保险公司互换便利并设立股票回购增持再贷款，10月21日LPR双双下调25个基点。数据方面，前三季度GDP增长4.8%，9月工业增加值增长5.4%、社零增长3.2%，1—9月固定资产投资增长3.4%；海关总署数据显示前三季度进出口首次突破32万亿元、增长5.3%。地产方面，六大银行10月25日批量调整存量房贷利率，住建部明确年底前“白名单”项目信贷规模增至4万亿元。海外方面，欧盟终裁对华电动汽车加征反补贴税，中方不认同。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家加力推出一揽子增量政策 五方面内容落地",
+      "summary": "国家发展改革委10月8日表示，我国加力推出一揽子增量政策，共有五方面内容；扩内需增量政策的重点更多放在惠民生、促消费上。今年近6万亿元政府投资绝大部分已落实到具体项目。",
+      "why": "增量政策框架定调，决定四季度稳增长工具的组合与力度",
+      "source": "中新网",
+      "publishedAt": "2024-10-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-08/10298084.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-08/10298115.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-08/10298010.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-08/10297994.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "财政部拟一次性增加较大规模债务限额置换隐性债务",
+      "summary": "财政部10月12日表示，拟一次性增加较大规模债务限额置换地方政府存量隐性债务。全年安排新增专项债券3.9万亿元，财政赤字4.06万亿元，国有大行资本补充工作已启动。",
+      "why": "地方隐性债务置换影响财政空间与城投链条的现金流预期",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-12/10300167.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300277.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300174.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300224.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300155.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行启动互换便利并设立股票回购增持再贷款",
+      "summary": "中国人民银行10月18日正式启动证券、基金、保险公司互换便利操作，并设立股票回购增持再贷款，年利率为1.75%；10月21日开展互换便利首次操作，金额500亿元。",
+      "why": "两项工具直接补充股市中长期资金，改变市场流动性供给方式",
+      "source": "中国人民银行",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554335797/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554316920/index.html",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303731.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-21/10305325.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303730.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "10月LPR下调25个基点 1年期与5年期以上同步降",
+      "summary": "央行10月21日宣布，1年期与5年期以上LPR均下降0.25个百分点，这是今年以来LPR第三次下降。业内解读认为，利率下调有利于减轻借款人利息负担、促进消费，房贷定价机制同步调整。",
+      "why": "贷款定价基准下调，是本轮降息传导至实体融资的核心一环",
+      "source": "中新网",
+      "publishedAt": "2024-10-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-21/10304979.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-21/10305116.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-22/10305583.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "前三季度GDP同比增长4.8% 9月工业增加值增长5.4%",
+      "summary": "国家统计局10月18日发布，前三季度GDP同比增长4.8%，9月规模以上工业增加值增长5.4%、社会消费品零售总额增长3.2%，1—9月份固定资产投资同比增长3.4%。",
+      "why": "三季度增速与月度数据组合，标定四季度政策加力的起点",
+      "source": "中新网",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-18/10303496.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303507.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303526.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303513.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303519.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "9月CPI同比上涨0.4% 社融存量同比增8%",
+      "summary": "国家统计局发布，9月份居民消费价格指数同比上涨0.4%、环比持平，PPI环比降幅收窄。央行同期的金融统计数据显示，9月末社会融资规模存量同比增长8%，政策加力支持实体经济。",
+      "why": "物价与社融同步读数，指向需求端修复与融资扩张的力度",
+      "source": "中新网",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-18/10303597.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-14/10301520.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554363656/index.html"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "前三季度进出口首破32万亿元 增长5.3%",
+      "summary": "海关总署10月14日发布，前三季度我国进出口总值首次突破32万亿元，同比增长5.3%，为历史同期首超；初步测算前三季度跨境电商进出口1.88万亿元、增长11.5%。",
+      "why": "外需是本轮增长的重要支撑，外贸数据决定政策空间判断",
+      "source": "中新网",
+      "publishedAt": "2024-10-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-14/10301303.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-14/10301350.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-14/10301367.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-14/10301414.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "六大银行10月25日批量调整存量房贷利率",
+      "summary": "中国六大银行10月25日起批量调整存量房贷利率，调整当日落地。此前公布的房贷利率新机制同步启用，重定价周期可调整为三个月、半年或一年，业内认为此举有助于房地产市场止跌回稳。",
+      "why": "存量房贷利率下调直接减轻居民利息负担，作用于需求端修复",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-12/10300217.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300099.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-25/10307824.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-31/10311047.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "住建部：年底前白名单项目信贷规模增至4万亿",
+      "summary": "住建部10月17日表示，年底前将房地产“白名单”项目信贷规模增加到4万亿元，10月份以来中国一线城市房地产全线回稳，并对房地产市场止跌回稳充满信心。",
+      "why": "白名单信贷规模是本轮地产融资支持的核心量化安排",
+      "source": "中新网",
+      "publishedAt": "2024-10-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-17/10302919.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-17/10303134.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-17/10302989.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-17/10302935.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-17/10303241.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "欧盟终裁对华电动汽车加征反补贴税",
+      "summary": "欧盟公布对华电动汽车反补贴调查终裁结果，决定对中国电动汽车加征反补贴税。商务部答记者问，中国汽车工业协会表示不认同；中国商务部同意立即启动中欧下一阶段磋商。",
+      "why": "对华电动车加税影响出口结构，也牵动中欧经贸谈判走向",
+      "source": "中新网",
+      "publishedAt": "2024-10-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-30/10310335.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-30/10310375.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-30/10310961.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-25/10308186.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "11月制造业PMI与物价数据能否延续改善，三季度GDP回落后的政策加码节奏",
+    "10月21日LPR下调与存量房贷利率批量调整后，银行息差与居民信贷需求的变化",
+    "中欧电动汽车反补贴价格承诺磋商进展，以及对欧盟白兰地反倾销后的后续措施",
+    "12月美联储议息前的美国就业与通胀数据，褐皮书制造业活动走弱的延续性",
+    "前三季度城镇新增就业1049万人之后，四季度稳就业与促消费政策的落地节奏"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:24:49+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 31,
+    "newsItems": 3185,
+    "missingDays": []
+  }
+}

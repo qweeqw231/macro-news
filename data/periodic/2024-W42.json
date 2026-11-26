@@ -1,0 +1,179 @@
+{
+  "date": "2024-W42",
+  "type": "week",
+  "generatedAt": "2026-11-26T19:31:25+08:00",
+  "endedAt": "2026-11-26T19:31:25+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 42 周宏观周报：三季度数据与工具加码",
+  "window": {
+    "from": "2024-10-14",
+    "to": "2024-10-20",
+    "fromAt": "2024-10-14T08:00:00+08:00",
+    "toAt": "2024-10-21T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是三季度经济数据落地与增量金融工具集中推出。国内方面，前三季度GDP同比增长4.8%，9月CPI同比上涨0.4%，9月规上工业增加值增长5.4%、社会消费品零售总额增长3.2%，9月末M2同比增6.8%、社会融资规模同比增长8%，前三季度进出口总值首超32万亿元。金融方面，央行启动互换便利SFISF操作、首批申请额度超2000亿元，设立股票回购增持再贷款年利率1.75%，多家国有大行下调存款利率，潘功胜称当前经济运行需要实施较强的宏观总量支持政策；五部门打出房地产组合拳，年底前白名单项目信贷规模增至4万亿元。外部方面，IMF预计2024年底全球公共债务达100万亿美元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行启动互换便利SFISF 首批申请额度超2000亿元",
+      "summary": "中国人民银行即日起正式启动证券、基金、保险公司互换便利（SFISF）操作，首批申请额度已超2000亿元，资本市场支持工具正式进入操作阶段。",
+      "why": "互换便利为资本市场提供中期流动性支持，工具启动是增量政策落地标志",
+      "source": "中国人民银行",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554335797/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303730.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303849.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303532.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303635.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行设立股票回购增持再贷款 年利率1.75%",
+      "summary": "中国人民银行设立股票回购增持再贷款，年利率为1.75%，支持维护资本市场稳定运行；央行会同金融监管总局、中国证监会就有关事宜发出通知。",
+      "why": "回购增持再贷款稳定股东回报预期，是资本市场政策工具的关键一步",
+      "source": "中国人民银行",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554316920/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554330307/index.html",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303731.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303531.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "潘功胜：当前经济运行需要实施较强的宏观总量支持政策",
+      "summary": "中国人民银行行长潘功胜在2024金融街论坛年会上表示，当前经济运行需要实施较强的宏观总量支持政策；宏观政策作用方向应更重消费。",
+      "why": "央行行长定调宏观总量支持力度，是观察后续货币政策取向的窗口",
+      "source": "中新网",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-18/10303822.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554383030/index.html",
+        "https://www.chinanews.com.cn/cj/2024/10-19/10304127.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303802.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "前三季度金融数据：9月末M2增6.8% 社融增8%",
+      "summary": "中国人民银行发布2024年前三季度金融统计数据报告，9月末M2同比增长6.8%、增速趋稳回升，9月末社会融资规模同比增长8%，政策加力支持实体经济。",
+      "why": "货币与社融增速反映宽信用成色，是观察货币政策传导的关键指标",
+      "source": "中国人民银行",
+      "publishedAt": "2024-10-14T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554385951/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-14/10301515.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-16/10302211.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-16/10302290.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-15/10301735.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "多家国有大行下调存款利率",
+      "summary": "中国多家国有大行下调存款利率，专家称利于稳定银行负债成本；多家银行今起下调人民币存款利率。",
+      "why": "存款利率下调影响银行负债成本与息差，是货币政策传导链条的起点",
+      "source": "中新网",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-18/10304071.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303455.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303700.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "前三季度GDP同比增长4.8%",
+      "summary": "国家统计局数据显示，前三季度GDP同比增长4.8%；国家统计局表示实现全年经济增长5%左右预期目标的信心在增强，前三季度国民经济运行稳中有进。",
+      "why": "三季度GDP是判断全年增长目标能否实现的核心读数",
+      "source": "中新网",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-18/10303496.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303585.shtml",
+        "https://www.chinanews.com.cn/gn/2024/10-18/10303717.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303724.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303506.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "9月CPI同比上涨0.4% 环比持平",
+      "summary": "国家统计局数据显示，9月份居民消费价格指数同比上涨0.4%，环比持平；国家统计局预计四季度CPI温和回升、PPI降幅收窄。",
+      "why": "通胀读数决定货币政策空间，也是观察价格与需求缺口的窗口",
+      "source": "中新网",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-18/10303597.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303729.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303561.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "9月规上工业增加值增长5.4% 社零增长3.2%",
+      "summary": "国家统计局数据显示，9月份规模以上工业增加值增长5.4%，9月份社会消费品零售总额同比增长3.2%；以旧换新政策拉动限上单位消费品零售额增长1.2%。",
+      "why": "生产与消费同步回升，是判断增量政策拉动成色的核心组合",
+      "source": "中新网",
+      "publishedAt": "2024-10-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-18/10303507.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303526.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303605.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-18/10303604.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "前三季度进出口总值首超32万亿元",
+      "summary": "海关总署数据显示，前三季度我国进出口总值首次突破32万亿元，前三季度货物贸易进出口同比增长5.3%；初步测算前三季度跨境电商进出口1.88万亿元，增长11.5%。",
+      "why": "外贸是四季度增长的重要支撑，结构变化反映外需韧性",
+      "source": "中新网",
+      "publishedAt": "2024-10-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-14/10301303.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-14/10301414.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-14/10301350.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-14/10301367.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-15/10301810.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "住建部：年底前白名单项目信贷规模增至4万亿元",
+      "summary": "住建部表示，年底前将房地产“白名单”项目信贷规模增加到4万亿元，保交房攻坚战各地推进有力，已经交付246万套；财政部表示专项债收购存量商品房由地方自主决策、自愿实施。",
+      "why": "房地产融资工具组合落地，决定信用扩张与地产投资能否企稳",
+      "source": "中新网",
+      "publishedAt": "2024-10-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/10-17/10303040.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/10-18/10303551.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-17/10302950.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-17/10302991.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-17/10302990.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "四季度增量政策落地节奏，存量房贷利率批量调整后信贷需求与银行息差变化",
+    "互换便利后续操作规模与频率、股票回购增持再贷款的实际投放与使用情况",
+    "10月工业增加值、社会消费品零售总额与固定资产投资能否延续回升",
+    "四季度GDP能否实现全年5%左右目标，统计局对后期房地产市场的判断",
+    "海外主要央行降息节奏与全球公共债务扩张带来的外部冲击"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:31:25+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 799,
+    "missingDays": []
+  }
+}
