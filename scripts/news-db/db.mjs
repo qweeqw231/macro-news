@@ -163,6 +163,46 @@ export function insertItems(db, items, { batch = 1000 } = {}) {
   return { inserted, skipped };
 }
 
+/**
+ * 正文回补：按 url 更新已有行的 content，content_status 升为 full，并同步 FTS。
+ * 与 insertItems 不同——insert 用 INSERT OR IGNORE 跳过重复 id，这里是要给已存在的
+ * title_only 行补正文，必须走 UPDATE。url 找不到或 content 为空的行直接跳过。
+ * 返回 { updated, missing }。
+ */
+export function updateContent(db, rows, { batch = 1000 } = {}) {
+  const find = db.prepare('SELECT rowid, title FROM items WHERE url = ? LIMIT 1');
+  const upd = db.prepare('UPDATE items SET content = ?, content_status = ?, fetched_at = ? WHERE rowid = ?');
+  const fts = db.prepare('UPDATE items_fts SET tokens = ? WHERE rowid = ?');
+  let updated = 0;
+  let missing = 0;
+  let n = 0;
+  db.exec('BEGIN');
+  try {
+    for (const it of rows) {
+      const content = String(it.content || '').trim();
+      if (!content) continue;
+      const row = find.get(it.url);
+      if (!row) {
+        missing++;
+        continue;
+      }
+      upd.run(content, 'full', new Date().toISOString(), row.rowid);
+      fts.run(tokenize(`${row.title} ${content}`), row.rowid);
+      updated++;
+      n++;
+      if (n % batch === 0) {
+        db.exec('COMMIT');
+        db.exec('BEGIN');
+      }
+    }
+    db.exec('COMMIT');
+  } catch (e) {
+    try { db.exec('ROLLBACK'); } catch { /* ignore */ }
+    throw e;
+  }
+  return { updated, missing };
+}
+
 export function setState(db, source, cursor, note = '') {
   db.prepare(`
     INSERT INTO backfill_state(source, cursor, updated_at, note) VALUES (?, ?, ?, ?)
