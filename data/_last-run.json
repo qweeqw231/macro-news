@@ -6,64 +6,64 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-26T20:53:01.008Z",
-  "durationMs": 10587,
+  "startedAt": "2026-11-26T21:08:04.062Z",
+  "durationMs": 12437,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 2400
+      "ms": 4507
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1161
+      "ms": 1228
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1061
+      "ms": 2864
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 950
+      "ms": 1428
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1844
+      "ms": 2470
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 949
+      "ms": 1903
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1648
+      "ms": 2589
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 5593
+      "ms": 7224
     }
   ],
   "quotes": 74,
@@ -71,27 +71,27 @@
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7003,
-    "kept": 7003,
+    "candidates": 7005,
+    "kept": 7005,
     "evicted": 0,
-    "deduped": 297,
+    "deduped": 296,
     "days": [
       {
         "day": "2026-11-26",
         "incoming": 274,
-        "candidates": 1248,
-        "kept": 1248,
+        "candidates": 1250,
+        "kept": 1250,
         "evicted": 0,
         "deduped": 272,
         "added": 2
       },
       {
         "day": "2026-11-25",
-        "incoming": 12,
+        "incoming": 11,
         "candidates": 1284,
         "kept": 1284,
         "evicted": 0,
-        "deduped": 12,
+        "deduped": 11,
         "added": 0
       },
       {
