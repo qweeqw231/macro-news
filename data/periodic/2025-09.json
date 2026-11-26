@@ -1,0 +1,176 @@
+{
+  "date": "2025-09",
+  "type": "month",
+  "generatedAt": "2026-11-26T21:05:26+08:00",
+  "endedAt": "2026-11-26T21:05:26+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年 9 月宏观月报：适度宽松与物价转折",
+  "window": {
+    "from": "2025-09-01",
+    "to": "2025-09-30",
+    "fromAt": "2025-09-01T08:00:00+08:00",
+    "toAt": "2025-10-01T08:00:00+08:00",
+    "days": 30
+  },
+  "overview": "2025年9月，国内宏观主线是适度宽松落地与物价读数的转折。货币政策上，央行公告将开展11000亿元买断式逆回购操作，三季度货币政策委员会例会强调落实落细适度宽松货币政策；8月社融存量同比增8.8%，前八个月人民币贷款增13.46万亿元。数据上，8月CPI同比下降0.4%，核心CPI涨幅连续4个月扩大，PPI同比降幅今年3月以来首次收窄；8月规上工业增加值增长5.2%、社零增长3.4%，9月制造业PMI升至49.8%。财政与外贸方面，5000亿元新型政策性金融工具全部用于补充项目资本金，前8个月货物贸易进出口增长3.5%。对外，美联储降息25个基点，中国货币政策坚持以我为主，关税摩擦升温。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行将开展11000亿元买断式逆回购操作",
+      "summary": "中国人民银行将开展11000亿元买断式逆回购操作；本月早些时候，央行曾公告将开展10000亿元买断式逆回购操作。",
+      "why": "月末大额买断式逆回购投放，是观察流动性安排力度的重要窗口",
+      "source": "中新网",
+      "publishedAt": "2025-09-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-30/10492491.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-04/10476857.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-05/10477077.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "货币政策委员会三季度例会 落实落细适度宽松货币政策",
+      "summary": "中国人民银行货币政策委员会召开2025年第三季度例会，提出落实落细适度宽松货币政策，促进经济稳定增长。",
+      "why": "例会对下阶段政策基调定调，是观察后续宽松取向的重要窗口",
+      "source": "中国人民银行",
+      "publishedAt": "2025-09-26T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/5855060/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-26/10490119.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-26/10490028.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "8月末社融存量433.66万亿元 同比增8.8%",
+      "summary": "8月末社会融资规模存量433.66万亿元，同比增长8.8%；广义货币余额同比增8.8%，前八个月人民币贷款增加13.46万亿元，8月企业新发放贷款利率保持历史低位。",
+      "why": "社融、货币增速与贷款利率，是判断融资扩张与流动性松紧的核心读数",
+      "source": "中新网",
+      "publishedAt": "2025-09-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-12/10481528.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-12/10481510.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-12/10481400.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/5837479/index.html",
+        "https://www.chinanews.com.cn/cj/2025/09-12/10481359.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "证监会同意FISP平台运行 支持中长期资金入市",
+      "summary": "中国证监会同意FISP平台运行，更好支持中长期资金入市；公募基金行业机构投资者直销服务平台正式启动运行。",
+      "why": "为中长期资金入市搭建服务平台，指向资本市场资金结构改革",
+      "source": "中新网",
+      "publishedAt": "2025-09-05T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-05/10477497.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-05/10477417.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "8月CPI同比下降0.4% 核心CPI连续4个月扩大",
+      "summary": "国家统计局数据显示，8月份居民消费价格同比下降0.4%、环比持平，核心CPI同比涨幅连续4个月扩大，PPI同比降幅今年3月以来首次收窄。",
+      "why": "物价与工业品价格读数，是判断需求修复与反内卷成效的先行指标",
+      "source": "中新网",
+      "publishedAt": "2025-09-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-10/10479618.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-10/10479633.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-10/10479840.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-10/10479816.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-10/10479820.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "8月工业增加值增5.2% 社零增3.4%",
+      "summary": "规模以上工业增加值增长5.2%，社会消费品零售总额增长3.4%，1—8月份全国固定资产投资增长0.5%，房地产开发投资60309亿元，8月份国民经济运行总体平稳、稳中有进。",
+      "why": "月度生产、消费与投资读数，标定政策加力的起点与成色",
+      "source": "中新网",
+      "publishedAt": "2025-09-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-15/10482423.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482436.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482452.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482425.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482454.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "9月制造业采购经理指数为49.8% 继续回升",
+      "summary": "国家统计局公布，9月份制造业采购经理指数为49.8%，指数继续回升，企业生产扩张加快；三季度非制造业经营活动保持平稳运行。",
+      "why": "月末景气读数，检验增量政策落地后的经济成色",
+      "source": "中新网",
+      "publishedAt": "2025-09-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-30/10492098.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-30/10492219.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-30/10492103.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-30/10492211.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "前8个月货物贸易进出口增长3.5%",
+      "summary": "海关总署数据显示，前8个月我国货物贸易进出口增长3.5%；8月进出口总值同比增长3.5%，前8个月进出口总值超29万亿元。",
+      "why": "货物贸易月度与累计增速，检验外需韧性与出口结构变化",
+      "source": "中新网",
+      "publishedAt": "2025-09-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-08/10478415.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-08/10478422.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-08/10478386.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-08/10478490.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "5000亿元新型政策性金融工具 补充项目资本金",
+      "summary": "国家发改委表示，5000亿元新型政策性金融工具已全部用于补充项目资本金，并提出适时加力实施宏观政策。",
+      "why": "政策性金融工具落地，是稳投资的重要资金安排",
+      "source": "中新网",
+      "publishedAt": "2025-09-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-29/10491784.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-29/10491642.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-29/10492012.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-29/10491636.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储宣布降息25个基点",
+      "summary": "美联储宣布降息25个基点，对劳动力市场担忧加剧；鲍威尔表示美联储将坚定维护自身独立性，潘功胜回应称中国货币政策坚持以我为主。",
+      "why": "海外货币政策转向改变全球流动性环境，是外部冲击的重要来源",
+      "source": "中新网",
+      "publishedAt": "2025-09-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/09-18/10484322.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/09-18/10484330.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-18/10484421.shtml",
+        "https://www.chinanews.com.cn/gj/2025/09-18/10484341.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-22/10487087.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "9月LPR维持不变后，四季度政策利率是否调整、降息空间如何变化",
+    "多地楼市新政落地后，10月房地产成交与房价能否延续8月降幅收窄态势",
+    "对美出口管制与不可靠实体清单、对墨西哥壁垒调查的后续反制与影响",
+    "9月PMI回升后，10月工业生产、消费与物价读数能否延续改善",
+    "服务消费扩围措施与以旧换新资金下达后，消费需求的修复力度"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:05:26+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 30,
+    "newsItems": 3500,
+    "missingDays": []
+  }
+}

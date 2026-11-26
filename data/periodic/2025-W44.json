@@ -1,0 +1,177 @@
+{
+  "date": "2025-W44",
+  "type": "week",
+  "generatedAt": "2026-11-26T21:03:36+08:00",
+  "endedAt": "2026-11-26T21:03:36+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 44 周宏观周报：央行恢复国债买卖操作",
+  "window": {
+    "from": "2025-10-27",
+    "to": "2025-11-02",
+    "fromAt": "2025-10-27T08:00:00+08:00",
+    "toAt": "2025-11-03T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本期主线是货币政策操作方式调整与“十五五”顶层规划落地。中国人民银行表示将恢复公开市场国债买卖操作，同日开展9000亿元MLF操作，并提出研究实施一次性的个人信用救济政策；中共中央发布关于制定国民经济和社会发展第十五个五年规划的建议，提出经济社会发展七方面主要目标。数据端，10月份制造业采购经理指数为49.0%，1—9月份规模以上工业企业利润增长3.2%；财政端新增2000亿元专项债券额度，5000亿元新型政策性金融工具资金投放完毕。外部方面，美联储再降息25个基点，加拿大央行与香港金管局同步降息；中美元首釜山会晤结束，商务部公布中美经贸磋商成果共识。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行将恢复公开市场国债买卖操作 开展9000亿元MLF操作",
+      "summary": "中国人民银行将恢复公开市场国债买卖操作，中国央行开展9000亿元MLF操作；央行同时表示正在研究实施一次性的个人信用救济政策。",
+      "why": "国债买卖重启改变公开市场投放方式，影响流动性供给节奏",
+      "source": "中新网",
+      "publishedAt": "2025-10-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-27/10505260.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505470.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505360.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505168.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505359.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中国证监会印发《合格境外投资者制度优化工作方案》",
+      "summary": "中国证监会印发《合格境外投资者制度优化工作方案》，该方案于27日正式推出，合格境外投资者制度进一步优化。",
+      "why": "跨境资本流动规则调整，影响外资参与境内市场的通道与便利度",
+      "source": "中新网",
+      "publishedAt": "2025-10-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-27/10505426.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505282.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505471.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "证监会加强资本市场中小投资者保护 启动深化创业板改革",
+      "summary": "中国证监会表示加强资本市场中小投资者保护，同时将启动实施深化创业板改革，中小投资者保护与创业板改革举措同期推出。",
+      "why": "资本市场交易规则与发行机制调整，影响投资者保护与供给节奏",
+      "source": "中新网",
+      "publishedAt": "2025-10-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-27/10505386.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505464.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505278.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505449.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "《中共中央关于制定国民经济和社会发展第十五个五年规划的建议》发布",
+      "summary": "中共中央受权发布关于制定国民经济和社会发展第十五个五年规划的建议，提出经济社会发展七方面主要目标，新华社全文播发建议及说明。",
+      "why": "未来五年经济社会发展的顶层文件，决定后续政策取向与改革节奏",
+      "source": "中新网",
+      "publishedAt": "2025-10-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/10-28/10505782.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/10-28/10505783.shtml",
+        "https://www.chinanews.com.cn/gn/2025/10-28/10506047.shtml",
+        "https://www.chinanews.com.cn/gn/2025/10-28/10505943.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "国家统计局：10月份制造业采购经理指数为49.0%",
+      "summary": "10月份制造业采购经理指数为49.0%，非制造业商务活动指数略有回升；制造业中三大重点行业保持扩张。",
+      "why": "制造业景气度回落至荣枯线以下，影响稳增长政策加码的紧迫性",
+      "source": "中新网",
+      "publishedAt": "2025-10-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-31/10507461.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-31/10507499.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-31/10507462.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "1—9月份全国规模以上工业企业利润增长3.2%",
+      "summary": "国家统计局数据显示，2025年1—9月份全国规模以上工业企业利润增长3.2%；9月规模以上工业企业利润同比大增21.6%，工业利润加快恢复。",
+      "why": "工业利润反映量价配合情况，检验工业增长的价格成色",
+      "source": "中新网",
+      "publishedAt": "2025-10-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-27/10504965.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505095.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10504972.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "新增2000亿元专项债券额度 支持部分省份投资建设",
+      "summary": "国家发改委表示新增2000亿元专项债券额度，专门用于支持部分省份投资建设；5000亿元新型政策性金融工具资金已全部投放完毕。",
+      "why": "财政工具加速落地，影响基建投资与稳增长的资金供给",
+      "source": "中新网",
+      "publishedAt": "2025-10-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-31/10507484.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-31/10507536.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-31/10507628.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-31/10507528.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "国家外汇局推出3方面9条政策措施服务跨境贸易",
+      "summary": "国家外汇局推出3方面9条政策措施服务跨境贸易，并发布支持外贸稳定发展一揽子便利化政策；跨境贸易高水平开放试点优化扩围同步推进。",
+      "why": "跨境结算与贸易便利化加码，影响外贸企业结售汇与资金周转条件",
+      "source": "中新网",
+      "publishedAt": "2025-10-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-29/10506369.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-29/10506418.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505345.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-29/10506625.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505483.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "美联储宣布再降息25个基点",
+      "summary": "美联储宣布再降息25个基点，为年内二连降；加拿大央行下调基准利率至2.25%，香港金管局下调基本利率25个基点至4.25%。",
+      "why": "主要经济体同步降息，外部货币环境转向宽松，影响跨境资金流向",
+      "source": "中新网",
+      "publishedAt": "2025-10-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/10-30/10506776.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/10-30/10506779.shtml",
+        "https://www.chinanews.com.cn/gj/2025/10-30/10506927.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-30/10507096.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-30/10506868.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中美元首釜山会晤结束",
+      "summary": "中美元首釜山会晤结束，商务部介绍中美吉隆坡经贸磋商成果共识；外媒关注称会晤释放缓和信号，推动两国关系稳定发展。",
+      "why": "最高层沟通结果影响外部冲击预期，是外贸与汇率环境的重要变量",
+      "source": "中新网",
+      "publishedAt": "2025-10-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/10-30/10506922.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-30/10507104.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-30/10507060.shtml",
+        "https://www.chinanews.com.cn/gn/2025/10-30/10507343.shtml",
+        "https://www.chinanews.com.cn/gj/2025/10-30/10507340.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行恢复公开市场国债买卖后的首次操作安排，以及存款准备金率与政策利率是否出现调整信号",
+    "十五五规划建议之后专项规划与产业政策的出台节奏，以及重点领域投资安排",
+    "10月制造业采购经理指数回落之后，11月制造业PMI、CPI与PPI等数据能否延续修复",
+    "新增2000亿元专项债券额度与5000亿元新型政策性金融工具所支持项目的落地进度",
+    "美联储后续降息路径与加拿大、香港跟进动作，以及人民币汇率中间价与结售汇变化"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:03:36+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 929,
+    "missingDays": []
+  }
+}

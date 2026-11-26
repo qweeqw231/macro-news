@@ -1,0 +1,175 @@
+{
+  "date": "2025-W41",
+  "type": "week",
+  "generatedAt": "2026-11-26T21:03:43+08:00",
+  "endedAt": "2026-11-26T21:03:43+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 41 周宏观周报：稀土等物项出口管制密集出台",
+  "window": {
+    "from": "2025-10-06",
+    "to": "2025-10-12",
+    "fromAt": "2025-10-06T08:00:00+08:00",
+    "toAt": "2025-10-13T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周主线是战略物项出口管制密集出台，中美经贸博弈同步升级。10月9日商务部与海关总署公布对中重稀土、稀土设备原辅料、超硬材料、锂电池及人造石墨负极材料实施出口管制，并将外国实体列入不可靠实体清单；次日商务部称反制美方301调查是正当防卫，拟对美船舶收取特别港务费。流动性方面，央行节后首日投放11000亿元买断式逆回购；A股高开，沪指站稳3900点创10年新高。数据面，双节假期国内出游8.88亿人次、总花费超8090亿元，9月物流景气回升，9月末外汇储备33387亿美元、央行连续11个月增持黄金。地产方面，住建部称750多万套已售难交付住房实现交付。海外方面，特朗普对进口卡车加征25%关税。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中国央行开展11000亿元买断式逆回购操作",
+      "summary": "中国人民银行开展11000亿元买断式逆回购操作，市场报道将该笔操作表述为节后首日的1.1万亿元买断式逆回购。",
+      "why": "节后投放中长期流动性，观察资金面与债市反应",
+      "source": "中新网",
+      "publishedAt": "2025-10-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-09/10495818.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-10/10496107.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "商务部公布对境外相关稀土物项实施出口管制的决定",
+      "summary": "商务部公布对境外相关稀土物项实施出口管制的决定；同期商务部、海关总署对超硬材料、稀土设备和原辅料、锂电池及人造石墨负极材料相关物项实施出口管制，并对稀土相关技术实施出口管制。",
+      "why": "战略资源出口管制加码，影响全球供应链与贸易摩擦",
+      "source": "中新网",
+      "publishedAt": "2025-10-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-09/10495367.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-09/10495362.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-09/10495669.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-09/10495670.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-09/10495664.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "商务部：中方反制美方301调查相关措施是正当防卫行为",
+      "summary": "商务部表示，中方反制美方301调查相关措施是正当防卫行为；另有报道称，中国拟对美船舶收取船舶特别港务费，商务部并就美将多家中国实体列入出口管制实体清单作出回应。",
+      "why": "中美经贸博弈升级，出口与航运环节面临新的摩擦点",
+      "source": "中新网",
+      "publishedAt": "2025-10-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-10/10496390.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-10/10496155.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-10/10496102.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-10/10496154.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "节后开门红！沪指站稳3900点创10年新高",
+      "summary": "节后A股高开，沪指站稳3900点创10年新高，贵金属板块领涨；10日创业板指半日跌3.4%，贵金属、半导体等板块出现调整。",
+      "why": "节后风险偏好与资金情绪变化，反映政策与流动性预期的重估",
+      "source": "中新网",
+      "publishedAt": "2025-10-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-09/10495622.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-09/10495589.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-09/10495408.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-09/10495640.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-10/10496018.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "国庆中秋假期国内出游8.88亿人次 总花费超8090亿元",
+      "summary": "国庆中秋假期国内出游8.88亿人次，总花费超8090亿元；假期全社会跨区域人员流动量超24亿人次创历史新高，全国消费相关行业日均销售收入同比增长4.5%。",
+      "why": "假日消费与出行数据是观察内需修复节奏的直接读数",
+      "source": "中新网",
+      "publishedAt": "2025-10-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-09/10495473.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-08/10495209.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-08/10495115.shtml",
+        "https://www.chinanews.com.cn/gn/2025/10-09/10495449.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "物流需求持续向好 9月中国物流业景气指数环比回升",
+      "summary": "9月中国物流业景气指数环比回升，物流需求持续向好；同月中国仓储指数小幅回升，新订单指数重回扩张区间，仓储行业运行向好恢复。",
+      "why": "物流与仓储景气是实体需求和补库节奏的高频观察指标",
+      "source": "中新网",
+      "publishedAt": "2025-10-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-11/10496422.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-11/10496466.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-10/10495872.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-10/10496218.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "国家外汇管理局：截至9月末我国外汇储备规模为33387亿美元",
+      "summary": "国家外汇管理局表示，截至9月末我国外汇储备规模为33387亿美元，创年内新高；央行已连续11个月增持黄金。",
+      "why": "外储与黄金持仓反映跨境资金流动和储备管理的取向",
+      "source": "中新网",
+      "publishedAt": "2025-10-07T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-07/10494796.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-07/10494912.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-09/10495387.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "住建部：全国750多万套已售难交付的住房实现交付",
+      "summary": "住房城乡建设部表示，全国750多万套已售难交付的住房实现交付，并提出五方面推动好房子建设；同期公布以人定房、以房定地、以房定钱的房地产发展新模式。",
+      "why": "保交房进度与住房供给模式调整，关系地产风险化解路径",
+      "source": "中新网",
+      "publishedAt": "2025-10-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-11/10496712.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-11/10496691.shtml",
+        "https://www.chinanews.com.cn/gn/2025/10-11/10496575.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-12/10497008.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "高通公司涉嫌违反反垄断法 市场监管总局依法决定立案调查",
+      "summary": "市场监管总局表示，高通公司涉嫌违反反垄断法，依法决定立案调查，并称该案为日常执法工作。",
+      "why": "外资企业反垄断立案，标志竞争执法范围的扩展",
+      "source": "中新网",
+      "publishedAt": "2025-10-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-10/10496183.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-10/10496264.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-12/10497094.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-12/10497082.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "特朗普宣布11月起对输美中型和重型卡车征收25%关税",
+      "summary": "特朗普宣布自11月起对输美中型和重型卡车征收25%关税；同期欧盟拟对配额外进口钢铁加征50%关税，全球贸易保护措施继续加码。",
+      "why": "贸易壁垒再度加码，出口链与全球贸易摩擦预期受影响",
+      "source": "中新网",
+      "publishedAt": "2025-10-07T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/10-07/10494835.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/10-07/10494729.shtml",
+        "https://www.chinanews.com.cn/gj/2025/10-07/10494794.shtml",
+        "https://www.chinanews.com.cn/gj/2025/10-08/10495044.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "稀土及相关战略物项出口管制的许可口径与执行进展，及其对全球产业链的传导",
+    "对美船舶特别港务费的实施方式与时间表，以及中方后续反制措施的落点",
+    "央行买断式逆回购与各期限逆回购的续作节奏及资金面变化",
+    "9月物流与仓储景气回升能否延续，以及双节消费数据的持续性",
+    "住建部保交房进度与房地产发展新模式的具体落地情况"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:03:43+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 430,
+    "missingDays": []
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "date": "2025-10",
+  "type": "month",
+  "generatedAt": "2026-11-26T21:05:17+08:00",
+  "endedAt": "2026-11-26T21:05:17+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年 10 月宏观月报：十五五规划建议发布",
+  "window": {
+    "from": "2025-10-01",
+    "to": "2025-10-31",
+    "fromAt": "2025-10-01T08:00:00+08:00",
+    "toAt": "2025-11-01T08:00:00+08:00",
+    "days": 31
+  },
+  "overview": "2025年10月的宏观主线是党的二十届四中全会审议通过“十五五”规划建议，为未来五年经济工作定下总纲。货币政策在月末集中发力，央行宣布恢复公开市场国债买卖操作、开展9000亿元MLF操作，并提出研究实施一次性的个人信用救济政策，10月LPR连续5个月保持不变。数据面上，前三季度GDP同比增长5.2%，9月份规模以上工业增加值增长6.5%，居民消费价格同比下降0.3%而核心CPI涨幅持续扩大，前三季度货物贸易进出口33.61万亿元、同比增长4%。资本市场方面，证监会印发合格境外投资者制度优化工作方案，加强中小投资者保护并启动创业板改革。外部环境上，美联储再降息25个基点，全球流动性边际转松。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "四中全会审议通过“十五五”规划建议",
+      "summary": "党的二十届四中全会审议通过《中共中央关于制定国民经济和社会发展第十五个五年规划的建议》，文件提出经济社会发展七方面主要目标。",
+      "why": "未来五年经济工作的总纲定调，决定后续政策组合与落地节奏",
+      "source": "中新网",
+      "publishedAt": "2025-10-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/10-28/10505782.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/10-28/10506047.shtml",
+        "https://www.chinanews.com.cn/gn/2025/10-28/10505943.shtml",
+        "https://www.chinanews.com.cn/gn/2025/10-24/10503653.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行宣布恢复公开市场国债买卖操作",
+      "summary": "10月27日，中国人民银行宣布将恢复公开市场国债买卖操作，并开展9000亿元MLF操作，同时表示正在研究实施一次性的个人信用救济政策。",
+      "why": "国债买卖与个人信用政策指向下一阶段流动性与需求侧支持",
+      "source": "中新网",
+      "publishedAt": "2025-10-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-27/10505260.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505168.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505359.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-24/10504046.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "前三季度GDP同比增长5.2%",
+      "summary": "国家统计局10月20日发布，前三季度国内生产总值同比增长5.2%；9月份规模以上工业增加值增长6.5%，社会消费品零售总额增长3.0%，1—9月份固定资产投资371535亿元。",
+      "why": "三季度增速与月度数据组合，标定四季度稳增长政策起点",
+      "source": "中新网",
+      "publishedAt": "2025-10-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-20/10501517.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-20/10501450.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-20/10501462.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-20/10501457.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "9月末社融存量437.08万亿元 同比增长8.7%",
+      "summary": "央行10月15日发布2025年前三季度金融统计数据报告，9月末社会融资规模存量437.08万亿元、同比增长8.7%，M2余额同比增长8.4%，前三季度社融增量突破30万亿。",
+      "why": "社融与货币供应量读数反映融资扩张力度与政策传导效果",
+      "source": "中新网",
+      "publishedAt": "2025-10-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-15/10499057.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-15/10499041.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498858.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-16/10499318.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "10月LPR报价出炉：1年期3.0% 5年期以上3.5%",
+      "summary": "10月20日LPR报价出炉，1年期LPR为3.0%、5年期以上LPR为3.5%，为连续5个月保持不变；业内认为后续仍存调整空间。",
+      "why": "贷款定价基准保持稳定，宽松预期转向观察后续调整窗口",
+      "source": "中新网",
+      "publishedAt": "2025-10-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-20/10501393.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-21/10502161.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-21/10502074.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-20/10501641.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "证监会印发合格境外投资者制度优化工作方案",
+      "summary": "10月27日，中国证监会印发《合格境外投资者制度优化工作方案》，并部署加强资本市场中小投资者保护；吴清表示将启动实施深化创业板改革。",
+      "why": "外资准入、投资者保护与创业板改革同步推进，指向资本市场制度完善",
+      "source": "中新网",
+      "publishedAt": "2025-10-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-27/10505426.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505282.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505386.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505449.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "前三季度货物贸易进出口33.61万亿元 增长4%",
+      "summary": "海关总署10月13日发布，前三季度我国货物贸易进出口33.61万亿元、同比增长4%，其中对东盟进出口同比增长9.6%，9月单月增速为8%。",
+      "why": "外需是增长的重要支撑，外贸数据决定外贸政策空间判断",
+      "source": "中新网",
+      "publishedAt": "2025-10-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/10-13/10497330.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-13/10497421.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-13/10497294.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-13/10497395.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498541.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "9月CPI同比下降0.3% 核心CPI涨幅持续扩大",
+      "summary": "国家统计局10月15日发布，9月份居民消费价格同比下降0.3%、环比上涨0.1%，核心CPI同比涨幅持续扩大、PPI同比降幅继续收窄，核心CPI同比涨幅近19个月来首次回到1%。",
+      "why": "物价与工业品价格读数显示需求修复与价格压力变化方向",
+      "source": "中新网",
+      "publishedAt": "2025-10-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-15/10498496.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498512.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498497.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498734.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "10月9日央行开展1.1万亿元买断式逆回购",
+      "summary": "10月9日，央行开展1.1万亿元买断式逆回购操作，同日开展6120亿元7天期逆回购操作；节后首日即实施大额中长期流动性投放。",
+      "why": "节后大额中长期投放直接影响资金面与债券市场预期",
+      "source": "中新网",
+      "publishedAt": "2025-10-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-09/10495818.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-10/10496107.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-09/10495371.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储再降息25个基点 年内二连降",
+      "summary": "10月30日美联储宣布再降息25个基点，为年内第二次降息，鲍威尔称美国政府“停摆”拖累经济活动；香港金管局同日下调基本利率25个基点至4.25%。",
+      "why": "海外货币政策转向影响全球流动性与主要经济体利差格局",
+      "source": "中新网",
+      "publishedAt": "2025-10-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/10-30/10506776.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/10-30/10506779.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-30/10506868.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-30/10507096.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "“十五五”规划建议提出后，专项债、货币与财政工具的落地安排及存量政策一致性评估的推进节奏",
+    "央行恢复公开市场国债买卖操作后的公开市场净投放规模与资金面变化",
+    "10月份制造业采购经理指数为49.0%之后，11月物价与金融数据能否延续修复",
+    "美联储再降息25个基点后全球资产定价的变化，以及中美元首会晤后关税安排的落实情况",
+    "前三季度新增地方政府债券发行形成的实物工作量，以及房地产成交与价格环比走势的持续性"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:05:17+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 31,
+    "newsItems": 2975,
+    "missingDays": []
+  }
+}

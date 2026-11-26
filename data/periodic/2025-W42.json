@@ -1,0 +1,173 @@
+{
+  "date": "2025-W42",
+  "type": "week",
+  "generatedAt": "2026-11-26T21:04:17+08:00",
+  "endedAt": "2026-11-26T21:04:17+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 42 周宏观周报：买断式逆回购与降息预期",
+  "window": {
+    "from": "2025-10-13",
+    "to": "2025-10-19",
+    "fromAt": "2025-10-13T08:00:00+08:00",
+    "toAt": "2025-10-20T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周主线是货币政策加码与基本面数据分化。央行开展6000亿元买断式逆回购操作，前三季度金融数据落地：9月末M2余额同比增8.4%，社融存量437.08万亿元、同比增8.7%，前三季度社融增量突破30万亿，9月信贷回升使年底前降息降准预期升温，中小银行调降存款利率。价格端，9月CPI同比下降0.3%，核心CPI涨幅近19个月来首次回到1%，PPI同比降幅继续收窄。外部方面，美方威胁11月1日起对华加征100%关税后，中美双方同意尽快举行新一轮经贸磋商。财政与需求端，前三季度财政收入同比增长0.5%，超长期特别国债发行收官，“两新”政策带动家电零售同比增长48.3%，前三季度外贸33.61万亿元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行开展6000亿元买断式逆回购操作",
+      "summary": "中国人民银行将开展6000亿元买断式逆回购操作；10月15日央行发布当天开展6000亿元买断式逆回购操作的消息，两次披露的操作规模一致。",
+      "why": "大额买断式逆回购补充中长期流动性，是观察后续货币政策取向的重要信号",
+      "source": "中新网",
+      "publishedAt": "2025-10-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-15/10498463.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-14/10498237.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "前三季度金融数据：M2增8.4% 社融存量增8.7%",
+      "summary": "中国人民银行发布2025年前三季度金融统计数据报告：9月末M2余额同比增8.4%，9月末社会融资规模存量437.08万亿元、同比增8.7%，前三季度社融增量突破30万亿。",
+      "why": "货币与社融增速反映宽信用力度，是判断政策传导效果的核心指标",
+      "source": "中国人民银行",
+      "publishedAt": "2025-10-15T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/5868082/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498858.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10499041.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10499057.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-16/10499318.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "9月CPI同比下降0.3% 核心CPI涨幅近19个月来首次回到1%",
+      "summary": "国家统计局数据显示，9月份居民消费价格同比下降0.3%、环比上涨0.1%，9月份核心CPI同比涨幅持续扩大，PPI同比降幅继续收窄，核心CPI涨幅近19个月来首次回到1%。",
+      "why": "价格读数决定货币政策空间，CPI转负反映需求端仍偏弱",
+      "source": "中新网",
+      "publishedAt": "2025-10-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-15/10498496.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498497.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498512.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498734.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "中美双方同意尽快举行新一轮中美经贸磋商",
+      "summary": "中美双方同意尽快举行新一轮中美经贸磋商；此前美方威胁从11月1日起对华商品加征100%关税，中国商务部作出回应，何立峰同美方财政部长、贸易代表举行视频通话。",
+      "why": "中美经贸谈判重启决定外部冲击节奏，是观察关税与出口管制走向的窗口",
+      "source": "中新网",
+      "publishedAt": "2025-10-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-18/10500667.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/10-18/10500563.shtml",
+        "https://www.chinanews.com.cn/gn/2025/10-13/10497483.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-14/10497879.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "前三季度财政收入同比增长0.5% 财政部将提前下达2026年新增地方债限额",
+      "summary": "财政部发布2025年前三季度财政收支情况，前三季度中国财政收入同比增长0.5%，1.3万亿元超长期特别国债14日发行收官；财政部将继续提前下达2026年新增地方政府债务限额。",
+      "why": "财政收入与债务限额安排决定财政发力节奏和地方资金面",
+      "source": "中新网",
+      "publishedAt": "2025-10-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-17/10500235.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-17/10500348.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-18/10500718.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-17/10500378.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-14/10497984.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "9月信贷季节性回升 市场预期新一轮降息降准",
+      "summary": "报道称9月信贷出现季节性回升，年底前央行或实施新一轮降息降准；本周中小银行密集调降存款利率。",
+      "why": "降息降准预期与存款利率下调同向，指向负债端成本与政策空间",
+      "source": "中新网",
+      "publishedAt": "2025-10-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-16/10499151.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-19/10501115.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "前三季度我国货物贸易进出口33.61万亿元 同比增长4%",
+      "summary": "海关总署数据显示，今年前三季度我国货物贸易进出口33.61万亿元，进出口总值同比增长4%；前三季度外贸增速逐季加快，9月单月增长8%。",
+      "why": "外贸是四季度增长的重要支撑，单月提速显示外需韧性",
+      "source": "中新网",
+      "publishedAt": "2025-10-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/10-13/10497330.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-13/10497421.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498541.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-13/10497294.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "进一步规范上市公司董事、高管和控股股东、实控人行为",
+      "summary": "中国进一步规范上市公司董事、高管和控股股东、实控人行为；同期定增项目陆续获批，释放券商再融资“破冰”信号，北京计划到2027年底推动REITs发行规模居全国前列。",
+      "why": "上市公司行为规范与再融资松绑并行，指向资本市场制度建设",
+      "source": "中新网",
+      "publishedAt": "2025-10-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-17/10500470.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498635.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10499043.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "前三季度“两新”政策成效明显 家电零售同比增长48.3%",
+      "summary": "税收数据显示，今年前三季度中国“两新”政策实施成效明显，前三季度家电零售同比增长48.3%；5000亿元“两新”国补资金成效受到关注，全国企业设备更新加快推进。",
+      "why": "以旧换新与设备更新补贴拉动需求，是观察内需修复力度的一环",
+      "source": "中新网",
+      "publishedAt": "2025-10-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-19/10500994.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-16/10499813.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-16/10499289.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-16/10499216.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "IMF将今年世界经济增长预期上调至3.2%",
+      "summary": "IMF将今年世界经济增长预期上调至3.2%，IMF总裁表示全球经济好于预期、不确定性成为新常态；同期中国人民银行行长潘功胜会见国际货币基金组织总裁格奥尔基耶娃。",
+      "why": "外部增长预期上调但不确定性上升，影响汇率与跨境资本判断",
+      "source": "中新网",
+      "publishedAt": "2025-10-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/10-14/10498344.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498445.shtml",
+        "https://www.chinanews.com.cn/gj/2025/10-17/10499836.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/5872230/index.html"
+      ]
+    }
+  ],
+  "watch": [
+    "央行后续买断式逆回购与公开市场操作规模，年底前是否实施新一轮降息降准",
+    "10月PMI与CPI、PPI读数能否延续9月的价格与信贷变化",
+    "11月1日美国对华加征关税措施落地后，中美磋商进展与出口管制是否调整",
+    "2026年新增地方政府债务限额提前下达后的地方债发行节奏",
+    "10月底金融街论坛将发布的系列金融政策内容"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:04:17+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 870,
+    "missingDays": []
+  }
+}
