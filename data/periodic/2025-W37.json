@@ -1,0 +1,172 @@
+{
+  "date": "2025-W37",
+  "type": "week",
+  "generatedAt": "2026-11-26T21:04:23+08:00",
+  "endedAt": "2026-11-26T21:04:23+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 37 周宏观周报：PPI降幅收窄与金融加力",
+  "window": {
+    "from": "2025-09-08",
+    "to": "2025-09-14",
+    "fromAt": "2025-09-08T08:00:00+08:00",
+    "toAt": "2025-09-15T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周价格端边际改善与金融总量高增速并行，财政工具加力，外部贸易摩擦升温。价格端，8月CPI同比下降0.4%、环比持平，核心CPI继续回升，PPI同比降幅收窄、环比结束连续8个月下行。货币端，8月末广义货币余额同比增长8.8%，社会融资规模存量433.66万亿元、同比增长8.8%，前八个月人民币贷款增加13.46万亿元。财政端，地方政府债务风险逐步收敛，政府负债率处于合理区间，未来财政政策发力空间依然充足。外贸端，前8个月货物贸易进出口增长3.5%，投洽会与服贸会相继开幕。外部方面，墨西哥拟提高进口关税，美国8月CPI同比上涨2.9%、欧洲央行维持利率不变。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "8月金融数据：M2同比增8.8% 社融存量增8.8%",
+      "summary": "央行公布8月金融数据：8月末广义货币余额同比增长8.8%，社会融资规模存量433.66万亿元、同比增长8.8%，今年前八个月人民币贷款增加13.46万亿元。",
+      "why": "金融总量与融资成本读数决定稳增长空间",
+      "source": "中新网",
+      "publishedAt": "2025-09-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-12/10481528.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-12/10481510.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/5837479/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/5837468/index.html",
+        "https://www.chinanews.com.cn/cj/2025/09-12/10481400.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "8月CPI同比下降0.4% PPI同比降幅收窄",
+      "summary": "国家统计局数据显示，8月份居民消费价格同比下降0.4%、环比持平，工业生产者出厂价格同比降幅收窄、环比结束连续8个月下行，核心CPI继续回升。",
+      "why": "价格拐点信号决定通胀预期与政策取向",
+      "source": "中新网",
+      "publishedAt": "2025-09-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-10/10479618.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-10/10479629.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-10/10479633.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-10/10479840.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-10/10479820.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行连续开展7天期逆回购操作",
+      "summary": "央行本周连续开展7天期逆回购操作，单日投放规模在1915亿元至3040亿元之间，公开市场流动性投放节奏受到关注。",
+      "why": "公开市场投放节奏反映短期流动性松紧",
+      "source": "中新网",
+      "publishedAt": "2025-09-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-10/10479616.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-08/10478333.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-09/10478920.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-11/10480370.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-12/10481003.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "财政部：地方政府债务风险逐步收敛 未来财政发力空间充足",
+      "summary": "财政部表示，地方政府债务风险逐步收敛，我国政府负债率处于合理区间、风险安全可控，未来财政政策发力空间依然充足，将做好政策储备主动靠前发力。",
+      "why": "财政空间与债务处置进度关系稳增长力度",
+      "source": "中新网",
+      "publishedAt": "2025-09-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-12/10481513.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-12/10481511.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-12/10481274.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-12/10481304.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "前8个月货物贸易进出口增长3.5%",
+      "summary": "海关总署数据显示，前8个月我国货物贸易进出口增长3.5%，进出口总值超29万亿元，8月单月进出口总值同比增长3.5%，外贸总量保持平稳增长。",
+      "why": "外贸总量反映外需强弱与出口链景气",
+      "source": "中新网",
+      "publishedAt": "2025-09-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-08/10478415.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-08/10478422.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-08/10478386.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-11/10480877.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "中国人民银行与多国央行深化本币合作",
+      "summary": "中国人民银行与欧央行、瑞士央行、匈牙利央行续签双边本币互换协议，并与印度尼西亚央行启动双边交易本币结算框架和二维码互联互通合作项目。",
+      "why": "本币结算与互换合作拓展跨境流动性通道",
+      "source": "中国人民银行",
+      "publishedAt": "2025-09-08T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554878093/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/5837074/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554853982/index.html"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "放开限购、取消限售、发放购房补贴等楼市新政落地",
+      "summary": "多地楼市新政密集落地，放开限购、取消限售、发放购房补贴等措施先后推出，深圳新政落地首个周末新房认购量增40%。",
+      "why": "地方需求端松绑影响地产销售与信用扩张",
+      "source": "中新网",
+      "publishedAt": "2025-09-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-12/10481121.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-08/10478497.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-09/10479479.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-08/10478526.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-08/10478668.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "证监会查处东方通严重财务造假 拟罚款2.29亿元",
+      "summary": "证监会查处东方通严重财务造假，拟对上市公司罚款2.29亿元，资本市场对财务造假的查处力度延续。",
+      "why": "重罚指向信息披露与中介机构责任追究",
+      "source": "中新网",
+      "publishedAt": "2025-09-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-12/10481603.shtml"
+    },
+    {
+      "rank": 9,
+      "title": "商务部回应墨西哥拟提高进口关税",
+      "summary": "墨西哥拟对中国进口汽车等产品征收50%关税，商务部表示密切关注墨方提税动向，中方将根据实际情况采取必要措施。",
+      "why": "外部关税冲击直接影响出口预期",
+      "source": "中新网",
+      "publishedAt": "2025-09-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-12/10480937.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/09-11/10480649.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-12/10480951.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美国8月CPI同比上涨2.9% 欧洲央行维持利率不变",
+      "summary": "美国8月CPI同比上涨2.9%，美国30年期贷款利率降至6.35%、创近一年来最低值，欧洲央行宣布维持三大关键利率不变。",
+      "why": "海外通胀与利率路径影响全球风险偏好",
+      "source": "中新网",
+      "publishedAt": "2025-09-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/09-12/10480952.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/09-11/10480835.shtml",
+        "https://www.chinanews.com.cn/gj/2025/09-12/10480955.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "9月金融数据中社融与M2增速、新增贷款规模及企业贷款利率的后续变化",
+    "PPI同比降幅收窄能否延续，核心CPI同比涨幅的上行持续性",
+    "各地楼市新政落地后的成交表现，以及闲置土地与存量商品房的处置进度",
+    "财政政策发力空间的落地节奏，特别是以旧换新与转移支付等工具的推进",
+    "美方关税与出口管制措施的进一步升级，以及海外通胀与利率路径变化"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:04:23+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 893,
+    "missingDays": []
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "date": "2025-W38",
+  "type": "week",
+  "generatedAt": "2026-11-26T21:03:49+08:00",
+  "endedAt": "2026-11-26T21:03:49+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 38 周宏观周报：8月数据与美联储降息",
+  "window": {
+    "from": "2025-09-15",
+    "to": "2025-09-21",
+    "fromAt": "2025-09-15T08:00:00+08:00",
+    "toAt": "2025-09-22T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是8月经济数据落地与美联储重启降息叠加。国内方面，国家统计局公布8月份规模以上工业增加值增长5.2%、社会消费品零售总额增长3.4%，1—8月份全国房地产开发投资60309亿元，8月份各线城市商品住宅销售价格同比降幅总体继续收窄；央行发布最新金融数据，前8个月新增贷款13.46万亿元，9月18日开展4870亿元7天期逆回购操作。政策方面，九部门发文以19项措施扩大服务消费，“反内卷”治理向汽车供应商账期与快递领域延伸，三部门印发轻工业稳增长工作方案。外部方面，美联储降息25个基点，时隔9个月再降息；中美就TikTok问题达成基本框架共识。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：8月份国民经济运行总体平稳、稳中有进",
+      "summary": "国家统计局：8月份规模以上工业增加值增长5.2%，社会消费品零售总额增长3.4%，1—8月份全国房地产开发投资60309亿元，各线城市商品住宅销售价格同比降幅总体继续收窄。",
+      "why": "月度宏观数据读数，直接对应下半年稳增长政策的落地效果",
+      "source": "中新网",
+      "publishedAt": "2025-09-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-15/10482423.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482436.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482452.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482454.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482388.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行发布最新金融数据　前8月新增贷款13.46万亿元",
+      "summary": "央行发布最新金融数据，前8个月新增贷款13.46万亿元；央行表示目前金融机构申报服务消费与养老再贷款近600亿元，去年以来出台的金融支持政策有效带动扩大服务消费供给。",
+      "why": "信贷投放与再贷款工具反映货币政策对实体融资的支持力度",
+      "source": "中新网",
+      "publishedAt": "2025-09-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-15/10482608.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-17/10484120.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-17/10483945.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "美联储宣布降息25个基点",
+      "summary": "美联储宣布降息25个基点，报道称对劳动力市场担忧加剧，特朗普“自己人”投下唯一一张反对票，鲍威尔表示美联储将坚定维护自身独立性；时隔9个月美联储再降息。",
+      "why": "美联储政策路径是全球流动性锚，牵动人民币汇率与风险资产定价",
+      "source": "中新网",
+      "publishedAt": "2025-09-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/09-18/10484322.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/09-18/10484330.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-18/10484421.shtml",
+        "https://www.chinanews.com.cn/gj/2025/09-18/10484341.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-18/10484402.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "19项措施扩大服务消费！九部门发文",
+      "summary": "九部门发文以19项措施扩大服务消费，商务部解读称将坚持惠民生和促消费相结合，并将在约50城开展消费新业态、新模式、新场景试点建设；同时推动一刻钟便民生活圈建设扩围升级。",
+      "why": "服务消费是扩内需的重要抓手，政策力度将影响后续消费数据",
+      "source": "中新网",
+      "publishedAt": "2025-09-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-16/10483302.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-17/10483911.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-17/10483922.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-17/10483906.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-19/10485062.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "我国“反内卷”治理效果显现",
+      "summary": "我国“反内卷”治理效果显现，“人工智能+”行动与反内卷深入推进；工信部表示支持规范汽车整车企业供应商账款支付，中汽协发布供应商账款支付倡议并获17家车企表态落实。",
+      "why": "反内卷指向产能与价格秩序，影响制造业盈利与工业品价格",
+      "source": "中新网",
+      "publishedAt": "2025-09-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-15/10482690.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482491.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482522.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482893.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-17/10483976.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "中美就妥善解决TikTok问题达成基本框架共识",
+      "summary": "中美就TikTok等经贸问题在西班牙马德里举行会谈，双方就以合作方式妥善解决TikTok相关问题、减少投资障碍达成基本框架共识；中美元首年内第三次通话。",
+      "why": "经贸磋商进展牵动关税与投资安排，是外部环境的关键变量",
+      "source": "中新网",
+      "publishedAt": "2025-09-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-16/10482967.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-16/10482966.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482950.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-20/10486041.shtml",
+        "https://www.chinanews.com.cn/gn/2025/09-20/10485996.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "9月18日央行开展4870亿元7天期逆回购操作",
+      "summary": "9月18日央行开展4870亿元7天期逆回购操作；9月15日央行开展2800亿元7天期逆回购操作，两笔操作均为7天期。",
+      "why": "公开市场投放规模是观察短期流动性松紧的高频指标",
+      "source": "中新网",
+      "publishedAt": "2025-09-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-18/10484376.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482418.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "中国8月银行结售汇顺差146亿美元",
+      "summary": "8月中国银行结售汇顺差146亿美元；国家外汇管理局公布8月银行结汇15103亿元人民币、售汇14058亿元人民币；9月18日人民币对美元中间价报7.1085元，下调72个基点。",
+      "why": "结售汇与中间价反映跨境资本流动和汇率供求，是外部均衡读数",
+      "source": "中新网",
+      "publishedAt": "2025-09-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-19/10485501.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-19/10485388.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-18/10484367.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-15/10482413.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "财政部：1-8月全国一般公共预算收入同比增长0.3%",
+      "summary": "财政部公布，1-8月全国一般公共预算收入同比增长0.3%；前8月四大主体税种实现正增长，证券交易印花税同比大增81.7%；前8个月全国制造业税收收入同比增长5%以上。",
+      "why": "财政收入增速是观察减税降费力度与经济运行结果的综合指标",
+      "source": "中新网",
+      "publishedAt": "2025-09-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-17/10483974.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-17/10484114.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-18/10484606.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-19/10485006.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "三部门印发轻工业稳增长工作方案 助力行业持续回升向好",
+      "summary": "三部门印发轻工业稳增长工作方案，工信部有关负责人解读《轻工业稳增长工作方案（2025—2026年）》，方案被定位为强供给、促消费、惠民生提供行动指南。",
+      "why": "工业稳增长政策涉及供给与需求两端，是观察制造业政策力度的窗口",
+      "source": "中新网",
+      "publishedAt": "2025-09-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/09-19/10485021.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/09-19/10485024.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-19/10485543.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "美联储后续降息节奏与美元指数走势，人民币中间价与银行结售汇能否延续顺差",
+    "9月金融数据中新增贷款增速能否延续，央行公开市场操作规模变化",
+    "扩大服务消费19项措施与约50城消费新业态试点的落地进度",
+    "房地产销售价格同比降幅能否继续收窄，反内卷治理对行业价格的影响",
+    "中美经贸磋商后续安排与TikTok问题解决方案的落地进展"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:03:49+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 928,
+    "missingDays": []
+  }
+}

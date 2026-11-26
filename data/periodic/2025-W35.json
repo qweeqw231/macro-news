@@ -1,0 +1,165 @@
+{
+  "date": "2025-W35",
+  "type": "week",
+  "generatedAt": "2026-11-26T21:03:33+08:00",
+  "endedAt": "2026-11-26T21:03:33+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 35 周宏观周报：流动性宽松加码",
+  "window": {
+    "from": "2025-08-25",
+    "to": "2025-08-31",
+    "fromAt": "2025-08-25T08:00:00+08:00",
+    "toAt": "2025-09-01T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本期宏观主线是货币政策边际加码与“人工智能+”顶层设计同时落地。央行连续开展大额逆回购操作，单月净投放创近半年新高，多家银行下调人民币存款利率，流动性呵护力度加大。数据端，8月制造业采购经理指数回升至49.4%，1—7月规上工业企业利润总额40203.5亿元、利润降幅连续两个月收窄，上半年服务进出口总额3.9万亿元创历史同期新高。政策端，国务院部署“人工智能+”行动并明确智能经济路线图，证监会表示持续巩固资本市场回稳向好势头，京沪相继放宽住房限购，增值税留抵退税政策进一步完善。外部方面，商务部贸易谈判代表李成钢赴美与美方官员会谈。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行单月净投放创近半年新高",
+      "summary": "央行连续开展大额7天期逆回购操作，单月净投放规模创近半年新高，呵护流动性的力度明显加大。",
+      "why": "净投放力度决定短期流动性松紧，是观察货币政策取向的窗口",
+      "source": "中新网",
+      "publishedAt": "2025-08-26T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/08-26/10471408.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/08-26/10471178.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-26/10471129.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-27/10471764.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-29/10473057.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "多家银行下调人民币存款利率 降幅10到20个基点",
+      "summary": "多家银行宣布下调人民币存款利率，降幅达10到20个基点，存款端定价下行成为本周货币政策的重要信号。",
+      "why": "存款利率是降息传导链条的起点，影响银行息差与信贷投放",
+      "source": "中新网",
+      "publishedAt": "2025-08-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/08-28/10472724.shtml"
+    },
+    {
+      "rank": 3,
+      "title": "证监会：持续巩固资本市场回稳向好势头",
+      "summary": "中国证监会表示将持续巩固资本市场回稳向好势头，并提出健全证券公司分类监管体系，稳市与严监管同步推进。",
+      "why": "监管层对市场的定调影响风险偏好与资金预期",
+      "source": "中新网",
+      "publishedAt": "2025-08-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/08-29/10473643.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/08-25/10470664.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "8月中国制造业PMI升至49.4%",
+      "summary": "国家统计局数据显示，8月制造业采购经理指数为49.4%，小幅回升；非制造业商务活动指数扩张加快，整体保持平稳运行。",
+      "why": "PMI是观察制造业景气与政策效果的高频先行指标",
+      "source": "中新网",
+      "publishedAt": "2025-08-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/08-31/10474208.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/08-31/10474169.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-31/10474172.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-31/10474291.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "1—7月全国规上工业企业利润总额40203.5亿元",
+      "summary": "1—7月份全国规上工业企业实现利润总额40203.5亿元，规上工业企业利润同比降幅连续两个月收窄。",
+      "why": "工业利润反映企业盈利修复节奏，是判断需求与价格的中枢信号",
+      "source": "中新网",
+      "publishedAt": "2025-08-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/08-27/10471771.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/08-27/10471881.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-28/10472376.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "上半年中国服务进出口总额3.9万亿元 创历史同期新高",
+      "summary": "上半年我国服务进出口总额3.9万亿元，规模创历史同期新高；商务部表示将推出新一批政策措施，加大力度促进服务出口。",
+      "why": "服务贸易结构变化反映外贸新动能与国内需求切换",
+      "source": "中新网",
+      "publishedAt": "2025-08-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/08-27/10472065.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/08-27/10471792.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-27/10471827.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-27/10471867.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "国务院部署“人工智能+”行动 明确智能经济路线图",
+      "summary": "国务院部署“人工智能+”行动，明确发展智能经济路线图；行动意见随之发布，聚焦六大领域，并明确九项重点工作。",
+      "why": "顶层设计决定产业政策力度与资金投向，是结构性政策的关键",
+      "source": "中新网",
+      "publishedAt": "2025-08-26T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/08-26/10471639.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/08-27/10471708.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-27/10471928.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-29/10473470.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-29/10473216.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "京沪相继放宽住房限购",
+      "summary": "北京、上海相继放宽住房限购；上海优化调整房地产政策，符合条件居民家庭在外环外购房不限套数。",
+      "why": "核心城市限购松绑影响需求预期与地产链条修复节奏",
+      "source": "中新网",
+      "publishedAt": "2025-08-25T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/08-25/10470874.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/08-25/10470647.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-25/10470997.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "财政部、税务总局明确多项安排 增值税留抵退税政策进一步完善",
+      "summary": "财政部、税务总局明确多项安排，增值税留抵退税政策进一步完善，明确多项税收领域的具体部署安排。",
+      "why": "留抵退税直接影响企业现金流与投资意愿",
+      "source": "中新网",
+      "publishedAt": "2025-08-25T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/08-25/10470447.shtml"
+    },
+    {
+      "rank": 10,
+      "title": "商务部李成钢与美国官员及工商界代表会谈",
+      "summary": "商务部国际贸易谈判代表兼副部长李成钢率团前往华盛顿，与美国政府部门相关官员及工商界代表举行会谈会见。",
+      "why": "中美经贸磋商进展影响外部环境与出口链预期",
+      "source": "中新网",
+      "publishedAt": "2025-08-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/08-30/10473779.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/08-30/10473819.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-28/10472626.shtml",
+        "https://www.chinanews.com.cn/gn/2025/08-28/10472644.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-28/10472719.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行公开市场操作与净投放的持续性，以及存款利率下调后的银行息差与信贷需求变化",
+    "9月制造业与非制造业PMI读数对8月回升的验证",
+    "“人工智能+”行动意见的配套细则与地方落地节奏",
+    "京沪限购放宽后重点城市成交与房价的后续反馈",
+    "中美经贸磋商的延续进展及关税相关政策变化"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:03:33+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 869,
+    "missingDays": []
+  }
+}
