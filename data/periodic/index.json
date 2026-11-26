@@ -1,6 +1,6 @@
 {
   "schema": "macro-news/periodic-index@1",
-  "generatedAt": "2026-11-26T19:52:20+08:00",
+  "generatedAt": "2026-11-26T20:59:55+08:00",
   "count": 89,
   "reports": [
     {
@@ -1295,7 +1295,7 @@
       },
       "generatedAt": "2026-11-26T19:34:14+08:00",
       "backfill": true,
-      "backfillAt": "2026-11-26T19:34:14+08:00",
+      "backfillAt": "2026-11-26T20:59:45+08:00",
       "itemCount": 10,
       "file": "periodic/2024-W41.json"
     },
