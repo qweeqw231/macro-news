@@ -6,93 +6,93 @@
     "consecutiveSkips": 0
   },
   "runner": "cloud",
-  "startedAt": "2026-11-26T00:08:21.397Z",
-  "durationMs": 12755,
+  "startedAt": "2026-11-26T00:23:20.477Z",
+  "durationMs": 10572,
   "sources": [
     {
       "id": "wallstreetcn",
       "label": "华尔街见闻",
       "ok": true,
       "count": 250,
-      "ms": 7574
+      "ms": 3455
     },
     {
       "id": "eastmoney",
       "label": "东方财富",
       "ok": true,
       "count": 50,
-      "ms": 1367
+      "ms": 1147
     },
     {
       "id": "sina",
       "label": "新浪财经",
       "ok": true,
       "count": 50,
-      "ms": 1647
+      "ms": 1325
     },
     {
       "id": "chinanews",
       "label": "中新网财经",
       "ok": true,
       "count": 30,
-      "ms": 720
+      "ms": 818
     },
     {
       "id": "pbc",
       "label": "中国人民银行",
       "ok": true,
       "count": 15,
-      "ms": 1955
+      "ms": 1622
     },
     {
       "id": "fed",
       "label": "美联储",
       "ok": true,
       "count": 20,
-      "ms": 844
+      "ms": 853
     },
     {
       "id": "ecb",
       "label": "欧洲央行",
       "ok": true,
       "count": 15,
-      "ms": 1269
+      "ms": 1363
     },
     {
       "id": "stats",
       "label": "国家统计局",
       "ok": true,
       "count": 25,
-      "ms": 5412
+      "ms": 6791
     }
   ],
   "quotes": 74,
-  "added": 18,
+  "added": 16,
   "news": {
     "cap": 1800,
     "capped": false,
-    "candidates": 7095,
-    "kept": 7095,
+    "candidates": 7109,
+    "kept": 7109,
     "evicted": 0,
-    "deduped": 272,
+    "deduped": 278,
     "days": [
       {
         "day": "2026-11-26",
-        "incoming": 15,
-        "candidates": 15,
-        "kept": 15,
+        "incoming": 28,
+        "candidates": 29,
+        "kept": 29,
         "evicted": 0,
-        "deduped": 0,
+        "deduped": 14,
         "added": 15
       },
       {
         "day": "2026-11-25",
-        "incoming": 261,
+        "incoming": 250,
         "candidates": 1284,
         "kept": 1284,
         "evicted": 0,
-        "deduped": 258,
-        "added": 3
+        "deduped": 250,
+        "added": 1
       },
       {
         "day": "2026-11-24",
