@@ -1,0 +1,167 @@
+{
+  "date": "2024-W08",
+  "type": "week",
+  "generatedAt": "2026-11-26T19:41:46+08:00",
+  "endedAt": "2026-11-26T19:41:46+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 8 周宏观周报：超预期降息与稳地产稳信用",
+  "window": {
+    "from": "2024-02-19",
+    "to": "2024-02-25",
+    "fromAt": "2024-02-19T08:00:00+08:00",
+    "toAt": "2024-02-26T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是超预期降息与稳地产、稳信用的政策加力。2月LPR报价1年期3.45%、5年期以上3.95%，5年期以上下调25个基点，为新机制形成以来最大降幅；央行加大公开市场投放，单日开展2470亿元7天期逆回购。地产端住建部称214个城市已建立房地产融资协调机制，1月70城房价环比降幅收窄。资本市场沪指八连阳收复3000点，证监会称将加大欺诈发行等违法行为打击力度。数据面，1月社融增量创历史同期最高水平，全国吸收外资1127.1亿元；IMF上调全球和中国2024年增长预期，德国政府下调预期至0.2%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "2月LPR报价：1年期3.45%、5年期以上3.95%",
+      "summary": "2月LPR报价出炉，1年期LPR为3.45%，5年期以上LPR为3.95%，其中5年期以上下调25个基点，为新机制形成以来最大降幅。",
+      "why": "LPR是贷款定价基准，最大幅度降息直接压低实体融资成本与房贷利率",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166193.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166337.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166454.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166693.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-22/10167412.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行开展2470亿元7天期逆回购操作",
+      "summary": "央行开展2470亿元7天期逆回购操作，单周内此前已分别开展320亿元、490亿元、580亿元7天期逆回购，公开市场持续加大投放力度。",
+      "why": "大额逆回购反映央行对流动性的呵护力度，是资金面松紧的直接读数",
+      "source": "中新网",
+      "publishedAt": "2024-02-23T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-23/10168211.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-19/10165541.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166852.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-22/10167562.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "证监会：进一步加大对上市公司欺诈发行等违法行为打击力度",
+      "summary": "证监会表示将进一步加大对上市公司欺诈发行等违法行为打击力度，证券违法行为处罚力度与违法成本会越来越大，并将大幅提高拟上市企业现场检查比例。",
+      "why": "强监管表态是资本市场制度端信号，影响违规成本与市场风险偏好",
+      "source": "中新网",
+      "publishedAt": "2024-02-23T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-23/10168574.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168628.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168661.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168589.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168654.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "A股三大股指集体收涨 沪指八连阳收复3000点",
+      "summary": "A股三大股指集体收涨，沪指八连阳收复3000点，节后市场连续多日上涨，指数走强成为观察资金面与市场信心的直接读数。",
+      "why": "指数收复整数关口反映风险偏好变化，是资本市场冷热的观测点",
+      "source": "中新网",
+      "publishedAt": "2024-02-23T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-23/10168409.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168615.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168084.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "开年首月社会融资规模增量创历史同期最高水平",
+      "summary": "开年首月我国社会融资规模增量创历史同期最高水平，宽信用力度与实体经济融资需求的匹配度受到关注。",
+      "why": "社融增量是信用扩张的总量读数，直接关系稳增长成色",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166152.shtml"
+    },
+    {
+      "rank": 6,
+      "title": "1月70城房价环比降幅收窄 同比整体延续降势",
+      "summary": "国家统计局数据显示，1月70个大中城市中商品住宅销售价格环比下降城市个数减少，70城房价环比降幅收窄，同比整体延续降势。",
+      "why": "房价环比降幅收窄是地产政策效果最早的读数，关系投资与信用",
+      "source": "中新网",
+      "publishedAt": "2024-02-23T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-23/10168220.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168219.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168419.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168730.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "商务部：2024年1月全国吸收外资1127.1亿元",
+      "summary": "商务部数据显示，2024年1月全国吸收外资1127.1亿元人民币，1月中国新设外资企业数同比增长74.4%，外资流入出现积极变化。",
+      "why": "外资是资本流入与信心的风向标，折射制度型开放与增长预期",
+      "source": "中新网",
+      "publishedAt": "2024-02-23T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-23/10168492.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-25/10169329.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168741.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168568.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168747.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "住建部：214个城市已建立房地产融资协调机制",
+      "summary": "住建部表示已有214个城市建立房地产融资协调机制，白名单加速落地，162个项目获融资逾294亿元，银行批复白名单项目贷款超1600亿元。",
+      "why": "融资协调机制打通房企融资堵点，是地产风险化解的关键抓手",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166570.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166631.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166185.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-22/10167499.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-23/10168139.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "中央财经委会议部署新一轮大规模设备更新和消费品以旧换新",
+      "summary": "中央财经委员会第四次会议强调，推动新一轮大规模设备更新和消费品以旧换新，有效降低全社会物流成本。",
+      "why": "两新政策是扩内需的重要抓手，关系全年投资与消费动能",
+      "source": "中新网",
+      "publishedAt": "2024-02-23T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-23/10168667.shtml"
+    },
+    {
+      "rank": 10,
+      "title": "德国政府大幅下调2024年经济增长预期至0.2%",
+      "summary": "德国政府大幅下调2024年经济增长预期至0.2%，德国经济持续低迷拖累欧洲增长，主要经济体增长预期调整引发外部环境关注。",
+      "why": "外需与全球增长预期的变化，是外部冲击的观测窗口",
+      "source": "中新网",
+      "publishedAt": "2024-02-22T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-22/10167525.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-23/10168695.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "3月LPR报价，以及降息后银行息差与信贷需求的变化",
+    "房地产融资协调机制在更多城市落地与白名单项目融资规模",
+    "1月70城房价之后各线城市成交与房价环比走势能否企稳延续",
+    "两会前后财政与扩大内需增量政策的力度与节奏",
+    "美联储、欧洲央行政策取向，以及德国等经济体增长预期调整"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:41:46+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 655,
+    "missingDays": []
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "date": "2024-02",
+  "type": "month",
+  "generatedAt": "2026-11-26T19:41:28+08:00",
+  "endedAt": "2026-11-26T19:41:28+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年 2 月宏观月报：降准降息与稳增长加力",
+  "window": {
+    "from": "2024-02-01",
+    "to": "2024-02-29",
+    "fromAt": "2024-02-01T08:00:00+08:00",
+    "toAt": "2024-03-01T08:00:00+08:00",
+    "days": 29
+  },
+  "overview": "2024年2月，货币政策转向宽松成为主线：央行下调金融机构存款准备金率0.5个百分点，释放长期资金约1万亿元；2月LPR中5年期以上下调25个基点至3.95%，为新机制形成以来最大降幅。1月社会融资规模增量6.5万亿元创历史同期最高水平，1月CPI环比上涨0.3%、PPI降幅收窄。证监会暂停新增转融券规模、严惩恶意做空并支持汇金增持。房地产融资协调机制加快落地，银行批复“白名单”项目贷款超1600亿元。中央财经委第四次会议部署新一轮设备更新和消费品以旧换新。海外方面，美联储维持联邦基金利率5.25%至5.50%不变，鲍威尔称3月不太可能降息。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行降准0.5个百分点 释放长期资金约1万亿元",
+      "summary": "央行下调金融机构存款准备金率0.5个百分点，释放长期资金约1万亿元。这是今年首次降准，释放中长期流动性，货币政策加力稳增长。",
+      "why": "年内首次降准释放长期资金，是宽松取向转向的关键信号",
+      "source": "中新网",
+      "publishedAt": "2024-02-05T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-05/10159265.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-05/10159174.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-06/10159942.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-05/10159576.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-05/10159186.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "5年期以上LPR下调25个基点至3.95%",
+      "summary": "2月LPR报价出炉，1年期LPR为3.45%，5年期以上LPR为3.95%。5年期以上LPR出现新机制形成以来最大降幅，为5年来最大幅度降息，专家认为对房贷市场将有积极影响。",
+      "why": "5年期以上LPR降幅创最大，是降息传导至房贷的核心一环",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166337.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166193.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166454.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166693.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-22/10167412.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "1月社融增量6.5万亿元 创历史同期最高水平",
+      "summary": "央行数据显示，1月社会融资规模增量为6.5万亿元，比上年同期多5061亿元；1月末社会融资规模存量384.29万亿元，同比增长9.5%；1月人民币贷款增加4.92万亿元。",
+      "why": "开年信贷投放力度，决定全年需求端修复的起点",
+      "source": "中新网",
+      "publishedAt": "2024-02-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-09/10162224.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-09/10162297.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-09/10162220.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-09/10162225.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166152.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "央行发布2023年第四季度货币政策执行报告 物价有望温和回升",
+      "summary": "中国人民银行发布2023年第四季度中国货币政策执行报告，提出2024年物价有望温和回升，并表示2023年我国货币信贷保持合理增长。",
+      "why": "央行对全年物价与货币信贷的定调，是后续政策预期的锚",
+      "source": "中国人民银行",
+      "publishedAt": "2024-02-08T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553775596/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553750004/index.html",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161882.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161893.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "证监会暂停新增转融券规模 严打恶意做空",
+      "summary": "证监会宣布依法暂停新增证券公司转融券规模，存量逐步了结；同时表示严惩操纵市场恶意做空，并坚定支持中央汇金公司持续加大增持规模和力度，继续引导各类机构投资者更大力度入市。",
+      "why": "转融券收紧与汇金增持并用，是稳定资本市场的直接抓手",
+      "source": "中新网",
+      "publishedAt": "2024-02-06T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-06/10160141.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-06/10160288.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-05/10159814.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-06/10160132.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-06/10160033.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "中央财经委会议部署新一轮设备更新与消费品以旧换新",
+      "summary": "中央财经委员会第四次会议强调，推动新一轮大规模设备更新和消费品以旧换新，有效降低全社会物流成本，为实体经济舒筋活络。",
+      "why": "设备更新与降物流成本，是全年扩内需的政策抓手",
+      "source": "中新网",
+      "publishedAt": "2024-02-23T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-23/10168667.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-27/10170782.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-28/10171566.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-29/10172240.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-26/10170248.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "1月CPI环比上涨0.3% PPI环比同比降幅均收窄",
+      "summary": "国家统计局发布，1月份居民消费价格环比上涨0.3%、涨幅扩大，CPI环比实现两连涨；工业生产者出厂价格同比和环比降幅均收窄。",
+      "why": "物价读数确认通缩压力缓解，是宽松政策的重要前提",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-08/10161484.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161652.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161481.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161470.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161644.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "276个城市建立房地产融资协调机制 白名单贷款超1600亿元",
+      "summary": "住建部表示已有214个城市建立房地产融资协调机制，至月底中国276个城市已建立协调机制；银行批复“白名单”项目贷款超1600亿元，已有162个项目获融资逾294亿元。",
+      "why": "白名单融资与协调机制落地节奏，决定地产链信用修复",
+      "source": "中新网",
+      "publishedAt": "2024-02-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-29/10172250.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-29/10172223.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166570.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166185.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166631.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "2023年统计公报发布 全年货物进出口总额417568亿元",
+      "summary": "国家统计局发布2023年国民经济和社会发展统计公报，2023年货物进出口总额417568亿元，社会消费品零售总额471495亿元，全社会固定资产投资509708亿元。",
+      "why": "统计公报锚定全年总量基准，是年度宏观数据的第一手读数",
+      "source": "中新网",
+      "publishedAt": "2024-02-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-29/10171721.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-29/10171769.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-29/10171764.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-29/10171766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-29/10171780.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储维持利率不变 鲍威尔称3月不太可能降息",
+      "summary": "美联储决定将联邦基金利率继续维持在5.25%至5.50%之间，鲍威尔称3月不太可能降息，并表示年内降息是合适的，将谨慎决定何时降息。",
+      "why": "海外降息节奏后移，构成国内宽松的外部约束",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-01/10156500.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-01/10156448.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156449.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10157009.shtml",
+        "https://www.chinanews.com.cn/gj/2024/02-28/10171558.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "全国两会后货币政策与财政政策的进一步加码方向，以及降准降息的传导效果",
+    "2月PMI、1月进出口与节后复工复产数据能否验证需求修复的持续性",
+    "5年期以上LPR下调后地产成交与房贷需求的变化，以及银行净息差压力",
+    "美联储降息预期回落后人民币汇率走势与跨境资本流动变化",
+    "暂停转融券与汇金增持之后，资本市场成交与融资活跃度的持续性"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:41:28+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 29,
+    "newsItems": 2514,
+    "missingDays": []
+  }
+}

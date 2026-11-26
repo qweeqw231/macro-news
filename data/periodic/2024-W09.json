@@ -1,0 +1,168 @@
+{
+  "date": "2024-W09",
+  "type": "week",
+  "generatedAt": "2026-11-26T19:41:31+08:00",
+  "endedAt": "2026-11-26T19:41:31+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 9 周宏观周报：稳增长发力与监管强化",
+  "window": {
+    "from": "2024-02-26",
+    "to": "2024-03-03",
+    "fromAt": "2024-02-26T08:00:00+08:00",
+    "toAt": "2024-03-04T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是稳增长政策发力与监管强化并行。中国人民银行召开金融五篇大文章工作座谈会，就银行间债券市场柜台业务有关事项答记者问，并将外籍来华人员移动支付单笔交易限额由1000美元提高到5000美元。2月制造业采购经理指数为49.1%，比上月下降0.1个百分点。国家统计局发布2023年国民经济和社会发展统计公报，全年国内生产总值超126万亿元，社会消费品零售总额471495亿元。276个城市已建立房地产融资协调机制，前两月百城房价总体平稳。沪深两市成交额再破万亿，沪指站稳3000点之上；美联储降息预期“缩水”。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行召开金融五篇大文章工作座谈会",
+      "summary": "中国人民银行召开做好金融五篇大文章工作座谈会；央行表示加大对五大重点领域资金支持。",
+      "why": "五篇大文章指向重点领域资金投向与实体经济支持",
+      "source": "中国人民银行",
+      "publishedAt": "2024-02-27T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553715004/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-27/10170880.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "2月制造业PMI为49.1% 环比下降0.1个百分点",
+      "summary": "2月制造业采购经理指数为49.1%，比上月下降0.1个百分点；春节假期因素致指数回落，企业预期稳定。",
+      "why": "PMI是观察制造业景气与政策力度的月度同步指标",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172365.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172367.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172591.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172461.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家统计局发布2023年国民经济和社会发展统计公报",
+      "summary": "统计公报显示，2023年全年国内生产总值超126万亿元，社会消费品零售总额471495亿元，全社会固定资产投资509708亿元，货物进出口总额417568亿元。",
+      "why": "统计公报是判断增长结构、需求与外贸基本盘的年度底账",
+      "source": "中新网",
+      "publishedAt": "2024-02-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-29/10171721.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172331.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-29/10171764.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-29/10171766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-29/10171769.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "证监会：将对DMA等场外衍生品业务继续强化监管",
+      "summary": "中国证监会表示，将对DMA等场外衍生品业务继续强化监管；同期召开资本市场法治建设座谈会，提出全面提升“零容忍”执法效能。",
+      "why": "场外衍生品监管关系风险敞口与市场交易秩序",
+      "source": "中新网",
+      "publishedAt": "2024-02-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-28/10171599.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-28/10171563.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-28/10171477.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "央行就银行间债券市场柜台业务有关事项答记者问",
+      "summary": "中国人民银行有关负责人就银行间债券市场柜台业务有关事项的通知答记者问，境外投资者可通过柜台渠道投资银行间债券，并进一步扩大柜台债券投资品种。",
+      "why": "柜台债券扩容拓宽境外资金参与境内债市渠道",
+      "source": "中国人民银行",
+      "publishedAt": "2024-02-29T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553722242/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-29/10172248.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172322.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "央行：外籍来华人员移动支付单笔限额提至5000美元",
+      "summary": "央行表示，将外籍来华人员使用移动支付的单笔交易限额由1000美元提高到5000美元，并为老年人、外籍来华人员等群体提供更加优质、高效、便捷的支付服务。",
+      "why": "支付便利与限额放宽对应入境消费与跨境结算",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172610.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553776477/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553782829/index.html",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172903.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "276个城市已建立房地产融资协调机制",
+      "summary": "中国276个城市已建立房地产融资协调机制，融资协调机制加快在各地落地，成为观察地产项目融资支持力度的一个窗口。",
+      "why": "融资协调机制落地进度关系地产链信用与项目交付",
+      "source": "中新网",
+      "publishedAt": "2024-02-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-29/10172250.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-29/10172223.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "前两月中国百城房价总体平稳 房企拿地意愿恢复",
+      "summary": "2024年前两月中国百城房价总体平稳，中国房企拿地意愿继续恢复，投资者情绪改善、租赁市场复苏推动大宗物业交易活跃度提升。",
+      "why": "房价与拿地是观察地产供需和信用扩张的先行指标",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172897.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172905.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172852.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "A股3月“开门红” 沪指站稳3000点之上",
+      "summary": "中国A股3月“开门红”，沪指站稳3000点之上；沪深两市成交额再破万亿，超5200只个股上涨，北向单月加仓超600亿元。",
+      "why": "股市成交与外资流向是观察风险偏好的即时读数",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172790.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-29/10172108.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172265.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储降息预期“缩水”",
+      "summary": "美国通胀减缓但物价居高不下，美联储降息预期“缩水”；美媒称美联储激进加息抬高借贷成本，消费者悲观情绪超经济学家预期。",
+      "why": "美联储路径变化牵动全球流动性与人民币汇率预期",
+      "source": "中新网",
+      "publishedAt": "2024-02-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-28/10171558.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-28/10171096.shtml",
+        "https://www.chinanews.com.cn/gj/2024/02-28/10171552.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "3月制造业与非制造业PMI能否延续企业预期稳定，以及两会后的增量政策方向",
+    "央行柜台债券投资品种扩容后的境外资金参与情况与债券市场供给节奏",
+    "276个城市房地产融资协调机制的实际落地进度与前两月楼市成交的持续性",
+    "各城市编制今明两年住房发展计划后的政策取向调整",
+    "美联储降息预期变化对全球流动性、人民币汇率与A股外资流向的影响"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:41:31+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 819,
+    "missingDays": []
+  }
+}

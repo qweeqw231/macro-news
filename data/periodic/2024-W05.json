@@ -1,0 +1,174 @@
+{
+  "date": "2024-W05",
+  "type": "week",
+  "generatedAt": "2026-11-26T19:41:35+08:00",
+  "endedAt": "2026-11-26T19:41:35+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 5 周宏观周报：宽松加码稳预期",
+  "window": {
+    "from": "2024-01-29",
+    "to": "2024-02-04",
+    "fromAt": "2024-01-29T08:00:00+08:00",
+    "toAt": "2024-02-05T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周主线是国内稳增长政策密集发力与海外央行按兵不动。国内方面，央行公开市场实现净投放3780亿元，并开展5440亿元7天期、430亿元14天期逆回购；金融监管总局连发固定资产贷款、流动资金贷款、个人贷款三个办法，证监会部署维护资本市场稳定工作。1月制造业采购经理指数为49.2%，较上月上升0.2个百分点，非制造业商务活动指数稳中有升；2023年全国一般公共预算收入突破21万亿元，同比增长6.4%。地产端多地放松限购、房地产融资“白名单”密集落地，2024年中央一号文件部署乡村重点工作。外部，美联储将联邦基金利率维持在5.25%至5.50%之间，IMF上调2024年全球经济增长预期至3.1%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行再出手维护流动性 净投放3780亿元",
+      "summary": "中国央行再出手维护流动性，实现净投放3780亿元；公开市场还开展了7天期逆回购5440亿元和14天期逆回购430亿元操作，资金面平稳受到关注。",
+      "why": "央行投放与逆回购节奏反映资金面松紧，牵动债市与股市情绪",
+      "source": "中新网",
+      "publishedAt": "2024-01-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-29/10154905.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155852.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158552.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "金融监管总局发布信贷管理三个办法",
+      "summary": "国家金融监督管理总局完善银行业金融机构信贷管理制度，连发固定资产贷款管理办法、流动资金贷款管理办法、个人贷款管理办法三个办法，合理拓宽固定资产贷款和流动资金贷款用途。",
+      "why": "信贷管理办法重构影响银行资产投向与实体融资条件",
+      "source": "中新网",
+      "publishedAt": "2024-02-02T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-02/10157665.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-02/10157882.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-02/10157666.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "1月制造业PMI为49.2% 较上月上升0.2个百分点",
+      "summary": "国家统计局数据显示，1月中国制造业采购经理指数为49.2%，较上月上升0.2个百分点，景气水平有所改善；1月中国非制造业商务活动指数稳中有升。",
+      "why": "PMI是观察经济动能与政策发力时点的高频先行指标",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10155863.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156067.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155888.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156062.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "证监会部署维护资本市场稳定工作",
+      "summary": "中国证监会部署维护资本市场稳定工作，并强调依法从严打击欺诈发行、财务造假等信息披露违法行为，资本市场监管取向受到关注。",
+      "why": "证监会维稳部署与执法表态直接影响市场风险偏好",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-04/10159072.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10159120.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10159016.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "2023年全国一般公共预算收入突破21万亿元 同比增6.4%",
+      "summary": "财政部数据显示，2023年全国一般公共预算收入突破21万亿元，同比增长6.4%，保持恢复性增长态势；2023年中国31个省份财政收入全部实现正增长。",
+      "why": "财政收入是观察财政发力力度与名义增长的先行读数",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-01/10156638.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156887.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156936.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156978.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "四天三城放松限购 楼市迎政策密集调整期",
+      "summary": "四天三城放松限购，苏州全面取消住房限购，上海优化住房限购并放开单身限制，广州放开120平方米以上住房限购，中国楼市迎来政策密集调整期。",
+      "why": "限购松绑是需求侧政策转向信号，关系成交与房价预期",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10156066.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-29/10154845.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-30/10155357.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-30/10155704.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "多地跟进 房地产融资“白名单”密集落地",
+      "summary": "多地跟进房地产融资“白名单”，全国第一笔贷款在广西落地，南宁市也落地第一笔贷款，房地产项目白名单陆续落地，融资协调机制加速运转。",
+      "why": "白名单融资是房企信用修复的关键通道，关联投资与信用扩张",
+      "source": "中新网",
+      "publishedAt": "2024-02-03T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-03/10158423.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156100.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156373.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-30/10155670.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "2024年中央一号文件部署乡村重点工作",
+      "summary": "2024年中央一号文件部署了乡村重点工作，文件提出惠农“大礼包”等举措；中央农办主任表示18亿亩耕地红线绝不能突破。",
+      "why": "一号文件定调年度三农与粮食安全政策取向",
+      "source": "中新网",
+      "publishedAt": "2024-02-03T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-03/10158450.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158855.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10159094.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158536.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "美联储将联邦基金利率维持在5.25%至5.50%之间",
+      "summary": "美联储新年首次议息按兵不动，将联邦基金利率继续维持在5.25%至5.50%之间；鲍威尔称年内降息是合适的，但3月不太可能降息。",
+      "why": "美联储降息节奏决定全球流动性松紧与人民币汇率方向",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-01/10156448.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156449.shtml",
+        "https://www.chinanews.com.cn/gj/2024/02-01/10156500.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10157009.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "IMF上调2024年全球经济增长预期至3.1%",
+      "summary": "国际货币基金组织上调2024年全球经济增长预期至3.1%，并预计2024年中国经济将增长4.6%；IMF中国代表团团长称中国将是今年全球经济增长的主要贡献者。",
+      "why": "IMF增长预期调整反映全球动能，牵动跨境资本流向",
+      "source": "中新网",
+      "publishedAt": "2024-01-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-30/10155691.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-03/10158225.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-02/10157456.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-03/10158230.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行后续公开市场投放力度与逆回购到期节奏，关注春节前后的资金面缺口",
+    "非制造业PMI新订单分项与春节后复工复产对下月景气的影响",
+    "房地产白名单融资规模与城中村改造专项借款的落地进度，观察房企资金链修复",
+    "美联储议息前的美国通胀与就业数据，以及主要央行降息节奏的分化",
+    "欧洲央行降息时点与外部需求变化，观察出口订单和人民币汇率走势"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T19:41:35+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 814,
+    "missingDays": []
+  }
+}
