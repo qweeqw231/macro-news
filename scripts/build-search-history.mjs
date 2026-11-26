@@ -31,7 +31,10 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_DATA = path.join(ROOT, 'data');
 // 2.30.0：热段拆出去后，分片要承接 archive 里 history 未覆盖的 40 天（+约 3 MB gzip），
 //   实测 2026-11-20 从 13.02 MB 涨到约 16 MB。预算同时上调，否则每次重建都会 exit 8。
-const BUDGET_TOTAL_GZIP = 24 * 1024 * 1024;
+// 3.2.1：2026-11-26 15:27 接入 2024-01-01~2025-11-01 历史标题切片（+1008 天）后，
+//   实测合计 26.68 MB > 24 MB ⇒ 部署期 build-search 恒 exit 8 ⇒ Pages 从 15:27 起
+//   连续失败 3.5 小时（站点停在 eeef5e67，页脚误报「采集/K线停摆」）。预算随数据量上调。
+const BUDGET_TOTAL_GZIP = 32 * 1024 * 1024;
 
 const gz = (text) => zlib.gzipSync(Buffer.from(text), { level: 9 }).length;
 // generatedAt 每次都会变，比较内容时应剔除，否则 --check 永远报过期
