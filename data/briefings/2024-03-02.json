@@ -1,0 +1,169 @@
+{
+  "date": "2024-03-02",
+  "generatedAt": "2026-11-27T19:30:17.777+08:00",
+  "endedAt": "2026-11-27T19:30:17.777+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-03-01",
+    "to": "2024-03-02",
+    "fromAt": "2024-03-01T08:00:00+08:00",
+    "toAt": "2024-03-02T09:00:00+08:00",
+    "fromTs": 1709251200,
+    "toTs": 1709341200
+  },
+  "overview": "2月制造业采购经理指数为49.1%，比上月下降0.1个百分点，春节假期因素致回落；2023年全年国内生产总值超126万亿。国务院常务会议部署经济工作，四部门延续稻谷最低收购价政策；A股3月“开门红”，沪指站稳3000点之上，北京出台促进民营经济行动方案。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "2月制造业采购经理指数为49.1% 比上月下降0.1个百分点",
+      "summary": "2月份制造业采购经理指数为49.1%，比上月下降0.1个百分点。春节假期因素致指数回落，企业预期保持稳定，该指标是判断制造业景气月度变化的直接坐标。",
+      "why": "PMI回落0.1个百分点，景气边际转弱",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172365.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172367.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172591.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172331.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "2023年全年国内生产总值超126万亿",
+      "summary": "2023年全年国内生产总值超126万亿。总量口径的确认为下一阶段宏观政策设定了基准，年度增长结构与相关核算分项，则是后续稳增长政策力度的重要参照。",
+      "why": "GDP总量确立宏观政策基准",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172331.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172365.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172335.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172360.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "李强主持召开国务院常务会议",
+      "summary": "李强主持召开国务院常务会议，对经济工作与相关政策作出部署。国务院常务会议是研究部署经济社会发展具体举措的重要平台，会议内容通常指向短期政策加力方向。",
+      "why": "国常会部署短期政策加力方向",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/03-01/10172874.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172820.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172671.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172268.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "中国增发国债加强水利建设 支持力度为近年来最大",
+      "summary": "中国增发国债加强水利建设，支持力度为近年来最大。水利部称增发国债安排的水利项目建设进度在逐月加快，国家发改委表示国债项目已转入组织实施阶段。",
+      "why": "增发国债落地为基建提供资金",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172600.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172671.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-01/10172493.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172590.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "四部门：2024年国家继续在稻谷主产区实行最低收购价政策",
+      "summary": "四部门明确2024年国家继续在稻谷主产区实行最低收购价政策。价格支持政策延续稳定了种粮收益预期，与全年粮食产量和农产品价格水平共同构成粮食安全与物价端的观察口径。",
+      "why": "最低收购价延续稳定种粮收益预期",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172820.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172365.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-01/10172874.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172335.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "中国A股3月“开门红” 沪指站稳3000点之上",
+      "summary": "中国A股3月实现“开门红”，沪指站稳3000点之上，北向单月加仓超600亿元。资金流向与指数点位变化，反映节后市场对经济预期和政策方向的即时定价。",
+      "why": "沪指站稳3000点，节后风险偏好回升",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172790.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172265.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172271.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-01/10172874.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "北京出台促进民营经济发展壮大行动方案",
+      "summary": "北京出台促进民营经济发展壮大行动方案，以地方行动方案落实民营经济提振信心。地方层面的具体举措，是观察中央部署转化为投资与经营预期改善路径的窗口。",
+      "why": "地方方案落地民营经济提振信心",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172268.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/03-01/10172874.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172820.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172331.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "（经济观察）中国推动新一轮“以旧换新”将带来多方利好",
+      "summary": "经济观察报道认为，中国推动新一轮“以旧换新”将带来多方利好。以旧换新是扩大内需的重要抓手，与地方补贴政策配套落地后，对耐用品消费与相关产业的拉动效果成为观察重点。",
+      "why": "以旧换新是扩内需的重要抓手",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172352.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/03-01/10172874.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172265.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172365.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "央行：进一步扩大柜台债券投资品种",
+      "summary": "央行表示将进一步扩大柜台债券投资品种，境外投资者可通过柜台渠道投资银行间债券。柜台市场品种扩容拓宽了居民与境外机构的债券投资渠道，属于直接融资渠道建设的一部分。",
+      "why": "柜台债券扩容拓宽直接融资渠道",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172322.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172610.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172768.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172790.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "央行：将外籍来华人员使用移动支付的单笔交易限额由1000美元提高到5000美元",
+      "summary": "央行宣布将外籍来华人员使用移动支付的单笔交易限额由1000美元提高到5000美元，国新办就优化支付服务举措举行政策例行吹风会。支付便利化措施指向入境消费与营商环境改善。",
+      "why": "支付便利化指向入境消费体验",
+      "source": "中新网",
+      "publishedAt": "2024-03-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-01/10172610.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553776477/index.html",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172417.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-01/10172322.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "2月PMI后续回落幅度与中小企业订单变化",
+    "增发国债水利项目的组织实施进度",
+    "两会前民营经济相关政策的落地节奏"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:30:17.777+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "date": "2024-02-12",
+  "generatedAt": "2026-11-27T19:29:48.096+08:00",
+  "endedAt": "2026-11-27T19:29:48.096+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-11",
+    "to": "2024-02-12",
+    "fromAt": "2024-02-11T08:00:00+08:00",
+    "toAt": "2024-02-12T09:00:00+08:00",
+    "fromTs": 1707609600,
+    "toTs": 1707699600
+  },
+  "overview": "价格与消费成为当日主线：CPI环比连续两个月上涨，社会有效需求温和复苏；除夕跨区域人员流动量超1.9亿人次、较上年同期增长26.7%，即时零售销售额同比增长约20%。文旅部推动文旅消费扩大，冰雪经济释放增长动能，江苏首趟跨里海班列开行，张建平称中国将继续担当全球增长的“火车头”。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "CPI环比连续两个月上涨 社会有效需求温和复苏",
+      "summary": "CPI环比连续两个月上涨，社会有效需求温和复苏。价格环比回升与需求回暖互为印证，反映消费与投资端在节日带动下的变化，为判断物价走势与货币政策空间提供观察窗口。",
+      "why": "物价环比回升，有效需求温和复苏",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10162825.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162824.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162829.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "金融对实体经济支持力度加大",
+      "summary": "金融对实体经济的支持力度加大。信贷与融资供给向实体领域倾斜的表述，与1月金融数据形成呼应，体现金融服务实体这一取向在总量宽松之外更强调结构引导。",
+      "why": "金融支持实体，结构性引导加强",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10162824.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162825.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162962.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "除夕跨区域人员流动量超1.9亿人次 较2023年同期增长26.7%",
+      "summary": "除夕当天跨区域人员流动量超1.9亿人次，较2023年同期增长26.7%。同比增速明显高于总量，是衡量春运出行强度与人员返程、探亲需求的核心指标。",
+      "why": "除夕流动量同比增26.7%",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10162826.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10163084.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162829.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "消费火热！除夕即时零售销售额同比增长约20%",
+      "summary": "除夕即时零售销售额同比增长约20%。即时零售在年夜饭等场景中的快速增长，反映消费渠道向即时化、场景化迁移，线上线下的消费融合在节日期间更为紧密。",
+      "why": "即时零售增约20%，消费场景迁移",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10162829.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162825.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-11/10163064.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "文旅部：推动文旅消费持续扩大 为经济高质量发展添能蓄势",
+      "summary": "文旅部表示将推动文旅消费持续扩大，为经济高质量发展添能蓄势。部门表态把扩大文旅消费与经济发展直接挂钩，指向以消费提振换取增长动能的思路。",
+      "why": "文旅消费扩容，指向消费提振增长",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10162914.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162897.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-11/10163064.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "“冰雪经济释放出巨大增长动能”",
+      "summary": "冰雪经济释放出巨大增长动能。滑雪、冰雪旅游等业态在假期期间集中走热，冰雪资源向消费与产业转化正在加快，成为冬季旅游市场扩容的新亮点。",
+      "why": "冰雪经济扩容，冬季消费新增长点",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10162897.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162914.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-11/10163064.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "甲辰龙年江苏首趟跨里海中亚班列开行",
+      "summary": "甲辰龙年，江苏首趟跨里海中亚班列开行。江苏与中亚之间的陆路通道由此新增班次，跨境铁路运输规模扩大，为地方外贸企业拓展中亚市场提供更便捷的运输选择。",
+      "why": "跨里海班列开行，中亚通道扩容",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10162936.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162962.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162825.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "春运以来广东高速公路累计车流量突破1亿车次",
+      "summary": "春运以来广东高速公路累计车流量突破1亿车次。路网流量是自驾出行规模的直接体现，反映大湾区作为人口与货物集散地的通行压力，也检验路网承载与疏堵能力。",
+      "why": "高速车流破亿，路网承载受考验",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10163084.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162826.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-11/10162911.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "如何开辟未来产业新赛道",
+      "summary": "文章讨论如何开辟未来产业新赛道，围绕新兴技术与产业方向的接续、培育与转化展开讨论。抢占新赛道是各地推动结构转型与培育新增长动能的共同关注点。",
+      "why": "布局未来产业，培育新增长动能",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10162828.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162962.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162897.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "张建平：中国将继续担当全球经济增长的“火车头”",
+      "summary": "张建平表示，中国将继续担当全球经济增长的“火车头”。这一判断把中国经济与全球增长前景相联系，指向中国经济对世界经济的带动作用与外溢效应。",
+      "why": "中国经济对全球增长的带动作用",
+      "source": "中新网",
+      "publishedAt": "2024-02-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-11/10162962.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162825.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-11/10162936.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "CPI环比连续上涨能否延续，核心价格走势",
+    "即时零售与文旅消费的假期后回落幅度",
+    "江苏跨里海中亚班列的后续开行密度"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:29:48.096+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "date": "2024-02-16",
+  "generatedAt": "2026-11-27T19:29:49.609+08:00",
+  "endedAt": "2026-11-27T19:29:49.609+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-15",
+    "to": "2024-02-16",
+    "fromAt": "2024-02-15T08:00:00+08:00",
+    "toAt": "2024-02-16T09:00:00+08:00",
+    "fromTs": 1707955200,
+    "toTs": 1708045200
+  },
+  "overview": "返程高峰当天信息密集：正月初五中国跨区域人员流动量创2024年春运单日新高，铁路累计发送旅客2.3亿人次；产业与外贸端，房地产融资协调机制加速落地，五大银行加速跟进项目“白名单”，中国连续第八年成为德国最重要贸易伙伴，广州南沙口岸1月出口汽车超2万辆；餐饮收入与支付数据同步走强。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "城市房地产融资协调机制加速落地",
+      "summary": "城市房地产融资协调机制加速落地。机制推动银行与项目逐个对接、形成融资需求清单，是打通房地产融资堵点的重要制度安排，其推进节奏直接影响房企项目资金周转。",
+      "why": "协调机制提速，房地产融资对接铺开",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-15/10163979.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164009.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164160.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中国五大银行加速跟进房地产融资“白名单”",
+      "summary": "中国五大银行加速跟进房地产融资“白名单”。国有大行同步推进白名单项目授信，意味着融资支持从机制安排进入执行层面，银行风险偏好与房企资金链状况的改善出现交汇。",
+      "why": "五大行跟进白名单，授信进入执行",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-15/10164009.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10163979.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164057.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "中国连续第八年成为德国最重要贸易伙伴",
+      "summary": "中国连续第八年成为德国最重要贸易伙伴。中德贸易的双向依存度保持高位，在全球供应链重组的背景下具有指示意义，双向投资与产业协作的走向值得关注。",
+      "why": "中德贸易依存度续居高位",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-15/10163973.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164057.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164139.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "广州南沙口岸1月出口汽车超2万辆 同比增长超67%",
+      "summary": "广州南沙口岸1月出口汽车超2万辆，同比增长超67%。整车出口在口岸实现数量与增速的同步提升，反映中国汽车制造在海外市场的竞争力与出海节奏加快。",
+      "why": "南沙汽车出口增超67%，出海提速",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-15/10164139.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10163973.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164057.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "春节“不打烊” 中国外贸新春跑出“加速度”",
+      "summary": "春节“不打烊”，中国外贸在假期期间跑出“加速度”。假期不停产与口岸通关的持续运转，构成外贸在淡季保持韧性的基础，也说明产业链供给能力对外需变化的支撑。",
+      "why": "假期外贸不停产，供给韧性显性",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-15/10164057.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10163973.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164139.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "2023年全国餐饮收入超5.2万亿元(新数据 新看点)",
+      "summary": "2023年全国餐饮收入超过5.2万亿元。餐饮消费是观察居民消费意愿与线下活跃度最直接的行业之一，其规模与恢复节奏对服务消费与就业预期都有指示意义。",
+      "why": "餐饮收入破5.2万亿，线下消费修复",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-15/10163986.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164081.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164160.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "正月初五中国跨区域人员流动量创2024年春运单日新高",
+      "summary": "正月初五中国跨区域人员流动量创2024年春运单日新高。返程客流在假期尾声集中释放并刷新单日纪录，反映出行需求的强度，交通与商业资源的阶段性紧张由此加大。",
+      "why": "返程单日流动创新高，客流集中",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-15/10164160.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164113.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164155.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "春运过半 中国铁路累计发送旅客2.3亿人次",
+      "summary": "春运过半，中国铁路累计发送旅客2.3亿人次。累计发送规模反映铁路在假期期间承担的出行比重，运力投放与客流需求的匹配程度考验调度能力。",
+      "why": "铁路累计发送2.3亿人次，运力承压",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-15/10164113.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164160.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164145.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "苏剑：就业将是2024年民生政策发力重点",
+      "summary": "苏剑认为，就业将是2024年民生政策发力重点。就业优先的政策取向预期，与稳增长、保民生的宏观目标相衔接，也决定了财政与产业政策的资源投向。",
+      "why": "就业成民生政策发力重点",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-15/10164145.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164113.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-15/10163986.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "王毅将出席第60届慕尼黑安全会议并访问西班牙、法国",
+      "summary": "王毅将出席第60届慕尼黑安全会议，并访问西班牙、法国。中国高层在多边安全场合与欧洲国家的双边互动安排，构成观察中外关系与多边外交取向的窗口。",
+      "why": "慕安会与欧洲之行，多边外交安排",
+      "source": "中新网",
+      "publishedAt": "2024-02-15T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-15/10164052.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-15/10164145.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-15/10163973.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "房地产融资协调机制与白名单的实际放款规模",
+    "中德贸易结构与德国对华投资的后续变化",
+    "返程高峰后铁路民航的运力回落安排"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:29:49.609+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

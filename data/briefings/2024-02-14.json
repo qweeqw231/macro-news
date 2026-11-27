@@ -1,0 +1,159 @@
+{
+  "date": "2024-02-14",
+  "generatedAt": "2026-11-27T19:29:48.841+08:00",
+  "endedAt": "2026-11-27T19:29:48.841+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-13",
+    "to": "2024-02-14",
+    "fromAt": "2024-02-13T08:00:00+08:00",
+    "toAt": "2024-02-14T09:00:00+08:00",
+    "fromTs": 1707782400,
+    "toTs": 1707872400
+  },
+  "overview": "返程高峰与节后开工叠加：交通运输部数据显示2月12日全社会跨区域人员流动量完成28465万人次，冷空气影响大部地区、部分地区降温超10℃；2023年机动车保有量4.35亿辆、政府资金支持就业超3000亿元；建行对接房地产融资协调机制初见成效，天津港至巴西滚装新航线开通。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "2023年机动车保有量4.35亿辆",
+      "summary": "2023年机动车保有量达4.35亿辆。保有量规模是判断交通需求、燃料消耗与汽车产业市场容量的基础数据，也为新能源汽车替代、充换电设施建设等方向提供测算依据。",
+      "why": "机动车保有量数据，牵引相关产业测算",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-13/10163377.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163427.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163638.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "建设银行积极对接城市房地产融资协调机制初见成效",
+      "summary": "建设银行积极对接城市房地产融资协调机制，初见成效。协调机制推动银行与项目精准对接并加快审批，房地产融资端的堵点有所打通，是观察政策传导落地效果的一个案例。",
+      "why": "融资协调机制落地，融资堵点渐解",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-13/10163460.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163507.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-13/10163611.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "2023年政府资金支持就业超3000亿元",
+      "summary": "2023年政府资金支持就业超过3000亿元。财政资金以职业技能培训、创业扶持等方式支持就业，反映稳就业政策中财政投入的规模，指向重点群体就业支持的政策力度。",
+      "why": "财政支持就业超3000亿，稳岗力度实",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-13/10163564.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163507.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-13/10163582.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "交通运输部：2月12日全社会跨区域人员流动量完成28465万人次",
+      "summary": "交通运输部数据显示，2月12日全社会跨区域人员流动量完成28465万人次。返程客流连续多日处于高位，日度流动数据反映春节假期尾声人员返程的规模与节奏。",
+      "why": "返程流动28465万人次，高位延续",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-13/10163560.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163427.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163522.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "高峰期推迟、峰值更高……今年春运有这些新变化",
+      "summary": "今年春运呈现出高峰期推迟、峰值更高等新变化。出行节奏的改变影响交通、住宿与商业等环节的经营安排，也是观察居民出行意愿与假期消费分布形态的一个切面。",
+      "why": "春运节奏变化，牵动假期经营安排",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-13/10163427.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163560.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163638.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "春节假期前三日北京重点监测企业销售额达22.8亿元",
+      "summary": "春节假期前三日，北京重点监测企业销售额达22.8亿元。重点监测口径下的销售额数据，反映首都消费市场的活跃程度，是评估假日消费恢复情况的地方样本。",
+      "why": "重点企业销售额22.8亿，消费回暖样本",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-13/10163582.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-13/10163511.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-13/10163644.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "多领域“龙腾虎跃”迎来开门红 中国高质量发展焕发澎湃动能",
+      "summary": "多领域“龙腾虎跃”迎来开门红，中国高质量发展焕发澎湃动能。文章从多个产业领域的开局表现切入，呈现节后复工阶段的经济运行状态与增长动能的整体面貌。",
+      "why": "多领域开门红，高质量发展动能显现",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-13/10163507.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-13/10163377.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163564.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "中企承建孟加拉国电网升级改造项目首条线路投产送电",
+      "summary": "中国企业承建的孟加拉国电网升级改造项目首条线路投产送电。项目进入送电阶段，是中国电建能力与标准在海外输电领域的落地，海外电网投资仍是装备与工程出口的重要方向。",
+      "why": "海外电网项目送电，工程出口落地",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-13/10163372.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-13/10163611.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163507.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "天津港至巴西滚装新航线正式开通",
+      "summary": "天津港至巴西的滚装新航线正式开通。新航线缩短了中巴滚装运输的路径选择，为汽车等大宗出口货物提供更稳定的物流方案，也丰富了外贸通道的布局。",
+      "why": "中巴滚装新线开通，物流通道加密",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-13/10163611.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-13/10163460.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163372.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "较强冷空气开始影响中国大部地区 部分地区降温超10℃",
+      "summary": "较强冷空气开始影响中国大部地区，部分地区降温超过10℃。气温骤降与返程客流高峰叠加，对道路通行、铁路与民航运行组织以及户外消费均构成影响。",
+      "why": "降温超10℃叠加返程高峰，运行承压",
+      "source": "中新网",
+      "publishedAt": "2024-02-13T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-13/10163522.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163560.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-13/10163427.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "房地产融资协调机制在各地的落地进度",
+    "强冷空气对返程交通与户外消费的影响",
+    "中欧班列与中巴滚装航线在节后的开行安排"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:29:48.841+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

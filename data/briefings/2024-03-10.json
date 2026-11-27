@@ -1,0 +1,169 @@
+{
+  "date": "2024-03-10",
+  "generatedAt": "2026-11-27T19:31:30.016+08:00",
+  "endedAt": "2026-11-27T19:31:30.016+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-03-09",
+    "to": "2024-03-10",
+    "fromAt": "2024-03-09T08:00:00+08:00",
+    "toAt": "2024-03-10T09:00:00+08:00",
+    "fromTs": 1709942400,
+    "toTs": 1710032400
+  },
+  "overview": "物价数据出现方向变化：2月份居民消费价格同比上涨0.7%，工业生产者出厂价格同比下降2.7%，CPI同比由降转涨、猪肉价格结束九连降。住建部称房地产还有很大潜力和空间，要求企业拼高质量、新科技、好服务；前两月铁路固定资产投资同比增长9.5%，人社部将强化促进青年就业政策举措。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：2月份居民消费价格同比上涨0.7%",
+      "summary": "国家统计局数据显示，2月份居民消费价格同比上涨0.7%，CPI同比由降转涨，猪肉价格结束九连降。物价读数的方向性变化，是判断通胀压力与需求修复节奏的重要依据。",
+      "why": "CPI由降转涨显示需求端变化",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-09/10177169.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177177.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177329.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177172.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：2月份工业生产者出厂价格同比下降2.7%",
+      "summary": "国家统计局数据显示，2月份工业生产者出厂价格同比下降2.7%，工业生产处于淡季。PPI与CPI走势分化，反映上下游价格传导尚不均衡，企业端价格压力仍在。",
+      "why": "PPI与CPI分化显示传导不均衡",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-09/10177172.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177177.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177332.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177169.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "2月份中国CPI同比由降转涨 猪肉价格结束九连降",
+      "summary": "2月份中国CPI同比由降转涨，猪肉价格结束九连降。食品价格的这一轮变动，是本月物价转正的重要推手，也关系到后续通胀预期的边际变化。",
+      "why": "猪肉价格止跌推动物价转正",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-09/10177329.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177169.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177177.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177214.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "民生主题记者会丨住建部：房地产还有很大潜力和空间",
+      "summary": "住建部表示，房地产还有很大的潜力和空间。部门口径对行业空间的这一定价，与报告提出的加快构建房地产发展新模式相衔接，指向行业运行环境的边际改善。",
+      "why": "主管部门表态指向行业空间判断",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-09/10177392.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177367.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177406.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177105.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "民生主题记者会丨住建部：希望房地产企业看到 今后拼的是高质量 新科技 好服务",
+      "summary": "民生主题记者会上，住建部希望房地产企业看到今后拼的是高质量、新科技、好服务。竞争维度的表述把行业引向产品与服务能力，是观察房企转型方向的政策信号。",
+      "why": "行业竞争转向质量与服务能力",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/03-09/10177367.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177392.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177406.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177105.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "（两会速递）人社部部长：今年将强化促进青年就业政策举措",
+      "summary": "人社部部长表示，今年将强化促进青年就业政策举措。青年就业是稳就业的重点环节，与政府工作报告提出的强化促进青年就业政策举措相互对应。",
+      "why": "青年就业是稳就业重点环节",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-09/10177514.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/03-09/10177130.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177099.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177107.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "国铁集团：前两月中国铁路固定资产投资同比增长9.5%",
+      "summary": "国铁集团数据显示，前两月中国铁路固定资产投资同比增长9.5%。铁路投资的月度增速，是观察基础设施投资形成实物工作量与有效投资落地节奏的具体口径。",
+      "why": "铁路投资增速体现基建落地节奏",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-09/10177245.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177091.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177095.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177176.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "两会大家谈丨来自部长的“以旧换新”清单，有哪些新优惠？",
+      "summary": "两会民生讨论中，部长们带来的“以旧换新”清单披露了新的优惠安排。以旧换新政策的细化和补贴兑现，是观察扩内需政策落地强度与兑现速度的窗口。",
+      "why": "以旧换新清单细化扩内需政策",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-09/10177082.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177105.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177090.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177214.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "首次写入政府工作报告！ 商业航天发展按下“加速键”",
+      "summary": "商业航天首次写入政府工作报告，发展按下“加速键”。新兴产业首次进入政府工作报告，意味着相关产业在国家层面的定位与支持方式得到进一步明确。",
+      "why": "商业航天入报告获政策定位",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-09/10177194.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177083.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-09/10177081.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177123.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "（两会速递）十四届全国人大二次会议收到代表议案298件 代表建议7000余件",
+      "summary": "十四届全国人大二次会议收到代表议案298件、代表建议7000余件。议案建议的总量与结构，是观察代表关注议题分布与部门年度工作重点的重要依据。",
+      "why": "议案建议数量反映代表关注分布",
+      "source": "中新网",
+      "publishedAt": "2024-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/03-09/10177413.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177091.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177095.shtml",
+        "https://www.chinanews.com.cn/gn/2024/03-09/10177267.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "物价回升的持续性与猪肉价格走势",
+    "房地产相关表态后的配套政策",
+    "以旧换新优惠的兑现进度"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:31:30.016+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

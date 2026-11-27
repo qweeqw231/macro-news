@@ -1,0 +1,159 @@
+{
+  "date": "2024-02-18",
+  "generatedAt": "2026-11-27T19:29:50.346+08:00",
+  "endedAt": "2026-11-27T19:29:50.346+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-17",
+    "to": "2024-02-18",
+    "fromAt": "2024-02-17T08:00:00+08:00",
+    "toAt": "2024-02-18T09:00:00+08:00",
+    "fromTs": 1708128000,
+    "toTs": 1708218000
+  },
+  "overview": "外事与出行是当日重点：第60届慕尼黑安全会议开幕，王毅会见欧盟高级代表博雷利，习近平向第37届非盟峰会致贺电；节后数据显示，春节假期跨区域人员流动量预计超23亿人次，2月17日全国铁路预计发送旅客1620万人次；消费端北京重点监测商企入账77.4亿元、上海8天消费569亿元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "第60届慕尼黑安全会议开幕",
+      "summary": "第60届慕尼黑安全会议开幕，各方围绕地区安全与全球治理议题展开讨论。该会议是观察国际安全形势演变与多边外交互动的重要场合，也是大国政策表述的集中发布窗口。",
+      "why": "慕安会开幕，国际安全议题聚焦",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-17/10164528.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-17/10164788.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-17/10164553.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "王毅会见欧盟外交与安全政策高级代表博雷利",
+      "summary": "王毅会见欧盟外交与安全政策高级代表博雷利。中欧高级别外交沟通在慕安会期间举行，涉及双边关系与国际热点问题，互动内容被视为观察中欧关系走向的窗口。",
+      "why": "中欧高级别沟通，观察关系走向",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-17/10164788.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-17/10164528.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-17/10164704.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "习近平向第37届非洲联盟峰会致贺电",
+      "summary": "习近平向第37届非洲联盟峰会致贺电，对峰会召开表示祝贺。非洲联盟峰会是中国同非洲国家开展多边协作的重要平台，致贺电体现中非关系在高层交往层面的重视程度。",
+      "why": "非盟峰会贺电，中非关系高位维护",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-17/10164704.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-17/10164528.shtml",
+        "https://www.chinanews.com.cn/gj/2024/02-17/10164788.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "春节假期全社会跨区域人员流动量预计超23亿人次",
+      "summary": "春节假期全社会跨区域人员流动量预计超23亿人次。假期累计出行规模处于高位，返程与返工叠加使交通组织压力集中在少数日期，是观察人员流动与假日消费分布的重要指标。",
+      "why": "假期流动超23亿人次，出行需求高位",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-17/10164652.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-17/10164612.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164745.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "2月17日全国铁路预计发送旅客1620万人次 运力投放创春运新高",
+      "summary": "2月17日全国铁路预计发送旅客1620万人次，运力投放创春运新高。单日发送量与运力投放同时刷新纪录，反映铁路部门在返程高峰采取的加开列车与挖潜提效措施。",
+      "why": "单日1620万人次，运力投放创新高",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-17/10164612.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164652.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164745.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "锦绣中国年｜春节假期北京重点监测企业销售额达77.4亿元 外来游客消费增长",
+      "summary": "春节假期北京重点监测企业销售额达77.4亿元，外来游客消费增长。重点监测口径下的销售额与客源结构变化，折射出一线城市的假日消费活力与文旅吸引力。",
+      "why": "重点企业销售额77.4亿，消费旺",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-17/10164745.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164652.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164774.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "春节8天上海消费金额569亿元 老字号餐饮受青睐",
+      "summary": "春节8天上海消费金额达569亿元，老字号餐饮备受青睐。地方消费总量与业态偏好同向呈现，说明传统餐饮品牌在假日场景中重新获得关注，区域消费结构有所变化。",
+      "why": "上海8天消费569亿，老字号受青睐",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-17/10164774.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164745.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164687.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "全球首架C919大飞机首次飞出国门参加航展",
+      "summary": "全球首架C919大飞机首次飞出国门，参加航展展示。这标志着国产大飞机开始走向国际市场，其海外拓展与适航取证进展，关系中国民机产业的规模化路径。",
+      "why": "C919首航海外，国产大飞机国际化",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-17/10164589.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-17/10164660.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164551.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "德研究机构：德国2023年对华直接投资创新高",
+      "summary": "德国研究机构称，德国2023年对华直接投资创新高。在欧洲对华投资结构调整的背景下，该数据反映德资企业在华布局的实际规模，为双边投资走向提供参照。",
+      "why": "德国对华直接投资创新高",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-17/10164603.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-17/10164529.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164551.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "泰国1月份外来投资大幅增长",
+      "summary": "泰国1月份外来投资大幅增长。外资流入的回升，与区域产业链重组中产能向东南亚转移的趋势并行，泰国承接投资的领域与结构因此更值得关注。",
+      "why": "泰国外资大幅增长，区域承接加速",
+      "source": "中新网",
+      "publishedAt": "2024-02-17T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-17/10164529.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-17/10164603.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-17/10164551.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "慕安会“中国专场”之后的中欧互动延续",
+    "返程客流峰值后的交通运力回落",
+    "C919海外拓展与适航取证进展"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:29:50.346+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "date": "2024-02-15",
+  "generatedAt": "2026-11-27T19:29:49.220+08:00",
+  "endedAt": "2026-11-27T19:29:49.220+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-14",
+    "to": "2024-02-15",
+    "fromAt": "2024-02-14T08:00:00+08:00",
+    "toAt": "2024-02-15T09:00:00+08:00",
+    "fromTs": 1707868800,
+    "toTs": 1707958800
+  },
+  "overview": "春节假期“上半场”的产业与消费信号：各地冲刺“开门红”加紧生产，1月中国中小企业发展指数回升，1.24亿户个体工商户支撑近3亿人就业；消费端把握节日消费新趋势，文旅市场开门红折射旺盛活力；溪洛渡水电站累计发电量突破6000亿千瓦时，全球首例一体化建造废物处理发电设施完工交付。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "各地冲刺“开门红”加紧生产 1月中国中小企业发展指数回升",
+      "summary": "各地冲刺“开门红”加紧生产，1月中国中小企业发展指数回升。该指数反映中小企业经营景气与生产节奏，节后复工阶段指数回升，是观察工业开工与企业信心的先行信号。",
+      "why": "中小企业指数回升，开工节奏加快",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-14/10163758.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163791.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-14/10163678.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "1.24亿户个体工商户支撑近3亿人就业(新数据 新看点)",
+      "summary": "1.24亿户个体工商户支撑近3亿人就业。个体工商户是吸纳就业最活跃的经营主体之一，这一规模意味着相关税费与融资支持政策的触达面极其广泛，稳就业措施因此更需落到个体层面。",
+      "why": "个体户规模巨大，稳就业政策落点明确",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-14/10163678.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163758.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163791.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "产销两旺，亮眼！政策加力提效 激活中小企业发展“引擎”",
+      "summary": "政策加力提效，中小企业发展“引擎”被进一步激活，产销呈现两旺。政策端与需求端同向发力，是开局阶段中小企业景气改善的合力来源，也体现稳增长政策的着力点。",
+      "why": "政策加力，中小企业发展引擎被激活",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-14/10163791.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163758.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163697.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "把握节日消费新趋势(今日谈)",
+      "summary": "评论文章提示把握节日消费新趋势。假日消费呈现新的品类与场景特征，如何识别并承接这些变化，成为商家在节后市场竞争中调整供给与营销的共同课题。",
+      "why": "节日消费趋势变化，需顺势调整供给",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-14/10163697.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-14/10163879.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163795.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "央广财评|文旅市场开门红 折射中国旺盛消费活力",
+      "summary": "央广财评认为文旅市场开门红，折射出中国旺盛的消费活力。春节假期文旅消费表现被视作观察内需与信心的窗口，评述把假日数据与经济运行态势直接关联。",
+      "why": "文旅开门红，印证内需与信心",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-14/10163879.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163697.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163901.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "多行业“握指成拳”形成合力 中国高质量发展披荆斩棘、风生水起",
+      "summary": "多行业“握指成拳”形成合力，中国高质量发展披荆斩棘、风生水起。文章从跨行业协同的角度描述经济运行，产业政策与市场自发调节共同发力，构成增长的整体图景。",
+      "why": "多行业协同发力，增长合力增强",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-14/10163703.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163779.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163758.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "陈甬军：中国经济“以进促稳”重在创新引领形成新质生产力",
+      "summary": "陈甬军提出，中国经济“以进促稳”重在创新引领、形成新质生产力。观点把稳与进的结合点放在创新驱动的生产力跃迁上，为观察宏观政策取向提供解读视角。",
+      "why": "以进促稳靠创新，形成新质生产力",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-14/10163779.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163703.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163791.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "溪洛渡水电站累计发电量突破6000亿千瓦时",
+      "summary": "溪洛渡水电站累计发电量突破6000亿千瓦时。大型水电工程的长期累计发电数据，反映清洁能源装机在电力供应中的实际贡献，也印证西部水电基地建设的运行成效。",
+      "why": "水电累计发电破6000亿千瓦时",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-14/10163958.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163810.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-14/10163878.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "全球首例一体化建造废物处理发电设施完工交付",
+      "summary": "全球首例一体化建造废物处理发电设施完工交付。该项目把废物处理与发电环节合并设计，为固废资源化提供新的技术路径，属于绿色低碳基础设施建设的重要进展。",
+      "why": "全球首例一体化固废发电设施交付",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-14/10163810.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163958.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163703.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "入地、下海，“中国深度”！新春伊始 一批大国重器取得新突破",
+      "summary": "新春伊始，一批大国重器在入地、下海等方向取得新突破。深海与地下工程装备的技术推进，体现高端制造在复杂工程领域的能力积累，与产业链自主化相互支撑。",
+      "why": "大国重器突破，高端制造能力积累",
+      "source": "中新网",
+      "publishedAt": "2024-02-14T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-14/10163878.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163958.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-14/10163810.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "1月中小企业发展指数后续读数与开工节奏",
+    "节日消费新趋势对节后零售的延续影响",
+    "溪洛渡等水电工程出力与迎峰度夏准备"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:29:49.220+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
