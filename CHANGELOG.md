@@ -54,6 +54,16 @@
 - 补齐过程中修了 25 处边界问题：overview 超 150~300 字（8 处）、summary 超 40~90 字（12 处）、
   refs/url 不在本期快照（5 处，含一处中新网链接把 `/cj/` 误写成 `/gj/`）。
 
+### 补写：2024-2025 历史早报（671 天缺口，分批推进中）
+
+- 缺口范围：`2024-01-01 ~ 2025-11-01` 共 **671 天**，此前只补到 2025-11-02；
+- 671 天的输入快照已全部生成（`prepare-range.mjs`，**662 成功 + 9 复用，零失败**）；
+- 正文按批补写中，每批 10~20 天，产物口径与已上线的 2025-11-02 样本一致：
+  `source=ai`、`backfill.kind=pre-era`、`items` 3~10 条、`overview` 60~140 字、
+  `summary` 60~120 字、`why` ≤40 字、`url`/`refs` 逐字取自当日输入快照；
+- 已落盘日期的 `history/index.json` 标记（`hasBriefing/briefLine/source/briefBackfill/briefAt`）
+  由 `patch-briefing-index.mjs` 同步，端到端核对与产物逐字一致。
+
 ### 新增：早报索引标记批量同步（`scripts/briefing/patch-briefing-index.mjs`）
 
 早报补写是「一天一份」批量落盘，逐日调 `publish.mjs` 的 `patchIndexFiles()` 太慢。
