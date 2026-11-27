@@ -1,0 +1,165 @@
+{
+  "date": "2024-02-21",
+  "generatedAt": "2026-11-27T19:33:00.717+08:00",
+  "endedAt": "2026-11-27T19:33:00.717+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-20",
+    "to": "2024-02-21",
+    "fromAt": "2024-02-20T08:00:00+08:00",
+    "toAt": "2024-02-21T09:00:00+08:00",
+    "fromTs": 1708387200,
+    "toTs": 1708477200
+  },
+  "overview": "节后首个交易日围绕LPR重定价展开：2月1年期LPR报3.45%、5年期以上LPR报3.95%，后者出现新机制形成以来最大降幅，房贷利率下调25个基点；住建部称214个城市已建房地产融资协调机制，白名单项目贷款超1600亿元；开年首月社融增量创历史同期最高水平。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "2月LPR报价出炉：1年期LPR为3.45%，5年期以上LPR为3.95%",
+      "summary": "2月LPR报价出炉，1年期LPR为3.45%，5年期以上LPR为3.95%。贷款市场报价利率是贷款定价的基准，5年期以上LPR对应房贷等中长期贷款，其水平变化直接关系到居民按揭成本与银行资产端定价。",
+      "why": "报价基准下调，融资成本直接受牵动",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166193.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166454.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166337.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166445.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "5年期以上LPR出现新机制形成以来最大降幅 释放出哪些信号？专家解读",
+      "summary": "5年期以上LPR出现LPR新机制形成以来最大降幅，相关报道邀请专家解读释放出的信号。降幅的力度与政策表述，构成市场判断货币政策取向的重要依据，中长期贷款与房地产相关融资的定价预期随之调整。",
+      "why": "降幅创机制以来最大，政策信号明确",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166454.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166193.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166337.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166445.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "房贷超预期降息 中国5年期以上LPR下调25个基点",
+      "summary": "房贷利率随5年期以上LPR下调25个基点，超出部分市场预期。存量房贷利率的批量调整直接改变居民家庭的利息支出，房贷利率的传导链条因此贯通到居民现金流与购房意愿。",
+      "why": "存量房贷重定价，居民现金流改善",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166337.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166193.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166454.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166445.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "住建部：214个城市已建立房地产融资协调机制",
+      "summary": "住建部表示，已有214个城市建立房地产融资协调机制。协调机制把项目与银行对接起来，为房企融资提供通道，其建立城市的数量与落地速度，是观察房地产融资支持政策覆盖范围的直接指标。",
+      "why": "协调机制扩至214城，项目融资通道打开",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166570.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166185.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166631.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166118.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "银行批复“白名单”项目贷款超1600亿元！多地建立城市房地产融资协调机制",
+      "summary": "银行已批复房地产“白名单”项目贷款超1600亿元，多地同步建立城市房地产融资协调机制。“白名单”项目贷款与协调机制相互配合，把保交房与房企融资需求对接起来，投放规模反映政策落地强度。",
+      "why": "白名单贷款超1600亿，融资支持落地",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166185.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166570.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166631.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166118.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "离岛免税购物金额24.89亿元 春节假期海南免税购物持续火热",
+      "summary": "春节假期海南离岛免税购物金额达24.89亿元，免税消费持续火热。离岛免税是观察居民消费能力与海南旅游消费的重要窗口，假期销售金额的规模，反映消费回流与价格敏感度的变化。",
+      "why": "免税消费火热，消费回流延续",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166115.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166133.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166055.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "开年首月 我国社会融资规模增量创历史同期最高水平",
+      "summary": "开年首月，我国社会融资规模增量创历史同期最高水平。社会融资规模增量是衡量实体经济融资总量扩张的核心指标，同期最高水平反映融资投放力度加大，结构上的投向变化同样值得关注。",
+      "why": "社融增量同期新高，宽信用在加力",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166152.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166136.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166104.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "春风送岗促就业 全国已累计举办各类招聘活动1.8万场",
+      "summary": "全国已累计举办各类招聘活动1.8万场，“春风送岗”促进就业。节后求职与用工需求集中释放，招聘活动场次可观反映供需两端对接的活跃程度，也是观察就业市场温度的一个窗口。",
+      "why": "招聘活动密集，就业对接提速",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-20/10166103.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166104.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166217.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "扩大有效投资，重大项目加快推进",
+      "summary": "各地推进扩大有效投资，重大项目加快建设。重大项目是固定资产投资的主要载体，开工与推进的节奏直接决定投资落地进度，也是观察稳增长政策向实物工作量转化的重要观测点。",
+      "why": "重大项目提速，投资落地可跟踪",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-20/10166104.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-20/10166153.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-20/10166217.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-20/10166098.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "全国人大财经委：加速推进多部财经立法项目",
+      "summary": "全国人大财经委表示，将加速推进多部财经立法项目。财经立法项目是构建社会主义市场经济体制的重要环节，两会前后的立法推进安排，与市场主体预期和制度型开放的节奏相互关联。",
+      "why": "财经立法提速，制度供给加码",
+      "source": "中新网",
+      "publishedAt": "2024-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-20/10166095.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-20/10166612.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-20/10166089.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "5年期以上LPR下调后房贷利率的传导",
+    "白名单项目贷款与协调机制的落地进度",
+    "1月社融结构中政府债与居民信贷的占比变化"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:33:00.717+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

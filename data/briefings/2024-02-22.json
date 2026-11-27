@@ -1,0 +1,163 @@
+{
+  "date": "2024-02-22",
+  "generatedAt": "2026-11-27T19:33:00.781+08:00",
+  "endedAt": "2026-11-27T19:33:00.781+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-21",
+    "to": "2024-02-22",
+    "fromAt": "2024-02-21T08:00:00+08:00",
+    "toAt": "2024-02-22T09:00:00+08:00",
+    "fromTs": 1708473600,
+    "toTs": 1708563600
+  },
+  "overview": "LPR新报价持续发酵：5年期以上LPR降至3.95%，央行开展490亿元7天期逆回购；交通银行多地落实房地产融资协调机制，楼市“小阳春”受关注。外贸与消费方面，商务部已开十六场外资企业圆桌会，国内首条金砖国家跨境电商空运专线货物超1.7万吨，服务消费日均销售收入同比增速超50%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "2月21日央行开展490亿元7天期逆回购操作",
+      "summary": "2月21日，央行开展490亿元7天期逆回购操作，操作规模490亿元、期限7天。节后逆回购投放延续到期续作与净投放交替的节奏，公开市场操作规模的变化，直接对应短期资金面的松紧。",
+      "why": "公开市场续作，短期流动性平稳",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10166852.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166693.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166916.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "5年期以上LPR降至3.95% 专家：对房贷市场将有积极影响",
+      "summary": "5年期以上LPR降至3.95%，专家认为将对房贷市场产生积极影响。房贷利率与LPR挂钩，报价水平的下降同步压低新增与存量房贷的定价基准，对购房需求与银行按揭资产质量的影响随之展开。",
+      "why": "房贷定价下移，购房成本走低",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10166693.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166852.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166916.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "财政部印发《重点生态保护修复治理资金管理办法》",
+      "summary": "财政部印发《重点生态保护修复治理资金管理办法》，对重点生态保护修复治理资金的管理作出规范。管理办法明确了资金分配与使用的制度安排，是财政资金向生态领域倾斜的具体落地方式。",
+      "why": "管理办法出台，生态资金使用有规可依",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10166996.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166720.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166852.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "商务部已召开十六场外资企业圆桌会",
+      "summary": "商务部已召开十六场外资企业圆桌会。围绕营商环境与外资诉求的常态化沟通机制，是吸收外资政策落地的具体抓手，与稳外资相关措施的推进节奏相互配合。",
+      "why": "外资沟通机制加密，稳外资抓落实",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10166782.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166822.shtml",
+        "https://www.chinanews.com.cn/gj/2024/02-21/10166750.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "交通银行多地积极落实城市房地产融资协调机制",
+      "summary": "交通银行在多地积极落实城市房地产融资协调机制。银行端的项目对接与授信投放，是房地产融资协调机制落地到具体项目的环节，落地速度与投放规模反映政策传导的通畅程度。",
+      "why": "银行端跟进，项目对接实质推进",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10166916.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10167333.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166720.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "楼市“小阳春”会出现吗",
+      "summary": "围绕楼市是否会出现“小阳春”，市场讨论升温。成交能否回升是这一问题的核心答案，而近期房贷利率下调、融资协调机制落地等条件变化，正共同作用于购房者的成本预期与开发商的融资环境。",
+      "why": "楼市预期回暖，成交是关键验证",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10166766.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166693.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166916.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "国内首条金砖城市跨境电商空运专线进出口货物超1.7万吨",
+      "summary": "国内首条金砖城市跨境电商空运专线进出口货物超过1.7万吨。空运专线的开行提升了跨境电商在金砖国家之间的运输时效与成本条件，相关货物规模的累积，反映新兴市场渠道对外贸的支撑作用。",
+      "why": "空运专线开行，外贸通道扩容",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10166953.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166822.shtml",
+        "https://www.chinanews.com.cn/gj/2024/02-21/10166750.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "服务消费相关行业日均销售收入同比增速超50%",
+      "summary": "服务消费相关行业日均销售收入同比增速超过50%。服务消费的快速恢复，与文旅、餐饮、出行等节后需求回暖相互印证，是观察居民消费结构向服务领域倾斜的一组数据。",
+      "why": "服务消费增速高，需求结构切换",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10166751.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166883.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166739.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10167333.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "各地区就业市场“热气腾腾” 多项惠企政策助力企业冲刺“开门红”",
+      "summary": "各地区就业市场“热气腾腾”，多项惠企政策助力企业冲刺“开门红”。节后用工需求与招聘活动同步升温，惠企政策在稳岗位、稳生产方面的作用，与地方经济开局的进度相互关联。",
+      "why": "就业市场回暖，惠企政策见效",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10167333.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166842.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-21/10166776.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-21/10166883.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中国A股周三上涨 沪指实现“六连涨”",
+      "summary": "中国A股周三上涨，沪指实现“六连涨”。连续上涨反映市场情绪与资金面阶段性偏暖，量能能否持续放大则是判断行情延续性的关键，资本市场活跃度与宏观政策预期相互关联。",
+      "why": "指数六连涨，市场情绪阶段性回暖",
+      "source": "中新网",
+      "publishedAt": "2024-02-21T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-21/10167200.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-21/10166847.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-21/10166827.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "5年期以上LPR下调对房贷市场与成交的传导",
+    "房地产融资协调机制在银行端的落地进度",
+    "服务消费与外贸数据在两会窗口期内的延续性"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:33:00.781+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
