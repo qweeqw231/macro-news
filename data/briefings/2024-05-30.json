@@ -1,0 +1,171 @@
+{
+  "date": "2024-05-30",
+  "generatedAt": "2026-11-27T22:30:00+08:00",
+  "endedAt": "2026-11-27T22:30:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-05-29",
+    "to": "2024-05-30",
+    "fromAt": "2024-05-29T08:00:00+08:00",
+    "toAt": "2024-05-30T09:00:00+08:00",
+    "fromTs": 1716940800,
+    "toTs": 1717030800
+  },
+  "overview": "周三宏观面两条主线并行：财政部通报1—4月国企利润总额同比增长3.8%，IMF上调今年中国经济增长预期至5%。政策端，市场监管总局40条营商环境措施征求意见，工信部规划1亿个车联网专用号码。广深同日降首付降利率，天津取消商贷利率下限；央行2500亿元逆回购净投放2480亿元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "财政部：1-4月，国有企业利润总额同比增长3.8%",
+      "summary": "财政部通报1—4月国有企业利润总额同比增长3.8%。国有企业利润是观察国有经济运行状况与经营质效的月度指标，累计增速的口径，与同期规模以上工业企业利润由降转增的判断可相互参照。",
+      "why": "国企利润累计增长3.8%",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10225158.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-29/10225043.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225083.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225048.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国际货币基金组织上调今年中国经济增长预期至5%",
+      "summary": "国际货币基金组织上调今年中国经济增长预期至5%。国际机构的预测调整，反映其对经济运行状况的重新评估，也构成外部视角下观察中国增长预期变化的一个坐标。",
+      "why": "IMF上调中国增长预期至5%",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10224956.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225060.shtml",
+        "https://www.chinanews.com.cn/gj/2024/05-29/10224876.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225083.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "（经济观察）三大一线城市接连出手 中国楼市政策力度超预期",
+      "summary": "经济观察指出三大一线城市接连出手，中国楼市政策力度超预期。一线城市密集出台的调整措施被视为力度较大，本地限购、信贷等工具的使用情况因此成为观察重点。",
+      "why": "一线城市楼市政策力度超预期",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10225227.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224882.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224971.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224893.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "房贷大变动，广深同日落地降首付降利率政策",
+      "summary": "广深同日落地降首付降利率政策，房贷安排出现较大变动。两座一线城市同步调整房贷参数，属于需求端支持措施在核心城市的集中落地，对市场预期的影响值得跟踪。",
+      "why": "广深同日落地降首付降利率",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10225096.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224971.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224950.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224882.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "天津取消首套、二套住房商贷利率政策下限 首套房首付最低15%",
+      "summary": "天津取消首套、二套住房商贷利率下限，首套房首付最低调整为15%。与广深同步落地的调整形成呼应，地方房贷政策工具的松绑范围进一步扩大，城市间政策差异仍然存在。",
+      "why": "天津取消房贷利率下限首付最低15%",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10224971.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224950.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225096.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224893.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "5月29日央行开展2500亿元7天期逆回购操作",
+      "summary": "5月29日央行开展2500亿元7天期逆回购操作，操作规模较此前明显放大。公开市场投放的放量，反映当期流动性呵护力度，月末的跨月资金安排是观察这一节奏的重要背景。",
+      "why": "央行逆回购放量至2500亿元",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10224926.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225243.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224922.shtml",
+        "https://www.chinanews.com.cn/gj/2024/05-29/10224876.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "中国央行逆回购操作放量，实现净投放2480亿元",
+      "summary": "中国央行逆回购操作放量，实现净投放2480亿元。净投放规模是衡量当期流动性松紧的直观结果，与单日操作金额、当日中间价下调5个基点共同构成货币市场的当日截面。",
+      "why": "逆回购净投放2480亿元",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10225243.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224926.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224922.shtml",
+        "https://www.chinanews.com.cn/gj/2024/05-29/10224876.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "财政部今年将在香港发行550亿元人民币国债",
+      "summary": "财政部今年将在香港发行550亿元人民币国债。离岸国债发行安排属于财政融资渠道的延伸，涉及发行规模、币种与投资者结构，对香港金融市场流动性亦有影响。",
+      "why": "550亿元离岸国债发行安排",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10224972.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225158.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225058.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225083.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "市场监管总局40条优化营商环境具体措施公开征求意见",
+      "summary": "市场监管总局就40条优化营商环境具体措施公开征求意见，涉及经营主体在经营过程中的办事与合规环节。征求意见阶段是政策定型的必要程序，正式出台后的执行口径值得关注。",
+      "why": "40条营商环境措施进入征求意见",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10224938.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-29/10224897.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225024.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225013.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "工信部规划1亿个车联网专用号码 支持智能网联汽车和车联网高质量发展",
+      "summary": "工信部规划1亿个车联网专用号码，支持智能网联汽车和车联网高质量发展。专用号段规划属于产业基础资源供给安排，与智能网联汽车的规模化应用直接相关。",
+      "why": "1亿个车联网号段支撑产业应用",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10225013.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224927.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225081.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224898.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "一线城市及更多城市楼市新政的落地效果",
+    "央行公开市场操作规模与资金面松紧",
+    "国企利润与工业利润数据的衔接验证",
+    "营商环境40条措施的定稿与执行",
+    "车联网号段规划与产业落地节奏"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T22:30:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

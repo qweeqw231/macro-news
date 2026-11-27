@@ -1,0 +1,171 @@
+{
+  "date": "2024-05-28",
+  "generatedAt": "2026-11-27T22:30:00+08:00",
+  "endedAt": "2026-11-27T22:30:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-05-27",
+    "to": "2024-05-28",
+    "fromAt": "2024-05-27T08:00:00+08:00",
+    "toAt": "2024-05-28T09:00:00+08:00",
+    "fromTs": 1716768000,
+    "toTs": 1716858000
+  },
+  "overview": "周一政策面由政治局会议与上海楼市新政主导：中央政治局会议审议中部地区崛起政策措施与金融风险问责规定，上海发布调整优化住房限购等9条政策。4月规模以上工业企业利润由降转增，1—4月累计增长4.3%。央行开展20亿元逆回购，中间价上调11个基点，800亿元超长期特别国债资金到账。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中共中央政治局召开会议 审议《新时代推动中部地区加快崛起的若干政策措施》《防范化解金融风险问责规定（试行）》 中共中央总书记习近平主持会议",
+      "summary": "中共中央政治局召开会议，审议《新时代推动中部地区加快崛起的若干政策措施》与《防范化解金融风险问责规定（试行）》，习近平主持会议。会议同时涉及区域发展政策与金融风险问责两项议题，是观察后续政策落地的关键节点。",
+      "why": "区域发展与金融监管两项政策同时出台",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-27/10223975.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-27/10223961.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224252.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-27/10223686.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：4月份规模以上工业企业利润由降转增",
+      "summary": "国家统计局公布4月份规模以上工业企业利润由降转增，工业盈利在当月出现方向性变化。利润增速的月度转折，与工业生产、价格和基数因素共同相关，是判断企业盈利修复节奏的重要月度指标。",
+      "why": "工业企业利润单月由降转增",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10223741.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223746.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-27/10223853.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-27/10223811.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "2024年1—4月份全国规模以上工业企业利润增长4.3%",
+      "summary": "2024年1—4月份全国规模以上工业企业利润增长4.3%。累计增速为前四个月工业盈利水平给出总量口径，与单月由降转增的判断共同构成当期工业利润的完整读数。",
+      "why": "前4月工业利润累计增长4.3%",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10223746.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223741.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-27/10223853.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-27/10223811.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "上海发布调整优化住房限购等9条政策",
+      "summary": "上海发布调整优化住房限购等9条政策，涉及限购松绑与信贷配套等内容，集中回应市场关切。地方政策在核心城市的落地节奏，直接关系到本轮房地产调整中需求端政策的推广速度与力度。",
+      "why": "核心城市限购松绑落地9条政策",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10224226.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224080.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224009.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224221.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "松限购、降首付、调利率……上海楼市调整放出连环招",
+      "summary": "报道梳理上海楼市调整“连环招”，涉及松限购、降首付、调利率等方面。多项举措同步出台，形成针对购房成本与资格条件的组合式调整，地方政策工具的使用方式因此更值得关注。",
+      "why": "松限购降首付调利率形成组合调整",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10224221.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224226.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224080.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224199.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "（经济观察）中国A股减持监管升级 料有助稳定市场",
+      "summary": "报道称中国A股减持监管升级，有助稳定市场。减持规则收紧指向上市公司股东减持行为的规范，直接关系到二级市场供求与投资者预期，是资本市场制度建设的一个切面。",
+      "why": "减持监管升级指向市场稳定",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10223894.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223695.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224252.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-27/10223852.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "5月27日央行开展20亿元7天期逆回购操作",
+      "summary": "5月27日央行开展20亿元7天期逆回购操作，以7天期逆回购方式对冲短期流动性需求。公开市场操作的期限与规模，是观察当期流动性安排的一个日常窗口。",
+      "why": "公开市场操作反映短期流动性安排",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10223739.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224162.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223666.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "5月27日人民币对美元中间价报7.1091元 上调11个基点",
+      "summary": "5月27日人民币对美元中间价报7.1091元，较前一交易日上调11个基点。中间价是人民币汇率的官方定价参考，单日调整方向与幅度是观察汇率预期变化的日常指标。",
+      "why": "中间价上调11个基点反映汇率预期",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10223766.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223739.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224162.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223666.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "800亿资金到账，超长期特别国债项目将加快建设",
+      "summary": "800亿元资金到账，超长期特别国债项目将加快建设。资金到位与项目开工提速直接相关，属于财政资金落地到实物工作量的环节，对基建与民生类投资的推进节奏具有指示意义。",
+      "why": "800亿元特别国债资金到位加快建设",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10223884.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223894.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-27/10223686.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-27/10223852.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "存款为何“搬家”？4月份理财产品规模环比增2万亿",
+      "summary": "存款“搬家”的同时，4月份理财产品规模环比增加2万亿元。理财规模变化反映居民与机构资金在存款与理财之间的重新配置，是观察资金面偏好与资产配置行为的一个月度切面。",
+      "why": "理财规模单月增加2万亿元",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10223666.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224162.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223695.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224252.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "政治局会议审议文件的后续印发与落实",
+    "上海楼市新政后的成交与房贷利率变化",
+    "工业企业利润月度数据与生产端指标的衔接",
+    "超长期特别国债资金对应的项目开工",
+    "理财与存款规模变化下的资金面取向"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T22:30:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

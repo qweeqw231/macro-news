@@ -1,0 +1,171 @@
+{
+  "date": "2024-06-01",
+  "generatedAt": "2026-11-27T22:30:00+08:00",
+  "endedAt": "2026-11-27T22:30:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-05-31",
+    "to": "2024-06-01",
+    "fromAt": "2024-05-31T08:00:00+08:00",
+    "toAt": "2024-06-01T09:00:00+08:00",
+    "fromTs": 1717113600,
+    "toTs": 1717203600
+  },
+  "overview": "周六由5月宏观数据与政策落地主导：国家统计局公布5月份制造业采购经理指数为49.5%。关税方面，国务院关税税则委员会决定中止《海峡两岸经济合作框架协议》部分产品第二批关税减让，商务部就134个税目答问。央行开展1000亿元逆回购，中间价上调23个基点，北京楼市新政满月。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：5月份制造业采购经理指数(PMI)为49.5%",
+      "summary": "国家统计局公布5月份制造业采购经理指数为49.5%。PMI是观察制造业景气度与供需状况的月度综合指标，当月读数同时反映生产、新订单与就业等分项变化，是判断经济运行节奏的常用参照。",
+      "why": "5月制造业PMI读数为49.5%",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226262.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226337.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226382.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226310.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "5月份中国采购经理指数公布：制造业生产继续扩张 新动能保持增长势头",
+      "summary": "5月份中国采购经理指数公布，报道称制造业生产继续扩张，新动能保持增长势头。生产与新动能的表述提供了总量读数之外的结构信息，有助于区分不同领域的表现差异。",
+      "why": "生产扩张与新动能是5月PMI结构特征",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226337.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226262.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226382.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226220.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "中国水利部：超85%的增发国债水利项目已开工",
+      "summary": "中国水利部称超85%的增发国债水利项目已开工。加发国债项目开工比例，是观察财政资金转化为实物工作量的直接指标，水利领域的进度也关系到后续防汛与农业灌溉的基础能力。",
+      "why": "超85%增发国债水利项目已开工",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226386.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226334.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226183.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226351.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "国务院关税税则委员会发布公告决定中止《海峡两岸 经济合作框架协议》部分产品（第二批）关税减让",
+      "summary": "国务院关税税则委员会发布公告，决定中止《海峡两岸经济合作框架协议》部分产品（第二批）关税减让。分批中止减让的做法，关系到相关税目税率的适用变化，属于关税政策的重要调整。",
+      "why": "第二批部分产品关税减让中止",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226185.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226257.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-31/10226241.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226385.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "商务部新闻发言人就中止《海峡两岸经济合作框架协议》134个税目产品关税减让答记者问",
+      "summary": "商务部新闻发言人就中止《海峡两岸经济合作框架协议》134个税目产品关税减让答记者问，就政策背景作出说明。主管部门的公开回应，是外界理解该项调整的直接信息渠道。",
+      "why": "商务部就134个税目中止减让答问",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226257.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226235.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554133785/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226153.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "5月31日央行开展1000亿元7天期逆回购操作",
+      "summary": "5月31日央行开展1000亿元7天期逆回购操作。月末时点的公开市场投放规模明显高于当月其他交易日，配合当日中间价上调23个基点，反映当期流动性安排与汇率定价的同步变化。",
+      "why": "月末1000亿元逆回购与中间价同向变动",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226235.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226240.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554133785/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226153.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "5月31日人民币对美元中间价报7.1088元 上调23个基点",
+      "summary": "5月31日人民币对美元中间价报7.1088元，较前一交易日上调23个基点，上调幅度为当月较大。中间价的单日变动反映货币定价取向，是观察人民币汇率预期的日常参考。",
+      "why": "中间价上调23个基点幅度较大",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226240.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226235.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554133785/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226153.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "“沪九条”新政将如何影响房地产市场：房价会不会涨？出手时机到了吗？",
+      "summary": "四川省调整优化商业性个人住房信贷政策，属于地方对个人住房贷款政策的进一步优化。地方信贷政策与上海、北京等地的新政形成呼应，区域差别化调整的分布情况值得关注。",
+      "why": "地方进一步优化个人住房信贷政策",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226261.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226832.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226210.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "北京楼市新政满月：二手房网签站上荣枯线",
+      "summary": "北京楼市新政满月，二手房网签站上荣枯线。新政实施一个月后的成交变化，被作为观察政策效果的阶段性判据，网签量相对荣枯线的位置构成直观参考。",
+      "why": "北京新政满月二手房网签站上荣枯线",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226210.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226261.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226832.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226766.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中阿合作论坛第十届部长级会议通过《北京宣言》和《行动执行计划》",
+      "summary": "中阿合作论坛第十届部长级会议通过《北京宣言》和《行动执行计划》。成果文件以宣言与行动计划的形式对合作方向作出安排，属于观察会议成果落地节奏的直接依据。",
+      "why": "论坛通过《北京宣言》和《行动执行计划》",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-31/10226419.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-31/10226165.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-31/10226255.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-31/10226169.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "5月PMI分项数据与后续月份走势",
+    "部分产品关税减让中止后的市场反应",
+    "增发国债水利项目开工进度",
+    "北京、上海等地楼市新政满月后的成交",
+    "央行公开市场操作与中间价变动"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T22:30:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
