@@ -1,0 +1,171 @@
+{
+  "date": "2024-06-21",
+  "generatedAt": "2026-11-28T00:00:00+08:00",
+  "endedAt": "2026-11-28T00:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-06-20",
+    "to": "2024-06-21",
+    "fromAt": "2024-06-20T08:00:00+08:00",
+    "toAt": "2024-06-21T09:00:00+08:00",
+    "fromTs": 1718841600,
+    "toTs": 1718931600
+  },
+  "overview": "利率与金融数据是当日主线：6月LPR报价出炉，1年期和5年期以上利率均维持不变；央行表示2024年一季度末金融业机构总资产476.49万亿元，并提出为经济持续回升向好提供金融支持。产业与需求侧，装备制造业成为拉动工业增长的重要力量，前5个月餐饮收入增长8.4%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "6月LPR报价出炉：1年期和5年期以上利率均维持不变",
+      "summary": "6月LPR报价出炉，1年期和5年期以上利率均维持不变。报价口径覆盖短期与中长期贷款基准，是观察贷款定价与实体融资成本变化的主要窗口。",
+      "why": "6月LPR报价1年期与5年期以上维持不变",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237119.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237247.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237390.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237122.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行：为经济持续回升向好提供金融支持",
+      "summary": "央行表示，为经济持续回升向好提供金融支持。这一表述把金融支持与经济回升目标直接挂钩，指向信贷投放与融资成本等工具的配合使用。",
+      "why": "央行提出为经济回升提供金融支持",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237054.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237442.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237122.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237119.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "6月20日央行开展200亿元7天期逆回购操作",
+      "summary": "6月20日央行开展200亿元7天期逆回购操作。公开市场投放规模与当日LPR报价、中间价调整同时出现，是观察短期资金面与政策信号的一个切面。",
+      "why": "6月20日央行开展200亿元逆回购操作",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237122.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237119.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237120.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237054.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "央行：2024年一季度末金融业机构总资产476.49万亿元",
+      "summary": "央行数据显示，2024年一季度末金融业机构总资产476.49万亿元。金融业机构资产规模的总量读数，是衡量金融体系体量扩张情况的季度指标。",
+      "why": "一季度末金融业机构总资产476.49万亿元",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237442.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237054.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554142695/index.html",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237174.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "证监会发布深化科创板改革八条措施",
+      "summary": "证监会发布深化科创板改革八条措施。改革措施围绕科技企业的上市与融资安排展开，与同期推出“科创板八条”的政策方向相互衔接，具体规则值得跟踪。",
+      "why": "证监会发布深化科创板改革八条措施",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237180.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237390.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237128.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237208.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "财政加力支持专精特新中小企业发展",
+      "summary": "财政加力支持专精特新中小企业发展。财政支持手段指向专精特新这一类企业主体，与年内奖补支持的规模口径配合，构成财政资金直达企业的通道。",
+      "why": "财政加力支持专精特新中小企业发展",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237172.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237089.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237359.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237327.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "今年前5个月江苏对“一带一路”共建国家进出口9923.2亿元 同比增长14.2%",
+      "summary": "今年前5个月江苏对“一带一路”共建国家进出口9923.2亿元，同比增长14.2%。地方对共建国家的进出口规模与增速，反映外贸市场多元化的实际进展。",
+      "why": "前5月江苏对“一带一路”国家进出口增14.2%",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237529.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237516.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237128.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237174.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "前5个月餐饮收入增长8.4%",
+      "summary": "前5个月餐饮收入增长8.4%。餐饮收入增速是观察服务消费与居民线下支出的一组月度数据，与文旅、假期等消费场景的恢复情况相互关联。",
+      "why": "前5个月餐饮收入增长8.4%",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237090.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237226.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237093.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237077.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "装备制造业成为拉动工业增长的重要力量（经济新方位）",
+      "summary": "报道以经济新方位为题，指出装备制造业成为拉动工业增长的重要力量。装备制造业在工业结构中的位置变化，是理解工业增速构成的一个角度。",
+      "why": "装备制造业成为拉动工业增长重要力量",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237093.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237172.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237247.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237442.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "“以购代建”多点开花，楼市迎来新动能",
+      "summary": "“以购代建”多点开花，楼市迎来新动能。以购代建模式在多地的推进，使存量房置换与新建需求之间形成连接，是观察楼市交易结构调整的一个切口。",
+      "why": "“以购代建”多点开花楼市迎来新动能",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237034.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237077.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237089.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237090.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "LPR报价后续调整的讨论与信号",
+    "金融业机构资产规模与信贷投放",
+    "科创板改革八条措施的配套细则",
+    "专精特新企业财政奖补的落地",
+    "餐饮与服务消费增速的延续性"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T00:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "date": "2024-06-18",
+  "generatedAt": "2026-11-28T00:00:00+08:00",
+  "endedAt": "2026-11-28T00:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-06-17",
+    "to": "2024-06-18",
+    "fromAt": "2024-06-17T08:00:00+08:00",
+    "toAt": "2024-06-18T09:00:00+08:00",
+    "fromTs": 1718582400,
+    "toTs": 1718672400
+  },
+  "overview": "5月经济数据集中发布是当日主线：国家统计局公布5月份规模以上工业增加值增长5.6%、社会消费品零售总额同比增长3.7%，房地产开发投资40632亿元。物价方面，5月CPI走势总体稳定，PPI环比7个月来首次转正；货币端央行开展1820亿元MLF操作，中标利率未变。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：5月份国民经济延续回升向好态势，运行总体平稳",
+      "summary": "国家统计局表示，5月份国民经济延续回升向好态势，运行总体平稳。这是当月各项指标发布的总口径表述，各分项数据的走势构成对这一判断的具体支撑。",
+      "why": "5月份国民经济延续回升向好态势",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235105.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235117.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235107.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235122.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：5月份规模以上工业增加值增长5.6%",
+      "summary": "国家统计局数据显示，5月份规模以上工业增加值增长5.6%。工业增速是衡量生产端运行强度的主要月度指标，转型升级推进情况也在其中有所体现。",
+      "why": "5月份规模以上工业增加值增长5.6%",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235117.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235105.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235237.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235221.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家统计局：5月份社会消费品零售总额同比增长3.7%",
+      "summary": "国家统计局数据显示，5月份社会消费品零售总额同比增长3.7%。社零增速是观察消费需求恢复节奏的核心变量，与以旧换新等促消费政策的落地情况相互关联。",
+      "why": "5月份社会消费品零售总额同比增长3.7%",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235107.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235105.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235245.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235246.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "国家统计局：1—5月份全国固定资产投资增长4.0%",
+      "summary": "国家统计局数据显示，1—5月份全国固定资产投资增长4.0%。投资增速反映资金向实体部门的配置强度，与基建、制造业投资分项的走势共同构成投资端的基本盘。",
+      "why": "1—5月份全国固定资产投资增长4.0%",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235122.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235102.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235105.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235140.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "国家统计局：1-5月全国房地产开发投资40632亿元",
+      "summary": "国家统计局数据显示，1-5月全国房地产开发投资40632亿元。开发投资是房地产链条上的前置指标，其累计规模与后续新开工、施工的进度相互对应。",
+      "why": "1-5月全国房地产开发投资40632亿元",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235102.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235055.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235223.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235530.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "国家统计局：5月份一线城市新建商品住宅销售价格环比下降0.7%",
+      "summary": "国家统计局数据显示，5月份一线城市新建商品住宅销售价格环比下降0.7%。一线城市新房价格的月度环比读数，是跟踪楼市政策效果的一项基础观察指标。",
+      "why": "5月一线城市新建商品住宅价格环比降0.7%",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235055.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235228.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235353.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235530.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "中国PPI环比7个月来首次转正",
+      "summary": "中国PPI环比7个月来首次转正，PPI同比降幅将继续收窄。工业品价格环比回升，是上游价格对企业利润与中下游成本传导链条上的关键信号。",
+      "why": "中国PPI环比7个月来首次转正",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235192.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235225.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235234.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235105.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "5月份CPI走势总体稳定 下阶段将继续呈现温和回升态势",
+      "summary": "5月份CPI走势总体稳定，下阶段将继续呈现温和回升态势。CPI读数是观察居民消费价格环境的主要月度口径，与PPI的走势共同构成物价端的观察框架。",
+      "why": "5月份CPI走势总体稳定",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235234.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235193.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235192.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235105.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "中国央行开展1820亿元MLF操作 中标利率未变",
+      "summary": "中国央行开展1820亿元MLF操作，中标利率未变。中期借贷便利的续作规模与中标利率，直接关系到中期流动性安排与利率信号的传递效果。",
+      "why": "央行开展1820亿元MLF操作中标利率未变",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235285.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235048.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235038.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235140.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "全国超70个城市推行住房“以旧换新” 助力美好安居、激活房地产市场",
+      "summary": "全国超70个城市推行住房“以旧换新”，助力美好安居、激活房地产市场。参与城市数量的扩张，说明这项安排正从试点转向更大范围的推广。",
+      "why": "全国超70个城市推行住房“以旧换新”",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235223.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235105.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235530.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235055.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "5月消费与投资分项的后续月度走势",
+    "PPI环比转正后价格读数的延续性",
+    "MLF续作规模与中标利率变化",
+    "一线城市新房价格环比读数",
+    "住房“以旧换新”推广城市的落地进度"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T00:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
