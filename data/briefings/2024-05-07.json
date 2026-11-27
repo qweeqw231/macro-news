@@ -1,0 +1,161 @@
+{
+  "date": "2024-05-07",
+  "generatedAt": "2026-11-28T00:13:08.778+08:00",
+  "endedAt": "2026-11-28T00:13:08.778+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-05-06",
+    "to": "2024-05-07",
+    "fromAt": "2024-05-06T08:00:00+08:00",
+    "toAt": "2024-05-07T09:00:00+08:00",
+    "fromTs": 1714953600,
+    "toTs": 1715043600
+  },
+  "overview": "周一宏观面集中在财政与工业数据：中央财政创新方法支持部分城市开展城市更新示范工作，1-3月国有企业利润总额10757.6亿元、同比增长2.8%。4月亚洲制造业PMI为51.5%，全球制造业PMI为49.9%。资本市场节后走强，沪指续创年内新高，楼市端深圳分区优化住房限购政策。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中央财政创新方法支持部分城市开展城市更新示范工作",
+      "summary": "中央财政创新方法支持部分城市开展城市更新示范工作，财政资金通过新的支持方式推动城市更新。城市更新涉及存量住房与公共设施的改造，与财政支出结构向建设和民生领域倾斜相关。",
+      "why": "财政支持城市更新，存量改造提速",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211806.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211985.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211623.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "1-3月国有企业利润总额10757.6亿元 同比增长2.8%",
+      "summary": "1-3月国有企业利润总额10757.6亿元，同比增长2.8%。利润总量维持在万亿元量级并实现正增长，是观察国有企业经营状况与工业盈利面的直接指标。",
+      "why": "国企利润总量破万亿且同比正增长",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211623.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211498.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211663.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "4月亚洲制造业PMI为51.5% 延续温和复苏趋势",
+      "summary": "4月亚洲制造业PMI为51.5%，延续温和复苏趋势。指数维持在50%荣枯线之上，是衡量亚洲制造业景气月度变化的前瞻性指标。",
+      "why": "亚洲制造业PMI站上荣枯线",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211591.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211637.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211623.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "4月全球制造业PMI为49.9% 经济基本延续温和复苏",
+      "summary": "4月全球制造业PMI为49.9%，报道称经济基本延续温和复苏。指数与50%荣枯线接近，反映全球制造业景气整体处于平稳状态。",
+      "why": "全球制造业PMI接近荣枯线",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211637.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211591.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211611.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "中汽协：3月汽车商品进出口总额为238.7亿美元 环比增长19.4%",
+      "summary": "中汽协数据显示，3月汽车商品进出口总额为238.7亿美元，环比增长19.4%。汽车商品进出口的月度总额与环比增幅，是观察整车及零部件跨境贸易节奏的一个切面。",
+      "why": "3月汽车商品进出口环比增19.4%",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211642.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211611.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211591.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "节后首个交易日A股走强 沪指续创年内新高",
+      "summary": "节后首个交易日A股走强，沪指续创年内新高。长假后的首个交易日A股出现上涨，沪指点位再创年内新高，是观察节后市场开局情况的重要信号。",
+      "why": "沪指续创年内新高",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211663.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211498.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211985.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "去年A股年度现金分红合计2.24万亿元",
+      "summary": "去年A股年度现金分红合计2.24万亿元。分红总规模达到两万亿元量级，与上市公司盈利和股东回报安排相关，是衡量资本市场回报水平的总量指标。",
+      "why": "A股年度现金分红合计2.24万亿元",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211498.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211663.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211623.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "深圳分区优化住房限购政策",
+      "summary": "深圳分区优化住房限购政策，限购安排在不同区域作出差异化调整。分区调整意味着限购松绑并非全市同步推进，政策工具的使用更为灵活。",
+      "why": "深圳分区优化住房限购政策",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211985.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211806.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211623.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "5月6日央行开展20亿元7天期逆回购操作",
+      "summary": "5月6日，央行开展20亿元7天期逆回购操作。逆回购操作规模与期限属于公开市场操作的日常安排，用于调节银行体系短期资金面。",
+      "why": "央行逆回购投放20亿元",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211566.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211663.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211498.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "第135届广交会落幕，写下贸易强国的新篇章",
+      "summary": "第135届广交会落幕，报道以贸易强国为主题回顾本届展会。广交会是中国外贸企业集中展示产品并对接订单的重要平台，其届次与主题变化对应外贸结构的调整。",
+      "why": "广交会落幕，外贸主题再更新",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211611.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211642.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211591.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "中央财政城市更新示范工作的资金安排与落地节奏",
+    "4月亚洲与全球制造业PMI的后续读数",
+    "沪指年内新高附近的成交与资金变化",
+    "深圳分区优化限购后的成交量表现",
+    "3月汽车商品进出口环比高增的持续性"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T00:13:08.778+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

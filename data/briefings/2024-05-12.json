@@ -1,0 +1,161 @@
+{
+  "date": "2024-05-12",
+  "generatedAt": "2026-11-28T00:14:36.876+08:00",
+  "endedAt": "2026-11-28T00:14:36.876+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-05-11",
+    "to": "2024-05-12",
+    "fromAt": "2024-05-11T08:00:00+08:00",
+    "toAt": "2024-05-12T09:00:00+08:00",
+    "fromTs": 1715385600,
+    "toTs": 1715475600
+  },
+  "overview": "周日宏观面核心是物价与金融数据：国家统计局公布4月份CPI同比上涨0.3%、涨幅稳中有升，4月PPI同比降幅收窄、环比有所下降。央行数据显示前4月人民币贷款增加10.19万亿元。李强主持召开国务院常务会议；北京持续防范化解房地产风险；今年4月广西外贸进出口额突破600亿元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：4月份CPI同比涨幅稳中有升 PPI同比降幅收窄",
+      "summary": "国家统计局公布，4月份CPI同比涨幅稳中有升，PPI同比降幅收窄。两项物价指标同向变动，分别对应居民消费端与工业生产端的价格走势。",
+      "why": "4月CPI涨幅稳中有升、PPI降幅收窄",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10214968.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214965.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214969.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：4月份居民消费价格同比上涨0.3%",
+      "summary": "国家统计局数据显示，4月份居民消费价格同比上涨0.3%。同比涨幅处于较低水平，与同期PPI降幅收窄并列，构成当月物价数据的两个主要口径。",
+      "why": "4月CPI同比上涨0.3%",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10214965.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214968.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214969.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家统计局：4月份工业生产者出厂价格同比降幅收窄",
+      "summary": "国家统计局数据显示，4月份工业生产者出厂价格同比降幅收窄。出厂价格是工业环节价格水平的观测点，与PPI月度读数互为印证。",
+      "why": "4月工业品出厂价格同比降幅收窄",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10214969.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214968.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215132.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "4月中国PPI同比降幅收窄 环比有所下降",
+      "summary": "4月中国PPI同比降幅收窄，环比有所下降。同比降幅收窄与环比下降同时出现，说明工业品价格的同比基数效应与当月走势存在差异。",
+      "why": "4月PPI同比降幅收窄、环比下降",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10215132.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214969.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214968.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "央行：2024年前4月人民币贷款增加10.19万亿元",
+      "summary": "央行数据显示，2024年前4月人民币贷款增加10.19万亿元。前4个月贷款增量规模，是观察信贷投放节奏与实体融资需求承接情况的核心数据。",
+      "why": "前4月人民币贷款增加10.19万亿元",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10215275.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554025225/index.html",
+        "https://www.chinanews.com.cn/gn/2024/05-11/10215139.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "2024年4月金融统计数据报告",
+      "summary": "中国人民银行发布2024年4月金融统计数据报告。报告以月度口径给出存贷款等金融数据，与当月社融和货币供应量数据配套使用。",
+      "why": "央行发布4月金融统计数据报告",
+      "source": "中国人民银行",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554025225/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215275.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-11/10215139.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "李强主持召开国务院常务会议",
+      "summary": "李强主持召开国务院常务会议。国务院常务会议通常部署经济与民生领域的政策事项，会议内容是观察近期政策安排的重要窗口与政策线索。",
+      "why": "李强主持召开国务院常务会议",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-11/10215344.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-11/10215005.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-11/10215140.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "北京持续防范化解房地产风险 实现应交付尽交付",
+      "summary": "北京持续防范化解房地产风险，实现应交付尽交付。保交房进度与风险化解被并列提出，是地方落实房地产风险化解要求的公开表述，也是观察重点城市风险处置口径的窗口。",
+      "why": "北京持续防范化解房地产风险",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10215267.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-11/10215344.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-11/10215005.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "今年4月广西外贸进出口额突破600亿元",
+      "summary": "今年4月广西外贸进出口额突破600亿元。单月省级进出口额突破关口，反映边境与加工贸易型地区的贸易活跃程度，是区域外贸的高频观测值。",
+      "why": "4月广西外贸进出口额突破600亿元",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10215457.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215229.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215393.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "5月11日央行开展20亿元7天期逆回购操作",
+      "summary": "5月11日，央行开展20亿元7天期逆回购操作。逆回购操作规模与期限属于公开市场操作的日常安排，用于调节银行体系短期资金面。",
+      "why": "央行开展20亿元逆回购操作",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10214963.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215275.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554025225/index.html"
+      ]
+    }
+  ],
+  "watch": [
+    "4月CPI、PPI的后续月度读数与翘尾因素",
+    "4月金融数据中的社融与货币供应量口径",
+    "国务院常务会议部署的具体政策事项",
+    "地方房地产风险化解与保交房的推进节奏",
+    "前4个月贷款增量与信贷投向结构"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T00:14:36.876+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

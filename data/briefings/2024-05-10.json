@@ -1,0 +1,161 @@
+{
+  "date": "2024-05-10",
+  "generatedAt": "2026-11-28T00:13:55.256+08:00",
+  "endedAt": "2026-11-28T00:13:55.256+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-05-09",
+    "to": "2024-05-10",
+    "fromAt": "2024-05-09T08:00:00+08:00",
+    "toAt": "2024-05-10T09:00:00+08:00",
+    "fromTs": 1715212800,
+    "toTs": 1715302800
+  },
+  "overview": "周五宏观面由外贸数据与楼市松绑主导：海关总署称前4个月我国货物贸易进出口总值13.81万亿元，4月进出口额同比增长8.0%。杭州与西安同日取消住房限购，官方提出支持建立“以旧换新”购房模式。4月中小企业发展指数继续回升，一季度贷款更多投向重点领域；交通重大工程投资规模高位运行。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "海关总署：今年前4个月我国货物贸易进出口总值13.81万亿元",
+      "summary": "海关总署数据显示，今年前4个月我国货物贸易进出口总值13.81万亿元。进出口总值是衡量外贸总体规模的总量指标，年度累计口径便于与上年同期对照。",
+      "why": "前4个月进出口总值13.81万亿元",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213626.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213770.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213964.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "4月中国进出口额同比增长8.0%",
+      "summary": "4月中国进出口额同比增长8.0%。单月进出口同比增速，反映当月货物贸易在上年同期基础上的实际变化幅度，与前4个月累计数据相互印证。",
+      "why": "4月进出口额同比增长8.0%",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213770.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213626.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-09/10213870.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "（经济观察）杭州西安同日取消住房限购  中国楼市“限购令”料近尾声",
+      "summary": "杭州与西安同日取消住房限购，报道认为中国楼市“限购令”料近尾声。两座城市的限购松绑同日落地，被视为地方调控工具进一步退出的信号。",
+      "why": "杭州西安同日取消住房限购",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213963.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10214012.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10214079.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "西安楼市取消限购 官方：支持建立“以旧换新”购房模式",
+      "summary": "西安楼市取消限购，官方表示支持建立“以旧换新”购房模式。限购退出与以旧换新购房机制并行提出，指向存量房置换的具体推进路径。",
+      "why": "西安支持以旧换新购房模式",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10214012.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213963.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213984.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "4月我国中小企业发展指数继续回升 主要靠服务业带动",
+      "summary": "4月我国中小企业发展指数继续回升，主要靠服务业带动。指数回升的驱动力来自服务业，反映中小企业景气改善在行业之间的分布情况。",
+      "why": "4月中小企业发展指数继续回升",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213466.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213808.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-09/10213494.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "一季度贷款更多投向重点领域",
+      "summary": "一季度贷款更多投向重点领域。信贷投放的结构方向，是观察银行体系资金配置取向与实体经济融资需求承接情况的重要线索，也是货币政策传导的观察窗口。",
+      "why": "一季度贷款更多投向重点领域",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213581.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213535.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213586.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "退市新规发威 A股“差生”加速离场",
+      "summary": "退市新规发威，A股“差生”加速离场。退市制度执行力度加大，不符合上市条件的公司加快退出，指向资本市场出清工作的常态化推进节奏。",
+      "why": "退市新规下A股加速出清",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213586.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213633.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213578.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "交通重大工程投资规模高位运行",
+      "summary": "交通重大工程投资规模高位运行。交通领域的重大工程投资保持在较高水平，与基建项目和地方投资安排的延续性密切相关，是固定资产投资的重要组成。",
+      "why": "交通重大工程投资规模高位运行",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213572.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213793.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213466.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "5月9日央行开展20亿元7天期逆回购操作",
+      "summary": "5月9日，央行开展20亿元7天期逆回购操作。逆回购操作规模与期限属于公开市场操作的日常安排，用于调节银行体系短期资金面。",
+      "why": "央行开展20亿元逆回购操作",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213535.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213525.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213904.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "5月9日人民币对美元中间价报7.1028元 下调12个基点",
+      "summary": "5月9日人民币对美元中间价报7.1028元，较前一交易日下调12个基点。中间价的每日报价反映人民币汇率政策信号与市场供求之间的平衡。",
+      "why": "人民币中间价下调12个基点",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213525.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213535.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213963.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "前4个月外贸总值与4月单月增速的后续走势",
+    "杭州、西安限购取消后的成交与价格反应",
+    "退市新规下A股公司退出的后续节奏",
+    "一季度贷款投向重点领域的结构数据",
+    "中小企业发展指数回升的月度延续性"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T00:13:55.256+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

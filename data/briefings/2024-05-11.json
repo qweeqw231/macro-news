@@ -1,0 +1,161 @@
+{
+  "date": "2024-05-11",
+  "generatedAt": "2026-11-28T00:14:32.111+08:00",
+  "endedAt": "2026-11-28T00:14:32.111+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-05-10",
+    "to": "2024-05-11",
+    "fromAt": "2024-05-10T08:00:00+08:00",
+    "toAt": "2024-05-11T09:00:00+08:00",
+    "fromTs": 1715299200,
+    "toTs": 1715389200
+  },
+  "overview": "周六宏观面由货币政策报告与区域数据构成：中国人民银行发布一季度货币政策执行报告，31省份一季度GDP数据出炉，经济运行开局良好。一季度经常账户顺差392亿美元，前4个月广东外贸进出口规模同比增长12.3%。A股三大指数集体走强、沪指再创年内新高，港股冲刺19000点。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "2024年第一季度中国货币政策执行报告",
+      "summary": "中国人民银行发布2024年第一季度中国货币政策执行报告。季度货币政策执行报告是央行对前期政策操作与后续取向的官方说明，也是观察货币政策口径的重要文本。",
+      "why": "央行发布一季度货币政策执行报告",
+      "source": "中国人民银行",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554023361/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554081127/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214882.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "三十一个省份一季度GDP数据出炉——经济运行开局良好",
+      "summary": "三十一个省份一季度GDP数据出炉，报道称经济运行开局良好。各省一季度经济数据的陆续公布，使区域增速的横向比较成为可能，成为观察区域经济表现的直接依据。",
+      "why": "31省份一季度GDP数据出炉",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214275.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214235.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214504.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "A股三大指数集体走强沪指再创年内新高",
+      "summary": "A股三大指数集体走强，沪指再创年内新高。三大指数同步上涨且沪指刷新年内点位，反映节后权益市场整体表现与资金情绪层面的变化。",
+      "why": "A股三大指数集体走强",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214467.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214687.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214703.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "港股继续走强：恒生指数冲刺19000点关口 地产股大涨",
+      "summary": "港股继续走强，恒生指数冲刺19000点关口，地产股大涨。恒指逼近整数关口的同时地产板块领涨，是当日港股结构性行情的突出特征。",
+      "why": "恒指冲刺19000点关口",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214687.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214467.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214335.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "中国一季度经常账户顺差392亿美元",
+      "summary": "中国一季度经常账户顺差392亿美元。经常账户顺差反映一国对外经常交易的净收支，是国际收支平衡表中的关键科目，也受货物与服务贸易结构影响。",
+      "why": "一季度经常账户顺差392亿美元",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214755.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214472.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214733.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "前4个月广东外贸量增质升 进出口规模同比增长12.3%",
+      "summary": "前4个月广东外贸量增质升，进出口规模同比增长12.3%。省级前4个月进出口增速是观察区域外贸景气与出口结构升级的一个口径。",
+      "why": "前4个月广东外贸同比增长12.3%",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214472.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214733.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214504.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "去年广东对外投资238亿美元 同比增长8%",
+      "summary": "去年广东对外投资238亿美元，同比增长8%。对外投资规模与增速反映企业对外资源配置的活跃度，是观察企业出海节奏的指标之一。",
+      "why": "去年广东对外投资同比增长8%",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214504.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214472.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214733.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "储蓄国债今日开售5年期年利率2.5%",
+      "summary": "储蓄国债今日开售，5年期年利率2.5%。储蓄国债的期限与票面利率安排，是观察居民储蓄配置与债券市场利率水平的一个直接窗口。",
+      "why": "5年期储蓄国债年利率2.5%",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214468.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214270.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554023361/index.html"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "楼市进入新一轮“去库存”阶段？",
+      "summary": "楼市进入新一轮“去库存”阶段的讨论受到关注。去库存指向存量住房的消化路径，是继限购优化之后市场讨论的另一条主线，也牵动房企的经营安排。",
+      "why": "楼市进入新一轮去库存阶段",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214309.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214604.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214335.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "5月10日央行开展20亿元7天期逆回购操作",
+      "summary": "5月10日，央行开展20亿元7天期逆回购操作。逆回购操作规模与期限属于公开市场操作的日常安排，用于调节银行体系短期资金面。",
+      "why": "央行开展20亿元逆回购操作",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214270.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554023361/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214882.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "一季度货币政策执行报告中的后续政策表述",
+    "31省份一季度GDP数据的横向比较",
+    "港股恒指能否站上19000点关口",
+    "一季度经常账户顺差与外储、汇率的联动",
+    "楼市去库存政策工具的落地节奏"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T00:14:32.111+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
