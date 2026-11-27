@@ -1,0 +1,171 @@
+{
+  "date": "2024-07-11",
+  "generatedAt": "2026-11-28T02:00:00+08:00",
+  "endedAt": "2026-11-28T02:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-07-10",
+    "to": "2024-07-11",
+    "fromAt": "2024-07-10T08:00:00+08:00",
+    "toAt": "2024-07-11T09:00:00+08:00",
+    "fromTs": 1720569600,
+    "toTs": 1720659600
+  },
+  "overview": "周四物价数据是绝对主线：国家统计局公布6月份CPI同比继续上涨、PPI同比降幅收窄，居民消费价格同比上涨0.2%，猪肉价格上涨18.1%。对外侧，商务部对原产于日本和美国的进口光纤预制棒继续征收反倾销税，并就欧盟依据《外国补贴条例》的做法开展贸易投资壁垒调查。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：2024年6月份CPI同比继续上涨 PPI同比降幅收窄",
+      "summary": "国家统计局公布2024年6月份物价数据，CPI同比继续上涨，PPI同比降幅收窄。居民消费价格与工业生产者出厂价格的这一组合，刻画了居民端与生产端价格的运行状态。",
+      "why": "消费与生产端价格同步给出信号",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248780.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248776.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248779.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248998.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：2024年6月份居民消费价格同比上涨0.2%",
+      "summary": "国家统计局数据显示，2024年6月份居民消费价格同比上涨0.2%。居民消费价格是衡量家庭日常消费品和服务价格变动的基础指标，其同比读数对应物价总水平的基本状态。",
+      "why": "CPI同比读数是物价总水平基准",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248776.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248780.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10249038.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248734.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "6月中国CPI同比继续上涨 猪肉价格涨18.1%",
+      "summary": "6月中国CPI同比继续上涨，其中猪肉价格上涨18.1%。食品是居民消费价格的重要组成部分，单一品类价格的明显波动会直接作用到物价总水平的月度读数上。",
+      "why": "猪肉价格波动直接影响食品分项",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248998.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248776.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248780.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248770.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "国家统计局：6月份工业生产者出厂价格同比降幅继续收窄",
+      "summary": "国家统计局发布6月份工业生产者出厂价格情况，同比降幅继续收窄。工业生产者出厂价格反映工业环节的产出价格，与上下游利润分配和需求端价格走势直接相关。",
+      "why": "PPI降幅收窄指向产出端压力缓解",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248779.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248780.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248776.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248916.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "财政部在香港顺利发行2024年第三期人民币国债90亿元",
+      "summary": "财政部在香港顺利发行2024年第三期人民币国债90亿元。在香港发行人民币国债是拓展离岸人民币资金供给与投资者覆盖范围的常用方式，发行结果体现境外对人民币债券的承接情况。",
+      "why": "离岸国债发行拓展人民币资金池",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10249045.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248852.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248849.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248770.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "商务部：7月11日起，对原产于日本和美国的进口光纤预制棒继续征收反倾销税",
+      "summary": "商务部宣布，7月11日起对原产于日本和美国的进口光纤预制棒继续征收反倾销税。相关措施延续既有的贸易救济安排，属于对特定进口产品采取的延续性措施。",
+      "why": "反倾销措施延续影响相关进口成本",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248917.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248967.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248730.shtml",
+        "https://www.chinanews.com.cn/gj/2024/07-10/10248789.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "商务部：就欧盟依据《外国补贴条例》对中企调查中采取的相关做法进行贸易投资壁垒调查",
+      "summary": "商务部表示，就欧盟依据《外国补贴条例》对中企调查中采取的相关做法进行贸易投资壁垒调查。该调查针对欧盟调查做法本身，属于对外贸易救济与投资规则领域的具体行动。",
+      "why": "贸易投资壁垒调查针对欧盟做法",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248967.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248917.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248730.shtml",
+        "https://www.chinanews.com.cn/gj/2024/07-10/10248789.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "（年中经济观察）上半年中国车市“成绩单”出炉：新能源与出口成亮点",
+      "summary": "年中经济观察发布上半年中国车市“成绩单”，新能源与出口成为其中的亮点。汽车市场的总量与结构变化，是观察制造业产品升级和出口竞争力的一个切面。",
+      "why": "车市结构显示新能源与出口亮点",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10249127.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248734.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248856.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248916.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "去年贸易额近2000亿美元 中国同南亚国家经贸往来势头好",
+      "summary": "去年中国同南亚国家贸易额近2000亿美元，经贸往来势头良好。对接南亚市场的规模变化，与共建“一带一路”项目的推进和区域贸易网络的深化相关。",
+      "why": "南亚市场贸易规模体现区域互联",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248730.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248854.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248967.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248917.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "二季度中国中小企业发展指数与去年同期持平",
+      "summary": "二季度中国中小企业发展指数与去年同期持平。该指数反映中小企业经营景气状况，与去年同期持平意味着这一时期企业运行大体延续了原有状态。",
+      "why": "中小企业景气与去年同期的对比",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248734.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10249127.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248916.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248849.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "6月份CPI与PPI数据的解读与后续走势",
+    "商务部对欧盟做法发起贸易投资壁垒调查的后续",
+    "光纤预制棒反倾销措施的执行情况",
+    "离岸人民币国债发行的认购结果",
+    "猪肉等食品价格的月度变化"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T02:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
