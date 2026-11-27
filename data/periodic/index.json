@@ -1,7 +1,7 @@
 {
   "schema": "macro-news/periodic-index@1",
-  "generatedAt": "2026-11-27T22:37:12+08:00",
-  "count": 186,
+  "generatedAt": "2026-11-27T22:43:14+08:00",
+  "count": 187,
   "reports": [
     {
       "type": "week",
@@ -1046,6 +1046,24 @@
       "backfillAt": "2026-11-23T12:41:12+08:00",
       "itemCount": 10,
       "file": "periodic/2025-12.json"
+    },
+    {
+      "type": "year",
+      "id": "2025",
+      "title": "2025 年宏观年报：宽松加力与结构分化",
+      "summary": "2025年经济围绕5%左右增长目标运行，一季度增长5.4%，上半年为5.3%，前三季度回落至5.2%，工业与出口保持韧性，消费、投资和房地产仍偏弱。面对关税冲击",
+      "window": {
+        "from": "2025-01-01",
+        "to": "2025-12-31",
+        "fromAt": "2025-01-01T08:00:00+08:00",
+        "toAt": "2026-01-01T08:00:00+08:00",
+        "days": 365
+      },
+      "generatedAt": "2026-11-27T22:42:32+08:00",
+      "backfill": true,
+      "backfillAt": "2026-11-27T22:42:32+08:00",
+      "itemCount": 10,
+      "file": "periodic/2025.json"
     },
     {
       "type": "week",

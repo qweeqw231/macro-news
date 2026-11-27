@@ -1,0 +1,178 @@
+{
+  "date": "2025",
+  "type": "year",
+  "generatedAt": "2026-11-27T22:42:32+08:00",
+  "endedAt": "2026-11-27T22:42:32+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年宏观年报：宽松加力与结构分化",
+  "window": {
+    "from": "2025-01-01",
+    "to": "2025-12-31",
+    "fromAt": "2025-01-01T08:00:00+08:00",
+    "toAt": "2026-01-01T08:00:00+08:00",
+    "days": 365
+  },
+  "overview": "2025年经济围绕5%左右增长目标运行，一季度增长5.4%，上半年为5.3%，前三季度回落至5.2%，工业与出口保持韧性，消费、投资和房地产仍偏弱。面对关税冲击和有效需求不足，政策以适度宽松货币政策和更加积极财政政策对冲：5月降准降息，财政扩大赤字并支持消费、育儿补贴和以旧换新，房地产限购与融资政策继续松绑。物价年末出现转折，制造业PMI重返扩张，中央经济工作会议部署八项任务，为2026年稳增长定调；外需波动、地产调整和海外政策分化仍是主要风险。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "增长目标5%左右 季度增速小幅回落",
+      "summary": "政府工作报告将全年增长目标定为5%左右。一季度GDP增长5.4%，上半年为5.3%，前三季度回落至5.2%；工业与出口保持韧性，但社零、固定资产投资和地产投资偏弱，增长结构分化决定政策持续偏向扩内需。",
+      "why": "增速温和回落且结构分化，稳增长政策需持续加力",
+      "source": "中新网",
+      "publishedAt": "2025-03-05T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/03-05/10377893.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-16/10400270.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-15/10447888.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-20/10501517.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "降准降息落地 适度宽松持续显效",
+      "summary": "5月央行宣布降准降息，7天期逆回购利率降至1.40%，再贷款利率下调0.25个百分点，LPR降至3.0%和3.5%。此后LPR连续数月持稳，央行通过大额MLF、买断式逆回购和恢复国债买卖维持适度宽松，并设立5000亿元服务消费与养老再贷款。",
+      "why": "价格型与数量型工具协同，降低融资成本并稳定流动性",
+      "source": "中新网",
+      "publishedAt": "2025-05-07T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/05-07/10411588.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/05-20/10418554.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-30/10492491.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505260.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "赤字率升至4%左右 财政重心转向内需",
+      "summary": "2025年赤字率拟按4%左右安排，2万亿元置换债启动发行，5000亿元新型政策性金融工具全部用于补充项目资本金。财政在扩大政府投资、缓解地方债务压力的同时，把提振消费和育儿补贴列入重点，政策由投资端进一步延伸至民生与需求端。",
+      "why": "财政扩张既托底投资，也直接补位消费和民生短板",
+      "source": "中新网",
+      "publishedAt": "2025-03-06T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-06/10378631.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-10/10351314.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-29/10491784.shtml",
+        "https://www.chinanews.com.cn/cj/2025/11-07/10511766.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "物价年末转折 核心CPI持续修复",
+      "summary": "2025年CPI多数时间同比为负，5月PPI降幅一度扩大至3.3%；6月CPI同比转涨0.1%，核心CPI涨幅持续修复。10月CPI由降转涨、PPI环比年内首次上涨，核心CPI涨幅接近1%，物价拐点初现，但工业品价格与终端需求修复仍不均衡。",
+      "why": "物价拐点有助于改善盈利，但需求修复仍需验证",
+      "source": "中新网",
+      "publishedAt": "2025-11-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/11-09/10512513.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-09/10428952.shtml",
+        "https://www.chinanews.com.cn/cj/2025/09-10/10479618.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10498496.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "社融保持较快扩张 结构性工具拓宽融资",
+      "summary": "1月社融增量7.06万亿元创历史同期最高，显示年初信贷投放前置。9月末社融存量437.08万亿元、同比增长8.7%，M2增长8.4%；10月末两者增速仍为8.5%和8.2%，适度宽松持续显效，科技创新债券等结构性工具同步拓宽融资渠道。",
+      "why": "金融总量扩张与结构优化并进，支持实体融资需求",
+      "source": "中新网",
+      "publishedAt": "2025-11-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/11-13/10514975.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-14/10369147.shtml",
+        "https://www.chinanews.com.cn/cj/2025/05-07/10411625.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-15/10499057.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "外贸展现韧性 关税休战缓和外部冲击",
+      "summary": "一季度进出口10.3万亿元创历史同期新高，上半年出口首破13万亿元、增长7.2%，前11个月进出口41.21万亿元、增长3.6%。中美关税从升级走向日内瓦调整与休战延期，但美国关税、出口管制及全球贸易政策不确定性仍压制外需预期。",
+      "why": "外贸托底增长，但关税路径仍是最大外部变量",
+      "source": "中新网",
+      "publishedAt": "2025-12-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/12-08/10528964.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-14/10399198.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-14/10447442.shtml",
+        "https://www.chinanews.com.cn/cj/2025/05-12/10414108.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-12/10463265.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "地产政策持续松绑 销售价格边际改善",
+      "summary": "国常会部署更大力度推动房地产止跌回稳，北京、上海相继放宽五环外、外环外限购，地方政策继续盘活存量土地和房产。上半年房地产开发投资同比下降11.2%，但房价降幅收窄、库存下降，销售与价格边际改善尚未完全传导至投资。",
+      "why": "需求端松绑初见成效，投资端修复仍滞后于销售",
+      "source": "中新网",
+      "publishedAt": "2025-06-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-14/10432111.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-15/10447888.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-25/10470874.shtml",
+        "https://www.chinanews.com.cn/cj/2025/11-30/10523715.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "长钱入市与科技金融 资本市场生态重塑",
+      "summary": "六部门明确每年新增保费30%投资A股，央行与证监会支持科技创新债券并设置风险分担工具，证监会完善合格境外投资者制度、推进创业板改革。A股总市值突破100万亿元、沪指创多年新高，资本市场制度型开放与科技融资渠道同步扩容。",
+      "why": "长期资金与制度开放提升市场稳定性，科技融资渠道拓宽",
+      "source": "中国人民银行",
+      "publishedAt": "2025-01-22T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554517598/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/05-07/10411625.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-18/10466673.shtml",
+        "https://www.chinanews.com.cn/cj/2025/10-27/10505426.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "民营经济与人工智能 双轮驱动产业升级",
+      "summary": "民营经济促进法正式施行，国务院部署“人工智能+”行动，为民营企业和科技创新提供制度与产业双重支撑。前10个月装备制造业增加值增长9.5%，1—11月规上工业企业利润增长0.1%，先进制造保持较快增长，但企业盈利整体仍偏弱。",
+      "why": "制度保障与技术革命培育新动能，盈利修复仍需时间",
+      "source": "中新网",
+      "publishedAt": "2025-02-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/02-17/10370080.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/05-20/10418611.shtml",
+        "https://www.chinanews.com.cn/cj/2025/08-26/10471639.shtml",
+        "https://www.chinanews.com.cn/cj/2025/11-14/10515292.shtml",
+        "https://www.chinanews.com.cn/cj/2025/12-27/10541269.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "年末定调2026 扩内需与防风险并重",
+      "summary": "中央经济工作会议部署八项任务，明确稳增长主线，货币政策延续适度宽松。2026年首批625亿元超长期特别国债用于以旧换新，三部门再推11条促消费措施；12月制造业PMI回升至50.1%，但消费、地产与外部关税仍是政策需要持续对冲的风险。",
+      "why": "年度定调决定次年政策组合，也划定风险观察重点",
+      "source": "中新网",
+      "publishedAt": "2025-12-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/12-11/10531857.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/12-15/10533515.shtml",
+        "https://www.chinanews.com.cn/cj/2025/12-30/10543166.shtml",
+        "https://www.chinanews.com.cn/cj/2025/12-31/10543495.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "消费补贴与育儿补贴对2026年内需的实际拉动",
+    "物价回升能否持续，关注核心CPI与PPI环比变化",
+    "房地产销售回稳向投资和新开工的传导",
+    "中美关税休战到期后的磋商与出口订单变化",
+    "美联储降息与日本央行加息下的汇率和资本流动"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T22:42:32+08:00",
+    "note": "周期结束后补写"
+  },
+  "coverage": {
+    "archiveDays": 365,
+    "newsItems": 82001,
+    "missingDays": []
+  }
+}
