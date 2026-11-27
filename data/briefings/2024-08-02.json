@@ -1,0 +1,171 @@
+{
+  "date": "2024-08-02",
+  "generatedAt": "2026-11-28T06:00:00+08:00",
+  "endedAt": "2026-11-28T06:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-08-01",
+    "to": "2024-08-02",
+    "fromAt": "2024-08-01T08:00:00+08:00",
+    "toAt": "2024-08-02T09:00:00+08:00",
+    "fromTs": 1722470400,
+    "toTs": 1722560400
+  },
+  "overview": "海外货币政策与国内政策解读并行：美联储维持联邦基金利率不变、鲍威尔称降息渐近；券商基金热议政治局会议认为政策暖风提振市场信心，国家发改委就下半年经济走势回应并提出把促消费放在更加突出的位置，同时正会同多个部门制定民营经济促进法。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "美联储维持联邦基金利率不变 鲍威尔称降息渐近",
+      "summary": "美联储维持联邦基金利率不变，鲍威尔称降息渐近。利率按兵不动与降息指引并存，是观察美联储后续政策路径与全球流动性预期的重要信号。",
+      "why": "美联储利率指引影响全球流动性预期",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/08-01/10261264.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261935.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261483.shtml",
+        "https://www.chinanews.com.cn/gj/2024/08-01/10261835.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "券商基金热议政治局会议：政策暖风提振市场信心",
+      "summary": "券商基金热议政治局会议，认为政策暖风提振市场信心。券商与基金对政策信号的解读，反映机构对后续市场环境的预期变化，也是观察市场情绪如何随政策信号调整的一个窗口。",
+      "why": "机构解读反映市场预期变化",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-01/10261530.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261932.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261761.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261509.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "（经济观察）过半省份GDP增速超全国 上半年中国地方经济平稳",
+      "summary": "报道关注上半年地方经济表现，指出过半省份GDP增速超全国、整体平稳。地方经济增速与全国的相对位置，反映区域发展的分化与协调情况。",
+      "why": "省份增速分布反映区域经济分化",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-01/10261661.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261374.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261949.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261461.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "今年下半年经济走势如何？国家发改委回应",
+      "summary": "国家发改委回应今年下半年经济走势，表示下半年走势是宏观政策研判的重要问题，其回应内容涉及对经济运行形势的判断与政策方向。",
+      "why": "发改委回应给出下半年形势判断",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-01/10261450.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261424.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261513.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261467.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "国家发改委：积极扩大内需 把促消费放在更加突出的位置",
+      "summary": "国家发改委表示，积极扩大内需，把促消费放在更加突出的位置。促消费位置的突出，反映政策对需求端修复的重视程度，以及政策资源投放的方向。",
+      "why": "促消费前置反映需求侧政策取向",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-01/10261439.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261414.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261492.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261450.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "国家发改委：正会同多个部门制定民营经济促进法",
+      "summary": "国家发改委表示，正会同多个部门制定民营经济促进法。法律层面的制度安排，是把民营经济政策要求上升为稳定预期的制度保障，也是涉企政策法治化的体现。",
+      "why": "民营经济立法稳定市场主体预期",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-01/10261456.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261471.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261424.shtml",
+        "https://www.chinanews.com.cn/gn/2024/08-01/10261371.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "国家发改委：推动盘活存量资产 更好促进投资良性循环",
+      "summary": "国家发改委表示，推动盘活存量资产，更好促进投资良性循环。盘活存量资产对应闲置土地、厂房等资源的再配置，是扩大有效投资的一条路径。",
+      "why": "盘活存量资产拓展有效投资来源",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-01/10261464.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261467.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261498.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261439.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "财政部：2019-2023年各级财政累计拨付城乡居民医保补助资金约3万亿元",
+      "summary": "财政部表示，2019-2023年各级财政累计拨付城乡居民医保补助资金约3万亿元。医保补助的累计拨付规模，是民生类财政支出力度的直接体现。",
+      "why": "医保补助拨付体现民生财政力度",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-01/10261681.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261509.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261520.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261450.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "A股8月首日遭遇调整 交运设备板块逆势上涨",
+      "summary": "A股8月首日遭遇调整，交运设备板块逆势上涨。指数调整与板块分化的组合，反映市场对政策预期与板块基本面的不同定价，也是观察主题轮动的直接窗口。",
+      "why": "指数与板块分化反映市场定价",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-01/10261761.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261509.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261571.shtml",
+        "https://www.chinanews.com.cn/gj/2024/08-01/10261835.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "对中国这一领域加征税，美国推迟两周，涉180亿美元",
+      "summary": "对中国这一领域加征税，美国推迟两周，涉及180亿美元。推迟安排与涉及金额，是外部关税措施节奏与规模的具体信息，直接影响相关出口链预期。",
+      "why": "推迟与金额反映关税措施节奏",
+      "source": "中新网",
+      "publishedAt": "2024-08-01T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/08-01/10261835.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/08-01/10261283.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261483.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-01/10261530.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "美联储9月降息路径与鲍威尔表态的后续变化",
+    "政治局会议部署的促消费与扩大内需落地",
+    "民营经济促进法制定进展与市场准入变化",
+    "美国对华加征税推迟安排的后续走向",
+    "存量资产盘活与投资良性循环的政策抓手"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T06:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
