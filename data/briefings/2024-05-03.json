@@ -1,0 +1,159 @@
+{
+  "date": "2024-05-03",
+  "generatedAt": "2026-11-28T00:06:53.881+08:00",
+  "endedAt": "2026-11-28T00:06:53.881+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-05-02",
+    "to": "2024-05-03",
+    "fromAt": "2024-05-02T08:00:00+08:00",
+    "toAt": "2024-05-03T09:00:00+08:00",
+    "fromTs": 1714608000,
+    "toTs": 1714698000
+  },
+  "overview": "美联储宣布维持联邦基金利率不变，符合市场预期，海外高利率环境延续；港股5月开局再上18000点创年内新高。假期经济成为当日主线，5月1日全国铁路发送旅客2069.3万人次创单日历史新高，5月2日全社会跨区域人员流动量完成28272万人次。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "美联储宣布维持联邦基金利率不变 符合市场预期",
+      "summary": "美联储宣布维持联邦基金利率不变，符合市场预期。利率按兵不动意味着高利率环境延续，主要经济体货币政策路径仍是影响全球流动性的关键变量。",
+      "why": "美联储按兵不动，高利率延续",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-02/10210236.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210533.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210589.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "美联储宣布当日，港股大涨",
+      "summary": "港股5月开局再上18000点，创今年新高，同日另有“港股8连涨，创逾6年来最长升市”的报道。连续上涨反映市场对外部利率环境与经济基本面的乐观预期。",
+      "why": "港股连创新高，风险偏好回升",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-02/10210589.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210596.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210236.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "5月1日全国铁路发送旅客2069.3万人次 创单日历史新高",
+      "summary": "5月1日全国铁路发送旅客2069.3万人次，创单日历史新高。假期客流集中释放，反映居民出游需求旺盛，也是观察假日消费的前端指标。",
+      "why": "铁路单日客流创历史新高",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-02/10210320.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210342.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-02/10210335.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "爱因斯坦探针卫星FXT成像性能优异 兼具高能量高时间分辨能力",
+      "summary": "5月2日全社会跨区域人员流动量完成28272万人次。跨区域流动量是衡量人员出行活跃度的总量指标，假期期间持续保持高位运行。",
+      "why": "跨区域流动量维持高位",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-02/10210439.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-02/10210590.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-02/10210335.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "“五一”假期首日 天津市重点商贸企业销售额同比增10.3%",
+      "summary": "“五一”假期首日，天津市重点商贸企业销售额同比增长10.3%。假日首日商超与商圈的销售表现，是观察本地消费恢复程度的重要样本。",
+      "why": "假日首日重点商圈销售增长",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-02/10210436.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210411.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210420.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "北京等地纷纷出台新一轮举措 城市更新下足“绣花功夫”",
+      "summary": "北京等地纷纷出台新一轮举措，城市更新下足“绣花功夫”。城市更新从增量建设转向存量改造，涉及投资安排与城市功能品质的提升。",
+      "why": "城市更新转向存量改造",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-02/10210331.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210579.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210252.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "入境游支付便利化 外国游客体验扫码“买买买”",
+      "summary": "入境游支付便利化，外国游客体验扫码“买买买”。支付环节的便利化改造，配合免签扩容等措施，直接影响入境游客的停留时间与消费转化。",
+      "why": "支付便利化配合入境游扩容",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-02/10210579.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/05-02/10210488.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-02/10210331.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "中国首个自营超深水大气田累计产气超80亿立方米",
+      "summary": "中国首个自营超深水大气田累计产气超80亿立方米。自营深水气田产气突破，反映国内油气增储上产与深海勘探开发能力的实际进展。",
+      "why": "自营深水气田产气突破",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-02/10210322.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210339.shtml",
+        "https://www.chinanews.com.cn/gj/2024/05-02/10210300.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "刷新多项世界纪录 全球首套千米级深水发球管汇建造完工",
+      "summary": "全球首套千米级深水发球管汇建造完工。深水油气装备的国产化突破，关系到海洋工程装备的技术水平，也为深海油气开发提供装备支撑。",
+      "why": "深海装备国产化再获突破",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-02/10210339.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210322.shtml",
+        "https://www.chinanews.com.cn/gj/2024/05-02/10210300.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中欧“双向奔赴”引关注 多家外媒积极评价中国扩容“免签”朋友圈",
+      "summary": "“中欧双向奔赴”引发关注，多家外媒积极评价中国扩容“免签”朋友圈。免签国家范围扩大，配合支付与通关便利措施，是提升入境游规模的关键一环。",
+      "why": "免签扩容带动入境游预期",
+      "source": "中新网",
+      "publishedAt": "2024-05-02T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/05-02/10210488.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-02/10210579.shtml",
+        "https://www.chinanews.com.cn/gj/2024/05-02/10210565.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "美联储利率决议后的全球流动性与汇率反馈",
+    "“五一”假期消费与客运数据的完整口径",
+    "免签扩容后入境游客数量的实际变化"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T00:06:53.881+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

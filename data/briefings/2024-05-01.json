@@ -1,0 +1,158 @@
+{
+  "date": "2024-05-01",
+  "generatedAt": "2026-11-28T00:06:53.768+08:00",
+  "endedAt": "2026-11-28T00:06:53.768+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-04-30",
+    "to": "2024-05-01",
+    "fromAt": "2024-04-30T08:00:00+08:00",
+    "toAt": "2024-05-01T09:00:00+08:00",
+    "fromTs": 1714435200,
+    "toTs": 1714525200
+  },
+  "overview": "中共中央政治局召开会议，决定今年7月在北京召开二十届三中全会，并分析研究当前经济形势和经济工作。数据方面，4月制造业PMI为50.4%、连续两个月位于扩张区间。金融端，央行4月30日开展4400亿元7天期逆回购，发布一季度金融机构贷款投向统计报告。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中共中央政治局召开会议 决定召开二十届三中全会 分析研究当前经济形势和经济工作 审议《关于持续深入推进长三角一体化高质量发展若干政策措施的意见》 中共中央总书记习近平主持会议",
+      "summary": "中共中央政治局召开会议，决定召开党的二十届三中全会，分析研究当前经济形势和经济工作，并审议《关于持续深入推进长三角一体化高质量发展若干政策措施的意见》，会议由习近平总书记主持。",
+      "why": "政治局会议定调后续经济工作",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/04-30/10209360.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/04-30/10209358.shtml",
+        "https://www.chinanews.com.cn/gn/2024/04-30/10209094.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中共中央政治局4月30日召开会议，决定今年7月在北京召开中国共产党第二十届中央委员会第三次全体会议",
+      "summary": "中共中央政治局4月30日召开会议，决定今年7月在北京召开中国共产党第二十届中央委员会第三次全体会议。三中全会时点确定，意味着更深层次改革举措的部署进入具体日程。",
+      "why": "三中全会时点落定",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/04-30/10209358.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/04-30/10209360.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "4月制造业PMI为50.4% 连续两个月位于扩张区间",
+      "summary": "4月制造业PMI为50.4%，连续两个月位于扩张区间。制造业景气度连续回到扩张区间，是观察工业生产与订单修复节奏的月度先行指标。",
+      "why": "制造业PMI连续两月扩张",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-30/10209096.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209284.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209132.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "国家统计局：4月份中国采购经理指数保持扩张",
+      "summary": "国家统计局表示，4月份中国采购经理指数保持扩张。官方PMI是观察制造业与服务业景气变化的月度基准指标，其发布为判断需求走向提供了参照。",
+      "why": "官方PMI确认经济保持扩张",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-30/10209132.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209096.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209197.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "4月30日央行开展4400亿元7天期逆回购操作",
+      "summary": "4月30日央行开展4400亿元7天期逆回购操作，期限为7天。逆回购是央行调节银行体系短期流动性的主要工具，当日操作安排反映银行间资金面的即时供求状况。",
+      "why": "大额逆回购投放短期流动性",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-30/10209089.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209648.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554041098/index.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "央行发布2024年一季度金融机构贷款投向统计报告",
+      "summary": "央行发布2024年一季度金融机构贷款投向统计报告。贷款投向统计反映信贷资金在企业与居民等各领域的分布，是观察信贷结构变化的重要资料。",
+      "why": "贷款投向数据揭示信贷结构",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-30/10209648.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554041098/index.html",
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209089.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "中国人民银行 国家市场监督管理总局联合发布《受益所有人信息管理办法》",
+      "summary": "中国人民银行、国家市场监督管理总局联合发布《受益所有人信息管理办法》。办法对受益所有人信息备案作出规范，关系金融机构反洗钱与客户身份识别的执行口径。",
+      "why": "受益所有人信息管理规范出台",
+      "source": "中国人民银行",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554057764/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554046958/index.html",
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209089.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "北京优化调整住房限购政策",
+      "summary": "北京优化调整住房限购政策，其中二套房京籍家庭可在五环外新购一套房。政策调整与各地取消限购、买房落户等楼市“加减法”接连出台同步推进。",
+      "why": "北京限购调整放松购房约束",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-30/10209653.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209026.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209650.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "天津：京冀户籍居民在津购房 享天津户籍居民购房政策",
+      "summary": "天津明确京冀户籍居民在津购房可享受天津户籍居民购房政策。京津冀在购房资格上的打通，降低了跨城购房的制度性门槛，也便利了区域人口流动安排。",
+      "why": "京津冀购房资格互认落地",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-30/10209357.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209636.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209026.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "世界黄金协会：2024年一季度全球黄金需求总量同比增长3%至1238吨",
+      "summary": "世界黄金协会数据显示，2024年一季度全球黄金需求总量同比增长3%至1238吨。全球需求回升反映避险与配置需求的变化，是观察贵金属市场景气的重要指标。",
+      "why": "全球黄金需求同比增长3%",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-30/10209541.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209335.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209512.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "政治局会议对经济工作的后续部署与部委落实",
+    "5月PMI等高频数据能否延续扩张",
+    "三中全会筹备节奏与改革重点"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T00:06:53.768+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
