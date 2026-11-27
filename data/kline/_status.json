@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-26T04:54:07.115Z",
+  "generatedAt": "2026-11-27T04:57:30.323Z",
   "ok": 70,
   "failed": 18,
   "failures": [],
   "rejected": [
-    "star50/1d: shorter-overlap-mismatch（新 1671 根 < 现有 1672 根）",
+    "star50/1d: shorter-overlap-mismatch（新 1672 根 < 现有 1673 根）",
     "star50/1M: shorter-overlap-mismatch（新 83 根 < 现有 84 根）",
     "a500/1w: shorter-too-partial（新 114 根 < 现有 1115 根）",
     "a500/1M: shorter-too-partial（新 27 根 < 现有 263 根）",
-    "csi1000/1d: shorter-too-partial（新 2944 根 < 现有 5317 根）",
+    "csi1000/1d: shorter-too-partial（新 2945 根 < 现有 5318 根）",
     "csi1000/1w: shorter-too-partial（新 621 根 < 现有 1115 根）",
     "csi1000/1M: shorter-too-partial（新 146 根 < 现有 263 根）",
     "dji/1d: shorter-too-partial（新 1000 根 < 现有 9222 根）",
@@ -20,11 +20,11 @@
     "spx/1d: shorter-too-partial（新 1000 根 < 现有 10186 根）",
     "spx/1w: shorter-too-partial（新 1000 根 < 现有 2094 根）",
     "spx/1M: derive-shorter（新 48 根 < 现有 483 根）",
-    "usdcny/1d: shorter-too-partial（新 3143 根 < 现有 4231 根）",
+    "usdcny/1d: shorter-too-partial（新 3144 根 < 现有 4232 根）",
     "usdcny/1w: shorter-too-partial（新 630 根 < 现有 848 根）",
     "usdcny/1M: shorter-too-partial（新 145 根 < 现有 196 根）",
     "ndx/1d: shorter-too-partial（新 1000 根 < 现有 1921 根）",
-    "sge_au9999/1d: shorter-too-partial（新 2410 根 < 现有 5571 根）",
+    "sge_au9999/1d: shorter-too-partial（新 2411 根 < 现有 5572 根）",
     "sge_au9999/1w: shorter-too-partial（新 509 根 < 现有 1169 根）",
     "sge_au9999/1M: shorter-too-partial（新 120 根 < 现有 275 根）"
   ]
