@@ -1,0 +1,170 @@
+{
+  "date": "2024-01-23",
+  "generatedAt": "2026-11-27T19:24:13.629+08:00",
+  "endedAt": "2026-11-27T19:24:13.629+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-01-22",
+    "to": "2024-01-23",
+    "fromAt": "2024-01-22T08:00:00+08:00",
+    "toAt": "2024-01-23T09:00:00+08:00",
+    "fromTs": 1705881600,
+    "toTs": 1705971600
+  },
+  "overview": "货币政策与地方数据同日揭晓：1月LPR报价出炉，1年期3.45%、5年期以上4.2%，连续5个月不变；央行开展1220亿元逆回购。首套房贷利率进入“3时代”，A股走弱、沪指失守2800点。12省份GDP出炉，消费规模再创新高，跨境电商出口增长19.6%，银发经济迎来26项举措。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "1月LPR报价出炉：1年期LPR为3.45%，5年期以上LPR为4.2%",
+      "summary": "1月LPR报价出炉，1年期LPR为3.45%，5年期以上LPR为4.2%。报价结果直接影响存量房贷重定价与新增贷款定价，是观察贷款市场报价机制运行、货币政策传导效率以及银行净息差压力的直接指标。",
+      "why": "LPR报价落地，贷款定价基准更新",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-22/10150348.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150511.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150505.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150392.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中国LPR连续5个月不变 2024年仍有降息空间",
+      "summary": "中国LPR已连续5个月保持不变，报道同时指出2024年仍有降息空间。利率按兵不动与后续空间预期的并存，反映政策在稳增长与防风险之间保持弹性，货币政策节奏仍是市场关注焦点。",
+      "why": "按兵不动但留有空间，节奏成焦点",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-22/10150505.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150348.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150511.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150356.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行1月22日开展1220亿元逆回购操作 期限为7天",
+      "summary": "央行1月22日开展1220亿元逆回购操作，期限为7天。公开市场操作直接调节银行体系流动性，节前资金面的平稳运行关系到债券市场与金融机构的资金成本，逆回购规模变化是观察流动性取向的日常窗口。",
+      "why": "逆回购投放呵护节前流动性",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-22/10150356.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150505.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150348.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150392.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "报告称中国60个主要城市首套房贷利率进入“3时代”",
+      "summary": "报告称中国60个主要城市首套房贷利率进入“3时代”。首套房利率进入3字头，购房月供成本相应下降，对改善型与刚性需求边际释放作用显现，也影响银行按揭资产定价与房地产成交的修复。",
+      "why": "首套利率进3时代，购房成本边际下降",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-22/10150554.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150764.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150447.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150297.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "中国A股周一下跌 沪指失守2800点关口",
+      "summary": "中国A股周一下跌，沪指失守2800点关口。节前资金面与观望情绪交织下，指数阶段性回落显示市场对政策落地节奏与基本面数据仍待确认，成交与情绪的后续变化值得留意。",
+      "why": "沪指失守2800点，节前观望情绪升温",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-22/10150764.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150348.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150505.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150297.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "12省份2023年GDP数据出炉 9个省份增速跑赢全国",
+      "summary": "12省份2023年GDP数据出炉，其中9个省份增速跑赢全国。地方经济表现分化明显，增速领先地区多集中在产业转型与区位条件较优的区域，为观察区域发展格局与政策倾斜提供了年度样本。",
+      "why": "12省份数据出炉，区域增速分化明显",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-22/10150296.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150447.shtml",
+        "https://www.chinanews.com.cn/gn/2024/01-22/10150724.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150832.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "我国消费市场规模再创新高",
+      "summary": "我国消费市场规模再创新高，反映居民消费与商品流通的总体水平继续提升。消费是内需的主要构成，其规模扩张与结构变化共同决定经济修复的稳固程度，节前备货与年货消费是这一趋势的近期体现。",
+      "why": "消费规模新高，内需修复的成色",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/01-22/10150351.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150386.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150366.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150394.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "去年1.83万亿元产品由我国销往世界各地 跨境电商出口增长19.6%",
+      "summary": "去年1.83万亿元产品由我国销往世界各地，跨境电商出口增长19.6%。跨境电商成为外贸增长的新支点，物流、支付与合规配套的完善决定其增速能否延续，也关系到出口结构与贸易方式的升级。",
+      "why": "跨境电商出口增19.6%，外贸新支点",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-22/10150386.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150416.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150824.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150366.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "我国制造业总体规模连续14年保持全球第一",
+      "summary": "我国制造业总体规模连续14年保持全球第一，产业基础与配套能力继续巩固。制造规模优势为经济应对外部冲击提供支撑，转型升级的进度决定这一优势能否转化为质量与效益层面的竞争力。",
+      "why": "制造业规模连居全球第一十四年",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-22/10150358.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150354.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150554.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150366.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "国家发改委：将从4个方面26项举措发展银发经济增进老年人福祉",
+      "summary": "国家发改委表示将从4个方面26项举措发展银发经济、增进老年人福祉，银发经济由此获得专门文件层面的政策支持。老龄化背景下相关产业赛道扩容，同时需要财政、养老服务与消费环境配套跟进。",
+      "why": "银发经济26项举措，养老产业扩容",
+      "source": "中新网",
+      "publishedAt": "2024-01-22T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/01-22/10150405.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/01-22/10150402.shtml",
+        "https://www.chinanews.com.cn/gn/2024/01-22/10150427.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-22/10150752.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "LPR连续不变后的降息窗口与节奏",
+    "首套房贷利率进入3时代后的成交修复",
+    "节前逆回购与A股成交量的配合节奏",
+    "银发经济26项举措的部门分工与落地时点"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:24:13.629+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

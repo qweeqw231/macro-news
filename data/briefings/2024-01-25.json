@@ -1,0 +1,170 @@
+{
+  "date": "2024-01-25",
+  "generatedAt": "2026-11-27T19:24:14.320+08:00",
+  "endedAt": "2026-11-27T19:24:14.320+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-01-24",
+    "to": "2024-01-25",
+    "fromAt": "2024-01-24T08:00:00+08:00",
+    "toAt": "2024-01-25T09:00:00+08:00",
+    "fromTs": 1706054400,
+    "toTs": 1706144400
+  },
+  "overview": "央行开年释放超预期大礼包：宣布降准0.5个百分点，并下调支农支小再贷款、再贴现利率，2月5日起执行，强调强化跨周期和逆周期调节。经营性物业贷款政策满足房企合理融资需求，潘功胜表示2024年有四方面因素支撑人民币汇率。4630亿元逆回购落地，A股三大股指收涨、沪指重回2800点。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中国央行降准0.5个百分点 下调支农再贷款等政策工具利率",
+      "summary": "中国央行降准0.5个百分点，并下调支农再贷款等政策工具利率。降准释放长期资金、下调政策工具利率引导信贷定价，两者组合指向宽信用与稳增长意图，作用于银行负债成本与实体融资条件两端。",
+      "why": "降准降工具利率，宽信用组合落地",
+      "source": "中新网",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-24/10152282.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553729065/index.html",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151944.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151924.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中国人民银行决定下调金融机构存款准备金率和支农支小再贷款、再贴现利率",
+      "summary": "中国人民银行决定下调金融机构存款准备金率和支农支小再贷款、再贴现利率。这是降准与结构性工具利率下调的正式落地表述，结构性工具指向涉农与小微领域，资源配置的导向性因而更加明确。",
+      "why": "结构性工具同步下调，涉农小微获倾斜",
+      "source": "中国人民银行",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553729065/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152282.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151944.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151924.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "事关利率、房产、物价，央行开年发声释放利好！",
+      "summary": "央行开年发声涉及利率、房产、物价等关键领域，市场评价为释放利好。三者分别对应资金价格、地产融资与物价水平，政策沟通口径的变化会影响居民购房与借贷决策的预期。",
+      "why": "利率房产物价同步发声，预期改善",
+      "source": "中新网",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-24/10152377.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152282.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553733486/index.html",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151984.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "央行：将强化跨周期和逆周期调节 为经济增长和物价稳定营造良好的货币金融环境",
+      "summary": "央行表示将强化跨周期和逆周期调节，为经济增长和物价稳定营造良好的货币金融环境。调控表述的强化，意味着货币政策在总量调节之外更强调节奏配合与政策协同，稳定预期的意图更加清晰。",
+      "why": "强化跨周期逆周期调节，稳预期",
+      "source": "中新网",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-24/10151984.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152282.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151924.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151994.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "潘功胜：2024年有四方面因素支撑人民币汇率",
+      "summary": "潘功胜表示2024年有四方面因素支撑人民币汇率。汇率表态服务于预期管理与跨境资金稳定，在美联储政策节奏变化的背景下，双向波动加大时明确支撑因素有助于降低市场的单向预期。",
+      "why": "明确汇率支撑因素，稳定跨境预期",
+      "source": "中新网",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-24/10152284.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151936.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152306.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151994.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "做好经营性物业贷款管理 满足房地产企业合理融资需求",
+      "summary": "关于做好经营性物业贷款管理、满足房地产企业合理融资需求的政策安排出台。经营性物业被纳入融资支持范围，是房地产融资协调机制的具体落地，有助于缓解优质房企的现金流压力。",
+      "why": "经营性物业贷款，房企现金流解压",
+      "source": "中国人民银行",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553733486/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152241.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152294.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151663.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "中国央行和香港金管局推六项金融举措",
+      "summary": "中国央行和香港金管局推出六项金融举措，涉及债券市场与跨境金融安排。加强内地与香港金融市场互联，是推进金融高水平开放与提升香港国际金融中心功能的具体部署。",
+      "why": "央港六项举措，金融互联互通加码",
+      "source": "中新网",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-24/10152281.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553741605/index.html",
+        "https://www.chinanews.com.cn/gn/2024/01-24/10151772.shtml",
+        "https://www.chinanews.com.cn/gn/2024/01-24/10151691.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "央行1月24日开展4630亿元逆回购操作 期限为7天",
+      "summary": "央行1月24日开展4630亿元逆回购操作，期限为7天。在降准落地前的过渡期，公开市场操作承担着维持流动性合理充裕的日常功能，投放节奏与资金面松紧直接相关。",
+      "why": "4630亿元逆回购，过渡期稳流动性",
+      "source": "中新网",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-24/10151708.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152282.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152377.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151994.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "A股三大股指收涨，沪指重回2800点",
+      "summary": "A股三大股指收涨，沪指重回2800点。降准降息消息落地后，节前资金面宽松预期与政策信心共同带动指数修复，投资者风险偏好有所回升。",
+      "why": "沪指重回2800点，政策信心回升",
+      "source": "中新网",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-24/10151932.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152377.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10152282.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151984.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "人社部：2023年城镇新增就业1244万人 就业局势保持总体稳定",
+      "summary": "人社部介绍2023年城镇新增就业1244万人，就业局势保持总体稳定。就业是最大的民生，也是观察居民收入预期与消费信心的基础变量，就业稳定为内需修复提供支撑。",
+      "why": "新增就业1244万人，就业基本盘稳",
+      "source": "中新网",
+      "publishedAt": "2024-01-24T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-24/10151734.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-24/10151766.shtml",
+        "https://www.chinanews.com.cn/gn/2024/01-24/10151738.shtml",
+        "https://www.chinanews.com.cn/gn/2024/01-24/10151743.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "降准2月5日执行前后的流动性与债市反应",
+    "经营性物业贷款政策的落地范围与银行执行",
+    "潘功胜所述汇率支撑因素的持续性",
+    "节前最后交易周的成交与资金外溢情况"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:24:14.320+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
