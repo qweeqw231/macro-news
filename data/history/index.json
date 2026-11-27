@@ -1,6 +1,6 @@
 {
   "v": 2,
-  "generatedAt": "2026-11-26T15:22:51+08:00",
+  "generatedAt": "2026-11-27T22:45:48.234+08:00",
   "from": "2024-01-01",
   "to": "2026-10-04",
   "total": 324528,
@@ -6913,13 +6913,21 @@
       "d": "2024-03-22",
       "n": 329,
       "b": 75428,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "国新办举行近期投资、财政、金融有关数据及政策新闻发布会。财政部表示1—2月财政收入延续增长态势、支出靠前发力，我国关税总水平降至7.3%；央行称法定存款准备金率",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:34:09.412+08:00"
     },
     {
       "d": "2024-03-21",
       "n": 331,
       "b": 74932,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "3月LPR报价出炉，1年期与5年期均维持不变，专家称仍有降息空间；财政部决定发行2024年记账式附息（七期）国债（50年期）。商务部称超六成“外资24条”政策举",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:34:09.347+08:00"
     },
     {
       "d": "2024-03-20",
@@ -6955,451 +6963,751 @@
       "d": "2024-03-15",
       "n": 395,
       "b": 89601,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "财政部连续16年在港发行人民币国债以巩固香港离岸人民币中心地位，央行发布外籍来华人员支付指南；今年前两月北京地区进出口总值5794.4亿元，2023年新设经营主",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:22.547+08:00"
     },
     {
       "d": "2024-03-14",
       "n": 290,
       "b": 64867,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "财政部要求从严从紧控制“三公”经费管理；前两个月汽车出口同比增长超30%，四川外贸进出口规模创历史同期新高。央行召开柜台债券业务座谈会；“十四五”期间地下管网改",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:22.545+08:00"
     },
     {
       "d": "2024-03-13",
       "n": 329,
       "b": 74117,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "财政部公布《我国支持科技创新主要税费优惠政策指引》，李强主持召开国务院常务会议；重磅政策频出、完善基础制度护航房地产发展，央行3月12日开展100亿元7天期逆回",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:22.542+08:00"
     },
     {
       "d": "2024-03-12",
       "n": 291,
       "b": 65392,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "十四届全国人大二次会议在京闭幕，表决通过政府工作报告、2024年国民经济和社会发展计划与2024年中央和地方预算的决议，并表决通过新修订的国务院组织法。1万亿元",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:22.540+08:00"
     },
     {
       "d": "2024-03-11",
       "n": 258,
       "b": 58910,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "全国政协十四届二次会议举行闭幕会，王沪宁发表讲话，十四届全国人大二次会议闭幕会定于次日下午举行。代表建言聚焦消费潜能释放、城乡融合与区域协调发展、粮食和重要农产",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:22.534+08:00"
     },
     {
       "d": "2024-03-10",
       "n": 191,
       "b": 44715,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "物价数据出现方向变化：2月份居民消费价格同比上涨0.7%，工业生产者出厂价格同比下降2.7%，CPI同比由降转涨、猪肉价格结束九连降。住建部称房地产还有很大潜力",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:31:30.016+08:00"
     },
     {
       "d": "2024-03-09",
       "n": 258,
       "b": 60161,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "外贸开局与立法清单并进：前2个月我国货物贸易进出口同比增长8.7%、创历史同期新高，海南对东盟进出口额增长近五成，福建对“一带一路”共建国家跨境电商出口破200",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:31:38.849+08:00"
     },
     {
       "d": "2024-03-08",
       "n": 436,
       "b": 100876,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "外贸与财政数据公布：前2个月我国货物贸易进出口增长8.7%，2月末外汇储备32258亿美元，较1月升幅0.20%。财政部表示今年财政政策基调是适度加力、提质增效",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:31:38.847+08:00"
     },
     {
       "d": "2024-03-07",
       "n": 387,
       "b": 92090,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "经济主题记者会释放密集信号：央行表示后续仍然有降准空间，货币政策工具箱依然丰富，并把价格稳定与温和回升作为货币政策重要考量；财政部称将研究出台结构性减税降费政策",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:31:38.841+08:00"
     },
     {
       "d": "2024-03-06",
       "n": 400,
       "b": 92818,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "十四届全国人大二次会议在京开幕，李强作政府工作报告。今年发展主要预期目标为5%左右，赤字率拟按3%安排，拟连续几年发行超长期特别国债、今年先发行1万亿元；报告提",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:31:30.005+08:00"
     },
     {
       "d": "2024-03-05",
       "n": 413,
       "b": 96716,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "十四届全国人大二次会议3月5日上午开幕，会期7天，七项议程发布，首场发布会逾90分钟密集回应关切。央行披露完成2023年“两会”建议提案办理工作，柜台债券投资品",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:30:17.784+08:00"
     },
     {
       "d": "2024-03-04",
       "n": 295,
       "b": 68155,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "全国政协十四届二次会议4日下午开幕，会期6天，新闻发布聚焦经济社会热点。经济回升向好、三大区域挑大梁，一组先行指数呈现开局活力。天津滨海新区449个项目开复工总",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:30:17.781+08:00"
     },
     {
       "d": "2024-03-03",
       "n": 138,
       "b": 31676,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "地方促消费与制度供给同步推进：上海发布新一轮燃油车以旧换新补贴政策和新能源汽车置换政策，住建部提出加快谋划第二批及后续保障性住房项目；IPO监管2个月内开出33",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:30:17.779+08:00"
     },
     {
       "d": "2024-03-02",
       "n": 150,
       "b": 34389,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "2月制造业采购经理指数为49.1%，比上月下降0.1个百分点，春节假期因素致回落；2023年全年国内生产总值超126万亿。国务院常务会议部署经济工作，四部门延续",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:30:17.777+08:00"
     },
     {
       "d": "2024-03-01",
       "n": 355,
       "b": 80860,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "政策与数据信号密集：中共中央政治局召开会议讨论政府工作报告，中央财经委第四次会议作出部署。国家统计局公布2023年统计公报，全年社会消费品零售总额471495亿",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:30:17.771+08:00"
     },
     {
       "d": "2024-02-29",
       "n": 336,
       "b": 76273,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "两会前夕财政与金融发力密集：央行28日开展3240亿元7天期逆回购，人民银行与上海市举行工作座谈会，财政部3月将在香港发行120亿元国债，财政收入预计继续恢复性",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:01.162+08:00"
     },
     {
       "d": "2024-02-28",
       "n": 364,
       "b": 82969,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "立法收官与政策部署并进：十四届全国人大常委会第八次会议闭幕，表决通过新修订的保守国家秘密法；人民银行称将加大对五大重点领域资金支持。外贸方面，八部门称2023年",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:01.108+08:00"
     },
     {
       "d": "2024-02-27",
       "n": 280,
       "b": 63105,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "两会前的立法准备提速：十四届全国人大常委会第八次会议在京举行，审议全国人大常委会工作报告稿。宏观方面，多地优化公积金贷款政策、首套房贷首付比例低至两成，1月外汇",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:01.053+08:00"
     },
     {
       "d": "2024-02-26",
       "n": 273,
       "b": 62080,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "节后复工与经济部署成为当日主线：1月吸收外资1127.1亿元，财政部强调用好重点生态保护修复治理资金；广东已有80%外省务工人员返岗，多省份部署加快推进新型工业",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:01.001+08:00"
     },
     {
       "d": "2024-02-25",
       "n": 120,
       "b": 27034,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "稳增长与稳外资成为当日主线：国常会提出今年经济工作重要发力点，专项债发行稳健开局，普惠小微与制造业中长期贷款余额同比增23.5%和31.9%。楼市出现企稳迹象，",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:00.948+08:00"
     },
     {
       "d": "2024-02-24",
       "n": 126,
       "b": 28467,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "政策部署密集：中央财经委第四次会议部署新一轮设备更新和消费品以旧换新、降低全社会物流成本，国常会召开；央行23日开展2470亿元7天期逆回购。1月70城房价环比",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:00.891+08:00"
     },
     {
       "d": "2024-02-23",
       "n": 262,
       "b": 59131,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "降息影响持续释放：5年来最大幅度降息落地，央行22日开展580亿元7天期逆回购；IMF上调全球和中国2024年增长预期。国内房地产融资协调机制获积极进展，北京发",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:00.838+08:00"
     },
     {
       "d": "2024-02-22",
       "n": 233,
       "b": 52650,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "LPR新报价持续发酵：5年期以上LPR降至3.95%，央行开展490亿元7天期逆回购；交通银行多地落实房地产融资协调机制，楼市“小阳春”受关注。外贸与消费方面，",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:00.781+08:00"
     },
     {
       "d": "2024-02-21",
       "n": 285,
       "b": 63890,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "节后首个交易日围绕LPR重定价展开：2月1年期LPR报3.45%、5年期以上LPR报3.95%，后者出现新机制形成以来最大降幅，房贷利率下调25个基点；住建部称",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:00.717+08:00"
     },
     {
       "d": "2024-02-20",
       "n": 263,
       "b": 58795,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "节后开工周，主线落在货币、楼市与外贸：央行开展320亿元7天期逆回购，货币政策工具加码“三大工程”；楼市“春节档”政策发放带动看房热度上升，1月50城新房成交降",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:33:00.661+08:00"
     },
     {
       "d": "2024-02-19",
       "n": 269,
       "b": 61032,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "节后首个工作日政策密集：李强主持召开国务院第三次全体会议，讨论《政府工作报告》稿并对开年工作进行动员；央行5000亿元“量增价平”续作MLF；两部门在自贸区及临",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:50.715+08:00"
     },
     {
       "d": "2024-02-18",
       "n": 261,
       "b": 58249,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "外事与出行是当日重点：第60届慕尼黑安全会议开幕，王毅会见欧盟高级代表博雷利，习近平向第37届非盟峰会致贺电；节后数据显示，春节假期跨区域人员流动量预计超23亿",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:50.346+08:00"
     },
     {
       "d": "2024-02-17",
       "n": 67,
       "b": 14838,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "龙年开局港股“三连升”、恒指重上16000点；外贸端，广西外贸进出口额截至2月中旬同比增长8%以上，“春节不打烊”中国外贸红火开局；政策与产业端，政策问答解读如",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:49.978+08:00"
     },
     {
       "d": "2024-02-16",
       "n": 76,
       "b": 16848,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "返程高峰当天信息密集：正月初五中国跨区域人员流动量创2024年春运单日新高，铁路累计发送旅客2.3亿人次；产业与外贸端，房地产融资协调机制加速落地，五大银行加速",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:49.609+08:00"
     },
     {
       "d": "2024-02-15",
       "n": 87,
       "b": 19360,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "春节假期“上半场”的产业与消费信号：各地冲刺“开门红”加紧生产，1月中国中小企业发展指数回升，1.24亿户个体工商户支撑近3亿人就业；消费端把握节日消费新趋势，",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:49.220+08:00"
     },
     {
       "d": "2024-02-14",
       "n": 75,
       "b": 16569,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "返程高峰与节后开工叠加：交通运输部数据显示2月12日全社会跨区域人员流动量完成28465万人次，冷空气影响大部地区、部分地区降温超10℃；2023年机动车保有量",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:48.841+08:00"
     },
     {
       "d": "2024-02-13",
       "n": 90,
       "b": 20190,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "假期后半段聚焦政策与出行：国办印发《关于加快构建废弃物循环利用体系的意见》，个税改革强调更好惠及民生；春运返程升温，2月11日全社会跨区域人员流动量完成2737",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:48.472+08:00"
     },
     {
       "d": "2024-02-12",
       "n": 73,
       "b": 15956,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "价格与消费成为当日主线：CPI环比连续两个月上涨，社会有效需求温和复苏；除夕跨区域人员流动量超1.9亿人次、较上年同期增长26.7%，即时零售销售额同比增长约2",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:48.096+08:00"
     },
     {
       "d": "2024-02-11",
       "n": 86,
       "b": 19083,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "春节长假期间以消费与出行数据为主轴：除夕夜网络支付峰值创同期历史新高，2023年国内出游48.91亿人次、旅游花费4.91万亿元，消费品总量达19173.7万种",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:47.726+08:00"
     },
     {
       "d": "2024-02-10",
       "n": 98,
       "b": 22098,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "金融与政策面密集发力：央行公布1月金融数据，人民币贷款增加4.92万亿元，社融增量6.5万亿元，M2同比增长8.7%；银行业加快对接房地产项目“白名单”，四部门",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:29:47.369+08:00"
     },
     {
       "d": "2024-02-09",
       "n": 155,
       "b": 35317,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "物价与货政报告同日发布：国家统计局公布1月CPI环比上涨0.3%，PPI环比同比降幅均收窄；央行发布2023年四季度货币政策执行报告，提出今年物价有望温和回升，",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-02-08",
       "n": 239,
       "b": 54787,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "财政与外贸成为当日主线：财政部提前通知地方增发2023年国债第三批项目预算1975亿元，国家发改委称2023年1万亿元增发国债项目全部下达；1月末外汇储备规模3",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-02-07",
       "n": 296,
       "b": 67152,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "降准效应在节后首个交易日释放：A股三大指数集体拉升，沪指收涨3.23%报2789.49点，北向资金净买入126亿元；宏观层面，首次降准释放约1万亿元中长期流动性",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-02-06",
       "n": 279,
       "b": 63003,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "央行年内首次降准落地：下调金融机构存款准备金率0.5个百分点，释放长期资金约1万亿元，支持一季度经济“开好局”。“国家账本”显示2023年人民币贷款增超22万亿",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-02-05",
       "n": 305,
       "b": 69248,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "节前流动性与年度数据并行：央行2月4日开展430亿元14天期逆回购操作，跨节资金安排延续；商务部披露2023年企业承接服务外包合同额28666亿元、对外投资合作",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-02-04",
       "n": 236,
       "b": 53599,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "海外货币政策预期与国内稳增长信号交织：欧洲央行降息预期升温，IMF预计2024年中国经济将增长4.6%；房地产融资“白名单”在多地密集落地，人民银行对6家信用评",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-02-03",
       "n": 150,
       "b": 33820,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "财政政策与经济数据继续主导版面：国务院常务会议召开，财政政策围绕强产、保粮、促创新推动高质量发展，2023年财政收入保持恢复性增长态势；2023年我国服务贸易规",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-02-02",
       "n": 262,
       "b": 59093,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "美联储按兵不动与财政数据构成当日主线：联邦基金利率维持在5.25%至5.50%，鲍威尔称3月不太可能降息；财政部披露2023年全国一般公共预算收入突破21万亿元",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-02-01",
       "n": 330,
       "b": 74767,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "1月数据与政策信号交替出现：国家统计局公布1月制造业PMI回升至49.2%，央行开展5440亿元7天期逆回购对冲节前流动性；人民币对美元震荡走低，多城放松限购、",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-01-31",
       "n": 282,
       "b": 64020,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "31省份公布2024年GDP目标主打创新牌，财政部披露2023年全国发行新增债券46571亿元；房地产项目“白名单”首笔贷款在南宁落地，银行再掀个人养老金争夺；",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T18:00:00+08:00"
     },
     {
       "d": "2024-01-30",
       "n": 256,
       "b": 58105,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "节前流动性与资本市场政策加码：央行净投放3780亿元，证监会全面暂停限售股出借、限制融券效率，何立峰部署上市公司高质量发展。2023年国企利润总额46332.8",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:16.046+08:00"
     },
     {
       "d": "2024-01-29",
       "n": 256,
       "b": 57967,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "资本市场监管与节前数据成为主线：证监会进一步加强融券业务监管、全面暂停限售股出借，结构性减税降费政策落实路径明确。受春节备货需求拉动，预计春节前多数水果价格小幅",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:15.700+08:00"
     },
     {
       "d": "2024-01-28",
       "n": 148,
       "b": 33842,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "中法建交60周年之际，周末版面聚焦政策与节前经济数据：A股受利好推动走出“四连阳”，广州放开120平方米以上住房限购，上海详解扩大金融开放的“三个更好”，浦东新",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:15.362+08:00"
     },
     {
       "d": "2024-01-27",
       "n": 124,
       "b": 28530,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "春运大幕今日开启，全国铁路春运预计发送旅客4.8亿人次。2023年企业贷款加权平均利率降至3.88%、持续创新低，央行开展4610亿元逆回购；住建部部署房地产融",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:15.005+08:00"
     },
     {
       "d": "2024-01-26",
       "n": 278,
       "b": 63850,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "降准大礼包落地后首个交易日市场回暖：A股三大股指飘红，沪指放量大涨3.03%、重返2900点，港股重上16000点。央行当日开展4660亿元7天期逆回购，经营性",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:14.653+08:00"
     },
     {
       "d": "2024-01-25",
       "n": 336,
       "b": 77492,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "央行开年释放超预期大礼包：宣布降准0.5个百分点，并下调支农支小再贷款、再贴现利率，2月5日起执行，强调强化跨周期和逆周期调节。经营性物业贷款政策满足房企合理融",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:14.320+08:00"
     },
     {
       "d": "2024-01-24",
       "n": 353,
       "b": 81120,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "节前政策与流动性信号密集：央行开展4650亿元7天期逆回购；国务院常务会议召开，银发经济迎来首个专门文件。消费端4.36万亿元、增速7.4%显示政策显效，服务消",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:13.984+08:00"
     },
     {
       "d": "2024-01-23",
       "n": 318,
       "b": 72272,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "货币政策与地方数据同日揭晓：1月LPR报价出炉，1年期3.45%、5年期以上4.2%，连续5个月不变；央行开展1220亿元逆回购。首套房贷利率进入“3时代”，A",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:13.629+08:00"
     },
     {
       "d": "2024-01-22",
       "n": 269,
       "b": 61286,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "节前交易周政策与预期升温：LPR报价行扩至20家，新一期LPR报价会否下调引发讨论。北京财政收入达八年来最好水平、为企业减负超850亿元，一般公共预算支出首次突",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:13.303+08:00"
     },
     {
       "d": "2024-01-21",
       "n": 154,
       "b": 34990,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "周末版面聚焦2023年经济数据：规模以上工业增加值同比增长4.6%，126万亿元GDP的分量再被审视，工业经济高质量发展扎实推进。全球贸易增长乏力引关注，航运企",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:24:12.958+08:00"
     },
     {
       "d": "2024-01-20",
       "n": 134,
       "b": 29760,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "开放与调控并行的一天：商务部披露2023年全国吸收外资1.1万亿元人民币，跨境贸易投资高水平开放政策试点扩大至广东全辖实施，中美金融工作组举行第三次会议。国家发",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:17:03.207+08:00"
     },
     {
       "d": "2024-01-19",
       "n": 361,
       "b": 81251,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "金融监管与地产政策同步推进：司法部、人民银行、金融监管总局负责人就修改部分行政法规和国务院决定答记者问，经济聚焦提出全面加强金融监管。北京发布2024年供地计划",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:17:03.205+08:00"
     },
     {
       "d": "2024-01-18",
       "n": 378,
       "b": 85120,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "年度经济数据集中发布：2023年国内生产总值1260582亿元、同比增长5.2%，12月规模以上工业增加值增长6.8%，全年固定资产投资增长3.0%，房地产开发",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:17:08.676+08:00"
     },
     {
       "d": "2024-01-17",
       "n": 380,
       "b": 85751,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "稳外贸稳外资政策工具再更新：新版《稳外贸稳外资税收政策指引》发布，央行连续三个月向市场注入较多流动性，开年MLF超额续作、存款利率下调。江苏出台政策礼包支持民营",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:17:03.198+08:00"
     },
     {
       "d": "2024-01-16",
       "n": 341,
       "b": 76730,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "开年金融与地产信号交织：央行1月继续超额续做MLF、中标利率连续5个月不变，消费贷利率竞争再度加剧。地方层面四川调整优化房地产政策，加大首套房与改善性住房支持力",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:16:15.549+08:00"
     },
     {
       "d": "2024-01-15",
       "n": 299,
       "b": 66505,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "金融与需求两端同步发力：2023年末全国普惠型小微企业贷款余额增长超23%，科技型企业金融服务进一步强化，消费市场持续回暖。同时外资加码中国市场，运力提升助推汽",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:16:15.547+08:00"
     },
     {
       "d": "2024-01-14",
       "n": 146,
       "b": 32479,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "稳外资与稳增长并进：国家发改委推出第七批重大外资项目、计划总投资超150亿美元，实体经济融资成本稳中有降，住房租赁市场获金融支持支持。外贸方面，新三样出口首次突",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:16:15.542+08:00"
     },
     {
       "d": "2024-01-13",
       "n": 143,
       "b": 32040,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "数据密集日：国家统计局公布12月CPI环比小幅上涨、CPI与PPI同比降幅均收窄；海关总署披露全年货物贸易进出口总值41.76万亿元、同比增长0.2%；央行公布",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:15:43.653+08:00"
     },
     {
       "d": "2024-01-12",
       "n": 387,
       "b": 87201,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "周二宏观政策与市场信号交织：财政部就促进数据合规高效流通使用发出指导意见，为高质量发展营造良好货币金融环境的声音同步出现。存款利率密集调整、人民币汇率逼近7.2",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:15:43.651+08:00"
     },
     {
       "d": "2024-01-11",
       "n": 394,
       "b": 88651,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "周一政策面聚焦民营经济与金融支持：央行行长潘功胜会见美国前财长萨默斯，副行长陆磊出席金融领域专家研讨会，郑栅洁提出做好促进民营经济发展政策的一致性评估。中小企业",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:15:43.645+08:00"
     },
     {
       "d": "2024-01-10",
       "n": 342,
       "b": 77538,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "关税与外贸政策是当日主线：关税开启新一轮调整，《区域全面经济伙伴关系协定》生效两周年持续释放区域红利。财政端探讨探索更多“财政+”模式；楼市方面广州开出一线城市",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:12:01.259+08:00"
     },
     {
       "d": "2024-01-09",
       "n": 313,
       "b": 70029,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "货币与财政两端同步发力：央行开展500亿元7天期逆回购操作，中小银行下调存款利率稳息差，以积极财政政策推动高质量发展。房地产端，广州推出房票安置以缩短去库存周期",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:12:01.206+08:00"
     },
     {
       "d": "2024-01-08",
       "n": 276,
       "b": 62166,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "外汇与资本市场数据主导当日：截至2023年12月末我国外汇储备规模为32380亿美元，保险资金加大不动产配置力度，消费回升态势显著。开放端，海南自贸港发布6项制",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:12:01.154+08:00"
     },
     {
       "d": "2024-01-07",
       "n": 107,
       "b": 23947,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "新年首场国务院常务会议聚焦银发经济；国务院发文完善国有资本经营预算制度。宁吉喆预计2023年四大宏观指标符合预期，12月亚洲制造业PMI为49.8%增速放缓，第",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:12:01.102+08:00"
     },
     {
       "d": "2024-01-06",
       "n": 113,
       "b": 25145,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "央行工作会议定调2024年，稳慎扎实推进人民币国际化，中小银行密集跟降存款利率。财政端强调积极财政政策加力提效；房地产方面多地发放公积金贷款“礼包”，两部门稳步",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:12:01.048+08:00"
     },
     {
       "d": "2024-01-05",
       "n": 291,
       "b": 65894,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "中央政治局常务委员会会议召开并定调；财政端强调强化政策支持和资金保障，促进国民经济循环畅通。三部门发布横琴粤澳深度合作区个人行李及货物进出口税收政策。前11月全",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:11:26.896+08:00"
     },
     {
       "d": "2024-01-04",
       "n": 273,
       "b": 61660,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "开年金融与楼市政策成为主线：央行回收过剩流动性后降准降息预期仍在，多地银行扎堆跟降存款利率，房贷利率下调，东莞取消首套房贷利率下限，洛阳推出购房抽奖最高50万元",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:11:26.837+08:00"
     },
     {
       "d": "2024-01-03",
       "n": 277,
       "b": 61691,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "开年政策与数据密集出台：东莞阶段性取消首套住房房贷利率下限，房贷重定价随之展开，2024年宏观政策十大看点同步亮相。第五次全国经济普查现场登记启动摸清经济家底；",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:11:26.781+08:00"
     },
     {
       "d": "2024-01-02",
       "n": 324,
       "b": 72701,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "元旦假期经济数据集中亮相：交通运输部预计全国发送旅客超1.2亿人次，北京重点商圈客流同比增长40.5%，海南离岛免税三个季度销售突破25亿元。政策与外贸端亦有进",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:11:26.727+08:00"
     },
     {
       "d": "2024-01-01",
       "n": 161,
       "b": 36095,
-      "hasBriefing": false
+      "hasBriefing": true,
+      "briefLine": "年末收官与新年开局交汇：国家统计局公布12月制造业PMI为49%，环比下降0.4个百分点；习近平主席发表二〇二四年新年贺词，为新一年定调。财政与产业数据同步亮相",
+      "source": "ai",
+      "briefBackfill": true,
+      "briefAt": "2026-11-27T19:10:23.591+08:00"
     }
   ]
 }
