@@ -1,0 +1,169 @@
+{
+  "date": "2024-06-15",
+  "generatedAt": "2026-11-27T23:00:00+08:00",
+  "endedAt": "2026-11-27T23:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-06-14",
+    "to": "2024-06-15",
+    "fromAt": "2024-06-14T08:00:00+08:00",
+    "toAt": "2024-06-15T09:00:00+08:00",
+    "fromTs": 1718323200,
+    "toTs": 1718413200
+  },
+  "overview": "金融数据是当日主线：5月末中国M2同比增长7%、当月新增人民币贷款9500亿元，5月社融数据同步发布。财政端，50年期超长期特别国债首发、发行总额350亿元；科技创新再贷款加速落地支持科技型企业。外经贸方面，商务部就土耳其加征乘用车关税答问，义乌外贸进出口总值2645.0亿元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中国5月末M2同比增长7%，当月新增人民币贷款9500亿元",
+      "summary": "5月末中国M2同比增长7%，当月新增人民币贷款9500亿元。货币供应与信贷投放的变化，是观察货币政策传导和企业融资需求强度的核心月度指标。",
+      "why": "货币信贷数据反映政策传导力度",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-14/10234146.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554128681/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554164415/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554155295/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554111214/index.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "2024年5月社会融资规模增量统计数据报告",
+      "summary": "2024年5月社会融资规模增量统计数据报告发布。社融增量反映实体经济从金融体系获得的资金总量，与新增贷款共同构成信用扩张的度量。",
+      "why": "社融增量衡量实体融资总量",
+      "source": "中国人民银行",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554164415/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10234146.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554128681/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554155295/index.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "50年期超长期特别国债今天首发 发行总额350亿元",
+      "summary": "50年期超长期特别国债当天首发，发行总额350亿元。超长期特别国债主要用于支持重大项目资本金，首发落地意味着长期建设资金正式到位。",
+      "why": "超长期特别国债首发落地支持项目",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-14/10233534.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233608.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554111214/index.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "科技创新再贷款加速落地，精准支持科技型企业",
+      "summary": "科技创新再贷款加速落地，精准支持科技型企业。结构性货币政策工具通过再贷款降低银行对科技型企业的信贷成本，指向创新链资金供给。",
+      "why": "科技创新再贷款降低科技企业融资成本",
+      "source": "中国人民银行",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554111214/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10234146.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233518.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554128681/index.html"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "商务部就土耳其对我燃油及混合动力乘用车征收额外关税答问",
+      "summary": "商务部就土耳其对中国燃油及混合动力乘用车征收额外关税答问。土耳其加税直接影响相关车型出口成本，是外贸企业面对的国别市场环境变化。",
+      "why": "土耳其加税抬升相关车型出口成本",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-14/10233752.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10234045.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233529.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233520.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "国家发改委：以“反补贴”名义限制中国电动汽车是典型双标",
+      "summary": "国家发改委表示，以反补贴名义限制中国电动汽车是典型双标。主管部门就欧盟措施定性，涉及中欧贸易摩擦走向，也影响新能源产业链预期。",
+      "why": "发改委就欧盟措施定性影响预期",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-14/10233529.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10234045.shtml",
+        "https://www.chinanews.com.cn/gj/2024/06-14/10233624.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233520.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "我国民营经济经营主体超1.8亿户",
+      "summary": "我国民营经济经营主体超过1.8亿户，数量规模持续扩大。经营主体数量是衡量民营经济活力与创业环境的基础指标，也关联就业和税收贡献。",
+      "why": "民企主体数量显经济活力基础",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-14/10233518.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233547.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233538.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554111214/index.html"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "今年前5个月浙江义乌外贸进出口总值2645.0亿元",
+      "summary": "今年前5个月浙江义乌外贸进出口总值达2645.0亿元。义乌以小商品市场集散功能著称，其进出口规模反映中小外贸主体的活跃程度与市场采购贸易景气度。",
+      "why": "义乌外贸规模反映中小外贸活跃度",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-14/10234044.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233520.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233707.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233700.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "5月份中欧班列创单月运量新高",
+      "summary": "5月份中欧班列开行量创单月运量新高。班列运量创新高反映中欧贸易通道的承载能力与物流效率提升，也间接体现外贸运输需求的旺盛程度。",
+      "why": "班列单月运量新高显通道能力提升",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-14/10233707.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10234044.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233700.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233582.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "全国夏粮陆续开秤 收购量突破1000万吨",
+      "summary": "全国夏粮陆续开秤，收购量突破1000万吨。夏粮收购进度关系全年粮食产量和农民收入，也是观察农业生产与农产品流通效率的年度节点。",
+      "why": "夏粮收购进度关系全年粮食供给",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-14/10233582.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233577.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10234044.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "5月社融存量与M2增速的后续变化",
+    "50年期超长期特别国债的个人投资者参与",
+    "土耳其额外关税下的出口安排",
+    "夏粮收购进度与全年产量"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T23:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

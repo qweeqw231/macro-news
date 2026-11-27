@@ -1,0 +1,162 @@
+{
+  "date": "2024-06-08",
+  "generatedAt": "2026-11-27T23:00:00+08:00",
+  "endedAt": "2026-11-27T23:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-06-07",
+    "to": "2024-06-08",
+    "fromAt": "2024-06-07T08:00:00+08:00",
+    "toAt": "2024-06-08T09:00:00+08:00",
+    "fromTs": 1717718400,
+    "toTs": 1717808400
+  },
+  "overview": "外贸数据是当日主线：前5个月货物贸易进出口总值17.5万亿元、同比增长6.3%，5月单月进出口值同比增长8.6%。政策端李强主持召开国务院常务会议，财政部将发行350亿元50年期超长期特别国债。5月末中国外汇储备达32320亿美元，5月广州一手住宅成交量环比上升。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "前5个月我国货物贸易进出口总值17.5万亿元 同比增长6.3%",
+      "summary": "前5个月我国货物贸易进出口总值17.5万亿元，同比增长6.3%，外贸规模与增速保持韧性。进出口总值是判断外需强弱和贸易部门对经济贡献的核心月度指标。",
+      "why": "进出口总值体现外需与贸易贡献",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230164.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230113.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230175.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230435.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "5月中国进出口值同比增长8.6%",
+      "summary": "5月中国进出口值同比增长8.6%，单月增速高于前5个月累计增速。单月数据反映外贸企业集中出货与订单交付节奏，累计值与单月值的差异有助于判断增长是否均衡。",
+      "why": "单月进出口增速高于累计增速",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230175.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230164.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230435.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-07/10230290.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "李强主持召开国务院常务会议",
+      "summary": "李强主持召开国务院常务会议，部署下一阶段重点工作。国常会通常在宏观政策节奏上释放信号，会议内容对财政、货币、产业和民生政策的衔接安排具有指引作用。",
+      "why": "国常会部署下阶段宏观经济政策",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-07/10230613.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230620.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230013.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "350亿元！财政部将发行50年期超长期特别国债",
+      "summary": "财政部将发行350亿元50年期超长期特别国债。该期限品种专为支持重大项目资本金安排，发行落地意味着长期建设资金到位节奏明确，对基建和重大项目形成直接支撑。",
+      "why": "350亿元超长期特别国债明确项目资金来源",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230105.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/06-07/10230613.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230620.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "5月末中国外汇储备达32320亿美元",
+      "summary": "5月末中国外汇储备达32320亿美元，外储规模保持稳定。外储变化反映跨境资金流动和汇率预期的边际变化，是观察资本流动与货币管理取向的月度参照。",
+      "why": "外储规模变化反映跨境资金流动",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230610.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230561.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230564.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "河南统筹超120亿元财政资金推进以旧换新",
+      "summary": "河南统筹超120亿元财政资金推进消费品以旧换新。地方以财政资金直接补贴以旧换新，是激活大宗消费、稳定内需的地方实践，对家电汽车等品类销售形成支撑。",
+      "why": "地方财政补贴以旧换新托举消费",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230620.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230102.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230413.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "楼市新政助力 5月广州一手住宅成交量环比上升",
+      "summary": "楼市新政助力下，5月广州一手住宅成交量环比上升。新政后成交变化是检验放松限购、降低首付等政策效果的第一手数据，对后续城市跟进调整具有指向意义。",
+      "why": "一线城市成交回升验证楼市新政效应",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230413.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230102.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230161.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "6月7日央行开展20亿元7天期逆回购操作",
+      "summary": "6月7日央行开展20亿元7天期逆回购操作，维持公开市场对流动性的常规调节。连续逆回购的规模与利率变化，是观察货币政策松紧取向和资金面状况的日常指标。",
+      "why": "逆回购反映央行流动性调节节奏",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230024.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230105.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230610.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "商务部：今年前4月我国服务进出口总额达24319.6亿元",
+      "summary": "商务部数据显示，今年前4月我国服务进出口总额达24319.6亿元。服务贸易增速通常快于货物贸易，与货物进出口合计可观察外贸结构中服务占比的变化。",
+      "why": "服务贸易规模显示外贸结构变化",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230007.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230103.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230164.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "RCEP全面生效一周年 海南企业享政策红利",
+      "summary": "RCEP全面生效一周年之际，海南企业享受政策红利。RCEP生效带动成员国间贸易往来增长，原产地累积规则等安排使企业更易享受关税优惠。",
+      "why": "RCEP周年落地效应显现在区域贸易",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230588.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/06-07/10230290.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230435.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "国常会部署的政策落地时点",
+    "超长期特别国债发行后的项目衔接",
+    "单月外贸增速能否延续",
+    "以旧换新财政资金的销售转化"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T23:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

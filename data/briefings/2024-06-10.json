@@ -1,0 +1,161 @@
+{
+  "date": "2024-06-10",
+  "generatedAt": "2026-11-27T23:00:00+08:00",
+  "endedAt": "2026-11-27T23:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-06-09",
+    "to": "2024-06-10",
+    "fromAt": "2024-06-09T08:00:00+08:00",
+    "toAt": "2024-06-10T09:00:00+08:00",
+    "fromTs": 1717891200,
+    "toTs": 1717981200
+  },
+  "overview": "周末版面聚焦楼市与外贸结构：房地产新政策对楼市的影响受到关注，多家银行推出房贷先息后本；外贸方面，新动能助推外贸质升量稳，技术含量提升与市场多元化受关注。产业与通道端，5G应用迎规模化发展，低空经济多地点燃新引擎，第九万列中欧班列开行。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "房地产新政策对楼市影响几何",
+      "summary": "报道分析房地产新政策对楼市的影响。近期多个城市在限购、信贷和购房补贴等环节调整政策，政策传导至成交端需要时间，观察重点落在新政后的成交量与二手房活跃度变化。",
+      "why": "新政传导效果决定楼市修复节奏",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-09/10231175.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231185.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-09/10231090.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "多家银行推房贷“先息后本”！划算么？",
+      "summary": "多家银行推出房贷先息后本还款方式，前期只还利息、后期还本。还款结构调整降低前期月供压力，缓解居民现金流，但也意味着本金偿付后移，对银行资产质量与居民杠杆的取舍更明显。",
+      "why": "还款方式调整影响居民现金流安排",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-09/10231185.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231175.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-09/10231090.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央广财评|中国新动能助推外贸“质升量稳”跑出“加速度”",
+      "summary": "央广财评称，中国新动能助推外贸质升量稳跑出加速度。外贸结构中技术含量更高的产品占比提升，与总量规模扩张并行，反映出口竞争力来源的变化。",
+      "why": "外贸质升量稳反映出口结构切换",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-09/10231123.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231251.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-09/10231107.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "技术含“金”量高！中国外贸“质升量稳” 发展“利好”因素积聚",
+      "summary": "报道指出中国外贸技术含量提升，质升量稳背后的利好因素正在积聚。产品结构升级与新市场开拓共同支撑外贸表现，与市场多元化、产业链完整度优势相互关联。",
+      "why": "技术含量与市场多元化支撑外贸",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-09/10231251.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231123.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-09/10231107.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231164.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "第九万列中欧班列开行见闻",
+      "summary": "第九万列中欧班列开行，见闻记录中欧班列的运行与通关效率。中欧班列开行量持续增长，是观察中国与欧洲贸易通道能力与沿线物流产业的一个窗口。",
+      "why": "班列开行量显示中欧贸易通道能力",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-09/10231107.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231163.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231164.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "首列中欧班列（上海）精品班列开行",
+      "summary": "首列中欧班列上海精品班列开行。精品班列在开行线路、班次与时效上作专门安排，服务高附加值货物运输，班列产品升级与中欧贸易往来需求上升相互呼应。",
+      "why": "精品班列提升中欧物流服务能力",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-09/10231163.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/06-09/10231107.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231164.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "多地点燃低空经济新引擎 为经济高质量发展注入新动能",
+      "summary": "多地点燃低空经济新引擎，为经济高质量发展注入新动能。低空经济从概念走向基础设施建设与场景落地，牵动空域管理、飞行器制造与运营等环节，是产业新增长点的代表。",
+      "why": "低空经济落地打开产业新增长点",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-09/10231089.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/06-09/10231090.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231123.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "5G应用迎来规模化发展",
+      "summary": "5G应用迎来规模化发展，从网络建设转向行业场景的大规模落地。规模化应用阶段对设备、算力和行业改造提出更高要求，数字经济与实体经济融合的进度因此加快。",
+      "why": "5G规模化应用加快数实融合",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-09/10231105.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/06-09/10231090.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231089.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "宁夏与东盟企业举办线上对接会",
+      "summary": "宁夏与东盟企业举办线上对接会，推动地方与东盟市场的经贸撮合。线上对接会降低了中小企业开拓东盟市场的成本，地方外贸新渠道建设由此多一种形式。",
+      "why": "线上对接降低中小外贸开拓成本",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-09/10231164.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231123.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-09/10231107.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "端午假期首日中国跨区域人员流动量超2亿人次",
+      "summary": "端午假期首日中国跨区域人员流动量超2亿人次，客流规模创同期新高。假期出行量是观察居民消费意愿与出行需求恢复的窗口，对服务消费和交通运行均有指示意义。",
+      "why": "假期客流显居民出行消费需求",
+      "source": "中新网",
+      "publishedAt": "2024-06-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-09/10231263.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-09/10231083.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-09/10231227.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "房贷先息后本的银行落地范围与条件",
+    "低空经济场景开放的试点城市",
+    "中欧班列精品班列的常态化开行",
+    "端午假期后楼市成交的延续性"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T23:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

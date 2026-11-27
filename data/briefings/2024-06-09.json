@@ -1,0 +1,161 @@
+{
+  "date": "2024-06-09",
+  "generatedAt": "2026-11-27T23:00:00+08:00",
+  "endedAt": "2026-11-27T23:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-06-08",
+    "to": "2024-06-09",
+    "fromAt": "2024-06-08T08:00:00+08:00",
+    "toAt": "2024-06-09T09:00:00+08:00",
+    "fromTs": 1717804800,
+    "toTs": 1717894800
+  },
+  "overview": "房地产与假日消费是当日两条主线：新一轮楼市去库存政策有望开启，节前生活必需品供应充足、价格总体平稳，端午文旅消费升温。数据方面，5月快递发展指数同比提升17.1%；外贸与产业端，17.5万亿元、24319.6亿元、450亿元等关键数据勾勒经济结构，广东近3亿元授信意向支持民企。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "（经济观察）中国新一轮楼市去库存政策有望开启",
+      "summary": "经济观察报道称，中国新一轮楼市去库存政策有望开启。5月下旬以来多个城市优化限购与信贷条件，去库存成为政策主要着力点，房地产政策节奏直接关联内需修复与地方财政。",
+      "why": "新一轮去库存政策或成楼市主线",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230923.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230876.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230966.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "市场规模持续扩大！5月中国快递发展指数同比提升17.1%",
+      "summary": "5月中国快递发展指数同比提升17.1%，快递市场规模持续扩大。快递业务量增速与电商实物商品网上零售额同步，是观察线上消费与流通效率的高频月度数据。",
+      "why": "快递发展指数显线上消费与流通活跃",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230812.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230928.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230975.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "节前全国生活必需品市场供应充足 价格总体平稳",
+      "summary": "端午节前全国生活必需品市场供应充足，价格总体平稳。节日期间物价稳定关系到居民消费预期和通胀走势，也是观察保供稳价政策效果的重要场景。",
+      "why": "节前生活必需品价格总体平稳",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230975.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230812.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230965.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "17.5万亿元、24319.6亿元、450亿元 透过数字看中国经济发展“成就感”",
+      "summary": "以外贸和服务贸易等关键数据为线索的报道指出，17.5万亿元、24319.6亿元、450亿元等指标勾勒中国经济结构。总量数据与结构数据结合，反映经济发展的韧性与新动能积累。",
+      "why": "关键数据勾勒经济结构与韧性",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230966.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230923.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230900.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "授信意向近3亿元 金融助广东民企高质量发展",
+      "summary": "广东以近3亿元授信意向支持民营企业发展。银行授信意向的规模与落地情况，直接关系民营企业融资可得性和成本，是观察金融支持实体经济力度的微观指标。",
+      "why": "授信意向落地衡量金融支持实体力度",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230900.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230732.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230710.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "市场监管总局等多部门：严厉打击检测报告弄虚作假",
+      "summary": "市场监管总局等多部门部署严厉打击检测报告弄虚作假，涉及认证检验检测等第三方机构。检测数据真实性关系到产品质量和市场信任，整顿第三方机构影响多个行业的合规成本。",
+      "why": "整顿检测机构关乎产品质量与信任",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230810.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230813.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230840.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "医保、医疗、医药协同发展 2024年医药卫生体制这样改革→",
+      "summary": "2024年医药卫生体制改革聚焦医保、医疗、医药协同发展。三方协同的改革方向影响药品耗材价格、医疗机构运行与医保基金使用效率，是支出端结构调整的重要抓手。",
+      "why": "三医协同改革调整医疗支出结构",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230813.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230810.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230966.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "经济观察：端午味道 中国粽子如何香飘海外？",
+      "summary": "经济观察关注中国粽子如何借端午节走向海外市场。节令食品出海反映跨境电商与食品出口的细分突破，对理解小商品出口的品类升级有参考价值。",
+      "why": "节令食品出海显跨境品类升级",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230773.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230965.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230808.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "“端午经济”热气腾腾消费活力升级 为各地文旅打好旺季“前哨”",
+      "summary": "端午假期各地文旅消费升温，为旺季经营打下前哨。节假日是观察消费场景恢复和文旅消费弹性的窗口，节前预订与客流数据可用于判断消费复苏的持续性。",
+      "why": "假日消费是内需修复的观察窗口",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230965.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230773.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230812.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230928.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "“海口—巴黎—伯恩茅斯”第五航权货运航线开通",
+      "summary": "海口至巴黎、伯恩茅斯第五航权货运航线开通，连接国内枢纽与欧洲航点。第五航权允许第三国航司运营本国航线的航权安排，新航线开通直接扩充国际货运通道。",
+      "why": "新开国际货运航线扩充外贸通道",
+      "source": "中新网",
+      "publishedAt": "2024-06-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-08/10230808.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230773.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230965.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "新一轮楼市去库存政策的城市落地",
+    "端午假期文旅与零售的实际客流",
+    "快递业务量增速与线上消费的持续性",
+    "检测报告整顿的行业覆盖范围"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T23:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

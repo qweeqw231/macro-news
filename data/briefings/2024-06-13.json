@@ -1,0 +1,166 @@
+{
+  "date": "2024-06-13",
+  "generatedAt": "2026-11-27T23:00:00+08:00",
+  "endedAt": "2026-11-27T23:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-06-12",
+    "to": "2024-06-13",
+    "fromAt": "2024-06-12T08:00:00+08:00",
+    "toAt": "2024-06-13T09:00:00+08:00",
+    "fromTs": 1718150400,
+    "toTs": 1718240400
+  },
+  "overview": "物价数据是当日核心：国家统计局公布5月份CPI总体平稳、同比上涨0.3%，PPI同比降幅明显收窄并环比上涨。政策端，央行部署保障性住房再贷款，商务部解读跨境电商出口与海外仓意见。外贸方面，欧盟将从下月对中国电动汽车加征关税，广西前5月对RCEP成员国进出口增长24.9%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：5月份CPI总体平稳 PPI降幅收窄",
+      "summary": "国家统计局公布5月份数据，CPI总体平稳、PPI降幅收窄。物价端的读数关系到实际利率与货币政策空间，PPI降幅收窄则对应工业端景气与工业企业利润的边际变化。",
+      "why": "物价读数锚定货币与利润环境",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232358.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232352.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232355.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232477.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：5月份居民消费价格同比上涨0.3%",
+      "summary": "5月份居民消费价格同比上涨0.3%，保持温和水平。CPI同比涨幅温和，意味着居民消费价格压力有限，也为货币政策维持支持性取向留出空间。",
+      "why": "CPI温和上涨留出政策空间",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232352.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232358.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232477.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232355.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家统计局：5月份工业生产者出厂价格同比降幅明显收窄 环比上涨",
+      "summary": "5月份工业生产者出厂价格同比降幅明显收窄，环比上涨并结束连续下行。PPI环比回升通常先于工业企业利润改善，对上游价格与中下游成本传导具有指示意义。",
+      "why": "PPI环比回升指向工业利润改善",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232355.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232358.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232520.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232352.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "1-4月全国晶硅光伏组件出口量达83.8GW 同比增长20%",
+      "summary": "1—4月全国晶硅光伏组件出口量达83.8GW，同比增长20%。光伏组件出口是新能源产品国际竞争力和全球绿色需求的一个缩影，出口量与增速反映产业供给能力和贸易环境变化。",
+      "why": "光伏组件出口量显新能源供给能力",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232571.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232341.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232860.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "中国人民银行召开会议 部署保障性住房再贷款推进工作",
+      "summary": "中国人民银行召开会议，部署保障性住房再贷款推进工作。再贷款工具直接支持保障性住房收购与建设，是货币政策定向支持房地产去库存与保交房的结构性安排。",
+      "why": "再贷款工具定向支持保障房建设",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232710.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554159834/index.html",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232349.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "商务部外贸司负责人解读《关于拓展跨境电商出口推进海外仓建设的意见》",
+      "summary": "商务部外贸司负责人解读拓展跨境电商出口、推进海外仓建设的意见。政策解读明确海外仓在通关、税收与结算环节的支持方式，直接影响外贸新业态的落地成本。",
+      "why": "政策解读明确海外仓支持方式",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232815.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232330.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232783.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232341.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "欧盟将从下月对中国电动汽车加征关税 中方回应",
+      "summary": "欧盟将从下月起对中国电动汽车加征关税，中方对此回应。关税落地时间明确，直接影响中国车企对欧出口的价格与订单安排，也牵动相关产业链预期。",
+      "why": "欧盟关税落地时间影响对欧出口",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-12/10232602.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232481.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232834.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232341.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "今年前5月广西对RCEP其他成员国进出口同比增长24.9%",
+      "summary": "今年前5月广西对RCEP其他成员国进出口同比增长24.9%，增速明显高于全国水平。西部口岸省份对东盟贸易的放量，反映区域关税优惠带来的贸易转移效应。",
+      "why": "东盟贸易放量显示区域关税红利",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232860.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232341.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232783.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "端午假期多地二手房成交较去年增长 “老破小”热度较高",
+      "summary": "端午假期多地二手房成交较去年增长，老破小关注度较高。假期是观察楼市政策松绑后需求释放节奏的场景，二手房成交结构变化影响后续市场判断。",
+      "why": "假期二手房成交验证需求释放",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232306.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232499.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232515.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "与年初相比降幅达24% 牛肉价格为何“大跳水”？",
+      "summary": "牛肉价格与年初相比降幅达24%，出现明显下跌。肉类价格下行直接作用于食品CPI分项，也关系养殖业产能调整和居民消费结构的变化。",
+      "why": "牛肉价格下跌影响食品CPI分项",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232348.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232527.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232502.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "CPI年内温和回升的机构预期",
+    "PPI环比回升能否持续",
+    "保障性住房再贷款的推进节奏",
+    "欧盟关税正式生效前的出口调整",
+    "牛肉等肉类价格的供给端变化"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T23:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

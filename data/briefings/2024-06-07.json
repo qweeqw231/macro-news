@@ -1,0 +1,162 @@
+{
+  "date": "2024-06-07",
+  "generatedAt": "2026-11-27T23:00:00+08:00",
+  "endedAt": "2026-11-27T23:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-06-06",
+    "to": "2024-06-07",
+    "fromAt": "2024-06-06T08:00:00+08:00",
+    "toAt": "2024-06-07T09:00:00+08:00",
+    "fromTs": 1717632000,
+    "toTs": 1717722000
+  },
+  "overview": "全球货币政策转向是当日最大变量：加拿大央行在G7中率先降息，欧洲央行宣布降息25个基点。国内财政部预告50年期超长期特别国债即将发行，央行开展20亿元7天期逆回购，多边央行数字货币桥进入最小可行化产品阶段。5月亚洲制造业PMI为51.1%；多地房地产融资白名单项目密集落地。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "财政部：50年期超长期特别国债即将发行",
+      "summary": "财政部表示50年期超长期特别国债即将发行。超长期特别国债是支持重大项目建设的长期资金来源，发行安排落地后将成为财政扩张的重要抓手，对基建和重大项目形成资金支撑。",
+      "why": "超长期特别国债加码重大项目建设",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-06/10229665.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229290.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229216.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229330.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "加拿大央行下调基准利率 在G7国家中率先降息",
+      "summary": "加拿大央行下调基准利率，在G7国家中率先降息，打发达经济体货币政策转向的先声。加拿大是首个降息的G7成员，其政策转向对其他发达经济体降息节奏具有示范意义。",
+      "why": "G7率先降息开启宽松预期",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/06-06/10229340.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/06-06/10229806.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229767.shtml",
+        "https://www.chinanews.com.cn/gj/2024/06-06/10229210.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "欧洲中央银行宣布降息25个基点",
+      "summary": "欧洲中央银行宣布降息25个基点，为其货币政策转向宽松的明确信号。欧央行降息将影响欧元区利率环境与欧元汇率，并通过全球资金面传导至新兴市场。",
+      "why": "欧央行降息影响全球资金面",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/06-06/10229806.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/06-06/10229340.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229767.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "多边央行数字货币桥项目进入最小可行化产品阶段",
+      "summary": "多边央行数字货币桥项目进入最小可行化产品阶段，由概念验证走向可实际运行的跨境结算工具。项目推进关系到央行数字货币在跨境支付中的可用性，以及人民币结算网络的延伸。",
+      "why": "数字货币桥推进跨境结算工具化",
+      "source": "中国人民银行",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554166054/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229290.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229825.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "5月亚洲制造业PMI为51.1% 走势相对平稳",
+      "summary": "5月亚洲制造业PMI为51.1%，走势相对平稳，处于扩张区间。亚洲制造业景气度是观察中国出口订单与产业链景气的先行指标，平稳扩张意味外需基本盘保持稳定。",
+      "why": "亚洲制造业景气度稳在扩张区间",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-06/10229564.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229317.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229344.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "6月6日央行开展20亿元7天期逆回购操作",
+      "summary": "6月6日央行开展20亿元7天期逆回购操作，继续以短期逆回购调节银行体系流动性。操作规模、期限与利率是观察货币政策取向和资金面松紧度的直接窗口。",
+      "why": "逆回购操作显示短端资金面松紧",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-06/10229290.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229665.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554166054/index.html"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "多地跟进！房地产融资“白名单”项目密集落地",
+      "summary": "多地跟进推动房地产融资白名单项目密集落地，为保交房项目提供融资支持。白名单机制把项目而非企业作为融资对象，有助于疏通房企融资渠道、稳定在建项目交付预期。",
+      "why": "白名单机制疏通房企项目融资",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-06/10229431.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229723.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-06/10229231.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "沪广深楼市新政效果初显：二手房活跃度提升明显",
+      "summary": "沪广深楼市新政效果初显，二手房活跃度提升明显。核心城市限购松绑后成交回暖，是本轮房地产政策调整在需求端的初步反馈，也关系到后续政策加码的节奏。",
+      "why": "一线城市二手房活跃度回升",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-06/10229723.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/06-06/10229431.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229822.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "中行白皮书：过半受访境外机构考虑增配人民币金融资产",
+      "summary": "中国银行白皮书显示，过半受访境外机构考虑增配人民币金融资产。境外机构人民币资产配置意愿上升，与熊猫债扩容、跨境结算便利化等措施相互印证，指向人民币资产需求改善。",
+      "why": "境外机构人民币配置意愿上升",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-06/10229825.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229216.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229330.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "全国政协十四届常委会第七次会议闭幕 王沪宁主持并讲话",
+      "summary": "全国政协十四届常委会第七次会议闭幕，王沪宁主持并讲话。会议围绕构建高水平社会主义市场经济体制进行大会发言并闭幕，是观察下阶段改革议题与政策取向的重要窗口。",
+      "why": "政协会议闭幕定调改革议题",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-06/10229443.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229344.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-06/10229231.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "50年期超长期特别国债的发行安排",
+    "房地产白名单项目融资落地规模",
+    "亚洲制造业PMI后续走势",
+    "境外机构增配人民币资产的节奏"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T23:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
