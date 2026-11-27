@@ -1,0 +1,149 @@
+{
+  "date": "2026-11-27",
+  "generatedAt": "2026-11-27T09:19:00+08:00",
+  "endedAt": "2026-11-27T09:02:39+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2026-11-26",
+    "to": "2026-11-27",
+    "fromAt": "2026-11-26T08:00:00+08:00",
+    "toAt": "2026-11-27T09:00:00+08:00",
+    "fromTs": 1795651200,
+    "toTs": 1795741200
+  },
+  "overview": "全球紧缩预期再起：欧洲央行纪要称通胀前景恶化、需进一步收紧，新行长定为德科斯，韩国央行加息25个基点，美国核心PCE超预期强化12月加息押注。国内央行隔夜逆回购5715亿元、四大行回购增持贷款超6000亿元，服务贸易“十五五”规划发布；中东推升布伦特原油。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行开展5715亿元隔夜逆回购操作",
+      "summary": "中国人民银行11月26日以固定利率、数量招标方式开展5715亿元隔夜逆回购操作，全额满足一级交易商需求，操作利率1.25%，跨月资金面维持平稳。",
+      "why": "隔夜逆回购放量，体现央行对跨月流动性的呵护力度",
+      "source": "中新网",
+      "publishedAt": "2026-11-26T09:35",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-26/10737911.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3206022"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行1000亿元国库现金定期存款12月1日招投标",
+      "summary": "财政部、中国人民银行定于12月1日上午通过中央国库现金管理商业银行定期存款业务系统开展2026年第二十四期招投标，本期操作量1000亿元、期限2个月，12月1日起息。",
+      "why": "国库现金定存招标规模，映射财政资金投放节奏",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-26T17:33",
+      "url": "https://wallstreetcn.com/livenews/3206331"
+    },
+    {
+      "rank": 3,
+      "title": "四大行股票回购增持贷款合同超6000亿元",
+      "summary": "在股票回购增持再贷款由阶段性安排转为长期制度性安排、并进一步下调再贷款利率后，工商银行、农业银行、中国银行、建设银行等已与上市公司签订股票回购增持贷款合同超6000亿元。",
+      "why": "再贷款工具制度化，稳定上市公司股东回报预期",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-26T22:29",
+      "url": "https://wallstreetcn.com/livenews/3206503"
+    },
+    {
+      "rank": 4,
+      "title": "服务贸易“十五五”规划发布，拓宽人民币跨境支付网络",
+      "summary": "商务部等8部门印发《服务贸易发展“十五五”规划》，提出支持金融保险服务出口，拓宽人民币跨境支付系统（CIPS）网络广度和深度，提升人民币金融服务全球竞争力。",
+      "why": "服务出口与人民币跨境基础设施扩容同步推进",
+      "source": "东方财富",
+      "publishedAt": "2026-11-26T10:17",
+      "url": "http://finance.eastmoney.com/news/1350,202611263940431235.html",
+      "refs": [
+        "http://finance.eastmoney.com/news/1352,202611273941007372.html"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "商务部：望美中推动对等降税安排尽快落地实施",
+      "summary": "商务部11月26日举行例行新闻发布会，就中美去年在吉隆坡达成的贸易共识推迟至2027年1月、关税与稀土出口管制等问题回应，敦促美中推动对等降税安排尽快落地实施。",
+      "why": "对等降税进度直接决定外贸企业订单预期",
+      "source": "中新网",
+      "publishedAt": "2026-11-26T16:51",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-26/10738193.shtml",
+      "refs": [
+        "http://finance.eastmoney.com/news/1350,202611263940993389.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "欧洲央行会议纪要：通胀前景恶化，需进一步收紧政策",
+      "summary": "欧洲央行公布的10月利率决策会议纪要显示，部分官员担心消费者价格涨幅要到2028年之后才能回到2%的目标水平，认为可能有必要进一步收紧货币政策，并一致认为不存在实质性的第二轮效应。",
+      "why": "欧央行紧缩倾向决定欧元区利率路径与欧元资产定价",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-26T22:05",
+      "url": "https://wallstreetcn.com/livenews/3206490",
+      "refs": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-26/doc-inkaapnv8882837.shtml",
+        "https://wallstreetcn.com/livenews/3206460",
+        "https://wallstreetcn.com/livenews/3206462"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "德科斯将出任欧洲央行行长",
+      "summary": "欧盟领导人在荷兰改而支持后，预计提名原西班牙央行行长巴勃罗·埃尔南德斯·德科斯出任欧洲央行行长，接替即将卸任的拉加德；欧洲理事会主席Costa称欧元区成员国已同意该推荐。",
+      "why": "新行长人选决定欧央行政策连续性与加息节奏",
+      "source": "华尔街见闻",
+      "publishedAt": "2026-11-26T21:31",
+      "url": "https://wallstreetcn.com/livenews/3206476",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3206568",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-27/doc-inkaceks7990479.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-27/doc-inkaayat1247796.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "韩国央行加息25个基点，利率升至两年新高",
+      "summary": "韩国央行11月26日将基准利率上调25个基点至3.25%，符合市场预期，为2026年以来第三次加息，利率升至2024年10月以来最高水平；该行并大幅上调经济增长预期，预计2026年、2027年GDP增速分别为3.9%和4.1%。",
+      "why": "亚洲央行同步紧缩，显示通胀压力仍未消退",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-26T14:40",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-26/doc-inizzwrf1415208.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3206004",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-26/doc-inizzmzr3795805.shtml",
+        "https://wallstreetcn.com/livenews/3206005",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-26/doc-inizzmzi8991957.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "美国通胀超预期，核心PCE强化加息路径",
+      "summary": "美国最新关键通胀指标进一步偏离美联储2%的目标，核心PCE物价指数超出市场预期，市场对美联储12月加息以及明年继续收紧货币政策的预期被强化，金价重心随之走低。",
+      "why": "美国通胀路径决定美联储政策与全球资产定价",
+      "source": "中新网",
+      "publishedAt": "2026-11-26T14:39",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-26/10738062.shtml",
+      "refs": [
+        "https://finance.sina.com.cn/money/nmetal/gjshz/2026-11-26/doc-inizzmzn8191641.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-26/doc-inizzwrc8959475.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中东局势推升油价，布伦特收于96美元上方",
+      "summary": "中东紧张局势搅动市场，也门胡塞武装袭击沙特关键炼油厂，威胁中东原油出口恢复进程；布伦特1月合约收涨2.07%，报96.57美元/桶，此前两个交易日累计上涨近6%。",
+      "why": "油价上行叠加关税传导，输入型通胀压力抬升",
+      "source": "新浪财经",
+      "publishedAt": "2026-11-27T05:32",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-11-27/doc-inkackst3326450.shtml",
+      "refs": [
+        "https://wallstreetcn.com/livenews/3206585",
+        "https://finance.sina.com.cn/world/2026-11-26/doc-inkaaawz8944315.shtml",
+        "https://finance.sina.com.cn/stock/usstock/c/2026-11-27/doc-inkacksq7889926.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "人民币中间价6.7096与即期6.66的差距能否延续，关注今日中间价与离岸价",
+    "欧央行新行长德科斯人选落地后，欧债收益率与欧元对加息的重新定价",
+    "OPEC+周日会议是否维持当前产量配额至2027年第一季度",
+    "日本央行12月会议前鹰派表态升温，加息25个基点与50个基点的定价变化"
+  ],
+  "model": "minimax-M3.1-Flash"
+}
