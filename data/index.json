@@ -1,10 +1,15 @@
 {
-  "generatedAt": "2026-11-26T23:53:21.450Z",
-  "total": 53384,
+  "generatedAt": "2026-11-27T00:08:28.725Z",
+  "total": 53398,
   "days": [
     {
+      "day": "2026-11-27",
+      "count": 8,
+      "hasBriefing": false
+    },
+    {
       "day": "2026-11-26",
-      "count": 1390,
+      "count": 1396,
       "hasBriefing": true,
       "briefLine": "主线是通胀超预期叠加AI交易动摇：美国10月PCE同比涨3.8%、核心涨3.3%超预期，三季度GDP修正值升至4.3%，12月加息几成定局；美股剧烈反转，纳指1",
       "source": "ai",
