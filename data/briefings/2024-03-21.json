@@ -1,0 +1,169 @@
+{
+  "date": "2024-03-21",
+  "generatedAt": "2026-11-27T19:34:09.347+08:00",
+  "endedAt": "2026-11-27T19:34:09.347+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-03-20",
+    "to": "2024-03-21",
+    "fromAt": "2024-03-20T08:00:00+08:00",
+    "toAt": "2024-03-21T09:00:00+08:00",
+    "fromTs": 1710892800,
+    "toTs": 1710982800
+  },
+  "overview": "3月LPR报价出炉，1年期与5年期均维持不变，专家称仍有降息空间；财政部决定发行2024年记账式附息（七期）国债（50年期）。商务部称超六成“外资24条”政策举措已落实或取得积极进展；前2个月快递业务量232.6亿件、同比增长25.1%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "3月中国LPR不变 专家称仍有降息空间",
+      "summary": "3月LPR报价出炉，1年期与5年期均维持不变，报价均未作调整。报道同时援引专家观点，认为当前仍有降息空间。LPR是贷款定价的基准，其按兵不动与后续政策空间预期，是观察利率传导与实体融资成本的重要口径。",
+      "why": "LPR按兵不动但仍存降息预期",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183349.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183251.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183264.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183265.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "财政部决定发行2024年记账式附息（七期）国债（50年期）",
+      "summary": "财政部决定发行2024年记账式附息（七期）国债，期限为50年期。超长期限记账式国债的发行安排，属于财政融资结构中的期限管理安排，为市场提供长久期的基准券种。",
+      "why": "50年期国债丰富长久期债券供给",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183336.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183579.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183264.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183265.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "3月20日央行开展30亿元7天期逆回购操作",
+      "summary": "央行3月20日开展30亿元7天期逆回购操作。公开市场操作投放的规模与期限，是观察当期流动性管理与资金面松紧程度的具体口径，也是判断短期资金供需的日常信号。",
+      "why": "逆回购投放反映流动性管理力度",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183265.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183349.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183251.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183264.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "央行：2023年末金融业机构总资产461.09万亿元",
+      "summary": "央行数据显示，2023年末金融业机构总资产461.09万亿元。金融业总资产是衡量银行、证券、保险等机构体量的总量指标，与实体经济融资总量的扩张节奏相互对应。",
+      "why": "金融业总资产反映体系体量水平",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183579.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183840.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553721800/index.html",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183265.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "商务部：超六成“外资24条”政策举措已落实或取得积极进展",
+      "summary": "商务部表示，“外资24条”政策举措中已有超六成落实或取得积极进展。外资稳态政策的落地进度，是观察外资在华投资环境改善幅度与企业信心的直接口径。",
+      "why": "外资政策落地进度影响引资预期",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183620.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183302.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183745.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183840.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "房贷利率持续下降，却有一地逆势上调",
+      "summary": "报道指出房贷利率整体延续下降趋势，但仍有地区逆势上调。个人住房贷款利率出现区域分化，说明房地产金融政策在地方执行层面并非完全同步，各地市场松紧程度不一。",
+      "why": "房贷利率区域分化反映市场松紧不一",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183682.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183349.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183251.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183601.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "国家能源局：1-2月全社会用电量同比增长11.0%",
+      "summary": "国家能源局数据显示，1-2月全社会用电量同比增长11.0%。用电量是观察工业生产与经济活动强度的高频指标，其增速可与同期生产、消费等数据相互印证。",
+      "why": "用电量增速反映经济活动强度",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183243.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183295.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183262.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183268.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "我国前2个月快递业务量达232.6亿件 同比增长25.1%",
+      "summary": "国家邮政局数据显示，我国前2个月快递业务量达232.6亿件，同比增长25.1%。快递业务量增速可作为线上消费与实物商品流通活跃度的观察指标，与零售环节的表现相互参照。",
+      "why": "快递业务量增速反映消费与流通活跃度",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183262.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183268.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183243.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183295.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "人民币兑美元中间价报7.0985元 调升17个基点",
+      "summary": "人民币兑美元中间价报7.0985元，较前一交易日调升17个基点。中间价的每日调整幅度，是观察人民币汇率管理与跨境资金供求边际变化的窗口。",
+      "why": "中间价调整体现汇率供求边际变化",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183264.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183349.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183251.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183840.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中央一揽子特殊支持政策在雄安新区落地生效",
+      "summary": "中央一揽子特殊支持政策在雄安新区落地生效，涵盖改革创新动能增强、人才激励完善等方面。区域特殊支持政策的落地，是观察新区制度创新与要素集聚情况的抓手。",
+      "why": "特殊支持政策落地推动新区要素集聚",
+      "source": "中新网",
+      "publishedAt": "2024-03-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/03-20/10183601.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/03-20/10183287.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183775.shtml",
+        "https://www.chinanews.com.cn/cj/2024/03-20/10183481.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "LPR维持不变后的降准降息表态",
+    "外资24条剩余举措的落地节奏",
+    "1-2月用电量与快递业务量等先行指标的延续性"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:34:09.347+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
