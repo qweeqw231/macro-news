@@ -1,0 +1,173 @@
+{
+  "date": "2024-08-16",
+  "generatedAt": "2026-11-28T08:00:00+08:00",
+  "endedAt": "2026-11-28T08:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-08-15",
+    "to": "2024-08-16",
+    "fromAt": "2024-08-15T08:00:00+08:00",
+    "toAt": "2024-08-16T09:00:00+08:00",
+    "fromTs": 1723680000,
+    "toTs": 1723770000
+  },
+  "overview": "7月数据集中公布构成当日主线：国家统计局表示7月国民经济运行总体平稳、稳中有进，社零、投资与物价细项同步发布。商务部、海关总署宣布9月15日起对锑等物项实施出口管制，央行操作5777亿元逆回购，首套房认定标准在超20城放宽。美国7月CPI同比上涨2.9%，创三年来最小增幅。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：7月份国民经济运行总体平稳、稳中有进",
+      "summary": "国家统计局发布7月份国民经济运行情况，整体呈现总体平稳、稳中有进的态势。7月各项主要指标是观察下半年经济修复节奏与政策空间的高频依据，也为后续稳增长措施的加力方向提供参照。",
+      "why": "月度数据确认经济修复节奏与政策空间",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269099.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269107.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269113.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269109.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269154.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：2024年7月份社会消费品零售总额增长2.7%",
+      "summary": "国家统计局数据显示，2024年7月份社会消费品零售总额增长2.7%。社零增速是观察居民消费与内需恢复力度最直接的月度指标，其变化直接关联扩内需政策的发力效果。",
+      "why": "社零增速是内需修复的高频刻度",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269107.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269099.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269136.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269190.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家统计局：7月份规模以上工业增加值增长5.1%",
+      "summary": "国家统计局数据显示，7月份规模以上工业增加值增长5.1%。工业生产增速反映供给端的产出状况与行业景气度，与制造业投资、出口交货值等指标共同构成对工业景气的判断依据。",
+      "why": "工业增加值增速刻画供给端景气",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269113.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269099.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269153.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269112.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "国家统计局：1—7月份全国固定资产投资增长3.6%",
+      "summary": "国家统计局数据显示，1—7月份全国固定资产投资增长3.6%。固定资产投资累计增速反映投资端扩张力度，叠加结构分布，可用于观察政策项目与民间投资对增长的拉动效果。",
+      "why": "投资累计增速反映投资端扩张力度",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269109.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269099.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269133.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269189.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "国家统计局：7月份CPI环比由降转涨 同比涨幅有所扩大",
+      "summary": "国家统计局数据显示，7月份CPI环比由降转涨，同比涨幅有所扩大。CPI环比转正是价格水平边际变化的重要信号，与PPI走势结合，可判断价格回升的持续性与需求端修复的力度。",
+      "why": "CPI环比转正是价格回升的重要信号",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269154.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269099.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269138.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269079.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "商务部、海关总署：9月15日起对锑等物项实施出口管制",
+      "summary": "商务部、海关总署公告，9月15日起对锑等物项实施出口管制。对关键矿产品实施出口管制，是资源安全与产业政策工具箱的重要手段，也可能影响相关品种的国际贸易流向。",
+      "why": "关键矿产品管制涉及资源安全与贸易流向",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269302.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269328.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269520.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10268994.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "中国央行操作5777亿元逆回购",
+      "summary": "中国央行当日开展5777亿元逆回购操作。大规模逆回购投放属于公开市场操作的常规安排，其净投放规模与期限结构，是观察流动性松紧与资金面状况的直接窗口。",
+      "why": "逆回购投放反映流动性松紧与资金面",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269310.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269293.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269096.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269099.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "个人住房贷款首套房标准放宽：超20城按区认定住房套数",
+      "summary": "个人住房贷款首套房标准进一步放宽，已有超20城按区认定住房套数。按区认定套数意味着限购口径在部分城市进一步松绑，属需求端政策调整，其实际效果仍需由成交数据验证。",
+      "why": "首套房认定松绑属需求端政策调整",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269061.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269079.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269117.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269306.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269084.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "中国7月跨境资金流动形势向好 外资净增持境内债券200亿美元",
+      "summary": "中国7月跨境资金流动形势向好，外资净增持境内债券200亿美元。外资增持境内债券反映国际投资者对人民币资产和国内利率环境的判断，也是观察跨境资本流动方向的直接数据。",
+      "why": "外资增持境内债券反映跨境资金流向",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269524.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269000.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269142.shtml",
+        "https://www.chinanews.com.cn/gj/2024/08-15/10269012.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美国7月CPI同比上涨2.9% 创三年来最小增幅",
+      "summary": "美国7月CPI同比上涨2.9%，创三年来最小增幅。美国通胀数据的这一回落幅度直接影响市场对美联储政策路径的定价，并通过美元与全球流动性传导至新兴市场。",
+      "why": "美国通胀回落影响美联储路径定价",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/08-15/10269012.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269064.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269093.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269306.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "7月经济数据细项公布后稳增长政策加力节奏",
+    "锑等物项出口管制的实施范围与合规影响",
+    "首套房标准放宽城市的成交数据验证",
+    "央行公开市场操作与资金面松紧变化",
+    "美国通胀回落对美联储降息预期的重定价"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T08:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

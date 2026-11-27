@@ -1,0 +1,164 @@
+{
+  "date": "2024-07-23",
+  "generatedAt": "2026-11-28T05:20:00+08:00",
+  "endedAt": "2026-11-28T05:20:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-07-22",
+    "to": "2024-07-23",
+    "fromAt": "2024-07-22T08:00:00+08:00",
+    "toAt": "2024-07-23T09:00:00+08:00",
+    "fromTs": 1721606400,
+    "toTs": 1721696400
+  },
+  "overview": "货币政策是当日主线：7月LPR报价1年期3.35%、5年期以上3.85%；央行把7天期逆回购操作利率由1.80%调整为1.70%，并下调常备借贷便利利率10个基点。财政与外贸方面，上半年中国财政收入115913亿元，对美加征关税商品排除延期清单公布，人民币中间价报7.1335元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "7月LPR报价出炉：1年期LPR为3.35% 5年期以上LPR为3.85%",
+      "summary": "7月LPR报价出炉，1年期LPR为3.35%，5年期以上LPR为3.85%。两个期限的报价构成贷款定价基准的月度更新，直接关联企业融资成本。",
+      "why": "LPR定价影响贷款与房贷利率基准",
+      "source": "中新网",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-22/10254909.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254980.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254900.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10255065.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行：即日起 公开市场7天期逆回购操作利率由1.80%调整为1.70%",
+      "summary": "央行宣布，即日起公开市场7天期逆回购操作利率由1.80%调整为1.70%。这一调整改变短期政策利率水平，是7天期逆回购操作定价的直接变化。",
+      "why": "政策利率下调带动短端资金价格回落",
+      "source": "中新网",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-22/10254900.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254909.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254925.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254905.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行：下调常备借贷便利利率10个基点",
+      "summary": "央行下调常备借贷便利利率10个基点。常备借贷便利是公开市场操作利率之上的另一档利率工具，其调整与公开市场操作利率变动处于同一政策操作框架内。",
+      "why": "常备借贷便利利率跟随政策利率下调",
+      "source": "中新网",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-22/10255065.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254900.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254904.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554115154/index.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "中国人民银行决定适当减免中期借贷便利（MLF）操作的质押品",
+      "summary": "中国人民银行决定适当减免中期借贷便利（MLF）操作的质押品。质押品要求的放宽属于中期流动性操作条件的调整，直接影响银行参与MLF操作的便利程度。",
+      "why": "MLF质押品放宽改善银行操作条件",
+      "source": "中国人民银行",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554115154/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254904.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254981.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10255065.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "上半年中国财政收入115913亿元",
+      "summary": "上半年中国财政收入为115913亿元。财政收入规模反映当期税收与非税收入的总体水平，是观察财政运行状况与支出腾挪空间的总量口径。",
+      "why": "财政收入总量反映财政运行状况",
+      "source": "中新网",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-22/10255271.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254927.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254884.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "国务院关税税则委员会公布对美加征关税商品第十五次排除延期清单",
+      "summary": "国务院关税税则委员会公布对美加征关税商品第十五次排除延期清单。排除延期延续既有的对美加征关税安排，是双边经贸摩擦在关税执行层面的具体处置。",
+      "why": "排除延期缓和关税措施边际冲击",
+      "source": "中新网",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-22/10255173.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254853.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254964.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "商务部：对原产于欧盟、英国、韩国和印度尼西亚的进口不锈钢钢坯和不锈钢热轧板/卷所适用的反倾销措施发起期终复审调查",
+      "summary": "商务部对原产于欧盟、英国、韩国和印度尼西亚的进口不锈钢钢坯和不锈钢热轧板/卷所适用的反倾销措施发起期终复审调查。复审决定这些贸易救济措施后续是否延续。",
+      "why": "反倾销复审影响进口钢材成本",
+      "source": "中新网",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-22/10254964.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-22/10255173.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10255395.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "7月22日人民币对美元中间价报7.1335元 下调20个基点",
+      "summary": "7月22日人民币对美元中间价报7.1335元，下调20个基点。中间价是人民币汇率的官方基准，每日公布反映对汇率水平的引导意图。",
+      "why": "中间价变动体现汇率引导取向",
+      "source": "中新网",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-22/10254919.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254909.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254900.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "报告：全国碳市场发展影响持续扩大 市场活力稳步提升",
+      "summary": "报告称全国碳市场发展影响持续扩大，市场活力稳步提升。碳市场覆盖范围与成交活跃度，是观察碳排放约束下市场机制建设进展的一组指标。",
+      "why": "碳市场活力反映机制建设进展",
+      "source": "中新网",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-22/10254940.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254850.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-22/10254973.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "国家数据局：正研究制定企业数据资源开发利用相关政策",
+      "summary": "国家数据局表示，正在研究制定企业数据资源开发利用相关政策。企业数据资源的开发利用被纳入政策研究范围，指向数据要素配置方式的制度安排。",
+      "why": "企业数据资源政策影响要素市场化",
+      "source": "中新网",
+      "publishedAt": "2024-07-22T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-22/10255302.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/07-22/10254935.shtml",
+        "https://www.chinanews.com.cn/gn/2024/07-22/10255113.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行各档政策利率调整后的市场资金面反应",
+    "财政收入之后支出与专项债发行进度",
+    "对美加征关税排除延期的后续批次",
+    "A股对货币政策转向的板块反应"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T05:20:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
