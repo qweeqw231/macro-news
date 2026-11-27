@@ -100,10 +100,17 @@ function main() {
     patchedDays += changed;
   }
 
-  console.log(`\n合计标记更新 ${patchedDays} 天次；索引里找不到对应日期的行 ${missing} 条`);
+  console.log(`\n合计标记更新 ${patchedDays} 天次`);
   if (missingList.length) {
-    console.log(`前 10 条：${missingList.slice(0, 10).join(' ')}`);
-    console.log('（索引里没有该日期的行 ⇒ 那天的早报在归档页不会显示，属预期：历史天在 history 索引，archive 天在 index 索引）');
+    // 正常情况：历史天只在 history/index.json 有行，archive 天只在 index.json 有行，
+    // 所以每个日期在其中一个索引里找不到是预期的，不算错。
+    const perFile = {};
+    for (const m of missingList) {
+      const rel = m.split(':')[0];
+      perFile[rel] = (perFile[rel] || 0) + 1;
+    }
+    console.log(`按索引统计「该索引里没有这一天的行」：${JSON.stringify(perFile)}`);
+    console.log('（正常现象：历史天在 history/index.json，archive 天在 index.json，两者不重叠）');
   }
   return 0;
 }
