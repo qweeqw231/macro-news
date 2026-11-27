@@ -1,0 +1,159 @@
+{
+  "date": "2024-02-09",
+  "generatedAt": "2026-11-27T18:00:00+08:00",
+  "endedAt": "2026-11-27T18:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-08",
+    "to": "2024-02-09",
+    "fromAt": "2024-02-08T08:00:00+08:00",
+    "toAt": "2024-02-09T09:00:00+08:00",
+    "fromTs": 1707350400,
+    "toTs": 1707440400
+  },
+  "overview": "物价与货政报告同日发布：国家统计局公布1月CPI环比上涨0.3%，PPI环比同比降幅均收窄；央行发布2023年四季度货币政策执行报告，提出今年物价有望温和回升，并称2023年货币信贷保持合理增长；A股兔年最后交易日三大股指涨超1%、成交额破万亿，一线城市节前放松住房限购。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：1月份CPI环比继续上涨 PPI降幅收窄",
+      "summary": "国家统计局公布，1月份CPI环比继续上涨，PPI降幅收窄。消费价格与工业价格的同步变化，是判断通缩压力是否缓解、需求端修复成色的核心价格信号。",
+      "why": "CPI环比上涨，PPI降幅收窄",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-08/10161484.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161652.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161644.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中国CPI环比两连涨 1月份涨幅扩大至0.3%",
+      "summary": "中国CPI环比两连涨，1月份涨幅扩大至0.3%。环比持续回升意味着价格下行压力边际缓解，为货币政策温和宽松与物价温和回升的判断提供支撑。",
+      "why": "CPI环比两连涨至0.3%",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-08/10161652.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161484.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161470.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "1月份中国PPI环比同比降幅均收窄",
+      "summary": "1月份中国PPI环比同比降幅均收窄。工业品价格的降幅收窄，通常先反映上游供需与补库存节奏的变化，其后续传导影响中下游利润与投资意愿。",
+      "why": "PPI环比同比降幅均收窄",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-08/10161644.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161484.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161481.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "2023年第四季度中国货币政策执行报告",
+      "summary": "中国人民银行发布2023年第四季度中国货币政策执行报告。季度报告是对前期政策操作与效果的总结，也是下一阶段政策取向、操作方式与重点方向的公开指引。",
+      "why": "央行四季度货政报告发布",
+      "source": "中国人民银行",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553775596/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161882.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553750004/index.html"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "中国货币政策执行报告：2024年物价有望温和回升",
+      "summary": "中国货币政策执行报告提出，2024年物价有望温和回升。物价判断关系到政策目标的实现路径，也为降准降息与信贷投放节奏的市场预期提供官方口径。",
+      "why": "报告预期2024年物价温和回升",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-08/10161882.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553775596/index.html",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161893.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "央行：2023年我国货币信贷保持合理增长",
+      "summary": "央行表示2023年我国货币信贷保持合理增长。关于货币与信贷总量的表述，回应了市场对金融支持实体经济力度与结构优化的普遍关注。",
+      "why": "2023年货币信贷保持合理增长",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-08/10161893.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553775596/index.html",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161882.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "A股兔年最后一个交易日：三大股指均涨超1% 成交额继续破万亿",
+      "summary": "A股兔年最后一个交易日，三大股指均涨超1%，成交额继续破万亿。节前成交维持高位，显示资金对政策预期与经济数据保持关注，节后行情取决于增量政策与数据验证。",
+      "why": "节前最后交易日成交额破万亿",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-08/10161676.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161653.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161724.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "（经济观察）四大一线城市节前放松住房限购 传递重磅政策信号",
+      "summary": "四大一线城市节前放松住房限购，传递重磅政策信号。核心城市需求端政策同步调整，是本轮地产政策优化的重要一步，对应稳市场与稳预期的双重目标。",
+      "why": "一线城市节前放松限购",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-08/10161655.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161413.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161567.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "商务部国际贸易谈判代表兼副部长王受文与美国财政部副部长尚博举行会谈",
+      "summary": "商务部国际贸易谈判代表兼副部长王受文与美国财政部副部长尚博举行会谈。中美经贸层级沟通的时点与议题，关系到关税与出口管制等摩擦变量的走向。",
+      "why": "中美经贸官员举行会谈",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-08/10161640.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161374.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161518.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "国家发改委印发通知 部署春耕化肥保供稳价工作",
+      "summary": "国家发改委印发通知，部署春耕化肥保供稳价工作。化肥保供稳价关系农业生产与农产品价格，是稳物价工作从流通端向生产端延伸的体现。",
+      "why": "部署春耕化肥保供稳价",
+      "source": "中新网",
+      "publishedAt": "2024-02-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-08/10161504.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-08/10161503.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-08/10161581.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "PPI降幅收窄能否延续及对工业企业利润的影响",
+    "货币政策执行报告对今年降准降息与信贷的表述",
+    "节后复工与一线城市楼市成交的验证"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T18:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

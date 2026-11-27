@@ -1,0 +1,159 @@
+{
+  "date": "2024-02-05",
+  "generatedAt": "2026-11-27T18:00:00+08:00",
+  "endedAt": "2026-11-27T18:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-04",
+    "to": "2024-02-05",
+    "fromAt": "2024-02-04T08:00:00+08:00",
+    "toAt": "2024-02-05T09:00:00+08:00",
+    "fromTs": 1707004800,
+    "toTs": 1707094800
+  },
+  "overview": "节前流动性与年度数据并行：央行2月4日开展430亿元14天期逆回购操作，跨节资金安排延续；商务部披露2023年企业承接服务外包合同额28666亿元、对外投资合作平稳，全行业对外直接投资同比增长5.7%；2023年黄金消费量1089.69吨、增8.78%，多地经济总量迈上新台阶。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行2月4日开展430亿元14天期逆回购操作",
+      "summary": "央行2月4日开展430亿元14天期逆回购操作。14天期限跨过春节长假，操作规模反映央行对节后资金回笼与流动性平稳的预先安排，是跨节流动性管理的一环。",
+      "why": "跨节逆回购操作，保障资金面平稳",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-04/10158552.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158686.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-04/10158732.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "商务部：2023年我国企业承接服务外包合同额28666亿元人民币",
+      "summary": "商务部表示，2023年我国企业承接服务外包合同额28666亿元人民币。承接离岸外包的规模反映国内承接产业转移与人力资源服务的国际竞争力，也是外贸新动能的组成部分。",
+      "why": "服务外包合同额28666亿元",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-04/10158830.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158628.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158741.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "商务部：2023年我国对外投资合作平稳发展",
+      "summary": "商务部表示2023年我国对外投资合作平稳发展。对外投资与合作是构建国际经济循环的重要一环，与境外产能布局、资源保障和品牌出海相互关联。",
+      "why": "对外投资合作保持平稳",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-04/10158628.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158741.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158830.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "2023年中国全行业对外直接投资同比增5.7%",
+      "summary": "2023年中国全行业对外直接投资同比增长5.7%。对外直接投资保持正增长，说明企业在海外市场仍具拓展意愿，与共建“一带一路”项目的落地密度相关。",
+      "why": "对外直接投资同比增5.7%",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-04/10158741.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158628.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158896.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "2023年我国黄金消费量1089.69吨，同比增长8.78%",
+      "summary": "2023年我国黄金消费量达到1089.69吨，同比增长8.78%。金饰与投资需求共同推升消费总量，是观察居民资产配置偏好与避险情绪的一个侧面。",
+      "why": "黄金消费量增8.78%",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-04/10158694.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158588.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158547.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "2023年多地经济总量迈上新台阶",
+      "summary": "2023年多地经济总量迈上新台阶，区域经济的规模扩张持续推进。地方GDP总量的变化反映产业承载与人口集聚效果，是观察区域分化与协调发展的基础数据。",
+      "why": "多地经济总量迈上新台阶",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-04/10158502.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158588.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158770.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "国家移民管理局：春节假期全国口岸日均通关人数将达180万人次",
+      "summary": "国家移民管理局部署，春节假期全国口岸日均通关人数将达180万人次。口岸通关安排反映跨境出行需求的恢复程度，是观察春节假期人员流动与文旅消费的量化口径。",
+      "why": "春节口岸日均通关180万人次",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-04/10158561.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158780.shtml",
+        "https://www.chinanews.com.cn/gn/2024/02-04/10158664.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "长三角水陆空增强运力 应对春节长假出行大客流",
+      "summary": "长三角水陆空增强运力，应对春节长假出行大客流。运力投放是假期交通与物流保障的关键环节，反映区域在节前集中组织资源保障经济与出行平稳的能力。",
+      "why": "长三角增强运力应对大客流",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-04/10158780.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-04/10158561.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158547.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "中国最高检：投资者保护是办理证券案件的重中之重",
+      "summary": "中国最高检表示，投资者保护是办理证券案件的重中之重。资本市场违法案件的查处与投资者赔偿机制，关系到市场信心与长期资金入市的制度基础。",
+      "why": "证券案件重在投资者保护",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/02-04/10158732.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/02-04/10158629.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158686.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "经济学家称中国经济中长期发展前景广阔",
+      "summary": "经济学家称中国经济中长期发展前景广阔。专业判断构成对全年与中长期增长预期的解释框架，与地方经济总量、对外投资等实际数据形成印证与补充。",
+      "why": "中长期发展前景预期良好",
+      "source": "中新网",
+      "publishedAt": "2024-02-04T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-04/10158588.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158502.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-04/10158770.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行节前14天期逆回购与后续流动性安排",
+    "对外投资与服务外包数据的年度口径变化",
+    "春节假期口岸通关与出行的客流验证"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T18:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

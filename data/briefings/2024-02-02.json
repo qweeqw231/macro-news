@@ -1,0 +1,159 @@
+{
+  "date": "2024-02-02",
+  "generatedAt": "2026-11-27T18:00:00+08:00",
+  "endedAt": "2026-11-27T18:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-02-01",
+    "to": "2024-02-02",
+    "fromAt": "2024-02-01T08:00:00+08:00",
+    "toAt": "2024-02-02T09:00:00+08:00",
+    "fromTs": 1706745600,
+    "toTs": 1706835600
+  },
+  "overview": "美联储按兵不动与财政数据构成当日主线：联邦基金利率维持在5.25%至5.50%，鲍威尔称3月不太可能降息；财政部披露2023年全国一般公共预算收入突破21万亿元、同比增长6.4%，并提出用好国债资金、落实结构性减税降费；中国超越日本成最大汽车出口国，服务进出口总额同比增长10%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "美联储决定将联邦基金利率继续维持在5.25%至5.50%之间",
+      "summary": "美联储决定将联邦基金利率继续维持在5.25%至5.50%之间。新利率水平延续了上一轮调整后的结果，高利率环境通过美元与全球资金成本影响新兴市场的资本流动。",
+      "why": "美联储按兵不动，利率维持高位",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-01/10156448.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-01/10156500.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156727.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "美联储维持联邦基金利率不变 鲍威尔称3月不太可能降息",
+      "summary": "美联储维持联邦基金利率不变，鲍威尔称3月不太可能降息，同时表示年内降息是合适的。政策路径的表态直接影响美元走势与全球资产定价，是当日外部环境的关键变量。",
+      "why": "3月降息预期降温，路径生变",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/02-01/10156500.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-01/10156448.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156449.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "财政部：2023年全国一般公共预算收入突破21万亿元",
+      "summary": "财政部披露，2023年全国一般公共预算收入突破21万亿元，收入规模创出新高并呈现恢复性增长。财政收入强弱直接决定后续财政支出空间与逆周期调节的可用资源。",
+      "why": "财政收入突破21万亿元",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-01/10156638.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156887.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156978.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "财政部：2023年全国一般公共预算收入同比增长6.4%",
+      "summary": "财政部数据显示，2023年全国一般公共预算收入同比增长6.4%。收入增速回升说明经济与税收基本盘出现修复，弥补了土地相关收入下行带来的部分缺口。",
+      "why": "财政收入增速回升至6.4%",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-01/10156887.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156638.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156936.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "财政部：今年将用好国债资金，适当增加中央预算内投资规模",
+      "summary": "财政部表示，今年将用好国债资金，适当增加中央预算内投资规模。国债资金与中央预算内投资是稳投资的重要抓手，其投向安排影响基建实物工作量的形成节奏。",
+      "why": "增加中央预算内投资规模",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-01/10156642.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156638.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10157031.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "财政部：今年将落实好结构性减税降费政策",
+      "summary": "财政部表示，今年将落实好结构性减税降费政策。减税降费通过降低企业成本、稳定市场预期发挥作用，是财政政策与货币政策协同发力的一部分。",
+      "why": "结构性减税降费政策落地",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-01/10157033.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156642.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156675.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "超越日本！中国成最大汽车出口国",
+      "summary": "中国超越日本，成为全球最大汽车出口国。出口排位变化反映国内汽车产业的成本与供应链优势，同时意味着海外市场对中国品牌份额的关注与贸易摩擦风险同步上升。",
+      "why": "中国成最大汽车出口国",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-01/10156588.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/02-01/10156626.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10157196.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "商务部：2023年全年服务进出口总额同比增长10%",
+      "summary": "商务部表示，2023年全年服务进出口总额同比增长10%。服务贸易增速快于货物贸易，反映旅行、运输等消费与生产性服务的恢复，对外汇收支结构形成支撑。",
+      "why": "服务进出口总额同比增长10%",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-01/10156554.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156668.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156588.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "中国A股现“回购增持热” 近90家公司同天公告",
+      "summary": "中国A股出现“回购增持热”，近90家公司同日发布回购或增持公告。上市公司真金白银增持通常传递估值信号，影响二级市场资金预期与风险偏好。",
+      "why": "A股回购增持潮，估值信号积极",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-01/10156977.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156600.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156631.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "两部门发文细化经营性物业贷款管理——满足房企合理融资需求",
+      "summary": "两部门发文细化经营性物业贷款管理，以满足房企合理融资需求。经营性物业贷款是房地产融资“白名单”机制的重要补充，有助于疏通房企现金流与项目建设的资金通道。",
+      "why": "经营性物业贷款细化落地",
+      "source": "中新网",
+      "publishedAt": "2024-02-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/02-01/10156589.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156600.shtml",
+        "https://www.chinanews.com.cn/cj/2024/02-01/10156675.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "美联储3月降息预期变化对人民币汇率的传导",
+    "财政收入恢复性增长能否延续到一季度",
+    "汽车出口跃居第一后的贸易摩擦风险"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T18:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

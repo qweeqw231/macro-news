@@ -1,0 +1,159 @@
+{
+  "date": "2024-02-01",
+  "generatedAt": "2026-11-27T18:00:00+08:00",
+  "endedAt": "2026-11-27T18:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-01-31",
+    "to": "2024-02-01",
+    "fromAt": "2024-01-31T08:00:00+08:00",
+    "toAt": "2024-02-01T09:00:00+08:00",
+    "fromTs": 1706659200,
+    "toTs": 1706749200
+  },
+  "overview": "1月数据与政策信号交替出现：国家统计局公布1月制造业PMI回升至49.2%，央行开展5440亿元7天期逆回购对冲节前流动性；人民币对美元震荡走低，多城放松限购、楼市进入政策密集调整期；市场监督管理总局强调加快建设全国统一大市场，全年稳增长与扩内需的政策取向渐次清晰。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：1月制造业PMI回升至49.2% 景气水平有所改善",
+      "summary": "国家统计局公布1月制造业PMI回升至49.2%，景气水平有所改善，但仍处于收缩区间。PMI是观察制造业运行与经济开局节奏的高频指标，回升幅度决定后续稳增长政策的发力强度。",
+      "why": "制造业PMI回升，景气边际改善",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10155888.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155860.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156067.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行1月31日开展5440亿元逆回购操作 期限为7天",
+      "summary": "央行1月31日开展5440亿元逆回购操作，期限为7天。公开市场投放规模反映央行对节前跨节资金面的对冲力度，也影响银行间市场的资金价格与市场预期。",
+      "why": "节前大额逆回购，对冲资金面",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10155852.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156379.shtml",
+        "https://www.chinanews.com.cn/gn/2024/01-31/10156233.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "1月人民币对美元震荡走低 业界析全年走势",
+      "summary": "1月人民币对美元震荡走低，业界对全年走势展开分析。汇率变动连接国内基本面与美元周期，是外资流向、出口结汇意愿与货币政策空间判断的重要外部坐标。",
+      "why": "人民币走低，汇率预期待稳",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10156379.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156362.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156383.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "（经济观察）四天三城放松限购 中国楼市迎政策密集调整期",
+      "summary": "四天之内三城放松限购，中国楼市进入政策密集调整期。限购松绑是需求端政策工具的重要变化，直接影响区域成交节奏与房地产市场的预期修复。",
+      "why": "多城放松限购，楼市政策转向",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10156066.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156100.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "多地调整楼市限购：苏州全面取消，上海放开单身限制",
+      "summary": "多地集中调整楼市限购政策，苏州全面取消限购、上海放开单身人士购房限制。政策在核心城市同步松绑，释放改善性与投资性需求，对区域成交的拉动效果有待数据验证。",
+      "why": "核心城市同步松绑，需求释放",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10155766.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156066.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10156100.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "中共中央政治局召开会议 习近平主持会议",
+      "summary": "中共中央政治局召开会议，习近平主持会议。作为年初研判经济形势、部署全年工作的重要会议，其对宏观政策取向的表述通常为后续部委政策落地定下基调。",
+      "why": "政治局会议定调全年经济工作",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/01-31/10156233.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155852.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155801.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "人民银行近日征求意见——进一步开放银行间债券市场",
+      "summary": "人民银行近日就进一步开放银行间债券市场征求意见。扩大银行间市场对外开放，指向利率市场化的稳步推进，也关系到境内外机构投资者的债券投资渠道。",
+      "why": "银行间债券市场开放征求意见",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10155801.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155852.shtml",
+        "https://www.chinanews.com.cn/gn/2024/01-31/10156233.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "市场监管总局：加快推进全国统一大市场建设 大力破除行政性垄断和地方保护",
+      "summary": "市场监管总局表示将加快推进全国统一大市场建设，大力破除行政性垄断和地方保护。统一大市场建设关系商品与要素的自由流动，是降低制度性交易成本、畅通国内循环的关键抓手。",
+      "why": "统一大市场建设破除地方保护",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10155912.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155954.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155966.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "国家市场监管总局：截至2023年底全国登记在册个体工商户1.24亿户",
+      "summary": "国家市场监管总局数据显示，截至2023年底全国登记在册个体工商户达到1.24亿户。个体工商户是市场主体的基本盘，其数量变化反映营商环境与经营预期，连接消费与就业两端。",
+      "why": "个体户1.24亿户，主体基础厚实",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10155954.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155912.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155966.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中国营商环境持续优化改善 对外资“磁吸力”增强",
+      "summary": "报道指出中国营商环境持续优化改善，对外资的“磁吸力”增强。营商环境是外资在华投资决策的核心变量，涵盖准入、税费与产权保护等制度性安排。",
+      "why": "营商环境改善，外资黏性增强",
+      "source": "中新网",
+      "publishedAt": "2024-01-31T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-31/10155931.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155912.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-31/10155845.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "1月PMI回升能否延续到节后复工数据",
+    "节前逆回购到期后的流动性回补安排",
+    "多城限购松绑后的成交与信贷反馈"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T18:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
