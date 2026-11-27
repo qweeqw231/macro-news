@@ -1,0 +1,160 @@
+{
+  "date": "2024-01-06",
+  "generatedAt": "2026-11-27T19:12:01.048+08:00",
+  "endedAt": "2026-11-27T19:12:01.048+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-01-05",
+    "to": "2024-01-06",
+    "fromAt": "2024-01-05T08:00:00+08:00",
+    "toAt": "2024-01-06T09:00:00+08:00",
+    "fromTs": 1704412800,
+    "toTs": 1704502800
+  },
+  "overview": "央行工作会议定调2024年，稳慎扎实推进人民币国际化，中小银行密集跟降存款利率。财政端强调积极财政政策加力提效；房地产方面多地发放公积金贷款“礼包”，两部门稳步发展房地产投资信托基金。产业端工信部提出现代化产业体系目标，服务进出口前11个月同比增9%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "2024年中国人民银行工作会议在京召开",
+      "summary": "2024年中国人民银行工作会议在京召开，部署下一年度金融与货币政策安排，并提出稳慎扎实推进人民币国际化。年度工作会议通常给出货币调控的总体取向与重点工具选择，是判断后续降准降息节奏与结构性工具力度的依据。",
+      "why": "央行定调，货币政策节奏可预期",
+      "source": "中国人民银行",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553646503/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10141391.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10141390.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140905.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中小银行密集跟降存款利率，2024年是否还有降息空间？",
+      "summary": "中小银行密集下调存款利率，市场讨论2024年是否还有进一步降息空间。存款利率是贷款利率下行与银行息差稳定之间的平衡点，其调整节奏既影响银行经营稳定性，也决定实体融资成本的下行空间。",
+      "why": "存款利率续降，息差与降息博弈",
+      "source": "中新网",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-05/10140905.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10141391.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140834.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "积极财政政策加力提效 促经济保民生",
+      "summary": "报道围绕积极财政政策加力提效、促进经济保民生展开，指向2024年财政发力的方向。加力提效意味着赤字安排、专项债发行与支出进度将更注重政策效果，财政与货币政策的协同程度关系到稳增长成色。",
+      "why": "财政加力提效，与货币形成合力",
+      "source": "中新网",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-05/10140864.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10141271.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140990.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "多地发放公积金贷款政策“礼包”",
+      "summary": "多地推出公积金贷款政策礼包，通过提高额度、下调利率等方式支持刚性与改善性住房需求。公积金政策的松绑是地方稳楼市工具箱的重要组成，落地力度与覆盖面关系到住房需求端的实际释放。",
+      "why": "公积金松绑，支持住房需求",
+      "source": "中新网",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-05/10140879.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10141399.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140882.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "中国两部门：稳步发展房地产投资信托基金",
+      "summary": "中国两部门提出稳步发展房地产投资信托基金，为存量房产盘活与项目融资提供新的工具安排。REITs市场的扩容关系到房地产发展新模式的融资支撑，也是观察资产证券化服务实体经济的重要切口。",
+      "why": "REITs稳步推进，存量盘活有工具",
+      "source": "中新网",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-05/10141399.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140879.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553646503/index.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "全国工业和信息化工作会议召开 提出加快建设现代化产业体系",
+      "summary": "全国工业和信息化工作会议召开，提出加快建设现代化产业体系。工信领域的年度工作会议通常明确产业方向、数字化转型与技术攻关的重点任务，对制造业投资方向和地方产业布局具有指引作用。",
+      "why": "工信定方向，产业投资有指引",
+      "source": "中新网",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/01-05/10140849.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140795.shtml",
+        "https://www.chinanews.com.cn/gn/2024/01-05/10141298.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "新能源汽车购置税减免新政落地 有消费者提前购车",
+      "summary": "新能源汽车购置税减免新政落地，部分消费者出现提前购车现象。税收优惠的兑现直接影响新能源汽车的终端价格与订单节奏，也关系到汽车产业政策接续性以及消费需求的释放时点。",
+      "why": "购置税减免落地，新能源车需求释放",
+      "source": "中新网",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-05/10140809.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140795.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140863.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "去年前11月中国服务进出口总额同比增9%",
+      "summary": "数据显示，去年前11月中国服务进出口总额同比增长9%。服务贸易增速反映旅行、运输与知识密集型服务等新增长点的表现，与货物贸易一道构成外贸结构转型的观察面，也关系到跨境资金与人员流动的活跃度。",
+      "why": "服务贸易增9%，外贸结构优化",
+      "source": "中新网",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-05/10140822.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140894.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10141256.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "外贸新产品新业态潜力不断释放 中国市场持续增强外资“磁吸力”",
+      "summary": "外贸新产品新业态潜力持续释放，中国市场对外资的吸引力增强。制度型开放与产业配套能力是吸引跨国资本布局的主要因素，关系到位增资节奏、产业链安全以及外资对华投资预期的稳定。",
+      "why": "外资磁吸力上升，开放见成效",
+      "source": "中新网",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-05/10140894.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140822.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140778.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中国A股银行板块周五逆势上涨",
+      "summary": "中国A股银行板块在周五逆势上涨，与同期大盘走势形成反差。市场解读多与存款利率下调、银行息差压力缓解及高股息防御属性相关，板块表现折射资金对银行盈利与资产质量预期的重新定价。",
+      "why": "银行股逆势涨，息差预期改善",
+      "source": "中新网",
+      "publishedAt": "2024-01-05T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-05/10141190.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-05/10140905.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-05/10141390.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行工作会议部署的降准降息与工具选择",
+    "存款利率下调对银行信贷投放的传导",
+    "房地产REITs与公积金政策的落地节奏"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:12:01.048+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

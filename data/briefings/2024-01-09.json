@@ -1,0 +1,159 @@
+{
+  "date": "2024-01-09",
+  "generatedAt": "2026-11-27T19:12:01.206+08:00",
+  "endedAt": "2026-11-27T19:12:01.206+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-01-08",
+    "to": "2024-01-09",
+    "fromAt": "2024-01-08T08:00:00+08:00",
+    "toAt": "2024-01-09T09:00:00+08:00",
+    "fromTs": 1704672000,
+    "toTs": 1704762000
+  },
+  "overview": "货币与财政两端同步发力：央行开展500亿元7天期逆回购操作，中小银行下调存款利率稳息差，以积极财政政策推动高质量发展。房地产端，广州推出房票安置以缩短去库存周期，政策支持租购并举发展模式；A股三大指数低开而房地产板块逆市高开，美国国债突破34万亿美元。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "1月8日央行开展500亿元逆回购操作 期限为7天",
+      "summary": "1月8日，央行开展500亿元逆回购操作，期限为7天。公开市场操作反映央行对跨节后流动性缺口的对冲力度与政策利率取向的维持状态，是观察短期资金面松紧与政策连续性的日常窗口。",
+      "why": "逆回购对冲节后流动性缺口",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-08/10142092.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-08/10141984.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10141982.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中小银行下调存款利率稳息差",
+      "summary": "中小银行下调存款利率，以稳定净息差并缓解负债端压力。存款利率下行为贷款利率让利提供空间，也关系到银行信贷投放能力与风险定价水平，是货币政策传导链条上的关键一环。",
+      "why": "存款利率下调，息差压力缓解",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-08/10141984.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142092.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142068.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "以积极的财政政策推动高质量发展",
+      "summary": "报道以积极财政政策推动高质量发展为主题，阐释财政发力对增长与结构转型的支撑作用。财政政策取向决定政府支出节奏、税费优惠力度与投资乘数效应，是观察稳增长政策组合的重要切口。",
+      "why": "财政发力指向高质量发展",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-08/10141987.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142224.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10141986.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "财政部：2024年政府采购脱贫地区农副产品将预留份额",
+      "summary": "财政部表示，2024年政府采购将对脱贫地区农副产品预留份额。政府采购向脱贫地区倾斜，是财政资金直接支持乡村振兴与农产品流通的具体安排，也关系到财政支出的结构性导向。",
+      "why": "财政预留份额，支向更精准",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-08/10142224.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-08/10141987.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10141986.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "扎实做好2024年经济工作 持续有效防范化解重点领域风险",
+      "summary": "文章围绕扎实做好2024年经济工作，强调持续有效防范化解重点领域风险。风险化解与增长稳定的统筹，是本轮经济工作的方法论特征，关系地方债务、房地产与金融风险的处置节奏。",
+      "why": "防风险与稳增长并重",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-08/10141986.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142037.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142148.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "广州推出房票安置形式 缩短楼市去库存周期",
+      "summary": "广州推出房票安置形式，以缩短楼市去库存周期。房票安置把拆迁补偿资金定向导入商品住房市场，在不直接扩大货币化投放的条件下疏通库存，是地方政府稳楼市工具的又一次扩容。",
+      "why": "房票安置，去库存新工具",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-08/10142281.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142353.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10141976.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "支持住房租赁市场发展 完善租购并举发展模式",
+      "summary": "政策提出支持住房租赁市场发展，完善租购并举的发展模式。租购并举是房地产发展新模式的核心内容，租赁住房的供给规模与金融支持安排，关系到住房消费与居民资产负债表的稳定。",
+      "why": "租购并举，住房供给结构调整",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-08/10141976.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-08/10141968.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142281.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "A股三大指数低开，房地产板块逆市高开",
+      "summary": "A股三大指数低开，而房地产板块逆市高开，板块与大盘走势明显背离。地产股走强与房贷利率下调、公积金政策等预期相关，反映市场对房地产支持政策加码的提前定价。",
+      "why": "地产逆市高开，政策预期先行",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-08/10142068.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142312.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142175.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "上海跨境电商特殊区域包裹零售出口模式首次进入规模化运作",
+      "summary": "上海跨境电商特殊区域包裹零售出口模式首次进入规模化运作。跨境电商零售出口是新外贸形态，政策与通道打通关系到中小外贸主体的出海效率，也是观察外贸新动能的重要切口。",
+      "why": "跨境电商规模化，外贸新动能",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/01-08/10142339.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/01-08/10141980.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142160.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美国国债突破34万亿美元！摩根大通警告：债台高筑对经济而言恰似“温水煮蛙”",
+      "summary": "美国国债突破34万亿美元，摩根大通警告高债务对经济而言如“温水煮蛙”。美债规模与利率水平是全球金融条件的核心变量，关系美元流动性、全球风险偏好以及我国跨境资本流动的外部环境。",
+      "why": "美债规模新高，外部环境承压",
+      "source": "中新网",
+      "publishedAt": "2024-01-08T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/01-08/10142305.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/01-08/10142013.shtml",
+        "https://www.chinanews.com.cn/cj/2024/01-08/10142148.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "逆回购与存款利率调整的续接节奏",
+    "广州房票安置的跟进城市",
+    "美债扩张对全球风险偏好的影响"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-27T19:12:01.206+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
