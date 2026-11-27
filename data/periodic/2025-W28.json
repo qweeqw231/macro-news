@@ -1,0 +1,171 @@
+{
+  "date": "2025-W28",
+  "type": "week",
+  "generatedAt": "2026-11-26T21:09:49+08:00",
+  "endedAt": "2026-11-26T21:09:49+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 28 周宏观周报：6月CPI由降转涨",
+  "window": {
+    "from": "2025-07-07",
+    "to": "2025-07-13",
+    "fromAt": "2025-07-07T08:00:00+08:00",
+    "toAt": "2025-07-14T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是国内物价读数出现方向性变化、增长数据在“十四五”收官节点集中披露，外部则是美国关税时间表与税率的密集调整。物价方面，6月CPI同比由降转涨、核心CPI继续回升，同期PPI同比下降3.6%，但部分行业价格企稳回升。增长结构方面，国家发展改革委披露“十四五”经济增量预计超35万亿元，2021年至2024年经济增速平均5.5%、内需贡献率86.4%。政策与市场方面，国办印发加大稳就业政策支持力度的通知，央行连续开展7天期逆回购操作，沪指重返3500点。外部冲击方面，美国“对等关税”确认8月1日生效，欧盟、墨西哥、加拿大、巴西相继被加征30%至50%不等的关税。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：6月份CPI同比由降转涨 核心CPI继续回升",
+      "summary": "国家统计局公布6月份居民消费价格同比上涨0.1%，CPI同比由降转涨，核心CPI继续回升，物价读数出现方向性变化。",
+      "why": "CPI由降转涨是物价方向转折，影响对货币政策空间的判断",
+      "source": "中新网",
+      "publishedAt": "2025-07-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-09/10444918.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-09/10444889.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-09/10445134.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：6月份工业生产者出厂价格同比下降3.6%",
+      "summary": "国家统计局公布，6月份工业生产者出厂价格同比下降3.6%，环比下降、部分行业价格企稳回升，工业品价格压力边际有所缓解。",
+      "why": "PPI同比与环比走势，关联工业利润和名义增长修复节奏",
+      "source": "中新网",
+      "publishedAt": "2025-07-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-09/10444895.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-09/10445149.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "沪指周四收盘成功重返3500点之上",
+      "summary": "沪指周四收盘成功重返3500点之上，地产股午后掀涨停潮；周五沪指站稳3500点之上，船舶制造板块走强，指数周内反复站上该点位。",
+      "why": "指数点位与板块轮动，反映市场风险偏好与稳地产预期",
+      "source": "中新网",
+      "publishedAt": "2025-07-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-10/10445850.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-10/10445754.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-11/10446422.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-09/10445279.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "国家发改委主任：“十四五”中国经济增量预计超35万亿元",
+      "summary": "国家发展改革委主任表示，“十四五”期间我国经济增量预计将超过35万亿元；2021年至2024年我国经济增速平均达到5.5%，内需对经济增长的平均贡献率为86.4%。",
+      "why": "增量与增速数据勾勒“十四五”增长质地，凸显内需支撑力度",
+      "source": "中新网",
+      "publishedAt": "2025-07-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-09/10445035.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-09/10444985.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-09/10444940.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-09/10445031.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-11/10446109.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "央行连续开展7天期逆回购操作",
+      "summary": "央行连续开展7天期逆回购操作，7月7日投放1065亿元、7月8日690亿元、7月10日900亿元、7月11日847亿元，公开市场操作维持高频运行。",
+      "why": "公开市场投放规模与节奏，是观察短期流动性松紧的高频指标",
+      "source": "中新网",
+      "publishedAt": "2025-07-07T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-07/10443746.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-08/10444266.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-10/10445521.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-11/10446107.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "中国人民银行与埃及中央银行签署合作谅解备忘录",
+      "summary": "中国人民银行与埃及中央银行签署双边金融合作谅解备忘录，涉及推动本币结算，以及在中央银行数字货币和数字创新领域开展合作。",
+      "why": "本币结算与数字货币合作拓展跨境人民币使用场景",
+      "source": "中国人民银行",
+      "publishedAt": "2025-07-11T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554896911/index.html"
+    },
+    {
+      "rank": 7,
+      "title": "国务院办公厅印发《关于进一步加大稳就业政策支持力度的通知》",
+      "summary": "国务院办公厅印发进一步加大稳就业政策支持力度的通知，推出19条硬核举措，从政策亮点与着力点解读稳就业稳企业的组合拳。",
+      "why": "稳就业是宏观政策发力重点，关联居民收入与消费预期",
+      "source": "中新网",
+      "publishedAt": "2025-07-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/07-09/10445236.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/07-09/10445266.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-11/10446106.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-11/10446256.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "房地产市场“活跃度”不断提升 上半年各地出台政策超340条",
+      "summary": "报道称上半年房地产市场“活跃度”不断提升，各地出台政策超340条，二手房交易保持高活跃度、刚需释放巩固回稳基础，房地产代建市场规模持续扩大。",
+      "why": "地方政策密度与成交活跃度，检验稳地产政策的落地效果",
+      "source": "中新网",
+      "publishedAt": "2025-07-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-12/10446781.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-08/10444314.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-09/10444901.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-07/10443798.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "特朗普：“对等关税”8月1日生效，不会再延期",
+      "summary": "特朗普称“对等关税”8月1日生效、不会再次延期，此前美方已对14国发出加征关税信函，延长暂缓期与加税施压同步推进。",
+      "why": "关税生效时间表决定三季度外贸节奏与全球供应链定价",
+      "source": "中新网",
+      "publishedAt": "2025-07-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/07-09/10444847.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/07-08/10444221.shtml",
+        "https://www.chinanews.com.cn/gj/2025/07-08/10444327.shtml",
+        "https://www.chinanews.com.cn/gj/2025/07-08/10444219.shtml",
+        "https://www.chinanews.com.cn/gj/2025/07-08/10444352.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "特朗普宣布对欧盟、墨西哥征收30%关税",
+      "summary": "特朗普宣布对欧盟、墨西哥商品征收30%关税，并称美国将从8月1日起对进口铜征收50%关税、对加拿大征收35%关税、对巴西征收50%关税；欧盟称必要时将采取反制措施。",
+      "why": "大国税率集体上调，冲击外需与区域供应链分工",
+      "source": "中新网",
+      "publishedAt": "2025-07-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/07-13/10447036.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/07-10/10445568.shtml",
+        "https://www.chinanews.com.cn/gj/2025/07-11/10446262.shtml",
+        "https://www.chinanews.com.cn/gj/2025/07-10/10445603.shtml",
+        "https://www.chinanews.com.cn/gj/2025/07-13/10447002.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "7月下旬6月社零、工业增加值与社融信贷数据，验证物价回升与内需修复的持续性",
+    "美国“对等关税”8月1日生效后的执行力度与谈判进展，以及出口链反应",
+    "央行7月LPR报价与公开市场操作利率是否调整，跨月资金面松紧情况",
+    "稳就业19条举措落地进度，重点行业招工与高校毕业生就业数据",
+    "三季度地方稳地产政策密度与重点城市成交能否延续"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:09:49+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 703,
+    "missingDays": []
+  }
+}

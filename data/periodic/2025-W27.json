@@ -1,0 +1,175 @@
+{
+  "date": "2025-W27",
+  "type": "week",
+  "generatedAt": "2026-11-26T21:09:18+08:00",
+  "endedAt": "2026-11-26T21:09:18+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 27 周宏观周报：央行对冲2万亿逆回购到期",
+  "window": {
+    "from": "2025-06-30",
+    "to": "2025-07-06",
+    "fromAt": "2025-06-30T08:00:00+08:00",
+    "toAt": "2025-07-07T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周主线是流动性对冲与外部关税压力同时加码。公开市场超2万亿元逆回购到期，央行连续开展7天期逆回购操作，单日投放3315亿元、1310亿元、985亿元、572亿元；中国人民银行公布2025年5月份金融市场运行情况，债券市场共发行各类债券71951.6亿元。6月份制造业采购经理指数为49.7%继续回升，制造业PMI连续两月回升。资本市场方面，证监会表示始终把维护市场稳定作为监管工作首要任务，沪指再创年内新高、盘中逼近3500点，IPO受理数已超去年全年。外部方面，中国自7月5日起对原产于欧盟的进口相关白兰地征收反倾销税，特朗普签署“大而美”税收和支出法案，并称将对部分国家征70%的关税。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "2025年5月份金融市场运行情况",
+      "summary": "中国人民银行公布2025年5月份金融市场运行情况，5月份债券市场共发行各类债券71951.6亿元，反映月度信用与债券供给的运行读数。",
+      "why": "月度金融市场运行数据，检验信用扩张与债券供给的节奏",
+      "source": "中国人民银行",
+      "publishedAt": "2025-06-30T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554761403/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-30/10440424.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "超2万亿元逆回购到期 央行如何对冲",
+      "summary": "本周公开市场有超2万亿元逆回购到期，央行连续开展7天期逆回购操作，单日投放规模分别为3315亿元、1310亿元、985亿元、572亿元。",
+      "why": "大额到期与高频投放并行，观察短期流动性松紧的调节节奏",
+      "source": "中新网",
+      "publishedAt": "2025-07-02T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-02/10441300.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-30/10440151.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-01/10440648.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-02/10441259.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-03/10441817.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家统计局：6月份制造业采购经理指数为49.7%",
+      "summary": "国家统计局公布，6月份制造业采购经理指数为49.7%并继续回升，制造业PMI连续两月回升，上半年中国非制造业经营活动保持平稳扩张。",
+      "why": "景气连续回升，是观察下半年经济动能的高频读数",
+      "source": "中新网",
+      "publishedAt": "2025-06-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-30/10440168.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-30/10440245.shtml",
+        "https://www.chinanews.com.cn/gn/2025/06-30/10440162.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-01/10440637.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-30/10440220.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "证监会：始终把维护市场稳定作为监管工作首要任务",
+      "summary": "证监会表示，始终把维护市场稳定作为监管工作的首要任务，资本市场监管的取向被明确为优先稳定市场运行。",
+      "why": "监管首要任务的表述，决定稳预期与流动性投放的配合",
+      "source": "中新网",
+      "publishedAt": "2025-07-02T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-02/10441711.shtml"
+    },
+    {
+      "rank": 5,
+      "title": "A股周四上涨  沪指再创年内新高",
+      "summary": "A股周四上涨，沪指再创年内新高，沪指盘中逼近3500点，数字货币概念多股涨停；7月首周港股回调，医药金融板块凸显韧性。",
+      "why": "指数与板块结构，反映资金对稳增长与科技主线的定价",
+      "source": "中新网",
+      "publishedAt": "2025-07-03T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-03/10442139.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-04/10442655.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-01/10440994.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-04/10442837.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "上半年IPO受理数已超去年全年",
+      "summary": "上半年IPO受理数已超去年全年，科创板第五套标准重启后首家拟IPO企业过会；机构指2025年香港IPO集资额有望重夺全球首位，陈茂波称香港股市上半年IPO集资额超1070亿港元。",
+      "why": "一级市场融资放量，供给端变化与风险偏好同步显现",
+      "source": "中新网",
+      "publishedAt": "2025-07-02T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-02/10441301.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-01/10441148.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-02/10441642.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-06/10443579.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "住房城乡建设部：持续巩固房地产市场稳定态势",
+      "summary": "住房城乡建设部表示持续巩固房地产市场稳定态势；公积金新政密集落地，年内近20城支持房贷“商转公”，6月中国百城新房均价小涨、二手房均价下跌，北京二手房进入存量优化调整期。",
+      "why": "政策与价格端同时表态，观察地产调整的节奏与深度",
+      "source": "中新网",
+      "publishedAt": "2025-07-04T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-04/10442853.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-03/10442176.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-04/10442433.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-01/10440976.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-02/10441297.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "中国7月5日起对原产于欧盟的进口相关白兰地征收反倾销税",
+      "summary": "商务部公布对原产于欧盟的进口相关白兰地反倾销调查的最终裁定，中国自7月5日起对相关白兰地征收反倾销税，对欧贸易救济正式落地。",
+      "why": "对欧贸易救济落地，是外部关税压力下对等措施的窗口",
+      "source": "中新网",
+      "publishedAt": "2025-07-04T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/07-04/10442676.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-04/10442618.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-05/10443180.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-05/10443124.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-03/10442072.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "特朗普签署“大而美”税收和支出法案",
+      "summary": "特朗普签署“大而美”税收和支出法案，该法案此前经美国国会参议院和众议院通过；分析称美参院版法案或增3.3万亿美元债务，国际货币基金组织认为法案将加剧美财政赤字。",
+      "why": "美财政扩张路径落定，影响美元流动性与全球风险偏好",
+      "source": "中新网",
+      "publishedAt": "2025-07-05T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/07-05/10443303.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/07-02/10441219.shtml",
+        "https://www.chinanews.com.cn/gj/2025/07-04/10442384.shtml",
+        "https://www.chinanews.com.cn/gj/2025/06-30/10440101.shtml",
+        "https://www.chinanews.com.cn/gj/2025/07-06/10443642.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美媒：特朗普称将对部分国家征70%的关税",
+      "summary": "美媒称特朗普将对部分国家征70%的关税，并称将发函告知各国最新关税税率、每天发10封；美关税谈判“大限”将至，多方展示强硬立场。",
+      "why": "关税税率确定节奏，是外部冲击落地时点的前瞻指标",
+      "source": "中新网",
+      "publishedAt": "2025-07-05T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/07-05/10443158.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/07-04/10442565.shtml",
+        "https://www.chinanews.com.cn/gj/2025/07-04/10442675.shtml",
+        "https://www.chinanews.com.cn/gn/2025/07-04/10442633.shtml",
+        "https://www.chinanews.com.cn/cj/2025/07-02/10441403.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "7月LPR报价与后续公开市场到期规模，检验央行对冲力度是否延续",
+    "6月社融与信贷数据对PMI回升的印证，以及下半年增量政策空间",
+    "沪指3500点附近的成交结构与数字货币、创新药等板块轮动情况",
+    "70%关税的适用范围与中方反制措施是否进一步升级",
+    "对欧盟白兰地反倾销税执行后的双边经贸磋商进展"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:09:18+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 656,
+    "missingDays": []
+  }
+}
