@@ -1,0 +1,171 @@
+{
+  "date": "2024-07-16",
+  "generatedAt": "2026-11-28T04:00:00+08:00",
+  "endedAt": "2026-11-28T04:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-07-15",
+    "to": "2024-07-16",
+    "fromAt": "2024-07-15T08:00:00+08:00",
+    "toAt": "2024-07-16T09:00:00+08:00",
+    "fromTs": 1721001600,
+    "toTs": 1721091600
+  },
+  "overview": "周二由上半年经济数据主导：国家统计局公布上半年GDP同比增长5.0%，6月规模以上工业增加值增长5.3%，1—6月社零增3.7%、房地产开发投资52529亿元，CPI平稳、PPI低位回升；央行开展1000亿元MLF操作，财政部开展国债做市支持操作；二十届三中全会在京开幕。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "上半年中国GDP同比增长5.0%",
+      "summary": "国家统计局公布，上半年中国GDP同比增长5.0%。GDP是衡量一个经济体总量的核心指标，上半年增速构成全年增长目标的重要参照，也是观察下半年政策力度的基准坐标。",
+      "why": "上半年总量读数是全年增长目标的基准",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251506.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251424.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251431.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251433.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：6月份规模以上工业增加值增长5.3%",
+      "summary": "国家统计局数据显示，6月份规模以上工业增加值增长5.3%。规模以上工业增加值是衡量工业生产景气的月度指标，其增速变化对应制造业订单与产出的实际恢复节奏。",
+      "why": "工业景气度是观察经济修复的月度刻度",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251424.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251506.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251427.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251446.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家统计局：1—6月份全国房地产开发投资52529亿元",
+      "summary": "国家统计局数据显示，1—6月份全国房地产开发投资52529亿元。房地产开发投资反映房企拿地与开工意愿，是观察房地产运行的一项基本口径，需与销售和房价数据合看。",
+      "why": "房地产投资是判断楼市景气的重要口径",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251431.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251396.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251427.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251435.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "国家统计局：1—6月份全国固定资产投资增长3.9%",
+      "summary": "国家统计局数据显示，1—6月份全国固定资产投资增长3.9%。固定资产投资反映基础设施、制造业与房地产等领域的投资总量，是观察投资端政策落地力度与资金投向的常用口径。",
+      "why": "投资增速体现投资端政策落地力度",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251427.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251431.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251457.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251460.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "国家统计局：1—6月份社会消费品零售总额同比增长3.7%",
+      "summary": "国家统计局数据显示，1—6月份社会消费品零售总额同比增长3.7%。社零总额是衡量居民消费规模与结构的核心指标，与居民收入数据配合，可观察消费恢复的支撑条件。",
+      "why": "社零增速直接反映居民消费修复力度",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251433.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251463.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251435.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251544.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "王有捐：上半年CPI平稳运行 PPI低位回升",
+      "summary": "国家统计局王有捐表示，上半年CPI平稳运行、PPI低位回升。CPI反映居民消费端价格变动，PPI对应工业生产者出厂价格，两项指标分别指向需求端与供给端的价格走势。",
+      "why": "物价双指标分别刻画需求与供给端价格",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251462.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251506.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251424.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251460.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "中国央行开展1000亿元MLF操作，利率保持不变",
+      "summary": "中国人民银行开展1000亿元MLF操作，利率保持不变。MLF操作对应中期借贷便利资金的到期续作，规模与中标利率构成观察央行流动性供给意图与政策取向的常规窗口。",
+      "why": "MLF规模与利率是观察货币政策取向的指标",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251753.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251389.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251470.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251749.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "财政部：决定开展国债做市支持操作",
+      "summary": "财政部决定开展国债做市支持操作。该项操作着眼于国债二级市场的做市支持，属于财政部门在债券市场运作环节推出的安排，与公开市场操作共同作用于债券市场。",
+      "why": "国债做市安排影响债券市场流动性供给",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251470.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251753.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251389.shtml",
+        "https://www.chinanews.com.cn/gn/2024/07-15/10251509.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "国家统计局：6月份各线城市商品住宅销售价格环比降幅总体收窄",
+      "summary": "国家统计局数据显示，6月份各线城市商品住宅销售价格环比降幅总体收窄。房价环比变动幅度是观察楼市预期与市场情绪的常用指标，降幅收窄对应价格下行幅度减小。",
+      "why": "房价环比降幅变化是楼市预期的月度信号",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251396.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251431.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251433.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251428.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中国共产党第二十届中央委员会第三次全体会议在北京开始举行",
+      "summary": "中国共产党第二十届中央委员会第三次全体会议在北京开始举行。全会公报与《决定》通常在会议期间审议通过，是后续经济、财税与民生领域改革部署的集中来源。",
+      "why": "三中全会公报与《决定》牵动后续改革部署",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/07-15/10251509.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/07-15/10251342.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251496.shtml",
+        "https://www.chinanews.com.cn/gn/2024/07-15/10251337.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "上半年GDP分项数据对下半年政策空间的指示",
+    "6月各线城市房价环比走势的延续性",
+    "央行MLF与公开市场操作的流动性配合",
+    "二十届三中全会公报与《决定》的后续发布",
+    "上半年消费品以旧换新政策的落地效果"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T04:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

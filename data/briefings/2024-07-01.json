@@ -1,0 +1,170 @@
+{
+  "date": "2024-07-01",
+  "generatedAt": "2026-11-28T03:00:00+08:00",
+  "endedAt": "2026-11-28T03:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-06-30",
+    "to": "2024-07-01",
+    "fromAt": "2024-06-30T08:00:00+08:00",
+    "toAt": "2024-07-01T09:00:00+08:00",
+    "fromTs": 1719705600,
+    "toTs": 1719795600
+  },
+  "overview": "周一经济数据与跨境开放为主线：6月制造业PMI为49.5%、企业生产保持扩张，非制造业商务活动指数保持扩张。前5月快递业务量同比增长24.4%，横琴口岸恢复货物及运输车辆通关，珠海洪湾港上半年跨境货运突破1000万吨，习言道关注粤港澳大湾区市场一体化。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "6月中国制造业PMI为49.5% 企业生产保持扩张",
+      "summary": "6月中国制造业PMI为49.5%，企业生产保持扩张。制造业景气度处在荣枯线下方的水平，但生产端的扩张态势仍在，企业经营预期偏稳。",
+      "why": "PMI读数是观察制造业景气的高频指标",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-30/10243175.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243123.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243098.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243362.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国家统计局：6月份中国制造业采购经理指数持平 非制造业商务活动指数保持扩张",
+      "summary": "国家统计局数据显示，6月份中国制造业采购经理指数持平，非制造业商务活动指数保持扩张。两项指数的分化，反映工业与服务业景气节奏的不同。",
+      "why": "制造业与非制造业景气出现分化",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-30/10243123.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243175.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243098.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243362.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "前5月快递业务量同比增长24.4% 运行态势持续向好",
+      "summary": "前5月快递业务量同比增长24.4%，运行态势持续向好。快递业务量增速是观察线上消费与实物商品流通活跃度的一个直接指标，也反映居民消费需求的强度。",
+      "why": "快递业务量增速反映线上消费活跃度",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-30/10243098.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243362.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243175.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243229.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "横琴口岸正式恢复货物及运输车辆通关",
+      "summary": "横琴口岸正式恢复货物及运输车辆通关。口岸通关恢复关系到粤港澳之间的货物与运输往来，是区域跨境物流通道畅通的标志，对跨境贸易便利化有直接意义。",
+      "why": "横琴口岸复通保障区域物流通道",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-30/10243174.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243229.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-30/10243258.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243098.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "珠海洪湾港上半年跨境货运突破1000万吨",
+      "summary": "珠海洪湾港上半年跨境货运突破1000万吨。港口跨境货运量的放量，反映大湾区与境外市场的贸易往来保持一定规模，是区域外贸活跃度的直接观测点。",
+      "why": "跨境货运放量显示大湾区外贸往来",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-30/10243229.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243174.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-30/10243258.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243098.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "习言道｜推进粤港澳大湾区市场一体化",
+      "summary": "习言道聚焦推进粤港澳大湾区市场一体化。推进市场一体化指向区域内规则衔接与要素流动，对跨境贸易与投资安排构成制度支撑，利于区域一体化发展。",
+      "why": "市场一体化为跨境贸易提供制度支撑",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-30/10243258.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243174.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243229.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243362.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "央广财评|中国网购用户超9亿人 畅通经济循环、开拓数字消费新“蓝海”",
+      "summary": "央广财评指出，中国网购用户超9亿人，数字消费新“蓝海”有待开拓。网购用户规模是衡量线上消费覆盖广度的基础指标，也显示数字消费的潜力空间。",
+      "why": "网购用户规模显示数字消费潜力",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-30/10243362.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243098.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243175.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-30/10243258.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "外籍人员来华热情升温",
+      "summary": "外籍人员来华热情升温。入境便利化政策叠加航班恢复，入境客流回升对入境消费与旅游服务形成增量，是观察对外开放成效的一个窗口。",
+      "why": "入境客流回升带来消费增量",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-30/10243103.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243098.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-30/10243258.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243229.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "习近平致深圳至中山跨江通道建成开通的贺信",
+      "summary": "习近平致深圳至中山跨江通道建成开通的贺信。跨江通道建成通车，连接深圳与中山两大城市，对区域交通一体化与要素流动具有标志性意义。",
+      "why": "跨江通道通车完善大湾区交通网络",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-30/10243168.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/06-30/10243258.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243229.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243174.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "北京亦庄将建全域人工智能之城 开放十大标杆应用场景",
+      "summary": "北京亦庄将建全域人工智能之城，开放十大标杆应用场景。全域人工智能之城与标杆场景开放，指向地方人工智能产业的集聚与应用落地。",
+      "why": "全域AI之城推动场景开放与产业集聚",
+      "source": "中新网",
+      "publishedAt": "2024-06-30T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-30/10243140.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243175.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243362.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-30/10243098.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "制造业PMI回落后的企业补库存意愿",
+    "非制造业商务活动指数的扩张持续性",
+    "粤港澳大湾区市场一体化的推进节奏",
+    "横琴口岸与洪湾港通关后的跨境货运量"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T03:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
