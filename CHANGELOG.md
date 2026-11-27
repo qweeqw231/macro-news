@@ -46,6 +46,21 @@
 `prepare-periodic-inputs.mjs` 新增该窗口范围后，素材累计 **118 期**（86 → 118），
 既有批次素材未被误删（按 `targetIds` 定向清理的修复在本轮得到验证）。
 
+### 周期报告：2024-2025 全覆盖（185 期）
+
+- 2024-2025 的 **52 周 + 12 月**口径现已 **100% 覆盖**（此前只到 2024-01/02、2024-09~12、
+  2025-W01~W44、2025-W46~W52、2025-06~12 等零散区间，**2024-03~08 整段缺失**）；
+- `data/periodic/` 现有 **185 期**正文，索引 185 条，`validate.mjs --all` **118 期全 ✓**；
+- 补齐过程中修了 25 处边界问题：overview 超 150~300 字（8 处）、summary 超 40~90 字（12 处）、
+  refs/url 不在本期快照（5 处，含一处中新网链接把 `/cj/` 误写成 `/gj/`）。
+
+### 新增：早报索引标记批量同步（`scripts/briefing/patch-briefing-index.mjs`）
+
+早报补写是「一天一份」批量落盘，逐日调 `publish.mjs` 的 `patchIndexFiles()` 太慢。
+本脚本把 `data/briefings/` 下已存在的早报一次性同步进 `data/index.json` 与
+`data/history/index.json` 的 `hasBriefing / briefLine / source / briefBackfill / briefAt`，口径与
+`patchIndexDoc()` 一致，`--dry-run` 可先看差异。
+
 ## 版本号规则（明文约束）
 
 - **补丁位（x.y.Z）**：bug 修复、文案/展示纠正、数据回填与守卫、测试补充、文档更正。
