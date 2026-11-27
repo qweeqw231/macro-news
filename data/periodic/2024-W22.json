@@ -1,0 +1,176 @@
+{
+  "date": "2024-W22",
+  "type": "week",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 22 周宏观周报：一线城市楼市新政密集落地",
+  "window": {
+    "from": "2024-05-27",
+    "to": "2024-06-02",
+    "fromAt": "2024-05-27T08:00:00+08:00",
+    "toAt": "2024-06-03T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是一线城市楼市政策密集落地与5月景气指标回落。国内方面，上海发布调整优化住房限购等9条政策，广州、深圳同日调整住房信贷政策，首套房首付比最低降至15%，超20省份进入首付15%时代，沈阳全区域解除限购限售；5月制造业采购经理指数为49.5%、有所回落，非制造业延续平稳增长；4月份规模以上工业企业利润由降转增，1-4月国有企业利润总额同比增长3.8%；财政部将在香港发行550亿元人民币国债，央行逆回购放量实现净投放2480亿元。外部方面，三部门对航空发动机等有关物项实施出口管制，并中止《海峡两岸经济合作框架协议》部分产品关税减让。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "上海发布调整优化住房限购等9条政策",
+      "summary": "上海发布调整优化住房限购等9条政策，涵盖松限购、降首付、调利率等方向，同步优化调整房地产市场政策；新政出台10天，北京等地楼市活跃度上升，政策效果开始显现。",
+      "why": "上海政策具有风向意义，影响一线城市楼市预期",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10224226.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224080.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224221.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224199.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224009.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "广深同日调整住房信贷政策 20余省份进入首付15%时代",
+      "summary": "深圳、广州同日调整住房信贷政策，深圳首套房首付比降至20%、下调贷款最低首付款比例和利率下限，广州首套房首付最低降至15%；超20省份落地执行，首付比进入15%时代。",
+      "why": "首付与利率下限下调扩围，决定需求端释放的力度",
+      "source": "中新网",
+      "publishedAt": "2024-05-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-28/10224815.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-28/10224729.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-28/10224812.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224971.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225452.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "5月制造业PMI回落至49.5% 非制造业延续平稳",
+      "summary": "国家统计局发布，5月份制造业采购经理指数为49.5%，较上月有所回落，企业信心稳定；非制造业延续平稳增长趋势，制造业生产继续扩张，新动能保持增长势头。",
+      "why": "PMI回落显示内生动能仍不稳，关系后续政策加码必要性",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226262.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226337.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226382.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226388.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "4月规模以上工业企业利润由降转增 国企利润增3.8%",
+      "summary": "国家统计局表示，4月份规模以上工业企业利润由降转增；1-4月电子信息制造业实现利润总额1442亿元、同比增长75.8%，财政部数据显示1-4月国有企业利润总额同比增长3.8%。",
+      "why": "工业盈利由降转增，标志价格与需求配合开始改善",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-27/10223741.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225305.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-29/10225158.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "三部门对航空发动机等有关物项实施出口管制",
+      "summary": "三部门公告对航空发动机或航天发动机等有关物项实施出口管制，商务部新闻发言人就此答记者问，并指责指责中国非市场政策和做法是典型双标；外部经贸工具使用更加密集。",
+      "why": "出口管制扩容抬高相关产业链技术流动与合规成本",
+      "source": "中新网",
+      "publishedAt": "2024-05-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-30/10225856.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-30/10225861.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-30/10225907.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226257.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "国务院关税税则委员会中止ECFA部分产品关税减让",
+      "summary": "国务院关税税则委员会发布公告，决定中止《海峡两岸经济合作框架协议》部分产品第二批关税减让，涉及134个税目产品；商务部回应称此次中止不影响两岸正常经贸往来。",
+      "why": "关税减让中止改变两岸贸易成本与产业布局预期",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226185.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226257.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226385.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-31/10226322.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "财政部今年将在香港发行550亿元人民币国债",
+      "summary": "财政部表示今年将在香港发行550亿元人民币国债；20年期超长期国债票面利率2.49%、上市交易首日表现平稳，800亿元资金到账，超长期特别国债项目将加快建设。",
+      "why": "离岸人民币国债发行，关系人民币国际化和资金面安排",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10225213.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-28/10224308.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-30/10225534.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223884.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "央行逆回购放量 实现净投放2480亿元",
+      "summary": "5月29日央行开展2500亿元7天期逆回购操作，实现净投放2480亿元；5月30日再开展2600亿元操作，月末流动性投放明显加量，央行并发布4月份金融市场运行情况。",
+      "why": "公开市场净投放决定短端资金松紧与债券市场情绪",
+      "source": "中新网",
+      "publishedAt": "2024-05-29T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-29/10225243.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-29/10224926.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-30/10225536.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554133785/index.html"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "商务部将推动出台跨境电商出口海外仓建设意见",
+      "summary": "商务部表示将推动尽快出台《关于拓展跨境电商出口推进海外仓建设的意见》，并愿加速推进中日韩自贸协定谈判进程；中国贸促会数据显示逾八成外贸企业预测上半年出口向好或持平。",
+      "why": "海外仓政策与自贸谈判推进，直接指向外贸新动能",
+      "source": "中新网",
+      "publishedAt": "2024-05-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-30/10225803.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-30/10225675.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-28/10224448.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-30/10225929.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "证监会对恒大地产罚款41.75亿元 减持监管升级",
+      "summary": "证监会对恒大地产债券欺诈发行及信息披露违法案作出处罚决定，罚款41.75亿元；同期A股减持监管升级，业内认为有助稳定市场预期，资本市场秩序整治延续。",
+      "why": "重罚与减持监管升级，关系市场风险偏好和信用秩序",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226682.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226562.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-27/10223894.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "6月LPR报价与降准降息的政策窗口",
+    "一线城市新政落地后成交与房价的持续性",
+    "5月PMI回落与工业增加值等高频数据能否企稳",
+    "出口管制新规及关税减让中止对相关企业订单的影响",
+    "跨境电商海外仓政策意见的出台时点"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 751,
+    "missingDays": []
+  }
+}

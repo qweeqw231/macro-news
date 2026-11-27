@@ -1,0 +1,177 @@
+{
+  "date": "2024-W20",
+  "type": "week",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 20 周宏观周报：房地产金融三箭齐发",
+  "window": {
+    "from": "2024-05-13",
+    "to": "2024-05-19",
+    "fromAt": "2024-05-13T08:00:00+08:00",
+    "toAt": "2024-05-20T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是房地产金融政策三箭齐发与美国加征关税落地。国内方面，央行宣布设立3000亿元保障性住房再贷款支持收购存量商品房，下调个人住房公积金贷款利率0.25个百分点、取消全国层面首套和二套住房商贷利率下限，首付比最低降至15%；4月规模以上工业增加值增长6.7%，1—4月固定资产投资增长4.2%、社会消费品零售总额增长2.3%，1—4月房地产开发投资30928亿元，各线城市商品住宅价格继续下行；30年期超长期特别国债5月17日首发，票面利率2.57%。外部方面，美国宣布对电动汽车等中国商品加征关税，商务部回应称不能因产能超过本国需求就贴“产能过剩”标签。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行设立3000亿元保障性住房再贷款",
+      "summary": "央行宣布设立3000亿元保障性住房再贷款，支持国有企业收购已建成未出售商品房；同时将租赁住房贷款支持计划并入保障性住房再贷款政策中管理，国新办就保交房配套政策吹风。",
+      "why": "再贷款工具打通收购存量房资金来源，指向去库存",
+      "source": "中新网",
+      "publishedAt": "2024-05-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-17/10218543.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218651.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218578.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554091417/index.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "首付比最低15% 取消全国层面房贷利率下限",
+      "summary": "央行通知下调个人住房公积金贷款利率0.25个百分点，调整个人住房贷款最低首付款比例政策，取消全国层面首套和二套住房商贷利率下限，地产金融政策三箭齐发。",
+      "why": "降低购房门槛与成本，直接影响需求端与银行资产端",
+      "source": "中新网",
+      "publishedAt": "2024-05-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-17/10218441.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218354.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218356.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554083971/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554062364/index.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "4月工业增加值增6.7% 1—4月固投增长4.2%",
+      "summary": "国家统计局发布，4月份规模以上工业增加值增长6.7%，1—4月全国固定资产投资增长4.2%，4月社会消费品零售总额增长2.3%，1—4月全国房地产开发投资30928亿元。",
+      "why": "月度数据刻画需求修复与地产投资拖累的相对力度",
+      "source": "中新网",
+      "publishedAt": "2024-05-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-17/10218226.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218233.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218240.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218244.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218222.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "4月各线城市商品住宅销售价格继续下行",
+      "summary": "国家统计局表示，4月份各线城市商品住宅销售价格继续下行，70个重点城市中上涨城市数量减少；统计局同时预计下阶段CPI有望低位温和回升、PPI有望继续低位回升。",
+      "why": "房价与物价预期走弱，是本轮政策加码的直接触发因素",
+      "source": "中新网",
+      "publishedAt": "2024-05-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-17/10218203.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218514.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218292.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218312.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "超长期特别国债今日首发 票面利率2.57%",
+      "summary": "30年期超长期特别国债5月17日正式首发，首笔2024年超长期特别国债票面利率2.57%；财政部此前公布2024年超长期特别国债发行安排，30年期特别国债纳入国债期货交割范围。",
+      "why": "长端利率供给落地，影响债券市场供需与利率预期",
+      "source": "中新网",
+      "publishedAt": "2024-05-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-17/10218416.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218162.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218612.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-14/10216299.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "美国将加征关税 中方就301复审结果回应",
+      "summary": "美国宣布将对电动汽车等中国商品加征关税，商务部新闻发言人就此发表谈话；美方并发布对华加征301关税四年期复审结果，中方称将采取必要措施维护自身正当权益。",
+      "why": "关税落地改变出口企业成本预期与订单流向",
+      "source": "中新网",
+      "publishedAt": "2024-05-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-14/10216559.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-14/10216702.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-14/10216767.shtml",
+        "https://www.chinanews.com.cn/gj/2024/05-16/10217572.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "5月MLF等量平价续作 年内降准降息仍有可能",
+      "summary": "5月15日央行开展20亿元逆回购操作和1250亿元MLF操作，MLF等量平价续作；市场分析认为年内降准降息仍有可能，央行连续多日开展7天期逆回购操作维持流动性。",
+      "why": "中期政策利率走向决定后续宽松空间与债市定价",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-15/10216898.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217254.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-16/10217477.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-14/10216270.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "证监会去年罚没63.89亿元 发布程序化交易规定",
+      "summary": "证监会披露2023年查办证券期货违法案件717件、罚没63.89亿元，并发布《证券市场程序化交易管理规定（试行）》；吴清表示将进一步夯实投资者保护的制度基础。",
+      "why": "执法与程序化交易监管强化，塑造市场交易秩序",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-15/10217224.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217298.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217194.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217215.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "商务部对欧美等地进口共聚聚甲醛反倾销立案",
+      "summary": "商务部对原产于欧盟、美国、台湾地区和日本的进口共聚聚甲醛进行反倾销立案调查；此前商务部表示4月份中国外贸表现符合预期，不能因一国产能超过本国需求就贴“产能过剩”标签。",
+      "why": "贸易救济工具加码，改变相关品类的进出口价格与流向",
+      "source": "中新网",
+      "publishedAt": "2024-05-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-19/10219437.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-16/10217824.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-16/10217822.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "白名单项目贷款审批9350亿元 持续化解地产风险",
+      "summary": "金融监管总局表示，商业银行已审批通过“白名单”项目贷款金额9350亿元；同期杭州临安政府收购商品房用作公租房，合肥出台房地产新政、购房最高补贴10万元。",
+      "why": "白名单融资规模决定保交房进度与地产链信用修复",
+      "source": "中新网",
+      "publishedAt": "2024-05-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-17/10218600.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218693.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217414.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-16/10218046.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "房地产金融三箭齐发后重点城市成交与房贷投放变化",
+    "超长期特别国债后续各期限发行节奏与资金落地",
+    "美国对华加征关税的具体税率与实施时间",
+    "降准降息是否在二季度兑现及政策利率动向",
+    "白名单项目融资与保交房落地进度"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 918,
+    "missingDays": []
+  }
+}

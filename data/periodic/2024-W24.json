@@ -1,0 +1,176 @@
+{
+  "date": "2024-W24",
+  "type": "week",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 24 周宏观周报：物价企稳与欧盟加税",
+  "window": {
+    "from": "2024-06-10",
+    "to": "2024-06-16",
+    "fromAt": "2024-06-10T08:00:00+08:00",
+    "toAt": "2024-06-17T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是5月物价企稳与欧盟对华电动汽车加税。国内方面，5月CPI同比上涨0.3%、PPI同比降幅明显收窄并结束六连降；央行部署保障性住房再贷款推进工作、加快推动存量商品房去库存，发布5月金融与社融数据，并称全国大部分城市已取消房贷利率下限；财政部350亿元50年期超长期特别国债首发，储蓄国债销售火爆；我国实有民营经济主体18045万户，九部门发文拓展跨境电商出口、推进海外仓建设；商务部表示5月货物贸易稳中有进。外部方面，欧盟拟对中国电动汽车征收临时反补贴税，发改委连发三文回击；美联储维持联邦基金利率不变，年内或仅降息一次。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "5月CPI同比上涨0.3% PPI降幅明显收窄",
+      "summary": "国家统计局发布，5月份居民消费价格同比上涨0.3%，CPI总体平稳；5月工业生产者出厂价格同比降幅明显收窄、环比上涨并结束六连降，物价保持基本稳定有坚实基础。",
+      "why": "物价企稳与工业品价格回升，关系宽松政策的持续性",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232352.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232355.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232358.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232520.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行部署保障性住房再贷款推进工作",
+      "summary": "中国人民银行召开保障性住房再贷款工作推进会，部署相关推进工作，以保障性住房再贷款加快推动存量商品房去库存；央行并表示全国大部分城市已取消房贷利率下限。",
+      "why": "再贷款落地节奏决定存量房去库存与地产链修复速度",
+      "source": "中国人民银行",
+      "publishedAt": "2024-06-12T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554159834/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232710.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232806.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-15/10234253.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行发布5月金融与社融数据 科技创新再贷款加速",
+      "summary": "中国人民银行发布2024年5月金融统计数据报告，以及社会融资规模增量、存量统计数据报告；同期科技创新再贷款加速落地，精准支持科技型企业，结构性工具持续发力的。",
+      "why": "金融与社融总量决定实体融资成本与信用扩张力度",
+      "source": "中国人民银行",
+      "publishedAt": "2024-06-14T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554128681/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554164415/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554155295/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554111214/index.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "50年期超长期特别国债今日首发 总额350亿元",
+      "summary": "50年期超长期特别国债6月14日首发，发行总额350亿元，个人投资者可以购买；同期储蓄式国债销售火爆、开售瞬间售罄，财政部并拟发行记账式附息2年期国债等品种。",
+      "why": "长端与储蓄国债供给，关系利率预期和居民资产配置",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-14/10233534.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233608.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-11/10231943.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-13/10233148.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "欧盟拟对中国电动汽车征收临时反补贴税",
+      "summary": "欧盟发布初裁披露，拟对中国电动汽车征收临时反补贴税，商务部回应称强烈不满；国家发改委连发三文回击，指以反补贴名义限制中国电动汽车是典型双标，加税将严重影响欧盟本土汽车产业。",
+      "why": "临时反补贴税直接冲击新能源汽车出口与产业链订单",
+      "source": "中新网",
+      "publishedAt": "2024-06-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-12/10232709.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/06-12/10232842.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-15/10234560.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10234045.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "我国实有民营经济主体18045万户",
+      "summary": "市场监管总局表示，截至5月底我国实有民营经济主体总量18045万户；相关数据表明民营经济经营主体超1.8亿户，民营经济在稳就业、增信心方面仍是重要支撑。",
+      "why": "经营主体数量反映市场活跃度与经济内生动力",
+      "source": "中新网",
+      "publishedAt": "2024-06-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-14/10233518.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233547.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-13/10233427.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232773.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "九部门发文拓展跨境电商出口 推进海外仓建设",
+      "summary": "九部门印发文件，拓展跨境电商出口、推进海外仓建设，商务部外贸司负责人就此作解读；同期商务部表示5月中国货物贸易总体保持稳中有进态势，RCEP生效一周年外贸企业享惠水平提升。",
+      "why": "外贸新业态政策落地，关系出口结构与海外渠道",
+      "source": "中新网",
+      "publishedAt": "2024-06-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-11/10232147.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232815.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10234068.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-14/10233520.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-13/10232987.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "沪九条政策效应释放 杭州取消限购满月新房加快入市",
+      "summary": "上海沪九条政策效应正在充分释放，稳定楼市预期、增加市场信心；杭州取消限购满月，新房加快入市、二手成交量持续高位运行，各地住房以旧换新模式也在探索之中。",
+      "why": "限购松绑后的成交持续性，决定地产政策退出节奏",
+      "source": "中新网",
+      "publishedAt": "2024-06-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-11/10231976.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-11/10232069.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-16/10234807.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-15/10234253.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "证监会：暂停新增转融券规模 互认基金比例放宽至80%",
+      "summary": "中国证监会表示，暂停新增券商转融券规模的政策仍在严格执行，并将拟把香港互认基金客地销售比例限制放宽至80%；同期金融监管总局推动国有大型保险集团发挥头雁作用成效初显。",
+      "why": "两融与跨境基金规则调整，影响市场流动性与开放度",
+      "source": "中新网",
+      "publishedAt": "2024-06-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-16/10234953.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-14/10234141.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-12/10232780.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储维持联邦基金利率不变 年内或仅降息一次",
+      "summary": "美联储维持联邦基金利率不变，市场预计年内或仅降息一次；美国5月通胀虽有所放缓，民众仍承受巨大生活成本压力，老年人受通胀冲击最大、财务困难显著增多。",
+      "why": "美联储路径决定全球流动性与人民币汇率压力",
+      "source": "中新网",
+      "publishedAt": "2024-06-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-13/10232899.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/06-13/10233191.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-13/10233361.shtml",
+        "https://www.chinanews.com.cn/gj/2024/06-14/10233819.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "6月金融与社融数据能否延续回升",
+    "欧盟临时反补贴税税率及中方反制措施",
+    "降准降息是否在二季度末落地",
+    "一线城市楼市成交持续性与去库存工具推出",
+    "50年期国债上市后的长端利率走势"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 590,
+    "missingDays": []
+  }
+}

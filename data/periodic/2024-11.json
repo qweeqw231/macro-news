@@ -1,0 +1,175 @@
+{
+  "date": "2024-11",
+  "type": "month",
+  "generatedAt": "2026-11-27T14:30:00+08:00",
+  "endedAt": "2026-11-27T14:30:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年 11 月宏观月报：化债落地与增量政策兑现",
+  "window": {
+    "from": "2024-11-01",
+    "to": "2024-11-30",
+    "fromAt": "2024-11-01T08:00:00+08:00",
+    "toAt": "2024-12-01T08:00:00+08:00",
+    "days": 30
+  },
+  "overview": "2024年11月，主线从增量政策出台转向政策兑现。11月8日全国人大常委会批准增加6万亿元地方政府债务限额置换存量隐性债务，财政部称直接增加地方化债资源10万亿元。10月数据改善，工业增加值同比增长5.3%，社会消费品零售总额增长4.8%，1—10月固定资产投资增长3.4%；10月末社融存量403.45万亿元，M2增速回升至7.5%。10月CPI同比涨0.3%，PPI环比降幅收窄。房地产出现\"银十\"超过\"金九\"，10月商品房成交同比、环比双增长；前10个月货物贸易进出口增长5.2%。外部压力上升，欧盟电动汽车关税落地，美国关税威胁升温，11月LPR维持1年期3.1%、5年期以上3.6%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "全国人大常委会批准增加6万亿元地方债务限额",
+      "summary": "11月8日，全国人大常委会表决通过增加地方政府债务限额置换存量隐性债务的决议。财政部称直接增加地方化债资源10万亿元，地方化债压力减轻；11月18日通报6万亿元限额已下达各地。",
+      "why": "置换存量隐性债务，释放地方可用财力",
+      "source": "中新网",
+      "publishedAt": "2024-11-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/11-08/10315848.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/11-08/10315764.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-18/10321614.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-12/10317497.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "10月工业增加值增5.3% 社零增4.8%",
+      "summary": "国家统计局11月15日发布，10月份规模以上工业增加值增长5.3%，社会消费品零售总额增长4.8%，1—10月份固定资产投资增长3.4%。同期70个大中城市房价环比降幅总体收窄。",
+      "why": "生产与消费同步提速，验证增量政策落地效果",
+      "source": "中新网",
+      "publishedAt": "2024-11-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/11-15/10319576.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/11-15/10319577.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-15/10319581.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-15/10319566.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "10月末社融存量403.45万亿元 M2增速回升",
+      "summary": "央行11月11日发布10月社融增量与存量数据，10月末社融存量403.45万亿元，前十个月社融增量累计27.06万亿元；同期金融统计数据显示，10月末M2增速企稳回升至7.5%。",
+      "why": "宽货币向宽信用传导，实体融资总量回升",
+      "source": "中国人民银行",
+      "publishedAt": "2024-11-11T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554322987/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/11-11/10317248.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-11/10317247.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-11/10317389.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "10月商品房成交双增长 银十超过金九",
+      "summary": "11月1日发布的数据显示，10月份商品房成交同比、环比实现双增长，为2007年以来首次出现银十超过金九；同日公布10月中国百城新房价格小涨，二手房价格跌幅收窄，部分楼盘出现涨价。",
+      "why": "销售与价格同步回稳，地产政策初见需求端效果",
+      "source": "中新网",
+      "publishedAt": "2024-11-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/11-01/10311737.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/11-01/10311933.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-01/10311930.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-02/10312300.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "前10个月货物贸易进出口增长5.2%",
+      "summary": "海关总署11月7日发布，前10个月货物贸易进出口增长5.2%；22日公布前10个月外贸进出口总值为36万亿元。同期显示，前三季度服务进出口总额55181.4亿元，增长14.5%。",
+      "why": "外贸总量维持正增长，是内需承压期的增长支撑",
+      "source": "中新网",
+      "publishedAt": "2024-11-07T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/11-07/10314893.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/11-22/10323648.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-05/10313782.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-10/10316543.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "10月CPI同比涨0.3% PPI环比降幅收窄",
+      "summary": "国家统计局11月9日发布，10月份CPI同比涨幅略有回落，食品价格高位回落；10月中国PPI环比下降0.1%，降幅明显收窄。统计局同时表示，下阶段CPI价格会保持小幅上涨态势。",
+      "why": "物价低位企稳，制约名义增长修复的幅度",
+      "source": "中新网",
+      "publishedAt": "2024-11-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/11-09/10316233.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/11-09/10316241.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-09/10316170.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-15/10319644.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "11月制造业PMI升至50.3% 扩张加快",
+      "summary": "国家统计局11月30日发布，11月制造业PMI为50.3%，扩张步伐小幅加快，重回扩张区间。10月亚洲制造业PMI升至51%，全球制造业PMI为48.8%，内外需继续分化。",
+      "why": "年末景气读数重回扩张，为四季度收官定调",
+      "source": "中新网",
+      "publishedAt": "2024-11-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/11-30/10328131.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/11-30/10328228.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-06/10314283.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-06/10314260.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "欧盟对华电动汽车加征关税 中欧磋商",
+      "summary": "11月1日欧盟对华电动汽车加征关税落地，欧洲大型车企公开反对。11月7日商务部回应称，中欧正就价格承诺方案进行磋商；同期公布的政策信号显示，双方仍在寻找谈判空间。",
+      "why": "出口产业与外部摩擦直接挂钩，牵动外贸预期",
+      "source": "中新网",
+      "publishedAt": "2024-11-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/11-01/10311627.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/11-07/10315074.shtml",
+        "https://www.chinanews.com.cn/gj/2024/11-02/10312363.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-02/10312311.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "11月LPR报价1年期3.1% 5年期以上3.6%",
+      "summary": "11月20日，11月LPR报价出炉，1年期为3.1%，5年期以上为3.6%，两档报价维持在这一水平，本月未再调整。市场对后续降息降准空间与政策节奏保持关注。",
+      "why": "报价暂停调整，宽松节奏与时点成为政策焦点",
+      "source": "中新网",
+      "publishedAt": "2024-11-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/11-20/10322472.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/11-20/10322568.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-15/10319648.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "特朗普称将对华加征关税 商务部回应",
+      "summary": "美国大选后关税信号密集释放，11月26日特朗普称将对进口自中国商品加征10%关税，驻美使馆回应其妄言。11月28日商务部表示，中方一贯反对单边加征关税措施。",
+      "why": "关税预期前置，牵动出口订单与汇率走势",
+      "source": "中新网",
+      "publishedAt": "2024-11-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/11-28/10327151.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/11-28/10327044.shtml",
+        "https://www.chinanews.com.cn/gn/2024/11-26/10325669.shtml",
+        "https://www.chinanews.com.cn/cj/2024/11-22/10323734.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "12月LPR报价与降准降息的落地时点，以及适度宽松取向在操作层面的体现",
+    "6万亿元置换额度下发后的地方发债进度与城投链条现金流变化",
+    "11月房地产成交与70城房价能否延续回稳，房地产开发投资降幅走势",
+    "美国对华关税措施的具体清单与中方反制措施的范围",
+    "中央经济工作会议对2025年财政、货币与扩大内需的定调"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T14:30:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 30,
+    "newsItems": 3376,
+    "missingDays": []
+  }
+}

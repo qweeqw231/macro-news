@@ -1,0 +1,184 @@
+{
+  "date": "2025-04",
+  "type": "month",
+  "generatedAt": "2026-11-26T21:14:01+08:00",
+  "endedAt": "2026-11-26T21:14:01+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年 4 月宏观月报：关税战下的稳市与稳增长",
+  "window": {
+    "from": "2025-04-01",
+    "to": "2025-04-30",
+    "fromAt": "2025-04-01T08:00:00+08:00",
+    "toAt": "2025-05-01T08:00:00+08:00",
+    "days": 30
+  },
+  "overview": "2025年4月，宏观主线是应对“对等关税”与稳市稳增长并进。中方对原产于美国进口商品加征关税税率提高至125%，发布中美经贸关系白皮书；“国家队”集体增持托底，央行表示必要时向中央汇金提供再贷款支持。4月LPR1年期3.1%、5年期以上3.6%连续6个月不变，央行开展6000亿元MLF操作，月末表态适时降准降息。一季度GDP同比增长5.4%，3月社零增长5.9%、规上工业增长7.7%；3月末M2余额326.06万亿元、社融存量同比增8.4%；CPI同比下降0.1%、PPI同比下降2.5%，4月制造业PMI为49.0%，外贸进出口10.3万亿元创新高。中央政治局会议部署“四稳”等政策组合拳。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行：将适时降准降息 发挥好货币政策工具箱功能",
+      "summary": "央行表示将适时降准降息，发挥好货币政策工具箱功能；同时强调坚决防范汇率超调风险，保持人民币汇率基本稳定，并称单一市场、单一资产变动对外储影响总体有限。",
+      "why": "政策利率与降准预期表态，指向后续宽松取向",
+      "source": "中新网",
+      "publishedAt": "2025-04-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-28/10407134.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-28/10407110.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554623685/index.html",
+        "https://www.chinanews.com.cn/cj/2025/04-28/10407126.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-28/10407108.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "4月LPR报价出炉：1年期为3.1%，5年期以上为3.6%",
+      "summary": "4月LPR报价出炉，1年期为3.1%，5年期以上为3.6%，LPR连续6个月按兵不动；同期央行开展6000亿元MLF操作，期限为1年期。",
+      "why": "政策利率连续持稳，流动性投放维持既有力度",
+      "source": "中新网",
+      "publishedAt": "2025-04-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-21/10403004.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-21/10403173.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-25/10405465.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-25/10405697.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "中央政治局召开会议 分析研究当前经济形势和经济工作",
+      "summary": "中共中央政治局召开会议，分析研究当前经济形势和经济工作，部署应对外部变局；会议明确“四稳”等政策组合拳，并对楼市提出持续巩固稳定态势的要求。",
+      "why": "最高层定调下半年经济工作与政策工具箱方向",
+      "source": "中新网",
+      "publishedAt": "2025-04-25T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/04-25/10405580.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-25/10405881.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-25/10405903.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-27/10406697.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-26/10406181.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "中国央行：必要时向中央汇金提供再贷款支持",
+      "summary": "央行表示必要时向中央汇金提供再贷款支持；中央汇金再次增持交易型开放式指数基金，中国诚通宣布增持1000亿元，中国国新以专项再贷款增持首批金额800亿元。",
+      "why": "政策资金直接入场稳定资本市场预期",
+      "source": "中新网",
+      "publishedAt": "2025-04-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-08/10396042.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-07/10395629.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-08/10396267.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-08/10396010.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-08/10395950.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "国家统计局：一季度GDP同比增长5.4%",
+      "summary": "国家统计局公布，一季度国内生产总值同比增长5.4%；3月份规模以上工业增加值增长7.7%，社会消费品零售总额增长5.9%，1—3月份全国固定资产投资增长4.2%。",
+      "why": "季度增速标定经济基本盘与政策加力起点",
+      "source": "中新网",
+      "publishedAt": "2025-04-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-16/10400270.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-16/10400287.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-16/10400285.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-16/10400286.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-16/10400279.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "2025年3月金融统计数据报告",
+      "summary": "央行发布3月金融统计数据，3月末M2余额326.06万亿元、同比增长7%，社会融资规模存量422.96万亿元、同比增长8.4%，一季度社会融资规模增量累计15.18万亿元。",
+      "why": "信贷与社融扩张力度是判断融资需求的核心读数",
+      "source": "中国人民银行",
+      "publishedAt": "2025-04-13T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554667292/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-13/10398869.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-13/10398868.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-13/10398870.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-13/10398977.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "国家统计局：2025年3月份居民消费价格同比下降0.1%",
+      "summary": "国家统计局数据，3月份居民消费价格同比下降0.1%，工业生产者出厂价格同比下降2.5%；CPI同比降幅收窄、核心CPI回升，部分行业价格现积极变化。",
+      "why": "物价低位运行反映需求偏弱与工业品通缩压力",
+      "source": "中新网",
+      "publishedAt": "2025-04-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-10/10397140.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-10/10397166.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-10/10397149.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-10/10397484.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-16/10400365.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "国家统计局：4月份制造业采购经理指数为49.0%",
+      "summary": "国家统计局数据，4月份制造业采购经理指数为49.0%，非制造业在扩张区间平稳运行；统计局解读称企业生产经营总体稳定。",
+      "why": "月末景气读数回落，反映外需与订单压力",
+      "source": "中新网",
+      "publishedAt": "2025-04-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-30/10408381.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-30/10408401.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-30/10408906.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-30/10408495.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "中国一季度货物贸易进出口10.3万亿元，创历史同期新高",
+      "summary": "海关总署数据，一季度我国货物贸易进出口10.3万亿元、创历史同期新高；东盟继续稳居我国第一大贸易伙伴地位，对欧盟进出口1.3万亿元。",
+      "why": "外需承压下外贸总量韧性仍是经济支撑",
+      "source": "中新网",
+      "publishedAt": "2025-04-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-14/10399198.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-14/10399106.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-14/10399119.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-14/10399095.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-14/10399141.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "中国对原产于美国的所有进口商品加征关税税率提高至125%",
+      "summary": "中国对原产于美国的所有进口商品加征关税税率提高至125%；此前再加征50%关税至84%，海关总署发布执行细则，中方发布中美经贸关系白皮书。",
+      "why": "关税升级改变外贸企业订单与产业链预期",
+      "source": "中新网",
+      "publishedAt": "2025-04-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-11/10398097.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-09/10396778.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-09/10396904.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-09/10397069.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-11/10398011.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行“适时降准降息”表态后降准降息操作的时点、力度与工具选择",
+    "5月LPR报价走向，以及新一轮稳就业稳经济举措的落地节奏",
+    "对美关税税率调整后外贸企业订单、出口转内销与制造业投资的反应",
+    "4月制造业PMI回落后的工业生产、消费与企业盈利数据能否企稳",
+    "民营经济促进法5月20日起施行后的配套细则与执行效果"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:14:01+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 30,
+    "newsItems": 3834,
+    "missingDays": []
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "date": "2025-W09",
+  "type": "week",
+  "generatedAt": "2026-11-27T09:07:06+08:00",
+  "endedAt": "2026-11-27T09:07:06+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 9 周宏观周报：5%增长与关税冲击并存",
+  "window": {
+    "from": "2025-02-24",
+    "to": "2025-03-02",
+    "fromAt": "2025-02-24T08:00:00+08:00",
+    "toAt": "2025-03-03T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是稳增长落地与外部关税冲击并存。数据面，国家统计局公布2024年国内生产总值比上年增长5.0%，统计公报发布；2月中国制造业PMI为50.2%、环比上升1.1个百分点，非制造业经营活动持续扩张。流动性面，央行开展3000亿元1年期MLF操作，2月开展14000亿元买断式逆回购操作，连续开展7天期逆回购操作。政策面，中国人民银行会同全国工商联、金融监管总局、中国证监会、国家外汇局召开金融支持民营企业高质量发展座谈会，提出增加对民营和小微企业信贷投放；民营经济促进法草案二审拟增加不得实施没有法律法规依据的罚款的规定。外部面，美国宣布征收所谓“对等关税”，中方表示强烈不满、坚决反对。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行开展3000亿元1年期MLF操作",
+      "summary": "中国央行开展3000亿元1年期中期借贷便利操作，相关报道援引机构观点称，一季度末降息窗口或打开。",
+      "why": "中期借贷便利的量与价信号，直接影响一季度降息预期",
+      "source": "中新网",
+      "publishedAt": "2025-02-25T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-25/10373752.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-25/10373935.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-25/10373780.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "五部门联合召开金融支持民营企业高质量发展座谈会",
+      "summary": "中国人民银行会同全国工商联、金融监管总局、中国证监会、国家外汇局联合召开金融支持民营企业高质量发展座谈会，并提出增加对民营和小微企业信贷投放。",
+      "why": "五部委联合表态，指向民营与小微企业融资供给的政策方向",
+      "source": "中国人民银行",
+      "publishedAt": "2025-03-02T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554591522/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-02/10376488.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-02/10376533.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-02/10376591.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家统计局：2024年国内生产总值比上年增长5.0%",
+      "summary": "国家统计局公布2024年国内生产总值比上年增长5.0%，《中华人民共和国2024年国民经济和社会发展统计公报》同步发布，2024年我国经济运行稳中有进。",
+      "why": "年度经济总量与增速读数，是判断经济运行与政策基调的基准",
+      "source": "中新网",
+      "publishedAt": "2025-02-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-28/10375412.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/02-28/10375421.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-28/10375416.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376055.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "2月份中国制造业PMI为50.2% 环比上升1.1个百分点",
+      "summary": "2月份中国制造业PMI为50.2%，环比上升1.1个百分点，回升明显；今年以来非制造业经营活动持续扩张，钢铁行业运行缓中趋稳。",
+      "why": "官方PMI是观察经济景气度与修复节奏的高频月度指标",
+      "source": "中新网",
+      "publishedAt": "2025-03-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376007.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376133.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376132.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376191.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "美国宣布征收所谓“对等关税” 中国贸促会回应",
+      "summary": "美国宣布征收所谓“对等关税”，中国贸促会对此回应；中方对美方威胁对中国输美产品再加征10%关税表示强烈不满、坚决反对。",
+      "why": "关税冲击抬升外部不确定性，直接影响出口预期与市场风险偏好",
+      "source": "中新网",
+      "publishedAt": "2025-02-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-28/10375536.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-28/10375494.shtml",
+        "https://www.chinanews.com.cn/gn/2025/02-28/10375589.shtml",
+        "https://www.chinanews.com.cn/gj/2025/02-28/10375641.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "央行开展14000亿元买断式逆回购 连续开展7天期逆回购",
+      "summary": "央行披露2月开展14000亿元买断式逆回购操作；2月25日至28日间连续开展7天期逆回购操作，单日投放规模分别为3185亿元、5487亿元、2150亿元、2845亿元。",
+      "why": "公开市场投放规模，是观察央行流动性松紧与政策取向的高频指标",
+      "source": "中新网",
+      "publishedAt": "2025-02-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-28/10375669.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-25/10373741.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-26/10374268.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-27/10374841.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-28/10375405.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "证监会：初步查明东方集团涉嫌重大财务造假 或触及重大违法强制退市情形",
+      "summary": "证监会初步查明东方集团涉嫌重大财务造假，或触及重大违法强制退市情形；同期证监会表示目前暂不具备条件设立重庆证券交易所。",
+      "why": "退市与严监管信号叠加，影响资本市场违规成本与市场预期",
+      "source": "中新网",
+      "publishedAt": "2025-02-28T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-28/10375832.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-26/10374349.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-28/10375910.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-28/10375873.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "中国百城二手房价连续7个月环比跌幅收窄",
+      "summary": "中国百城二手房价连续7个月环比跌幅收窄；多地出台住房公积金优化调整政策，减少提取限制、纳入更多人群，楼市止跌回稳再迎关键政策落地。",
+      "why": "二手房价格跌幅收窄与公积金政策调整，指向地产支持政策的边际变化",
+      "source": "中新网",
+      "publishedAt": "2025-03-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376224.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-25/10374133.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-26/10374224.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-02/10376382.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "中央一号文件首提“农业新质生产力”",
+      "summary": "中央一号文件首次提出“农业新质生产力”，农业股走强；文件同时划出两条政策底线，并首提“培育农业科技领军企业”。",
+      "why": "涉农政策定调，指向农业科技创新与产业升级方向",
+      "source": "中新网",
+      "publishedAt": "2025-02-24T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-24/10373350.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-24/10373216.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-25/10374029.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-26/10374580.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "民营经济促进法草案二审：不得实施没有法律法规依据的罚款",
+      "summary": "民营经济促进法草案二审稿拟增加规定，不得实施没有法律法规依据的罚款；涉民营经济与民用航空高质量发展的两部法律修改同步受到关注。",
+      "why": "立法层面约束涉企执法，影响民营企业营商环境预期",
+      "source": "中新网",
+      "publishedAt": "2025-02-24T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/02-24/10373597.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-24/10373541.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-02/10376491.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-25/10373797.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "后续降准降息节奏与存款利率调整，验证一季度末降息窗口的判断",
+    "五部门金融支持民营企业座谈会后信贷投放的落地规模与配套细则",
+    "美国“对等关税”的具体税率与实施时间，以及中方后续反制措施",
+    "2月制造业PMI回升的持续性，以及钢铁、用电等高频指标的验证",
+    "二手房价格跌幅收窄趋势与各地住房公积金、购房政策调整的连续性"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T09:07:06+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 680,
+    "missingDays": []
+  }
+}

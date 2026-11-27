@@ -1,0 +1,172 @@
+{
+  "date": "2024-W28",
+  "type": "week",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 28 周宏观周报：外贸破21万亿与物价温和回升",
+  "window": {
+    "from": "2024-07-08",
+    "to": "2024-07-14",
+    "fromAt": "2024-07-08T08:00:00+08:00",
+    "toAt": "2024-07-15T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是上半年经济数据集中发布与外部贸易摩擦升温。国内方面，海关总署数据显示上半年货物贸易进出口突破21万亿元、同比增长6.1%；国家统计局公布6月CPI同比上涨0.2%、PPI同比降幅连续三个月收窄，全国夏粮总产量14978万吨、增长2.5%；央行披露上半年社会融资规模增量累计18.1万亿元，6月末M2余额305.02万亿元、同比增长6.2%；证监会依法批准暂停转融券业务；商务部就欧盟依据《外国补贴条例》对中企调查启动贸易投资壁垒调查，上半年全国吸收外资4989.1亿元；李强主持召开经济形势专家和企业家座谈会。海外方面，美国6月CPI同比上涨3%，美联储主席称高通胀不再是唯一风险。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "上半年货物贸易进出口超21万亿元 同比增长6.1%",
+      "summary": "海关总署数据显示，上半年我国货物贸易进出口总值突破21万亿元，同比增长6.1%，规模创历史同期新高；外贸规模再创新高、结构持续优化。",
+      "why": "上半年外贸规模与增速决定下半年外需与就业基本盘",
+      "source": "中新网",
+      "publishedAt": "2024-07-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-12/10250094.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-12/10250174.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-14/10250995.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-12/10250179.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "6月CPI同比上涨0.2% PPI降幅连续三个月收窄",
+      "summary": "国家统计局数据显示，6月CPI同比上涨0.2%，PPI同比降幅连续三个月收窄，6月工业生产者出厂价格同比降幅继续收窄；上半年我国物价保持平稳。",
+      "why": "物价与出厂价格是观察需求恢复与利润传导的窗口",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248780.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10249029.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248779.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-11/10249440.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10248998.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行：上半年社融增量18.1万亿元 M2增长6.2%",
+      "summary": "央行披露，上半年社会融资规模增量累计18.1万亿元，6月末广义货币M2余额305.02万亿元、同比增长6.2%，6月末社会融资规模存量395.11万亿元。",
+      "why": "社融与M2增速决定流动性环境与信用扩张力度",
+      "source": "中国人民银行",
+      "publishedAt": "2024-07-12T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554123701/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-12/10250331.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-12/10250330.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554139432/index.html"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "证监会批准暂停转融券业务 高频交易账户年内降超20%",
+      "summary": "证监会依法批准暂停转融券业务，7月11日起实施；同时表示将指导证交所尽快出台程序化交易管理实施细则，全市场高频交易账户年内下降超过20%。",
+      "why": "转融券暂停与程序化交易监管重塑交易结构与杠杆成本",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10249103.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10249199.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10249106.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10249202.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "商务部就欧盟外国补贴条例调查启动贸易投资壁垒调查",
+      "summary": "商务部表示，就欧盟依据《外国补贴条例》对中企调查中采取的相关做法进行贸易投资壁垒调查，并将确保调查公平公正；同期就电动汽车反补贴案磋商作出回应。",
+      "why": "对欧贸易救济调查影响中欧经贸关系与出口企业预期",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248967.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-11/10249610.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-11/10249702.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-11/10249701.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "上半年吸收外资4989.1亿元 新设外企数增14.2%",
+      "summary": "商务部表示，1-6月全国吸收外资4989.1亿元人民币，上半年我国吸引外资规模仍处于近十年来的高位；同期中国新设外企数同比增长14.2%。",
+      "why": "外资规模与新设企业数反映开放水平与外资信心",
+      "source": "中新网",
+      "publishedAt": "2024-07-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-12/10250365.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-12/10250364.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-12/10250497.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "统计局：全国夏粮总产量14978万吨 同比增长2.5%",
+      "summary": "国家统计局数据显示，2024年全国夏粮总产量14978万吨，同比增长2.5%，全国夏粮获得丰收；粮食产量稳定是物价基本盘的重要支撑。",
+      "why": "夏粮丰收稳住粮食供给与食品类物价预期",
+      "source": "中新网",
+      "publishedAt": "2024-07-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-12/10250025.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-12/10250028.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "上半年汽车产销分别为1389.1万辆和1404.7万辆",
+      "summary": "上半年我国汽车产销分别完成1389.1万辆和1404.7万辆，新能源汽车累计产销量超3000万辆、保有量达2472万辆，出口成为车市新亮点。",
+      "why": "汽车产销与新能源出口反映制造业需求与出口韧性",
+      "source": "中新网",
+      "publishedAt": "2024-07-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-10/10248940.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-10/10249126.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-08/10247863.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-10/10249127.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "李强主持召开经济形势专家和企业家座谈会",
+      "summary": "李强主持召开经济形势专家和企业家座谈会；同期多领域数据亮眼，中国经济持续回升向好态势巩固增强，政策暖意增强市场吸引力。",
+      "why": "年中经济座谈会是观察下半年政策取向的重要窗口",
+      "source": "中新网",
+      "publishedAt": "2024-07-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/07-09/10248642.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/07-09/10248182.shtml",
+        "https://www.chinanews.com.cn/gn/2024/07-10/10248911.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "央行将视情况开展临时正回购或临时逆回购操作",
+      "summary": "央行表示，将视情况开展临时正回购或临时逆回购操作，公开市场操作或“加班”，临时正逆回购成可选项；权威专家称央行国债买卖定位绝不是搞量化宽松。",
+      "why": "临时正逆回购工具扩宽央行流动性调节的操作空间",
+      "source": "中新网",
+      "publishedAt": "2024-07-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-08/10247637.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-08/10247774.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-12/10250514.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "7月经济数据发布后内需与物价走势能否延续温和回升",
+    "央行临时正逆回购与国债买卖操作的实际运用及流动性投放节奏",
+    "商务部对欧贸易投资壁垒调查与电动汽车反补贴案磋商进展",
+    "上半年21万亿元外贸在下半年能否保持6%以上增速",
+    "转融券暂停及程序化交易细则落地后两融与市场活跃度变化"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 679,
+    "missingDays": []
+  }
+}

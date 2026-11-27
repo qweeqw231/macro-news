@@ -1,0 +1,175 @@
+{
+  "date": "2025-W25",
+  "type": "week",
+  "generatedAt": "2026-11-26T21:09:38+08:00",
+  "endedAt": "2026-11-26T21:09:38+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 25 周宏观周报：陆家嘴论坛金融开放提速",
+  "window": {
+    "from": "2025-06-16",
+    "to": "2025-06-22",
+    "fromAt": "2025-06-16T08:00:00+08:00",
+    "toAt": "2025-06-23T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是陆家嘴论坛集中释放金融开放信号，货币政策保持定力。陆家嘴论坛开幕，央行行长潘功胜宣布将在上海实施八项政策举措，包括设立银行间市场交易报告库和数字人民币国际运营中心；央行与香港金融管理局的跨境支付通6月22日上线运行。利率端，6月LPR报价5年期和1年期利率均维持不变，央行连续开展7天期逆回购操作，单日投放规模在1563亿元至2420亿元之间。数据端，5月份社会消费品零售总额同比增长6.4%，规模以上工业增加值增长5.8%，5月末社会融资规模存量426.16万亿元。资本市场方面，证监会设置科创板科创成长层，推出6项改革举措。外部方面，美联储维持利率不变，称经济前景不确定性高。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "2025陆家嘴论坛开幕 央行宣布八项重磅金融开放举措",
+      "summary": "2025陆家嘴论坛开幕，中国人民银行行长潘功胜宣布将在上海实施八项政策举措，包括设立银行间市场交易报告库、设立数字人民币国际运营中心，并披露人民币跨境支付清算网络已初步建成。",
+      "why": "金融开放集中落地的年度窗口，指向跨境支付与市场基础设施的制度方向",
+      "source": "中新网",
+      "publishedAt": "2025-06-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-18/10434050.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-18/10434093.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554737374/index.html",
+        "https://www.chinanews.com.cn/cj/2025/06-18/10434054.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-18/10434097.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "6月LPR报价出炉：5年期和1年期利率均维持不变",
+      "summary": "6月LPR报价出炉，5年期和1年期利率均维持不变，贷款定价基准连续保持稳定，本月报价未做调整，政策利率保持定力。",
+      "why": "LPR是贷款定价基准，未变直接影响实体融资成本与按揭利率预期",
+      "source": "中新网",
+      "publishedAt": "2025-06-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-20/10435172.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-20/10435307.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行连续开展7天期逆回购操作",
+      "summary": "央行连续开展7天期逆回购操作，单日投放规模分别为2420亿元、1973亿元、1563亿元、1612亿元，公开市场操作维持每日高频运行。",
+      "why": "公开市场投放规模是观察央行短期流动性松紧的高频指标",
+      "source": "中新网",
+      "publishedAt": "2025-06-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-16/10432889.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-17/10433470.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-18/10434029.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-20/10435164.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "跨境支付通6月22日上线 内地与香港启动",
+      "summary": "中国人民银行与香港金融管理局联合举办跨境支付通启动仪式，跨境支付通于6月22日上线运行，中国首笔跨境支付通业务在深圳落地。",
+      "why": "跨境支付互联互通落地，影响内地与香港之间的资金流转便利度",
+      "source": "中国人民银行",
+      "publishedAt": "2025-06-20T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554733470/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554734464/index.html",
+        "https://www.chinanews.com.cn/cj/2025/06-20/10435391.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-20/10435478.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-22/10436219.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "证监会：设置科创板科创成长层 推出6项改革举措",
+      "summary": "证监会宣布在科创板设置科创成长层，推出6项改革举措，新政以“1+6”形式发布，并就相关意见答记者问，科创板制度包容性与适应性进一步增强。",
+      "why": "科创板分层扩容，改变科技创新企业的上市与融资规则边界",
+      "source": "中新网",
+      "publishedAt": "2025-06-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-18/10434210.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-18/10434343.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-18/10434416.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-18/10434221.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-21/10435725.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "5月份社会消费品零售总额增长6.4%",
+      "summary": "国家统计局公布，5月份社会消费品零售总额同比增长6.4%，消费增速回升；1-5月社会消费品零售总额20.32万亿元，同比增长5.0%，网络促销带动市场销售明显回升。",
+      "why": "消费增速是内需修复的核心变量，直接关系扩内需政策效果",
+      "source": "中新网",
+      "publishedAt": "2025-06-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-16/10432915.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-22/10436159.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-19/10434807.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-16/10433059.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-17/10433590.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "5月份规模以上工业增加值增长5.8%",
+      "summary": "国家统计局公布，5月份规模以上工业增加值同比增长5.8%，5月份经济运行总体平稳、部分指标继续改善；1—5月份全国固定资产投资增长3.7%。",
+      "why": "工业增加值与投资增速，反映实体经济供给端的修复力度",
+      "source": "中新网",
+      "publishedAt": "2025-06-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-16/10432904.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-20/10435215.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-16/10432945.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-16/10432909.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-16/10432903.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "5月末社会融资规模存量为426.16万亿元",
+      "summary": "5月末社会融资规模存量为426.16万亿元，相关报道同时解读最新金融数据传递的信号，社融存量规模是观察信用扩张与杠杆水平变化的重要月度读数。",
+      "why": "社融存量反映信用扩张力度，是观察宽货币向宽信用传导的指标",
+      "source": "中新网",
+      "publishedAt": "2025-06-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-16/10432839.shtml"
+    },
+    {
+      "rank": 9,
+      "title": "5月份各线城市商品住宅销售价格同比降幅继续收窄",
+      "summary": "国家统计局公布2025年5月份70个大中城市商品住宅销售价格变动情况，各线城市商品住宅销售价格同比降幅继续收窄，房地产继续朝着止跌回稳方向迈进。",
+      "why": "房价降幅收窄是地产止跌回稳的先行信号，关联政策传导效果",
+      "source": "中新网",
+      "publishedAt": "2025-06-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/06-16/10432885.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-16/10432892.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-16/10433184.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-16/10433011.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-17/10433486.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储维持利率不变 称经济前景不确定性仍高",
+      "summary": "美联储维持利率不变，称经济前景不确定性仍高；美联储主席鲍威尔表示关税政策对消费者影响将更加明显，美国GDP增长预期被再度下调。",
+      "why": "美联储路径指向全球流动性与汇率预期，外部条件仍不明朗",
+      "source": "中新网",
+      "publishedAt": "2025-06-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/06-19/10434527.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/06-19/10434788.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-19/10434564.shtml",
+        "https://www.chinanews.com.cn/cj/2025/06-19/10434992.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "陆家嘴论坛八项政策举措的实施细则与落地节奏",
+    "7月LPR报价与存款利率是否跟随调整",
+    "科创板科创成长层的首批申报与配套征求意见进展",
+    "6月社零、工业增加值与社融数据能否延续5月改善",
+    "美联储关税政策传导与美国GDP增长预期的后续修正"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-26T21:09:38+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 642,
+    "missingDays": []
+  }
+}

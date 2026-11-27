@@ -1,0 +1,185 @@
+{
+  "date": "2024-W50",
+  "type": "week",
+  "generatedAt": "2026-11-27T09:09:14+08:00",
+  "endedAt": "2026-11-27T09:09:14+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 50 周宏观周报：中央经济工作会议定调",
+  "window": {
+    "from": "2024-12-09",
+    "to": "2024-12-15",
+    "fromAt": "2024-12-09T08:00:00+08:00",
+    "toAt": "2024-12-16T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是中央经济工作会议对2025年政策基调的定调。12月9日中央政治局会议分析研究2025年经济工作，货币政策重回适度宽松，时隔14年；12月12日中央经济工作会议在北京举行，部署明年九项重点任务，提出更加积极的宏观政策取向，把全方位扩大国内需求列在首位。数据方面，11月CPI同比上涨0.2%、核心CPI回升，PPI环比由降转涨、同比降幅收窄；11月末社融存量405.6万亿元、同比增长7.8%，广义货币余额311.96万亿元、同比增长7.1%；11月进出口总值同比增长1.2%。海外方面，欧洲央行下调欧元区三大关键利率，加拿大央行再度降息50个基点，美国11月CPI同比上涨2.7%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中央经济工作会议部署明年九项重点任务",
+      "summary": "中央经济工作会议在北京举行，习近平出席会议并发表重要讲话，会议提出更加积极的宏观政策取向，部署明年九项重点任务，把全方位扩大国内需求列在首位。",
+      "why": "顶层会议定调决定明年政策力度与方向",
+      "source": "中新网",
+      "publishedAt": "2024-12-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-12/10335436.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/12-12/10335276.shtml",
+        "https://www.chinanews.com.cn/gn/2024/12-12/10335399.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-12/10335483.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-12/10335471.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中央政治局会议定调2025年经济工作",
+      "summary": "中共中央政治局召开会议，分析研究2025年经济工作，并部署党风廉政建设和反腐败工作；货币政策重回适度宽松，时隔14年，央行官员表示将加大货币信贷投放力度。",
+      "why": "货币与财政取向转向决定明年政策空间",
+      "source": "中新网",
+      "publishedAt": "2024-12-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/12-09/10333327.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333566.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333562.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-10/10333816.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-14/10336342.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "11月末社融存量增7.8% M2同比增7.1%",
+      "summary": "央行数据显示，11月末社会融资规模存量405.6万亿元、同比增长7.8%，广义货币余额311.96万亿元、同比增长7.1%，前11个月社融增量累计29.4万亿元。",
+      "why": "社融与货币供应增速反映实体融资需求与流动性松紧",
+      "source": "中国人民银行",
+      "publishedAt": "2024-12-13T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554425517/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335997.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335999.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10336000.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10336104.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "11月CPI同比涨0.2% 核心CPI回升 PPI环比转涨",
+      "summary": "国家统计局数据显示，11月份居民消费价格同比上涨0.2%，核心CPI回升；工业生产者出厂价格环比由降转涨，同比降幅收窄，物价端出现企稳迹象。",
+      "why": "价格端企稳影响实际利率与货币政策空间判断",
+      "source": "中新网",
+      "publishedAt": "2024-12-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-09/10333296.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333321.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333150.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333135.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333144.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "11月进出口总值同比增长1.2% 前11月增长4.9%",
+      "summary": "海关总署数据显示，前11个月我国货物贸易进出口增长4.9%；11月中国进出口总值同比增长1.2%，有进出口实绩的外贸经营主体达68.2万家。",
+      "why": "外贸增速反映外需强弱与出口结构变化",
+      "source": "中新网",
+      "publishedAt": "2024-12-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-10/10333795.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-10/10333752.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-11/10334279.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-11/10334436.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-15/10336676.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "欧洲央行下调三大关键利率 加拿大央行再降50个基点",
+      "summary": "欧洲央行宣布下调欧元区三大关键利率，加拿大央行再度降息50个基点，澳大利亚央行继续维持基准利率不变；美国11月CPI同比上涨2.7%。",
+      "why": "海外宽松节奏影响全球流动性与人民币汇率",
+      "source": "中新网",
+      "publishedAt": "2024-12-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/12-12/10335365.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/12-12/10334864.shtml",
+        "https://www.chinanews.com.cn/gj/2024/12-10/10334010.shtml",
+        "https://www.chinanews.com.cn/gj/2024/12-12/10335011.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "个人养老金制度15日起在全国实施",
+      "summary": "个人养老金制度15日起在全国实施，国债、指数基金被纳入产品范围；两部门同时明确在全国范围实施个人养老金个人所得税优惠政策。",
+      "why": "个人养老金全国推广关系到长期资金供给与居民配置",
+      "source": "中新网",
+      "publishedAt": "2024-12-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/12-12/10334977.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335841.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335983.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-12/10335207.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335498.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "住建部：新建商品房网签面积连续两月同比环比双增",
+      "summary": "住建部表示，10月、11月全国新建商品房交易网签面积连续两月同比环比双增长，中国房地产市场呈现出止跌回稳积极势头，契税新政实施10日重庆累计减免近1.9亿元。",
+      "why": "网签面积连续增长是楼市政策效果的直接读数",
+      "source": "中新网",
+      "publishedAt": "2024-12-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-14/10336208.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-14/10336344.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335716.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-11/10334679.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333056.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "以旧换新带动相关产品销售额超1万亿元",
+      "summary": "商务部表示，消费品以旧换新带动相关产品销售额超1万亿元；汽车以旧换新补贴申请量突破500万份，家电以旧换新销售额超2000亿元。",
+      "why": "以旧换新是扩内需政策落地最直接的总量指标",
+      "source": "中新网",
+      "publishedAt": "2024-12-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-13/10335832.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-11/10334261.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333098.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-11/10334386.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-10/10334089.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "证监会：切实维护资本市场稳定",
+      "summary": "中国证监会表示将切实维护资本市场稳定，并持续推动期货市场品种发展扩面、提质、增效；证监会同意多晶硅期货和期权注册、同意瓶片期权注册。",
+      "why": "监管层稳市表态影响投资者预期与风险偏好",
+      "source": "中新网",
+      "publishedAt": "2024-12-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-14/10336435.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333122.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335993.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10336071.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-12/10335208.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "12月美联储议息会议对利率路径的表述，以及美国11月CPI同比2.7%之后的通胀走势",
+    "降准降息等货币政策操作在明年的落地时点与力度",
+    "12月制造业PMI等月度数据发布，验证中央经济工作会议部署的起步情况",
+    "个人养老金制度全国实施后的开户与缴费规模，以及楼市成交改善的持续性",
+    "人民币汇率在7.3关口附近的走势与跨境资金流动方向"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T09:09:14+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 788,
+    "missingDays": []
+  }
+}

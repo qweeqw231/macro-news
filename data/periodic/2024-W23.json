@@ -1,0 +1,177 @@
+{
+  "date": "2024-W23",
+  "type": "week",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 23 周宏观周报：外贸新高与财政资金落地",
+  "window": {
+    "from": "2024-06-03",
+    "to": "2024-06-09",
+    "fromAt": "2024-06-03T08:00:00+08:00",
+    "toAt": "2024-06-10T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是外贸总量新高与财政资金加快落地。国内方面，5月进出口值同比增长8.6%，前5个月货物贸易进出口总值17.5万亿元、同比增长6.3%，前4个月服务进出口总额24319.6亿元、增长16.8%；财政部下达2024年汽车以旧换新补贴64.4亿元，并将发行350亿元50年期超长期特别国债，4月我国债券市场发行近7万亿元；地产方面，前5月百城新房价格累计小涨1.09%、二手房价下跌，江苏全面取消首套二套房贷利率下限，沪广深新政效果初显、融资白名单项目密集落地；央行多边数字货币桥项目进入最小可行化产品阶段。外部方面，商务部称将采取一切必要措施维护企业正当利益，欧洲央行、加拿大央行相继降息。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "前5个月货物贸易进出口总值17.5万亿元 增长6.3%",
+      "summary": "海关总署数据显示，前5个月我国货物贸易进出口增长6.3%，进出口总值17.5万亿元；5月中国进出口值同比增长8.6%，前4个月服务进出口总额达24319.6亿元、",
+      "why": "外贸总量和服务贸易增速，衡量外需韧性与结构升级",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230113.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230164.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230175.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230103.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230007.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "财政部下达2024年汽车以旧换新补贴64.4亿元",
+      "summary": "财政部下达2024年汽车以旧换新补贴64.4亿元，加上此前安排资金合计超111亿元；商务部表示汽车报废更新补贴申请量呈加快增长态势，以旧换新利民惠企初见成效。",
+      "why": "补贴资金落地直接带动汽车等大宗消费品需求",
+      "source": "中新网",
+      "publishedAt": "2024-06-03T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-03/10227891.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-04/10228173.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229573.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229517.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "财政部将发行350亿元50年期超长期特别国债",
+      "summary": "财政部将发行50年期超长期特别国债，规模350亿元；此前我国4月债券市场发行近7万亿元，财政部并就财政支持三北工程建设的意见作出解读，债券供给保持高位。",
+      "why": "长端国债供给影响债市供需与利率中枢预期",
+      "source": "中新网",
+      "publishedAt": "2024-06-07T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-07/10230105.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229665.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-05/10228651.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-03/10227757.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "前5月百城新房价格累计小涨1.09% 二手房价下跌",
+      "summary": "前5月中国百城新房价格累计小涨1.09%，二手房价下跌；新沪九条施行首个周末楼市表现受关注，江苏已全面取消首套、二套房贷利率下限，沪广深新政效果初显。",
+      "why": "价格与政策松绑同步，验证地产政策传导的实际效果",
+      "source": "中新网",
+      "publishedAt": "2024-06-03T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-03/10228062.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-03/10227955.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229723.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-04/10228267.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "房地产融资白名单项目密集落地 三大工程建设提速",
+      "summary": "多地跟进，房地产融资白名单项目密集落地；住房城乡建设领域抓好三大工程建设、构建房地产发展新模式，业内认为新一轮楼市去库存政策有望开启，银川设6000万元购房补贴专项资金。",
+      "why": "融资与去库存工具落地，决定供给端风险化解进度",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-06/10229431.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-05/10228593.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230923.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-08/10230876.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "央行数字货币桥项目进入最小可行化产品阶段",
+      "summary": "中国人民银行表示，多边央行数字货币桥项目已进入最小可行化产品阶段；同期我国4月债券市场发行近7万亿元，国家发改委召开现场会提升金融支持民营经济高质量发展质效。",
+      "why": "跨境支付基础设施与民企融资支持，关系金融开放度",
+      "source": "中国人民银行",
+      "publishedAt": "2024-06-06T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554166054/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-05/10228651.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-05/10229154.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-05/10228991.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "发改委：提升金融支持民营经济高质量发展质效",
+      "summary": "国家发改委召开现场会，提升金融支持民营经济高质量发展质效，并推动在医疗、出行等重点领域实施信用加工程；民营企业加速出海，跨境金融合作成为重要趋势。",
+      "why": "金融资源向民企倾斜，关系内生投资与市场信心",
+      "source": "中新网",
+      "publishedAt": "2024-06-05T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-05/10229154.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-05/10228991.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-04/10228475.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230212.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "证监会就ST退市情况答记者问 拟规范行政处罚裁量",
+      "summary": "证监会就近期上市公司股票被实施ST、退市情况答记者问，表示高度重视涉及退市的投资者保护工作；并就行政处罚裁量基本规则征求意见，拟发文规范行政处罚裁量。",
+      "why": "退市与裁量规则明确化，关系资本市场定价与秩序",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-06/10229731.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229747.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230360.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-07/10230451.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "商务部谈中欧经贸摩擦：必要时采取一切必要措施",
+      "summary": "商务部就中欧经贸摩擦表示，将采取一切必要措施维护企业正当利益，愿同欧方通过对话协商妥善处理摩擦；此前欧盟官员称欧洲不会跟随美国对华征收关税，",
+      "why": "中欧经贸走向决定出口结构与外需基本盘",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-06/10229699.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229588.shtml",
+        "https://www.chinanews.com.cn/gn/2024/06-04/10228391.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-03/10228023.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "欧洲央行降息25个基点 加拿大央行率先降息",
+      "summary": "欧洲中央银行宣布降息25个基点，加拿大央行下调基准利率，在七国集团国家中率先降息；同期美国第一季度经济增长率下调，持续通胀给美国家庭带来压力。",
+      "why": "主要经济体转向宽松，影响全球流动性与汇率预期",
+      "source": "中新网",
+      "publishedAt": "2024-06-06T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/06-06/10229806.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/06-06/10229340.shtml",
+        "https://www.chinanews.com.cn/gj/2024/06-03/10227993.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-06/10229767.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "6月CPI、PPI与金融数据对政策空间的影响",
+    "前5个月外贸新高能否延续及美国关税变量",
+    "50年期特别国债发行后的长端利率走势",
+    "一线城市楼市新政成交的持续性与去库存工具落地",
+    "中欧电动汽车反补贴谈判进展"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 649,
+    "missingDays": []
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "date": "2025-W03",
+  "type": "week",
+  "generatedAt": "2026-11-27T09:08:23+08:00",
+  "endedAt": "2026-11-27T09:08:23+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 3 周宏观周报：GDP增长5%与降准预期",
+  "window": {
+    "from": "2025-01-13",
+    "to": "2025-01-19",
+    "fromAt": "2025-01-13T08:00:00+08:00",
+    "toAt": "2025-01-20T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是2024年全年数据落地与稳增长政策加码。国家统计局公布，2024年中国GDP同比增长5.0%，经济总量首次超过130万亿元；12月规模以上工业增加值增长6.2%，社会消费品零售总额增长3.7%。货币端，1月份资金面存在多个扰动因素，春节前降准预期升温，央行表示将继续降低银行整体负债成本、保持人民币汇率基本稳定目标不变，2024年末社会融资规模存量408.34万亿元、同比增长8%。监管端，证监会发布行政处罚裁量基本规则，拟强化期货程序化交易全过程监管。外贸端，2024年我国货物贸易进出口总值43.85万亿元、创历史新高。消费端，商务部加力扩围实施消费品以旧换新。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "1月份资金面存多个扰动因素 春节前降准预期升温",
+      "summary": "报道指出1月份资金面存在多个扰动因素，春节前降准预期升温；同期央行表示将继续强化利率政策执行、进一步降低银行整体负债成本，并称保持人民币汇率基本稳定的目标不会改变。",
+      "why": "降准预期与负债成本下行，指向下一阶段货币宽松取向",
+      "source": "中新网",
+      "publishedAt": "2025-01-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-14/10352707.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-14/10353062.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-14/10353178.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-14/10353035.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554811047/index.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "2024年末社融存量408.34万亿元 同比增8%",
+      "summary": "中国人民银行数据：2024年末社会融资规模存量408.34万亿元，同比增长8%；12月末广义货币余额313.53万亿元，同比增长7.3%，全年新增贷款逾18万亿元。",
+      "why": "社融与货币供应量读数，决定实体融资成本与后续宽松空间",
+      "source": "中新网",
+      "publishedAt": "2025-01-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-14/10353412.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-14/10352995.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-14/10353392.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554485438/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554483666/index.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行 证监会联合召开股票回购增持再贷款座谈会",
+      "summary": "中国人民银行与中国证监会联合召开股票回购增持再贷款座谈会；报道称该政策工具带动效应逐步显现，2024年上市公司披露回购增持计划近3000亿元。",
+      "why": "回购增持再贷款是稳市工具，直接影响资本市场资金供给",
+      "source": "中国人民银行",
+      "publishedAt": "2025-01-19T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554562644/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-19/10356278.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-19/10356267.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "证监会发布《中国证监会行政处罚裁量基本规则》",
+      "summary": "证监会发布《中国证监会行政处罚裁量基本规则》，明确行政处罚裁量规则；同期拟强化对期货市场程序化交易全过程监管，并拟加强对上市公司募集资金监管。",
+      "why": "执法裁量与程序化交易监管趋严，影响市场秩序与合规成本",
+      "source": "中新网",
+      "publishedAt": "2025-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-17/10355442.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355510.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355511.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355542.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "2024年中国GDP增长5.0% 经济总量首次超过130万亿元",
+      "summary": "国家统计局数据：2024年中国GDP同比增长5%，全年增长5.0%；我国经济总量首次超过130万亿元，主要发展目标顺利实现。",
+      "why": "全年增速与总量读数，确立稳增长政策的基准坐标",
+      "source": "中新网",
+      "publishedAt": "2025-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-17/10354932.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-17/10354997.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355061.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355427.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355229.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "2024年12月份规模以上工业增加值增长6.2%",
+      "summary": "国家统计局数据：2024年12月份规模以上工业增加值增长6.2%，社会消费品零售总额增长3.7%，全年固定资产投资增长3.2%，CPI同比上涨0.2%。",
+      "why": "工业、消费、投资与价格月度读数，构成经济修复的底账",
+      "source": "中新网",
+      "publishedAt": "2025-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-17/10354955.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-17/10354969.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10354960.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10354946.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10354970.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "2024年我国货物贸易进出口总值43.85万亿元 创历史新高",
+      "summary": "海关总署数据：2024年我国货物贸易进出口总值43.85万亿元，规模再创历史新高，出口规模首次突破25万亿元，进出口总值同比增长5%。",
+      "why": "外贸总量与出口结构，检验外部关税扰动下的基本盘",
+      "source": "中新网",
+      "publishedAt": "2025-01-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-13/10352191.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-13/10352204.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-13/10352309.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-13/10352210.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-13/10352339.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "商务部：加力扩围实施消费品以旧换新",
+      "summary": "商务部表示加力扩围实施消费品以旧换新，以旧换新带动相关产品销售额超1.3万亿元，2024年全国汽车以旧换新超680万辆；1月20日起手机等数码产品购新补贴陆续实施。",
+      "why": "以旧换新是扩内需稳消费的主要抓手，决定需求释放节奏",
+      "source": "中新网",
+      "publishedAt": "2025-01-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-15/10353801.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-15/10353763.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-15/10353799.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-16/10354430.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-15/10353917.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "2025地方债开闸 2万亿化债先行",
+      "summary": "2025年地方债开闸，2万亿化债先行，地方政府债务化解与新增额度安排成为财政政策的重要发力点。",
+      "why": "地方债置换与化债安排，决定基建资金来源与财政空间",
+      "source": "中新网",
+      "publishedAt": "2025-01-14T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-14/10353208.shtml"
+    },
+    {
+      "rank": 10,
+      "title": "2024年12月份一线城市商品住宅销售价格环比上涨",
+      "summary": "国家统计局数据：2024年12月份一线城市商品住宅销售价格环比上涨，70城房价环比上涨城市增多；全年全国房地产开发投资100280亿元，四季度新建商品房销售扭转连续下滑态势。",
+      "why": "房价与投资先行指标，检验地产政策对市场预期的修复力度",
+      "source": "中新网",
+      "publishedAt": "2025-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-17/10354906.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-17/10354965.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355095.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355101.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355034.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "春节前降准与公开市场操作力度，以及M1统计口径调整后的读数变化",
+    "以旧换新补贴扩围至手机等数码产品后，消费与家电数码销售数据的变化",
+    "商务部对进口共聚聚甲醛反倾销调查与成熟制程芯片低价冲击调查的进展",
+    "特朗普就任后的关税安排与中方反制措施的相互升级",
+    "一线城市二手房成交与房地产开发投资后续走势的持续性"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T09:08:23+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 900,
+    "missingDays": []
+  }
+}

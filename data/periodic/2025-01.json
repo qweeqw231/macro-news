@@ -1,0 +1,185 @@
+{
+  "date": "2025-01",
+  "type": "month",
+  "generatedAt": "2026-11-27T09:08:47+08:00",
+  "endedAt": "2026-11-27T09:08:47+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年 1 月宏观月报：降准降息定调与长钱入市",
+  "window": {
+    "from": "2025-01-01",
+    "to": "2025-01-31",
+    "fromAt": "2025-01-01T08:00:00+08:00",
+    "toAt": "2025-02-01T08:00:00+08:00",
+    "days": 31
+  },
+  "overview": "2025年1月宏观主线是货币政策宽松与长钱入市同步推进。货币政策委员会四季度例会建议择机降准降息，央行工作会议明确今年适度宽松，央行同期阶段性暂停公开市场买入国债。六部门联合印发中长期资金入市实施方案，明确新增保费30%投资A股。数据上，2024年GDP增长5.0%、总量首超130万亿元，货物贸易进出口43.85万亿元、增5%，社融存量408.34万亿元；但12月CPI仅涨0.1%、PPI降幅收窄至2.3%，1月制造业PMI为49.1%。财政提高赤字率、扩大债务规模，2万亿元置换债启动发行；“两新”扩围27条、810亿元资金预下达。海外美联储按兵不动、欧央行降息、日央行加息，关税威胁升温。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中国央行货币政策委员会建议：择机降准降息",
+      "summary": "中国人民银行货币政策委员会召开2024年第四季度例会，建议择机降准降息；央行工作会议同时明确今年将实施适度宽松的货币政策。",
+      "why": "降准降息取向定调，决定后续流动性松紧与利率走势",
+      "source": "中新网",
+      "publishedAt": "2025-01-03T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-03/10347450.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554436558/index.html",
+        "https://www.chinanews.com.cn/cj/2025/01-05/10347721.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-06/10348146.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-05/10347963.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行决定阶段性暂停在公开市场买入国债",
+      "summary": "中国人民银行决定阶段性暂停在公开市场买入国债，央行随后说明此举是为避免市场波动，基础货币投放方式更趋相机灵活。",
+      "why": "暂停买债改变基础货币投放方式，牵动债券与利率预期",
+      "source": "中国人民银行",
+      "publishedAt": "2025-01-10T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554448610/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-10/10351075.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-10/10350779.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-14/10353178.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "六部门联合印发推动中长期资金入市实施方案",
+      "summary": "中央金融办、中国证监会、财政部、人社部、中国人民银行、金融监管总局联合印发推动中长期资金入市实施方案，明确每年新增保费30%用于投资A股等硬指标。",
+      "why": "长钱入市方案落地，指向资本市场资金结构的制度性调整",
+      "source": "中国人民银行",
+      "publishedAt": "2025-01-22T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554517598/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-22/10358114.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-22/10358031.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-23/10358485.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-23/10358423.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "2024年中国GDP增长5.0%",
+      "summary": "国家统计局数据显示，2024年中国GDP同比增长5.0%，经济总量首次超过130万亿元；12月份规模以上工业增加值增长6.2%，社会消费品零售总额增长3.7%。",
+      "why": "全年经济读数标定增长基数，也决定后续政策加码力度",
+      "source": "中新网",
+      "publishedAt": "2025-01-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-17/10354997.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355061.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10354932.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10354955.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10354969.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "2024年社会融资规模增量统计数据报告发布",
+      "summary": "央行发布2024年社会融资规模增量统计数据报告：年末社会融资规模存量408.34万亿元，M2同比增长7.3%，全年新增贷款逾18万亿元。",
+      "why": "社融与货币增速决定流动性松紧和融资扩张节奏",
+      "source": "中国人民银行",
+      "publishedAt": "2025-01-14T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554483666/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-14/10353412.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-14/10352995.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-14/10353392.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554556876/index.html"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "两部门出台27条措施 加力扩围实施设备更新和消费品以旧换新",
+      "summary": "两部门出台27条措施，加力扩围实施大规模设备更新和消费品以旧换新；中央财政预下达2025年消费品以旧换新资金810亿元，手机等数码产品购新补贴自1月20日起全国实施。",
+      "why": "扩围以旧换新是当期稳消费、扩内需最直接的抓手",
+      "source": "中新网",
+      "publishedAt": "2025-01-08T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-08/10349425.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-08/10349464.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-15/10353917.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-08/10349429.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-15/10353763.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "2024年中国进出口总值同比增5% 规模再创历史新高",
+      "summary": "海关总署数据显示，2024年我国货物贸易进出口总值43.85万亿元，同比增长5%，规模连续八年居世界第一；出口规模首次突破25万亿元，电动汽车出口量首次突破200万辆。",
+      "why": "外贸总量与出口结构决定外需对增长的支撑力度",
+      "source": "中新网",
+      "publishedAt": "2025-01-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-13/10352309.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-13/10352191.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-13/10352210.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-13/10352245.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-13/10352204.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "2025年中国将提高赤字率扩大债务规模",
+      "summary": "财政部表示，2025年财政政策方向清晰明确、非常积极，将提高赤字率、扩大债务规模，赤字规模有较大幅度增加；2025年2万亿元置换债券已启动发行工作。",
+      "why": "赤字与债务规模抬升，标志财政发力强度与节奏",
+      "source": "中新网",
+      "publishedAt": "2025-01-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-10/10351314.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-10/10351016.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-10/10351072.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-10/10351087.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-10/10351061.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "去年12月中国CPI同比涨0.1% 核心CPI继续回升",
+      "summary": "国家统计局数据显示，12月CPI同比上涨0.1%，核心CPI继续回升；PPI同比降幅收窄至2.3%，统计局预计1月CPI同比涨幅扩大，2025年CPI有望温和回升。",
+      "why": "物价读数是判断需求修复与工业品通缩压力的先行指标",
+      "source": "中新网",
+      "publishedAt": "2025-01-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-09/10350304.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/01-09/10350442.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-09/10350129.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355041.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-17/10355050.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储宣布维持联邦基金利率目标区间不变",
+      "summary": "美联储宣布维持联邦基金利率目标区间不变，鲍威尔称不需匆忙调整政策立场；同期欧洲央行宣布再次降息，日本央行将政策利率上调至0.5%，特朗普称计划对中国商品征收关税。",
+      "why": "海外货币政策分化与关税威胁决定外部流动性和外需风险",
+      "source": "中新网",
+      "publishedAt": "2025-01-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/01-30/10361587.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/01-30/10361595.shtml",
+        "https://www.chinanews.com.cn/cj/2025/01-30/10361866.shtml",
+        "https://www.chinanews.com.cn/gj/2025/01-24/10359498.shtml",
+        "https://www.chinanews.com.cn/gn/2025/01-22/10357966.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "春节前后公开市场投放与国债买入安排，以及降准降息的实际落地节奏",
+    "中长期资金入市方案的配套细则、保险资金投资比例与考核政策的执行进展",
+    "810亿元消费品以旧换新资金下达后的使用进度与消费数据延续性",
+    "1月制造业PMI为49.1%之后，2月景气指标能否重回扩张区间",
+    "特朗普关税措施推进节奏及其对我国出口订单与外贸增速的影响"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T09:08:47+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 31,
+    "newsItems": 2987,
+    "missingDays": []
+  }
+}

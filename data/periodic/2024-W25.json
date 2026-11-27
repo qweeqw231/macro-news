@@ -1,0 +1,177 @@
+{
+  "date": "2024-W25",
+  "type": "week",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 25 周宏观周报：陆家嘴论坛与5月数据",
+  "window": {
+    "from": "2024-06-17",
+    "to": "2024-06-23",
+    "fromAt": "2024-06-17T08:00:00+08:00",
+    "toAt": "2024-06-24T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是陆家嘴论坛释放货币政策信号与5月经济数据出炉。国内方面，央行行长潘功胜在陆家嘴论坛系统阐述当前货币政策立场与未来货币政策框架的演进，明确挤水分效应不意味货币政策立场发生变化；5月规模以上工业增加值增长5.6%、社会消费品零售总额增长3.7%，1—5月固定资产投资增长4.0%、房地产开发投资40632亿元，5月PPI环比7个月来首次转正，CPI将继续温和回升，但70城房价继续走降；证监会发布深化科创板改革八条措施，国办印发促进创业投资高质量发展的若干政策措施；商务部数据显示1-5月全国吸收外资4125.1亿元。外部方面，中欧经贸摩擦与美方提高对华301关税的博弈持续。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "潘功胜：阐述当前货币政策立场与未来框架演进",
+      "summary": "中国人民银行行长潘功胜在第十五届陆家嘴论坛作主题演讲，系统阐述中国当前货币政策立场及未来货币政策框架的演进，并表示挤水分效应不意味货币政策立场发生变化；",
+      "why": "央行对政策立场与框架的定调，决定后续宽松路径",
+      "source": "中国人民银行",
+      "publishedAt": "2024-06-19T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554146083/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-19/10236731.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-19/10236855.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554114216/index.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "5月工业增加值增5.6% 1—5月固投增长4.0%",
+      "summary": "国家统计局发布，5月份规模以上工业增加值增长5.6%，社会消费品零售总额同比增长3.7%，1—5月份全国固定资产投资增长4.0%，1-5月全国房地产开发投资40632亿元，",
+      "why": "月度产出、投资与消费三驾马车的读数决定下半年政策力度",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235117.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235107.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235122.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235102.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235105.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "5月70城房价继续走降 一线新房环比降0.7%",
+      "summary": "国家统计局数据显示，5月中国70城房价继续走降，其中一线城市新建商品住宅销售价格环比下降0.7%；统计局同时表示5月中旬以来我国房地产市场出现一些积极变化，市场情绪有所修复。",
+      "why": "价格企稳是地产政策见效的关键，关系投资端修复",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235260.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235055.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235228.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235353.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "5月PPI环比7个月来首次转正 CPI将温和回升",
+      "summary": "国家统计局表示，中国5月PPI环比7个月来首次转正、同比降幅将继续收窄；5月份CPI走势总体稳定，下阶段将继续呈现温和回升态势，工业领域价格信号出现转折。",
+      "why": "工业品价格转正是通缩压力缓解与盈利改善的前瞻信号",
+      "source": "中新网",
+      "publishedAt": "2024-06-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-17/10235192.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235225.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235234.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235193.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "证监会发布深化科创板改革八条措施",
+      "summary": "证监会发布《关于深化科创板改革 服务科技创新和新质生产力发展的八条措施》，吴清表示将发布相关措施；措施包括优化股债融资制度、支持产业链上下游并购整合、",
+      "why": "科创板制度升级，服务科技创新融资与新质生产力",
+      "source": "中新网",
+      "publishedAt": "2024-06-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-19/10236648.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-19/10236837.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237180.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-19/10236660.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "国办印发促进创业投资高质量发展的若干政策措施",
+      "summary": "国务院办公厅印发《促进创业投资高质量发展的若干政策措施》，鼓励长期资金投向创业投资；相关措施共十七条，涵盖投早投小投长期投硬科技，引导资本支持科技创新与新质生产力。",
+      "why": "创投政策决定长期资本供给方向，影响科技融资",
+      "source": "中新网",
+      "publishedAt": "2024-06-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/06-19/10236828.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237345.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-21/10237766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-21/10238424.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "6月LPR报价出炉 1年期和5年期以上利率维持不变",
+      "summary": "6月LPR报价出炉，1年期和5年期以上利率均维持不变，中国LPR连续4个月不变；6月17日央行开展1820亿元MLF操作、中标利率未变，市场认为LPR下调仍存空间。",
+      "why": "政策利率按兵不动，关系实体融资成本与预期管理",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237119.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237247.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237390.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235285.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "商务部：1-5月全国吸收外资4125.1亿元",
+      "summary": "商务部数据显示，1-5月全国吸收外资4125.1亿元人民币，并表示当前外商投资预期和信心总体稳定；前五个月我国对外非金融类直接投资同比增长16.3%，",
+      "why": "外资与对外投资数据，反映市场信心与资本流动",
+      "source": "中新网",
+      "publishedAt": "2024-06-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-21/10238385.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-21/10238394.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237396.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237529.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "商务部回应美方提高301关税与中欧贸易摩擦",
+      "summary": "商务部表示，美方执意保留并提高对华301关税是典型的政治操弄；针对中欧经贸摩擦，商务部称责任完全在欧方，并已对欧盟白兰地反倾销调查完成登记应诉等程序，",
+      "why": "贸易救济与关税博弈牵动出口预期和产业调整",
+      "source": "中新网",
+      "publishedAt": "2024-06-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-20/10237431.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-21/10238187.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-21/10238129.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237424.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "两部门集中部署 存量商品房收储有望加速",
+      "summary": "两部门集中部署，存量商品房收储有望加速；各地探索以购代建、以旧换新等模式，全国超70个城市推行住房以旧换新，房地产新政月考显示市场活跃度有所提升。",
+      "why": "收储提速直接决定库存去化与地产投资企稳节奏",
+      "source": "中新网",
+      "publishedAt": "2024-06-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/06-21/10238097.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/06-20/10237034.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-23/10238954.shtml",
+        "https://www.chinanews.com.cn/cj/2024/06-17/10235223.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "7月降准降息落地时点与政策利率调整",
+    "陆家嘴论坛后货币政策框架细节与汇率表态",
+    "存量商品房收储的规模与落地速度",
+    "中欧电动汽车关税终裁与中方反制",
+    "5月消费回升能否延续至三季度"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 777,
+    "missingDays": []
+  }
+}

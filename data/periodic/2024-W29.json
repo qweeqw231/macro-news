@@ -1,0 +1,174 @@
+{
+  "date": "2024-W29",
+  "type": "week",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 29 周宏观周报：上半年GDP增长5.0%与改革部署",
+  "window": {
+    "from": "2024-07-15",
+    "to": "2024-07-21",
+    "fromAt": "2024-07-15T08:00:00+08:00",
+    "toAt": "2024-07-22T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是上半年经济数据集中发布与三中全会改革部署。国内方面，国家统计局公布上半年国内生产总值同比增长5.0%，1—6月社会消费品零售总额增长3.7%、全国固定资产投资增长3.9%，房地产开发投资52529亿元，6月各线城市商品住宅销售价格环比降幅总体收窄；央行开展1000亿元1年期MLF操作、利率保持不变；国务院常务会议研究加力支持大规模设备更新和消费品以旧换新；中共中央新闻发布会解读三中全会《决定》，提出促进房地产市场平稳健康发展、加快新旧发展动能转换。外部方面，欧盟11国在对华关税表决中弃权，商务部反对美方滥施出口管制，美联储褐皮书显示更多地区经济动能不足。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "上半年中国GDP同比增长5.0%",
+      "summary": "国家统计局公布，2024年上半年国内生产总值同比增长5.0%，上半年国民经济运行总体平稳、稳中有进；二季度和上半年国内生产总值初步核算结果同步发布。",
+      "why": "半年增速决定全年增长目标能否达成与政策力度",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251506.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251827.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251428.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-16/10251942.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-19/10253611.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "上半年社零总额增3.7% 6月工业增加值增5.3%",
+      "summary": "国家统计局数据显示，1—6月份社会消费品零售总额同比增长3.7%，升级类消费增势较好；6月份规模以上工业增加值增长5.3%，上半年工业生产呈现较快增长态势。",
+      "why": "消费与工业增速是内需修复和生产端景气的同步读数",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251433.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251544.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251424.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-19/10253877.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "上半年固定资产投资增3.9% 房地产开发投资52529亿元",
+      "summary": "国家统计局数据显示，1—6月份全国固定资产投资增长3.9%，投资稳定增长、调结构提质效持续发力；同期全国房地产开发投资52529亿元。",
+      "why": "投资与地产投资决定下半年稳增长的着力点",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251427.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251431.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251457.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-18/10253064.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "6月各线城市商品住宅销售价格环比降幅总体收窄",
+      "summary": "国家统计局数据显示，6月份各线城市商品住宅销售价格环比降幅总体收窄，70城房价环比跌幅收窄、京沪二手房价转涨；上半年全国居民人均可支配收入20733元。",
+      "why": "房价环比降幅收窄是地产政策见效的前置信号",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251396.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251620.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251435.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251761.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "央行开展1000亿元1年期MLF操作 利率保持不变",
+      "summary": "中国人民银行开展1000亿元1年期MLF操作，利率保持不变；同期央行连续开展7天期逆回购操作，7月16日单日操作规模6760亿元。",
+      "why": "MLF利率与投放量决定中期流动性与债市定价",
+      "source": "中新网",
+      "publishedAt": "2024-07-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-15/10251753.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251389.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-16/10251924.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-17/10252470.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "国常会研究加力支持设备更新和消费品以旧换新",
+      "summary": "李强主持召开国务院常务会议，学习贯彻党的二十届三中全会精神，研究加力支持大规模设备更新和消费品以旧换新政策措施，审议通过《退役军人安置条例（草案）》。",
+      "why": "以旧换新加力直接决定下半年扩内需资金投向",
+      "source": "中新网",
+      "publishedAt": "2024-07-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/07-19/10254125.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/07-17/10252853.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-17/10252729.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-16/10251914.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "三中全会发布会：促进房地产市场平稳健康发展",
+      "summary": "中共中央新闻办发布会上解读三中全会《决定》，强调事关房地产、新兴产业、扩大内需，加快新旧发展动能转换重点在三方面发力，提出促进房地产市场平稳健康发展。",
+      "why": "三中全会部署框定下半年改革开放与地产政策方向",
+      "source": "中新网",
+      "publishedAt": "2024-07-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-19/10254077.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/07-19/10253789.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-19/10253855.shtml",
+        "https://www.chinanews.com.cn/gn/2024/07-19/10253742.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "事关对华关税：欧盟11国弃权",
+      "summary": "欧盟就将对华加征关税的表决中，11个国家选择弃权；商务部并表示将继续坚持扩大开放，中方称上半年进出口数据亮眼。",
+      "why": "欧盟表决结果牵动中欧贸易摩擦走向与出口预期",
+      "source": "中新网",
+      "publishedAt": "2024-07-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/07-18/10253036.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/07-19/10253946.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "美拟加码芯片贸易限制 商务部反对滥施出口管制",
+      "summary": "美方考虑采取更严格措施限制日、荷公司对华芯片贸易，商务部回应称中方反对美滥施出口管制；同期中方就诉美《通胀削减法》世贸争端案提出设立专家组请求。",
+      "why": "芯片出口管制升级牵动科技供应链与中美经贸博弈",
+      "source": "中新网",
+      "publishedAt": "2024-07-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/07-19/10254101.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/07-17/10252726.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251752.shtml",
+        "https://www.chinanews.com.cn/cj/2024/07-15/10251703.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美联储褐皮书：更多地区经济动能不足",
+      "summary": "美联储经济状况褐皮书显示，更多地区经济动能不足、消费者购买力下降，预计美国经济放缓趋势将持续；同期美国5月国际资本流动报告公布外国投资者大幅减持长期证券。",
+      "why": "美联储褐皮书指向降息路径与全球流动性预期",
+      "source": "中新网",
+      "publishedAt": "2024-07-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/07-19/10253746.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/07-18/10253363.shtml",
+        "https://www.chinanews.com.cn/gj/2024/07-19/10253863.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "7月经济数据与三季度增长动能能否延续上半年稳中有进态势",
+    "国常会以旧换新加力政策的资金规模与具体落地时间",
+    "三中全会《决定》配套细则与房地产平稳健康发展政策落地",
+    "央行7月LPR报价以及MLF、逆回购操作节奏的变化",
+    "欧盟对华关税表决后中欧经贸磋商与美方芯片管制升级的影响"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 757,
+    "missingDays": []
+  }
+}

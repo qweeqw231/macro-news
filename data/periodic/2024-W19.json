@@ -1,0 +1,178 @@
+{
+  "date": "2024-W19",
+  "type": "week",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 19 周宏观周报：限购松绑与4月数据出炉",
+  "window": {
+    "from": "2024-05-06",
+    "to": "2024-05-12",
+    "fromAt": "2024-05-06T08:00:00+08:00",
+    "toAt": "2024-05-13T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是楼市限购松绑与4月经济数据密集发布。国内方面，杭州、西安全面取消住房限购，深圳分区优化限购、武汉优化购房落户，全国仅剩7地仍有限购；4月CPI同比上涨0.3%、PPI同比降幅收窄，央行公布前4个月人民币贷款增加10.19万亿元；海关总署数据显示前4个月货物贸易进出口总值13.81万亿元，4月进出口同比增长8.0%；中央财政创新方法支持城市更新示范，以旧换新政策持续扩围。外部方面，美国将37家中国实体列入出口管制清单，中方回应美撤销部分企业对华为出口许可证。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "杭州西安全面取消住房限购 全国仅剩7地还有限制",
+      "summary": "5月9日杭州全面取消住房限购、不再审核购房资格，西安同日宣布全面取消住房限购措施；深圳此前分区优化住房限购、武汉优化购房落户手续，全国仅剩7地仍有限购。",
+      "why": "限购退出直接释放购房资格需求，影响成交与预期",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213700.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213900.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211985.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211678.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213963.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行：前4个月人民币贷款增加10.19万亿元",
+      "summary": "央行数据显示，2024年前4个月人民币贷款增加10.19万亿元；同期发布4月社会融资规模增量和存量统计报告，4月新增信贷同比多增，信贷“大小月”现象有所缓解。",
+      "why": "信贷与社融总量是观察宽货币向宽信用传导的读数",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10215275.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554025225/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554028258/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554048365/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215429.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "4月CPI同比上涨0.3% PPI同比降幅收窄",
+      "summary": "国家统计局发布，4月份居民消费价格同比上涨0.3%，CPI同比涨幅稳中有升；4月工业生产者出厂价格同比降幅收窄，物价环比有所下降，消费需求恢复带动CPI同比三连涨。",
+      "why": "物价回升与工业品价格修复是宽松效果的同步验证",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10214965.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214969.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214968.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215133.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "前4个月货物贸易进出口总值13.81万亿元",
+      "summary": "海关总署数据显示，今年前4个月我国货物贸易进出口总值13.81万亿元，4月中国进出口额同比增长8.0%；第135届广交会落幕，前4个月广东外贸进出口规模同比增长12.3%。",
+      "why": "外贸总量与增速是外需强弱和出口结构优化的直接指标",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213626.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213770.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211611.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214472.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "中央财政支持城市更新示范 教育经费保障加固",
+      "summary": "中央财政创新方法支持部分城市开展城市更新示范工作；财政部持续巩固提高义务教育经费保障水平，并与教育部下达多笔教育经费，同时加大力度支持中小企业参与招标投标。",
+      "why": "财政投向结构决定资金如何转化为实物工作量",
+      "source": "中新网",
+      "publishedAt": "2024-05-06T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-06/10211921.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-07/10212460.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-08/10213306.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-08/10213425.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "汽车以旧换新补贴可与购置税减免叠加享受",
+      "summary": "商务部表示，汽车以旧换新补贴可与新能源汽车购置税减免等叠加享受；“五一”假日消费火热，60个重点商圈消费金额达99.2亿元，多地陆续启动消费品以旧换新行动。",
+      "why": "以旧换新与购置税减免叠加，直接撬动大宗商品消费",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213892.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211548.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-07/10212142.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213636.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "31省份一季度GDP数据出炉 国企利润同比增长2.8%",
+      "summary": "三十一个省份一季度GDP数据出炉，经济运行开局良好，吉林增速领跑；1-3月中国国有企业利润总额10757.6亿元，同比增长2.8%，工业经济回升向好。",
+      "why": "地方经济与国企盈利反映增长的结构和成色",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214275.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-07/10212524.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211623.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211906.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "央行发布2024年第一季度货币政策执行报告",
+      "summary": "中国人民银行发布2024年第一季度中国货币政策执行报告及一季度货币政策大事记；同期央行表示将引导信贷合理增长、均衡投放，金融“五篇大文章”实施路线图明确。",
+      "why": "货币政策执行报告给出下一阶段政策取向与操作思路",
+      "source": "中国人民银行",
+      "publishedAt": "2024-05-10T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554023361/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554081127/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214882.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-11/10215139.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "金融监管总局发文部署 银行保险业将迎来新变化",
+      "summary": "金融监管总局发文部署，银行保险业将迎来新变化；同期银行密集公告高息存款产品正在减少，协定存款频迎调整，存款成本下行与监管新规同步推进。",
+      "why": "监管新规与存款成本下行使银行负债端持续承压",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-10/10214889.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214688.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-06/10211701.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215389.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美将37家中国实体列入出口管制清单 中方回应",
+      "summary": "美国商务部将37家中国实体列入贸易黑名单，商务部回应称美将多家中国实体列入出口管制“实体清单”；中方还回应美撤销部分企业对华为公司的出口许可证。",
+      "why": "出口管制清单扩容抬高涉美企业合规与经营成本",
+      "source": "中新网",
+      "publishedAt": "2024-05-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-10/10214633.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214561.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-08/10213356.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-10/10214638.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "限购退出后重点城市成交与按揭需求能否延续回暖",
+    "5月LPR报价及存款利率下调的进一步安排",
+    "4月信贷结构改善能否延续至二季度",
+    "美国对华加征关税决定公布前的出口订单变化",
+    "超长期特别国债发行安排与项目落地节奏"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 943,
+    "missingDays": []
+  }
+}

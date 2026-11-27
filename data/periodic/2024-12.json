@@ -1,0 +1,176 @@
+{
+  "date": "2024-12",
+  "type": "month",
+  "generatedAt": "2026-11-27T14:30:00+08:00",
+  "endedAt": "2026-11-27T14:30:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年 12 月宏观月报：中央经济工作会议定调2025",
+  "window": {
+    "from": "2024-12-01",
+    "to": "2024-12-31",
+    "fromAt": "2024-12-01T08:00:00+08:00",
+    "toAt": "2025-01-01T08:00:00+08:00",
+    "days": 31
+  },
+  "overview": "2024年12月，年度定调落地。12月12日中央经济工作会议在北京举行，部署明年九项重点任务；此前12月9日中共中央政治局会议分析研究2025年经济工作。政策基调转向更加积极的财政政策和适度宽松的货币政策，央行表态适时降准降息。11月数据修复，工业增加值增长5.4%，社会消费品零售总额增长3.0%，1—11月固定资产投资增长3.3%；11月CPI同比涨0.2%、核心CPI回升，PPI环比转涨。11月末社融存量405.6万亿元，M2增7.1%。外贸增速回落，前11个月货物贸易进出口增长4.9%。外部摩擦升温，美对华半导体管制升级并提高301关税。12月制造业PMI为50.1%，连续三个月扩张。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中央经济工作会议定调2025 部署九项重点任务",
+      "summary": "12月12日中央经济工作会议在北京举行，部署明年九项重点任务。此前12月9日中共中央政治局召开会议，分析研究2025年经济工作并部署党风廉政建设和反腐败工作，为明年经济工作定调。",
+      "why": "年度经济工作定调，决定2025年政策组合与力度",
+      "source": "中新网",
+      "publishedAt": "2024-12-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/12-12/10335276.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/12-09/10333327.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-12/10335436.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-12/10335483.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行定调适度宽松货币政策 适时降准降息",
+      "summary": "12月16日报道，央行表示将实施好适度宽松的货币政策，适时降准降息；12月20日公布的12月LPR为1年期3.1%、5年期以上3.6%。解读称，货币政策时隔14年重回适度宽松。",
+      "why": "货币取向转向宽松，决定降准降息的落地节奏",
+      "source": "中新网",
+      "publishedAt": "2024-12-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-16/10337312.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335496.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-20/10339795.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554459122/index.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "财政部：明年从5个方面实施更加积极财政政策",
+      "summary": "12月24日，财政部表示我国明年将从5个方面实施更加积极的财政政策；同日通报2024年推进落实一揽子化债方案，并推动房地产市场止跌回稳。年末财政与化债的年度进度同时交卷。",
+      "why": "财政力度升级，直接决定明年赤字与支出安排",
+      "source": "中新网",
+      "publishedAt": "2024-12-24T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-24/10341485.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-24/10341500.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-24/10341504.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-25/10342002.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "11月工业增加值增5.4% 社零增3.0%",
+      "summary": "国家统计局12月16日发布，11月份规模以上工业增加值增长5.4%；社会消费品零售总额增长3.0%，1—11月份固定资产投资增长3.3%。",
+      "why": "工业偏强而消费偏弱，结构分化决定政策着力点",
+      "source": "中新网",
+      "publishedAt": "2024-12-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-16/10336927.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-16/10336948.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-16/10336932.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-27/10343671.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "11月CPI同比涨0.2% 核心CPI回升 PPI环比转涨",
+      "summary": "国家统计局12月9日发布，11月CPI同比小幅上涨0.2%，核心CPI回升；PPI同比降幅收窄，环比由降转涨。统计局同时表示，下阶段我国CPI有望继续保持小幅上涨。",
+      "why": "核心CPI与PPI同步改善，是需求修复的确认信号",
+      "source": "中新网",
+      "publishedAt": "2024-12-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-09/10333296.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333321.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333150.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-16/10336996.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "11月末社融存量405.6万亿元 M2增长7.1%",
+      "summary": "央行12月13日发布11月金融与社融数据：11月末社融存量405.6万亿元，同比增长7.8%；M2余额311.96万亿元，同比增长7.1%；前11个月社融增量累计29.4万亿元。",
+      "why": "社融与M2增速回升，指向宽松取向下的资金供给",
+      "source": "中国人民银行",
+      "publishedAt": "2024-12-13T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554425517/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335999.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10335997.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-13/10336000.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "前11个月货物贸易进出口增长4.9%",
+      "summary": "海关总署12月10日发布，前11个月货物贸易进出口增长4.9%，总值近40万亿元；11月单月进出口总值同比增长1.2%。商务部数据显示，前10月服务进出口总额61255.8亿元。",
+      "why": "单月增速明显放缓，外需对增长的拉动力度下降",
+      "source": "中新网",
+      "publishedAt": "2024-12-10T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-10/10333752.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-10/10333795.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-17/10337907.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-04/10330656.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "1—11月房地产开发投资93634亿元 楼市延续回稳",
+      "summary": "国家统计局12月16日发布，1—11月份全国房地产开发投资93634亿元，同时公布11月70城商品住宅销售价格变动情况。12月2日报道多城二手房价转涨、11月中国楼市延续回稳。",
+      "why": "投资与销售分化，检验地产支持政策的需求端效果",
+      "source": "中新网",
+      "publishedAt": "2024-12-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-16/10336954.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-16/10336906.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-02/10329369.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-09/10333056.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "12月制造业PMI为50.1% 连续三个月扩张",
+      "summary": "国家统计局12月31日发布，12月制造业PMI为50.1%，PMI连续三个月位于扩张区间。全球制造业PMI升至49.3%，创半年以来新高，亚洲制造业PMI连续11个月扩张。",
+      "why": "年末景气读数连续扩张，为2025年开局提供参照",
+      "source": "中新网",
+      "publishedAt": "2024-12-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-31/10345200.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-31/10345294.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-06/10331824.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-06/10331781.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "美对华半导体管制升级并提高301关税",
+      "summary": "12月5日，美对华半导体管制升级，商务部表示将采取必要措施。12月16日商务部回应美方提高对华部分产品301关税；12月28日公布自2025年1月1日起调整部分商品关税税率税目。",
+      "why": "外部摩擦集中在技术与贸易领域，影响出口结构",
+      "source": "中新网",
+      "publishedAt": "2024-12-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/12-16/10337400.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/12-05/10331184.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-28/10343915.shtml",
+        "https://www.chinanews.com.cn/cj/2024/12-08/10332660.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "降准降息在2025年初的落地时点、幅度与工具组合",
+    "中央经济工作会议部署的九项重点任务中，扩大内需与提振消费的具体举措",
+    "更加积极的财政政策在赤字、专项债与两重两新上的规模安排",
+    "美国对华半导体出口管制与301关税清单的进一步落地及中方反制",
+    "1月CPI、PPI与出口数据能否延续11月的改善与结构分化"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T14:30:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 31,
+    "newsItems": 3498,
+    "missingDays": []
+  }
+}

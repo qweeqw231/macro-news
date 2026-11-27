@@ -1,0 +1,176 @@
+{
+  "date": "2025-W08",
+  "type": "week",
+  "generatedAt": "2026-11-27T14:30:00+08:00",
+  "endedAt": "2026-11-27T14:30:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 8 周宏观周报：民营经济定调与关税冲击并存",
+  "window": {
+    "from": "2025-02-17",
+    "to": "2025-02-23",
+    "fromAt": "2025-02-17T08:00:00+08:00",
+    "toAt": "2025-02-24T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周主线是民营经济座谈会后的政策定调与外部关税冲击并存。2月17日至19日民营企业座谈会召开并释放多个信号，多个部委密集表态部署，多部门将出台举措促进民营经济发展，民营经济促进法草案二审同步推进。稳外资方面，2025年稳外资行动方案20条发布，1月中国吸收外资975.9亿元。数据端，1月70城房价同比降幅收窄，一线、二线新房价格环比回升。货币端，2月LPR连续4个月不变，1年期3.1%、5年期以上3.6%，央行全周连续逆回购并召开宏观审慎工作会议。财政端，财长表态实施好更加积极的财政政策。外部面，美方拟对进口汽车加征约25%关税，中美双方拟就经贸问题沟通。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "民营经济座谈会召开 多部门密集部署支持举措",
+      "summary": "民营企业座谈会召开并释放多个信号；国家发展改革委表示支持民营企业积极参与“两重两新”，金融监管总局提出保持稳定有效的增量信贷供给，市场监管总局表示鼓励支持民营企业加快发展。",
+      "why": "最高层级的民营经济定调，指向涉企政策的整体取向",
+      "source": "中新网",
+      "publishedAt": "2025-02-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-18/10370307.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-18/10370574.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371368.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-19/10371097.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "稳外资行动方案发布 扩大电信医疗等领域开放试点",
+      "summary": "《2025年稳外资行动方案》共20条措施，涉及扩大电信、医疗、教育等领域开放试点；1月中国吸收外资975.9亿元人民币，工信部称2024年制造业实际使用外资超2200亿元。",
+      "why": "外资准入与实际使用数据，直接反映开放政策的落地效果",
+      "source": "中新网",
+      "publishedAt": "2025-02-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/02-19/10371049.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-19/10371096.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371298.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371466.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "财长：实施好更加积极的财政政策",
+      "summary": "中国财长表示要实施好更加积极的财政政策，推动经济持续回升向好；财政部同期发布《中华人民共和国绿色主权债券框架》，并在香港成功发行2025年首期125亿元人民币国债。",
+      "why": "财政取向与发债节奏，关系稳增长的资金供给力度",
+      "source": "中新网",
+      "publishedAt": "2025-02-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-21/10372103.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-21/10371910.shtml",
+        "https://www.chinanews.com.cn/gn/2025/02-20/10371827.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-19/10371174.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "2月LPR连续4个月不变 1年期报3.1%",
+      "summary": "2月LPR报价出炉，1年期为3.1%、5年期以上为3.6%，LPR已连续4个月保持不变；相关报道援引专家观点称降息可能性仍大，房贷利率是否继续下调随之成为关注焦点。",
+      "why": "LPR是实体融资成本的核心报价，连续持平反映政策观望",
+      "source": "中新网",
+      "publishedAt": "2025-02-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371340.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371519.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-21/10372097.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "央行召开宏观审慎工作会议 全周连续逆回购操作",
+      "summary": "中国人民银行召开2025年宏观审慎工作会议；同期央行连续开展7天期逆回购操作，2月17日、18日、19日分别投放1905亿元、4892亿元、5389亿元，21日投放1825亿元。",
+      "why": "宏观审慎取向与公开市场投放量，指向流动性松紧",
+      "source": "中国人民银行",
+      "publishedAt": "2025-02-20T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554534500/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-17/10369745.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-18/10370228.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-19/10370771.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-21/10371949.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "1月70城房价出炉 一线二线新房价格环比回升",
+      "summary": "国家统计局数据显示1月份一线城市商品住宅销售价格环比继续上涨，二线城市新房价格时隔19个月重回环比上涨区间，70城房价同比降幅总体收窄；多地优化住房公积金政策，楼市开年回暖。",
+      "why": "量价边际变化决定地产支持政策是否继续加码",
+      "source": "中新网",
+      "publishedAt": "2025-02-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-19/10370774.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-19/10370975.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-19/10370786.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371309.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "中美经贸高层沟通在即 美方关税动作加码",
+      "summary": "中美双方拟于2月21日就中美经济领域重要问题进行沟通；同期美方宣布将对进口汽车征收约25%的关税，商务部回应称关税战没有出路、也不会有赢家。",
+      "why": "关税节奏与谈判安排，直接影响出口订单预期",
+      "source": "中新网",
+      "publishedAt": "2025-02-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/02-21/10372165.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/02-22/10372636.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371578.shtml",
+        "https://www.chinanews.com.cn/gj/2025/02-19/10370683.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "五部门印发优化消费环境三年行动方案",
+      "summary": "五部门印发《优化消费环境三年行动方案（2025—2027年）》，支持汽车、电子、家居等消费升级；以旧换新加力扩围政策满月，超2671万名消费者申请三类数码产品购新补贴。",
+      "why": "消费环境与以旧换新落地，是内需修复的直接抓手",
+      "source": "中新网",
+      "publishedAt": "2025-02-19T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-19/10371045.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-21/10372004.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-22/10372506.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-21/10371942.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "A股成交额重返2万亿元 证监会支持民企融资",
+      "summary": "A股周五放量上涨，两市成交额重返2万亿元；证监会表示将做好民营企业股债融资支持，2024年办理各类案件739件、罚没款153亿元，并联合最高检发布8宗证券违法犯罪指导性案例。",
+      "why": "成交活跃与严监管并行，反映市场风险偏好与合规约束",
+      "source": "中新网",
+      "publishedAt": "2025-02-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-21/10372382.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-21/10372235.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-21/10372185.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-21/10372425.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "潘功胜：新兴市场经济体应提升汇率弹性",
+      "summary": "潘功胜表示新兴市场经济体应提升汇率弹性，并出席新兴市场经济体研讨会、主持召开中国和海合会第三次央行行长会；同期人民币对美元中间价在7.1696元至7.1712元之间窄幅波动。",
+      "why": "汇率弹性表述关系跨境资本流动与外部均衡",
+      "source": "中新网",
+      "publishedAt": "2025-02-18T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-18/10370662.shtml",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554544373/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554527469/index.html",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371377.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "两会前稳增长增量政策与民营经济促进法草案二审的进展",
+    "央行后续降准降息与LPR报价调整的时点和力度",
+    "稳外资20条落地效果与1月信贷金融数据的发布",
+    "中美经贸高层沟通后美方关税措施的具体节奏",
+    "70城房价与一线二线成交回暖的持续性及公积金政策加码"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T14:30:00+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 766,
+    "missingDays": []
+  }
+}

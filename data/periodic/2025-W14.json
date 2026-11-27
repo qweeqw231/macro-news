@@ -1,0 +1,173 @@
+{
+  "date": "2025-W14",
+  "type": "week",
+  "generatedAt": "2026-11-27T09:07:34+08:00",
+  "endedAt": "2026-11-27T09:07:34+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2025 年第 14 周宏观周报：对等关税落地与反制",
+  "window": {
+    "from": "2025-03-31",
+    "to": "2025-04-06",
+    "fromAt": "2025-03-31T08:00:00+08:00",
+    "toAt": "2025-04-07T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周主线是美国“对等关税”落地引发的全球贸易冲击与中方反制，美股两日大幅回撤、衰退预期升温。国内政策同步加力：中国将发行5000亿元特别国债支持国有商业银行补充资本，央行3月开展8000亿元买断式逆回购操作，4月1日至3日连续投放7天期逆回购。数据面，3月制造业PMI升至50.5%并连续两个月扩张，非制造业经营活动保持扩张。监管端，证监会召开境外上市备案管理跨部门协调工作机制全体会议，上交所全面推进程序化交易监管。外部方面，惠誉下调中国主权信用评级而财政部不予认可，中欧同意尽快重启电动汽车反补贴案价格承诺谈判。地产端一季度百城新房价格上涨、二手房价下跌。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中国将发特别国债5000亿元支持国有商业银行补充资本",
+      "summary": "财政部表态将发行5000亿元特别国债，用于支持国有商业银行补充核心一级资本，相关报道称此次增资涉及四大行。",
+      "why": "大行资本补充决定后续信贷投放与金融体系扩表空间",
+      "source": "中新网",
+      "publishedAt": "2025-03-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-31/10392029.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-31/10392059.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-31/10391844.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "央行：3月开展8000亿元买断式逆回购操作",
+      "summary": "央行3月开展8000亿元买断式逆回购操作；4月1日至4月3日连续开展7天期逆回购操作，单日投放规模分别为649亿元、2299亿元、2234亿元。",
+      "why": "大额买断式逆回购的续作与到期情况，决定短端资金面松紧",
+      "source": "中新网",
+      "publishedAt": "2025-03-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-31/10392156.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-01/10392478.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-02/10393188.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-03/10393845.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "3月中国制造业PMI升至50.5%",
+      "summary": "国家统计局公布，3月份制造业采购经理指数为50.5%，连续两个月扩张；同期一季度中国非制造业经营活动保持扩张。",
+      "why": "PMI连续站上荣枯线，是观察制造业景气与库存周期的高频标尺",
+      "source": "中新网",
+      "publishedAt": "2025-03-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-31/10392020.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-31/10391895.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-31/10391903.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-01/10392444.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-31/10392017.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "特朗普签署行政令 对贸易伙伴征收“对等关税”",
+      "summary": "特朗普签署行政令，对贸易伙伴征收“对等关税”；此前宣布国家紧急状态并实施“对等关税”措施，全球贸易政策不确定性上升。",
+      "why": "对等关税把贸易摩擦升级为全球性变量，重定价外需与供应链",
+      "source": "中新网",
+      "publishedAt": "2025-04-03T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/04-03/10393785.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/04-03/10393784.shtml",
+        "https://www.chinanews.com.cn/gj/2025/04-03/10393776.shtml",
+        "https://www.chinanews.com.cn/gj/2025/04-03/10393829.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "中国将对原产于美国的所有进口商品加征34%关税",
+      "summary": "国务院关税税则委员会公布，对原产于美国的所有进口商品加征关税，加征幅度为34%，这是美方“对等关税”落地后中方的反制措施。",
+      "why": "对等加征关税直接抬升双边贸易成本，改变出口链与进口替代节奏",
+      "source": "中新网",
+      "publishedAt": "2025-04-04T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-04/10394770.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/04-04/10394719.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-04/10394747.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "中国对中重稀土相关物项实施出口管制",
+      "summary": "商务部与海关总署公告2025年第18号，公布对部分中重稀土相关物项实施出口管制的决定；商务部新闻发言人就此答记者问。",
+      "why": "稀土是新能源与半导体上游环节的卡点，管制直接牵动全球供给预期",
+      "source": "中新网",
+      "publishedAt": "2025-04-04T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-04/10394797.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-04/10394723.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-04/10394728.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "关税令美股两天蒸发逾5万亿美元 经济衰退风险增大",
+      "summary": "关税令美股两天蒸发逾5万亿美元，经济衰退风险增大；期间美股一日蒸发3万亿美元，道指两日分别重挫逾1600点与逾2200点。",
+      "why": "美股估值与衰退预期变化，是观察关税冲击向全球风险偏好传导的窗口",
+      "source": "中新网",
+      "publishedAt": "2025-04-05T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-05/10394879.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-04/10394518.shtml",
+        "https://www.chinanews.com.cn/gj/2025/04-04/10394490.shtml",
+        "https://www.chinanews.com.cn/gj/2025/04-05/10394987.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "证监会召开境外上市备案管理跨部门协调工作机制全体会议",
+      "summary": "证监会召开境外上市备案管理跨部门协调工作机制全体会议，并表示将为企业境外上市提供更加透明高效可预期的监管环境。",
+      "why": "境外上市备案的跨部门协调决定境内企业赴美上市的通道与节奏",
+      "source": "中新网",
+      "publishedAt": "2025-03-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-31/10392099.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-31/10392321.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-01/10392667.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "一季度中国百城新房价格上涨 二手房价下跌",
+      "summary": "一季度中国百城新房价格上涨、二手房价下跌；同期机构数据显示300城市住宅用地出让金同比增逾两成，北京甲级写字楼净吸纳量连续七个季度为正。",
+      "why": "新房与二手房走势背离，反映改善型需求与存量房定价的分化",
+      "source": "中新网",
+      "publishedAt": "2025-04-01T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-01/10392940.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/04-01/10392945.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-02/10393713.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-02/10393438.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "惠誉下调中国主权信用评级 中国财政部：不予认可",
+      "summary": "惠誉下调中国主权信用评级，中国财政部回应深表遗憾、不予认可；同期大公国际评定中国主权信用等级为iAAAsc，评级展望稳定。",
+      "why": "主权评级分歧加大外部融资与汇率预期的波动来源",
+      "source": "中新网",
+      "publishedAt": "2025-04-03T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/04-03/10394424.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/04-03/10394372.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-04/10394456.shtml",
+        "https://www.chinanews.com.cn/cj/2025/04-04/10394570.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "中美关税磋商进展与中方反制措施的后续节奏，以及对出口链订单和工业品价格的传导",
+    "美股大幅回撤后全球风险偏好的修复，以及美联储政策取向与美元指数走势",
+    "3月PMI扩张能否延续至4月，以及清明假期出行消费数据对内需的指示意义",
+    "5000亿元特别国债注资国有大行的落地进度与信贷投放、小微企业贷款数据变化",
+    "中欧电动汽车反补贴案价格承诺谈判进展，以及2月份外资净增持境内债券和股票后的后续流向"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T09:07:34+08:00",
+    "note": "2024-11 ~ 2025-11 历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 786,
+    "missingDays": []
+  }
+}

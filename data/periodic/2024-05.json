@@ -1,0 +1,183 @@
+{
+  "date": "2024-05",
+  "type": "month",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年 5 月宏观月报：地产金融组合拳与特别国债发行",
+  "window": {
+    "from": "2024-05-01",
+    "to": "2024-05-31",
+    "fromAt": "2024-05-01T08:00:00+08:00",
+    "toAt": "2024-06-01T08:00:00+08:00",
+    "days": 31
+  },
+  "overview": "2024年5月，政策重心转向稳地产与特别国债落地。5月17日央行连发四项通知：首套房商贷最低首付款比例调整为不低于15%，取消全国层面住房商贷利率下限，下调个人住房公积金贷款利率0.25个百分点，并设立3000亿元保障性住房再贷款；5月LPR维持不变。财政部公布2024年超长期特别国债发行安排，5月17日30年期特别国债首发、票面利率2.57%。4月规模以上工业增加值增长6.7%，1—4月房地产开发投资30928亿元，4月CPI同比上涨0.3%、PPI同比降幅收窄；前4个月货物贸易进出口13.81万亿元增长5.7%，5月制造业PMI回落至49.5%。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行降首付取消房贷利率下限 并设3000亿保障房再贷款",
+      "summary": "5月17日央行连发四项通知：首套房商贷最低首付款比例调整为不低于15%，取消全国层面住房商贷利率下限，下调公积金贷款利率0.25个百分点，并设立3000亿元保障性住房再贷款。",
+      "why": "组合拳直接作用于购房门槛与库存去化",
+      "source": "中国人民银行",
+      "publishedAt": "2024-05-17T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554062364/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554083971/index.html",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554094241/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218441.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218651.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "超长期特别国债启动发行 30年期首发票面利率2.57%",
+      "summary": "财政部公布2024年超长期特别国债发行安排，5月17日30年期超长期特别国债正式首发，首笔票面利率2.57%，个人可购买；20年期特别国债5月28日发行，票面利率2.49%。",
+      "why": "特别国债是扩内需的重要财政资金来源",
+      "source": "中新网",
+      "publishedAt": "2024-05-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-17/10218612.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-13/10215891.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218416.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-28/10224308.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-18/10218939.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "4月工业增加值增6.7% 社零增2.3%",
+      "summary": "国家统计局发布，4月份规模以上工业增加值增长6.7%，社会消费品零售总额增长2.3%，1—4月固定资产投资增长4.2%、房地产开发投资30928亿元，CPI有望低位温和回升。",
+      "why": "生产强于消费、投资偏弱，结构分化明显",
+      "source": "中新网",
+      "publishedAt": "2024-05-17T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-17/10218226.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218240.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218244.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218233.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-17/10218203.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "4月CPI同比上涨0.3% PPI同比降幅收窄",
+      "summary": "国家统计局发布，4月份居民消费价格同比上涨0.3%，涨幅稳中有升；工业生产者出厂价格同比降幅收窄、环比有所下降。报道称消费需求恢复带动CPI同比三连涨，基数效应减弱叠加油价回升。",
+      "why": "物价温和回升是宽松政策的重要前提",
+      "source": "中新网",
+      "publishedAt": "2024-05-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-11/10214968.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214965.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10214969.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215132.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215133.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "前4个月货物贸易进出口13.81万亿元 增长5.7%",
+      "summary": "海关总署公布，今年前4个月我国货物贸易进出口总值13.81万亿元，同比增长5.7%；4月单月进出口同比增长8.0%。一季度服务进出口总额18167.4亿元、同比增长14.7%。",
+      "why": "外贸是二季度经济的重要支撑项",
+      "source": "中新网",
+      "publishedAt": "2024-05-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-09/10213626.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213770.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-25/10223016.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-05/10211273.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-09/10213524.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "前4月人民币贷款增加10.19万亿元 4月末M2增7.2%",
+      "summary": "央行数据显示，今年前4个月人民币贷款增加10.19万亿元；4月末M2同比增长7.2%，社会融资规模增长平稳、金融支持质效提升。央行表示将继续引导信贷合理增长、均衡投放。",
+      "why": "信贷投放节奏与资金空转治理影响宽松效果",
+      "source": "中国人民银行",
+      "publishedAt": "2024-05-11T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554028258/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554048365/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215275.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-11/10215391.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214882.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "5月制造业PMI回落至49.5% 扩张区间中断",
+      "summary": "国家统计局公布，5月份制造业采购经理指数为49.5%，有所回落，扩张区间中断，非制造业延续平稳增长趋势；制造业生产继续扩张，新动能保持增长势头，企业信心稳定。",
+      "why": "景气回落加大二季度稳增长压力",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226262.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226337.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226382.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226388.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "央行发布2024年第一季度中国货币政策执行报告",
+      "summary": "中国人民银行发布2024年第一季度中国货币政策执行报告及同期大事记，部署下一阶段工作；央行表示将继续引导信贷合理增长、均衡投放，5月MLF操作等量平价续作，资金面宽松态势延续。",
+      "why": "季度货政报告是后续政策取向的定调文本",
+      "source": "中国人民银行",
+      "publishedAt": "2024-05-10T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554023361/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554081127/index.html",
+        "https://www.chinanews.com.cn/cj/2024/05-10/10214882.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217254.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-16/10217477.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "政治局会议审议金融风险问责规定与中部崛起政策",
+      "summary": "5月27日中共中央政治局召开会议，审议《新时代推动中部地区加快崛起的若干政策措施》《防范化解金融风险问责规定（试行）》两项文件；报道称会议释放“严”信号，金融监管将“长牙带刺”。",
+      "why": "金融问责制度与区域政策是下半年部署重点",
+      "source": "中新网",
+      "publishedAt": "2024-05-27T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-27/10223975.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-27/10224252.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-01/10210020.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "证监会对恒大地产罚款41.75亿元 减持监管收紧",
+      "summary": "证监会对恒大地产债券欺诈发行及信息披露违法案作出处罚决定，对恒大地产罚款41.75亿元；证监会严格规范大股东减持，2023年查办证券期货违法案件717件，去年罚没63.89亿元。",
+      "why": "执法与退市新规共同压制违规溢价",
+      "source": "中新网",
+      "publishedAt": "2024-05-31T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-31/10226682.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-31/10226562.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-24/10222942.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217221.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217224.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "地产金融政策发布一周后，多地首付比例与利率下限的落地节奏",
+    "3000亿元保障性住房再贷款的实际投放进度与收购规模",
+    "超长期特别国债各期限发行与项目资金到位情况",
+    "5月制造业PMI回落至49.5%后，二季度稳增长加力政策的可能形式",
+    "美联储维持高利率与日元汇率变化对人民币汇率和国内政策空间的约束"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 31,
+    "newsItems": 3517,
+    "missingDays": []
+  }
+}

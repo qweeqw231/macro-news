@@ -1,0 +1,177 @@
+{
+  "date": "2024-08",
+  "type": "month",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年 8 月宏观月报：央行买卖国债落地，楼市去库存提速",
+  "window": {
+    "from": "2024-08-01",
+    "to": "2024-08-31",
+    "fromAt": "2024-08-01T08:00:00+08:00",
+    "toAt": "2024-09-01T08:00:00+08:00",
+    "days": 31
+  },
+  "overview": "2024年8月，稳增长政策继续加码，数据与政策同步落地。7月规上工业增加值增长5.1%、社零增长2.7%，1—7月固定资产投资增长3.6%；7月CPI同比上涨0.5%，PPI降幅与上月持平；7月末M2同比增长6.3%，前七个月社融增量18.87万亿元；前7个月货物贸易进出口24.83万亿元、增6.2%。政策上，央行召开2024年下半年工作会议，潘功胜表示金融体系总体稳健；当月净买入1000亿元国债。房地产方面，“白名单”项目获批融资近1.4万亿元，住建部提出收购存量商品房用作保障性住房。财政端1—7月一般公共预算收入135663亿元，以旧换新政策继续扩围加码；鲍威尔称美联储降息时机已到。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "7月工业增5.1%、社零增2.7%，1—7月固投增3.6%",
+      "summary": "国家统计局数据显示，7月份规模以上工业增加值增长5.1%、社会消费品零售总额增长2.7%，1—7月份全国固定资产投资增长3.6%，1—7月份新建商品房销售面积54149万平方米。",
+      "why": "生产保持较快增长，消费与投资恢复仍偏弱",
+      "source": "中新网",
+      "publishedAt": "2024-08-15T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-15/10269099.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269113.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269107.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269109.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269117.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "7月CPI同比涨幅扩大至0.5%，PPI降幅持平",
+      "summary": "国家统计局公布，7月份居民消费价格同比上涨0.5%，涨幅较上月扩大、环比由降转涨；工业生产者出厂价格同比与环比降幅均与上月相同，物价回升的持续性仍待观察。",
+      "why": "CPI涨幅扩大但PPI仍为负，需求修复力度仍需验证",
+      "source": "中新网",
+      "publishedAt": "2024-08-09T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-09/10266019.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-09/10266017.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-09/10266026.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-15/10269154.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "7月M2增6.3%，前7月社融增量18.87万亿元",
+      "summary": "央行数据显示，7月末M2余额303.31万亿元、同比增长6.3%，7月末社会融资规模存量395.72万亿元、同比增长8.2%，前七个月社会融资规模增量累计18.87万亿元。",
+      "why": "社融与M2增速的差距，反映实体融资需求强弱",
+      "source": "中新网",
+      "publishedAt": "2024-08-13T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-13/10268417.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-13/10268233.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-13/10268235.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-13/10268242.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "前7个月货物贸易进出口24.83万亿元，增长6.2%",
+      "summary": "海关总署数据显示，前7个月我国货物贸易进出口总值24.83万亿元，同比增长6.2%，规模创历史同期新高；7月中国进出口总值同比增长6.5%，上半年服务进出口总额同比增长14%。",
+      "why": "外需韧性仍是稳增长的重要支撑",
+      "source": "中新网",
+      "publishedAt": "2024-08-07T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-07/10264837.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-07/10264840.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-07/10264971.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-20/10271499.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "央行下半年工作会议召开，部署下半年金融工作",
+      "summary": "央行召开2024年下半年工作会议，传达学习党的二十届三中全会精神；央行行长潘功胜表示我国金融体系总体稳健，将有序化解重点领域金融风险，并强调“不大放大收”的政策取向。",
+      "why": "下半年金融工作的定调，决定信贷与风险化解节奏",
+      "source": "中国人民银行",
+      "publishedAt": "2024-08-02T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554249728/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-17/10270339.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-18/10270686.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-09/10266436.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "央行8月净买入1000亿元国债",
+      "summary": "央行当月买入4000亿元特别国债，8月净买入1000亿元国债，国债买卖进入实操阶段；同期央行开展3000亿元MLF操作和4710亿元逆回购操作，共同维护市场流动性。",
+      "why": "国债买卖入实操，货币政策框架向利率调控靠拢",
+      "source": "中新网",
+      "publishedAt": "2024-08-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-30/10277598.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276948.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-26/10274647.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-31/10277941.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "房地产白名单获批融资近1.4万亿元",
+      "summary": "国家金融监管总局表示商业银行已审批房地产“白名单”项目5392个，获批融资近1.4万亿元；住建部提出收购存量商品房用作保障性住房，二季度末房地产开发贷款余额同比增长2.8%。",
+      "why": "融资审批与收储并行，是地产信用修复的两条主线",
+      "source": "中新网",
+      "publishedAt": "2024-08-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-21/10272543.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-21/10272437.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-23/10273597.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-30/10277573.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "1—7月一般公共预算收入135663亿元",
+      "summary": "财政部数据显示，1—7月全国一般公共预算收入135663亿元，并表示地方政府债务风险总体可控；财政部发布《2024年上半年中国财政政策执行情况报告》，提出加大财政政策实施力度。",
+      "why": "财政收入与债务表态，决定后续财政发力空间",
+      "source": "中新网",
+      "publishedAt": "2024-08-26T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-26/10274713.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-26/10274813.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-30/10277361.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-30/10277500.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "以旧换新政策扩围加码，第二轮家电细则出台",
+      "summary": "商务部等7部门发布《关于进一步做好汽车以旧换新有关工作的通知》，汽车报废更新补贴翻倍；第二轮家电以旧换新实施细则发布，每件商品最高补贴2000元。",
+      "why": "两新政策扩围直接拉动下半年消费需求",
+      "source": "中新网",
+      "publishedAt": "2024-08-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-16/10270050.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-25/10274456.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-17/10270591.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-22/10272898.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "鲍威尔称美联储降息时机已到",
+      "summary": "美联储主席鲍威尔表示降息时机已到，此前7月议息会议维持联邦基金利率不变；美国7月CPI同比上涨2.9%，创2021年3月以来最低增幅，通胀回落为降息打开空间。",
+      "why": "美联储转向降息，制约国内宽松的外部约束减弱",
+      "source": "中新网",
+      "publishedAt": "2024-08-24T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/08-24/10273893.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/08-01/10261264.shtml",
+        "https://www.chinanews.com.cn/gj/2024/08-15/10269012.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-27/10275329.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "9月经济数据能否验证以旧换新与增量政策的拉动效果",
+    "央行国债买卖月度操作规模与流动性投放节奏",
+    "存量商品房收购落地规模与房地产开发投资降幅变化",
+    "美联储9月议息结果及人民币汇率、跨境资本流动变化",
+    "地方专项债发行进度与基建投资落地情况"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 31,
+    "newsItems": 3001,
+    "missingDays": []
+  }
+}

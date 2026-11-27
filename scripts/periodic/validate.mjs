@@ -100,8 +100,11 @@ function validateOne(id, index) {
       add(`${at}.source 不在允许来源内：${it.source}`);
     }
     if (strict) {
-      if (!/^2024-\d{2}-\d{2}T12:00:00\+08:00$/.test(String(it.publishedAt || ''))) {
-        add(`${at}.publishedAt 应形如 2024-02-06T12:00:00+08:00，实际 ${it.publishedAt}`);
+      // 标题-only 归档的时间统一为当日 12:00:00+08:00；年份随期次走（2024 / 2025 / …），
+      // 不能写死 2024 —— 否则 2025 之后的期次会被整批误判为不合规。
+      // 日期是否落在本期窗口，由下面的 window 检查兜底。
+      if (!/^\d{4}-\d{2}-\d{2}T12:00:00\+08:00$/.test(String(it.publishedAt || ''))) {
+        add(`${at}.publishedAt 应形如 YYYY-MM-DDT12:00:00+08:00，实际 ${it.publishedAt}`);
       }
     } else if (!isIsoBj(it.publishedAt)) {
       add(`${at}.publishedAt 不是 YYYY-MM-DDTHH:MM:SS+08:00：${it.publishedAt}`);

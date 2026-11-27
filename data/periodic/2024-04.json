@@ -1,0 +1,183 @@
+{
+  "date": "2024-04",
+  "type": "month",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年 4 月宏观月报：一季度经济成绩单与新国九条落地",
+  "window": {
+    "from": "2024-04-01",
+    "to": "2024-04-30",
+    "fromAt": "2024-04-01T08:00:00+08:00",
+    "toAt": "2024-05-01T08:00:00+08:00",
+    "days": 30
+  },
+  "overview": "2024年4月，一季度经济数据与资本市场新规是两条主线。统计局公布一季度GDP同比增长5.3%，房地产开发投资22082亿元，3月规模以上工业增加值增长4.5%、社会消费品零售总额增长3.1%，一季度规上工业企业利润增长4.3%；3月CPI同比上涨0.1%、PPI同比下降2.8%但环比降幅收窄，4月制造业PMI为50.4%连续两个月处于扩张区间。外贸方面，一季度进出口历史同期首次突破10万亿元、同比增长5%。政策方面，国务院发布资本市场高质量发展若干意见，证监会同步发布退市新规，央行设立5000亿元科技创新和技术改造再贷款，4月LPR连续两月不变。月末政治局会议决定召开二十届三中全会。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "一季度GDP同比增长5.3% 3月工业与社零增速回落",
+      "summary": "国家统计局发布，一季度GDP同比增长5.3%；3月规上工业增加值增长4.5%、社会消费品零售总额增长3.1%，1—3月固定资产投资增长4.2%、房地产开发投资22082亿元。",
+      "why": "季度增速是全年目标完成度的关键参照",
+      "source": "中新网",
+      "publishedAt": "2024-04-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-16/10199518.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-16/10199607.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-16/10199521.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-16/10199526.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-16/10199530.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "国务院发布新国九条 提高上市标准强化退市约束",
+      "summary": "4月12日国务院发布资本市场高质量发展若干意见，要求提高主板、创业板上市标准、进一步严格强制退市标准、严厉打击违规减持，并鼓励银行理财和信托资金积极参与资本市场。",
+      "why": "新国九条划定资本市场发展路线图与红线",
+      "source": "中新网",
+      "publishedAt": "2024-04-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-12/10197504.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-12/10197695.shtml",
+        "https://www.chinanews.com.cn/gn/2024/04-12/10197517.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-12/10197674.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-12/10197508.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "央行设立5000亿元科技创新和技术改造再贷款",
+      "summary": "中国人民银行设立科技创新和技术改造再贷款，额度5000亿元，支持科技创新、技术改造和设备更新；同期七部门印发强化金融支持绿色低碳发展的指导意见，四部门就以旧换新金融工作召开推进会。",
+      "why": "再贷款直接对接设备更新与科技改造成本",
+      "source": "中国人民银行",
+      "publishedAt": "2024-04-07T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553912015/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-07/10194260.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-07/10194266.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-11/10196504.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-28/10207940.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "3月CPI同比涨0.1% PPI同比降2.8% 环比降幅收窄",
+      "summary": "国家统计局发布，3月份居民消费价格同比上涨0.1%，CPI季节性回落；工业生产者出厂价格同比下降2.8%，环比降幅收窄。一季度CPI同比持平，统计局表示未来物价将缓慢回升。",
+      "why": "物价读数是判断通缩压力与政策空间的关键",
+      "source": "中新网",
+      "publishedAt": "2024-04-11T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-11/10196562.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-11/10196558.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-11/10196561.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-11/10196915.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-16/10199602.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "一季度进出口历史同期首破10万亿元 同比增长5%",
+      "summary": "海关总署公布，一季度我国货物贸易进出口规模历史同期首次突破10万亿元，同比增长5%；跨境电商进出口5776亿元、增长9.6%，对RCEP其他14个成员国合计进出口3.08万亿元。",
+      "why": "外需是二季度增长的重要支撑",
+      "source": "中新网",
+      "publishedAt": "2024-04-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-12/10197516.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-12/10197583.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-13/10198076.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-12/10197585.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-12/10197541.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "消费品以旧换新行动方案公布 撬动超5万亿元市场",
+      "summary": "国家发改委等部门推动大规模设备更新和消费品以旧换新形成闭环，行动方案明确汽车、家电、家装厨卫为重点赛道；7部门联合印发《汽车以旧换新补贴实施细则》，符合要求最高可领补贴一万元。",
+      "why": "以旧换新是扩内需最直接的抓手",
+      "source": "中新网",
+      "publishedAt": "2024-04-12T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-12/10197901.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-03/10192797.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-11/10196504.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-26/10206722.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-26/10206993.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "4月制造业PMI为50.4% 连续两个月位于扩张区间",
+      "summary": "国家统计局公布，4月份制造业采购经理指数为50.4%，连续两个月位于扩张区间；3月份制造业PMI超预期回升，一季度规模以上工业增加值同比增长6.1%，汽车等重点行业带动作用明显。",
+      "why": "PMI连续扩张验证经济回升的持续性",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-30/10209096.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209132.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209284.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-02/10191766.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-18/10200955.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "政治局会议分析经济形势 决定召开二十届三中全会",
+      "summary": "4月30日中共中央政治局召开会议，分析研究当前经济形势和经济工作，决定召开二十届三中全会，并审议《关于持续深入推进长三角一体化高质量发展若干政策措施的意见》。",
+      "why": "三中全会节奏与经济部署是下半年政策锚",
+      "source": "中新网",
+      "publishedAt": "2024-04-30T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/04-30/10209360.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-30/10209708.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "一季度人民币贷款增加9.46万亿元 M2突破300万亿元",
+      "summary": "央行数据显示，一季度人民币贷款增加9.46万亿元，M2总量突破300万亿元；一季度新增社融规模同比有所回落但仍处于历史较高水平，央行表示未来货币政策还有空间，将择机用好储备工具。",
+      "why": "信贷与M2读数决定宽松空间的实际使用",
+      "source": "中国人民银行",
+      "publishedAt": "2024-04-12T12:00:00+08:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553924337/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212553983827/index.html",
+        "https://www.chinanews.com.cn/cj/2024/04-12/10197758.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-12/10197862.shtml",
+        "https://www.chinanews.com.cn/gn/2024/04-18/10201132.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "首批白名单项目审批超5200亿元 地级城市全部建机制",
+      "summary": "中国首批房地产融资“白名单”项目审批金额超5200亿元，中国地级及以上城市已建立城市房地产融资协调机制；1—3月份全国房地产开发投资22082亿元。",
+      "why": "白名单融资规模决定地产项目端资金可得性",
+      "source": "中新网",
+      "publishedAt": "2024-04-16T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/04-16/10200108.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/04-04/10193106.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-16/10199483.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-26/10206295.shtml",
+        "https://www.chinanews.com.cn/cj/2024/04-22/10203720.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "超长期特别国债与地方专项债的发行节奏及其对流动性的影响",
+    "4月PMI连续扩张后，二季度生产与新订单能否维持",
+    "新国九条配套细则落地后，A股成交与退市、分红监管的实际效果",
+    "设备更新与消费品以旧换新补贴对汽车、家电销售的拉动幅度",
+    "房地产白名单融资规模扩大后，楼市成交与房企资金面的变化"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 30,
+    "newsItems": 4135,
+    "missingDays": []
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "date": "2024-W21",
+  "type": "week",
+  "generatedAt": "2026-11-27T15:00:00+08:00",
+  "endedAt": "2026-11-27T15:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "title": "2024 年第 21 周宏观周报：楼市新政落地与财政发力",
+  "window": {
+    "from": "2024-05-20",
+    "to": "2024-05-26",
+    "fromAt": "2024-05-20T08:00:00+08:00",
+    "toAt": "2024-05-27T08:00:00+08:00",
+    "days": 7
+  },
+  "overview": "本周宏观主线是房地产新政落地见效与财政资金加快下达。国内方面，5月LPR报价1年期和5年期以上利率均维持不变，山西、甘肃、广西等地相继取消首套和二套房贷利率政策下限，广东19个城市实行房贷利率市场化，超70城推进住房以旧换新，深圳二手房单日成交量创近三年新高；财政方面，1-4月全国一般公共预算支出89483亿元、增长3.5%，中央财政对地方转移支付已下达8.68万亿元，超长期特别国债30年期银行端开闸、上市首日大涨；外贸方面，1至4月货物进出口增长5.7%，前4月对外非金融类直接投资增长18.7%。外部方面，商务部将三家美国企业列入不可靠实体清单。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "5月LPR报价公布 1年期和5年期以上利率维持不变",
+      "summary": "5月LPR报价出炉，1年期和5年期以上利率均维持不变；住房城乡建设部表示将及时调整住房公积金个人住房贷款利率，市场关注后续降准降息空间与政策利率动向。",
+      "why": "LPR不动与公积金利率调整并行，指向差异化宽松路径",
+      "source": "中新网",
+      "publishedAt": "2024-05-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-20/10219820.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-20/10219815.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-23/10221871.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-20/10220007.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "1-4月一般公共预算支出89483亿元 增长3.5%",
+      "summary": "财政部数据显示，1-4月全国一般公共预算支出89483亿元，同比增长3.5%，1-4月中国财政收入80926亿元；截至4月上旬中央财政对地方转移支付已下达8.68万亿元。",
+      "why": "财政支出进度与转移支付力度决定稳增长的资金供给",
+      "source": "中新网",
+      "publishedAt": "2024-05-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-20/10220181.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-20/10220263.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220577.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220619.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "30年期超长期特别国债银行端开闸 上市首日大涨",
+      "summary": "30年期超长期特别国债银行端“开闸”，个人投资者购买窗口仅1天，部分网点开售即告罄；超长期特别国债上市首日大涨，专家提醒理性看待，第一批项目已“就位”。",
+      "why": "长债供给与交易活跃度上升，关系利率预期和稳增长资金来源",
+      "source": "中新网",
+      "publishedAt": "2024-05-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-21/10220486.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-23/10221654.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220734.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-24/10222962.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "商务部将三家美国企业列入不可靠实体清单",
+      "summary": "商务部宣布将波音防务、空间与安全集团等三家美国企业列入不可靠实体清单，并表示这是中方正常执法行为；同期外部经贸摩擦压力仍在上升，反倾销等工具同步使用。",
+      "why": "不可靠实体清单影响特定企业资质与市场准入",
+      "source": "中新网",
+      "publishedAt": "2024-05-20T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-20/10219780.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-20/10219784.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-23/10221998.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "前4月对外非金融类直接投资同比增长18.7%",
+      "summary": "商务部数据显示，前4月我国对外非金融类直接投资同比增长18.7%，前4月全国网上零售额同比增长11.5%，服务外包新增从业人员超30万人，重点外贸企业新签订单连续4个月向好。",
+      "why": "对外投资与新签订单反映企业扩张意愿和外贸景气度",
+      "source": "中新网",
+      "publishedAt": "2024-05-23T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-23/10221971.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220633.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220628.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220460.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "发改委：1-4月审批核准固投项目50个 总投资3207亿元",
+      "summary": "国家发改委表示，1-4月共审批核准固定资产投资项目50个、总投资3207亿元，去年增发的1万亿元国债相关资金已全部下达到地方；并从三方面推进超长期特别国债支持“两重”建设准备工作。",
+      "why": "项目审批与资金下达进度决定投资形成实物工作量速度",
+      "source": "中新网",
+      "publishedAt": "2024-05-21T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-21/10220518.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220527.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220538.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220556.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "1—4月社会消费品零售总额15.6万亿元 增长4.1%",
+      "summary": "1—4月社会消费品零售总额15.6万亿元，同比增长4.1%；我国拟建立设备更新和消费品以旧换新工作机制，多地以真金白银推进以旧换新，激发居民消费活力。",
+      "why": "消费总量增速与以旧换新机制，决定内需修复斜率",
+      "source": "中新网",
+      "publishedAt": "2024-05-24T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-24/10222343.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-24/10222345.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-20/10219802.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-20/10219730.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "山西甘肃广西取消房贷利率政策下限 广东19城跟进",
+      "summary": "山西、甘肃、广西相继取消首套、二套房贷利率政策下限，广东19个城市实行房贷利率市场化；央行住房金融政策发布一周，多地跟进下调首付比、取消利率下限。",
+      "why": "地方利率新政扩围，决定降成本效果能否落到成交端",
+      "source": "中新网",
+      "publishedAt": "2024-05-24T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-24/10222730.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-24/10222726.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-24/10222930.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-25/10223095.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "1至4月货物进出口增长5.7%",
+      "summary": "海关数据显示，1至4月我国货物进出口增长5.7%；前4个月长三角区域外贸进出口总值超5万亿元，北京地区进出口总值创历史同期新高，江苏对东盟进出口2737.3亿元、增长9.1%。",
+      "why": "外贸总量与区域结构显示外需韧性和市场多元化进展",
+      "source": "中新网",
+      "publishedAt": "2024-05-25T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-25/10223016.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-20/10219918.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-20/10220076.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-21/10220867.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "超70城推进住房以旧换新 深圳成交创近三年新高",
+      "summary": "超70城推进住房“以旧换新”，广州启动首批、122个楼盘项目参与；新政后深圳售楼处通宵卖房，中介门店二手房单日成交量创近三年新高，楼市活跃度明显提升。",
+      "why": "以旧换新与新政共振，决定市场成交修复的持续性",
+      "source": "中新网",
+      "publishedAt": "2024-05-24T12:00:00+08:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-24/10222843.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-22/10221495.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-22/10221244.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-25/10223076.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "降准降息是否在二季度兑现及LPR后续报价",
+    "房贷利率新政落地后重点城市成交与价格走势",
+    "超长期特别国债项目开工和资金拨付进度",
+    "美国对华加征关税幅度及对出口订单的冲击",
+    "财政转移支付与专项债形成实物工作量的速度"
+  ],
+  "backfill": {
+    "kind": "period-backfill",
+    "at": "2026-11-27T15:00:00+08:00",
+    "note": "2024 年历史数据补写"
+  },
+  "coverage": {
+    "archiveDays": 7,
+    "newsItems": 776,
+    "missingDays": []
+  }
+}
