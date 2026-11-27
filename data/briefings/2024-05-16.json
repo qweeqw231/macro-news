@@ -1,0 +1,161 @@
+{
+  "date": "2024-05-16",
+  "generatedAt": "2026-11-28T00:16:01.029+08:00",
+  "endedAt": "2026-11-28T00:16:01.029+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-05-15",
+    "to": "2024-05-16",
+    "fromAt": "2024-05-15T08:00:00+08:00",
+    "toAt": "2024-05-16T09:00:00+08:00",
+    "fromTs": 1715731200,
+    "toTs": 1715821200
+  },
+  "overview": "周四宏观面以货币政策操作与关税反制为主线：央行开展20亿元逆回购操作和1250亿元MLF操作，5月MLF操作“等量平价”，人民银行行长潘功胜出席第十一届国际货币体系高级别会议。美方发布对华加征关税，外交部称进一步加税是错上加错，海外多方人士倡导自由贸易。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "5月15日央行开展20亿元逆回购操作和1250亿元MLF操作",
+      "summary": "5月15日，央行开展20亿元逆回购操作和1250亿元MLF操作。逆回购与中期借贷便利同时操作，操作期限与规模构成当日公开市场安排的主要内容。",
+      "why": "央行开展逆回购与1250亿元MLF操作",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-15/10216898.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217254.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554074582/index.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中国央行5月MLF操作“等量平价”",
+      "summary": "中国央行5月MLF操作“等量平价”。MLF操作量与价格均维持不变，是观察中期流动性供给方式的一个直接口径，与当周降准降息的讨论形成对照。",
+      "why": "5月MLF操作等量平价",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-15/10217254.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10216898.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554054809/index.html"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "中国人民银行行长潘功胜出席第十一届国际货币体系高级别会议",
+      "summary": "中国人民银行行长潘功胜出席第十一届国际货币体系高级别会议。国际货币体系高级别会议是各国央行行长沟通货币与金融议题的重要场合。",
+      "why": "潘功胜出席国际货币体系高级别会议",
+      "source": "中国人民银行",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554054809/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217254.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10216898.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "汪文斌：美方进一步增加对华关税是错上加错",
+      "summary": "汪文斌表示，美方进一步增加对华关税是错上加错。外交部发言人就关税加码作出定性评价，指向单边保护主义做法存在的问题与不合理性。",
+      "why": "外交部称进一步加税错上加错",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/05-15/10217128.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217028.shtml",
+        "https://www.chinanews.com.cn/gj/2024/05-15/10217388.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "美方发布对华加征关税 海外多方人士倡导自由贸易",
+      "summary": "美方发布对华加征关税，海外多方人士倡导自由贸易。关税措施公布后，海外各界从自由贸易立场作出回应，形成来自外部的舆论压力。",
+      "why": "海外多方人士倡导自由贸易",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-15/10217028.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/05-15/10217128.shtml",
+        "https://www.chinanews.com.cn/gn/2024/05-15/10217174.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "我国汽车出口前4月同比增逾33%",
+      "summary": "我国汽车出口前4月同比增逾33%。前4个月汽车出口增速是观察整车出海节奏与外部关税环境冲击的一个高频数据，也牵动出口结构。",
+      "why": "我国汽车出口前4月同比增逾33%",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-15/10216899.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217352.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10216865.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "前4月新疆外贸进出口总值同比增长近五成",
+      "summary": "前4月新疆外贸进出口总值同比增长近五成。区域外贸总值增速接近五成，反映口岸与区位优势地区的贸易扩张力度，也是西部外贸的一个观察切面。",
+      "why": "前4月新疆外贸总值增长近五成",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-15/10217401.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217352.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10216865.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "美国4月PPI环比上涨0.5% 高于市场预期",
+      "summary": "美国4月PPI环比上涨0.5%，高于市场预期。美国工业生产者出厂价格环比读数与市场预期的比较，是观察海外通胀路径的参考。",
+      "why": "美国4月PPI环比上涨0.5%",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/05-15/10216837.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/05-15/10217013.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10216831.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "自然资源部：1-4月全国农用地转用和土地征收批准面积同比增加56.57%",
+      "summary": "自然资源部数据表明，1-4月全国农用地转用和土地征收批准面积同比增加56.57%。批准面积增幅较大，是观察土地供应与建设端用地的月度口径。",
+      "why": "1-4月土地征收批准面积增56.57%",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-15/10216956.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10217001.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10216869.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "夯实“稳”的基础、增强“进”的底气 中国经济回升向好动能不断蓄积",
+      "summary": "夯实“稳”的基础、增强“进”的底气，中国经济回升向好动能不断蓄积。报道从稳与进两方面归纳经济运行，是当期形势判断的综述性表述。",
+      "why": "中国经济回升向好动能不断蓄积",
+      "source": "中新网",
+      "publishedAt": "2024-05-15T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/05-15/10216862.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/05-15/10216859.shtml",
+        "https://www.chinanews.com.cn/cj/2024/05-15/10216865.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "MLF等量平价后流动性和市场利率的后续变化",
+    "美方加征关税清单公布后的行业与市场反应",
+    "汽车出口增速与外贸新动能的月度数据",
+    "土地供应批准面积增幅与建设端用地的关系",
+    "国际货币体系高级别会议释放的政策信号"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T00:16:01.029+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
