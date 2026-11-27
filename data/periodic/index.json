@@ -1,7 +1,7 @@
 {
   "schema": "macro-news/periodic-index@1",
-  "generatedAt": "2026-11-27T19:17:51.135+08:00",
-  "count": 185,
+  "generatedAt": "2026-11-27T22:37:12+08:00",
+  "count": 186,
   "reports": [
     {
       "type": "week",
@@ -2198,6 +2198,24 @@
       "backfillAt": "2026-11-27T14:30:00+08:00",
       "itemCount": 10,
       "file": "periodic/2024-12.json"
+    },
+    {
+      "type": "year",
+      "id": "2024",
+      "title": "2024 年宏观年报：政策转向稳增长",
+      "summary": "2024年经济围绕5%左右增长目标运行，一季度增速5.3%，上半年回落至5.0%，前三季度为4.8%，生产偏强、消费和投资偏弱。面对有效需求不足与物价低位，政策",
+      "window": {
+        "from": "2024-01-01",
+        "to": "2024-12-31",
+        "fromAt": "2024-01-01T08:00:00+08:00",
+        "toAt": "2025-01-01T08:00:00+08:00",
+        "days": 366
+      },
+      "generatedAt": "2026-11-27T22:35:15+08:00",
+      "backfill": true,
+      "backfillAt": "2026-11-27T22:35:15+08:00",
+      "itemCount": 10,
+      "file": "periodic/2024.json"
     },
     {
       "type": "week",
