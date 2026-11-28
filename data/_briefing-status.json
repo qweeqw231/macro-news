@@ -1,23 +1,23 @@
 {
   "v": 1,
-  "updatedAt": "2026-11-28T09:10:19+08:00",
+  "updatedAt": "2026-11-28T09:15:53+08:00",
   "days": {
-    "2024-09-15": {
-      "date": "2024-09-15",
+    "2024-09-22": {
+      "date": "2024-09-22",
       "status": "done",
       "stage": "publish",
-      "startedAt": "2026-11-28T09:10:18+08:00",
-      "endedAt": "2026-11-28T09:10:18+08:00",
+      "startedAt": "2026-11-28T09:15:53+08:00",
+      "endedAt": "2026-11-28T09:15:53+08:00",
       "exitCode": 0,
-      "items": 10,
+      "items": 8,
       "source": "ai",
       "reason": "",
-      "durationMs": 21,
+      "durationMs": 22,
       "generator": "llm-v1",
       "attempt": 0,
       "backfill": true,
       "backfillKind": "pre-era",
-      "backfilledAt": "2026-11-28T09:10:18+08:00"
+      "backfilledAt": "2026-11-28T09:15:53+08:00"
     },
     "2026-11-15": {
       "date": "2026-11-15",
