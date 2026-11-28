@@ -1,0 +1,151 @@
+{
+  "date": "2024-10-13",
+  "generatedAt": "2026-11-28T09:20:18+08:00",
+  "endedAt": "2026-11-28T09:22:19+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2024-10-12",
+    "to": "2024-10-13",
+    "fromAt": "2024-10-12T08:00:00+08:00",
+    "toAt": "2024-10-13T09:00:00+08:00",
+    "fromTs": 1728691200,
+    "toTs": 1728781200
+  },
+  "overview": "财政部宣布近期陆续推出一揽子增量政策，拟增加较大规模债务限额置换地方隐性债务，并推动房地产止跌回稳；存量房贷调整与资本市场货币工具落地，海外关注德国通胀和中东局势。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "财政部将推出逆周期调节增量政策",
+      "summary": "财政部表示，近期将陆续推出一揽子有针对性增量政策，围绕稳增长、扩内需、化风险发力，并加大逆周期调节力度，更多政策工具仍在研究中。",
+      "why": "政策方向明确，需跟踪增量工具落地节奏。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-12/10300147.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300150.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300156.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300271.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300141.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "拟增债务限额置换地方隐性债务",
+      "summary": "财政部拟一次性增加较大规模债务限额，用于置换地方政府存量隐性债务，并称这是近年来力度最大的安排，相关表述受到市场关注，成为当日财政政策焦点。",
+      "why": "债务置换关系地方财政风险化解与融资成本。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-12/10300167.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300166.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300335.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "财政支持推动房地产止跌回稳",
+      "summary": "财政部明确推动房地产市场止跌回稳，将积极研究出台政策措施促进供需平衡，发挥政府债券牵引作用扩大有效投资，以财税支持回应楼市回稳期待。",
+      "why": "楼市政策力度与落地效果影响市场预期。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-12/10300182.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300283.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300531.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300189.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "六大行25日起批量调整存量房贷",
+      "summary": "中国六大银行将于10月25日批量调整存量房贷利率，相关部门就二套房贷如何调整提供说明，具体调整安排成为居民与市场关注焦点。",
+      "why": "房贷利率调整影响居民负担与楼市需求。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-12/10300217.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300099.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300178.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "资本市场货币工具落地",
+      "summary": "我国首个支持资本市场的货币政策工具落地，同时国有大行资本补充工作已经启动，相关报道还提及特别国债支持核心一级资本补充，政策支持路径进一步明确。",
+      "why": "资本市场与银行资本补充政策同步推进。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/10-12/10300163.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300349.shtml",
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300224.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "德国9月通胀率降至1.6%",
+      "summary": "德国9月通胀率降至1.6%，最新通胀数据为观察欧洲价格走势提供依据，海外经济与通胀变化仍是宏观市场关注的重点之一，后续表现继续影响海外市场判断。",
+      "why": "欧洲通胀走势影响海外政策预期。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/10-12/10300079.shtml"
+    },
+    {
+      "rank": 7,
+      "title": "英国税收担忧影响企业投资",
+      "summary": "英国行业机构称，税收担忧导致企业暂停投资，反映出政策不确定性对企业投资意愿的影响，并对经济增长形成制约，海外企业投资动态值得继续跟踪。",
+      "why": "企业投资意愿关系英国经济增长前景。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/10-12/10300080.shtml"
+    },
+    {
+      "rank": 8,
+      "title": "德国政商界反对欧对华电车加税",
+      "summary": "德国政商界反对欧盟对中国电动汽车加征关税，欧洲方面同时关注汽车业电动化转型挑战与动力电池生产进展，贸易政策分歧受到关注。",
+      "why": "贸易政策分歧影响中欧汽车产业与出口。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/10-12/10300475.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/10-12/10300177.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "尼加拉瓜断绝与以色列外交关系",
+      "summary": "尼加拉瓜政府发布公告，宣布断绝与以色列外交关系，后续报道进一步称双方所有外交关系均已断绝，中东外交关系变化引发关注，相关公告内容受到持续关注。",
+      "why": "中东外交变化或影响地区局势与风险偏好。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/10-12/10300066.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/10-12/10300262.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "黎巴嫩局势与联黎部队安全受关注",
+      "summary": "联黎部队称48小时内遭以军两次爆炸袭击，古特雷斯表示无法容忍；地中海九国领导人峰会聚焦黎巴嫩紧张局势，地区安全风险受到关注。",
+      "why": "地区安全风险关系油价与市场避险情绪。",
+      "source": "中新网",
+      "publishedAt": "2024-10-12T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2024/10-12/10300067.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2024/10-12/10300081.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "财政增量政策的具体规模、工具构成与推出时点",
+    "地方政府存量隐性债务置换的发行与实施进展",
+    "六大银行存量房贷利率调整的执行情况及二套房贷细则",
+    "德国通胀后续走势及英国企业投资变化"
+  ],
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T09:22:19+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
