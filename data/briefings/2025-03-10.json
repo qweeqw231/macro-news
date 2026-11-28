@@ -1,0 +1,165 @@
+{
+  "date": "2025-03-10",
+  "generatedAt": "2026-11-28T16:00:00+08:00",
+  "endedAt": "2026-11-28T16:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2025-03-09",
+    "to": "2025-03-10",
+    "fromAt": "2025-03-09T08:00:00+08:00",
+    "toAt": "2025-03-10T09:00:00+08:00",
+    "fromTs": 1741478400,
+    "toTs": 1741568400
+  },
+  "overview": "2月物价数据与楼市判断同日公布：国家统计局称2月份居民消费价格同比下降0.7%，工业生产者出厂价格同比、环比降幅均收窄；住建部在民生主题记者会上表示房地产市场继续保持止跌回稳积极势头；全国人大财政经济委员会完成年度预算与计划草案审查；美国关税政策引发通胀与衰退担忧。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "国家统计局：2月份居民消费价格同比下降0.7%",
+      "summary": "国家统计局数据显示，2月份居民消费价格同比下降0.7%。月度CPI转负反映当期物价水平的变化，是观察居民端通胀压力与货币政策空间的核心指标，春节错月等因素被列为重要背景。",
+      "why": "CPI转负影响通胀与政策预期",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-09/10380325.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380407.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380330.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380412.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "2月中国CPI同比下降0.7% 春节错月等因素影响",
+      "summary": "2月中国CPI同比下降0.7%，春节错月等因素构成影响。基期扰动带来的读数回落，需要与后续月份数据连续观察，才能判断价格水平的实际趋势与需求修复的成色。",
+      "why": "春节错月扰动需连续观察",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-09/10380407.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380325.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380330.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "国家统计局：2月份工业生产者出厂价格同比、环比降幅均收窄",
+      "summary": "国家统计局数据显示，2月份工业生产者出厂价格同比、环比降幅均收窄。出厂价格降幅收窄意味着工业端通缩压力边际减轻，也直接影响中下游企业的成本与利润空间。",
+      "why": "PPI降幅收窄缓解工业通缩压力",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-09/10380332.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380412.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380330.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "民生主题记者会丨住建部：房地产市场继续保持“止跌回稳”积极势头",
+      "summary": "在民生主题记者会上，住建部表示房地产市场继续保持止跌回稳积极势头。部委在两会的口径表述，为观察楼市政策方向提供了直接依据，也是判断后续调控工具安排的参考坐标。",
+      "why": "住建部口径确认楼市政策方向",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-09/10380490.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380529.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380648.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380507.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "住房和城乡建设部部长：房地产市场保持止跌回稳积极势头",
+      "summary": "住房和城乡建设部部长表示，房地产市场保持止跌回稳积极势头。部长表述与部门口径相互印证，强化了止跌回稳的官方判断，也为观察成交量与价格端的实际变化提供了基准。",
+      "why": "部长表态强化楼市企稳预期",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-09/10380529.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380490.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380648.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380469.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "两会受权发布丨第十四届全国人民代表大会财政经济委员会关于2024年中央和地方预算执行情况与2025年中央和地方预算草案的审查结果报告",
+      "summary": "全国人大财政经济委员会公布关于2024年中央和地方预算执行情况与2025年中央和地方预算草案的审查结果报告。审查结果报告对预算安排作出评估，是年度预算最终批准前的关键法定环节。",
+      "why": "预算审查是预算批准前关键环节",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/03-09/10380285.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/03-09/10380284.shtml",
+        "https://www.chinanews.com.cn/gn/2025/03-09/10380636.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "两会受权发布丨第十四届全国人民代表大会财政经济委员会关于2024年国民经济和社会发展计划执行情况与2025年国民经济和社会发展计划草案的审查结果报告",
+      "summary": "全国人大财政经济委员会公布关于2024年国民经济和社会发展计划执行情况与2025年国民经济和社会发展计划草案的审查结果报告。对上年计划执行与本年计划草案的评估，构成年度经济增长目标的法定论证基础。",
+      "why": "计划审查奠定年度增长目标基础",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2025/03-09/10380284.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/03-09/10380285.shtml",
+        "https://www.chinanews.com.cn/gn/2025/03-09/10380598.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "西班牙学者：美关税政策将引发通胀 造成全球经济不稳定",
+      "summary": "西班牙学者表示，美国关税政策将引发通胀并造成全球经济不稳定。关税推高成本的担忧在学界与市场层面同时出现，构成观察美国关税外溢效应的一个视角。",
+      "why": "关税通胀担忧反映外溢风险",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-09/10380424.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380430.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380410.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "关税政策殃及美股，美国经济恐陷衰退",
+      "summary": "关税政策殃及美股，美国经济恐陷衰退。市场把关税政策与美股表现及衰退风险相联系，海外资产定价的调整也会通过风险偏好与资金流向影响国内市场。",
+      "why": "美股调整外溢影响全球风险偏好",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-09/10380430.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380424.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380410.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "民生主题记者会丨就业是民生的头等大事 人社部部长用两句话概括",
+      "summary": "在民生主题记者会上，就业被表述为民生的头等大事，人社部部长用两句话加以概括。就业是最基本的民生问题，部长层面对其优先位置的确认，为观察稳就业政策力度提供了明确口径。",
+      "why": "就业优先口径明确政策着力点",
+      "source": "中新网",
+      "publishedAt": "2025-03-09T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-09/10380455.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380462.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380502.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-09/10380512.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "2月CPI与PPI回落中春节错月影响的持续性",
+    "住建部止跌回稳口径后的楼市成交数据",
+    "年度预算与计划草案审查结果及后续表决安排",
+    "美国关税政策对美股与全球通胀预期的冲击",
+    "民生主题记者会释放的就业与社保政策信号"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T16:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

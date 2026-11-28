@@ -1,0 +1,164 @@
+{
+  "date": "2025-03-11",
+  "generatedAt": "2026-11-28T16:00:00+08:00",
+  "endedAt": "2026-11-28T16:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2025-03-10",
+    "to": "2025-03-11",
+    "fromAt": "2025-03-10T08:00:00+08:00",
+    "toAt": "2025-03-11T09:00:00+08:00",
+    "fromTs": 1741564800,
+    "toTs": 1741654800
+  },
+  "overview": "金融与物价信号密集：财政部有关负责人就政府性融资担保发展管理办法答记者问；央行开展965亿元7天期逆回购操作，人民币中间价报7.1733元；2月北京CPI由升转降、广东CPI环比同比均下降；美商务部长证实3月12日起对进口钢铝征收25%关税；A股AI医疗板块逆势上涨。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "中国险资长期投资改革试点项目鸿鹄基金投资落地500亿元",
+      "summary": "中国险资长期投资改革试点项目鸿鹄基金投资落地500亿元。保险资金以长期投资试点方式进入市场，是长线资金来源的重要安排，对资本市场资金结构与长期投资行为均有指向意义。",
+      "why": "长线资金入市改善资金结构",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-10/10380882.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10381079.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380827.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380884.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "财政部有关负责人就政府性融资担保发展管理办法答记者问",
+      "summary": "财政部有关负责人就政府性融资担保发展管理办法答记者问。政府性融资担保直接连接财政资源与实体融资，其管理办法的制定关系到融资担保业务的规范运行与财政资金的使用效率。",
+      "why": "融资担保办法规范财政金融协同",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-10/10381040.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380827.shtml",
+        "https://www.chinanews.com.cn/gn/2025/03-10/10380737.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "3月10日央行开展965亿元7天期逆回购操作",
+      "summary": "3月10日，央行开展965亿元7天期逆回购操作。公开市场操作规模的变化，反映央行在两会窗口期对银行体系流动性的日常调节力度，也与当日人民币中间价调整相互印证。",
+      "why": "逆回购规模反映流动性调节力度",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-10/10380753.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380749.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-10/10381080.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "3月10日人民币对美元中间价报7.1733元 下调28个基点",
+      "summary": "3月10日，人民币对美元中间价报7.1733元，较前一交易日下调28个基点。中间价的连续调整幅度，是观察汇率定价取向与跨境资金流动的一处高频读数。",
+      "why": "中间价调整反映汇率定价",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-10/10380749.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380753.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380860.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "“两新”政策加力扩围 支持设施农业更新改造",
+      "summary": "两新政策加力扩围，支持设施农业更新改造。政策支持范围延伸至设施农业的更新改造，直接影响相关投资需求与农业装备供给，也是观察设备更新落地进度的一个切面。",
+      "why": "两新扩围打开设施农业投资空间",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-10/10381080.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380769.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380814.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "美商务部长证实：3月12日起对进口钢铝征收25%关税",
+      "summary": "美国商务部长证实，3月12日起对进口钢铁和铝征收25%关税。生效时间与税率同时明确，标志美国钢铝关税措施进入实际执行阶段，直接影响全球钢铁与铝的贸易流向与价格预期。",
+      "why": "钢铝关税落地冲击全球贸易流",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/03-10/10380719.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380833.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380890.shtml",
+        "https://www.chinanews.com.cn/gj/2025/03-10/10380721.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "2月北京CPI由升转降 金饰品价格涨幅扩大",
+      "summary": "2月北京CPI由升转降，而金饰品价格涨幅扩大。同一指标内部出现方向分化，反映居民消费端价格与贵金属相关价格走势并不同步，为观察区域物价结构提供了具体切面。",
+      "why": "北京物价结构呈现内部分化",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-10/10380860.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380779.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-10/10381005.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "A股AI医疗板块周一逆势上涨",
+      "summary": "A股AI医疗板块周一逆势上涨。在指数承压的背景下，AI医疗方向逆势走强，反映资金对人工智能应用落地与医疗信息化等细分方向的偏好，也是观察主题行情持续性的窗口。",
+      "why": "AI医疗逆势走强显资金偏好",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-10/10381006.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380844.shtml",
+        "https://www.chinanews.com.cn/gn/2025/03-10/10380737.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "1至2月全国铁路发送旅客7.26亿人次 同比增长4.7%",
+      "summary": "1至2月全国铁路发送旅客7.26亿人次，同比增长4.7%。客运量保持增长，反映人员流动与出行需求的恢复情况，是观察内需与服务业景气度的一个直接数据。",
+      "why": "铁路客运量反映出行需求强弱",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-10/10380793.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380755.shtml",
+        "https://www.chinanews.com.cn/gn/2025/03-10/10380852.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "反对“内卷”，民营企业家呼吁有序竞争",
+      "summary": "民营企业家反对内卷，呼吁有序竞争。企业侧对无序竞争的集中呼吁，指向价格与产能层面的市场秩序问题，也是观察涉企政策取向与企业预期的一个切口。",
+      "why": "民企呼吁有序竞争指向市场秩序",
+      "source": "中新网",
+      "publishedAt": "2025-03-10T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/03-10/10380884.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380827.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380870.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-10/10380791.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "险资鸿鹄基金500亿元投资落地的后续配置方向",
+    "政府性融资担保管理办法的具体执行细则",
+    "美国钢铝关税3月12日生效后的贸易反制措施",
+    "2月地方CPI与金饰品价格走势的后续数据",
+    "A股AI医疗板块逆势行情的持续性"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T16:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
