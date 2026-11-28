@@ -1,9 +1,9 @@
 {
   "date": "2025-02-13",
-  "generatedAt": "2026-11-28T10:09:33+08:00",
-  "endedAt": "2026-11-28T10:12:12+08:00",
+  "generatedAt": "2026-11-28T10:27:06.335+08:00",
+  "endedAt": "2026-11-28T10:27:06.335+08:00",
   "source": "ai",
-  "generator": "llm-v1",
+  "generator": "minimaxcode",
   "window": {
     "from": "2025-02-12",
     "to": "2025-02-13",
@@ -12,132 +12,149 @@
     "fromTs": 1739318400,
     "toTs": 1739408400
   },
-  "overview": "当日主线聚焦中国流动性、物价与政策发力：央行大额逆回购，人民币中间价上调，一月CPI多地偏暖，国开行基础设施贷款与以旧换新、地产政策持续托底。海外关注鲍威尔不急降息及美国关税争议，黄金创新高，华尔街看好DeepSeek推动A股行情。",
+  "overview": "物价与地产是当日主线：31省份1月CPI出炉，27地上涨、宁夏“11连降”；多地土拍高溢价开局，土地市场点状回暖，辽宁大连拟调整公积金贷款政策、首付款比例降至20%。央行开展5580亿元7天期逆回购，人民币中间价报7.1710元、上调6个基点；鲍威尔强调“不急于”降息。",
   "items": [
     {
       "rank": 1,
-      "title": "央行逆回购5580亿元，人民币中间价上调",
-      "summary": "2月12日央行开展5580亿元7天期逆回购操作，同日人民币对美元中间价报7.1710元，上调6个基点。两条消息共同指向中国货币政策与汇率动态。",
-      "why": "央行流动性操作与汇率信号同现",
+      "title": "31省份1月CPI出炉：27地上涨，宁夏“11连降”",
+      "summary": "31省份1月CPI数据出炉，27个省份居民消费价格同比上涨，宁夏出现“11连降”，各地物价走势分化反映需求与供给结构差异。",
+      "why": "各地物价分化反映区域需求差异",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367155.shtml",
+      "publishedAt": "2025-02-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367256.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-12/10367153.shtml"
+        "https://www.chinanews.com.cn/gj/2025/02-12/10367107.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367160.shtml"
       ]
     },
     {
       "rank": 2,
-      "title": "31省份1月CPI出炉：27地上涨",
-      "summary": "1月份CPI呈现明显地域差异，31省份中27地价格上涨，宁夏出现“11连降”。候选信息反映各地物价走势分化，是观察国内价格变化的重要窗口。",
-      "why": "多地CPI上涨，物价分化值得关注",
+      "title": "今年多地土拍高溢价开局：土地市场点状回暖，市场信心不断增强",
+      "summary": "今年多地土地拍卖以高溢价开局，土地市场出现点状回暖迹象，土地成交与房企拿地意愿的变化是观察房地产与地方财政的一个直接窗口。",
+      "why": "土拍高溢价开局显示土地市场回暖",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367256.shtml"
-    },
-    {
-      "rank": 3,
-      "title": "国开行去年发放基础设施贷款1.53万亿元",
-      "summary": "国开行2024年发放基础设施贷款1.53万亿元。该数据直接反映基础设施领域信贷投放规模，是观察金融支持相关建设力度的窗口。",
-      "why": "基础设施贷款规模体现金融支持力度",
-      "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367139.shtml"
-    },
-    {
-      "rank": 4,
-      "title": "春节假期汽车等以旧换新销量达860万台（套）",
-      "summary": "春节假期汽车等产品以旧换新销量达860万台（套），相关报道同时称以旧换新有效激发消费市场活力。两组信息共同指向消费品以旧换新对消费市场的作用。",
-      "why": "以旧换新销量与消费活力相互印证",
-      "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367131.shtml",
+      "publishedAt": "2025-02-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367158.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-12/10367177.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367284.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367145.shtml"
       ]
     },
     {
-      "rank": 5,
-      "title": "大连拟下调公积金贷款首付款比例至20%",
-      "summary": "辽宁大连拟调整公积金贷款政策，首付款比例降至20%。另有报道关注楼市企稳回升基础及多地土拍高溢价开局，共同构成房地产政策与市场动向的观察线索。",
-      "why": "公积金政策与楼市、土拍动向同受关注",
+      "rank": 3,
+      "title": "辽宁大连拟调整公积金贷款政策首付款比例降至20%",
+      "summary": "辽宁大连拟调整公积金贷款政策，首付款比例降至20%，公积金政策调整影响当地购房门槛与改善性需求释放，是地方楼市政策优化的举措。",
+      "why": "公积金首付下调降低购房门槛",
       "source": "中新网",
-      "publishedAt": "",
+      "publishedAt": "2025-02-12T12:00",
       "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367284.shtml",
       "refs": [
         "https://www.chinanews.com.cn/cj/2025/02-12/10367160.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367145.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "楼市企稳回升有基础 假期“淡季不淡”节后仍有支撑",
+      "summary": "楼市企稳回升具备基础，假期呈现“淡季不淡”特征，节后市场仍有支撑，房地产销售与价格走势成为观察楼市需求端的重要观察窗口之一。",
+      "why": "楼市淡季不淡反映需求端支撑",
+      "source": "中新网",
+      "publishedAt": "2025-02-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367160.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367284.shtml",
         "https://www.chinanews.com.cn/cj/2025/02-12/10367158.shtml"
       ]
     },
     {
-      "rank": 6,
-      "title": "鲍威尔强调“不急于”降息",
-      "summary": "美联储主席鲍威尔出席国会听证会，强调“不急于”降息。该表态是观察美国货币政策路径的重要线索，具体降息时点与幅度仍需后续信息确认。",
-      "why": "美联储降息节奏预期再受关注",
+      "rank": 5,
+      "title": "美联储主席鲍威尔出席国会听证会 强调“不急于”降息",
+      "summary": "美联储主席鲍威尔出席国会听证会，强调不急于降息，货币政策表态影响美联储后续政策节奏与全球利率、美元汇率走势预期，也牵动全球资产定价。",
+      "why": "鲍威尔表态影响降息节奏预期",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/gj/2025/02-12/10367107.shtml"
-    },
-    {
-      "rank": 7,
-      "title": "美国关税政策被指给汽车产业带来“混乱”",
-      "summary": "福特CEO称美国关税政策正给汽车产业带来“混乱”，美国专家则称相关关税行动“不合法”，全球经济恐陷险境。两条信息集中反映市场对美国关税政策外溢影响的担忧。",
-      "why": "关税政策争议牵动全球增长预期",
-      "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/gj/2025/02-12/10367395.shtml",
+      "publishedAt": "2025-02-12T12:00",
+      "url": "https://www.chinanews.com.cn/gj/2025/02-12/10367107.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/gj/2025/02-12/10367592.shtml"
-      ]
-    },
-    {
-      "rank": 8,
-      "title": "国际金价创新高，现货黄金供应偏紧",
-      "summary": "候选标题显示，国际金价再创盘中历史新高，伦敦、纽约现货黄金“告急”，有平台投资金条显示缺货，专家提示短期小心“过山车”。金价上行与现货紧张同时受到关注。",
-      "why": "金价新高与现货紧张信号叠加",
-      "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367597.shtml",
-      "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-12/10367117.shtml",
+        "https://www.chinanews.com.cn/gj/2025/02-12/10367592.shtml",
         "https://www.chinanews.com.cn/cj/2025/02-12/10367164.shtml"
       ]
     },
     {
-      "rank": 9,
-      "title": "美舰过航台湾海峡，东部战区全程跟监警戒",
-      "summary": "东部战区就美舰船过航台湾海峡回应称全程跟监警戒、有效应对处置，另有报道同样提及全程跟监警戒。相关消息集中于台海方向军事动态。",
-      "why": "台海方向动态需关注外溢影响",
+      "rank": 6,
+      "title": "2月12日央行开展5580亿元7天期逆回购操作",
+      "summary": "2月12日中国人民银行开展5580亿元7天期逆回购操作，投放规模回升，央行在节后资金需求上升阶段继续调节短期流动性，保持资金面平稳。",
+      "why": "逆回购放量对冲节后资金需求",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/gn/2025/02-12/10367095.shtml",
+      "publishedAt": "2025-02-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367155.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/gn/2025/02-12/10367097.shtml",
-        "https://www.chinanews.com.cn/gn/2025/02-12/10367109.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367153.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367688.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "2月12日人民币对美元中间价报7.1710元 上调6个基点",
+      "summary": "2月12日人民币对美元中间价报7.1710元，较前一交易日上调6个基点，中间价调整反映外汇市场供求变化与汇率政策取向的信号。",
+      "why": "中间价调整体现汇率供求变化",
+      "source": "中新网",
+      "publishedAt": "2025-02-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367153.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367155.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367688.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "春节假期汽车等产品以旧换新销量达860万台（套）",
+      "summary": "春节假期汽车等产品以旧换新销量达860万台（套），以旧换新政策在假期期间拉动大宗消费品销售，扩内需政策效果在数据上得到体现。",
+      "why": "以旧换新销量体现扩内需政策效果",
+      "source": "中新网",
+      "publishedAt": "2025-02-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367131.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-12/10367177.shtml",
+        "https://www.chinanews.com.cn/gj/2025/02-12/10367350.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "持续看好！华尔街预测DeepSeek将推动A股“牛市”",
+      "summary": "华尔街机构预测DeepSeek将推动A股“牛市”，海外卖方对中国科技板块与AI应用的预期升温，相关判断成为观察外资看法的参考。",
+      "why": "华尔街看多DeepSeek影响科技股预期",
+      "source": "中新网",
+      "publishedAt": "2025-02-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367688.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gj/2025/02-12/10367280.shtml",
+        "https://www.chinanews.com.cn/gn/2025/02-12/10367097.shtml"
       ]
     },
     {
       "rank": 10,
-      "title": "华尔街预测DeepSeek将推动A股“牛市”",
-      "summary": "华尔街预测DeepSeek将推动A股“牛市”，另有文章讨论DeepSeek或催化中高阶智驾加速渗透。两条信息体现人工智能主题在资本市场与产业应用中的关注度。",
-      "why": "AI主题联动资本市场与产业预期",
+      "title": "国开行去年发放基础设施贷款1.53万亿元",
+      "summary": "国开行去年发放基础设施贷款1.53万亿元，政策性银行基础设施贷款投放规模反映稳投资力度与项目融资供给情况，是观察财政金融协同的重要指标。",
+      "why": "基建贷款投放反映稳投资力度",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367688.shtml",
+      "publishedAt": "2025-02-12T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-12/10367139.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-12/10367258.shtml"
+        "https://www.chinanews.com.cn/gn/2025/02-12/10367335.shtml",
+        "https://www.chinanews.com.cn/hr/2025/02-12/10367152.shtml"
       ]
     }
   ],
   "watch": [
-    "人民币对美元中间价与7天期逆回购操作规模",
-    "各地CPI涨幅分布及后续全国CPI数据",
-    "美联储官员降息表态与美国关税政策进展",
-    "国际金价及伦敦、纽约现货黄金供应情况"
+    "31省份1月CPI走势分化对通胀判断的影响",
+    "多地土拍高溢价能否延续及楼市成交变化",
+    "大连公积金政策调整的落地范围",
+    "鲍威尔听证会表态后的美联储政策预期"
   ],
+  "model": "minimaxcode",
   "backfill": {
     "kind": "pre-era",
-    "at": "2026-11-28T10:12:12+08:00",
+    "at": "2026-11-28T10:27:06.335+08:00",
     "note": "早报制度生效前的日子，按该日新闻切片补写"
   }
 }

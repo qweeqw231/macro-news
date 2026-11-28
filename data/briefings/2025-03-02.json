@@ -1,9 +1,9 @@
 {
   "date": "2025-03-02",
-  "generatedAt": "2026-11-28T10:00:00+08:00",
-  "endedAt": "2026-11-28T10:22:24+08:00",
+  "generatedAt": "2026-11-28T15:00:00+08:00",
+  "endedAt": "2026-11-28T15:00:00+08:00",
   "source": "ai",
-  "generator": "llm-v1",
+  "generator": "minimaxcode",
   "window": {
     "from": "2025-03-01",
     "to": "2025-03-02",
@@ -12,108 +12,148 @@
     "fromTs": 1740787200,
     "toTs": 1740877200
   },
-  "overview": "本期宏观焦点包括：2月中国制造业PMI回升至50.2%，非制造业经营活动持续扩张，百城二手房价环比跌幅连续7个月收窄；全国政协会议议程公布，清偿拖欠民营企业账款受到关注。海外方面，美国1月PCE同比上涨2.5%，美乌领导人会谈中断且矿产协议未签，国际金价本周累计跌近3%。",
+  "overview": "开年景气与民生数据集中发布：2月制造业PMI回升至50.2%、环比上升1.1个百分点，非制造业经营活动持续扩张，第五次经济普查显示第三产业成带动经济增长重要力量；年度个税汇算3月1日启动，全国政协会议议程公布；百城二手房价连续7个月跌幅收窄，广东工业机器人产量同比增长31.2%。",
   "items": [
     {
       "rank": 1,
       "title": "2月份中国制造业PMI为50.2% 环比上升1.1个百分点",
-      "summary": "2月中国制造业PMI为50.2%，环比上升1.1个百分点。",
-      "why": "制造业PMI及其环比变化是观察工业景气变化的重要指标。",
+      "summary": "2月份中国制造业PMI为50.2%，环比上升1.1个百分点。制造业景气指数的回升，是观察开年经济运行与政策加力时点最直接的月度指标。",
+      "why": "PMI回升确认制造业景气转好",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376007.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376007.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376133.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376132.shtml"
+      ]
     },
     {
       "rank": 2,
-      "title": "激烈争吵 矿产协议未签署 特朗普与泽连斯基会晤为何不欢而散",
-      "summary": "特朗普与泽连斯基会晤时激烈争吵，美乌矿产协议未签署。",
-      "why": "美乌会晤结果直接影响矿产协议前景，并增加俄乌局势的不确定性。",
+      "title": "2024年度个税汇算3月1日开始办理，你是退税还是补税？",
+      "summary": "2024年度个税汇算3月1日开始办理，纳税人进入退税或补税流程。个税汇算是观察居民收入与税收负担变化、衡量减税政策落地的直接窗口。",
+      "why": "个税汇算显居民税负与减税效果",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/gj/2025/03-01/10375974.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376027.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376020.shtml",
+        "https://www.chinanews.com.cn/gn/2025/03-01/10376259.shtml"
+      ]
     },
     {
       "rank": 3,
-      "title": "美国1月PCE同比上涨2.5%",
-      "summary": "美国1月PCE同比上涨2.5%。",
-      "why": "美国通胀数据是观察海外货币政策预期和全球资产价格变化的重要依据。",
+      "title": "第五次经济普查：我国第三产业成带动经济增长重要力量",
+      "summary": "第五次经济普查显示，我国第三产业成为带动经济增长的重要力量。产业结构这一变化，关系到增长动能的持续性与政策着力点的选择。",
+      "why": "三产成引擎显增长动能转换",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376024.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376184.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376055.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376132.shtml"
+      ]
     },
     {
       "rank": 4,
-      "title": "新华社权威快报｜全国政协会议议程来了",
-      "summary": "全国政协会议议程公布。",
-      "why": "两会日程和议题是观察国内政策方向的重要窗口。",
+      "title": "中国百城二手房价连续7个月环比跌幅收窄",
+      "summary": "中国百城二手房价连续7个月环比跌幅收窄。二手房价格环比降幅的持续收窄，是观察房地产市场企稳节奏与相关政策传导效果的重要窗口。",
+      "why": "二手房价跌幅收窄显楼市企稳迹象",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/gn/2025/03-01/10376008.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376224.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376262.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376052.shtml"
+      ]
     },
     {
       "rank": 5,
-      "title": "中国百城二手房价连续7个月环比跌幅收窄",
-      "summary": "中国百城二手房价连续7个月环比跌幅收窄。",
-      "why": "二手房价格变化是观察房地产市场价格走势的重要指标。",
+      "title": "今年以来中国非制造业经营活动持续扩张",
+      "summary": "今年以来中国非制造业经营活动持续扩张。非制造业是服务业景气的直接刻度，持续扩张反映需求端修复仍在延续，是判断开年经济运行成色的重要参照。",
+      "why": "非制造业扩张印证开年修复轮廓",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376224.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376132.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376007.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376184.shtml"
+      ]
     },
     {
       "rank": 6,
-      "title": "今年以来中国非制造业经营活动持续扩张",
-      "summary": "今年以来中国非制造业经营活动持续扩张。",
-      "why": "非制造业经营活动表现有助于观察国内经济景气变化。",
+      "title": "金观平：加快清偿拖欠民营企业账款",
+      "summary": "金观平表示要加快清偿拖欠民营企业账款，把清欠作为稳增长的具体抓手。拖欠账款的清偿进度，直接关系民营企业现金流与投资意愿的修复。",
+      "why": "清偿欠款关系民企现金流修复",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376132.shtml"
+      "url": "https://www.chinanews.com.cn/gn/2025/03-01/10375992.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376047.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376069.shtml"
+      ]
     },
     {
       "rank": 7,
-      "title": "金观平：加快清偿拖欠民营企业账款",
-      "summary": "舆论文章提出，要加快清偿拖欠民营企业账款。",
-      "why": "账款清偿进展关系到民营企业现金流和经营预期。",
+      "title": "去年广东工业机器人产量达24万台 同比增长31.2%",
+      "summary": "去年广东工业机器人产量达24万台，同比增长31.2%。智能装备产量的高速增长，反映制造业新质生产力在沿海制造大省的落地速度。",
+      "why": "机器人产量高增显新质生产力落地",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/gn/2025/03-01/10375992.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376179.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10375993.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376021.shtml"
+      ]
     },
     {
       "rank": 8,
-      "title": "国际金价本周累计跌近3%",
-      "summary": "国际金价本周累计下跌近3%。",
-      "why": "国际金价短期调整是观察全球市场风险偏好变化的重要线索。",
+      "title": "三个“首次”见证中国外贸新动能",
+      "summary": "三个“首次”见证中国外贸新动能，反映出口结构与贸易方式的阶段性变化。新动能的成形，决定外贸增长的后续空间与产业链的位置升级。",
+      "why": "外贸新动能决定增长后续空间",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376258.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10375993.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376184.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376055.shtml"
+      ]
     },
     {
       "rank": 9,
-      "title": "德国联盟党和社民党举行首轮试探性组阁会谈",
-      "summary": "德国联盟党和社民党举行首轮试探性组阁会谈。",
-      "why": "德国组阁进程是观察欧洲主要经济体政策走向的重要窗口。",
+      "title": "美国1月PCE同比上涨2.5%",
+      "summary": "美国1月PCE同比上涨2.5%。物价数据仍是美联储判断政策路径与全球流动性环境的重要依据，也间接影响外部货币条件与跨境资本流向。",
+      "why": "美国PCE影响美联储政策路径",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/gj/2025/03-01/10376026.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376024.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376184.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376069.shtml"
+      ]
     },
     {
       "rank": 10,
-      "title": "2月中国钢铁行业运行缓中趋稳",
-      "summary": "2月中国钢铁行业运行缓中趋稳。",
-      "why": "钢铁行业运行情况可为观察工业需求变化提供参考。",
+      "title": "换新热潮节节攀升 消费市场焕发蓬勃生机",
+      "summary": "换新热潮节节攀升，消费市场焕发蓬勃生机。换新需求与消费品类的销售表现，是观察内需修复力度与居民消费意愿的重要线索，也牵动消费品类结构。",
+      "why": "换新热潮显内需修复力度",
       "source": "中新网",
       "publishedAt": "2025-03-01T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376191.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/03-01/10376069.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2025/03-01/10376259.shtml",
+        "https://www.chinanews.com.cn/cj/2025/03-01/10376224.shtml"
+      ]
     }
   ],
   "watch": [
-    "中国制造业PMI与非制造业经营活动的后续变化",
-    "全国政协会议议程及拖欠民营企业账款清偿进展",
-    "美国后续PCE数据与国际金价走势",
-    "美乌矿产协议签署进展及德国组阁会谈后续"
+    "2月PMI回升后的订单与价格分项走势",
+    "全国政协会议对年度经济议题的讨论",
+    "百城二手房价与保租房市场的后续变化"
   ],
+  "model": "minimaxcode",
   "backfill": {
     "kind": "pre-era",
-    "at": "2026-11-28T10:22:24+08:00",
+    "at": "2026-11-28T15:00:00+08:00",
     "note": "早报制度生效前的日子，按该日新闻切片补写"
   }
 }
