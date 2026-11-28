@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T23:53:21.349Z",
+  "generatedAt": "2026-11-28T00:08:21.326Z",
   "quotes": [
     {
       "key": "sh_comp",
@@ -851,13 +851,13 @@
       "key": "brent",
       "name": "布伦特原油",
       "market": "CMDTY",
-      "price": 90.79,
+      "price": 90.7,
       "open": 91.84,
       "high": 93.17,
       "low": 89.86,
       "prevClose": 91.67,
-      "changePct": -0.96,
-      "updatedAt": "2026-11-28T04:00:00+08:00",
+      "changePct": -1.06,
+      "updatedAt": "2026-11-28T03:59:58+08:00",
       "note": ""
     },
     {
@@ -1012,14 +1012,14 @@
       "key": "vnindex",
       "name": "越南胡志明",
       "market": "VN",
-      "price": 1654.23,
+      "price": 1653.9,
       "open": 1629.68,
       "high": 1662.83,
       "low": 1618.21,
       "prevClose": 1629.68,
       "volume": 585794352,
-      "changePct": 1.51,
-      "updatedAt": "2026-11-27T15:45:05+08:00",
+      "changePct": 1.49,
+      "updatedAt": "2026-11-27T15:59:59+08:00",
       "source": "eastmoney"
     },
     {
