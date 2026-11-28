@@ -1,9 +1,9 @@
 {
   "date": "2025-02-07",
-  "generatedAt": "2026-11-28T10:09:20+08:00",
-  "endedAt": "2026-11-28T10:10:28+08:00",
+  "generatedAt": "2026-11-28T10:23:23.453+08:00",
+  "endedAt": "2026-11-28T10:23:23.453+08:00",
   "source": "ai",
-  "generator": "llm-v1",
+  "generator": "minimaxcode",
   "window": {
     "from": "2025-02-06",
     "to": "2025-02-07",
@@ -12,33 +12,15 @@
     "fromTs": 1738800000,
     "toTs": 1738890000
   },
-  "overview": "当日主线聚焦央行公开市场操作、人民币中间价与制造业PMI，国内政策与消费修复线索并行。商务部回应美推迟对加墨加征关税，海外电动汽车销量数据受关注；国内成品油价格按机制不作调整，A股放量上涨且DeepSeek概念股持续走强。",
+  "overview": "节后第二日，制造业景气与贸易摩擦并存：1月全球制造业PMI为50%、连续3个月小幅上升，亚洲制造业PMI为50.7%、连续13个月处于扩张区间。商务部就美单边加征关税加剧全球贸易紧张答问。央行开展2755亿元逆回购，A股放量上涨，北京春节楼市到访量超预期300%。",
   "items": [
     {
       "rank": 1,
-      "title": "央行开展2755亿元7天期逆回购操作",
-      "summary": "2月6日，央行开展2755亿元7天期逆回购操作。该操作规模与期限是观察当日公开市场资金投放和银行体系短期流动性的直接线索。",
-      "why": "央行逆回购操作反映公开市场流动性调控动向",
+      "title": "2025年1月份全球制造业PMI为50% 连续3个月小幅上升",
+      "summary": "2025年1月份全球制造业PMI为50%，连续3个月小幅上升，制造业景气度回到扩张区间，为观察全球需求与贸易环境提供最新月度指标。",
+      "why": "全球PMI回升反映制造业景气修复",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363947.shtml"
-    },
-    {
-      "rank": 2,
-      "title": "人民币对美元中间价报7.1691元 上调2个基点",
-      "summary": "2月6日，人民币对美元中间价报7.1691元，上调2个基点。中间价调整幅度为观察当日人民币汇率预期与汇率变化提供最新线索。",
-      "why": "人民币中间价变化是观察汇率预期的重要窗口",
-      "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363891.shtml"
-    },
-    {
-      "rank": 3,
-      "title": "1月全球制造业PMI升至50% 连续三个月小幅上升",
-      "summary": "2025年1月全球制造业PMI为50%，连续3个月小幅上升；亚洲制造业PMI为50.7%，连续13个月处于扩张区间。全球与亚洲数据共同指向制造业景气延续。",
-      "why": "制造业PMI是判断全球与亚洲工业生产景气的重要指标",
-      "source": "中新网",
-      "publishedAt": "",
+      "publishedAt": "2025-02-06T12:00",
       "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363958.shtml",
       "refs": [
         "https://www.chinanews.com.cn/cj/2025/02-06/10363979.shtml",
@@ -46,85 +28,132 @@
       ]
     },
     {
-      "rank": 4,
-      "title": "商务部回应美推迟对加墨加征关税",
-      "summary": "商务部回应美国推迟对加拿大、墨西哥加征关税，并指出美单边加征关税加剧全球贸易紧张。相关表态还涉及为跨境电商营造公平政策环境。",
-      "why": "关税推迟节奏与中方回应影响外贸政策预期",
+      "rank": 2,
+      "title": "1月亚洲制造业PMI为50.7%  连续13个月稳定在扩张区间",
+      "summary": "1月亚洲制造业PMI为50.7%，连续13个月稳定在扩张区间，亚洲制造业扩张的持续性为观察中国出口订单与区域产业链景气提供参照。",
+      "why": "亚洲制造业扩张延续支撑区域需求",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364117.shtml",
+      "publishedAt": "2025-02-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363979.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-06/10364235.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-06/10364236.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363958.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364099.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "2月6日央行开展2755亿元7天期逆回购操作",
+      "summary": "2月6日中国人民银行开展2755亿元7天期逆回购操作，对冲节后到期的逆回购资金，节后银行体系短期资金面总体保持平稳，央行继续实施日常流动性调节。",
+      "why": "逆回购操作调节节后短期流动性",
+      "source": "中新网",
+      "publishedAt": "2025-02-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363947.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363891.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "2月6日人民币对美元中间价报7.1691元 上调2个基点",
+      "summary": "2月6日人民币对美元中间价报7.1691元，较前一交易日上调2个基点，中间价的小幅调整反映外汇市场供求变化与汇率政策取向。",
+      "why": "中间价调整体现汇率供求变化",
+      "source": "中新网",
+      "publishedAt": "2025-02-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363891.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363947.shtml"
       ]
     },
     {
       "rank": 5,
-      "title": "上海推出优化营商环境行动方案8.0版",
-      "summary": "上海推出优化营商环境行动方案8.0版，标题强调将企业感受放在首位。该方案为观察地方改善营商环境、稳定企业预期提供政策线索。",
-      "why": "地方营商环境政策变化关系企业预期与经营活力",
+      "title": "商务部：美单边加征关税加剧全球贸易紧张",
+      "summary": "商务部表示，美国单边加征关税加剧全球贸易紧张，中方对此作出回应，贸易摩擦升级对全球供应链稳定与订单流向的影响值得持续关注。",
+      "why": "美加征关税加剧全球贸易紧张",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363953.shtml"
+      "publishedAt": "2025-02-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364235.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364117.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364114.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364236.shtml"
+      ]
     },
     {
       "rank": 6,
-      "title": "春节假期消费市场供需两旺",
-      "summary": "春节假期消费市场供需两旺，消费活动涵盖“影”“食”与非遗体验；宁夏银川、吉林等地亦披露春节消费或游客数据，显示假日消费热度。",
-      "why": "春节消费是观察内需修复与消费结构变化的重要窗口",
+      "title": "商务部：望美方为跨境电商营造公平政策环境",
+      "summary": "商务部表示，希望美方为跨境电商营造公平的政策环境，并就美方相关政策变动对跨境电商企业的影响作出说明，回应跨境电商行业的关切。",
+      "why": "跨境电商政策环境关系出口新业态",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364068.shtml",
+      "publishedAt": "2025-02-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364236.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-06/10363841.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-06/10364015.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-06/10364016.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-06/10364089.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364235.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363857.shtml"
       ]
     },
     {
       "rank": 7,
-      "title": "行业数据显示英国1月电动汽车销量上涨",
-      "summary": "行业数据显示，英国1月电动汽车销量上涨。该标题虽未披露具体涨幅，但为观察海外汽车消费与电动化需求变化提供了最新月度线索。",
-      "why": "海外电动汽车销量有助于观察消费需求与产业趋势",
+      "title": "北京春节楼市：有楼盘到访量超预期300%",
+      "summary": "北京春节楼市出现有楼盘到访量超预期300%的情况，节后看房热度与购房需求出现回升迹象，为观察房地产市场的边际变化提供窗口。",
+      "why": "楼市到访量回升反映购房需求变化",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/gj/2025/02-06/10363880.shtml"
+      "publishedAt": "2025-02-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363952.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363874.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364068.shtml"
+      ]
     },
     {
       "rank": 8,
-      "title": "2月6日国内成品油价格按机制不作调整",
-      "summary": "2月6日国内成品油价格按机制不作调整，此前市场关注国内油价能否结束“二连涨”。成品油调价结果为观察国内能源价格变化提供最新线索。",
-      "why": "成品油调价影响能源价格与相关行业成本预期",
+      "title": "A股周四放量上涨 DeepSeek概念股持续走强",
+      "summary": "A股周四放量上涨，DeepSeek概念股持续走强，人工智能主题延续活跃，节后市场交投情绪与风险偏好随之回升，成交量能同步放大。",
+      "why": "A股放量上涨反映市场风险偏好",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364086.shtml",
+      "publishedAt": "2025-02-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364248.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-06/10363867.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363922.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363857.shtml"
       ]
     },
     {
       "rank": 9,
-      "title": "A股放量上涨 DeepSeek概念股持续走强",
-      "summary": "A股周四放量上涨，DeepSeek概念股持续走强；另一则标题显示DeepSeek板块开盘强势。股市表现与概念板块热度共同反映当日市场关注方向。",
-      "why": "成交放大与概念板块表现反映市场风险偏好",
+      "title": "今年以来重庆经铁路出口汽车增长逾六成",
+      "summary": "今年以来重庆经铁路出口汽车增长逾六成，铁路口岸汽车出口放量，反映中欧班列等物流通道在汽车外贸中的作用持续增强，为观察出口物流通道景气提供样本。",
+      "why": "铁路汽车出口增长反映外贸通道效能",
       "source": "中新网",
-      "publishedAt": "",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364248.shtml",
+      "publishedAt": "2025-02-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364099.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-06/10363922.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363937.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364155.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "2024年全国消协组织共受理消费者投诉1761886件，比上年增长32.62%",
+      "summary": "2024年全国消协组织共受理消费者投诉1761886件，比上年增长32.62%，投诉受理量的大幅上升反映消费市场快速扩张后的权益保护压力。",
+      "why": "投诉量上升反映消费权益保护压力",
+      "source": "中新网",
+      "publishedAt": "2025-02-06T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363954.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364228.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364068.shtml"
       ]
     }
   ],
   "watch": [
-    "央行7天期逆回购操作规模与后续公开市场到期安排",
-    "人民币对美元中间价及后续调整方向",
-    "全球与亚洲制造业PMI变化、亚洲PMI扩张区间延续情况",
-    "美国对加墨关税推迟后的执行时点及A股DeepSeek概念板块表现"
+    "全球与亚洲制造业PMI后续走势及贸易摩擦影响",
+    "商务部就关税与跨境电商表态后的后续交涉",
+    "央行公开市场操作与人民币中间价的短期波动",
+    "北京等城市节后楼市成交与到访热度"
   ],
+  "model": "minimaxcode",
   "backfill": {
     "kind": "pre-era",
-    "at": "2026-11-28T10:10:28+08:00",
+    "at": "2026-11-28T10:23:23.453+08:00",
     "note": "早报制度生效前的日子，按该日新闻切片补写"
   }
 }

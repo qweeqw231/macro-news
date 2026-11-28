@@ -1,9 +1,9 @@
 {
   "date": "2025-02-10",
-  "generatedAt": "2026-11-28T10:08:55+08:00",
-  "endedAt": "2026-11-28T10:12:11+08:00",
+  "generatedAt": "2026-11-28T10:23:23.639+08:00",
+  "endedAt": "2026-11-28T10:23:23.639+08:00",
   "source": "ai",
-  "generator": "llm-v1",
+  "generator": "minimaxcode",
   "window": {
     "from": "2025-02-09",
     "to": "2025-02-10",
@@ -12,130 +12,150 @@
     "fromTs": 1739059200,
     "toTs": 1739149200
   },
-  "overview": "当日主线围绕开年物价与政策落地展开：1月CPI涨幅扩大、PPI同比下降，新能源上网电价市场化改革和集采药品答问受关注；数码购新补贴申请规模显现，春节档消费热度突出。海外与突发方面，美日领导人会面、巴以停火风险及海上事故值得跟踪。",
+  "overview": "1月物价数据是当日核心：国家统计局公布1月份CPI涨幅扩大、PPI同比下降，居民消费价格同比上涨0.5%，工业生产者出厂价格同比下降2.3%。两部门发文深化新能源上网电价市场化改革，出口海外仓货物“离境即退税”，2024年登记在册企业数同比增长5.1%。",
   "items": [
     {
       "rank": 1,
-      "title": "1月中国CPI涨幅扩大",
-      "summary": "国家统计局公布，1月份居民消费价格同比上涨0.5%，涨幅扩大；中新网另一篇报道将这一变化与春节因素相联系。相关报道聚焦节日期间消费价格表现，为观察开年物价走势提供最新信息。",
-      "why": "判断开年物价与节日消费价格变化",
+      "title": "国家统计局：1月份CPI涨幅扩大 PPI同比下降",
+      "summary": "国家统计局发布1月份物价数据，CPI涨幅扩大、PPI同比下降，物价走势的分化反映需求端与工业端价格的不同表现，是观察通胀形势的重要依据。",
+      "why": "CPI与PPI分化反映通胀结构变化",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365585.shtml",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365584.shtml",
       "refs": [
         "https://www.chinanews.com.cn/cj/2025/02-09/10365585.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-09/10365584.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365583.shtml",
         "https://www.chinanews.com.cn/cj/2025/02-09/10365705.shtml"
       ]
     },
     {
       "rank": 2,
-      "title": "1月中国PPI同比下降",
-      "summary": "国家统计局公布，1月份工业生产者出厂价格同比下降2.3%。中新网报道指出，工业生产处于淡季。价格数据与此前消费价格报道同日发布，呈现工业生产领域价格变化情况。",
-      "why": "观察工业领域价格压力与淡季表现",
+      "title": "国家统计局：1月份居民消费价格同比上涨0.5%",
+      "summary": "国家统计局数据显示，1月份居民消费价格同比上涨0.5%，居民消费价格涨幅的变化是观察需求恢复与通胀水平变化的重要月度指标。",
+      "why": "CPI涨幅变化反映需求恢复力度",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365583.shtml",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365585.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-09/10365583.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-09/10365714.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365584.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365705.shtml"
       ]
     },
     {
       "rank": 3,
-      "title": "深化新能源上网电价市场化改革",
-      "summary": "两部门提出深化新能源上网电价市场化改革，促进新能源高质量发展。中新网同时从官方发文角度进行报道，显示政策安排继续围绕新能源上网电价形成机制展开，关注市场化改革的具体推进。",
-      "why": "关系新能源电价形成机制与行业预期",
+      "title": "国家统计局：1月份工业生产者出厂价格同比下降2.3%",
+      "summary": "国家统计局数据显示，1月份工业生产者出厂价格同比下降2.3%，工业品价格同比下降反映工业供需与生产端价格压力，是观察工业景气的重要参考。",
+      "why": "PPI下降反映工业端价格压力",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365598.shtml",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365583.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-09/10365598.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-09/10365707.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365584.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365714.shtml"
       ]
     },
     {
       "rank": 4,
-      "title": "医保药监部门就集采药品问题答问",
-      "summary": "医保、药监部门就集采药品问题答问，涉及血压不降、麻药不睡、泻药不泻等公众关注问题。报道以部门答问形式呈现，政策沟通重点落在集采药品质量与使用效果相关疑问上。",
-      "why": "关系公众对集采药品使用的关切",
+      "title": "春节因素带动1月中国CPI涨幅扩大",
+      "summary": "春节因素带动1月中国CPI涨幅扩大，节日期间食品、服务等消费集中释放推高当月价格读数，是理解当月物价数据变化的关键背景。",
+      "why": "春节因素解释当月CPI读数抬升",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/gn/2025/02-09/10365728.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365705.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365584.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365585.shtml"
+      ]
     },
     {
       "rank": 5,
-      "title": "数码产品购新补贴申请破2000万",
-      "summary": "全国手机等数码产品购新补贴申请人数突破2000万。该标题直接给出全国申请规模，未披露补贴总额或具体节奏，可作为观察数码产品消费支持政策落地情况的一个窗口。",
-      "why": "观察消费支持政策覆盖与落地力度",
+      "title": "两部门：深化新能源上网电价市场化改革 促进新能源高质量发展",
+      "summary": "两部门发文深化新能源上网电价市场化改革，出台新能源市场化改革新方案，对新能源项目上网电价形成机制作出调整，影响电力行业投资与运营。",
+      "why": "新能源电价市场化改革影响电力行业",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365859.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365598.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365707.shtml",
+        "https://www.chinanews.com.cn/gj/2025/02-09/10365562.shtml"
+      ]
     },
     {
       "rank": 6,
-      "title": "石破茂与特朗普会面",
-      "summary": "石破茂与特朗普会面，中新网以国际识局形式报道美日互动，并关注双方各自的政策考量。标题未披露会谈成果细节，相关进展可作为观察美国与日本政策协调的线索。",
-      "why": "观察美日政策互动与外部环境",
+      "title": "出口海外仓货物“离境即退税”",
+      "summary": "出口海外仓货物“离境即退税”政策落地，货物离境即可办理退税，退税便利化措施降低外贸企业资金占用与成本，影响跨境电商与海外仓模式。",
+      "why": "离境即退税降低外贸企业成本",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/gj/2025/02-09/10365644.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365560.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365598.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365541.shtml"
+      ]
     },
     {
       "rank": 7,
-      "title": "巴以完成第五批人质交换",
-      "summary": "以色列和哈马斯交换第五批被扣押人员；另有报道称，哈马斯官员警告以方持续违反停火协议可能导致协议破裂。人质交换推进与停火风险同时出现，成为中东局势的重要观察点。",
-      "why": "关系中东停火安排与局势稳定性",
+      "title": "2024年登记在册的企业数同比增长5.1%",
+      "summary": "2024年登记在册的企业数同比增长5.1%，企业数量增长反映市场主体扩容与营商环境改善，是观察经济活跃度的重要年度数据。",
+      "why": "企业数增长反映市场主体扩容",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/gj/2025/02-09/10365638.shtml",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365541.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/gj/2025/02-09/10365638.shtml",
-        "https://www.chinanews.com.cn/gj/2025/02-09/10365534.shtml"
+        "https://www.chinanews.com.cn/gj/2025/02-09/10365564.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365699.shtml"
       ]
     },
     {
       "rank": 8,
-      "title": "洪都拉斯以北海域强震引发海啸",
-      "summary": "洪都拉斯以北海域发生7.6级强震并引发海啸，另有中新网快讯补充震源深度为10千米。报道集中于地震及海啸情况，是当日国际突发信息中较受关注的一条。",
-      "why": "关注突发灾害进展及其外溢影响",
+      "title": "青海：2025年首批消费品以旧换新补贴发放到位",
+      "summary": "青海2025年首批消费品以旧换新补贴发放到位，补贴资金落地是“两新”政策在地方执行的进展，也是观察扩内需政策传导效率的一个样本。",
+      "why": "以旧换新补贴落地检验政策传导效率",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/gj/2025/02-09/10365637.shtml",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365777.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/gj/2025/02-09/10365637.shtml",
-        "https://www.chinanews.com.cn/gj/2025/02-09/10365543.shtml",
-        "https://www.chinanews.com.cn/gj/2025/02-09/10365579.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365686.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365860.shtml"
       ]
     },
     {
       "rank": 9,
-      "title": "俄罗斯轮船事故船上载有13万吨燃油",
-      "summary": "俄罗斯一艘轮船发生事故，船上载有13万吨燃油。标题未说明事故类型、人员伤亡或泄漏情况，但货物规模使该事件值得关注，后续需留意事故进展及是否影响燃油运输。",
-      "why": "关注航运安全与燃油运输潜在影响",
+      "title": "春节过后“菜篮子”供应充足 价格平稳回落",
+      "summary": "春节过后“菜篮子”供应充足、价格平稳回落，节日性食品价格回落是观察节后通胀走势的重要参考，也反映民生商品保供稳价工作的实际效果。",
+      "why": "菜篮子价格回落反映节后物价平稳",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/gj/2025/02-09/10365878.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365686.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365584.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365585.shtml"
+      ]
     },
     {
       "rank": 10,
-      "title": "春节档票房和观影人次双破纪录",
-      "summary": "春节档票房和观影人次双破纪录，中新网以刷新中国影史的表述突出消费热度。报道未在标题中给出具体档期累计数值，可作为观察节日消费和电影市场表现的一条线索。",
-      "why": "观察节日消费与电影市场热度",
+      "title": "2024年湖南国有企业资产总额达7.3万亿元",
+      "summary": "2024年湖南国有企业资产总额达7.3万亿元，地方国有资产的规模扩张反映国企改革与地方经济体量的变化，可为观察区域经济提供参考。",
+      "why": "地方国企资产规模反映区域经济体量",
       "source": "中新网",
       "publishedAt": "2025-02-09T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365529.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/02-09/10365699.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365541.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-09/10365850.shtml"
+      ]
     }
   ],
   "watch": [
-    "1月CPI与PPI后续走势及春节因素影响",
-    "新能源上网电价市场化改革落地节奏",
-    "手机等数码产品购新补贴后续发放",
-    "巴以停火协议执行与美日会谈后续"
+    "1月CPI与PPI数据公布后的通胀走势判断",
+    "新能源上网电价市场化改革方案的实施安排",
+    "离境即退税政策对海外仓与跨境电商的影响",
+    "节后复工复产与以旧换新补贴的落地进度"
   ],
+  "model": "minimaxcode",
   "backfill": {
     "kind": "pre-era",
-    "at": "2026-11-28T10:12:11+08:00",
+    "at": "2026-11-28T10:23:23.639+08:00",
     "note": "早报制度生效前的日子，按该日新闻切片补写"
   }
 }
