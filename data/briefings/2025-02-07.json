@@ -1,0 +1,130 @@
+{
+  "date": "2025-02-07",
+  "generatedAt": "2026-11-28T10:09:20+08:00",
+  "endedAt": "2026-11-28T10:10:28+08:00",
+  "source": "ai",
+  "generator": "llm-v1",
+  "window": {
+    "from": "2025-02-06",
+    "to": "2025-02-07",
+    "fromAt": "2025-02-06T08:00:00+08:00",
+    "toAt": "2025-02-07T09:00:00+08:00",
+    "fromTs": 1738800000,
+    "toTs": 1738890000
+  },
+  "overview": "当日主线聚焦央行公开市场操作、人民币中间价与制造业PMI，国内政策与消费修复线索并行。商务部回应美推迟对加墨加征关税，海外电动汽车销量数据受关注；国内成品油价格按机制不作调整，A股放量上涨且DeepSeek概念股持续走强。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "央行开展2755亿元7天期逆回购操作",
+      "summary": "2月6日，央行开展2755亿元7天期逆回购操作。该操作规模与期限是观察当日公开市场资金投放和银行体系短期流动性的直接线索。",
+      "why": "央行逆回购操作反映公开市场流动性调控动向",
+      "source": "中新网",
+      "publishedAt": "",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363947.shtml"
+    },
+    {
+      "rank": 2,
+      "title": "人民币对美元中间价报7.1691元 上调2个基点",
+      "summary": "2月6日，人民币对美元中间价报7.1691元，上调2个基点。中间价调整幅度为观察当日人民币汇率预期与汇率变化提供最新线索。",
+      "why": "人民币中间价变化是观察汇率预期的重要窗口",
+      "source": "中新网",
+      "publishedAt": "",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363891.shtml"
+    },
+    {
+      "rank": 3,
+      "title": "1月全球制造业PMI升至50% 连续三个月小幅上升",
+      "summary": "2025年1月全球制造业PMI为50%，连续3个月小幅上升；亚洲制造业PMI为50.7%，连续13个月处于扩张区间。全球与亚洲数据共同指向制造业景气延续。",
+      "why": "制造业PMI是判断全球与亚洲工业生产景气的重要指标",
+      "source": "中新网",
+      "publishedAt": "",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363958.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363979.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364014.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "商务部回应美推迟对加墨加征关税",
+      "summary": "商务部回应美国推迟对加拿大、墨西哥加征关税，并指出美单边加征关税加剧全球贸易紧张。相关表态还涉及为跨境电商营造公平政策环境。",
+      "why": "关税推迟节奏与中方回应影响外贸政策预期",
+      "source": "中新网",
+      "publishedAt": "",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364117.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364235.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364236.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "上海推出优化营商环境行动方案8.0版",
+      "summary": "上海推出优化营商环境行动方案8.0版，标题强调将企业感受放在首位。该方案为观察地方改善营商环境、稳定企业预期提供政策线索。",
+      "why": "地方营商环境政策变化关系企业预期与经营活力",
+      "source": "中新网",
+      "publishedAt": "",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10363953.shtml"
+    },
+    {
+      "rank": 6,
+      "title": "春节假期消费市场供需两旺",
+      "summary": "春节假期消费市场供需两旺，消费活动涵盖“影”“食”与非遗体验；宁夏银川、吉林等地亦披露春节消费或游客数据，显示假日消费热度。",
+      "why": "春节消费是观察内需修复与消费结构变化的重要窗口",
+      "source": "中新网",
+      "publishedAt": "",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364068.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363841.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364015.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364016.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-06/10364089.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "行业数据显示英国1月电动汽车销量上涨",
+      "summary": "行业数据显示，英国1月电动汽车销量上涨。该标题虽未披露具体涨幅，但为观察海外汽车消费与电动化需求变化提供了最新月度线索。",
+      "why": "海外电动汽车销量有助于观察消费需求与产业趋势",
+      "source": "中新网",
+      "publishedAt": "",
+      "url": "https://www.chinanews.com.cn/gj/2025/02-06/10363880.shtml"
+    },
+    {
+      "rank": 8,
+      "title": "2月6日国内成品油价格按机制不作调整",
+      "summary": "2月6日国内成品油价格按机制不作调整，此前市场关注国内油价能否结束“二连涨”。成品油调价结果为观察国内能源价格变化提供最新线索。",
+      "why": "成品油调价影响能源价格与相关行业成本预期",
+      "source": "中新网",
+      "publishedAt": "",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364086.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363867.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "A股放量上涨 DeepSeek概念股持续走强",
+      "summary": "A股周四放量上涨，DeepSeek概念股持续走强；另一则标题显示DeepSeek板块开盘强势。股市表现与概念板块热度共同反映当日市场关注方向。",
+      "why": "成交放大与概念板块表现反映市场风险偏好",
+      "source": "中新网",
+      "publishedAt": "",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-06/10364248.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-06/10363922.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "央行7天期逆回购操作规模与后续公开市场到期安排",
+    "人民币对美元中间价及后续调整方向",
+    "全球与亚洲制造业PMI变化、亚洲PMI扩张区间延续情况",
+    "美国对加墨关税推迟后的执行时点及A股DeepSeek概念板块表现"
+  ],
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T10:10:28+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
