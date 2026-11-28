@@ -3,7 +3,8 @@
   "name": "美元/韩元",
   "market": "FX",
   "period": "1d",
-  "generatedAt": "2026-11-27T22:24:20.889Z",
+  "generatedAt": "2026-11-28T04:54:55.133Z",
+  "openRefreshedAt": "2026-11-27T18:24:42.411Z",
   "source": "东方财富",
   "bars": [
     {
@@ -62702,6 +62703,5 @@
       "l": 1332.395,
       "v": 0
     }
-  ],
-  "openRefreshedAt": "2026-11-27T18:24:42.411Z"
+  ]
 }

@@ -3,7 +3,8 @@
   "name": "费城半导体指数",
   "market": "US",
   "period": "1d",
-  "generatedAt": "2026-11-27T18:24:38.499Z",
+  "generatedAt": "2026-11-28T04:54:55.133Z",
+  "openRefreshedAt": "2026-11-25T18:54:11.442Z",
   "source": "东方财富",
   "bars": [
     {
@@ -830,6 +831,5 @@
       "l": 8789.31,
       "v": 0
     }
-  ],
-  "openRefreshedAt": "2026-11-25T18:54:11.442Z"
+  ]
 }

@@ -3,7 +3,8 @@
   "name": "美元指数",
   "market": "FX",
   "period": "1d",
-  "generatedAt": "2026-11-27T22:24:17.653Z",
+  "generatedAt": "2026-11-28T04:54:55.133Z",
+  "openRefreshedAt": "2026-11-27T18:24:39.178Z",
   "source": "东方财富",
   "bars": [
     {
@@ -83862,6 +83863,5 @@
       "l": 103.63,
       "v": 0
     }
-  ],
-  "openRefreshedAt": "2026-11-27T18:24:39.178Z"
+  ]
 }
