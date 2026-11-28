@@ -79,7 +79,7 @@ test('状态存储：K 线视窗与打开的天都写进同一份 sessionStorage
   assert.match(save, /pendingKlineView\.key === klineKey && pendingKlineView\.period === klinePeriod/);
 });
 
-test('归档页：按路由恢复滚动与展开，点日卡仍进要闻流', () => {
+test('归档页：按路由恢复滚动与展开，日卡仍能进阅读器', () => {
   assert.match(app, /det\.open = true;/, '恢复展开状态，不能收起');
   assert.match(app, /box\.classList\.add\('expanded'\)/);
   // 3.0.0：滚动位置与展开状态按路由保存（routeStates），不再只存一份全局 y
@@ -88,9 +88,10 @@ test('归档页：按路由恢复滚动与展开，点日卡仍进要闻流', ()
   const scroll = between(app, 'function restoreArchiveState(route)', '// ---------- 归档：数据分组');
   assert.match(scroll, /window\.scrollTo\(\{ top: y/);
   assert.match(scroll, /alignState\.userMoved = true/, '停掉自动纠偏，别把页面拽回顶部');
-  // 行为意图：点日卡仍走 openDay（要闻流），归档内不铺开当日条目
-  const card = between(app, 'function dayCard(d)', 'const briefCache');
+  // 行为意图不变：点日卡最终仍能读到当日条目（3.4.0 起先落归档日层，再由层头按钮进要闻流）
+  const card = between(app, 'function dayCard(d, opts)', 'const briefCache');
   assert.match(card, /openDay\(d\.day, d\.kind\)/);
+  assert.match(card, /navigateArchive\(dayRoute\(d\.day\)\)/);
 });
 
 test('归档某天：刷新后仍停在当天，不回最新要闻流', () => {

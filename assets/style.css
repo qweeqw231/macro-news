@@ -415,21 +415,44 @@ body { overflow-wrap: break-word; }
 .hist-hint { font-size: 0.8rem; color: var(--warm); }
 
 /* ---------- 归档页：周期报告（周报 / 月报 / 年报，3.0.0） ---------- */
-/* 与按日归档并列但不混排：独立面板 + 独立分组，卡片不进 #days 网格。 */
+/* 与按日归档并列但不混排：独立面板 + 独立分组，卡片不进 #days 网格。
+   3.4.0：整块改为折叠入口（默认收起），只留一行「周期报告 N 期 · 周报 x · 月报 y · 年报 z」；
+   此前 187 期全量铺开，把日期层推到 12 屏（桌面）/ 25 屏（手机）之外。 */
 .periodic {
   border: 1px solid var(--rule); background: var(--surface); border-radius: 6px;
-  padding: 1rem 1.15rem; margin: 0 0 1.1rem;
+  margin: 0 0 0.9rem;
 }
-.periodic-hd h2 { font-size: 1.05rem; margin: 0 0 0.3rem; display: flex; align-items: center; gap: 0.45rem; }
+.periodic-sum {
+  display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+  padding: 0.5rem 0.9rem; cursor: pointer; list-style: none;
+  font-family: var(--sans);
+}
+.periodic-sum::-webkit-details-marker { display: none; }
+.periodic-sum:hover { background: var(--code-bg); }
+.ps-title { font-size: 0.92rem; font-weight: 700; color: var(--ink); }
+.ps-stat { font-size: 0.76rem; color: var(--ink-mute); }
+.ps-caret { margin-left: auto; font-size: 0.74rem; color: var(--accent); white-space: nowrap; }
+.periodic-body { border-top: 1px dashed var(--rule); padding: 0.75rem 0.9rem 0.9rem; }
 .periodic-sub { margin: 0; color: var(--ink-mute); font-size: 0.82rem; line-height: 1.65; }
-.periodic-list { display: grid; gap: 0.9rem; margin-top: 0.85rem; }
-.pr-jumps { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
-.pr-group { display: grid; gap: 0.45rem; scroll-margin-top: 72px; }
+.periodic-list { display: grid; gap: 0.9rem; margin-top: 0.75rem; }
+.pr-jumps { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.55rem; }
+.pr-jumps .fchip { cursor: pointer; }
+.pr-group { display: grid; gap: 0.45rem; scroll-margin-top: var(--arch-sticky, 120px); }
 .pr-group + .pr-group { border-top: 1px dashed var(--rule); padding-top: 0.8rem; }
 .pr-group-hd { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
 .pr-group-n { font-family: var(--sans); font-size: 0.76rem; color: var(--ink-mute); }
 .pr-group-note { font-family: var(--sans); font-size: 0.72rem; color: var(--ink-faint); }
 .pr-group-list { display: grid; gap: 0.45rem; }
+/* 组内按年份分区：187 期跨 2024~2026 连排无法扫描，默认只展开当前层所在年 */
+.pr-year { border-top: 1px dashed var(--rule); padding-top: 0.4rem; }
+.pr-year-hd {
+  display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+  padding: 0.15rem 0; cursor: pointer; list-style: none;
+}
+.pr-year-hd::-webkit-details-marker { display: none; }
+.pr-year-t { font-family: var(--sans); font-size: 0.8rem; font-weight: 700; color: var(--ink-soft); }
+.pr-year-n { font-family: var(--sans); font-size: 0.72rem; color: var(--ink-faint); }
+.pr-year > .pr-group-list { margin-top: 0.35rem; }
 .pr-type {
   display: inline-block; padding: 0.05rem 0.38rem; border-radius: 3px;
   background: var(--accent-soft); color: var(--accent);
@@ -449,6 +472,11 @@ body { overflow-wrap: break-word; }
   color: var(--ink-mute); white-space: nowrap;
 }
 .pr-tags { display: inline-flex; gap: 0.25rem; }
+/* 3.4.0：卡片渲染索引里的 40~90 字摘要（此前只有类型 + 标题 + 区间，187 行无法扫描） */
+.pr-sum {
+  flex: 1 1 100%; font-family: var(--sans); font-size: 0.78rem; line-height: 1.65;
+  color: var(--ink-mute);
+}
 .pr-caret { font-family: var(--sans); font-size: 0.72rem; color: var(--accent); white-space: nowrap; }
 .pr-body { border-top: 1px dashed var(--rule); padding: 0.7rem 0.9rem 0.85rem; }
 .pr-meta-full { margin-bottom: 0.35rem; color: var(--ink-faint); font: 0.72rem/1.5 var(--sans); }
@@ -866,7 +894,7 @@ body.kline-open { overflow: hidden; }
 .al-nav .fchip { text-decoration: none; }
 
 /* ---------- 月层：周组 ---------- */
-.arch-week { margin: 0 0 1.25rem; scroll-margin-top: 136px; }
+.arch-week { margin: 0 0 1.25rem; scroll-margin-top: var(--arch-sticky, 120px); }
 .aw-hd {
   display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
   margin-bottom: 0.45rem; padding-bottom: 0.28rem;
@@ -886,8 +914,25 @@ body.kline-open { overflow: hidden; }
 .aw-rep:hover { border-color: var(--accent); }
 .aw-rep.off { color: var(--ink-faint); border-style: dashed; }
 
-/* ---------- 层内报告卡 / 待生成占位 ---------- */
-.arch-report { margin: 0 0 0.9rem; }
+/* ---------- 层内同期报告：一行入口，点开才展开（3.4.0） ---------- */
+/* 此前层内直接把报告卡整张展开：首张日卡被推到 2,048px（桌面）/ 3,015px（手机）之外，
+   且同一期报告在「顶部面板」与「本层」两处各有一份展开正文。 */
+.arch-rep {
+  margin: 0 0 0.9rem; border: 1px solid var(--rule);
+  border-radius: 6px; background: var(--surface);
+}
+.arch-rep-hd {
+  display: flex; align-items: baseline; gap: 0.45rem; flex-wrap: wrap;
+  width: 100%; text-align: left; background: transparent; border: 0;
+  padding: 0.5rem 0.8rem; cursor: pointer; font-family: var(--sans);
+}
+.arch-rep-hd:hover { background: var(--code-bg); }
+.ar-title { flex: 1 1 12rem; min-width: 0; font-size: 0.88rem; font-weight: 600; color: var(--ink); }
+.ar-range, .ar-caret { font-family: var(--sans); font-size: 0.72rem; white-space: nowrap; }
+.ar-range { color: var(--ink-faint); }
+.ar-caret { color: var(--accent); }
+.arch-rep .pr-body { border-top: 1px dashed var(--rule); }
+.arch-rep .pr-body[hidden] { display: none; }
 .arch-empty-rep {
   display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
   font-family: var(--sans); font-size: 0.8rem; color: var(--ink-faint);
@@ -900,7 +945,7 @@ body.kline-open { overflow: hidden; }
 .arch-month {
   border: 1px solid var(--rule); border-radius: 6px;
   background: var(--surface); padding: 0.7rem 0.9rem;
-  scroll-margin-top: 136px;
+  scroll-margin-top: var(--arch-sticky, 120px);
 }
 .arch-month + .arch-month { margin-top: 0; }
 .am-hd { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.45rem; }
@@ -931,8 +976,10 @@ body.kline-open { overflow: hidden; }
 /* ---------- 日层 ---------- */
 .days-one { grid-template-columns: minmax(0, 1fr); }
 .days-one .day { max-width: 460px; }
-.arch-day-acts { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
-.arch-day-note { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-faint); }
+.arch-day-note {
+  margin: 0.8rem 0 0; font-family: var(--sans);
+  font-size: 0.75rem; color: var(--ink-faint);
+}
 
 /* ---------- 口径说明（移到底部） ---------- */
 .arch-hd-foot { margin: 1.6rem 0 0; border-top: 1px dashed var(--rule); padding-top: 0.8rem; }
@@ -959,5 +1006,8 @@ body.kline-open { overflow: hidden; }
   .arch-bar { top: 48px; padding: 0.4rem 0 0.35rem; }
   .arch-quick .all-dates { margin-left: 0; }
   .al-title h2 { font-size: 1.08rem; }
-  .arch-week, .arch-month { scroll-margin-top: 150px; }
+  /* 锚点补偿由 --arch-sticky 统一派生（app.js syncStickyOffset），手机端不再写死 */
+  /* 折叠行在手机上只占两行：第一行「周期报告 + 全部期次」，第二行期数统计 */
+  .ps-stat { order: 2; flex: 1 1 100%; }
+  .ps-caret { order: 1; }
 }

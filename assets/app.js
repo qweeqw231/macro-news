@@ -146,6 +146,8 @@
         day: S.view === 'feed' && openedDay ? { day: openedDay.day, kind: openedDay.kind } : null,
         briefOpen,
         periodicOpen,
+        // 3.4.0：周期报告整块折叠入口的展开状态（默认收起），刷新后原样恢复
+        periodicPanel: !!($('#periodicPanel') && $('#periodicPanel').open),
       }));
     } catch { /* 隐私模式/配额满：不影响页面 */ }
   }
@@ -1639,6 +1641,37 @@
     window.scrollTo({ top: target(), behavior: instant ? 'auto' : 'smooth' });
   }
 
+  // ---------- 归档页：sticky 时间尺的滚动补偿（3.4.0） ----------
+  // 归档页有两层 sticky：站点顶栏（top:0）+ 时间尺（top:56 / 手机 48）。
+  // 补偿值不再写死：从时间尺的计算样式 top 与实测高度派生（审计 P1-7：写死 72/136，
+  // 而实测时间尺 113 / 157，手机端整个分组标题被盖住）。
+  function archBarOffset() {
+    const bar = $('#archBar');
+    if (!bar) return 72;
+    const top = parseFloat(getComputedStyle(bar).top) || 0;
+    return top + bar.offsetHeight + 8;
+  }
+
+  function syncStickyOffset() {
+    document.documentElement.style.setProperty('--arch-sticky', Math.round(archBarOffset()) + 'px');
+  }
+
+  // 滚到某个归档内的节点，扣掉时间尺高度
+  function scrollUnderSticky(node) {
+    if (!node) return;
+    const y = node.getBoundingClientRect().top + window.scrollY - archBarOffset();
+    if (alignState) alignState.userMoved = true;   // 别让 ResizeObserver 把页面拽回区块顶部
+    window.scrollTo({ top: Math.max(0, y), behavior: 'auto' });
+  }
+
+  // 切层后的落点 = 新层的层头（不是归档视图顶部）
+  function scrollToLayerHead() {
+    const box = $('#days');
+    const hd = box && box.querySelector('.arch-layer-hd');
+    if (!hd) { alignToView('archive', true); return; }
+    scrollUnderSticky(hd);
+  }
+
   function viewFromHash() {
     const m = String(location.hash || '').match(/^#view-(feed|market|macro|archive|sources)$/);
     if (m) return m[1];
@@ -1839,6 +1872,9 @@
     return `${w.from} 08:00 – ${w.to} 次日 08:00`;
   }
 
+  // 3.4.0：整块默认收起，只留一行汇总（周期报告 N 期 · 周报 x · 月报 y · 年报 z）。
+  //   此前 187 期全量铺在日期层之上：桌面 10,392px、手机 20,632px，日期被推到 12 / 25 屏之外
+  //   （见 2026-11-28 归档页体验审计 P0-1）。展开后按类型分组、组内再按年份分区。
   function renderPeriodicPanel(idx) {
     const panel = $('#periodicPanel');
     const listBox = $('#periodicList');
@@ -1855,6 +1891,16 @@
     // 三类都空：整块隐藏；部分为空：该类型分组不出现；三类齐全：三组依次排列
     panel.hidden = reps.length === 0;
     if (!reps.length) return;
+    const stat = $('#periodicStat');
+    if (stat) {
+      const parts = PERIODIC_GROUPS
+        .map((t) => [t, reps.filter((r) => r.type === t).length])
+        .filter(([, n]) => n > 0)
+        .map(([t, n]) => `${PERIODIC_LABEL[t]} ${n}`);
+      stat.textContent = `${reps.length} 期 · ${parts.join(' · ')}`;
+    }
+    // 组内默认展开哪一年：当前层所在年 > 最新年（187 期跨三年连排，一条通道到底无法扫描）
+    const curYear = archRoute && archRoute.year ? String(archRoute.year) : '';
     PERIODIC_GROUPS.forEach((type) => {
       const group = reps.filter((r) => r.type === type);
       if (!group.length) return;
@@ -1865,25 +1911,59 @@
       hd.appendChild(el('span', 'pr-type', PERIODIC_LABEL[type]));
       hd.appendChild(el('span', 'pr-group-n', `${group.length} 期`));
       hd.appendChild(el('span', 'pr-group-note', PERIODIC_NOTE[type]));
+      // 全是补写时只在组头说一次：187/187 都打「补写」等于零信息（审计 P1-4）
+      if (group.every((r) => r.backfill)) hd.appendChild(el('span', 'pr-group-note', '均为补写'));
       sec.appendChild(hd);
-      const wrap = el('div', 'pr-group-list');
-      group.forEach((r) => wrap.appendChild(periodicCard(r)));
-      sec.appendChild(wrap);
+      const years = [...new Set(group.map((r) => r.window.end.slice(0, 4)))].sort().reverse();
+      const openYear = years.includes(curYear) ? curYear : years[0];
+      years.forEach((y) => {
+        const mine = group.filter((r) => r.window.end.slice(0, 4) === y);
+        const sub = el('details', 'pr-year');
+        sub.dataset.year = y;
+        sub.open = y === openYear;
+        const sm = el('summary', 'pr-year-hd');
+        sm.appendChild(el('span', 'pr-year-t', y + ' 年'));
+        sm.appendChild(el('span', 'pr-year-n', `${mine.length} 期`));
+        sub.appendChild(sm);
+        const wrap = el('div', 'pr-group-list');
+        mine.forEach((r) => wrap.appendChild(periodicCard(r)));
+        sub.appendChild(wrap);
+        sec.appendChild(sub);
+      });
       listBox.appendChild(sec);
     });
-    // 顶部入口只列有数据的类型；三类都空时整块已隐藏，不会出现空入口
+    // 顶部三类入口：改成按钮而不是 `#periodic-week` 锚点链接 —— 锚点会把归档层级
+    //   （#archive/2024/01）从 URL 里冲掉，刷新就掉回默认月（审计 P2-8）。
     const jumps = $('#periodicJumps');
     if (jumps) {
       jumps.innerHTML = '';
       PERIODIC_GROUPS.forEach((type) => {
         const n = reps.filter((r) => r.type === type).length;
         if (!n) return;
-        const a = el('a', 'fchip', `${PERIODIC_LABEL[type]} ${n}`);
-        a.href = `#periodic-${type}`;
-        jumps.appendChild(a);
+        const b = el('button', 'fchip', `${PERIODIC_LABEL[type]} ${n}`);
+        b.type = 'button';
+        b.onclick = () => focusPeriodicGroup(type);
+        jumps.appendChild(b);
       });
       jumps.hidden = !jumps.children.length;
     }
+  }
+
+  // 展开面板并滚到某一类型分组；补偿值取时间尺实际高度（审计 P1-7：写死 72/136 会被遮住 96/134px）
+  function focusPeriodicGroup(type) {
+    const panel = $('#periodicPanel');
+    const sec = document.getElementById('periodic-' + type);
+    if (!panel || !sec) return;
+    panel.open = true;
+    syncPeriodicCaret();
+    scrollUnderSticky(sec);
+    saveUI();
+  }
+
+  function syncPeriodicCaret() {
+    const panel = $('#periodicPanel');
+    const caret = $('#periodicCaret');
+    if (panel && caret) caret.textContent = panel.open ? '收起' : '全部期次';
   }
 
   function periodicCard(r) {
@@ -1896,11 +1976,12 @@
     sum.appendChild(el('span', 'pr-title', r.title));
     sum.appendChild(el('span', 'pr-range',
       `${r.window.start} ~ ${r.window.end} · 覆盖 ${r.window.days} 天`));
-    const tags = el('span', 'pr-tags');
-    if (r.backfill) tags.appendChild(el('span', 'day-tag backfill', '补写'));
-    sum.appendChild(tags);
     const caret = el('span', 'pr-caret', '展开');
     sum.appendChild(caret);
+    // 3.4.0：渲染索引里的 40~90 字摘要。此前 187 张卡只有「类型 + 标题 + 区间」，
+    //   索引里现成的 summary 完全没被用上，长列表无法扫描（审计 P1-4）。
+    //   同时去掉逐行的「补写」标签：187/187 都是补写，标签没有区分度，改在组头统一说明。
+    if (r.summary) sum.appendChild(el('span', 'pr-sum', r.summary));
     det.appendChild(sum);
 
     const body = el('div', 'pr-body');
@@ -1994,25 +2075,38 @@
   }
 
   // 刷新后恢复展开的周期报告（与早报分开记录，避免两套 id 混在一起）
-  //   3.0.0：报告卡可能同时出现在顶部入口与本层，同名 key 的实例都要展开。
+  //   3.4.0：报告卡只存在于顶部折叠面板里（层内改成一行入口），
+  //   面板本身收起时只恢复 open 标记，不预取正文 —— 否则一进归档页就白下几十份报告。
   function restorePeriodicOpen() {
     const st = archiveRouteState();
     const open = st && Array.isArray(st.periodicOpen) ? st.periodicOpen : [];
     if (!open.length) return Promise.resolve();
+    const panel = $('#periodicPanel');
+    const panelOpen = !!(panel && panel.open);
     const jobs = [];
     document.querySelectorAll('#view-archive details.pr-card').forEach((det) => {
       if (!open.includes(det.dataset.key)) return;
       det.open = true;
       const caret = det.querySelector('.pr-caret');
       if (caret) caret.textContent = '收起';
+      if (!panelOpen) return;
       const r = periodicById.get(det.dataset.key);
       if (r) jobs.push(loadPeriodicReport(r, det.querySelector('.pr-body')));
     });
     return Promise.all(jobs);
   }
 
-  function dayCard(d) {
-    const open = (e) => { e.preventDefault(); openDay(d.day, d.kind); };
+  function dayCard(d, opts) {
+    // 3.4.0：日卡先进入归档「日」层（保留层级与 URL），日层里再显式「打开当日要闻流」。
+    //   此前日卡一律 openDay → 直接跳到要闻流，四层钻取在「日」断路，日期跳转也把人带离归档页
+    //   （审计 P1-5 / P1-6）。日层自己被渲染时传 { toLayer: false }，那一次点击就是「打开」。
+    const toLayer = !(opts && opts.toLayer === false);
+    const href = toLayer ? AT.archiveHash(dayRoute(d.day)) : '#';
+    const open = (e) => {
+      e.preventDefault();
+      if (toLayer) navigateArchive(dayRoute(d.day));
+      else openDay(d.day, d.kind);
+    };
     // 2.12.0：归档按**新闻日**分文件（北京 08:00 ~ 次日 08:00，等价 UTC 日期）。
     // 卡片必须默认可见地标出来，否则「11-10 · 1,233 条」会被误读成自然日 00:00–24:00 的量。
     const dayHint = (day) => `${day} 新闻日 · 北京时间 ${day} 08:00 ~ 次日 08:00`;
@@ -2035,7 +2129,7 @@
     };
     if (!d.hasBriefing) {
       const a = el('a', 'day');
-      a.href = '#';
+      a.href = href;
       a.title = d.reason ? `${dayHint(d.day)}；${d.reason}` : dayHint(d.day);
       const tags = [];
       // 2.19.0：制度起点之后、有新闻却没有早报 —— 这一天是「该有却没有」，必须显形。
@@ -2058,7 +2152,7 @@
     const box = el('div', 'day has-brief');
     box.dataset.day = d.day;
     const a = el('a', 'day-open');
-    a.href = '#';
+    a.href = href;
     a.title = d.reason ? `${dayHint(d.day)}；${d.reason}` : dayHint(d.day);
     a.appendChild(withTag(d.day));
     const tags = [];
@@ -2268,6 +2362,9 @@
   }
 
   // 早报 / 报告正文是异步到达的，页面会先矮后高：等全部落位后再对齐一次。
+  //   focusLayer：本次渲染是「切层」（点周组 / 点日期 / 前后层级跳转），
+  //   没有历史滚动位置时要落到新层层头，而不是归档视图顶部（3.4.0 修审计 P0-2）。
+  let archFocusLayer = false;
   function restoreArchiveState(route) {
     if (!archRendered) return;
     const st = archiveRouteState(route);
@@ -2276,9 +2373,13 @@
       y = uiState.y;
       legacyScrollUsed = true;
     }
+    const focusLayer = archFocusLayer;
+    archFocusLayer = false;
     if (y != null) {
       if (alignState) alignState.userMoved = true;   // 别让 ResizeObserver 把页面拽回区块顶部
       window.scrollTo({ top: y, behavior: 'auto' });
+    } else if (focusLayer) {
+      scrollToLayerHead();
     } else {
       alignToView('archive', true);
     }
@@ -2535,8 +2636,10 @@
     return a;
   }
 
-  // 报告卡：有就原位展开，没有就给出「待生成」占位（不伪造正文）。
-  function periodicBlock(box, type, id, openNow) {
+  // 层内同期报告：一行入口，点开才展开正文（默认收起）。
+  //   3.4.0 之前是 openNow=true 直接展开：月层层头 → 首张日卡之间隔着 2,048px（手机 3,015px）
+  //   的报告正文，同一期报告在页面上还出现两份展开内容（审计 P0-3）。
+  function periodicEntry(box, type, id) {
     const r = reportFor(type, id);
     if (!r) {
       const ph = el('div', 'arch-empty-rep');
@@ -2545,16 +2648,26 @@
       box.appendChild(ph);
       return;
     }
-    const wrap = el('div', 'arch-report');
-    const card = periodicCard(r);
-    wrap.appendChild(card);
+    const wrap = el('div', 'arch-rep');
+    const row = el('button', 'arch-rep-hd');
+    row.type = 'button';
+    row.appendChild(el('span', 'pr-type', PERIODIC_LABEL[type]));
+    row.appendChild(el('span', 'ar-title', r.title));
+    row.appendChild(el('span', 'ar-range', `${r.window.start} ~ ${r.window.end}`));
+    const caret = el('span', 'ar-caret', '展开');
+    row.appendChild(caret);
+    const body = el('div', 'pr-body');
+    body.hidden = true;
+    row.onclick = () => {
+      const show = body.hidden;
+      body.hidden = !show;
+      caret.textContent = show ? '收起' : '展开';
+      if (show) loadPeriodicReport(r, body);
+      saveUI();
+    };
+    wrap.appendChild(row);
+    wrap.appendChild(body);
     box.appendChild(wrap);
-    if (openNow) {
-      card.open = true;
-      const caret = card.querySelector('.pr-caret');
-      if (caret) caret.textContent = '收起';
-      loadPeriodicReport(r, card.querySelector('.pr-body'));
-    }
   }
 
   function dayGrid(days) {
@@ -2572,7 +2685,7 @@
     if (prev) acts.push(navLink('← 上一月', monthRoute(prev)));
     if (next) acts.push(navLink('下一月 →', monthRoute(next)));
     layerHead(box, AT.monthLabel(key), `${days.length} 天 · ${sumCount(days).toLocaleString('zh-CN')} 条`, acts);
-    periodicBlock(box, 'month', key, true);
+    periodicEntry(box, 'month', key);
     if (!days.length) {
       box.appendChild(el('div', 'empty', '本月暂无归档'));
       return;
@@ -2612,7 +2725,7 @@
     if (nextW) acts.push(navLink('下一周 →', weekRoute(nextW.key)));
     layerHead(box, '第 ' + Number(g.week) + ' 周',
       `${g.start} ~ ${g.end} · ${g.days.length} 天 · ${sumCount(g.days).toLocaleString('zh-CN')} 条`, acts);
-    periodicBlock(box, 'week', key, true);
+    periodicEntry(box, 'week', key);
     if (!g.days.length) {
       box.appendChild(el('div', 'empty', '本周暂无归档'));
       return;
@@ -2625,6 +2738,14 @@
     const d = archCtx.byDay.get(day);
     const w = AT.isoWeek(day);
     const acts = [];
+    // 「打开当日要闻流」是日层唯一的出口，放进层头动作区（此前埋在层尾的一句话里，
+    //   日卡自己又直接跳要闻流 ⇒ 日层既进不来、进来也没有明确出口，审计 P1-6）
+    if (d) {
+      const go = el('button', 'fchip on', '打开当日要闻流');
+      go.type = 'button';
+      go.onclick = () => openDay(d.day, d.kind);
+      acts.push(go);
+    }
     if (w) acts.push(navLink('← 返回第 ' + Number(w.week) + ' 周', weekRoute(w.key)));
     acts.push(navLink('← 前一天', dayRoute(AT.addDays(day, -1))));
     acts.push(navLink('后一天 →', dayRoute(AT.addDays(day, 1))));
@@ -2635,15 +2756,10 @@
       return;
     }
     const grid = el('div', 'days days-one');
-    grid.appendChild(dayCard(d));
+    grid.appendChild(dayCard(d, { toLayer: false }));
     box.appendChild(grid);
-    const acts2 = el('div', 'arch-day-acts');
-    const go = el('button', 'fchip on', '打开当日要闻流');
-    go.type = 'button';
-    go.onclick = () => openDay(d.day, d.kind);
-    acts2.appendChild(go);
-    acts2.appendChild(el('span', 'arch-day-note', '日层第一阶段不在归档内铺开条目：点日卡或按钮进入要闻流。'));
-    box.appendChild(acts2);
+    box.appendChild(el('p', 'arch-day-note',
+      '当日条目在要闻流里读：点日卡或层头的「打开当日要闻流」。'));
   }
 
   function renderYearLayer(box, route) {
@@ -2657,7 +2773,7 @@
     if (next) acts.push(navLink(next + ' 年 →', { level: 'year', year: next }));
     layerHead(box, y + ' 年',
       `${months.length} 个月 · ${allDays.length} 天 · ${sumCount(allDays).toLocaleString('zh-CN')} 条`, acts);
-    periodicBlock(box, 'year', y, true);
+    periodicEntry(box, 'year', y);
     if (!months.length) {
       box.appendChild(el('div', 'empty', '该年暂无归档'));
       return;
@@ -2751,6 +2867,14 @@
     if (location.hash !== h) history.replaceState(null, '', h);
   }
 
+  // 归档内跳转统一入口：改 hash 交给 hashchange 渲染（同一层则直接重渲染）。
+  //   用真实的 hash 跳转而不是 replaceState，浏览器前进/后退才能回到上一层。
+  function navigateArchive(route) {
+    const h = AT.archiveHash(route);
+    if (location.hash === h) renderArchive(route, { nav: true });
+    else location.hash = h;
+  }
+
   async function renderArchive(route, opts) {
     opts = opts || {};
     const token = ++archToken;
@@ -2762,22 +2886,32 @@
       if (token !== archToken) return;
       const list = collectArchiveDays(idx, hist);
       archCtx = buildArchiveCtx(list);
-      // 周期报告渲染失败不能拖垮按日归档：单独兜住
-      try { renderPeriodicPanel(per); } catch { /* 保持区块隐藏 */ }
-      archCtx.reports = periodicById ? [...periodicById.values()] : [];
-      renderHistPanel(hist, list);
 
       const prevLevel = archRoute ? archRoute.level : '';
       const r = resolveArchiveRoute(route);
       if (r.level === 'all' && prevLevel !== 'all') archAllShown = 3;
+      // 先落路由：周期报告组内默认展开哪一年，按当前层所在年决定
       archRoute = r;
       archRendered = true;
+      // 周期报告渲染失败不能拖垮按日归档：单独兜住
+      try { renderPeriodicPanel(per); } catch { /* 保持区块隐藏 */ }
+      archCtx.reports = periodicById ? [...periodicById.values()] : [];
+      // 3.4.0：整块默认收起；刷新前展开过就恢复展开（只恢复开关，不预取正文）
+      const pnl = $('#periodicPanel');
+      if (pnl) pnl.open = !!(uiState && uiState.periodicPanel);
+      syncPeriodicCaret();
+      renderHistPanel(hist, list);
       setArchHash(r);
       renderArchiveChrome();
+      syncStickyOffset();   // 时间尺高度随面包屑换行变化：锚点补偿要跟着更新
       // 渲染 + 恢复期间先别让 toggle 触发的 saveUI 写回（见 saveUI 顶部注释）
       archRestoring = true;
       renderArchiveLayer(r);
-      const done = () => { archRestoring = false; restoreArchiveState(r); };
+      const done = () => {
+        archRestoring = false;
+        archFocusLayer = !!opts.nav;
+        restoreArchiveState(r);
+      };
       Promise.all([restoreBriefOpen(), restorePeriodicOpen()]).then(done, done);
     } catch (e) {
       archRestoring = false;
@@ -4050,6 +4184,17 @@
     });
     // 手动改 hash / 前进后退时也要跟着切视图
     window.addEventListener('hashchange', () => {
+      // 3.4.0：旧的 #periodic-week / #periodic-month / #periodic-year 锚点
+      //   （此前由三类入口按钮写入）不再当作路由：展开面板滚到分组，再把归档层级写回 URL，
+      //   否则刷新会掉回默认月（审计 P2-8）。
+      const anch = String(location.hash || '').match(/^#periodic-(week|month|year)$/);
+      if (anch) {
+        if (S.view === 'archive') {
+          focusPeriodicGroup(anch[1]);
+          if (archRoute) history.replaceState(null, '', AT.archiveHash(archRoute));
+        }
+        return;
+      }
       const v = viewFromHash();
       if (!v) return;
       if (v !== S.view) { showView(v); return; }
@@ -4058,7 +4203,8 @@
         const r = AT.parseArchiveHash(location.hash);
         // 旧链接 #view-archive / 裸 #archive 视为「默认月」，同时把 URL 规范成 #archive/YYYY/MM
         if (!r || r.level === 'default') { renderArchive(null); return; }
-        if (AT.routeKey(r) !== archKey(archRoute)) renderArchive(r);
+        // nav: true ⇒ 新层没有历史滚动位置时落到「新层层头」，不是归档视图顶部
+        if (AT.routeKey(r) !== archKey(archRoute)) renderArchive(r, { nav: true });
       }
     });
     // 带着 #view-xxx 打开时直接进对应视图（instant：首帧不要看到平滑滚动）
@@ -4094,7 +4240,8 @@
       $('#mqClear').hidden = true;
       applyQuoteFilter();
     };
-    // 归档页日期跳转：history 切片与 archive 共用同一个 openDay，按 dayIndex 里登记的来源路由
+    // 归档页日期跳转：落到归档「日」层（保留层级与 URL），再由日层的出口进要闻流。
+    //   此前直接 openDay ⇒ 用户本来在按日期导航，却被打发到要闻流并丢掉归档页（审计 P1-5）。
     const histForm = $('#histForm');
     if (histForm) {
       histForm.addEventListener('submit', (e) => {
@@ -4120,11 +4267,20 @@
           return;
         }
         if (hint) hint.textContent = '';
-        openDay(hit.day, hit.kind);
+        navigateArchive(dayRoute(hit.day));
+      });
+    }
+    // 3.4.0：周期报告整块是折叠入口，展开/收起要记住（刷新与切层后不回弹）
+    const pnl = $('#periodicPanel');
+    if (pnl) {
+      pnl.addEventListener('toggle', () => {
+        syncPeriodicCaret();
+        saveUI();
       });
     }
     syncSearchPlaceholder();
     window.addEventListener('resize', syncSearchPlaceholder);
+    window.addEventListener('resize', syncStickyOffset);
 
     // 行情加载完再刷一次页脚：健康摘要里的「行情」时点来自 quotes.json 各卡片的源时间，
     // 而 renderQuotes 与下面的 latest.json 是两个并发链，先到先得的顺序不固定。

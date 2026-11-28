@@ -49,6 +49,10 @@ test('归档页：周期报告区块在按日归档之前，且有三类分组�
   assert.ok(HTML.includes('id="periodicJumps"'), '缺少三类入口容器');
   assert.ok(APP.includes("sec.id = `periodic-${type}`"), '分组缺少稳定入口 id');
   assert.ok(APP.includes("const PERIODIC_GROUPS = ['week', 'month', 'year'];"), '三类分组顺序缺失');
+  // 3.4.0：整块收成折叠入口，不再 187 期全量铺在日期层之上；三组入口仍在面板内
+  assert.match(HTML, /<details class="periodic" id="periodicPanel" hidden>/);
+  assert.ok(HTML.indexOf('id="periodicJumps"') > HTML.indexOf('id="periodicPanel"'));
+  assert.ok(!HTML.includes('<details class="periodic" id="periodicPanel" hidden open>'), '默认必须收起');
 });
 
 test('降级：索引缺失/为空时隐藏区块，坏条目跳过，单条正文失败不影响其他', () => {
@@ -68,7 +72,7 @@ test('渲染：条目复用日报 renderBriefItems，展开状态独立保存', 
   assert.ok(APP.includes('`${r.type}=${r.id}`'), '展开 key 必须带 week=/month=/year= 前缀');
   assert.ok(APP.includes('periodicOpen'), '刷新恢复缺少周期报告展开状态');
   assert.ok(APP.includes('restorePeriodicOpen()'), 'renderArchive 未恢复周期报告展开状态');
-  assert.ok(HTML.includes('assets/app.js?v=20261123c'), 'app.js 版本号未更新');
+  assert.ok(HTML.includes('assets/app.js?v=20261128a'), 'app.js 版本号未更新');
 });
 
 test('既有行为：归档索引仍是 60s TTL + no-cache 条件请求', () => {
