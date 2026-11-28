@@ -51,7 +51,8 @@ function main() {
 
   const files = fs
     .readdirSync(PERIODIC)
-    .filter((f) => f.endsWith('.json') && /^\d{4}(-\d{2}|-W\d{2})$/.test(f.replace(/\.json$/, '')))
+    // id 形态：YYYY（年报）/ YYYY-MM（月报）/ YYYY-Www（周报）
+    .filter((f) => f.endsWith('.json') && /^\d{4}(-\d{2}|-W\d{2})?$/.test(f.replace(/\.json$/, '')))
     .sort();
 
   const reports = [];
