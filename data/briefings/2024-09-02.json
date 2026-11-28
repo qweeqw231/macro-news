@@ -1,0 +1,160 @@
+{
+  "date": "2024-09-02",
+  "generatedAt": "2026-11-28T09:00:00+08:00",
+  "endedAt": "2026-11-28T09:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-09-01",
+    "to": "2024-09-02",
+    "fromAt": "2024-09-01T08:00:00+08:00",
+    "toAt": "2024-09-02T09:00:00+08:00",
+    "fromTs": 1725148800,
+    "toTs": 1725238800
+  },
+  "overview": "当日关注房地产与自贸试验区：8月中国百城新房价格环比小涨、二手房价继续走降，中央部署自贸区提升战略。消费与贸易方面，财经观察指出新场景、新模式推动服务消费扩容升级；中国首份输越南自助打印中国—东盟自贸协定原产地证书获签。交通端，中国铁路暑运累计发送旅客8.87亿人次创历史新高。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "8月中国百城新房价格环比小涨 二手房价继续走降",
+      "summary": "8月中国百城新房价格环比小涨，二手房价继续走降。新房与二手价格走势出现分化，反映购房端预期与供需关系的差异，是观察房地产市场修复节奏的月度口径。",
+      "why": "新房二手价格分化反映市场修复节奏",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-01/10278055.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278102.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278104.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "联播观察｜深改探新路！中央部署自贸区提升战略",
+      "summary": "有关观察梳理中央关于自贸区提升战略的部署。自贸试验区承担制度创新与开放试验功能，战略提升意味着在更大范围复制推广已形成的制度型开放经验。",
+      "why": "自贸区提升强化制度创新功能",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/09-01/10278059.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10277963.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-01/10277965.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "海南将确保自贸港封关各项任务如期完成",
+      "summary": "海南将确保自贸港封关各项任务如期完成。封关运作是海南自由贸易港建设的关键节点，关系到零关税清单、加工增值等政策的落地时点与效果。",
+      "why": "封关节点决定自贸港政策落地",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-01/10277963.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10277965.shtml",
+        "https://www.chinanews.com.cn/gn/2024/09-01/10278059.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "财经观察：新场景、新模式推动服务消费扩容升级",
+      "summary": "有关观察指出，新场景、新模式推动服务消费扩容升级。服务消费的增长来自消费场景的拓展与经营模式的创新，是扩内需政策在服务业端的着力点。",
+      "why": "场景创新推动服务消费扩容",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-01/10278102.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278105.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278055.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "财经观察：农货“进城”与消费“下乡”双向奔赴",
+      "summary": "有关观察关注农货“进城”与消费“下乡”双向奔赴。双向流动把农业生产与城市消费需求直接连接，涉及流通渠道建设与县域商业体系完善。",
+      "why": "城乡双向流动完善流通体系",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-01/10278105.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278102.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-01/10277963.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "中国首份输越南自助打印中国—东盟自贸协定原产地证书获签",
+      "summary": "中国首份输越南自助打印中国—东盟自贸协定原产地证书获签。首份证书的自助打印落地，关系到企业享受协定税率的便利程度与通关成本。",
+      "why": "证书自助打印降低企业通关成本",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-01/10278104.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278055.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-01/10277963.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "中国铁路暑运累计发送旅客8.87亿人次 创历史同期新高",
+      "summary": "中国铁路暑运累计发送旅客8.87亿人次，创历史同期新高。暑运客流刷新同期纪录，反映人员出行需求集中释放，也带动交通与旅游相关消费。",
+      "why": "铁路客流新高反映出行需求集中",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-01/10278034.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10277963.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278067.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "里程碑！C919承运旅客突破50万人次大关",
+      "summary": "C919承运旅客突破50万人次大关。国产大飞机累计载客量迈过这一规模节点，标志其商业运营航线网络与运力投放进入新的阶段。",
+      "why": "载客量突破反映商业运营推进",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-01/10278025.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278067.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278034.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "2024版《国铁集团客规》正式公布 主要变化有这些",
+      "summary": "2024版《国铁集团客规》正式公布。此次客规修改涉及旅客乘车的规则调整，关系铁路运输服务流程与旅客购票乘车体验的变化，也影响沿线车站的服务安排。",
+      "why": "客规修订影响旅客乘车规则",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/09-01/10278067.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278034.shtml",
+        "https://www.chinanews.com.cn/gn/2024/09-01/10278063.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "福建各地中小学“花式”开学",
+      "summary": "福建各地中小学“花式”开学，各地以不同方式迎接新学期。开学季集中释放校园周边消费需求，是观察三季度初消费市场热度的一个时点。",
+      "why": "开学季集中带动校园周边消费",
+      "source": "中新网",
+      "publishedAt": "2024-09-01T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/09-01/10278063.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278104.shtml",
+        "https://www.chinanews.com.cn/cj/2024/09-01/10278102.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "百城房价后续月度走势与分化延续",
+    "海南自贸港封关任务的具体进展",
+    "自贸区提升战略的试点复制安排",
+    "开学季与中秋档消费数据"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T09:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}

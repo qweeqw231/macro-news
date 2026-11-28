@@ -1,0 +1,160 @@
+{
+  "date": "2024-08-30",
+  "generatedAt": "2026-11-28T09:00:00+08:00",
+  "endedAt": "2026-11-28T09:00:00+08:00",
+  "source": "ai",
+  "generator": "minimaxcode",
+  "window": {
+    "from": "2024-08-29",
+    "to": "2024-08-30",
+    "fromAt": "2024-08-29T08:00:00+08:00",
+    "toAt": "2024-08-30T09:00:00+08:00",
+    "fromTs": 1724889600,
+    "toTs": 1724979600
+  },
+  "overview": "当日主线是改革部署与货币操作：习近平主持召开中央全面深化改革委员会第六次会议，中国人民银行召开专家学者及金融企业负责人座谈会，央行买入4000亿元特别国债并开展1509亿元7天期逆回购，以旧换新释放内需潜力，消费品品种突破2亿种，中美商贸工作组将于9月在天津举行工作会议。",
+  "items": [
+    {
+      "rank": 1,
+      "title": "习近平主持召开中央全面深化改革委员会第六次会议",
+      "summary": "习近平主持召开中央全面深化改革委员会第六次会议，对改革任务的组织实施作出部署，并对解放思想、实事求是、与时俱进、求真务实提出要求，指向下一阶段改革推进的节奏与落实要求。",
+      "why": "深改委会议部署改革任务组织实施",
+      "source": "中新网",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/08-29/10276636.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/08-29/10276647.shtml",
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554215209/index.html"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "中国人民银行召开专家学者及金融企业负责人座谈会",
+      "summary": "中国人民银行召开专家学者及金融企业负责人座谈会，就当前经济金融形势与政策取向听取意见。座谈会是货币政策沟通的常规渠道，关系到后续操作节奏与市场预期的形成。",
+      "why": "央行座谈沟通政策取向与预期",
+      "source": "中国人民银行",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554215209/index.html",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/08-29/10276636.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276948.shtml"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "中国央行买入4000亿元特别国债",
+      "summary": "中国央行买入4000亿元特别国债。该操作属于公开市场国债买卖范畴，其规模变化反映央行对流动性的投放力度，也牵动国债市场供求与收益率水平。",
+      "why": "特别国债买入影响流动性投放",
+      "source": "中新网",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-29/10276948.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276404.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276345.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "8月29日央行开展1509亿元7天期逆回购操作",
+      "summary": "8月29日央行开展1509亿元7天期逆回购操作。7天期逆回购是调节短期资金面的常用工具，操作规模直接影响银行间市场的资金松紧与短期利率水平。",
+      "why": "逆回购投放影响短期资金松紧",
+      "source": "中新网",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-29/10276404.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276948.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276345.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "8月29日人民币对美元中间价报7.1299元 下调83个基点",
+      "summary": "8月29日人民币对美元中间价报7.1299元，下调83个基点。中间价是人民币汇率的官方参考价格，逐日调整反映跨境资金供求与外部环境的变化。",
+      "why": "中间价调整反映跨境资金供求",
+      "source": "中新网",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-29/10276345.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276404.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276948.shtml"
+      ]
+    },
+    {
+      "rank": 6,
+      "title": "政策效应逐步显现 消费品以旧换新释放内需潜力",
+      "summary": "有关报道指出政策效应逐步显现，消费品以旧换新释放内需潜力。以旧换新政策的效果体现为耐用品消费需求改善，关系到扩大内需政策的落地节奏与后续安排。",
+      "why": "以旧换新政策释放内需潜力",
+      "source": "中新网",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-29/10276524.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276353.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276275.shtml"
+      ]
+    },
+    {
+      "rank": 7,
+      "title": "我国消费品品种突破2亿种",
+      "summary": "我国消费品品种突破2亿种。品种数量是反映供给能力与消费选择丰富度的指标，供给端的扩容与需求端的升级相互配合，构成扩大内需的基础条件。",
+      "why": "消费品品种扩容支撑消费供给",
+      "source": "中新网",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-29/10276275.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276524.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276274.shtml"
+      ]
+    },
+    {
+      "rank": 8,
+      "title": "中美两国商务部拟于9月7日在天津举行工作会议",
+      "summary": "中美两国商务部拟于9月7日在天津举行工作会议。会谈安排涉及两国经贸沟通的节奏，关系到出口管制、关税等争议议题的后续处理方式。",
+      "why": "中美经贸会谈安排影响外部环境",
+      "source": "中新网",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.chinanews.com.cn/gn/2024/08-29/10276553.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276698.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276591.shtml"
+      ]
+    },
+    {
+      "rank": 9,
+      "title": "中美商贸工作组将举行第二次副部长级会议",
+      "summary": "中美商贸工作组将举行第二次副部长级会议。会议层级与往次安排的延续性，体现双方维持经贸沟通渠道的意愿，对观察贸易摩擦走向具有指标意义。",
+      "why": "副部长级会议体现沟通机制延续",
+      "source": "中新网",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-29/10276698.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/gn/2024/08-29/10276553.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276591.shtml"
+      ]
+    },
+    {
+      "rank": 10,
+      "title": "尺素金声丨增势“一马当先”，高技术制造业何以领跑工业大盘",
+      "summary": "有关报道以高技术制造业增势“一马当先”解释其领跑工业大盘的格局。高技术制造业增速领先，反映产业升级与新质生产力培育对工业增长结构的带动作用。",
+      "why": "高技术制造业领跑体现结构升级",
+      "source": "中新网",
+      "publishedAt": "2024-08-29T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2024/08-29/10276476.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276517.shtml",
+        "https://www.chinanews.com.cn/cj/2024/08-29/10276513.shtml"
+      ]
+    }
+  ],
+  "watch": [
+    "深改委会议部署的改革任务与落实节奏",
+    "央行公开市场国债买卖的后续操作",
+    "以旧换新政策带动的耐用品消费数据",
+    "中美天津会谈的议题与时间安排"
+  ],
+  "model": "minimaxcode",
+  "backfill": {
+    "kind": "pre-era",
+    "at": "2026-11-28T09:00:00+08:00",
+    "note": "早报制度生效前的日子，按该日新闻切片补写"
+  }
+}
