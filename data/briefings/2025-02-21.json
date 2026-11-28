@@ -1,9 +1,9 @@
 {
   "date": "2025-02-21",
-  "generatedAt": "2026-11-28T10:15:41+08:00",
-  "endedAt": "2026-11-28T10:16:18+08:00",
+  "generatedAt": "2026-11-28T10:19:30.999+08:00",
+  "endedAt": "2026-11-28T10:19:30.999+08:00",
   "source": "ai",
-  "generator": "llm-v1",
+  "generator": "minimaxcode",
   "window": {
     "from": "2025-02-20",
     "to": "2025-02-21",
@@ -12,132 +12,148 @@
     "fromTs": 1740009600,
     "toTs": 1740099600
   },
-  "overview": "当日主线聚焦中国货币政策与政策落地：2月LPR连续4个月保持不变，人民银行部署宏观审慎工作，稳外资20条与民营经济支持举措推进。海外方面，美联储警示关税通胀风险，美欧应对关税摩擦，墨西哥央行下调增长预测，中美股市表现分化。",
+  "overview": "稳外资与货币政策同日落地：力度更大的稳外资20条发布，商务部介绍《2025年稳外资行动方案》特点，工信部称2024年制造业使用外资超2200亿元；2月LPR报价1年期3.1%、5年期以上3.6%，央行召开2025年宏观审慎工作会议，楼市开年回暖，商务部回应美方拟实施所谓对等关税。",
   "items": [
     {
       "rank": 1,
-      "title": "2月LPR连续4个月保持不变",
-      "summary": "2月LPR报价出炉，1年期为3.1%，5年期以上为3.6%；中国LPR连续4个月保持不变，专家称降息可能性仍大，利率整体保持稳定。",
-      "why": "LPR连续不变与降息预期是观察货币政策的窗口",
-      "source": "中新网",
-      "publishedAt": "2025-02-20T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371340.shtml",
-      "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-20/10371519.shtml"
-      ]
-    },
-    {
-      "rank": 2,
-      "title": "人民银行召开宏观审慎工作会议",
-      "summary": "中国人民银行召开2025年宏观审慎工作会议。会议聚焦宏观审慎工作，为观察年度金融政策安排和风险防控方向提供重要线索，会议信息值得关注。",
-      "why": "宏观审慎部署是观察金融政策与风险防控的窗口",
-      "source": "中国人民银行",
-      "publishedAt": "2025-02-20T12:00",
-      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554534500/index.html"
-    },
-    {
-      "rank": 3,
-      "title": "支持民营经济政策落地持续推进",
-      "summary": "多部门将出台举措促进民营经济发展，报道聚焦政策落地和为民企解惑。人民银行传达学习民营企业座谈会精神，显示政策落实与金融支持持续受到关注。",
-      "why": "多部门举措与政策落地是观察民营经济支持的重点",
-      "source": "中新网",
-      "publishedAt": "2025-02-20T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371368.shtml",
-      "refs": [
-        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554542119/index.html",
-        "https://www.chinanews.com.cn/cj/2025/02-20/10371532.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-20/10371276.shtml"
-      ]
-    },
-    {
-      "rank": 4,
-      "title": "稳外资20条发布并细化落实",
-      "summary": "中国稳外资20条发布，涉及电信、医疗、教育等领域。商务部介绍行动方案特点，并称切实保障内资和外资企业在华生产的产品平等参与政府采购，释放扩大开放与公平竞争信号。",
-      "why": "稳外资政策覆盖行业开放与政府采购公平",
+      "title": "力度更大！中国稳外资20条发布 涉及电信、医疗、教育等领域",
+      "summary": "中国稳外资20条发布，力度更大，涉及电信、医疗、教育等领域。政策以条目化方式稳定外资预期，并明确了扩大开放的行业范围，是观察稳外资落地的核心文件。",
+      "why": "稳外资20条明确开放范围与力度",
       "source": "中新网",
       "publishedAt": "2025-02-20T12:00",
       "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371298.shtml",
       "refs": [
         "https://www.chinanews.com.cn/cj/2025/02-20/10371411.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-20/10371479.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371423.shtml"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "《2025年稳外资行动方案》有何突出特点？商务部介绍",
+      "summary": "商务部介绍《2025年稳外资行动方案》的突出特点。行动方案以年度形式部署稳外资工作，配套措施的出台节奏与落实进度因此受到关注。",
+      "why": "年度行动方案细化稳外资配套措施",
+      "source": "中新网",
+      "publishedAt": "2025-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371411.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371298.shtml",
         "https://www.chinanews.com.cn/cj/2025/02-20/10371436.shtml"
       ]
     },
     {
-      "rank": 5,
-      "title": "楼市开年回暖政策效应显现",
-      "summary": "楼市开年回暖，政策效应显现；一线城市商品房售价环比继续上涨。两条报道共同指向房地产市场的年初修复态势，为观察政策效果与行业景气提供线索。",
-      "why": "楼市表现是观察政策效果与行业景气的窗口",
+      "rank": 3,
+      "title": "工信部：2024年制造业实际使用外资超2200亿元",
+      "summary": "工信部介绍，2024年制造业实际使用外资超2200亿元。制造业外资规模是观察产业吸引外资能力与开放政策成效的核心指标，也为稳外资政策提供了现实依据。",
+      "why": "制造业外资规模检验开放政策成效",
       "source": "中新网",
       "publishedAt": "2025-02-20T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371309.shtml",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371466.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-20/10371370.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371775.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371423.shtml"
+      ]
+    },
+    {
+      "rank": 4,
+      "title": "去年中国递延纳税政策吸引外商在华再投资同比增长15%",
+      "summary": "去年中国递延纳税政策吸引外商在华再投资同比增长15%。税收递延安排改善了外资企业的现金流条件，再投资的增长说明该政策在稳外资中的作用较为直接。",
+      "why": "税收递延政策提升外资再投资意愿",
+      "source": "中新网",
+      "publishedAt": "2025-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371775.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371466.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371423.shtml"
+      ]
+    },
+    {
+      "rank": 5,
+      "title": "2月LPR报价出炉：1年期为3.1%，5年期以上为3.6%",
+      "summary": "2月LPR报价出炉，1年期为3.1%，5年期以上为3.6%。报价水平关系到企业贷款成本与房贷定价，在利率连续持平的背景下，报价本身仍构成观察政策取向的直接参照。",
+      "why": "LPR报价关系企业成本与房贷定价",
+      "source": "中新网",
+      "publishedAt": "2025-02-20T12:00",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371340.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371519.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371309.shtml"
       ]
     },
     {
       "rank": 6,
-      "title": "财政部发布绿色主权债券框架",
-      "summary": "财政部发布《中华人民共和国绿色主权债券框架》。该框架的发布是观察中国绿色债券制度建设与财政融资安排的新线索，也为后续相关工作提供参照。",
-      "why": "绿色主权债券框架关系财政融资制度建设",
-      "source": "中新网",
+      "title": "中国人民银行召开2025年宏观审慎工作会议",
+      "summary": "中国人民银行召开2025年宏观审慎工作会议，对年度宏观审慎管理与金融风险防控作出部署。年度会议的定调，构成理解货币与监管政策取向的重要依据。",
+      "why": "年度会议定调货币与审慎政策取向",
+      "source": "中国人民银行",
       "publishedAt": "2025-02-20T12:00",
-      "url": "https://www.chinanews.com.cn/gn/2025/02-20/10371827.shtml"
+      "url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554534500/index.html",
+      "refs": [
+        "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212554542119/index.html",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371340.shtml"
+      ]
     },
     {
       "rank": 7,
-      "title": "美联储警示关税或推高美国通胀",
-      "summary": "美联储警告，特朗普关税政策或推高美国通胀。该消息将关税政策与美国物价压力相联系，是观察海外通胀预期和政策路径的重要线索。",
-      "why": "关税与通胀预期交织，影响海外政策观察",
+      "title": "楼市开年回暖 政策效应显现",
+      "summary": "楼市开年回暖，政策效应显现。节后各地稳市措施的传导结果开始体现在成交端，房地产市场能否延续回暖，成为观察需求端政策效果的关键变量。",
+      "why": "楼市回暖验证稳市政策传导效果",
       "source": "中新网",
       "publishedAt": "2025-02-20T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371361.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371309.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371423.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371683.shtml"
+      ]
     },
     {
       "rank": 8,
-      "title": "欧洲抓紧应对美国关税政策风险",
-      "summary": "欧洲抓紧应对美国关税政策风险，欧盟准备与美国讨论降低汽车关税，德国汽车行业谴责美国加征关税。中方也就美方拟实施所谓对等关税作出回应，称关税战没有出路。",
-      "why": "美欧关税磋商与各方回应牵动贸易预期",
+      "title": "财政部发布《中华人民共和国绿色主权债券框架》",
+      "summary": "财政部发布《中华人民共和国绿色主权债券框架》。框架为绿色主权债券的发行与使用确立规则，为财政资金支持绿色项目提供了可操作的标准与路径。",
+      "why": "绿色主权债券框架拓宽财政融资工具",
       "source": "中新网",
       "publishedAt": "2025-02-20T12:00",
-      "url": "https://www.chinanews.com.cn/gj/2025/02-20/10371667.shtml",
+      "url": "https://www.chinanews.com.cn/gn/2025/02-20/10371827.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-20/10371362.shtml",
-        "https://www.chinanews.com.cn/gj/2025/02-20/10371628.shtml",
-        "https://www.chinanews.com.cn/cj/2025/02-20/10371578.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371573.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371325.shtml"
       ]
     },
     {
       "rank": 9,
-      "title": "墨西哥央行下调2025年增长预测",
-      "summary": "墨西哥央行下调2025年经济增长预测。该消息反映海外央行对本国增长前景的判断调整，为观察海外央行对增长前景的研判提供线索。",
-      "why": "海外增长预测调整影响政策预期",
+      "title": "商务部回应美方拟实施所谓对等关税：关税战没有出路 也不会有赢家",
+      "summary": "商务部回应美方拟实施所谓对等关税，指出关税战没有出路、也不会有赢家。官方表态延续反制基调，美方关税方案的实施节奏与谈判可能因此成为外部环境的观察重点。",
+      "why": "官方回应延续对外反制基调",
       "source": "中新网",
       "publishedAt": "2025-02-20T12:00",
-      "url": "https://www.chinanews.com.cn/gj/2025/02-20/10371447.shtml"
+      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371578.shtml",
+      "refs": [
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371776.shtml",
+        "https://www.chinanews.com.cn/gj/2025/02-20/10371667.shtml"
+      ]
     },
     {
       "rank": 10,
-      "title": "美股续创新高，A股窄幅震荡",
-      "summary": "美股三大指数小幅收涨，标普500续创新高；A股周四窄幅震荡，AI眼镜板块领涨。两地股市表现为观察海外风险偏好与国内行业交易主线提供同步窗口。",
-      "why": "股市表现是观察风险偏好与行业主线的窗口",
+      "title": "A股周四窄幅震荡 AI眼镜板块领涨",
+      "summary": "A股周四窄幅震荡，AI眼镜板块领涨。指数窄幅整理的同时，AI硬件相关板块表现活跃，反映资金在科技主线上仍保持持续配置倾向。",
+      "why": "科技板块活跃反映资金配置主线",
       "source": "中新网",
       "publishedAt": "2025-02-20T12:00",
-      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371324.shtml",
+      "url": "https://www.chinanews.com.cn/cj/2025/02-20/10371683.shtml",
       "refs": [
-        "https://www.chinanews.com.cn/cj/2025/02-20/10371683.shtml"
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371566.shtml",
+        "https://www.chinanews.com.cn/cj/2025/02-20/10371328.shtml"
       ]
     }
   ],
   "watch": [
-    "后续LPR报价与市场降息预期变化",
-    "民营经济支持举措和稳外资20条落地节奏",
-    "美欧关税磋商及美国通胀预期变化",
-    "A股AI眼镜板块与美股标普500表现"
+    "稳外资20条与行动方案的配套细则出台",
+    "LPR连续持平下的降息预期变化",
+    "商务部回应对等关税后的贸易反制动向"
   ],
+  "model": "minimaxcode",
   "backfill": {
     "kind": "pre-era",
-    "at": "2026-11-28T10:16:18+08:00",
+    "at": "2026-11-28T10:19:30.999+08:00",
     "note": "早报制度生效前的日子，按该日新闻切片补写"
   }
 }
