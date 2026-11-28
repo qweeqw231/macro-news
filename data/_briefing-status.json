@@ -1,6 +1,6 @@
 {
   "v": 1,
-  "updatedAt": "2026-11-28T09:06:53+08:00",
+  "updatedAt": "2026-11-28T09:10:09+08:00",
   "days": {
     "2024-09-08": {
       "date": "2024-09-08",
@@ -308,18 +308,24 @@
     },
     "2026-11-28": {
       "date": "2026-11-28",
-      "status": "awaiting",
-      "stage": "awaiting-llm",
-      "startedAt": "2026-11-28T09:01:05+08:00",
-      "endedAt": "",
+      "status": "done",
+      "stage": "publish",
+      "startedAt": "2026-11-28T09:10:09+08:00",
+      "endedAt": "2026-11-28T09:10:09+08:00",
       "exitCode": 0,
       "candidates": 120,
-      "items": 0,
-      "source": "",
-      "reason": "输入快照已生成，等待 LLM 写作",
-      "durationMs": 0,
-      "generator": "prepare-v1",
-      "attempt": 1
+      "items": 10,
+      "source": "ai",
+      "reason": "",
+      "durationMs": 20,
+      "generator": "llm-v1",
+      "attempt": 1,
+      "backfill": false,
+      "backfillKind": "",
+      "backfilledAt": "",
+      "pushed": null,
+      "pushError": "",
+      "pushAt": ""
     }
   }
 }
